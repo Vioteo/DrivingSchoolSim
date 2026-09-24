@@ -78,11 +78,14 @@ def run(parts, meta):
         gap = meta['arch_r'] - max(meta['wheels'].values())
         check('Зазор шина - арка, м', gap >= 0.06, round(gap, 3), '>= 0.06')
         if 'windscreen_rake' in meta:
-            # route minibuses in Russia have a near-upright windscreen and a
-            # short bonnet; a raked 'van wedge' front is a regression
-            check('Наклон лобового стекла от вертикали, град', meta['windscreen_rake'] <= 30,
-                  round(meta['windscreen_rake'], 1), '<= 30')
-            check('Высота лобового стекла, м', meta['windscreen_h'] >= 1.0, round(meta['windscreen_h'], 2), '>= 1.0')
+            # Russian city marshrutka = high-roof van (Transit / Sprinter class):
+            # raked windscreen ending at ~2 m, tall body-colour forehead above it.
+            # Guards against both the 'wedge' (glass up to the roof) and the
+            # upright bus front.
+            check('Наклон лобового стекла от вертикали, град', 30 <= meta['windscreen_rake'] <= 45,
+                  round(meta['windscreen_rake'], 1), '30..45')
+            check('Высота лобового стекла, м', meta['windscreen_h'] >= 0.7, round(meta['windscreen_h'], 2), '>= 0.7')
+            check('«Лоб» над стеклом до крыши, м', meta['forehead'] >= 0.5, round(meta['forehead'], 2), '>= 0.5')
         for n in ('Wheel_FL', 'Wheel_FR', 'Wheel_RL', 'Wheel_RR', 'Socket_DriverEye', 'MirrorSurface_L', 'MirrorSurface_R',
                   'Socket_CentreOfMass', 'COL_Body'):
             check(f'Имя-контракт {n}', n in by, n in by, 'есть')

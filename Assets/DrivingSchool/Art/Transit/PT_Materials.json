@@ -37,6 +37,18 @@
       "emission": 0
     },
     {
+      "name": "PT_Paint_MinibusBlue",
+      "color": [
+        0.017,
+        0.19,
+        0.58,
+        1
+      ],
+      "metallic": 0.15,
+      "roughness": 0.3,
+      "emission": 0
+    },
+    {
       "name": "PT_Paint_TramCream",
       "color": [
         0.78,
