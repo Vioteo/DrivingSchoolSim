@@ -29,9 +29,9 @@ namespace DrivingSchool.Editor
         // Must match CHARACTERS and the clip lists in tools/build_pedestrians.py.
         static readonly Spec[] Specs =
         {
-            new Spec("DS_Pedestrian_A", 1.65f, 1.9f, .24f),
-            new Spec("DS_Pedestrian_B", 1.65f, 1.9f, .24f),
-            new Spec("DS_Pedestrian_C", 1.65f, 1.9f, .24f),
+            new Spec("DS_Pedestrian_A", 1.55f, 1.95f, .24f),
+            new Spec("DS_Pedestrian_B", 1.55f, 1.95f, .24f),
+            new Spec("DS_Pedestrian_C", 1.55f, 1.95f, .24f),
             new Spec("DS_Pedestrian_Child_A", 1.1f, 1.4f, .18f),
             new Spec("DS_Pedestrian_Child_B", 1.1f, 1.4f, .18f),
             new Spec("DS_Pedestrian_Police", 1.7f, 1.95f, .24f, police: true),
