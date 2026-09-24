@@ -1,24 +1,41 @@
 {
-  "revision": 1,
-  "utc": "2026-09-19T18:33:51.716476+00:00",
-  "blender": "5.0.1",
+  "revision": 2,
+  "utc": "2026-09-24T12:39:12.945675+00:00",
+  "blender": "5.0.0",
   "units": "metres",
   "sourceAxes": "Z up, -Y forward",
+  "fps": 30,
   "assets": [
     {
       "name": "DS_Pedestrian_A",
       "triangles": 6402,
       "bones": 20,
       "materials": 7,
-      "clips": [
-        "Idle",
-        "Walk"
-      ],
+      "clips": {
+        "Idle": {
+          "frames": 61,
+          "lengthS": 2.0
+        },
+        "Walk": {
+          "frames": 31,
+          "lengthS": 1.0,
+          "naturalSpeedMps": 1.323
+        },
+        "Run": {
+          "frames": 23,
+          "lengthS": 0.7333,
+          "naturalSpeedMps": 3.72
+        },
+        "LookAround": {
+          "frames": 91,
+          "lengthS": 3.0
+        }
+      },
       "heightM": 1.7889563031494617,
       "files": {
-        "ArtSource\\Pedestrians\\DS_Pedestrian_A.blend": "af7a0d242d2a19f615ecd54195e57bfefe583c14be9e9cd571b1d33fb9248baa",
-        "Assets\\DrivingSchool\\Art\\Pedestrians\\DS_Pedestrian_A.fbx": "94887758666beed9230c81fee13327503fe598185ae0ba9b207c9ef1e7920c78",
-        "artifacts\\visual-review\\pedestrians\\models\\DS_Pedestrian_A.glb": "572dc91ae891635a9ae38ab803e7a7b2fcfa278f6d66fda31a85a89677de56bc"
+        "ArtSource/Pedestrians/DS_Pedestrian_A.blend": "e72afb420b01cb8c8bd3a2544e7b4a31cc2a2e8fa9a9bdbc2d151e7fc1fb6bf1",
+        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_A.fbx": "b949377ab42db84f83d46613730f7555b67c6a7638225440d6019531f838e0e6",
+        "artifacts/visual-review/pedestrians/models/DS_Pedestrian_A.glb": "03b01cd342a70d5f87c54c8207503250f6dbcf0c43d396228f4eff5459302b98"
       }
     },
     {
@@ -26,15 +43,31 @@
       "triangles": 6402,
       "bones": 20,
       "materials": 7,
-      "clips": [
-        "Idle",
-        "Walk"
-      ],
+      "clips": {
+        "Idle": {
+          "frames": 61,
+          "lengthS": 2.0
+        },
+        "Walk": {
+          "frames": 31,
+          "lengthS": 1.0,
+          "naturalSpeedMps": 1.323
+        },
+        "Run": {
+          "frames": 23,
+          "lengthS": 0.7333,
+          "naturalSpeedMps": 3.72
+        },
+        "LookAround": {
+          "frames": 91,
+          "lengthS": 3.0
+        }
+      },
       "heightM": 1.7889563031494617,
       "files": {
-        "ArtSource\\Pedestrians\\DS_Pedestrian_B.blend": "7fcc770709600487feeee08576a442f20cc1e175ad1807e408aaa705563586aa",
-        "Assets\\DrivingSchool\\Art\\Pedestrians\\DS_Pedestrian_B.fbx": "de70712745df50ead94647f91221c32131c3d4cacb7e7470a018e9ff54e10e76",
-        "artifacts\\visual-review\\pedestrians\\models\\DS_Pedestrian_B.glb": "18d73b091647bcac8de84977267bf1cdb11aa385a40290c4e8034bbc5ae7490a"
+        "ArtSource/Pedestrians/DS_Pedestrian_B.blend": "09eb08a0e1e24ed2300ef90cc170d51f1aaebc0a0090db0a1d57e1fe681c57aa",
+        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_B.fbx": "afc91b6982f6f60667a8e24edbb08722a904d73cbaae00cf8d94e40fe0f99328",
+        "artifacts/visual-review/pedestrians/models/DS_Pedestrian_B.glb": "2766814ba18b2825b4dc912a257cda054158b0681b085329b43529c56688138b"
       }
     },
     {
@@ -42,17 +75,136 @@
       "triangles": 6834,
       "bones": 20,
       "materials": 7,
-      "clips": [
-        "Idle",
-        "Walk"
-      ],
+      "clips": {
+        "Idle": {
+          "frames": 61,
+          "lengthS": 2.0
+        },
+        "Walk": {
+          "frames": 31,
+          "lengthS": 1.0,
+          "naturalSpeedMps": 1.323
+        },
+        "Run": {
+          "frames": 23,
+          "lengthS": 0.7333,
+          "naturalSpeedMps": 3.72
+        },
+        "LookAround": {
+          "frames": 91,
+          "lengthS": 3.0
+        }
+      },
       "heightM": 1.7889563031494617,
       "files": {
-        "ArtSource\\Pedestrians\\DS_Pedestrian_C.blend": "86b228f4a227bbe23eaa8a339ab1bf26cb108a9d5c18ffe2b0a43671d00b2d49",
-        "Assets\\DrivingSchool\\Art\\Pedestrians\\DS_Pedestrian_C.fbx": "2cc835a1c3b3109adce92b71bde28df7e7243b3a86b8281a6f40cd34cc64a984",
-        "artifacts\\visual-review\\pedestrians\\models\\DS_Pedestrian_C.glb": "4f791dda837bae8fff0d577c6fc048820488b82470a5b5770070e3ccfdcca8e8"
+        "ArtSource/Pedestrians/DS_Pedestrian_C.blend": "592026b944930fa4b67bdd97d9218d2a98163ad4b04d21f3c905945dabea692d",
+        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_C.fbx": "9ee883135a6e6522e80c68b2e702231d23686e7151af71e634ce00c0f5e88a48",
+        "artifacts/visual-review/pedestrians/models/DS_Pedestrian_C.glb": "6586300c99bf042a957ab5365e79e7a00170e84dfdf90313a795e57fb67bb46a"
+      }
+    },
+    {
+      "name": "DS_Pedestrian_Child_A",
+      "triangles": 6834,
+      "bones": 20,
+      "materials": 7,
+      "clips": {
+        "Idle": {
+          "frames": 61,
+          "lengthS": 2.0
+        },
+        "Walk": {
+          "frames": 25,
+          "lengthS": 0.8,
+          "naturalSpeedMps": 1.204
+        },
+        "Run": {
+          "frames": 19,
+          "lengthS": 0.6,
+          "naturalSpeedMps": 3.086
+        },
+        "LookAround": {
+          "frames": 91,
+          "lengthS": 3.0
+        }
+      },
+      "heightM": 1.261036184616387,
+      "files": {
+        "ArtSource/Pedestrians/DS_Pedestrian_Child_A.blend": "2b3e41a4706a959c55cb9af82d18ec4f7bb36b9c4d90c8f8c94195be799b7ce6",
+        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_A.fbx": "367cb2ba2e7123ef489d3a9033a701446a09940ab633ef49621312a8f063a44e",
+        "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Child_A.glb": "251bf82487c7e47e4293226340409841e6b4c9016b3b50af522b780b0c8274ba"
+      }
+    },
+    {
+      "name": "DS_Pedestrian_Child_B",
+      "triangles": 6650,
+      "bones": 20,
+      "materials": 7,
+      "clips": {
+        "Idle": {
+          "frames": 61,
+          "lengthS": 2.0
+        },
+        "Walk": {
+          "frames": 25,
+          "lengthS": 0.8,
+          "naturalSpeedMps": 1.204
+        },
+        "Run": {
+          "frames": 19,
+          "lengthS": 0.6,
+          "naturalSpeedMps": 3.086
+        },
+        "LookAround": {
+          "frames": 91,
+          "lengthS": 3.0
+        }
+      },
+      "heightM": 1.261036184616387,
+      "files": {
+        "ArtSource/Pedestrians/DS_Pedestrian_Child_B.blend": "f2b2c908d4e07b77ccf235872d5cf7a1f920866f0850ed5b7749c4b6c418c89f",
+        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_B.fbx": "3b40302356aea67d0bc108502c33cab0c3be55a6df091180868c041084171179",
+        "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Child_B.glb": "40480934614496dfac6a2819f880325e915b24d76b64ca1ca1f77f6868d2cf67"
+      }
+    },
+    {
+      "name": "DS_Pedestrian_Police",
+      "triangles": 7270,
+      "bones": 20,
+      "materials": 10,
+      "clips": {
+        "Idle": {
+          "frames": 61,
+          "lengthS": 2.0
+        },
+        "Walk": {
+          "frames": 31,
+          "lengthS": 1.0,
+          "naturalSpeedMps": 1.323
+        },
+        "LookAround": {
+          "frames": 91,
+          "lengthS": 3.0
+        },
+        "Signal_ArmsSide": {
+          "frames": 61,
+          "lengthS": 2.0
+        },
+        "Signal_RightArmForward": {
+          "frames": 61,
+          "lengthS": 2.0
+        },
+        "Signal_ArmUp": {
+          "frames": 61,
+          "lengthS": 2.0
+        }
+      },
+      "heightM": 1.811000008136034,
+      "files": {
+        "ArtSource/Pedestrians/DS_Pedestrian_Police.blend": "100e0b2cc6819d91d5150261fa9ffbfb5fcc0a5bcfc3c4e3b6c4a4cce164baae",
+        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Police.fbx": "94c43a671349dcb55f8db82bdcd7b2a3e2637350d091979f4e26b31e8573eb16",
+        "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Police.glb": "ddb4b537524ce3bd00e47dafa474dc95d81c1f97d6f94240b1314314c1048a0f"
       }
     }
   ],
-  "scope": "Authored meshes, generic skeleton and in-place animation. No pedestrian navigation, LODs or traffic AI."
+  "scope": "Authored meshes, generic skeleton and in-place looping clips. No pedestrian navigation, LODs or traffic AI."
 }
