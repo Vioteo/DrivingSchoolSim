@@ -43,6 +43,18 @@
 - `SignalController` (Simulation/Traffic): аспект — функция времени симуляции и плана; режимы Normal / FlashingAmber / Off; `TimeToChange`. `ValidatePlan` запрещает одновременный зелёный пересекающимся прямым направлениям и прямому направлению с пешеходами на его переходе; разрешённые повороты могут делить зелёный (уступают по правилам).
 - `LaneFollowerAgent` + `DriverProfile` (Simulation/Traffic): кинематика `(path, s, d, v, a)` по маршруту, IDM, торможение к меньшему ограничению впереди, остановка у стоп-линии/препятствия; параметры профиля — игровые.
 
+## Диспетчер трафика и протокол (T35, T40)
+
+Код: `Simulation/Traffic/` (pure C#), Unity-обвязка — `Presentation/TrafficDirectorHost.cs`, `TrafficVehicleView.cs`.
+
+- `TrafficDirector(WorldDocumentV2, TrafficProfile, seed)`: `SetPlayer(PlayerSample)`, `Tick(tick, simSeconds)`, `OnChunkReady/OnChunkUnloaded(cx, cz)`, `ReportContact(agentId, otherId)`, `Snapshot`. Для сценариев и тестов — `AddVehicle(route, s, speed, profile, id)`, `Freeze(id)`, `ReverseProcessingOrder`.
+- `TrafficProfile`: `MaxVehicles` (8), `SpawnIntervalSeconds`, `MinSpawnDistanceM` (150), `HiddenSpawnDistanceM` (40), `ViewConeDeg` (120), `NearRadiusM` (250), `DecisionHz` (10), `BackgroundHz` (2), `RouteHorizonM`, `JunctionLookaheadM`, `DeadlockSeconds` (6, игровое правило), `HazardNoticeRangeM`, `ChunkSizeM`, `Drivers` (`DriverProfile[]`). Все значения — игровые параметры.
+- `PlayerSample`: поза, курс, скорость, поворотники, аварийка, габариты, `Present`.
+- `TrafficSnapshot`: `Tick, SimSeconds`, `Participants` (`ParticipantState`: id, вид, путь/`S`/`D`, скорость, ускорение, курс, позиция, габариты, поворотники, стоп-сигнал, аварийка, угол колёс, уровень детализации, профиль, `Decision` — причина для отладки), `Signals` (`SignalState`), `Reservations`, `Permits`, `Notices` (доставленные в этом тике), `Events` (`contact`).
+- Протокол (`ManeuverProtocol.cs`): `ManeuverRequest` (агент, путь, `ManeuverKind`, ETA, длительность, `ReservationClaim`), `ManeuverPermit` (разрешено/нет, причина, чей конфликт, срок, запасной вариант), `ManeuverNotice` (`NoticeKind`: OpenGap, Hold, SlowDown, YieldToPedestrian, HazardAhead, Cancel). Реализованы `EnterConflictZone`, `Hold`, `Cancel`, `HazardAhead`; остальные виды — T33/T34/T36.
+- `ReservationTable`: `TryReserve`, `Release`, `ExpireUntil`, `AssertConsistent`. Ключ зоны конфликта — `"<zoneId>#A|B"` (сторона связи): конфликтуют только разные стороны одной зоны, поэтому машины, едущие друг за другом через одну связь, не блокируют друг друга. Прочие ключи конфликтуют при равенстве; `PathSpan` — участки полос.
+- «Наблюдаемая заявка» игрока: владелец `player`, связь, на которой игрок находится или в которую въезжает (по поворотнику, иначе прямо). Неиспользованные разрешения ИИ, конфликтующие с ней, отзываются.
+
 ## Раскладка района (T29)
 
 Источник истины: `Assets/DrivingSchool/Code/Contracts/DistrictLayout.cs`; компилятор — `Simulation/RoadGraph/DistrictCompiler.cs`, шаблоны модулей — `Simulation/RoadGraph/RoadKitTemplates.cs`, справочник знаков — `SignCatalog.cs`.

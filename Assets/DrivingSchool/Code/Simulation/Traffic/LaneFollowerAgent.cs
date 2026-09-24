@@ -70,6 +70,8 @@ namespace DrivingSchool.Simulation.Traffic
         public float TargetAccelerationMps2 => (float)a;
         public float TargetSteeringAngleRad { get; private set; }
         public bool Finished { get; private set; }
+        /// <summary>The route ends at the district edge: drive off it instead of stopping before the end.</summary>
+        public bool ExitAtRouteEnd;
 
         public Vec3d Position => CurrentPath.Line.OffsetPoint(s, d);
         public double HeadingRad => CurrentPath.Line.HeadingAt(s);
@@ -130,7 +132,7 @@ namespace DrivingSchool.Simulation.Traffic
             double free = 1 - Math.Pow(v / v0, Delta);
             double interaction = 0;
             // End of route without continuation behaves like a stop point.
-            double endGap = RemainingRouteM - Profile.LengthM / 2;
+            double endGap = ExitAtRouteEnd ? double.PositiveInfinity : RemainingRouteM - Profile.LengthM / 2;
             double stop = Math.Min(stopGapM, endGap + Profile.StopLineGapM);
             interaction = Math.Max(interaction, Term(leadGapM, leadSpeedMps, Profile.MinGapM));
             interaction = Math.Max(interaction, Term(stop, 0, Profile.StopLineGapM));
