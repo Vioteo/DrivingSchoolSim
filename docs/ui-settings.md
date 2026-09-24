@@ -108,7 +108,7 @@ flowchart LR
 ## 6. Что нужно решить до кода
 
 1. ~~Палитра~~ — **решено 24.09**, см. §8. Осталось поправить токены в T03 и константы `UIBuilder`.
-2. **Шрифт** — выбор за владельцем. Образцы четырёх пар: `artifacts/visual-review/fonts/index.html` (скриншот `fonts.png`). Рекомендация: **Golos Text + Roboto Mono**. Лицензии проверены по `google/fonts` (METADATA.pb, OFL.txt) 24.09.2026: Golos Text, Roboto Condensed, Inter, PT Sans / Narrow / Mono, Roboto Mono, IBM Plex Mono (зарезервированное имя «Plex»), Manrope, JetBrains Mono — все SIL OFL 1.1 с подмножествами cyrillic и cyrillic-ext. Barlow Condensed — только latin/latin-ext/vietnamese. В сборку класть TTF и `OFL.txt` рядом (`Assets/DrivingSchool/Art/Fonts/<Family>/`).
+2. ~~Шрифт~~ — **решено 24.09: Golos Text + Roboto Mono** (цифры приборов и таймеров). Образцы и сравнение: `artifacts/visual-review/fonts/index.html`, `fonts.png`. Лицензии проверены по `google/fonts` (METADATA.pb, OFL.txt): все кандидаты — SIL OFL 1.1 с cyrillic и cyrillic-ext; у Barlow Condensed кириллицы нет. В проект класть TTF и `OFL.txt` рядом: `Assets/DrivingSchool/Art/Fonts/GolosText/`, `Assets/DrivingSchool/Art/Fonts/RobotoMono/`. Источники: github.com/googlefonts/golos-text, github.com/googlefonts/robotomono.
 3. ~~Где лежит `GameSettings`~~ — **решено: ADR-011**, отдельный чистый модуль `DS.Settings` + `SettingsStore`/`SettingsApplier` в `Presentation`.
 4. **Руль — Logitech G29, а не G27** (уточнено владельцем 24.09). Схема кнопок в меню (предложение, номера кнопок сверить в калибровке T04):
 
@@ -122,13 +122,13 @@ flowchart LR
 | OPTIONS | пауза / продолжить | Esc в поездке |
 | Колесо-селектор + красная кнопка | значение ← → / выбрать | ← → / Enter |
 
-   Лепестки в поездке переключают передачи только в режиме АКПП с ручным выбором, если он появится; в МКПП-режиме это не используется. **Открыто:** есть ли шифтер Driving Force Shifter (H-паттерн 6+R). В G29 его нет в комплекте, а R02 и A04 требуют H-паттерн. CLAUDE.md, requirements.md, architecture.md, `LogitechG27Adapter` и тесты по-прежнему говорят о G27 — переименование и проверку раскладки делать отдельной карточкой.
+   Шифтер Driving Force Shifter у владельца **есть** (24.09) — H-паттерн 6+R остаётся по R02. CLAUDE.md, requirements.md и architecture.md обновлены; код, тесты и генератор UI — карточка T28.
 
 ## 7. Следующие шаги
 
 1. Согласовать макет и §6.
 2. T03: главное меню в `UIBuilder` — настоящие `Button`, `InputSystemUIInputModule`, русские тексты, кириллический TMP-шрифт.
-3. Новая карточка T27 «Настройки»: модель и хранение + тесты, затем экран в `UIBuilder` + адаптер применения. Разделы Звук и FFB — со статусом «скоро».
+3. Карточка T27 «Настройки»: модель и хранение + тесты, затем экран в `UIBuilder` + адаптер применения. Разделы Звук и FFB — со статусом «скоро».
 
 ## 8. Цветовые темы
 

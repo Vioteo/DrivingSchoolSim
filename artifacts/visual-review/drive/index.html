@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-/* Тема «Асфальт» (docs/ui-settings.md §8). Шрифт — рекомендованная пара Golos Text + Roboto Mono (ещё не утверждена). */
+/* Тема «Асфальт» (docs/ui-settings.md §8). Шрифт Golos Text + Roboto Mono (утверждён 24.09). */
 :root{
   --bg-dark:#161718; --bg-panel:#1E2021; --bg-card:#26292B; --bg-row-hover:#2D3033;
   --accent:#FFD84D; --accent-soft:rgba(255,216,77,.12); --on-accent:#1A1A1A;
@@ -45,14 +45,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .mono{font-family:var(--m)}
 
 /* навигатор */
-.nav{left:calc(40*var(--u));top:calc(40*var(--u));width:calc(430*var(--u));padding:calc(18*var(--u)) calc(20*var(--u));display:grid;grid-template-columns:auto 1fr;gap:calc(4*var(--u)) calc(18*var(--u));align-items:center}
+.nav{left:calc(40*var(--u));top:calc(40*var(--u));width:max-content;max-width:calc(520*var(--u));padding:calc(18*var(--u)) calc(20*var(--u));display:grid;grid-template-columns:auto 1fr;gap:calc(4*var(--u)) calc(18*var(--u));align-items:center}
 .nav svg{width:calc(84*var(--u));height:calc(84*var(--u));grid-row:span 2}
 .nav .dist{font:700 calc(52*var(--u))/1 var(--m);color:var(--text)}
 .nav .dist small{font-size:calc(24*var(--u));color:var(--text-2)}
 .nav .street{font-size:calc(22*var(--u));color:var(--text)}
-.lanes{grid-column:1/-1;display:flex;gap:calc(6*var(--u));margin-top:calc(10*var(--u));padding-top:calc(10*var(--u));border-top:1px solid var(--line)}
-.lanes span{flex:1;text-align:center;padding:calc(4*var(--u)) 0;border-radius:calc(3*var(--u));color:var(--muted);font-size:calc(26*var(--u));background:rgba(255,255,255,.04)}
-.lanes span.ok{color:var(--on-accent);background:var(--accent)}
 
 /* подсказка инструктора */
 .coach{left:50%;transform:translateX(-50%);top:calc(40*var(--u));width:calc(760*var(--u));padding:calc(16*var(--u)) calc(22*var(--u)) calc(18*var(--u));border-left:calc(5*var(--u)) solid var(--accent);transition:opacity .3s}
@@ -69,23 +66,17 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .coach.kind-warn .bar i{background:var(--red)} .coach.kind-info .bar i{background:var(--info)}
 
 /* баллы */
-.score{right:calc(40*var(--u));top:calc(40*var(--u));width:calc(360*var(--u));padding:calc(16*var(--u)) calc(20*var(--u))}
-.score .top{display:flex;justify-content:space-between;align-items:baseline}
-.score .pts{font:700 calc(56*var(--u))/1 var(--m);color:var(--text)}
-.score .pts small{font-size:calc(22*var(--u));color:var(--muted)}
-.score .time{font:500 calc(22*var(--u)) var(--m);color:var(--text-2);text-align:right}
-.meter{display:grid;grid-template-columns:repeat(7,1fr);gap:calc(4*var(--u));margin:calc(12*var(--u)) 0 calc(6*var(--u))}
-.meter i{height:calc(10*var(--u));border-radius:calc(2*var(--u));background:rgba(255,255,255,.1)}
+.score{right:calc(40*var(--u));top:calc(40*var(--u));padding:calc(12*var(--u)) calc(18*var(--u));display:flex;align-items:center;gap:calc(14*var(--u))}
+.score .pts{font:700 calc(48*var(--u))/1 var(--m);color:var(--text)}
+.score .col{display:flex;flex-direction:column;gap:calc(7*var(--u))}
+.meter{display:grid;grid-template-columns:repeat(7,calc(18*var(--u)));gap:calc(4*var(--u))}
+.meter i{height:calc(8*var(--u));border-radius:calc(2*var(--u));background:rgba(255,255,255,.12)}
 .meter i.f{background:var(--accent)} .meter i.d{background:var(--red)}
-.meter i:last-child{outline:1px dashed rgba(229,72,77,.6);outline-offset:1px}
-.score .note{font-size:calc(14*var(--u));color:var(--muted)}
+.meter i:last-child{box-shadow:inset 0 0 0 1px rgba(229,72,77,.7)}
 
-/* знаки в зоне действия */
-.signs{right:calc(40*var(--u));top:calc(250*var(--u));display:flex;gap:calc(12*var(--u));padding:calc(12*var(--u));align-items:center}
-.signs svg{width:calc(64*var(--u));height:calc(64*var(--u))}
 
 /* нарушения */
-.viol-stack{right:calc(40*var(--u));top:calc(360*var(--u));width:calc(460*var(--u));display:flex;flex-direction:column;gap:calc(10*var(--u))}
+.viol-stack{right:calc(40*var(--u));top:calc(150*var(--u));width:calc(460*var(--u));display:flex;flex-direction:column;gap:calc(10*var(--u))}
 .viol{display:grid;grid-template-columns:1fr auto;gap:calc(4*var(--u)) calc(14*var(--u));padding:calc(14*var(--u)) calc(18*var(--u));background:var(--hud-strong);border-left:calc(5*var(--u)) solid var(--red);border-radius:calc(6*var(--u));animation:slide .35s ease-out}
 .viol .t{font-size:calc(24*var(--u));color:var(--text);font-weight:600;line-height:1.2}
 .viol .id{font:500 calc(14*var(--u)) var(--m);color:var(--muted);grid-column:1}
@@ -101,29 +92,22 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .mini .scale::before{content:"";display:block;width:calc(70*var(--u));height:calc(4*var(--u));border:1px solid var(--text-2);border-top:0;margin-bottom:calc(2*var(--u))}
 
 /* приборы */
-.cluster{left:50%;transform:translateX(-50%);bottom:calc(36*var(--u));width:calc(620*var(--u));padding:calc(14*var(--u)) calc(24*var(--u)) calc(16*var(--u));display:grid;grid-template-columns:1fr auto auto;gap:0 calc(26*var(--u));align-items:end}
-.tt{grid-column:1/-1;display:flex;gap:calc(14*var(--u));align-items:center;margin-bottom:calc(8*var(--u))}
+.cluster{left:50%;transform:translateX(-50%);bottom:calc(36*var(--u));padding:calc(14*var(--u)) calc(26*var(--u)) calc(18*var(--u));display:grid;grid-template-columns:auto auto;gap:0 calc(40*var(--u));align-items:center}
+.tt{grid-column:1/-1;display:flex;gap:calc(16*var(--u));align-items:center;justify-content:center;margin-bottom:calc(6*var(--u))}
 .tt span{display:inline-flex;align-items:center;gap:calc(6*var(--u));font-size:calc(15*var(--u));color:rgba(255,255,255,.18)}
 .tt svg{width:calc(28*var(--u));height:calc(28*var(--u))}
 .tt .on-g{color:var(--green)} .tt .on-r{color:var(--red)} .tt .on-b{color:var(--info)}
 .tt .blink{animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:.15}}
-.tt .sp{margin-left:auto}
 .speed{display:flex;align-items:baseline;gap:calc(8*var(--u))}
-.speed .n{font:700 calc(110*var(--u))/.9 var(--m);color:var(--text)}
+.speed .n{font:700 calc(110*var(--u))/.9 var(--m);color:var(--text);min-width:3ch;text-align:right}
 .speed.over .n{color:var(--red)}
 .speed .u{font-size:calc(22*var(--u));color:var(--text-2)}
-.lim{width:calc(78*var(--u));height:calc(78*var(--u))}
-.gear{text-align:center}
-.gear .g{font:700 calc(80*var(--u))/.9 var(--m);color:var(--accent)}
-.gear .lbl{font-size:calc(13*var(--u))}
-.rpm{grid-column:1/-1;margin-top:calc(12*var(--u));height:calc(8*var(--u));background:rgba(255,255,255,.08);border-radius:calc(4*var(--u));position:relative;overflow:hidden}
-.rpm i{position:absolute;left:0;top:0;bottom:0;background:var(--text-2);border-radius:calc(4*var(--u))}
+.hgear svg{display:block;width:calc(150*var(--u));height:calc(112*var(--u))}
+.rpm{grid-column:1/-1;margin-top:calc(14*var(--u));height:calc(6*var(--u));background:rgba(255,255,255,.08);border-radius:calc(3*var(--u));position:relative;overflow:hidden}
+.rpm i{position:absolute;left:0;top:0;bottom:0;background:var(--text-2);border-radius:calc(3*var(--u))}
 .rpm b{position:absolute;right:0;top:0;bottom:0;width:18%;background:rgba(229,72,77,.45)}
-.rpm-l{grid-column:1/-1;display:flex;justify-content:space-between;font:500 calc(13*var(--u)) var(--m);color:var(--muted);margin-top:calc(4*var(--u))}
 
-.keys{right:calc(40*var(--u));bottom:calc(40*var(--u));display:flex;gap:calc(16*var(--u));padding:calc(10*var(--u)) calc(14*var(--u));font-size:calc(16*var(--u));color:var(--text-2)}
-.keys kbd{font:600 calc(14*var(--u)) var(--m);color:var(--text);border:1px solid var(--line);border-bottom-width:2px;padding:0 calc(6*var(--u));margin-right:calc(6*var(--u));border-radius:calc(3*var(--u))}
 
 /* прекращение экзамена */
 .stop{inset:0;display:none;align-items:center;justify-content:center;background:rgba(10,10,10,.6)}
@@ -247,6 +231,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     <button class="act" id="addStop">Нарушение 7 (прекращение)</button>
     <button class="act" id="blink">Поворотник</button>
     <button class="act" id="belt">Ремень</button>
+    <button class="act" id="gearBtn">Передача</button>
+    <button class="act" id="overBtn">Превышение</button>
   </span>
   <span>Спецификация: <a href="../../../docs/ui-drive.md" style="color:var(--info)">docs/ui-drive.md</a></span>
 </div>
@@ -260,7 +246,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     <svg viewBox="0 0 84 84" aria-label="Поворот направо"><path d="M30 76V40a10 10 0 0 1 10-10h18" fill="none" stroke="#F4F4F2" stroke-width="10" stroke-linecap="round"/><path d="M54 16l16 14-16 14z" fill="#F4F4F2"/></svg>
     <div class="dist">80<small> м</small></div>
     <div class="street">Направо · ул. Садовая</div>
-    <div class="lanes hud-full"><span>↑</span><span>↑</span><span class="ok">↱</span></div>
   </div>
 
   <div class="abs panel coach" id="coach">
@@ -269,17 +254,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     <div class="bar"><i id="coachBar"></i></div>
   </div>
 
-  <div class="abs panel score hud-full hud-min hud-off">
-    <div class="top"><span class="lbl">Штрафные баллы</span><span class="time">08:42</span></div>
-    <div class="top"><span class="pts" id="pts">0<small> / сдано ≤ 6*</small></span></div>
-    <div class="meter" id="meter"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <div class="note">Экзамен · маршрут 2 · * шкала по открытым источникам, не сверена с методикой</div>
-  </div>
-
-  <div class="abs panel signs hud-full" title="Знаки в зоне действия">
-    <svg viewBox="0 0 64 64" aria-label="Ограничение 60"><circle cx="32" cy="32" r="30" fill="#fff"/><circle cx="32" cy="32" r="25" fill="none" stroke="#D7263D" stroke-width="7"/><text x="32" y="41" text-anchor="middle" font-family="Golos Text,sans-serif" font-weight="700" font-size="24" fill="#111">60</text></svg>
-    <svg viewBox="0 0 64 64" aria-label="Пешеходный переход"><rect x="2" y="2" width="60" height="60" rx="5" fill="#1F5FBF" stroke="#fff" stroke-width="2"/><path d="M32 8L58 54H6z" fill="#fff"/><circle cx="33" cy="25" r="3.4" fill="#111"/><path d="M32 30l-4 10 5 3-2 8M32 30l5 9 4 1M28 40l-5 9" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M14 52h36" stroke="#111" stroke-width="2" stroke-dasharray="4 3"/></svg>
-    <svg viewBox="0 0 64 64" aria-label="Главная дорога"><rect x="12" y="12" width="40" height="40" transform="rotate(45 32 32)" fill="#fff" stroke="#333" stroke-width="1"/><rect x="18" y="18" width="28" height="28" transform="rotate(45 32 32)" fill="#F2C200"/></svg>
+  <div class="abs panel score hud-full hud-min hud-off" title="Штрафные баллы; последний сегмент — прекращение экзамена">
+    <span class="pts" id="pts">0</span>
+    <span class="col"><span class="lbl">баллы</span><span class="meter" id="meter"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span>
   </div>
 
   <div class="abs viol-stack" id="violStack"></div>
@@ -296,16 +273,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
       <span class="on-g" title="Ближний свет"><svg viewBox="0 0 28 28"><path d="M14 6c-5 0-8 3.5-8 8s3 8 8 8z" fill="currentColor"/><path d="M17 9l8 2M17 14h8M17 19l8-2" stroke="currentColor" stroke-width="2"/></svg></span>
       <span id="ttBelt" class="on-r blink" title="Ремень не пристёгнут"><svg viewBox="0 0 28 28"><circle cx="14" cy="6" r="3.5" fill="currentColor"/><path d="M8 26V15a6 6 0 0 1 12 0v11" fill="none" stroke="currentColor" stroke-width="3"/><path d="M9 12l11 12" stroke="currentColor" stroke-width="2.5"/></svg>ремень</span>
       <span title="Стояночный тормоз"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="2.5"/><text x="14" y="19" text-anchor="middle" font-family="Roboto Mono,monospace" font-weight="700" font-size="12" fill="currentColor">P</text></svg></span>
-      <span class="sp mono" title="Дистанция">4,2 км</span>
     </div>
     <div class="speed" id="speed"><span class="n" id="spd">38</span><span class="u">км/ч</span></div>
-    <svg class="lim" viewBox="0 0 64 64" aria-label="Текущее ограничение 60"><circle cx="32" cy="32" r="30" fill="#fff"/><circle cx="32" cy="32" r="25" fill="none" stroke="#D7263D" stroke-width="7"/><text x="32" y="41" text-anchor="middle" font-family="Golos Text,sans-serif" font-weight="700" font-size="24" fill="#111">60</text></svg>
-    <div class="gear"><div class="g">3</div><div class="lbl">передача</div></div>
+    <div class="hgear" title="Схема КПП из данных автомобиля"><svg viewBox="0 0 150 112" id="hgear"></svg></div>
     <div class="rpm hud-full"><i style="width:36%"></i><b></b></div>
-    <div class="rpm-l hud-full"><span>0</span><span>2 000 об/мин</span><span>6 000</span></div>
   </div>
-
-  <div class="abs panel keys hud-full"><span><kbd>Esc</kbd>пауза</span><span><kbd>M</kbd>карта</span><span><kbd>C</kbd>камера</span></div>
 
   <div class="abs stop" id="stop">
     <div class="box">
@@ -337,15 +309,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     <div class="bar"><i style="width:60%;background:var(--info)"></i></div>
   </div>
   <div class="abs panel score">
-    <div class="top"><span class="lbl">Штрафные баллы</span><span class="time">06:10</span></div>
-    <div class="top"><span class="pts">1<small> · тренировка</small></span></div>
-    <div class="meter"><i class="f"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <div class="note">В тренировке упражнение не прекращается</div>
+    <span class="pts">1</span>
+    <span class="col"><span class="lbl">баллы · тренировка</span><span class="meter"><i class="f"></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span>
   </div>
   <div class="abs panel gauge" title="Расстояние до разметки бокса — помощник, отмечается в разборе">
     <span>До разметки слева</span><span class="v">0,42 м</span><span class="bar"><i></i></span><span class="chip demo" style="font-size:calc(14*var(--u))">помощник</span>
   </div>
-  <div class="abs panel keys"><span><kbd>Esc</kbd>пауза</span><span><kbd>C</kbd>камера</span><span><kbd>V</kbd>вид сверху (помощник)</span></div>
 </section>
 
 <!-- ============ КАРТА ============ -->
@@ -459,7 +428,7 @@ $('#nextHint').onclick = () => showHint(++hintI);
 // ---------- нарушения и баллы ----------
 let pts = 0;
 function renderPts() {
-  $('#pts').innerHTML = `${pts}<small> / сдано ≤ 6*</small>`;
+  $('#pts').textContent = pts;
   document.querySelectorAll('#meter i').forEach((m, k) => m.className = k < Math.min(pts, 7) ? (pts >= 7 ? 'd' : 'f') : '');
 }
 function violation(title, id, p, doText) {
@@ -476,6 +445,25 @@ $('#addStop').onclick = () => { violation('Проезд на запрещающ�
 $('#retry').onclick = () => { pts = 0; renderPts(); $('#stop').classList.remove('on'); $('#violStack').innerHTML = ''; };
 $('#blink').onclick = () => { const r = $('#ttR'); r.classList.toggle('on-g'); r.classList.toggle('blink'); };
 $('#belt').onclick = () => { const b = $('#ttBelt'); b.classList.toggle('on-r'); b.classList.toggle('blink'); };
+
+// ---------- схема КПП: раскладка из данных автомобиля (здесь 5 ступеней, R справа внизу) ----------
+const GATE = {x:[25,75,125], top:16, bot:96, mid:56};
+const SLOTS = {1:[0,'top'],2:[0,'bot'],3:[1,'top'],4:[1,'bot'],5:[2,'top'],'-1':[2,'bot']};
+let gear = 3;
+function drawGear() {
+  const {x, top, bot, mid} = GATE;
+  let g = `<g stroke="rgba(255,255,255,.22)" stroke-width="4" stroke-linecap="round" fill="none"><path d="M${x[0]} ${mid}H${x[2]}"/>${x.map(v => `<path d="M${v} ${top}V${bot}"/>`).join('')}</g>`;
+  for (const [k, [c, r]] of Object.entries(SLOTS)) {
+    const cx = x[c], cy = r === 'top' ? top : bot, on = +k === gear, label = k === '-1' ? 'R' : k;
+    g += on ? `<circle cx="${cx}" cy="${cy}" r="15" fill="var(--accent)"/>` : `<circle cx="${cx}" cy="${cy}" r="14" fill="#1E2021" stroke="rgba(255,255,255,.18)" stroke-width="2"/>`;
+    g += `<text x="${cx}" y="${cy + 6}" text-anchor="middle" font-family="Roboto Mono,monospace" font-weight="700" font-size="17" fill="${on ? 'var(--on-accent)' : (k === '-1' ? '#E5484D' : '#B3B5B6')}">${label}</text>`;
+  }
+  if (gear === 0) g += `<circle cx="${x[1]}" cy="${mid}" r="12" fill="var(--accent)"/><text x="${x[1]}" y="${mid + 5}" text-anchor="middle" font-family="Roboto Mono,monospace" font-weight="700" font-size="14" fill="var(--on-accent)">N</text>`;
+  $('#hgear').innerHTML = g;
+}
+const GEAR_SEQ = [0, 1, 2, 3, 4, 5, -1];
+$('#gearBtn').onclick = () => { gear = GEAR_SEQ[(GEAR_SEQ.indexOf(gear) + 1) % GEAR_SEQ.length]; drawGear(); };
+$('#overBtn').onclick = () => { const sp = $('#speed'), over = !sp.classList.contains('over'); sp.classList.toggle('over', over); $('#spd').textContent = over ? 67 : 38; };
 
 // ---------- мини-карта и большая карта (схема района) ----------
 function grid(w, h, step, off) {
@@ -544,7 +532,7 @@ document.addEventListener('keydown', e => {
   else if (screen === 'map' && (e.key === 'Escape' || e.key === 'm' || e.key === 'ь')) go('city');
 });
 
-renderPts(); showHint(0); setHud('full'); renderTimeline(4); renderDots();
+renderPts(); drawGear(); showHint(0); setHud('full'); renderTimeline(4); renderDots();
 go(new URLSearchParams(location.search).get('screen') || 'city');
 </script>
 </body>

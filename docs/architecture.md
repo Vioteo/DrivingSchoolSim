@@ -35,7 +35,7 @@ Unity X вправо, Y вверх, Z вперёд, SI. Канонические
 
 ## Ввод, FFB, VR и UI
 
-Keyboard и wheel adapter выдают один DriverCommand. Raw G27 bindings не предполагать по имени устройства: калибровка показывает live axes, инверсию, min/centre/max, dead zones, clutch semantics и H pattern. Combined pedals не считать тремя независимыми осями. Backend FFB для Windows — отдельная dependency за интерфейсом, с обоснованием лицензии и доставки DLL; наличие InputSystem не означает поддержку FFB.
+Keyboard и wheel adapter выдают один DriverCommand. Raw G29 bindings не предполагать по имени устройства: калибровка показывает live axes, инверсию, min/centre/max, dead zones, clutch semantics и H pattern. Combined pedals не считать тремя независимыми осями. Backend FFB для Windows — отдельная dependency за интерфейсом, с обоснованием лицензии и доставки DLL; наличие InputSystem не означает поддержку FFB.
 
 Существующий IMGUI — технический стенд. Девять экранов HTML-прототипа служат визуальной спецификацией; перенос выполняется отдельно в uGUI/TMP с InputSystemUIInputModule, focus/navigation, Russian font fallback и сохранением настроек. Отключённые будущие функции помечаются явно; кнопка не изображает рабочую поездку без solver.
 

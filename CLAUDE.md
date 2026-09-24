@@ -6,7 +6,7 @@
 ## Стек и окружение
 - Unity **6000.3.10f1**, URP 17.3, Input System 1.18 (activeInputHandler = Both), uGUI/TMP, OpenXR. Windows x64.
 - Unity.exe: `E:\unityroot\6000.3.10f1\Editor\Unity.exe`.
-- Целевое железо: Ryzen 2700X / RTX 2080 / 32 GB, 1920×1080 @ 60 fps. Руль Logitech G27 (900°, 3 педали, H-шифтер 6+R).
+- Целевое железо: Ryzen 2700X / RTX 2080 / 32 GB, 1920×1080 @ 60 fps. Руль Logitech G29 + Driving Force Shifter (900°, 3 педали, H-шифтер 6+R). Код и часть документов ещё называют его G27 — переход в `docs/tasks/T28.md`.
 
 ## Где что лежит
 - `Assets/DrivingSchool/Code/<Module>/` — код, модуль = asmdef:

@@ -93,7 +93,7 @@ const PAIRS = [
 ];
 document.getElementById('grid').innerHTML = PAIRS.map(p => `
  <section class="card ${p.rec ? 'rec' : ''}">
-  <div class="meta"><b>${p.name}${p.rec ? '<span class="tag">РЕКОМЕНДУЮ</span>' : ''}</b>
+  <div class="meta"><b>${p.name}${p.rec ? '<span class="tag">ВЫБРАН 24.09</span>' : ''}</b>
    <dl><dt>Лицензия</dt><dd>${p.lic}</dd><dt>Авторы</dt><dd>${p.who}</dd><dt>Источник</dt><dd>${p.src}</dd><dt>Почему</dt><dd>${p.why}</dd></dl></div>
   <div class="demo" style="font-family:${p.body}">
    <div class="h" style="font-family:${p.head}">Настройки</div>
