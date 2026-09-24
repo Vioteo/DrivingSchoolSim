@@ -8,9 +8,20 @@ namespace DrivingSchool.Contracts
         public float steering, throttle, brake, clutch;
         public bool handbrake, ignition, starter;
         public int requestedGear; // -1 R, 0 N, 1..6; explicit selection, not increment.
+        // Automatic transmission selector; ignored by a manual gearbox. default = P.
+        public AutomaticSelector selector;
+        // Body controls are explicit driver actions, never derived from steering angle.
+        public TurnSignal turnSignal;
+        public bool hazard;
+        public HeadlightMode headlights;
+        public bool highBeam, flashHighBeam, horn, seatbelt, washer;
+        public WiperMode wipers;
         public void Validate()
         {
             if (!Finite(steering)||!Unit(throttle)||!Unit(brake)||!Unit(clutch)||steering < -1 || steering > 1 || requestedGear < -1 || requestedGear > 6)
+                throw new ArgumentOutOfRangeException("DriverCommand");
+            if (!Enum.IsDefined(typeof(AutomaticSelector), selector) || !Enum.IsDefined(typeof(TurnSignal), turnSignal) ||
+                !Enum.IsDefined(typeof(HeadlightMode), headlights) || !Enum.IsDefined(typeof(WiperMode), wipers))
                 throw new ArgumentOutOfRangeException("DriverCommand");
         }
         static bool Finite(float v) { return !float.IsNaN(v)&&!float.IsInfinity(v); }
@@ -23,6 +34,11 @@ namespace DrivingSchool.Contracts
         public float signedSpeedMps, engineRpm, steeringRadians, clutchTorqueNm;
         public int gear; public EnginePhase engine;
         public bool leftIndicator, rightIndicator, lowBeam, highBeam, brakeLight;
+        // leftIndicator/rightIndicator = signal switched on (incl. hazard); indicatorLampOn = flasher phase.
+        public bool indicatorLampOn, hazard, parkingLights, reverseLight, horn, seatbelt, handbrake;
+        public TransmissionType transmission; public AutomaticSelector selector;
+        public WiperMode wipers; public float wiperAngle01; // 0 = parked, 1 = full sweep
+        public float engineTorqueNm, wheelSpeedFrontRadS, wheelSpeedRearRadS;
     }
     public interface IInputSource { DriverCommand Read(long tick); bool IsConnected { get; } }
     public interface IForceFeedbackOutput : IDisposable
