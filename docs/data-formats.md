@@ -35,6 +35,19 @@
 - `SidewalkPath`: `id,widthM`, `points`, `linkedIds` (тротуары и переходы). `Zone`: `id,laneId`, `kind` (Parking/NoStopping/NoParking/KeepJunctionClear), `fromS..toS`. `SpawnPoint`: `id,pathId`, `role` (Vehicle → полоса/связь, Pedestrian → тротуар), `edge`, `s`.
 - Миграция v1 → v2: узлы степени ≥ 3 становятся перекрёстками, полосы у них обрезаются на половину ширины самой широкой дороги, successors v1 через узел превращаются в кубические `LaneConnection`. Геометрия перекрёстка схематическая, топология точная. Разметка, знаки и приоритет в v1 отсутствуют и после миграции пусты.
 
+## Раскладка района (T29)
+
+Источник истины: `Assets/DrivingSchool/Code/Contracts/DistrictLayout.cs`; компилятор — `Simulation/RoadGraph/DistrictCompiler.cs`, шаблоны модулей — `Simulation/RoadGraph/RoadKitTemplates.cs`, справочник знаков — `SignCatalog.cs`.
+
+- `DistrictLayout`: `schemaVersion=1`, `id,name,revision`, `instances`, `joins`, `openSockets`, `signs`, `approaches`, `signalPlans`.
+- `ModuleInstance`: `id` (без `/`), `catalogId` (модуль Road Kit), поза корня префаба `x,y,z`, `yawDeg` (0 = +Z, 90 = +X), `speedLimitKph` (0 = по шаблону, 60).
+- `SocketJoin`: `instanceA,socketA,instanceB,socketB` — сокеты должны совпасть с точностью 1 см и смотреть навстречу (0,1°), профили (число полос в каждую сторону и ширина) равны. Модули не сдвигаются: несовпадение — ошибка с величиной зазора.
+- `SocketRef` в `openSockets`: край района; для въезжающих полос создаются точки появления машин. Сокет, не соединённый и не отмеченный открытым, — ошибка «Dangling socket».
+- `LayoutSign`: `id,code,value,instanceId,laneId` (локальный id полосы в шаблоне), `plaques` (id префабов табличек), `atS`, `untilNextJunction`. Ставится на 3,4 м правее центра полосы (центр тротуара Road Kit v1), лицом к потоку; зона «до перекрёстка» кончается на стоп-линии.
+- `LayoutApproach`: `instanceId,socket,priority,signIds` для въезда перекрёстка; без записи въезд равнозначный.
+- `LayoutSignalPlan`: `instanceId,offsetSeconds`, `stages` (`LayoutSignalStage`: `greenSockets` — въезды с зелёным, `walkSockets` — переходы через рукава с зелёным для пешеходов, длительности как в `SignalStage`). Группы: `<inst>/sg.<socket>` (все связи въезда), `<inst>/pg.<socket>` (переход); головы светофоров ставятся компилятором. План обязан давать зелёный каждому въезду.
+- Итоговые id графа: `<instanceId>/<localId>`; отпечаток графа — `GraphFingerprint.Compute` (SHA256 канонического дампа, не зависит от форматирования JSON).
+
 ## Файлы примеров
 
 `world.json` v1: training-district, 5 nodes, 4 segments, 16 lanes, spawn-car и demo district500m. Successors не моделируют точную геометрию манёвров, приоритет или конфликтные зоны. `lesson.json`: start-stop-demo, 120s, target20m, stop≤0.14m/s в течение2s. `theory.json`: одна авторская демонстрация; `isOfficial=false`.

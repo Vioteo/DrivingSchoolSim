@@ -95,6 +95,18 @@ namespace DrivingSchool.Simulation.RoadGraph
                 Require(InRange(z.fromSA, z.toSA, paths[z.connectionA].Length) && InRange(z.fromSB, z.toSB, paths[z.connectionB].Length), "Conflict zone range outside connection: " + z.id);
             }
 
+            // Connections of one junction whose centerlines cross must share a conflict zone (except same origin lane).
+            var zonePairs = new HashSet<string>();
+            foreach (var z in w.conflictZones) { zonePairs.Add(z.connectionA + "|" + z.connectionB); zonePairs.Add(z.connectionB + "|" + z.connectionA); }
+            foreach (var j in w.junctions)
+                for (int x = 0; x < j.connectionIds.Length; x++)
+                for (int y = x + 1; y < j.connectionIds.Length; y++)
+                {
+                    var ca = connections[j.connectionIds[x]]; var cb = connections[j.connectionIds[y]];
+                    if (ca.fromLaneId == cb.fromLaneId || zonePairs.Contains(ca.id + "|" + cb.id)) continue;
+                    Require(!PathsCross(paths[ca.id], paths[cb.id]), "Connections cross without conflict zone: " + ca.id + " / " + cb.id);
+                }
+
             var stopLines = new HashSet<string>();
             foreach (var s in w.stopLines)
             {
@@ -227,6 +239,15 @@ namespace DrivingSchool.Simulation.RoadGraph
             var pts = line.Points;
             for (int i = 0; i < pts.Count - 1; i++)
                 if (SegmentsIntersect(a, b, pts[i], pts[i + 1])) return true;
+            return false;
+        }
+
+        static bool PathsCross(Polyline a, Polyline b)
+        {
+            var pa = a.Points; var pb = b.Points;
+            for (int i = 0; i < pa.Count - 1; i++)
+                for (int k = 0; k < pb.Count - 1; k++)
+                    if (SegmentsIntersect(pa[i], pa[i + 1], pb[k], pb[k + 1])) return true;
             return false;
         }
 
