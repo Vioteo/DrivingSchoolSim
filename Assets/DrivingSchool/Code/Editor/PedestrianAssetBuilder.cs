@@ -17,6 +17,16 @@ namespace DrivingSchool.Editor
         const string Root = "Assets/DrivingSchool";
         const string Output = Root + "/Prefabs/Pedestrians";
         const string Materials = Root + "/Materials/Pedestrians";
+        const string Art = Root + "/Art/Pedestrians";
+
+        [Serializable] sealed class MaterialRecord
+        {
+            public string name, diffuse, normal;
+            public float[] color;
+            public float smoothness = -1;
+            public bool alphaClip, doubleSided;
+        }
+        [Serializable] sealed class MaterialFile { public MaterialRecord[] materials; }
 
         sealed class Spec
         {
@@ -62,7 +72,7 @@ namespace DrivingSchool.Editor
         static GameObject BuildOne(Spec spec, System.Text.StringBuilder report)
         {
             string name = spec.Name;
-            string path = Root + "/Art/Pedestrians/" + name + ".fbx";
+            string path = Art + "/" + name + ".fbx";
             var importer = AssetImporter.GetAtPath(path) as ModelImporter;
             if (importer == null) throw new FileNotFoundException(path);
             importer.globalScale = 1;
@@ -91,20 +101,19 @@ namespace DrivingSchool.Editor
             if (!names.SequenceEqual(spec.Clips.OrderBy(n => n)))
                 throw new InvalidOperationException(name + ": clips " + string.Join(",", names) + ", expected " + string.Join(",", spec.Clips));
             importer.clipAnimations = clips;
+            // Material set written by tools/build_pedestrians.py next to the FBX.
+            var records = JsonUtility.FromJson<MaterialFile>(
+                File.ReadAllText(Art + "/" + name + ".materials.json")).materials.ToDictionary(r => r.name);
             foreach (var source in AssetDatabase.LoadAllAssetsAtPath(path).OfType<Material>())
             {
+                if (!records.TryGetValue(source.name, out var rec))
+                    throw new InvalidOperationException(name + ": no material record for " + source.name);
                 string materialPath = Materials + "/" + name + "_" + source.name + ".mat";
-                var material = AssetDatabase.LoadAssetAtPath<Material>(materialPath);
-                if (material == null)
-                {
-                    material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-                    AssetDatabase.CreateAsset(material, materialPath);
-                }
-                material.SetColor("_BaseColor", source.HasProperty("_Color") ? source.color : Color.gray);
-                // Reflective vest bands and the cap badge read as satin, the rest as cloth and skin.
-                material.SetFloat("_Smoothness", source.name.Contains("Reflect") || source.name.Contains("Badge") ? .55f : .22f);
+                AssetDatabase.DeleteAsset(materialPath);          // no stale keywords from earlier builds
+                var material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+                ConfigureMaterial(material, rec);
+                AssetDatabase.CreateAsset(material, materialPath);
                 importer.AddRemap(new AssetImporter.SourceAssetIdentifier(source), material);
-                EditorUtility.SetDirty(material);
             }
             importer.SaveAndReimport();
             var animations = AssetDatabase.LoadAllAssetsAtPath(path).OfType<AnimationClip>()
@@ -156,6 +165,43 @@ namespace DrivingSchool.Editor
                 return PrefabUtility.SaveAsPrefabAsset(instance, Output + "/" + name + ".prefab");
             }
             finally { UnityEngine.Object.DestroyImmediate(instance); }
+        }
+
+        static void ConfigureMaterial(Material material, MaterialRecord rec)
+        {
+            // Generator colours are linear; Unity expects sRGB values here.
+            var color = rec.color != null && rec.color.Length >= 3 ? new Color(rec.color[0], rec.color[1], rec.color[2]).gamma : Color.white;
+            material.SetColor("_BaseColor", color);
+            material.SetFloat("_Smoothness", rec.smoothness >= 0 ? rec.smoothness : .2f);
+            if (!string.IsNullOrEmpty(rec.diffuse))
+                material.SetTexture("_BaseMap", Texture(rec.diffuse, false));
+            if (!string.IsNullOrEmpty(rec.normal))
+            {
+                material.SetTexture("_BumpMap", Texture(rec.normal, true));
+                material.EnableKeyword("_NORMALMAP");
+            }
+            if (rec.alphaClip)
+            {
+                // Hair, eyebrows and eyelashes are alpha-tested cards.
+                material.SetFloat("_AlphaClip", 1); material.SetFloat("_Cutoff", .5f);
+                material.EnableKeyword("_ALPHATEST_ON");
+                material.renderQueue = (int)RenderQueue.AlphaTest;
+            }
+            if (rec.doubleSided) material.SetFloat("_Cull", (float)CullMode.Off);
+        }
+
+        static Texture2D Texture(string file, bool normal)
+        {
+            string path = Art + "/Textures/" + file;
+            var ti = AssetImporter.GetAtPath(path) as TextureImporter;
+            if (ti == null) throw new FileNotFoundException(path);
+            ti.textureType = normal ? TextureImporterType.NormalMap : TextureImporterType.Default;
+            ti.sRGBTexture = !normal;
+            ti.alphaIsTransparency = !normal && path.EndsWith(".png");
+            ti.maxTextureSize = 1024;
+            ti.mipmapEnabled = true;
+            ti.SaveAndReimport();
+            return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
         }
 
         static AnimatorController BuildController(string name, Spec spec, Dictionary<string, AnimationClip> clips,

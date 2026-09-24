@@ -1,0 +1,69 @@
+{
+  "materials": [
+    {
+      "name": "Ped_Skin",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_young_darkskinned_male_diffuse_d.jpg"
+    },
+    {
+      "name": "Ped_Suit",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_male_worksuit01_diffuse_d.jpg",
+      "normal": "MH_male_worksuit01_normal_n.png"
+    },
+    {
+      "name": "Ped_Shoes",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_shoes02_diffuse_d.jpg"
+    },
+    {
+      "name": "Ped_Hair",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_afro_diffuse_d.png"
+    },
+    {
+      "name": "Ped_Eyebrows",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_eyebrow002_d.png"
+    },
+    {
+      "name": "Ped_Eyes",
+      "alphaClip": true,
+      "doubleSided": false,
+      "diffuse": "MH_brown_eye_d.png"
+    },
+    {
+      "name": "Ped_Eyelashes",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_eyelashes01_d.png"
+    },
+    {
+      "name": "Ped_Pack",
+      "color": [
+        0.04,
+        0.045,
+        0.05
+      ],
+      "alphaClip": false,
+      "doubleSided": false,
+      "smoothness": 0.4
+    },
+    {
+      "name": "Ped_PackTrim",
+      "color": [
+        0.02,
+        0.02,
+        0.025
+      ],
+      "alphaClip": false,
+      "doubleSided": false,
+      "smoothness": 0.30000000000000004
+    }
+  ]
+}

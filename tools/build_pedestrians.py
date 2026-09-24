@@ -11,14 +11,16 @@ from pathlib import Path
 from mathutils import Vector, Quaternion
 from datetime import datetime, timezone
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import pedestrian_body as pb_body
-from pedestrian_body import ARM_OUT
+import pedestrian_mh as mh
+import fetch_makehuman as fetch
+from pedestrian_mh import ARM_OUT
 
 ROOT = Path(__file__).resolve().parents[1]
 ART = ROOT / 'ArtSource/Pedestrians'
 OUT = ROOT / 'Assets/DrivingSchool/Art/Pedestrians'
+TEXTURES = OUT / 'Textures'
 WEB = ROOT / 'artifacts/visual-review/pedestrians'
-for p in (ART, OUT, WEB, WEB/'models', ROOT/'artifacts/reports'):
+for p in (ART, OUT, TEXTURES, WEB, WEB/'models', ROOT/'artifacts/reports'):
     p.mkdir(parents=True, exist_ok=True)
 FPS = 30
 TAU = math.tau
@@ -31,28 +33,38 @@ FRAMES = {'adult': {'Idle': 61, 'Walk': 31, 'Run': 23, 'LookAround': 91},
           'child': {'Idle': 61, 'Walk': 25, 'Run': 19, 'LookAround': 91}}
 SIGNAL_FRAMES = 61
 RUN_FLIGHT = .045   # m, body rise while both feet are off the ground
-# Colours are linear RGB. build: male / female / child proportions (tools/pedestrian_body.py).
+# MakeHuman (CC0) characters: macro morph values, skin and fitted proxies from the system asset pack.
+# build: 'child' selects the child clip timing. Age in years.
+EYES = [('eyes', 'eyes/low-poly/low-poly.mhclo'), ('eyelashes', 'eyelashes/eyelashes01/eyelashes01.mhclo')]
 CHARACTERS = [
-    dict(name='DS_Pedestrian_A', build='male', height=1.78, hair='short', skin=(.58,.36,.25),
-         hair_color=(.045,.027,.019), outer=(.045,.16,.19), trouser=(.05,.07,.11), accent=(.03,.05,.06),
-         shoe=(.03,.03,.035), sole=(.6,.6,.58), iris=(.08,.05,.03)),
-    dict(name='DS_Pedestrian_B', build='female', height=1.66, hair='long', skin=(.72,.48,.36),
-         hair_color=(.12,.05,.022), outer=(.42,.13,.06), trouser=(.06,.05,.06), accent=(.25,.08,.04),
-         shoe=(.04,.025,.02), sole=(.05,.04,.035), iris=(.10,.12,.10)),
-    dict(name='DS_Pedestrian_C', build='male', height=1.82, hair='cropped', girth=1.06, backpack=True,
-         skin=(.20,.10,.055), hair_color=(.015,.013,.012), outer=(.30,.32,.20), trouser=(.10,.10,.11),
-         accent=(.12,.14,.16), pack=(.05,.06,.07), shoe=(.5,.5,.48), sole=(.7,.7,.68), iris=(.03,.02,.015)),
-    # Schoolboy with a satchel and schoolgirl with pigtails, about 8 years old.
-    dict(name='DS_Pedestrian_Child_A', build='child', height=1.28, hair='fringe', backpack=True,
-         skin=(.70,.46,.33), hair_color=(.16,.09,.04), outer=(.62,.22,.03), trouser=(.06,.10,.20),
-         accent=(.05,.20,.50), pack=(.60,.60,.58), shoe=(.05,.06,.08), sole=(.7,.7,.68), iris=(.12,.14,.18)),
-    dict(name='DS_Pedestrian_Child_B', build='child', height=1.26, hair='pigtails', skin=(.76,.52,.39),
-         hair_color=(.30,.15,.06), outer=(.55,.14,.30), trouser=(.10,.09,.14), accent=(.80,.62,.08),
-         shoe=(.35,.08,.15), sole=(.7,.7,.68), iris=(.10,.12,.10)),
-    # Traffic police officer: dark-blue uniform, lime vest with reflective bands, peaked cap, striped baton.
-    dict(name='DS_Pedestrian_Police', build='male', height=1.80, hair='cropped', police=True, skin=(.62,.40,.28),
-         hair_color=(.06,.04,.03), outer=(.03,.045,.08), trouser=(.03,.04,.07), accent=(.025,.035,.06),
-         shoe=(.012,.012,.014), sole=(.012,.012,.014), iris=(.08,.06,.04)),
+    dict(name='DS_Pedestrian_A', build='male', skin='skins/young_caucasian_male/young_caucasian_male.mhmat',
+         macro=dict(gender=1, age=27, muscle=.55, weight=.5, height=.55),
+         proxies=[('suit', 'clothes/male_casualsuit05/male_casualsuit05.mhclo'), ('shoes', 'clothes/shoes01/shoes01.mhclo'),
+                  ('hair', 'hair/short02/short02.mhclo'), ('eyebrows', 'eyebrows/eyebrow001/eyebrow001.mhclo')] + EYES),
+    dict(name='DS_Pedestrian_B', build='female', skin='skins/young_caucasian_female/young_caucasian_female.mhmat',
+         macro=dict(gender=0, age=32, muscle=.45, weight=.48, height=.5),
+         proxies=[('suit', 'clothes/female_elegantsuit01/female_elegantsuit01.mhclo'), ('shoes', 'clothes/shoes03/shoes03.mhclo'),
+                  ('hair', 'hair/ponytail01/ponytail01.mhclo'), ('eyebrows', 'eyebrows/eyebrow010/eyebrow010.mhclo')] + EYES),
+    dict(name='DS_Pedestrian_C', build='male', backpack=True, skin='skins/young_african_male/young_african_male.mhmat',
+         macro=dict(gender=1, age=35, muscle=.6, weight=.6, height=.4, race={'african': 1.}),
+         proxies=[('suit', 'clothes/male_worksuit01/male_worksuit01.mhclo'), ('shoes', 'clothes/shoes02/shoes02.mhclo'),
+                  ('hair', 'hair/afro01/afro01.mhclo'), ('eyebrows', 'eyebrows/eyebrow002/eyebrow002.mhclo')] + EYES),
+    # Schoolboy with a satchel and schoolgirl with a braid, about 8 years old.
+    dict(name='DS_Pedestrian_Child_A', build='child', backpack=True,
+         skin='skins/young_caucasian_male/young_caucasian_male.mhmat', macro=dict(gender=1, age=8, weight=.5, height=.66),
+         proxies=[('suit', 'clothes/male_casualsuit06/male_casualsuit06.mhclo'), ('shoes', 'clothes/shoes06/shoes06.mhclo'),
+                  ('hair', 'hair/short03/short03.mhclo'), ('eyebrows', 'eyebrows/eyebrow001/eyebrow001.mhclo')] + EYES),
+    dict(name='DS_Pedestrian_Child_B', build='child',
+         skin='skins/young_caucasian_female/young_caucasian_female.mhmat', macro=dict(gender=0, age=8, weight=.5, height=.74),
+         proxies=[('suit', 'clothes/female_casualsuit01/female_casualsuit01.mhclo'), ('shoes', 'clothes/shoes05/shoes05.mhclo'),
+                  ('hair', 'hair/braid01/braid01.mhclo'), ('eyebrows', 'eyebrows/eyebrow010/eyebrow010.mhclo')] + EYES),
+    # Traffic police officer: suit retinted to uniform navy, then vest, peaked cap and baton (tools/pedestrian_mh.py).
+    dict(name='DS_Pedestrian_Police', build='male', police=True,
+         skin='skins/middleage_caucasian_male/middleage_caucasian_male.mhmat',
+         macro=dict(gender=1, age=38, muscle=.6, weight=.55, height=.45),
+         proxies=[('suit', 'clothes/male_elegantsuit01/male_elegantsuit01.mhclo'), ('shoes', 'clothes/shoes03/shoes03.mhclo'),
+                  ('hair', 'hair/short01/short01.mhclo'), ('eyebrows', 'eyebrows/eyebrow002/eyebrow002.mhclo')] + EYES,
+         materials={'suit': {'tint': (.16, .22, .42), 'tris': 9000}}),
 ]
 
 # ---------------------------------------------------------------- animation
@@ -233,31 +245,21 @@ def animate(rig, spec):
 # ---------------------------------------------------------------- geometry
 def create_character(spec):
     global parts
-    kit = pb_body.Kit()
-    lips = tuple(c*f for c, f in zip(spec['skin'], (.95, .62, .6)))
-    for name, color, rough in [('Skin', spec['skin'], .6), ('Lips', lips, .5), ('Hair', spec['hair_color'], .7),
-            ('Outer', spec['outer'], .8), ('Trouser', spec['trouser'], .85), ('Accent', spec['accent'], .8),
-            ('Shoe', spec['shoe'], .5), ('Sole', spec['sole'], .8), ('Cream', (.62,.61,.56), .6),
-            ('EyeWhite', (.72,.70,.66), .3), ('Iris', spec['iris'], .25), ('Pack', spec.get('pack', spec['accent']), .7)]:
-        kit.material(name, color, rough)
-    if spec.get('police'):
-        kit.material('Vest', (.50,.75,.03), .6); kit.material('Reflect', (.68,.70,.70), .35)
-        kit.material('CapBand', (.50,.02,.02), .7); kit.material('Badge', (.80,.58,.12), .35)
-    J = pb_body.skeleton(spec)
-    rig = pb_body.rig_create(J, spec['name'])
-    pb_body.build_body(spec, J, kit)
-    pb_body.activate(kit.parts[0])
+    kit = mh.Kit(TEXTURES)
+    J, roles, W, co = mh.build(spec, kit, fetch.assets())
+    rig = mh.rig_create(J, spec['name'])
+    mh.relax_arms(rig, kit.parts)
+    mh.extras(spec, kit, rig, roles)
+    mh.activate(kit.parts[0])
     for o in kit.parts: o.select_set(True)
     bpy.ops.object.join()
     body = bpy.context.object; body.name = spec['name'] + '_Body'
-    # Drop material slots that no face uses.
-    used = {p.material_index for p in body.data.polygons}
-    for i in reversed(range(len(body.data.materials))):
-        if i not in used:
-            body.active_material_index = i; bpy.ops.object.material_slot_remove()
     parts = [body]
     body.parent = rig
     mod = body.modifiers.new('Pedestrian skin', 'ARMATURE'); mod.object = rig
+    used = {m.name for m in body.data.materials}
+    (OUT/(spec['name']+'.materials.json')).write_text(json.dumps(
+        {'materials': [r for r in kit.unity.values() if r['name'] in used]}, indent=2), encoding='utf-8')
     clips = animate(rig, spec)
     return rig, body, clips
 
@@ -277,8 +279,9 @@ def stage():
     scene.render.resolution_x=960; scene.render.resolution_y=720; scene.render.resolution_percentage=100
     if scene.world is None: scene.world=bpy.data.worlds.new('Review')
     scene.world.color=(.25,.25,.25)
-    kit=pb_body.Kit(); kit.material('Stage',(.12,.155,.17))
-    pb_body.box(kit,'Review floor',(0,0,-.052),(200,200,.1),'Stage',None,0)
+    bpy.ops.mesh.primitive_plane_add(size=200, location=(0,0,0)); floor=bpy.context.object; floor.name='Review floor'
+    m=bpy.data.materials.new('Stage'); m.use_nodes=True
+    m.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(.12,.155,.17,1); floor.data.materials.append(m)
     for name,loc,power,size in [('Key',(-3,-4,6),700,5),('Fill',(4,-1,4),450,4),('Rim',(0,3,5),900,3)]:
         d=bpy.data.lights.new(name,'AREA'); d.energy=power; d.shape='DISK'; d.size=size
         o=bpy.data.objects.new(name,d); bpy.context.collection.objects.link(o); o.location=loc
