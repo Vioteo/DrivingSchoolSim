@@ -14,7 +14,7 @@ write('Packages/manifest.json',{'dependencies':{
  'com.unity.modules.vehicles':'1.0.0','com.unity.modules.jsonserialize':'1.0.0',
  'com.unity.modules.imgui':'1.0.0','com.unity.modules.ui':'1.0.0','com.unity.modules.audio':'1.0.0',
  'com.unity.modules.animation':'1.0.0','com.unity.modules.imageconversion':'1.0.0'}})
-write('.gitignore','Library/\nTemp/\nObj/\nLogs/\nUserSettings/\nBuilds/\n*.csproj\n*.sln\n*.blend1\n*.log\nartifacts/test-userdata/\n')
+# .gitignore is maintained in git (Unity template); do not overwrite it here.
 modules={'Contracts':[], 'Simulation':['Contracts'], 'World':['Contracts'], 'Input':['Contracts'],
  'Rules':['Contracts'], 'Learning':['Contracts'], 'Presentation':['Contracts','Simulation','World','Input','Rules','Learning'],
  'Editor':['Contracts','Simulation','World','Learning','Presentation']}
