@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Compiles the Unity-free modules exactly as Unity would see them: netstandard2.1, C# 9, no UnityEngine. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <AssemblyName>DS.PureModules</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../Assets/DrivingSchool/Code/Contracts/**/*.cs" />
+    <Compile Include="../../../Assets/DrivingSchool/Code/Simulation/**/*.cs" />
+    <Compile Include="../../../Assets/DrivingSchool/Code/Rules/**/*.cs" />
+    <Compile Include="../../../Assets/DrivingSchool/Code/Learning/**/*.cs" />
+  </ItemGroup>
+</Project>
