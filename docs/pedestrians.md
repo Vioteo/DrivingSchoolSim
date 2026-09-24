@@ -10,7 +10,7 @@
 |---|---|---|---|
 | `DS_Pedestrian_A` | мужчина ~27 лет | куртка и джинсы `male_casualsuit05`, `shoes01`, `short02` | Idle, Walk, Run, LookAround |
 | `DS_Pedestrian_B` | женщина ~32 лет | блузка и юбка `female_elegantsuit01`, сапоги `shoes03`, `ponytail01` | Idle, Walk, Run, LookAround |
-| `DS_Pedestrian_C` | мужчина ~35 лет с рюкзаком | комбинезон `male_worksuit01`, `shoes02`, `afro01` | Idle, Walk, Run, LookAround |
+| `DS_Pedestrian_C` | мужчина ~35 лет с рюкзаком | комбинезон `male_worksuit01`, `shoes02`, `short01` | Idle, Walk, Run, LookAround |
 | `DS_Pedestrian_Child_A` | школьник ~8 лет с ранцем | футболка и джинсы `male_casualsuit06`, кеды `shoes06`, `short03` | Idle, Walk, Run, LookAround |
 | `DS_Pedestrian_Child_B` | школьница ~8 лет | `female_casualsuit01`, `shoes05`, коса `braid01` | Idle, Walk, Run, LookAround |
 | `DS_Pedestrian_Police` | инспектор ДПС | костюм `male_elegantsuit01`, перекрашенный в тёмно-синий, `shoes03`, `short01`; жилет, фуражка и жезл строятся скриптом | Idle, Walk, LookAround, Signal_ArmsSide, Signal_RightArmForward, Signal_ArmUp |

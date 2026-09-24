@@ -1,6 +1,6 @@
 {
   "revision": 2,
-  "utc": "2026-09-24T15:12:10.993986+00:00",
+  "utc": "2026-09-24T15:35:27.158757+00:00",
   "blender": "5.0.0",
   "units": "metres",
   "sourceAxes": "Z up, -Y forward",
@@ -33,8 +33,8 @@
       },
       "heightM": 1.8459782600402832,
       "files": {
-        "ArtSource/Pedestrians/DS_Pedestrian_A.blend": "06b02063f549ea5877e0854a8d45c38b2c719fe8a42ab265d70a5863887dbe08",
-        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_A.fbx": "9c3a456262025d5f672a84074cb5f8a102e0940bf506c55f6846282e2c156861",
+        "ArtSource/Pedestrians/DS_Pedestrian_A.blend": "0e51f5ec70a326c37882cd4cfdb09c0596b442f95130ec5604ef94fa9f5691a5",
+        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_A.fbx": "50603d05c6193cd55605d94f231b0475109ae35ca7e3b60a32fbcb088925e1d8",
         "artifacts/visual-review/pedestrians/models/DS_Pedestrian_A.glb": "2674f3bb6b6e20652e0ae000236be54230dd4f8c91c550321630ea688134d497"
       }
     },
@@ -65,14 +65,14 @@
       },
       "heightM": 1.6328563690185547,
       "files": {
-        "ArtSource/Pedestrians/DS_Pedestrian_B.blend": "d409b55ef12fceafa20002fd72a775ffec88150dd86b58ee39a586b31e8d0775",
-        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_B.fbx": "019323ea9625aea6765d77df2dc1d3c2889fbf5129722262c5fcf3430bd7acd7",
+        "ArtSource/Pedestrians/DS_Pedestrian_B.blend": "8f1544ccb5155cc8aefa84fad2d7633d7b538874e9fc89b60edab98f98c8654c",
+        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_B.fbx": "6100851075dd6279a605c2e055c6407dab5ea555c72cb6fc0844fa3e274e4e17",
         "artifacts/visual-review/pedestrians/models/DS_Pedestrian_B.glb": "c68524f0b57ae958adf4fb867893248b9439e6e1c98257243a32550a450777b6"
       }
     },
     {
       "name": "DS_Pedestrian_C",
-      "triangles": 30346,
+      "triangles": 31832,
       "bones": 20,
       "materials": 9,
       "clips": {
@@ -83,23 +83,23 @@
         "Walk": {
           "frames": 31,
           "lengthS": 1.0,
-          "naturalSpeedMps": 1.329
+          "naturalSpeedMps": 1.293
         },
         "Run": {
           "frames": 23,
           "lengthS": 0.7333,
-          "naturalSpeedMps": 3.856
+          "naturalSpeedMps": 3.705
         },
         "LookAround": {
           "frames": 91,
           "lengthS": 3.0
         }
       },
-      "heightM": 1.787654161453247,
+      "heightM": 1.7065749168395996,
       "files": {
-        "ArtSource/Pedestrians/DS_Pedestrian_C.blend": "de2c4f9de472fb33b350ff5d2a34492e2eafad4ac2e81b0f3090050623b4844b",
-        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_C.fbx": "86c5638f4e5134c6de5529dbc468d1d83573ef92f8181987c917f52c4781534c",
-        "artifacts/visual-review/pedestrians/models/DS_Pedestrian_C.glb": "6cdbd592720509fc7002e0d3392b37703cd19873aa9aa11b82166138a6a94ead"
+        "ArtSource/Pedestrians/DS_Pedestrian_C.blend": "43933fdf214cc8e7ea8490199978aed88d80314e19285f57c4e333e1059d80a2",
+        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_C.fbx": "049e9080af0423e288401394ebbd7caf9168be9394daf44d87a95eb23ca3cb3d",
+        "artifacts/visual-review/pedestrians/models/DS_Pedestrian_C.glb": "9b271999dca6c0e6bd2b9e7be3dbc480a63c771e6a50dbd6243a7389f39077a0"
       }
     },
     {
@@ -129,9 +129,9 @@
       },
       "heightM": 1.3004546165466309,
       "files": {
-        "ArtSource/Pedestrians/DS_Pedestrian_Child_A.blend": "b8f8ea74209d6253f14660306cd88df1ecf1c3682d527bdcb9c27a87c2b6169e",
-        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_A.fbx": "be674ff1dc99e2e77af6a8e72cd13e965a08beccba0b412e66d0df5b230bac0c",
-        "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Child_A.glb": "dbe6260854715cad44d5e9b2b0e591bd1b4d2aeb0c86a380ddd1a59eabf79415"
+        "ArtSource/Pedestrians/DS_Pedestrian_Child_A.blend": "199c3146e096b8130fdaa38e3c937ff203a0973dbfb4336fae585eb2c707c2cb",
+        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_A.fbx": "43730df889cd0dc83733e3eda11ed70479ec5b2798f2b7b4664eea1a7196f8f6",
+        "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Child_A.glb": "6b0b473580e029e0d0f9dfa33311d344461667715e0bab6ce9e47338eea0d3cb"
       }
     },
     {
@@ -161,8 +161,8 @@
       },
       "heightM": 1.2792887687683105,
       "files": {
-        "ArtSource/Pedestrians/DS_Pedestrian_Child_B.blend": "2812ca18ee4b1faa4d77ec9e6a46d4b3c283e4edc8c9290e76537d360f1c8b4f",
-        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_B.fbx": "5133a16a84423da1d66f5e55744406b5c44bcb88098dbd86c68de669bb75d91e",
+        "ArtSource/Pedestrians/DS_Pedestrian_Child_B.blend": "62e0ec355a7975e7994b7999547321c02bb36f42f2516c5ae5f3d5e39f9c44cf",
+        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_B.fbx": "67c0ae8ee06f3b4105edfaf0a784cf8ba9d3a2d0fdddcdcfd45f35d22231cc51",
         "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Child_B.glb": "ad1cb0aacf467a00bca7ef8078d290c4fd394b15d4512490d0e49f4a5c4b7e51"
       }
     },
@@ -200,9 +200,9 @@
       },
       "heightM": 1.7573184967041016,
       "files": {
-        "ArtSource/Pedestrians/DS_Pedestrian_Police.blend": "01fb6cb54a607fbaa00fb13b3b68a84260192927373ad91d3bc16c3b89d7cc64",
-        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Police.fbx": "ca7543f4751ad0f6dc7577163a42d83401fe854b9ca09f203bc79d4b36256d70",
-        "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Police.glb": "37cd08344cc77514b727a7c7df31f6c426616bccfc5d80f52d620040ae9807e6"
+        "ArtSource/Pedestrians/DS_Pedestrian_Police.blend": "a2f4dd174cd2e6ee1b3d3a8436a1d79f8eb8dfe6dde511503da166a55244364a",
+        "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Police.fbx": "6c67bd7559483554700b5982c4b62eedb5f72877379d047434601ce77dc96776",
+        "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Police.glb": "3885eee209328f522f3b9732963fec511908c2a1734022794733980652efde60"
       }
     }
   ],

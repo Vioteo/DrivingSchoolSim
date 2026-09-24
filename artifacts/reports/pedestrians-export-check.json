@@ -3,7 +3,7 @@
   "assets": [
     {
       "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_A.fbx",
-      "sha256": "9c3a456262025d5f672a84074cb5f8a102e0940bf506c55f6846282e2c156861",
+      "sha256": "50603d05c6193cd55605d94f231b0475109ae35ca7e3b60a32fbcb088925e1d8",
       "dimensionsM": [
         0.6913865804672241,
         0.3606252446770668,
@@ -141,7 +141,7 @@
     },
     {
       "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_B.fbx",
-      "sha256": "019323ea9625aea6765d77df2dc1d3c2889fbf5129722262c5fcf3430bd7acd7",
+      "sha256": "6100851075dd6279a605c2e055c6407dab5ea555c72cb6fc0844fa3e274e4e17",
       "dimensionsM": [
         0.5416176319122314,
         0.32500791549682617,
@@ -279,11 +279,11 @@
     },
     {
       "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_C.fbx",
-      "sha256": "86c5638f4e5134c6de5529dbc468d1d83573ef92f8181987c917f52c4781534c",
+      "sha256": "049e9080af0423e288401394ebbd7caf9168be9394daf44d87a95eb23ca3cb3d",
       "dimensionsM": [
-        0.6560876369476318,
-        0.5174101442098618,
-        1.7876535197100054
+        0.6214781999588013,
+        0.49835652112960815,
+        1.7065747147078483
       ],
       "bones": 20,
       "animations": [
@@ -294,10 +294,10 @@
             61.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.013857761881880997,
+          "maxDisplacementM": 0.013281433645270105,
           "groundRangeM": [
-            3.9692700681825954e-08,
-            3.6496251709650096e-07
+            -1.0141766182414358e-07,
+            3.1932222555042244e-07
           ],
           "pass": true
         },
@@ -308,10 +308,10 @@
             31.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.7873309740639668,
+          "maxDisplacementM": 0.745588640728531,
           "groundRangeM": [
-            2.825255585037212e-08,
-            6.068178208806785e-07
+            -2.5214635002157593e-07,
+            4.0780801668915956e-07
           ],
           "pass": true
         },
@@ -322,10 +322,10 @@
             23.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 1.0933270986446508,
+          "maxDisplacementM": 1.0458429294102856,
           "groundRangeM": [
-            -0.003332005348056555,
-            0.036116279661655426
+            -0.002609115093946457,
+            0.03605274856090546
           ],
           "pass": true
         },
@@ -336,10 +336,10 @@
             91.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.14208134106456416,
+          "maxDisplacementM": 0.14569819899233372,
           "groundRangeM": [
-            1.649060834552074e-07,
-            1.649060834552074e-07
+            8.292246178598361e-08,
+            8.292246178598361e-08
           ],
           "pass": true
         }
@@ -348,11 +348,11 @@
     },
     {
       "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_C.glb",
-      "sha256": "6cdbd592720509fc7002e0d3392b37703cd19873aa9aa11b82166138a6a94ead",
+      "sha256": "9b271999dca6c0e6bd2b9e7be3dbc480a63c771e6a50dbd6243a7389f39077a0",
       "dimensionsM": [
-        0.6560875177383423,
-        0.5174104869365692,
-        1.787654067377046
+        0.6214781105518341,
+        0.49835677444934845,
+        1.7065746827909933
       ],
       "bones": 20,
       "animations": [
@@ -363,10 +363,10 @@
             61.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.013857711264106221,
+          "maxDisplacementM": 0.013281406904328722,
           "groundRangeM": [
-            -4.04629290073899e-08,
-            9.47499287917708e-08
+            -1.0219078205864207e-07,
+            1.2420889561326476e-07
           ],
           "pass": true
         },
@@ -377,10 +377,10 @@
             31.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.7873325442692783,
+          "maxDisplacementM": 0.7455885621516716,
           "groundRangeM": [
-            8.451752364635468e-08,
-            7.227063179016113e-07
+            5.381298251450062e-08,
+            6.034970283508301e-07
           ],
           "pass": true
         },
@@ -391,10 +391,10 @@
             23.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 1.0933296554987322,
+          "maxDisplacementM": 1.0458423138523456,
           "groundRangeM": [
-            -0.0033321897499263287,
-            0.036116600036621094
+            -0.0026092207990586758,
+            0.03605265915393829
           ],
           "pass": true
         },
@@ -405,10 +405,10 @@
             91.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.14208117414611027,
+          "maxDisplacementM": 0.14569831405072045,
           "groundRangeM": [
-            -2.513308849927398e-08,
-            -2.513308849927398e-08
+            1.1483931672273684e-07,
+            1.1483931672273684e-07
           ],
           "pass": true
         }
@@ -417,7 +417,7 @@
     },
     {
       "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_A.fbx",
-      "sha256": "be674ff1dc99e2e77af6a8e72cd13e965a08beccba0b412e66d0df5b230bac0c",
+      "sha256": "43730df889cd0dc83733e3eda11ed70479ec5b2798f2b7b4664eea1a7196f8f6",
       "dimensionsM": [
         0.44934186339378357,
         0.35827556252479553,
@@ -486,7 +486,7 @@
     },
     {
       "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Child_A.glb",
-      "sha256": "dbe6260854715cad44d5e9b2b0e591bd1b4d2aeb0c86a380ddd1a59eabf79415",
+      "sha256": "6b0b473580e029e0d0f9dfa33311d344461667715e0bab6ce9e47338eea0d3cb",
       "dimensionsM": [
         0.4493415653705597,
         0.35827572643756866,
@@ -555,7 +555,7 @@
     },
     {
       "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_B.fbx",
-      "sha256": "5133a16a84423da1d66f5e55744406b5c44bcb88098dbd86c68de669bb75d91e",
+      "sha256": "67c0ae8ee06f3b4105edfaf0a784cf8ba9d3a2d0fdddcdcfd45f35d22231cc51",
       "dimensionsM": [
         0.4112767279148102,
         0.24790816381573677,
@@ -693,7 +693,7 @@
     },
     {
       "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Police.fbx",
-      "sha256": "ca7543f4751ad0f6dc7577163a42d83401fe854b9ca09f203bc79d4b36256d70",
+      "sha256": "6c67bd7559483554700b5982c4b62eedb5f72877379d047434601ce77dc96776",
       "dimensionsM": [
         0.666054368019104,
         0.4347463920712471,
@@ -790,7 +790,7 @@
     },
     {
       "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Police.glb",
-      "sha256": "37cd08344cc77514b727a7c7df31f6c426616bccfc5d80f52d620040ae9807e6",
+      "sha256": "3885eee209328f522f3b9732963fec511908c2a1734022794733980652efde60",
       "dimensionsM": [
         0.666054368019104,
         0.43474654480814934,

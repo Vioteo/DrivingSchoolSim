@@ -45,10 +45,10 @@ CHARACTERS = [
          macro=dict(gender=0, age=32, muscle=.45, weight=.48, height=.5),
          proxies=[('suit', 'clothes/female_elegantsuit01/female_elegantsuit01.mhclo'), ('shoes', 'clothes/shoes03/shoes03.mhclo'),
                   ('hair', 'hair/ponytail01/ponytail01.mhclo'), ('eyebrows', 'eyebrows/eyebrow010/eyebrow010.mhclo')] + EYES),
-    dict(name='DS_Pedestrian_C', build='male', backpack=True, skin='skins/young_african_male/young_african_male.mhmat',
-         macro=dict(gender=1, age=35, muscle=.6, weight=.6, height=.4, race={'african': 1.}),
+    dict(name='DS_Pedestrian_C', build='male', backpack=True, skin='skins/middleage_caucasian_male/middleage_caucasian_male.mhmat',
+         macro=dict(gender=1, age=35, muscle=.6, weight=.6, height=.4),
          proxies=[('suit', 'clothes/male_worksuit01/male_worksuit01.mhclo'), ('shoes', 'clothes/shoes02/shoes02.mhclo'),
-                  ('hair', 'hair/afro01/afro01.mhclo'), ('eyebrows', 'eyebrows/eyebrow002/eyebrow002.mhclo')] + EYES),
+                  ('hair', 'hair/short01/short01.mhclo'), ('eyebrows', 'eyebrows/eyebrow002/eyebrow002.mhclo')] + EYES),
     # Schoolboy with a satchel and schoolgirl with a braid, about 8 years old.
     dict(name='DS_Pedestrian_Child_A', build='child', backpack=True,
          skin='skins/young_caucasian_male/young_caucasian_male.mhmat', macro=dict(gender=1, age=8, weight=.5, height=.66),

@@ -4,7 +4,7 @@
       "name": "Ped_Skin",
       "alphaClip": false,
       "doubleSided": false,
-      "diffuse": "MH_young_darkskinned_male_diffuse_d.jpg"
+      "diffuse": "MH_middleage_lightskinned_male_diffuse_d.jpg"
     },
     {
       "name": "Ped_Suit",
@@ -23,7 +23,7 @@
       "name": "Ped_Hair",
       "alphaClip": true,
       "doubleSided": true,
-      "diffuse": "MH_afro_diffuse_d.png"
+      "diffuse": "MH_short01_diffuse_d.png"
     },
     {
       "name": "Ped_Eyebrows",
