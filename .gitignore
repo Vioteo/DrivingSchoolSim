@@ -111,3 +111,5 @@ InitTestScene*.unity*
 # DrivingSchoolSim
 # Test runner user data
 /artifacts/test-userdata/
+# MakeHuman sources, fetched by tools/fetch_makehuman.py
+ArtSource/Pedestrians/MakeHuman/cache/
