@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "ds01",
+  "massKg": 1350,
+  "lengthM": 4.5,
+  "bodyWidthM": 1.8,
+  "mirrorWidthM": 2.25,
+  "heightM": 1.5,
+  "wheelbaseM": 2.72,
+  "trackM": 1.71,
+  "wheelRadiusM": 0.327,
+  "centreOfMassM": [
+    0,
+    0.51,
+    -0.1
+  ],
+  "steeringWheelDegrees": 900,
+  "gearRatios": [
+    3.6,
+    2.1,
+    1.4,
+    1.05,
+    0.84,
+    0.69
+  ],
+  "reverseRatio": -3.5,
+  "finalDrive": 4.1,
+  "idleRpm": 850,
+  "redlineRpm": 6500,
+  "engineInertiaKgm2": 0.2,
+  "maxClutchTorqueNm": 240,
+  "calibrationStatus": "design-target-not-measured"
+}

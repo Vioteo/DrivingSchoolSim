@@ -1,0 +1,60 @@
+{
+  "revision": 2,
+  "checks": [
+    {
+      "id": "Pedal_Brake floor clearance",
+      "passed": true,
+      "detail": {
+        "lowestZ": 0.44847726821899414,
+        "floorZ": 0.331
+      }
+    },
+    {
+      "id": "Pedal_Clutch floor clearance",
+      "passed": true,
+      "detail": {
+        "lowestZ": 0.44847726821899414,
+        "floorZ": 0.331
+      }
+    },
+    {
+      "id": "Pedal_Throttle floor clearance",
+      "passed": true,
+      "detail": {
+        "lowestZ": 0.44847726821899414,
+        "floorZ": 0.331
+      }
+    },
+    {
+      "id": "Seat_Rear-0.4 rear-glass clearance",
+      "passed": true,
+      "detail": {
+        "topZ": 1.2699999809265137,
+        "rearGlassZAtBack": 1.3174999952316284
+      }
+    },
+    {
+      "id": "Seat_Rear0.4 rear-glass clearance",
+      "passed": true,
+      "detail": {
+        "topZ": 1.2699999809265137,
+        "rearGlassZAtBack": 1.3174999952316284
+      }
+    },
+    {
+      "id": "Tyre radial clearance",
+      "passed": true,
+      "detail": {
+        "clearanceM": 0.068,
+        "neutralSteering": true,
+        "fullSuspensionSweep": "pending"
+      }
+    },
+    {
+      "id": "No exposed A/C structural tubes",
+      "passed": true,
+      "detail": "formed panel replacements"
+    }
+  ],
+  "status": "PASS"
+}

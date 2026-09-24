@@ -1,0 +1,18 @@
+{
+  "name": "DS.Tests",
+  "references": [
+    "DS.Contracts",
+    "DS.Simulation",
+    "DS.World",
+    "DS.Learning",
+    "DS.Input",
+    "DS.Rules",
+    "DS.Presentation.Physics"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

@@ -1,0 +1,224 @@
+{
+  "materials": [
+    {
+      "name": "RW_Ballast",
+      "color": [
+        0.2,
+        0.185,
+        0.17
+      ],
+      "metallic": 0,
+      "smoothness": 0.05,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_Sleeper",
+      "color": [
+        0.33,
+        0.33,
+        0.31
+      ],
+      "metallic": 0,
+      "smoothness": 0.15,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_RailSteel",
+      "color": [
+        0.16,
+        0.11,
+        0.08
+      ],
+      "metallic": 0.55,
+      "smoothness": 0.4,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_RailHead",
+      "color": [
+        0.6,
+        0.61,
+        0.62
+      ],
+      "metallic": 0.95,
+      "smoothness": 0.78,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_Fastening",
+      "color": [
+        0.035,
+        0.035,
+        0.04
+      ],
+      "metallic": 0.6,
+      "smoothness": 0.5,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_Deck",
+      "color": [
+        0.028,
+        0.03,
+        0.033
+      ],
+      "metallic": 0,
+      "smoothness": 0.18,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_DeckSeam",
+      "color": [
+        0.006,
+        0.006,
+        0.007
+      ],
+      "metallic": 0,
+      "smoothness": 0.1,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_Asphalt",
+      "color": [
+        0.033,
+        0.038,
+        0.043
+      ],
+      "metallic": 0,
+      "smoothness": 0.1,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_Concrete",
+      "color": [
+        0.42,
+        0.42,
+        0.4
+      ],
+      "metallic": 0,
+      "smoothness": 0.2,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_Cabinet",
+      "color": [
+        0.46,
+        0.48,
+        0.49
+      ],
+      "metallic": 0.35,
+      "smoothness": 0.58,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_Steel",
+      "color": [
+        0.4,
+        0.44,
+        0.47
+      ],
+      "metallic": 0.8,
+      "smoothness": 0.65,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_Red",
+      "color": [
+        0.7,
+        0.02,
+        0.02
+      ],
+      "metallic": 0,
+      "smoothness": 0.62,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_White",
+      "color": [
+        0.86,
+        0.88,
+        0.86
+      ],
+      "metallic": 0,
+      "smoothness": 0.62,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_Black",
+      "color": [
+        0.01,
+        0.011,
+        0.013
+      ],
+      "metallic": 0.1,
+      "smoothness": 0.55,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_Housing",
+      "color": [
+        0.018,
+        0.02,
+        0.024
+      ],
+      "metallic": 0.2,
+      "smoothness": 0.65,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_Gasket",
+      "color": [
+        0.006,
+        0.006,
+        0.008
+      ],
+      "metallic": 0,
+      "smoothness": 0.1,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_LensRed",
+      "color": [
+        0.12,
+        0.004,
+        0.004
+      ],
+      "metallic": 0.1,
+      "smoothness": 0.85,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_LensWhite",
+      "color": [
+        0.2,
+        0.21,
+        0.23
+      ],
+      "metallic": 0.1,
+      "smoothness": 0.85,
+      "emission": 0.0
+    },
+    {
+      "name": "RW_RedOn",
+      "color": [
+        1.0,
+        0.03,
+        0.01
+      ],
+      "metallic": 0,
+      "smoothness": 0.8,
+      "emission": 3.0
+    },
+    {
+      "name": "RW_WhiteOn",
+      "color": [
+        0.92,
+        0.94,
+        1.0
+      ],
+      "metallic": 0,
+      "smoothness": 0.8,
+      "emission": 3.0
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 1,
+  "id": "training-district",
+  "name": "Учебный квартал",
+  "chunkSizeM": 256,
+  "nodes": [
+    {
+      "id": "south",
+      "x": 0,
+      "y": 0,
+      "z": -250
+    },
+    {
+      "id": "centre",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    {
+      "id": "north",
+      "x": 0,
+      "y": 0,
+      "z": 250
+    },
+    {
+      "id": "west",
+      "x": -250,
+      "y": 0,
+      "z": 0
+    },
+    {
+      "id": "east",
+      "x": 250,
+      "y": 0,
+      "z": 0
+    }
+  ],
+  "segments": [
+    {
+      "id": "south-centre",
+      "fromNode": "south",
+      "toNode": "centre",
+      "widthM": 14,
+      "laneCount": 4,
+      "speedLimitKph": 60
+    },
+    {
+      "id": "north-centre",
+      "fromNode": "north",
+      "toNode": "centre",
+      "widthM": 14,
+      "laneCount": 4,
+      "speedLimitKph": 60
+    },
+    {
+      "id": "west-centre",
+      "fromNode": "west",
+      "toNode": "centre",
+      "widthM": 14,
+      "laneCount": 4,
+      "speedLimitKph": 60
+    },
+    {
+      "id": "east-centre",
+      "fromNode": "east",
+      "toNode": "centre",
+      "widthM": 14,
+      "laneCount": 4,
+      "speedLimitKph": 60
+    }
+  ],
+  "lanes": [
+    {
+      "id": "south-centre:0:0",
+      "segmentId": "south-centre",
+      "fromNode": "south",
+      "toNode": "centre",
+      "widthM": 3.5,
+      "index": 0,
+      "successors": [
+        "north-centre:1:0",
+        "west-centre:1:0",
+        "east-centre:1:0"
+      ]
+    },
+    {
+      "id": "south-centre:0:1",
+      "segmentId": "south-centre",
+      "fromNode": "south",
+      "toNode": "centre",
+      "widthM": 3.5,
+      "index": 1,
+      "successors": [
+        "north-centre:1:1",
+        "west-centre:1:1",
+        "east-centre:1:1"
+      ]
+    },
+    {
+      "id": "south-centre:1:0",
+      "segmentId": "south-centre",
+      "fromNode": "centre",
+      "toNode": "south",
+      "widthM": 3.5,
+      "index": 0,
+      "successors": []
+    },
+    {
+      "id": "south-centre:1:1",
+      "segmentId": "south-centre",
+      "fromNode": "centre",
+      "toNode": "south",
+      "widthM": 3.5,
+      "index": 1,
+      "successors": []
+    },
+    {
+      "id": "north-centre:0:0",
+      "segmentId": "north-centre",
+      "fromNode": "north",
+      "toNode": "centre",
+      "widthM": 3.5,
+      "index": 0,
+      "successors": [
+        "south-centre:1:0",
+        "west-centre:1:0",
+        "east-centre:1:0"
+      ]
+    },
+    {
+      "id": "north-centre:0:1",
+      "segmentId": "north-centre",
+      "fromNode": "north",
+      "toNode": "centre",
+      "widthM": 3.5,
+      "index": 1,
+      "successors": [
+        "south-centre:1:1",
+        "west-centre:1:1",
+        "east-centre:1:1"
+      ]
+    },
+    {
+      "id": "north-centre:1:0",
+      "segmentId": "north-centre",
+      "fromNode": "centre",
+      "toNode": "north",
+      "widthM": 3.5,
+      "index": 0,
+      "successors": []
+    },
+    {
+      "id": "north-centre:1:1",
+      "segmentId": "north-centre",
+      "fromNode": "centre",
+      "toNode": "north",
+      "widthM": 3.5,
+      "index": 1,
+      "successors": []
+    },
+    {
+      "id": "west-centre:0:0",
+      "segmentId": "west-centre",
+      "fromNode": "west",
+      "toNode": "centre",
+      "widthM": 3.5,
+      "index": 0,
+      "successors": [
+        "south-centre:1:0",
+        "north-centre:1:0",
+        "east-centre:1:0"
+      ]
+    },
+    {
+      "id": "west-centre:0:1",
+      "segmentId": "west-centre",
+      "fromNode": "west",
+      "toNode": "centre",
+      "widthM": 3.5,
+      "index": 1,
+      "successors": [
+        "south-centre:1:1",
+        "north-centre:1:1",
+        "east-centre:1:1"
+      ]
+    },
+    {
+      "id": "west-centre:1:0",
+      "segmentId": "west-centre",
+      "fromNode": "centre",
+      "toNode": "west",
+      "widthM": 3.5,
+      "index": 0,
+      "successors": []
+    },
+    {
+      "id": "west-centre:1:1",
+      "segmentId": "west-centre",
+      "fromNode": "centre",
+      "toNode": "west",
+      "widthM": 3.5,
+      "index": 1,
+      "successors": []
+    },
+    {
+      "id": "east-centre:0:0",
+      "segmentId": "east-centre",
+      "fromNode": "east",
+      "toNode": "centre",
+      "widthM": 3.5,
+      "index": 0,
+      "successors": [
+        "south-centre:1:0",
+        "north-centre:1:0",
+        "west-centre:1:0"
+      ]
+    },
+    {
+      "id": "east-centre:0:1",
+      "segmentId": "east-centre",
+      "fromNode": "east",
+      "toNode": "centre",
+      "widthM": 3.5,
+      "index": 1,
+      "successors": [
+        "south-centre:1:1",
+        "north-centre:1:1",
+        "west-centre:1:1"
+      ]
+    },
+    {
+      "id": "east-centre:1:0",
+      "segmentId": "east-centre",
+      "fromNode": "centre",
+      "toNode": "east",
+      "widthM": 3.5,
+      "index": 0,
+      "successors": []
+    },
+    {
+      "id": "east-centre:1:1",
+      "segmentId": "east-centre",
+      "fromNode": "centre",
+      "toNode": "east",
+      "widthM": 3.5,
+      "index": 1,
+      "successors": []
+    }
+  ],
+  "objects": [
+    {
+      "id": "spawn",
+      "catalogId": "spawn-car",
+      "x": -1.75,
+      "y": 0.1,
+      "z": -40,
+      "yawDeg": 0
+    }
+  ],
+  "districts": [
+    {
+      "id": "demo",
+      "minX": -250,
+      "minZ": -250,
+      "sizeM": 500
+    }
+  ]
+}

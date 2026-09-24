@@ -1,0 +1,6 @@
+{
+  "name": "DS.Contracts",
+  "rootNamespace": "DrivingSchool.Contracts",
+  "references": [],
+  "noEngineReferences": true
+}

@@ -1,0 +1,58 @@
+{
+  "revision": 1,
+  "utc": "2026-09-19T18:33:51.716476+00:00",
+  "blender": "5.0.1",
+  "units": "metres",
+  "sourceAxes": "Z up, -Y forward",
+  "assets": [
+    {
+      "name": "DS_Pedestrian_A",
+      "triangles": 6402,
+      "bones": 20,
+      "materials": 7,
+      "clips": [
+        "Idle",
+        "Walk"
+      ],
+      "heightM": 1.7889563031494617,
+      "files": {
+        "ArtSource\\Pedestrians\\DS_Pedestrian_A.blend": "af7a0d242d2a19f615ecd54195e57bfefe583c14be9e9cd571b1d33fb9248baa",
+        "Assets\\DrivingSchool\\Art\\Pedestrians\\DS_Pedestrian_A.fbx": "94887758666beed9230c81fee13327503fe598185ae0ba9b207c9ef1e7920c78",
+        "artifacts\\visual-review\\pedestrians\\models\\DS_Pedestrian_A.glb": "572dc91ae891635a9ae38ab803e7a7b2fcfa278f6d66fda31a85a89677de56bc"
+      }
+    },
+    {
+      "name": "DS_Pedestrian_B",
+      "triangles": 6402,
+      "bones": 20,
+      "materials": 7,
+      "clips": [
+        "Idle",
+        "Walk"
+      ],
+      "heightM": 1.7889563031494617,
+      "files": {
+        "ArtSource\\Pedestrians\\DS_Pedestrian_B.blend": "7fcc770709600487feeee08576a442f20cc1e175ad1807e408aaa705563586aa",
+        "Assets\\DrivingSchool\\Art\\Pedestrians\\DS_Pedestrian_B.fbx": "de70712745df50ead94647f91221c32131c3d4cacb7e7470a018e9ff54e10e76",
+        "artifacts\\visual-review\\pedestrians\\models\\DS_Pedestrian_B.glb": "18d73b091647bcac8de84977267bf1cdb11aa385a40290c4e8034bbc5ae7490a"
+      }
+    },
+    {
+      "name": "DS_Pedestrian_C",
+      "triangles": 6834,
+      "bones": 20,
+      "materials": 7,
+      "clips": [
+        "Idle",
+        "Walk"
+      ],
+      "heightM": 1.7889563031494617,
+      "files": {
+        "ArtSource\\Pedestrians\\DS_Pedestrian_C.blend": "86b228f4a227bbe23eaa8a339ab1bf26cb108a9d5c18ffe2b0a43671d00b2d49",
+        "Assets\\DrivingSchool\\Art\\Pedestrians\\DS_Pedestrian_C.fbx": "2cc835a1c3b3109adce92b71bde28df7e7243b3a86b8281a6f40cd34cc64a984",
+        "artifacts\\visual-review\\pedestrians\\models\\DS_Pedestrian_C.glb": "4f791dda837bae8fff0d577c6fc048820488b82470a5b5770070e3ccfdcca8e8"
+      }
+    }
+  ],
+  "scope": "Authored meshes, generic skeleton and in-place animation. No pedestrian navigation, LODs or traffic AI."
+}

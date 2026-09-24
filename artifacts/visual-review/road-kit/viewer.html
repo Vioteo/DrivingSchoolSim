@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Дорожные модули · 3D</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#27333c;color:#edf0ea;font:15px 'Segoe UI',sans-serif}#view{height:100vh}header{position:absolute;top:22px;left:24px;right:24px;display:flex;gap:14px;justify-content:space-between;align-items:center;flex-wrap:wrap}a{color:#f4cd79}select,button{color:#edf0ea;background:#17242e;border:1px solid #69808e;padding:10px;border-radius:5px;font:inherit}footer{position:absolute;bottom:20px;left:24px;max-width:440px;padding:14px 18px;background:#16242ded;border-radius:8px}footer p{line-height:1.5;color:#c3ced1;margin:0 0 10px}#status{position:absolute;top:48%;width:100%;text-align:center;pointer-events:none}#status:empty{display:none}@media(max-width:600px){header{left:12px;right:12px}select{max-width:100%}footer{left:12px;right:12px;font-size:12px}}</style>
+<script type="importmap">{"imports":{"three":"../vendor/three.module.js"}}</script></head>
+<body><div id="view"></div><header><a href="index.html">← Дорожный набор</a><label>Модуль <select id="module" aria-label="Выбрать модель"></select></label></header>
+<div id="status" role="status">Загрузка…</div><footer><p>Левая кнопка — вращение · колесо — масштаб · правая — перемещение. Реальная геометрия GLB; освещение браузера отличается от Blender и Unity.</p><button id="reset">Сбросить вид</button> <button id="wire">Каркас</button> <a id="download" download>Скачать GLB</a></footer>
+<script type="module">
+import * as THREE from 'three';
+import {GLTFLoader} from '../vendor/GLTFLoader.js';
+import {OrbitControls} from '../vendor/OrbitControls.js';
+const modules=[['RK_Road_Urban_20m','Городская дорога'],['RK_Road_Rural_20m','Загородная дорога'],['RK_Road_Curve90_R14','Поворот 90°'],['RK_Road_Cross_24m','Перекрёсток'],['RK_Sidewalk_2x5m','Тротуар'],['RK_Curb_1m','Бордюр'],['RK_Shoulder_1p5x5m','Обочина'],['RK_Marking_Solid_20m','Сплошная'],['RK_Marking_Dashed_20m','Прерывистая'],['RK_Marking_DoubleSolid_20m','Двойная сплошная'],['RK_Marking_Yellow_20m','Жёлтая линия'],['RK_Marking_Zebra_8x3m','Зебра'],['RK_Marking_Stop_3p5m','Стоп-линия'],['RK_Marking_Arrow_Straight','Стрелка прямо'],['RK_Marking_Arrow_Left','Стрелка налево'],['RK_Marking_Parking_2p5x5m','Парковка']];
+const select=document.querySelector('#module'),status=document.querySelector('#status');
+modules.forEach(([id,label])=>select.add(new Option(label,id)));
+try {
+ const scene=new THREE.Scene();scene.background=new THREE.Color('#27333c');
+ const camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,.01,500);
+ const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;document.querySelector('#view').append(renderer.domElement);
+ const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;
+ scene.add(new THREE.HemisphereLight(0xe5f2ff,0x536066,2));
+ for(const [x,y,z,p] of [[10,20,10,2.4],[-10,10,-15,1.4]]){const light=new THREE.DirectionalLight(0xfff6e4,p);light.position.set(x,y,z);scene.add(light)}
+ let model,grid,center=new THREE.Vector3(),size=20,wire=false,ticket=0;
+ function reset(){camera.position.copy(center).add(new THREE.Vector3(size*.72,size*.62,size*.85));controls.target.copy(center);controls.update()}
+ function dispose(object){object?.traverse(o=>{if(o.isMesh){o.geometry.dispose();[].concat(o.material).forEach(m=>{for(const value of Object.values(m))if(value?.isTexture)value.dispose();m.dispose()})}})}
+ function load(){const request=++ticket;status.textContent='Загрузка…';new GLTFLoader().load('models/'+select.value+'.glb',g=>{
+   if(request!==ticket){dispose(g.scene);return}
+   if(model){scene.remove(model);dispose(model)}if(grid){scene.remove(grid);grid.geometry.dispose();grid.material.dispose()}
+   model=g.scene;scene.add(model);model.traverse(o=>{if(o.isMesh)[].concat(o.material).forEach(m=>m.wireframe=wire)});
+   const box=new THREE.Box3().setFromObject(model);center=box.getCenter(new THREE.Vector3());size=Math.max(box.getSize(new THREE.Vector3()).length(),1);
+   grid=new THREE.GridHelper(Math.ceil(size*1.5),Math.min(60,Math.ceil(size*1.5)),0x536774,0x354752);grid.position.set(center.x,box.min.y-.025,center.z);scene.add(grid);reset();status.textContent='';document.querySelector('#download').href='models/'+select.value+'.glb';
+ },undefined,()=>{if(request===ticket)status.textContent='Не удалось загрузить модель. Откройте страницу через локальный HTTP-сервер.'})}
+ select.onchange=load;document.querySelector('#reset').onclick=reset;document.querySelector('#wire').onclick=()=>{wire=!wire;model?.traverse(o=>{if(o.isMesh)[].concat(o.material).forEach(m=>m.wireframe=wire)});document.querySelector('#wire').textContent=wire?'Материалы':'Каркас'};
+ addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+ renderer.setAnimationLoop(()=>{controls.update();renderer.render(scene,camera)});load();
+}catch(e){status.textContent='WebGL недоступен — откройте галерею рендеров.'}
+</script></body></html>

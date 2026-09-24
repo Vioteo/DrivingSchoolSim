@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="93" result="Failed(Child)" total="93" passed="88" failed="5" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-20 12:14:20Z" end-time="2026-09-20 12:14:52Z" duration="31,4837321">
+  <test-suite type="TestSuite" id="1000" name="DrivingSchoolSim Prototype" fullname="DrivingSchoolSim Prototype" runstate="Runnable" testcasecount="93" result="Failed" site="Child" start-time="2026-09-20 12:14:20Z" end-time="2026-09-20 12:14:52Z" duration="31.483732" total="93" passed="88" failed="5" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1099" name="DS.Tests.dll" fullname="C:/Users/AVSok/OneDrive/Documents/unity-driing/DrivingSchoolSim/Library/ScriptAssemblies/DS.Tests.dll" runstate="Runnable" testcasecount="91" result="Failed" site="Child" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.319670" total="91" passed="87" failed="4" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="27176" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1100" name="DrivingSchool" fullname="DrivingSchool" runstate="Runnable" testcasecount="91" result="Failed" site="Child" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.318228" total="91" passed="87" failed="4" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1101" name="Tests" fullname="DrivingSchool.Tests" runstate="Runnable" testcasecount="91" result="Failed" site="Child" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.317191" total="91" passed="87" failed="4" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestFixture" id="1001" name="ContractTests" fullname="DrivingSchool.Tests.ContractTests" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" testcasecount="23" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.166844" total="23" passed="23" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1006" name="AxleTorqueRejectsNanAndInfinity" fullname="DrivingSchool.Tests.ContractTests.AxleTorqueRejectsNanAndInfinity" methodname="AxleTorqueRejectsNanAndInfinity" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="474238118" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.031059" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1014" name="BrokenLaneSuccessorIsRejected" fullname="DrivingSchool.Tests.ContractTests.BrokenLaneSuccessorIsRejected" methodname="BrokenLaneSuccessorIsRejected" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1758488652" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.011539" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1005" name="ClutchCannotExceedCapacity" fullname="DrivingSchool.Tests.ContractTests.ClutchCannotExceedCapacity" methodname="ClutchCannotExceedCapacity" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="686661956" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.006284" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1007" name="ClutchTorqueRejectsNanAndInfinity" fullname="DrivingSchool.Tests.ContractTests.ClutchTorqueRejectsNanAndInfinity" methodname="ClutchTorqueRejectsNanAndInfinity" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1483463051" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000860" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1008" name="CommandsRejectNan" fullname="DrivingSchool.Tests.ContractTests.CommandsRejectNan" methodname="CommandsRejectNan" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="616476027" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000728" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1004" name="DisengagedClutchCannotTransmitTorque" fullname="DrivingSchool.Tests.ContractTests.DisengagedClutchCannotTransmitTorque" methodname="DisengagedClutchCannotTransmitTorque" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="440447215" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000456" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1015" name="FutureSchemaIsNotSilentlyLoaded" fullname="DrivingSchool.Tests.ContractTests.FutureSchemaIsNotSilentlyLoaded" methodname="FutureSchemaIsNotSilentlyLoaded" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1398016112" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000499" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1009" name="HoldingStillAtSpawnDoesNotPass" fullname="DrivingSchool.Tests.ContractTests.HoldingStillAtSpawnDoesNotPass" methodname="HoldingStillAtSpawnDoesNotPass" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="806578419" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.002130" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1012" name="InvalidStartIsRejected" fullname="DrivingSchool.Tests.ContractTests.InvalidStartIsRejected" methodname="InvalidStartIsRejected" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1092144082" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000611" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1018" name="KeyboardInputDefaultProducesValidCommand" fullname="DrivingSchool.Tests.ContractTests.KeyboardInputDefaultProducesValidCommand" methodname="KeyboardInputDefaultProducesValidCommand" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="37668223" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.003452" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1019" name="KeyboardInputResetClearsPedals" fullname="DrivingSchool.Tests.ContractTests.KeyboardInputResetClearsPedals" methodname="KeyboardInputResetClearsPedals" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="718308341" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.002198" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1002" name="NeutralCannotTransmitTorque" fullname="DrivingSchool.Tests.ContractTests.NeutralCannotTransmitTorque" methodname="NeutralCannotTransmitTorque" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="920464274" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000949" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1010" name="ReachingTargetThenStoppingPassesOnce" fullname="DrivingSchool.Tests.ContractTests.ReachingTargetThenStoppingPassesOnce" methodname="ReachingTargetThenStoppingPassesOnce" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="35992872" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001950" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1003" name="ReverseAndFinalDriveAffectTorque" fullname="DrivingSchool.Tests.ContractTests.ReverseAndFinalDriveAffectTorque" methodname="ReverseAndFinalDriveAffectTorque" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="152257840" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001053" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1021" name="SpeedLimitExceededGeneratesSingleRuleEvent" fullname="DrivingSchool.Tests.ContractTests.SpeedLimitExceededGeneratesSingleRuleEvent" methodname="SpeedLimitExceededGeneratesSingleRuleEvent" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="2003748430" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.007432" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1020" name="SpeedLimitUnderLimitDoesNotTrigger" fullname="DrivingSchool.Tests.ContractTests.SpeedLimitUnderLimitDoesNotTrigger" methodname="SpeedLimitUnderLimitDoesNotTrigger" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="133342647" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000750" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1022" name="TheoryPackAuthorValidationSucceeds" fullname="DrivingSchool.Tests.ContractTests.TheoryPackAuthorValidationSucceeds" methodname="TheoryPackAuthorValidationSucceeds" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1575159495" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.003913" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1023" name="TheoryPackInvalidCorrectIndexRejected" fullname="DrivingSchool.Tests.ContractTests.TheoryPackInvalidCorrectIndexRejected" methodname="TheoryPackInvalidCorrectIndexRejected" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="2137495507" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.002045" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1024" name="TheoryPackOfficialWithoutSourceRejected" fullname="DrivingSchool.Tests.ContractTests.TheoryPackOfficialWithoutSourceRejected" methodname="TheoryPackOfficialWithoutSourceRejected" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="677069901" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001340" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1011" name="TimeoutAndCancellationAreTerminal" fullname="DrivingSchool.Tests.ContractTests.TimeoutAndCancellationAreTerminal" methodname="TimeoutAndCancellationAreTerminal" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1056220439" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000811" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1016" name="WorldLoadFallsBackToBackupOnCorruptPrimary" fullname="DrivingSchool.Tests.ContractTests.WorldLoadFallsBackToBackupOnCorruptPrimary" methodname="WorldLoadFallsBackToBackupOnCorruptPrimary" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1039877713" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.040382" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1013" name="WorldRoundTripAndBackup" fullname="DrivingSchool.Tests.ContractTests.WorldRoundTripAndBackup" methodname="WorldRoundTripAndBackup" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1932862607" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.015266" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1017" name="WorldValidatorRejectsInvalidDistrict" fullname="DrivingSchool.Tests.ContractTests.WorldValidatorRejectsInvalidDistrict" methodname="WorldValidatorRejectsInvalidDistrict" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="2000266088" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.002135" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1025" name="EngineModelTests" fullname="DrivingSchool.Tests.EngineModelTests" classname="DrivingSchool.Tests.EngineModelTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.025072" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1031" name="ExcessiveLoad_CausesEngineToStall" fullname="DrivingSchool.Tests.EngineModelTests.ExcessiveLoad_CausesEngineToStall" methodname="ExcessiveLoad_CausesEngineToStall" classname="DrivingSchool.Tests.EngineModelTests" runstate="Runnable" seed="1923983394" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.006783" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1030" name="FullThrottleInNeutral_ReachesRedline_DoesNotExceedCutoff" fullname="DrivingSchool.Tests.EngineModelTests.FullThrottleInNeutral_ReachesRedline_DoesNotExceedCutoff" methodname="FullThrottleInNeutral_ReachesRedline_DoesNotExceedCutoff" classname="DrivingSchool.Tests.EngineModelTests" runstate="Runnable" seed="2020756764" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.004488" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1027" name="IgnitionOnly_TransitionsToIgnitionPhase_ZeroRpm" fullname="DrivingSchool.Tests.EngineModelTests.IgnitionOnly_TransitionsToIgnitionPhase_ZeroRpm" methodname="IgnitionOnly_TransitionsToIgnitionPhase_ZeroRpm" classname="DrivingSchool.Tests.EngineModelTests" runstate="Runnable" seed="136529267" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000651" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1026" name="InitialState_IsOff_ZeroRpm" fullname="DrivingSchool.Tests.EngineModelTests.InitialState_IsOff_ZeroRpm" methodname="InitialState_IsOff_ZeroRpm" classname="DrivingSchool.Tests.EngineModelTests" runstate="Runnable" seed="741343028" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000380" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1033" name="InvalidInputs_ThrowArgumentOutOfRangeException" fullname="DrivingSchool.Tests.EngineModelTests.InvalidInputs_ThrowArgumentOutOfRangeException" methodname="InvalidInputs_ThrowArgumentOutOfRangeException" classname="DrivingSchool.Tests.EngineModelTests" runstate="Runnable" seed="1449115970" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001559" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1028" name="Starter_TransitionsToCranking_AndSpinsEngine" fullname="DrivingSchool.Tests.EngineModelTests.Starter_TransitionsToCranking_AndSpinsEngine" methodname="Starter_TransitionsToCranking_AndSpinsEngine" classname="DrivingSchool.Tests.EngineModelTests" runstate="Runnable" seed="1386638304" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001550" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1029" name="SuccessfulStart_EntersRunning_AndMaintainsIdleRpm" fullname="DrivingSchool.Tests.EngineModelTests.SuccessfulStart_EntersRunning_AndMaintainsIdleRpm" methodname="SuccessfulStart_EntersRunning_AndMaintainsIdleRpm" classname="DrivingSchool.Tests.EngineModelTests" runstate="Runnable" seed="299416222" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001445" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1032" name="TurningOffIgnition_StopsEngine" fullname="DrivingSchool.Tests.EngineModelTests.TurningOffIgnition_StopsEngine" methodname="TurningOffIgnition_StopsEngine" classname="DrivingSchool.Tests.EngineModelTests" runstate="Runnable" seed="831938117" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001167" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1034" name="FloatingOriginTests" fullname="DrivingSchool.Tests.FloatingOriginTests" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.022183" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1035" name="Canonical_ToUnityAndToWorld_RoundTripPrecision" fullname="DrivingSchool.Tests.FloatingOriginTests.Canonical_ToUnityAndToWorld_RoundTripPrecision" methodname="Canonical_ToUnityAndToWorld_RoundTripPrecision" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="1643452035" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.002819" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1042" name="CheckAndShift_GuardsAgainstNanAndInfinity_PreventsOriginCorruption" fullname="DrivingSchool.Tests.FloatingOriginTests.CheckAndShift_GuardsAgainstNanAndInfinity_PreventsOriginCorruption" methodname="CheckAndShift_GuardsAgainstNanAndInfinity_PreventsOriginCorruption" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="2040451465" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.004369" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1037" name="ChunkCenter_ReturnsExactCoordinates" fullname="DrivingSchool.Tests.FloatingOriginTests.ChunkCenter_ReturnsExactCoordinates" methodname="ChunkCenter_ReturnsExactCoordinates" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="220888268" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001571" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1036" name="ChunkIndices_AlignsWith256mGrid" fullname="DrivingSchool.Tests.FloatingOriginTests.ChunkIndices_AlignsWith256mGrid" methodname="ChunkIndices_AlignsWith256mGrid" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="1144904145" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.002182" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1043" name="Shift_GuardsAgainstNanAndInfinity_PreventsOriginCorruption" fullname="DrivingSchool.Tests.FloatingOriginTests.Shift_GuardsAgainstNanAndInfinity_PreventsOriginCorruption" methodname="Shift_GuardsAgainstNanAndInfinity_PreventsOriginCorruption" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="872949612" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.002000" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1039" name="Shift_MaintainsCanonicalWorldPositionsOfLandmarks" fullname="DrivingSchool.Tests.FloatingOriginTests.Shift_MaintainsCanonicalWorldPositionsOfLandmarks" methodname="Shift_MaintainsCanonicalWorldPositionsOfLandmarks" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="1224180455" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001100" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1041" name="Shift_Traversing10kmHighwayGeneratesPeriodicShifts" fullname="DrivingSchool.Tests.FloatingOriginTests.Shift_Traversing10kmHighwayGeneratesPeriodicShifts" methodname="Shift_Traversing10kmHighwayGeneratesPeriodicShifts" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="1387027574" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.003082" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1038" name="Shift_TriggersWhenDistanceThresholdExceeded" fullname="DrivingSchool.Tests.FloatingOriginTests.Shift_TriggersWhenDistanceThresholdExceeded" methodname="Shift_TriggersWhenDistanceThresholdExceeded" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="1818547967" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000791" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1040" name="Shift_VelocityIsInvariantAcrossOriginShift" fullname="DrivingSchool.Tests.FloatingOriginTests.Shift_VelocityIsInvariantAcrossOriginShift" methodname="Shift_VelocityIsInvariantAcrossOriginShift" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="935342460" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000362" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1044" name="LogitechG27Tests" fullname="DrivingSchool.Tests.LogitechG27Tests" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" testcasecount="17" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.028586" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1049" name="AxisCalibration_BipolarNormalizesSteeringCorrectly" fullname="DrivingSchool.Tests.LogitechG27Tests.AxisCalibration_BipolarNormalizesSteeringCorrectly" methodname="AxisCalibration_BipolarNormalizesSteeringCorrectly" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1284997727" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001383" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1046" name="AxisCalibration_HandlesInvertedPedal" fullname="DrivingSchool.Tests.LogitechG27Tests.AxisCalibration_HandlesInvertedPedal" methodname="AxisCalibration_HandlesInvertedPedal" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1796284529" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001348" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1045" name="AxisCalibration_NormalizesLinearCorrectly" fullname="DrivingSchool.Tests.LogitechG27Tests.AxisCalibration_NormalizesLinearCorrectly" methodname="AxisCalibration_NormalizesLinearCorrectly" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="504653173" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000527" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1048" name="AxisCalibration_RejectsNanAndInfinity" fullname="DrivingSchool.Tests.LogitechG27Tests.AxisCalibration_RejectsNanAndInfinity" methodname="AxisCalibration_RejectsNanAndInfinity" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="277080927" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000278" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1047" name="AxisCalibration_ZeroSpan_ReturnsZeroWithoutNaN" fullname="DrivingSchool.Tests.LogitechG27Tests.AxisCalibration_ZeroSpan_ReturnsZeroWithoutNaN" methodname="AxisCalibration_ZeroSpan_ReturnsZeroWithoutNaN" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="358002882" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000208" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1052" name="LogitechG27_CenteringSpringIncreasesWithSpeed" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_CenteringSpringIncreasesWithSpeed" methodname="LogitechG27_CenteringSpringIncreasesWithSpeed" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="935042783" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000782" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1054" name="LogitechG27_DampingAndFrictionOpposeAngularVelocity" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_DampingAndFrictionOpposeAngularVelocity" methodname="LogitechG27_DampingAndFrictionOpposeAngularVelocity" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1229902735" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001669" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1051" name="LogitechG27_DisconnectedDeviceReturnsNeutralSafeCommand" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_DisconnectedDeviceReturnsNeutralSafeCommand" methodname="LogitechG27_DisconnectedDeviceReturnsNeutralSafeCommand" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1083450998" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.002748" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1060" name="LogitechG27_DisconnectionImmediatelyZeroesTorque" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_DisconnectionImmediatelyZeroesTorque" methodname="LogitechG27_DisconnectionImmediatelyZeroesTorque" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="2081706916" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001556" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1059" name="LogitechG27_DisposeCleansUpGracefully" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_DisposeCleansUpGracefully" methodname="LogitechG27_DisposeCleansUpGracefully" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="2032018567" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001491" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1053" name="LogitechG27_EndStopAppliesRepulsiveTorqueBeyond450Deg" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_EndStopAppliesRepulsiveTorqueBeyond450Deg" methodname="LogitechG27_EndStopAppliesRepulsiveTorqueBeyond450Deg" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1553581212" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000759" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1056" name="LogitechG27_FFBRateLimiterConstrainsTorqueDelta" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_FFBRateLimiterConstrainsTorqueDelta" methodname="LogitechG27_FFBRateLimiterConstrainsTorqueDelta" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="164684570" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000952" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1055" name="LogitechG27_GripLossVibrationActivatesOnFrontSlip" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_GripLossVibrationActivatesOnFrontSlip" methodname="LogitechG27_GripLossVibrationActivatesOnFrontSlip" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="36231334" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001724" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1058" name="LogitechG27_PauseAndResumeZeroesAndRestoresFFB" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_PauseAndResumeZeroesAndRestoresFFB" methodname="LogitechG27_PauseAndResumeZeroesAndRestoresFFB" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="2058695281" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000931" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1061" name="LogitechG27_SetNormalizedTorque_RespectsSlewRateLimit" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_SetNormalizedTorque_RespectsSlewRateLimit" methodname="LogitechG27_SetNormalizedTorque_RespectsSlewRateLimit" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1760887323" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000693" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1050" name="LogitechG27_SimulatedInputProducesValidCommand" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_SimulatedInputProducesValidCommand" methodname="LogitechG27_SimulatedInputProducesValidCommand" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="365332845" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001924" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1057" name="LogitechG27_StopWatchdogIsIdempotentAndZeroesTorque" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_StopWatchdogIsIdempotentAndZeroesTorque" methodname="LogitechG27_StopWatchdogIsIdempotentAndZeroesTorque" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1702549760" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000771" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1062" name="RuleEvaluatorTests" fullname="DrivingSchool.Tests.RuleEvaluatorTests" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.018369" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1070" name="ExerciseBoundary_CrossingBoundary_TriggersFatalInfraction" fullname="DrivingSchool.Tests.RuleEvaluatorTests.ExerciseBoundary_CrossingBoundary_TriggersFatalInfraction" methodname="ExerciseBoundary_CrossingBoundary_TriggersFatalInfraction" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="334804107" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001705" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1069" name="ExerciseBoundary_InsideBoundary_DoesNotTrigger" fullname="DrivingSchool.Tests.RuleEvaluatorTests.ExerciseBoundary_InsideBoundary_DoesNotTrigger" methodname="ExerciseBoundary_InsideBoundary_DoesNotTrigger" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1991996750" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000332" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1076" name="ExerciseBoundary_SpatialHysteresis_SuppressesJitterCascade" fullname="DrivingSchool.Tests.RuleEvaluatorTests.ExerciseBoundary_SpatialHysteresis_SuppressesJitterCascade" methodname="ExerciseBoundary_SpatialHysteresis_SuppressesJitterCascade" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1496354790" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000446" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1073" name="PenaltyScore_AccumulatesAcrossMultipleViolations" fullname="DrivingSchool.Tests.RuleEvaluatorTests.PenaltyScore_AccumulatesAcrossMultipleViolations" methodname="PenaltyScore_AccumulatesAcrossMultipleViolations" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1306865109" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001840" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1074" name="Reset_ClearsAllInfractionsAndFatalStatus" fullname="DrivingSchool.Tests.RuleEvaluatorTests.Reset_ClearsAllInfractionsAndFatalStatus" methodname="Reset_ClearsAllInfractionsAndFatalStatus" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1172272345" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000736" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1063" name="SpeedLimit_BelowThreshold_DoesNotTrigger" fullname="DrivingSchool.Tests.RuleEvaluatorTests.SpeedLimit_BelowThreshold_DoesNotTrigger" methodname="SpeedLimit_BelowThreshold_DoesNotTrigger" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1071797261" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000385" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1064" name="SpeedLimit_DebounceWindow_RequiresSustainedExcess" fullname="DrivingSchool.Tests.RuleEvaluatorTests.SpeedLimit_DebounceWindow_RequiresSustainedExcess" methodname="SpeedLimit_DebounceWindow_RequiresSustainedExcess" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1640046734" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000788" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1065" name="SpeedLimit_EdgeTriggered_DoesNotSpamEvents" fullname="DrivingSchool.Tests.RuleEvaluatorTests.SpeedLimit_EdgeTriggered_DoesNotSpamEvents" methodname="SpeedLimit_EdgeTriggered_DoesNotSpamEvents" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1794536293" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000970" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1066" name="SpeedLimit_Hysteresis_ResetsAfterSlowingDown" fullname="DrivingSchool.Tests.RuleEvaluatorTests.SpeedLimit_Hysteresis_ResetsAfterSlowingDown" methodname="SpeedLimit_Hysteresis_ResetsAfterSlowingDown" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1190238557" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000690" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1075" name="StopLine_DynamicDt_IsTickRateIndependent" fullname="DrivingSchool.Tests.RuleEvaluatorTests.StopLine_DynamicDt_IsTickRateIndependent" methodname="StopLine_DynamicDt_IsTickRateIndependent" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="320077797" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000613" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1067" name="StopLine_PassingWithoutStopping_TriggersViolation" fullname="DrivingSchool.Tests.RuleEvaluatorTests.StopLine_PassingWithoutStopping_TriggersViolation" methodname="StopLine_PassingWithoutStopping_TriggersViolation" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="2001059679" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000573" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1068" name="StopLine_StoppingCorrectly_PassesWithoutViolation" fullname="DrivingSchool.Tests.RuleEvaluatorTests.StopLine_StoppingCorrectly_PassesWithoutViolation" methodname="StopLine_StoppingCorrectly_PassesWithoutViolation" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="2073464604" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001450" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1071" name="TurnSignal_OmissionTriggersPenalty" fullname="DrivingSchool.Tests.RuleEvaluatorTests.TurnSignal_OmissionTriggersPenalty" methodname="TurnSignal_OmissionTriggersPenalty" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="217584206" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000978" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1072" name="TurnSignal_ProperIndicatorUsage_PassesCleanly" fullname="DrivingSchool.Tests.RuleEvaluatorTests.TurnSignal_ProperIndicatorUsage_PassesCleanly" methodname="TurnSignal_ProperIndicatorUsage_PassesCleanly" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1569373902" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001140" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1077" name="TrainingCourseTests" fullname="DrivingSchool.Tests.TrainingCourseTests" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" testcasecount="13" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.014780" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1083" name="ExamIncludesTransfersAndFinalFinish" fullname="DrivingSchool.Tests.TrainingCourseTests.ExamIncludesTransfersAndFinalFinish" methodname="ExamIncludesTransfersAndFinalFinish" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="777634416" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.004727" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1085" name="FaultThresholdAndTerminalStateAreStable" fullname="DrivingSchool.Tests.TrainingCourseTests.FaultThresholdAndTerminalStateAreStable" methodname="FaultThresholdAndTerminalStateAreStable" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="1766964976" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001348" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1081" name="GatesCannotBeCompletedOutOfOrder" fullname="DrivingSchool.Tests.TrainingCourseTests.GatesCannotBeCompletedOutOfOrder" methodname="GatesCannotBeCompletedOutOfOrder" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="1391309930" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000487" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1088" name="HillRollbackFailsAfterEntry" fullname="DrivingSchool.Tests.TrainingCourseTests.HillRollbackFailsAfterEntry" methodname="HillRollbackFailsAfterEntry" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="824745615" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000320" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1079" name="HoldMustBeContinuousAndAligned" fullname="DrivingSchool.Tests.TrainingCourseTests.HoldMustBeContinuousAndAligned" methodname="HoldMustBeContinuousAndAligned" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="621299410" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000309" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1089" name="InvalidNumbersAreRejected" fullname="DrivingSchool.Tests.TrainingCourseTests.InvalidNumbersAreRejected" methodname="InvalidNumbersAreRejected" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="1538401144" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000961" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1078" name="MustFitEntireVehicleInParkingBay" fullname="DrivingSchool.Tests.TrainingCourseTests.MustFitEntireVehicleInParkingBay" methodname="MustFitEntireVehicleInParkingBay" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="736033094" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000548" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1082" name="ReverseEntryLatchClearsOnExit" fullname="DrivingSchool.Tests.TrainingCourseTests.ReverseEntryLatchClearsOnExit" methodname="ReverseEntryLatchClearsOnExit" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="1676478715" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000440" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1080" name="ReverseParkingCannotPassByDrivingForward" fullname="DrivingSchool.Tests.TrainingCourseTests.ReverseParkingCannotPassByDrivingForward" methodname="ReverseParkingCannotPassByDrivingForward" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="134465245" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000288" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1087" name="RotatedBayUsesRotatedVehicleFootprint" fullname="DrivingSchool.Tests.TrainingCourseTests.RotatedBayUsesRotatedVehicleFootprint" methodname="RotatedBayUsesRotatedVehicleFootprint" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="1078241824" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000222" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1090" name="ShiftGateRequiresGearAndMeasuredSpeed" fullname="DrivingSchool.Tests.TrainingCourseTests.ShiftGateRequiresGearAndMeasuredSpeed" methodname="ShiftGateRequiresGearAndMeasuredSpeed" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="1319976805" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000338" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1084" name="SingleLessonDoesNotRequireTransfer" fullname="DrivingSchool.Tests.TrainingCourseTests.SingleLessonDoesNotRequireTransfer" methodname="SingleLessonDoesNotRequireTransfer" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="369912728" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000245" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1086" name="TimeoutCannotBeOverriddenByPassingStop" fullname="DrivingSchool.Tests.TrainingCourseTests.TimeoutCannotBeOverriddenByPassingStop" methodname="TimeoutCannotBeOverriddenByPassingStop" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="318021589" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000239" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1091" name="VehicleAdapterTests" fullname="DrivingSchool.Tests.VehicleAdapterTests" classname="DrivingSchool.Tests.VehicleAdapterTests" runstate="Runnable" testcasecount="7" result="Failed" site="Child" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.032841" total="7" passed="3" failed="4" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-case id="1097" name="AckermannSteering_ComputesAsymmetricWheelAngles" fullname="DrivingSchool.Tests.VehicleAdapterTests.AckermannSteering_ComputesAsymmetricWheelAngles" methodname="AckermannSteering_ComputesAsymmetricWheelAngles" classname="DrivingSchool.Tests.VehicleAdapterTests" runstate="Runnable" seed="1568729533" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.009632" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1094" name="Brakes_DecelerateAndStopVehicle" fullname="DrivingSchool.Tests.VehicleAdapterTests.Brakes_DecelerateAndStopVehicle" methodname="Brakes_DecelerateAndStopVehicle" classname="DrivingSchool.Tests.VehicleAdapterTests" runstate="Runnable" seed="574279005" result="Failed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.011068" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[  Expected: greater than 0.5f
+  But was:  0.147702336f
+]]></message>
+                <stack-trace><![CDATA[at DrivingSchool.Tests.VehicleAdapterTests.Brakes_DecelerateAndStopVehicle () [0x000d8] in C:\Users\AVSok\OneDrive\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\VehicleAdapterTests.cs:86
+]]></stack-trace>
+              </failure>
+            </test-case>
+            <test-case id="1095" name="Handbrake_PreventsRollbackAndHoldsVehicle" fullname="DrivingSchool.Tests.VehicleAdapterTests.Handbrake_PreventsRollbackAndHoldsVehicle" methodname="Handbrake_PreventsRollbackAndHoldsVehicle" classname="DrivingSchool.Tests.VehicleAdapterTests" runstate="Runnable" seed="764793470" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000962" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1098" name="ReverseGear_DrivesVehicleBackwards" fullname="DrivingSchool.Tests.VehicleAdapterTests.ReverseGear_DrivesVehicleBackwards" methodname="ReverseGear_DrivesVehicleBackwards" classname="DrivingSchool.Tests.VehicleAdapterTests" runstate="Runnable" seed="2096067515" result="Failed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001790" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[  Vehicle should move backwards in reverse gear.
+  Expected: less than -0.200000003f
+  But was:  -0.067472361f
+]]></message>
+                <stack-trace><![CDATA[at DrivingSchool.Tests.VehicleAdapterTests.ReverseGear_DrivesVehicleBackwards () [0x000e3] in C:\Users\AVSok\OneDrive\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\VehicleAdapterTests.cs:171
+]]></stack-trace>
+              </failure>
+            </test-case>
+            <test-case id="1092" name="Rigidbody_MassAndCenterOfMass_ConfiguredCorrectly" fullname="DrivingSchool.Tests.VehicleAdapterTests.Rigidbody_MassAndCenterOfMass_ConfiguredCorrectly" methodname="Rigidbody_MassAndCenterOfMass_ConfiguredCorrectly" classname="DrivingSchool.Tests.VehicleAdapterTests" runstate="Runnable" seed="385065529" result="Failed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.003391" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[  Expected: (0.00, 0.51, -0.10)
+  But was:  (0.00, 0.00, 0.00)
+]]></message>
+                <stack-trace><![CDATA[at DrivingSchool.Tests.VehicleAdapterTests.Rigidbody_MassAndCenterOfMass_ConfiguredCorrectly () [0x0002c] in C:\Users\AVSok\OneDrive\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\VehicleAdapterTests.cs:42
+]]></stack-trace>
+              </failure>
+            </test-case>
+            <test-case id="1093" name="StartingEngine_AndDrivingForward_AcceleratesVehicle" fullname="DrivingSchool.Tests.VehicleAdapterTests.StartingEngine_AndDrivingForward_AcceleratesVehicle" methodname="StartingEngine_AndDrivingForward_AcceleratesVehicle" classname="DrivingSchool.Tests.VehicleAdapterTests" runstate="Runnable" seed="1424466377" result="Failed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.001411" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[  Expected: Running
+  But was:  Stalled
+]]></message>
+                <stack-trace><![CDATA[at DrivingSchool.Tests.VehicleAdapterTests.StartingEngine_AndDrivingForward_AcceleratesVehicle () [0x00113] in C:\Users\AVSok\OneDrive\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\VehicleAdapterTests.cs:72
+]]></stack-trace>
+              </failure>
+            </test-case>
+            <test-case id="1096" name="SuddenClutchDumpAtIdle_StallsEngine" fullname="DrivingSchool.Tests.VehicleAdapterTests.SuddenClutchDumpAtIdle_StallsEngine" methodname="SuddenClutchDumpAtIdle_StallsEngine" classname="DrivingSchool.Tests.VehicleAdapterTests" runstate="Runnable" seed="867346821" result="Passed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:13Z" duration="0.000661" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1105" name="DS.TrainingSceneTests.dll" fullname="C:/Users/AVSok/OneDrive/Documents/unity-driing/DrivingSchoolSim/Library/ScriptAssemblies/DS.TrainingSceneTests.dll" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2026-09-20 12:14:21Z" end-time="2026-09-20 12:14:52Z" duration="30.991331" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="27176" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1106" name="DrivingSchool" fullname="DrivingSchool" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2026-09-20 12:14:21Z" end-time="2026-09-20 12:14:52Z" duration="30.987951" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1107" name="Tests" fullname="DrivingSchool.Tests" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2026-09-20 12:14:21Z" end-time="2026-09-20 12:14:52Z" duration="30.985219" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestFixture" id="1102" name="TrainingSceneTests" fullname="DrivingSchool.Tests.TrainingSceneTests" classname="DrivingSchool.Tests.TrainingSceneTests" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2026-09-20 12:14:21Z" end-time="2026-09-20 12:14:52Z" duration="30.982576" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-case id="1104" name="ActualSceneKeyboardDriveCanPassStartStop" fullname="DrivingSchool.Tests.TrainingSceneTests.ActualSceneKeyboardDriveCanPassStartStop" methodname="ActualSceneKeyboardDriveCanPassStartStop" classname="DrivingSchool.Tests.TrainingSceneTests" runstate="Runnable" seed="427254061" result="Failed" start-time="2026-09-20 12:14:13Z" end-time="2026-09-20 12:14:52Z" duration="38.607160" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <failure>
+                <message><![CDATA[  Actual keyboard drive: Двигайтесь прямо по коридору z=-62
+  Expected: Passed
+  But was:  Running
+]]></message>
+                <stack-trace><![CDATA[at DrivingSchool.Tests.TrainingSceneTests+<ActualSceneKeyboardDriveCanPassStartStop>d__2.MoveNext () [0x00190] in C:\Users\AVSok\OneDrive\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\TrainingScene\TrainingSceneTests.cs:50
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@0b7a23ab2e1d\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
+]]></stack-trace>
+              </failure>
+            </test-case>
+            <test-case id="1103" name="EveryAuthoredLessonAndWholeExamCanCompleteWithValidGateSamples" fullname="DrivingSchool.Tests.TrainingSceneTests.EveryAuthoredLessonAndWholeExamCanCompleteWithValidGateSamples" methodname="EveryAuthoredLessonAndWholeExamCanCompleteWithValidGateSamples" classname="DrivingSchool.Tests.TrainingSceneTests" runstate="Runnable" seed="1501307594" result="Passed" start-time="2026-09-20 12:14:52Z" end-time="2026-09-20 12:14:52Z" duration="0.004133" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: C:/Users/AVSok/AppData/LocalLow/DrivingSchool/DrivingSchoolSim Prototype\TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

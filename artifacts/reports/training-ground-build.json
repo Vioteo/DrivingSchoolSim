@@ -1,0 +1,28 @@
+{
+    "utc": "2026-09-24T09:23:15.9584785Z",
+    "unity": "6000.3.10f1",
+    "scene": "Assets/DrivingSchool/Scenes/Autodrome_Training.unity",
+    "lessonCount": 11,
+    "renderers": 5141,
+    "colliders": 2253,
+    "modelSources": [
+        "Assets/DrivingSchool/Prefabs/Props/DS_TrafficCone.prefab",
+        "Assets/DrivingSchool/Prefabs/TrainingKit/TK_RailwayCrossing_Tracks.prefab",
+        "Assets/DrivingSchool/Prefabs/TrainingKit/TK_RailwaySignal.prefab",
+        "Assets/DrivingSchool/Prefabs/Traffic/DS_Sign_Straight.prefab",
+        "Assets/DrivingSchool/Prefabs/Traffic/DS_Sign_Yield.prefab",
+        "Assets/DrivingSchool/Prefabs/Traffic/DS_Sign_Right.prefab",
+        "Assets/DrivingSchool/Prefabs/Traffic/DS_Sign_Stop.prefab",
+        "Assets/DrivingSchool/Prefabs/Traffic/DS_Sign_Priority.prefab",
+        "Assets/DrivingSchool/Prefabs/Traffic/DS_Sign_Crossing.prefab",
+        "Assets/DrivingSchool/Prefabs/Traffic/DS_Signal_Vehicle.prefab",
+        "Assets/DrivingSchool/Prefabs/Traffic/DS_Signal_Pedestrian.prefab",
+        "Assets/DrivingSchool/Prefabs/Traffic/DS_Sign_Parking.prefab",
+        "Assets/DrivingSchool/Prefabs/TrainingKit/TK_InstructorShelter.prefab",
+        "Assets/DrivingSchool/Prefabs/TrainingKit/TK_Gate_8m.prefab",
+        "Assets/DrivingSchool/Prefabs/TrainingKit/TK_Fence_5m.prefab",
+        "Assets/DrivingSchool/Prefabs/TrainingKit/TK_Lamp_7m.prefab",
+        "Assets/DrivingSchool/Prefabs/TrainingKit/TK_ZoneBoard.prefab"
+    ],
+    "staticChecksPassed": true
+}

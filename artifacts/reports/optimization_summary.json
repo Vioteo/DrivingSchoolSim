@@ -1,0 +1,125 @@
+{
+  "total_before_triangles": 296152,
+  "total_after_triangles": 294456,
+  "total_saved_triangles": 1696,
+  "total_reduction_percent": 0.6,
+  "models": [
+    {
+      "model": "DS_Sedan_A.blend",
+      "before_triangles": 41964,
+      "after_triangles": 41964,
+      "saved_triangles": 0,
+      "reduction_percent": 0.0,
+      "before_vertices": 21652,
+      "after_vertices": 21652
+    },
+    {
+      "model": "DS_Sedan_A_cabin_v3.blend",
+      "before_triangles": 41964,
+      "after_triangles": 41964,
+      "saved_triangles": 0,
+      "reduction_percent": 0.0,
+      "before_vertices": 21652,
+      "after_vertices": 21652
+    },
+    {
+      "model": "DS_Sedan_A_closed_shell.blend",
+      "before_triangles": 38900,
+      "after_triangles": 38900,
+      "saved_triangles": 0,
+      "reduction_percent": 0.0,
+      "before_vertices": 19988,
+      "after_vertices": 19988
+    },
+    {
+      "model": "DS_Sedan_A_reviewed.blend",
+      "before_triangles": 36172,
+      "after_triangles": 36172,
+      "saved_triangles": 0,
+      "reduction_percent": 0.0,
+      "before_vertices": 18800,
+      "after_vertices": 18800
+    },
+    {
+      "model": "DS_Sedan_A_v1.blend",
+      "before_triangles": 23432,
+      "after_triangles": 23432,
+      "saved_triangles": 0,
+      "reduction_percent": 0.0,
+      "before_vertices": 12122,
+      "after_vertices": 12122
+    },
+    {
+      "model": "DS_TrafficCone.blend",
+      "before_triangles": 2604,
+      "after_triangles": 908,
+      "saved_triangles": 1696,
+      "reduction_percent": 65.1,
+      "before_vertices": 1304,
+      "after_vertices": 456
+    },
+    {
+      "model": "DS_SpeedBumps.blend",
+      "before_triangles": 8452,
+      "after_triangles": 8452,
+      "saved_triangles": 0,
+      "reduction_percent": 0.0,
+      "before_vertices": 4594,
+      "after_vertices": 4594
+    },
+    {
+      "model": "DS_RoadKit_v1.blend",
+      "before_triangles": 6756,
+      "after_triangles": 6756,
+      "saved_triangles": 0,
+      "reduction_percent": 0.0,
+      "before_vertices": 4074,
+      "after_vertices": 4074
+    },
+    {
+      "model": "DS_Autodrome.blend",
+      "before_triangles": 5406,
+      "after_triangles": 5406,
+      "saved_triangles": 0,
+      "reduction_percent": 0.0,
+      "before_vertices": 2904,
+      "after_vertices": 2904
+    },
+    {
+      "model": "DS_District.blend",
+      "before_triangles": 75778,
+      "after_triangles": 75778,
+      "saved_triangles": 0,
+      "reduction_percent": 0.0,
+      "before_vertices": 47984,
+      "after_vertices": 47984
+    },
+    {
+      "model": "DS_Pedestrian_A.blend",
+      "before_triangles": 4800,
+      "after_triangles": 4800,
+      "saved_triangles": 0,
+      "reduction_percent": 0.0,
+      "before_vertices": 2487,
+      "after_vertices": 2487
+    },
+    {
+      "model": "DS_Pedestrian_B.blend",
+      "before_triangles": 4800,
+      "after_triangles": 4800,
+      "saved_triangles": 0,
+      "reduction_percent": 0.0,
+      "before_vertices": 2487,
+      "after_vertices": 2487
+    },
+    {
+      "model": "DS_Pedestrian_C.blend",
+      "before_triangles": 5124,
+      "after_triangles": 5124,
+      "saved_triangles": 0,
+      "reduction_percent": 0.0,
+      "before_vertices": 2657,
+      "after_vertices": 2657
+    }
+  ]
+}

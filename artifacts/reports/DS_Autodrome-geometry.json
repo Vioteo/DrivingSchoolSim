@@ -1,0 +1,806 @@
+{
+  "source": "Original procedural authored geometry",
+  "objects": [
+    {
+      "name": "Asphalt",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Asphalt"
+      ]
+    },
+    {
+      "name": "Cone",
+      "vertices": 32,
+      "triangles": 60,
+      "materials": [
+        "Lamp_Amber"
+      ]
+    },
+    {
+      "name": "Cone.001",
+      "vertices": 32,
+      "triangles": 60,
+      "materials": [
+        "Lamp_Amber"
+      ]
+    },
+    {
+      "name": "Cone.002",
+      "vertices": 32,
+      "triangles": 60,
+      "materials": [
+        "Lamp_Amber"
+      ]
+    },
+    {
+      "name": "Cone.003",
+      "vertices": 32,
+      "triangles": 60,
+      "materials": [
+        "Lamp_Amber"
+      ]
+    },
+    {
+      "name": "Cone.004",
+      "vertices": 32,
+      "triangles": 60,
+      "materials": [
+        "Lamp_Amber"
+      ]
+    },
+    {
+      "name": "ConeBand",
+      "vertices": 32,
+      "triangles": 60,
+      "materials": [
+        "Line_White"
+      ]
+    },
+    {
+      "name": "ConeBand.001",
+      "vertices": 32,
+      "triangles": 60,
+      "materials": [
+        "Line_White"
+      ]
+    },
+    {
+      "name": "ConeBand.002",
+      "vertices": 32,
+      "triangles": 60,
+      "materials": [
+        "Line_White"
+      ]
+    },
+    {
+      "name": "ConeBand.003",
+      "vertices": 32,
+      "triangles": 60,
+      "materials": [
+        "Line_White"
+      ]
+    },
+    {
+      "name": "ConeBand.004",
+      "vertices": 32,
+      "triangles": 60,
+      "materials": [
+        "Line_White"
+      ]
+    },
+    {
+      "name": "ConeBase",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "ConeBase.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "ConeBase.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "ConeBase.003",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "ConeBase.004",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "EdgeLine",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Line_White"
+      ]
+    },
+    {
+      "name": "EdgeLine.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Line_White"
+      ]
+    },
+    {
+      "name": "EdgeLine.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Line_White"
+      ]
+    },
+    {
+      "name": "EdgeLine.003",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Line_White"
+      ]
+    },
+    {
+      "name": "Ground",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Grass"
+      ]
+    },
+    {
+      "name": "HillRamp",
+      "vertices": 12,
+      "triangles": 18,
+      "materials": [
+        "Concrete"
+      ]
+    },
+    {
+      "name": "HillStop",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Line_White"
+      ]
+    },
+    {
+      "name": "LampLens",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_White"
+      ]
+    },
+    {
+      "name": "LampLens.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_White"
+      ]
+    },
+    {
+      "name": "LampLens.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_White"
+      ]
+    },
+    {
+      "name": "LampLens.003",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_White"
+      ]
+    },
+    {
+      "name": "LampLens.004",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_White"
+      ]
+    },
+    {
+      "name": "LampLens.005",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_White"
+      ]
+    },
+    {
+      "name": "LampLens.006",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_White"
+      ]
+    },
+    {
+      "name": "LightPole",
+      "vertices": 24,
+      "triangles": 44,
+      "materials": [
+        "Facade_Dark"
+      ]
+    },
+    {
+      "name": "LightPole.001",
+      "vertices": 24,
+      "triangles": 44,
+      "materials": [
+        "Facade_Dark"
+      ]
+    },
+    {
+      "name": "LightPole.002",
+      "vertices": 24,
+      "triangles": 44,
+      "materials": [
+        "Facade_Dark"
+      ]
+    },
+    {
+      "name": "LightPole.003",
+      "vertices": 24,
+      "triangles": 44,
+      "materials": [
+        "Facade_Dark"
+      ]
+    },
+    {
+      "name": "LightPole.004",
+      "vertices": 24,
+      "triangles": 44,
+      "materials": [
+        "Facade_Dark"
+      ]
+    },
+    {
+      "name": "LightPole.005",
+      "vertices": 24,
+      "triangles": 44,
+      "materials": [
+        "Facade_Dark"
+      ]
+    },
+    {
+      "name": "LightPole.006",
+      "vertices": 24,
+      "triangles": 44,
+      "materials": [
+        "Facade_Dark"
+      ]
+    },
+    {
+      "name": "Luminaire",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Facade_Dark"
+      ]
+    },
+    {
+      "name": "Luminaire.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Facade_Dark"
+      ]
+    },
+    {
+      "name": "Luminaire.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Facade_Dark"
+      ]
+    },
+    {
+      "name": "Luminaire.003",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Facade_Dark"
+      ]
+    },
+    {
+      "name": "Luminaire.004",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Facade_Dark"
+      ]
+    },
+    {
+      "name": "Luminaire.005",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Facade_Dark"
+      ]
+    },
+    {
+      "name": "Luminaire.006",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Facade_Dark"
+      ]
+    },
+    {
+      "name": "Tree_Canopy",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.001",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.002",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.003",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.004",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.005",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.006",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.007",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.008",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.009",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.010",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.011",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.012",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.013",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.014",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.015",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.016",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.017",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.018",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.019",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.020",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.021",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.022",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.023",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.024",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.025",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.026",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.027",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.028",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.029",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.030",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.031",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.032",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.033",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.034",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.035",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.036",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.037",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.038",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.039",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.040",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Canopy.041",
+      "vertices": 42,
+      "triangles": 80,
+      "materials": [
+        "Leaf"
+      ]
+    },
+    {
+      "name": "Tree_Trunk",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Trunk"
+      ]
+    },
+    {
+      "name": "Tree_Trunk.001",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Trunk"
+      ]
+    },
+    {
+      "name": "Tree_Trunk.002",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Trunk"
+      ]
+    },
+    {
+      "name": "Tree_Trunk.003",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Trunk"
+      ]
+    },
+    {
+      "name": "Tree_Trunk.004",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Trunk"
+      ]
+    },
+    {
+      "name": "Tree_Trunk.005",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Trunk"
+      ]
+    },
+    {
+      "name": "Tree_Trunk.006",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Trunk"
+      ]
+    },
+    {
+      "name": "Tree_Trunk.007",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Trunk"
+      ]
+    },
+    {
+      "name": "Tree_Trunk.008",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Trunk"
+      ]
+    },
+    {
+      "name": "Tree_Trunk.009",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Trunk"
+      ]
+    },
+    {
+      "name": "Tree_Trunk.010",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Trunk"
+      ]
+    },
+    {
+      "name": "Tree_Trunk.011",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Trunk"
+      ]
+    },
+    {
+      "name": "Tree_Trunk.012",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Trunk"
+      ]
+    },
+    {
+      "name": "Tree_Trunk.013",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Trunk"
+      ]
+    }
+  ],
+  "trianglesBase": 4990
+}

@@ -1,0 +1,796 @@
+{
+  "generatedAtUtc": "2026-09-20T11:57:15.461506+00:00",
+  "totalFilesAudited": 87,
+  "filesExisting": 87,
+  "filesMissing": 0,
+  "requirements": [
+    {
+      "id": "R01",
+      "name": "Platform",
+      "status": "PREPARED",
+      "notes": "Unity 6000.3.10f1, URP, Input System, OpenXR manifest configured; batch compile clean (exit 0). uGUI migration pending T03."
+    },
+    {
+      "id": "R02",
+      "name": "Input",
+      "status": "PREPARED",
+      "notes": "IInputSource interface defined. Keyboard/G27 adapters designed in T04/T05. Physical G27 verification BLOCKED (no hardware connected)."
+    },
+    {
+      "id": "R03",
+      "name": "Force Feedback",
+      "status": "PREPARED",
+      "notes": "IForceFeedbackOutput interface defined. FFB lifecycle controller designed in T06. Physical FFB BLOCKED (no hardware)."
+    },
+    {
+      "id": "R04",
+      "name": "Drivetrain & Dynamics",
+      "status": "IMPLEMENTED",
+      "notes": "DrivetrainMath implemented (12 tests pass). EngineModel/Clutch/Gearbox pure solver designed in T07-T10."
+    },
+    {
+      "id": "R05",
+      "name": "Vehicle Asset",
+      "status": "VERIFIED",
+      "notes": "Sedan A model authored in Blender, FBX & GLB exported, shell repair accepted, 24 render views generated."
+    },
+    {
+      "id": "R06",
+      "name": "Territory & Large World",
+      "status": "PREPARED",
+      "notes": "10x10 km masterplan JSON and 256m chunk schema specified. Streaming lifecycle designed in T12-T13."
+    },
+    {
+      "id": "R07",
+      "name": "Road Graph",
+      "status": "IMPLEMENTED",
+      "notes": "RoadGraph v1 data format implemented with 16 lanes demo world. V2 curve schema designed in T11."
+    },
+    {
+      "id": "R08",
+      "name": "Runtime Editor & Persistence",
+      "status": "IMPLEMENTED",
+      "notes": "WorldRepository JSON with .bak rotation implemented. Editor command architecture designed in T14-T15."
+    },
+    {
+      "id": "R09",
+      "name": "Traffic & Pedestrians",
+      "status": "PROPOSED",
+      "notes": "Lane follower agent and crosswalk behavior specified in T16-T17."
+    },
+    {
+      "id": "R10",
+      "name": "Traffic Rules",
+      "status": "PROPOSED",
+      "notes": "RuleEvent struct defined. Speed limit and stop line rule evaluators designed in T18."
+    },
+    {
+      "id": "R11",
+      "name": "Weather & Surface Friction",
+      "status": "PROPOSED",
+      "notes": "Dry/wet/snow/ice friction model and stopping distance formulas designed in T19."
+    },
+    {
+      "id": "R12",
+      "name": "Lessons & 8 Exercises",
+      "status": "IMPLEMENTED",
+      "notes": "LessonSession lifecycle implemented. Autodrome 8 exercises modeled in 3D and specified in T20-T21."
+    },
+    {
+      "id": "R13",
+      "name": "Theory Module",
+      "status": "IMPLEMENTED",
+      "notes": "TheoryContentPack struct and sample question implemented. Provenance validation designed in T22."
+    },
+    {
+      "id": "R14",
+      "name": "Performance (1080p60)",
+      "status": "PROPOSED",
+      "notes": "Target 1080p60 profile and metrics collection runner designed in T25. Release benchmark pending full scene."
+    },
+    {
+      "id": "R15",
+      "name": "Verifiability & Provenance",
+      "status": "VERIFIED",
+      "notes": "Evidence manifest, SHA256 hashes, test reports, and 26 discrete task cards fully authored."
+    }
+  ],
+  "files": [
+    {
+      "path": "ArtSource/DS_Sedan_A.blend",
+      "description": "Blender original source: Sedan A (v2)",
+      "category": "3d-source",
+      "exists": true,
+      "sizeBytes": 456803,
+      "sha256": "222d8854fb0f431b5798f7272dbbd5789a7e058f4ec605156e89847e85af578c"
+    },
+    {
+      "path": "ArtSource/DS_Sedan_A_closed_shell.blend",
+      "description": "Blender source: Sedan A closed shell repair",
+      "category": "3d-source",
+      "exists": true,
+      "sizeBytes": 409281,
+      "sha256": "96aa14d3eb5a6eeb6b27ba141999e86bf58e340862871dc1bc6bf1cb2eab1a36"
+    },
+    {
+      "path": "ArtSource/DS_District.blend",
+      "description": "Blender source: Demonstration District 500x500m",
+      "category": "3d-source",
+      "exists": true,
+      "sizeBytes": 1497058,
+      "sha256": "2c25d0e80120ad30f3688a32443abebdf12a11628aee643580140ade3f5072ae"
+    },
+    {
+      "path": "ArtSource/DS_Autodrome.blend",
+      "description": "Blender source: Autodrome with 8 exercises",
+      "category": "3d-source",
+      "exists": true,
+      "sizeBytes": 146437,
+      "sha256": "953979005e6e5b9b36635a600d15566c01aebbfb9c48752954af954aa293f59b"
+    },
+    {
+      "path": "Assets/DrivingSchool/Art/DS_Sedan_A.fbx",
+      "description": "Sedan A FBX model for Unity",
+      "category": "unity-asset",
+      "exists": true,
+      "sizeBytes": 2457100,
+      "sha256": "6633f77af07c8876c06d34e3c8d95bf3b1abd5044dfcefc2e94cfbcf77e45486"
+    },
+    {
+      "path": "Assets/DrivingSchool/Art/DS_District.fbx",
+      "description": "District FBX model for Unity",
+      "category": "unity-asset",
+      "exists": true,
+      "sizeBytes": 9989420,
+      "sha256": "dc6f40528a4ec8d16ccae0ee222d11bbbf5fd703fb8e52fc6fb92684578816a6"
+    },
+    {
+      "path": "Assets/DrivingSchool/Art/DS_Autodrome.fbx",
+      "description": "Autodrome FBX model for Unity",
+      "category": "unity-asset",
+      "exists": true,
+      "sizeBytes": 392716,
+      "sha256": "78971699f67ee5fbebad46c62e2df4fd3d3d3c774d61b37308557b7682860508"
+    },
+    {
+      "path": "Assets/DrivingSchool/Art/palette.json",
+      "description": "Material palette JSON",
+      "category": "unity-asset",
+      "exists": true,
+      "sizeBytes": 6274,
+      "sha256": "5cbcfc8a24068fc09ed03c699b6437b6ce7192512cfc386149c231d42584b8ae"
+    },
+    {
+      "path": "artifacts/visual-review/models/DS_Sedan_A.glb",
+      "description": "Sedan A GLB interactive preview",
+      "category": "web-asset",
+      "exists": true,
+      "sizeBytes": 2377424,
+      "sha256": "5ef69e04325bce1bb0444b08216e2505368394808f76373aeef3a6c7d08c2fd7"
+    },
+    {
+      "path": "artifacts/visual-review/models/DS_District.glb",
+      "description": "District GLB interactive preview",
+      "category": "web-asset",
+      "exists": true,
+      "sizeBytes": 6235980,
+      "sha256": "98ef450713a9e98060f21632555e00cd8bc8e05ac62c4f39680d0df311e1bdbc"
+    },
+    {
+      "path": "artifacts/visual-review/models/DS_Autodrome.glb",
+      "description": "Autodrome GLB interactive preview",
+      "category": "web-asset",
+      "exists": true,
+      "sizeBytes": 1184452,
+      "sha256": "92d9d6fd71e37fb775cefa290f19447a3d1d8b5d53d12bd308b88216a770cfa8"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Contracts/Contracts.cs",
+      "description": "Core architectural C# contracts and DTOs",
+      "category": "code-contracts",
+      "exists": true,
+      "sizeBytes": 4014,
+      "sha256": "f70c7e64d1cb2114ce4d853aa5629ac433a511d85238b0fd054971da5d9f41d2"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Simulation/DrivetrainMath.cs",
+      "description": "Drivetrain torque formulas",
+      "category": "code-simulation",
+      "exists": true,
+      "sizeBytes": 1903,
+      "sha256": "aeab2afb3e828641d575317af70b25d4a35491303bcf39ca4b45154b77130dc8"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Learning/LessonSession.cs",
+      "description": "Lesson session state machine",
+      "category": "code-learning",
+      "exists": true,
+      "sizeBytes": 2028,
+      "sha256": "c86860b7b3adf972b22f47bdeb401784358e5bce2b3d977382fe4ea27e912a4f"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Learning/TheoryPackageValidator.cs",
+      "description": "Theory package content validator",
+      "category": "code-learning",
+      "exists": true,
+      "sizeBytes": 2254,
+      "sha256": "55c489f85e595aab7d430bb43624d826cb012ea6fc90ad321c4eb01b8660a05d"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/World/WorldRepository.cs",
+      "description": "World persistence and repository",
+      "category": "code-world",
+      "exists": true,
+      "sizeBytes": 6492,
+      "sha256": "59de9761c17fd9eaf5ba761a4d51eda3dc2108ed3f901e91b6b725dcea1e4e06"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/World/FloatingOrigin.cs",
+      "description": "Large world floating origin service",
+      "category": "code-world",
+      "exists": true,
+      "sizeBytes": 7978,
+      "sha256": "5d1136f8d034eda137c6d183369f1f914614d7c615eca877493da843cabf4b41"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Input/KeyboardInputSource.cs",
+      "description": "Keyboard input adapter",
+      "category": "code-input",
+      "exists": true,
+      "sizeBytes": 3646,
+      "sha256": "17b7052055f7295d13b8b862e030fff176b5d3424c31351b21a685b5216fea91"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Input/LogitechG27Adapter.cs",
+      "description": "Logitech G27 adapter and axis calibration",
+      "category": "code-input",
+      "exists": true,
+      "sizeBytes": 16973,
+      "sha256": "4df49484bf3f5a84a3f2b36fbdd7e6bf06a31f144106f53014bdcb3d143e3e34"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Rules/SpeedLimitEvaluator.cs",
+      "description": "Speed limit violation evaluator",
+      "category": "code-rules",
+      "exists": true,
+      "sizeBytes": 1865,
+      "sha256": "7e25a7cd6d746b165fe7ab32e38037fe40563b46481910778cd8d09ce4ab8804"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Rules/RuleEvaluator.cs",
+      "description": "General traffic rules evaluator",
+      "category": "code-rules",
+      "exists": true,
+      "sizeBytes": 12914,
+      "sha256": "128e396b231d36ec9445dbc8c0f01326404d35c078568f309f4bbc079010334a"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Rules/TrafficRules.cs",
+      "description": "Traffic rule definitions and constants",
+      "category": "code-rules",
+      "exists": true,
+      "sizeBytes": 3644,
+      "sha256": "f00b29435f36e23bdfdfcaed7f724388fb626d4920501a7c79bd8aeb9ccd54c0"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Presentation/ModelDemonstrator.cs",
+      "description": "Presentation model demonstrator",
+      "category": "code-presentation",
+      "exists": true,
+      "sizeBytes": 6217,
+      "sha256": "08168ae8443ade38b7e4d6e2fb4e69b9204b959ef5cc4d810a87e4d1c5ebc8b0"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Presentation/PlanarMirror.cs",
+      "description": "Planar mirror camera component",
+      "category": "code-presentation",
+      "exists": true,
+      "sizeBytes": 3386,
+      "sha256": "2aeb4375dfaea60469814b455505ae2a3a2cc6d1e11766640f283de7905e297b"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Editor/ProjectBuilder.cs",
+      "description": "Project builder (Prepare / Build)",
+      "category": "code-editor",
+      "exists": true,
+      "sizeBytes": 13144,
+      "sha256": "23cd8eaf148c090de1cf94bd97b8d26f36b753ded5da92319c68d560f9835237"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Tests/ContractTests.cs",
+      "description": "NUnit contract test suite",
+      "category": "code-tests",
+      "exists": true,
+      "sizeBytes": 8280,
+      "sha256": "416aa18e8a09dfcb9fd6d3e752606506a7c768e0d8fed551daa49f5e661b9149"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Tests/FloatingOriginTests.cs",
+      "description": "Floating origin test suite",
+      "category": "code-tests",
+      "exists": true,
+      "sizeBytes": 9423,
+      "sha256": "250c25f4355a5bac1e150f2bce9879de361e41e6ec017c6c7bd3856f2d9e486e"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Tests/LogitechG27Tests.cs",
+      "description": "Logitech G27 adapter test suite",
+      "category": "code-tests",
+      "exists": true,
+      "sizeBytes": 10954,
+      "sha256": "1d0560980760f36147322cb6334a0396649d7a17b4e1bf1cf8ed1b5d542f9d8a"
+    },
+    {
+      "path": "Assets/DrivingSchool/Code/Tests/RuleEvaluatorTests.cs",
+      "description": "Traffic rules test suite",
+      "category": "code-tests",
+      "exists": true,
+      "sizeBytes": 13409,
+      "sha256": "a82274bc76d1ab8efa2a4ec5636285ca2a09b8e4f31cf634edcdcc9d87759b14"
+    },
+    {
+      "path": "Assets/DrivingSchool/Materials/Stage.mat",
+      "description": "Showroom stage floor material",
+      "category": "unity-asset",
+      "exists": true,
+      "sizeBytes": 3798,
+      "sha256": "609fab5efd0c98500aeafc380047f3a19058d691947f95c01c7c5b62bf2bcea7"
+    },
+    {
+      "path": "Assets/DrivingSchool/Materials/MirrorReflection.mat",
+      "description": "Planar mirror reflection template material",
+      "category": "unity-asset",
+      "exists": true,
+      "sizeBytes": 3790,
+      "sha256": "d68114614c9fb641643948a4050eb1ca77de5d8075430fcceb60827b9e3f987a"
+    },
+    {
+      "path": "Assets/StreamingAssets/Examples/world.json",
+      "description": "Example road network (v1)",
+      "category": "example-data",
+      "exists": true,
+      "sizeBytes": 5536,
+      "sha256": "248dcccf919d4ebf6e798d3bc31922f8683d0c6418d2198066025f93f5a27096"
+    },
+    {
+      "path": "Assets/StreamingAssets/Examples/lesson.json",
+      "description": "Example lesson definition",
+      "category": "example-data",
+      "exists": true,
+      "sizeBytes": 301,
+      "sha256": "1572befc50a5cefbe0f5cc6be69989fc0c7f1eeee7499b336cde80d2c370af96"
+    },
+    {
+      "path": "Assets/StreamingAssets/Examples/theory.json",
+      "description": "Example theory content pack",
+      "category": "example-data",
+      "exists": true,
+      "sizeBytes": 963,
+      "sha256": "581046f3b115f1f9652691cf1565755eae5d95e7a129a95ed493d7b7489a3db1"
+    },
+    {
+      "path": "Assets/StreamingAssets/Examples/vehicle.json",
+      "description": "Target vehicle physics specifications",
+      "category": "example-data",
+      "exists": true,
+      "sizeBytes": 592,
+      "sha256": "c99066a71239fb508247272904b504e4c9469dba6ae5844e08c117cd0fbf8530"
+    },
+    {
+      "path": "artifacts/visual-review/index.html",
+      "description": "Visual demonstration hub",
+      "category": "ui-prototype",
+      "exists": true,
+      "sizeBytes": 13538,
+      "sha256": "8aca8ee9368a028c1a9a9660c1bc456efa516ac0fd6343638c9df87021e4e70f"
+    },
+    {
+      "path": "artifacts/visual-review/prototype.html",
+      "description": "Interactive 9-screen HTML prototype",
+      "category": "ui-prototype",
+      "exists": true,
+      "sizeBytes": 1387,
+      "sha256": "bcca5f6a2506e7e7c8d2e487897b76837abf62906405632716386d0dd0f0e7ce"
+    },
+    {
+      "path": "artifacts/visual-review/prototype.js",
+      "description": "UI prototype interactions and states",
+      "category": "ui-prototype",
+      "exists": true,
+      "sizeBytes": 11663,
+      "sha256": "1c88530ad54000513c10843332dc70a29fadfffcab85245058af2d08c9f29c01"
+    },
+    {
+      "path": "artifacts/visual-review/prototype.css",
+      "description": "UI design tokens and layout",
+      "category": "ui-prototype",
+      "exists": true,
+      "sizeBytes": 13202,
+      "sha256": "aee542de9487587e51112896a6ae07252d75a11d7859ca0e542e1051c907965a"
+    },
+    {
+      "path": "artifacts/visual-review/viewer.html",
+      "description": "3D WebGL model viewer (Three.js)",
+      "category": "ui-prototype",
+      "exists": true,
+      "sizeBytes": 4216,
+      "sha256": "22d44e7aa02fea9b697a4fdd96a12d298efef7bfb2654337718d041fbb916ec4"
+    },
+    {
+      "path": "artifacts/visual-review/world-assets.json",
+      "description": "Showcase world renders catalog",
+      "category": "ui-prototype",
+      "exists": true,
+      "sizeBytes": 978,
+      "sha256": "34ebfff82d1ee28d481aba26df5095afc5d4cf07240c0b198758d9e67445bd7e"
+    },
+    {
+      "path": "artifacts/visual-review/qa-results.json",
+      "description": "UI automated QA results summary",
+      "category": "ui-prototype",
+      "exists": true,
+      "sizeBytes": 2513,
+      "sha256": "a53b48dbd55fc3ae2d0096bea68a3ff16fd75416babb54eeac5008c6f0f841b2"
+    },
+    {
+      "path": "artifacts/visual-review/qa-report.md",
+      "description": "UI automated QA comprehensive report",
+      "category": "ui-prototype",
+      "exists": true,
+      "sizeBytes": 7459,
+      "sha256": "ab2902bd6fb8dc87ad783697eb2ef28aeef56abc496f155d1c2322cbfb7cf2a7"
+    },
+    {
+      "path": "artifacts/visual-review/data/masterplan.json",
+      "description": "City master plan 10x10 km data",
+      "category": "ui-prototype",
+      "exists": true,
+      "sizeBytes": 1711,
+      "sha256": "6447abd5dd82dda8e9a3886febab1a74cae0edc41a861628918ee33115ad4933"
+    },
+    {
+      "path": "README.md",
+      "description": "Project overview and entry point",
+      "category": "documentation",
+      "exists": true,
+      "sizeBytes": 3859,
+      "sha256": "e5be0cd02e61bf51c5a3a9921345b640e21a72505ecbcf35f2a9b13676b91686"
+    },
+    {
+      "path": "docs/requirements.md",
+      "description": "Requirements and traceability matrix R01-R15",
+      "category": "documentation",
+      "exists": true,
+      "sizeBytes": 7584,
+      "sha256": "19c8640d6264186f254e41d463115f36ebeedc06d6adf3ef8baea3d33b277956"
+    },
+    {
+      "path": "docs/current-state.md",
+      "description": "Current implementation audit and gaps",
+      "category": "documentation",
+      "exists": true,
+      "sizeBytes": 10595,
+      "sha256": "f44e48d4af0c872f4a557747c85cc49e9d031cc5abb76f103dae8395d4a2da7a"
+    },
+    {
+      "path": "docs/architecture.md",
+      "description": "System architecture and simulation tick",
+      "category": "documentation",
+      "exists": true,
+      "sizeBytes": 9760,
+      "sha256": "f10f6f28060230155a5aefbbba27e47198b71a318ea744eb1b85a43645a42a03"
+    },
+    {
+      "path": "docs/adr.md",
+      "description": "Architecture Decision Records ADR-001..ADR-010",
+      "category": "documentation",
+      "exists": true,
+      "sizeBytes": 6239,
+      "sha256": "0f8d7aa9587e4f77773e8d603e5606f41d348abf701648b2252f814bb6bbcfa6"
+    },
+    {
+      "path": "docs/asset-standard.md",
+      "description": "Asset standard and geometry gates G01-G08",
+      "category": "documentation",
+      "exists": true,
+      "sizeBytes": 9734,
+      "sha256": "761738ee927499874c9a66f2c9ca4f39e6acb2d4df035f05de5fd554725f4b44"
+    },
+    {
+      "path": "docs/data-formats.md",
+      "description": "Data formats specification and v2 migration",
+      "category": "documentation",
+      "exists": true,
+      "sizeBytes": 9056,
+      "sha256": "4e2df71260af291e54a868ed2d5feacf4d098314cb44e0e5248ded841d258473"
+    },
+    {
+      "path": "docs/acceptance.md",
+      "description": "Acceptance gates A01-A19 and commands C00-C05",
+      "category": "documentation",
+      "exists": true,
+      "sizeBytes": 13186,
+      "sha256": "0fe9bc50102c6595272fd4901ff287be7a413c13c49fd1de37a75aa84313ebf1"
+    },
+    {
+      "path": "docs/implementation-plan.md",
+      "description": "Milestones M0-M3 and execution order",
+      "category": "documentation",
+      "exists": true,
+      "sizeBytes": 8124,
+      "sha256": "963c847bbad011ed4ca67bc09e08e6d63ec0335f707ed76690ddfb1212ba4ed5"
+    },
+    {
+      "path": "docs/model-iteration.md",
+      "description": "Model iteration and repair workflow",
+      "category": "documentation",
+      "exists": true,
+      "sizeBytes": 5181,
+      "sha256": "032db649ce421404091cf72ac4b7497169324a97627ae62b8ae9372d3770f6d7"
+    },
+    {
+      "path": "docs/tasks/README.md",
+      "description": "Developer small tasks index T01-T26",
+      "category": "documentation",
+      "exists": true,
+      "sizeBytes": 2890,
+      "sha256": "b9b2526831306e0a769a32363dde2096584b9ceac8e74b64a6628b3cd098f0f1"
+    },
+    {
+      "path": "artifacts/reports/editmode.xml",
+      "description": "NUnit EditMode test execution report (53 tests)",
+      "category": "verification-evidence",
+      "exists": true,
+      "sizeBytes": 49785,
+      "sha256": "d1585e21f566952234a0186ddd337184abe133f442c257da569a37f1d520b260"
+    },
+    {
+      "path": "artifacts/reports/shell-repair.md",
+      "description": "Body shell repair report and renders",
+      "category": "verification-evidence",
+      "exists": true,
+      "sizeBytes": 4691,
+      "sha256": "b024257f183d66b8cc0c892267de0a4848c23dcce378a215e20baedff72cee14"
+    },
+    {
+      "path": "artifacts/reports/sedan-fit.json",
+      "description": "Sedan geometry fitting report",
+      "category": "verification-evidence",
+      "exists": true,
+      "sizeBytes": 1338,
+      "sha256": "75415748a6f8852936e91c2045c879c9d985462f1b1988cde5ded63eff008a08"
+    },
+    {
+      "path": "artifacts/reports/player-smoke.png",
+      "description": "Standalone Windows player smoke test capture",
+      "category": "verification-evidence",
+      "exists": true,
+      "sizeBytes": 190896,
+      "sha256": "75d86eca9822339091ac0c15a188b3b2a5e10e446f9b9bbef1bcf79793504c7b"
+    },
+    {
+      "path": "artifacts/reports/player-smoke.log",
+      "description": "Standalone Windows player smoke test log",
+      "category": "verification-evidence",
+      "exists": true,
+      "sizeBytes": 5432,
+      "sha256": "988671337abd158467b92ff3f56a795886d7b9894e80865c6d8381add3af1f80"
+    },
+    {
+      "path": "artifacts/unity-compile.log",
+      "description": "Unity batchmode compilation log",
+      "category": "verification-evidence",
+      "exists": true,
+      "sizeBytes": 784932,
+      "sha256": "6cea3314ae207d8bf6e5c64a93d2f7316197b6b98e84ed20399fa57cde9d92c9"
+    },
+    {
+      "path": "docs/tasks/T01.md",
+      "description": "Task card T01",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 4723,
+      "sha256": "063fd115aa895310dce4c1e2498c874e80c4af3fc886e7b8b796ab344d37b367"
+    },
+    {
+      "path": "docs/tasks/T02.md",
+      "description": "Task card T02",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 4825,
+      "sha256": "8a3bfc901abd998a6b203c2f5ccaaa67c9d638be7b5513f478ee7f3bdb02dafd"
+    },
+    {
+      "path": "docs/tasks/T03.md",
+      "description": "Task card T03",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 4758,
+      "sha256": "f431f47af22e509ad337abcd096e5d2afb4b975a805f7b90f780a4cb0b68cb5f"
+    },
+    {
+      "path": "docs/tasks/T04.md",
+      "description": "Task card T04",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 4782,
+      "sha256": "8bf1750fd6b6315963b6ac6f530e987e24d5747a2e9e63b660b67b16adf4670d"
+    },
+    {
+      "path": "docs/tasks/T05.md",
+      "description": "Task card T05",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 4803,
+      "sha256": "329b1ae7dd021ef012660b3252bbbaf84ef3a9cb39561d75395860a303094239"
+    },
+    {
+      "path": "docs/tasks/T06.md",
+      "description": "Task card T06",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 4551,
+      "sha256": "32d11975c14127b56ea18915c5b272beeb0d158eb0c23129369904e60074fd61"
+    },
+    {
+      "path": "docs/tasks/T07.md",
+      "description": "Task card T07",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5349,
+      "sha256": "8ba7fb92c6c2197a7273e5a882b2f0f27139217cd1d49c118d66d5f342eda711"
+    },
+    {
+      "path": "docs/tasks/T08.md",
+      "description": "Task card T08",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5506,
+      "sha256": "6295181393e9c1710a74574318beac5efebdbfd1cc8ab3e46b2545ef34f4de2e"
+    },
+    {
+      "path": "docs/tasks/T09.md",
+      "description": "Task card T09",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5084,
+      "sha256": "1ebf7a08a5086598371313b6072122da12369ea021af0f7c6af8dae2ef215ceb"
+    },
+    {
+      "path": "docs/tasks/T10.md",
+      "description": "Task card T10",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5939,
+      "sha256": "80626170387801d362c3689cf338783e1ff2d966b87b59b724efc27513be673c"
+    },
+    {
+      "path": "docs/tasks/T11.md",
+      "description": "Task card T11",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5079,
+      "sha256": "8d0b095a10a9d4101fc7efb7183fd51ca5e0c7fa5f8552bb6e06e8cfcf43f383"
+    },
+    {
+      "path": "docs/tasks/T12.md",
+      "description": "Task card T12",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5979,
+      "sha256": "4cd2ca75b2b971a040be28887544b401dc63fe4166b919780f359ae0d6487cab"
+    },
+    {
+      "path": "docs/tasks/T13.md",
+      "description": "Task card T13",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5691,
+      "sha256": "62f79d49c551905c4c7f082e2bf2a3b4de0510cb183cafd2d7967de553a423d8"
+    },
+    {
+      "path": "docs/tasks/T14.md",
+      "description": "Task card T14",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5342,
+      "sha256": "9d934ad16f99e98df2e99c1f02c43f1d4628c4936288ecd05e183e75331a67ca"
+    },
+    {
+      "path": "docs/tasks/T15.md",
+      "description": "Task card T15",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5392,
+      "sha256": "9ba2320f2f8845f2de2fd38196fa55b057980ffea9f038a64664e07919956f1d"
+    },
+    {
+      "path": "docs/tasks/T16.md",
+      "description": "Task card T16",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5523,
+      "sha256": "c6334770abf7a74d9ef0c8266a51dc6aa04456aa15758507a3f37a77e5335e0d"
+    },
+    {
+      "path": "docs/tasks/T17.md",
+      "description": "Task card T17",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5386,
+      "sha256": "fad79d52162afe36e6cb1542ace1a998e68cb8911b3177504f6ec4e754ab117d"
+    },
+    {
+      "path": "docs/tasks/T18.md",
+      "description": "Task card T18",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5630,
+      "sha256": "e1a5ae89bd82073702f36028dc1e2c43256ea799bb7cd44e2e5b90c2ef9afa1b"
+    },
+    {
+      "path": "docs/tasks/T19.md",
+      "description": "Task card T19",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5493,
+      "sha256": "0e3400dd74df5c610704e93dc6eee7b6b79c16d513bd18c21ca6c5269590c72e"
+    },
+    {
+      "path": "docs/tasks/T20.md",
+      "description": "Task card T20",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5268,
+      "sha256": "732f7c360cf7e7bb71d9e5907dfd9b2cf96187d3362916388034babe87abd5ed"
+    },
+    {
+      "path": "docs/tasks/T21.md",
+      "description": "Task card T21",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5697,
+      "sha256": "2aa2dbb11bec426b391a8156def749101156187d4106e91711db186cf8fab772"
+    },
+    {
+      "path": "docs/tasks/T22.md",
+      "description": "Task card T22",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5375,
+      "sha256": "fc1ec9d815ef307de89e29cde089c155979cfa95b024995fc4f3e1818552c4dc"
+    },
+    {
+      "path": "docs/tasks/T23.md",
+      "description": "Task card T23",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5574,
+      "sha256": "bd30a043683d24cb5921ffbc6910084f4a118fd55f0c059130d11177deeb63cd"
+    },
+    {
+      "path": "docs/tasks/T24.md",
+      "description": "Task card T24",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5609,
+      "sha256": "4ffec10c6ad714adfebfa319acbe91efd4e48a2762b6b90e58934b7d7df5348f"
+    },
+    {
+      "path": "docs/tasks/T25.md",
+      "description": "Task card T25",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5401,
+      "sha256": "49eeea6e53d4daa16541ae11970ae215bfb3e8fd7509fa4a55d452de96c309ce"
+    },
+    {
+      "path": "docs/tasks/T26.md",
+      "description": "Task card T26",
+      "category": "task-card",
+      "exists": true,
+      "sizeBytes": 5363,
+      "sha256": "6f12464b9e5e14ae21b68d3f3dcab5d4a114d5c42e40d45c4ac29739d78a0455"
+    }
+  ]
+}

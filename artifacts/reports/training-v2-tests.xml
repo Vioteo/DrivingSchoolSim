@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="15" result="Failed(Child)" total="15" passed="14" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-20 12:23:49Z" end-time="2026-09-20 12:24:20Z" duration="31,1866105">
+  <test-suite type="TestSuite" id="1000" name="DrivingSchoolSim Prototype" fullname="DrivingSchoolSim Prototype" runstate="Runnable" testcasecount="93" result="Failed" site="Child" start-time="2026-09-20 12:23:49Z" end-time="2026-09-20 12:24:20Z" duration="31.186611" total="15" passed="14" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1099" name="DS.Tests.dll" fullname="C:/Users/AVSok/OneDrive/Documents/unity-driing/DrivingSchoolSim/Library/ScriptAssemblies/DS.Tests.dll" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.068244" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="28160" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1100" name="DrivingSchool" fullname="DrivingSchool" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.066096" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1101" name="Tests" fullname="DrivingSchool.Tests" runstate="Runnable" testcasecount="91" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.064537" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1077" name="TrainingCourseTests" fullname="DrivingSchool.Tests.TrainingCourseTests" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" testcasecount="13" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.060769" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1083" name="ExamIncludesTransfersAndFinalFinish" fullname="DrivingSchool.Tests.TrainingCourseTests.ExamIncludesTransfersAndFinalFinish" methodname="ExamIncludesTransfersAndFinalFinish" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="885253713" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.026345" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1085" name="FaultThresholdAndTerminalStateAreStable" fullname="DrivingSchool.Tests.TrainingCourseTests.FaultThresholdAndTerminalStateAreStable" methodname="FaultThresholdAndTerminalStateAreStable" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="1139188142" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.000602" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1081" name="GatesCannotBeCompletedOutOfOrder" fullname="DrivingSchool.Tests.TrainingCourseTests.GatesCannotBeCompletedOutOfOrder" methodname="GatesCannotBeCompletedOutOfOrder" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="616175182" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.001491" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1088" name="HillRollbackFailsAfterEntry" fullname="DrivingSchool.Tests.TrainingCourseTests.HillRollbackFailsAfterEntry" methodname="HillRollbackFailsAfterEntry" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="357972721" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.000580" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1079" name="HoldMustBeContinuousAndAligned" fullname="DrivingSchool.Tests.TrainingCourseTests.HoldMustBeContinuousAndAligned" methodname="HoldMustBeContinuousAndAligned" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="618569932" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.001153" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1089" name="InvalidNumbersAreRejected" fullname="DrivingSchool.Tests.TrainingCourseTests.InvalidNumbersAreRejected" methodname="InvalidNumbersAreRejected" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="2083859117" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.005818" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1078" name="MustFitEntireVehicleInParkingBay" fullname="DrivingSchool.Tests.TrainingCourseTests.MustFitEntireVehicleInParkingBay" methodname="MustFitEntireVehicleInParkingBay" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="366393128" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.000325" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1082" name="ReverseEntryLatchClearsOnExit" fullname="DrivingSchool.Tests.TrainingCourseTests.ReverseEntryLatchClearsOnExit" methodname="ReverseEntryLatchClearsOnExit" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="1293894783" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.000221" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1080" name="ReverseParkingCannotPassByDrivingForward" fullname="DrivingSchool.Tests.TrainingCourseTests.ReverseParkingCannotPassByDrivingForward" methodname="ReverseParkingCannotPassByDrivingForward" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="1532205270" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.000245" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1087" name="RotatedBayUsesRotatedVehicleFootprint" fullname="DrivingSchool.Tests.TrainingCourseTests.RotatedBayUsesRotatedVehicleFootprint" methodname="RotatedBayUsesRotatedVehicleFootprint" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="1431186506" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.000356" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1090" name="ShiftGateRequiresGearAndMeasuredSpeed" fullname="DrivingSchool.Tests.TrainingCourseTests.ShiftGateRequiresGearAndMeasuredSpeed" methodname="ShiftGateRequiresGearAndMeasuredSpeed" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="81458601" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.000283" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1084" name="SingleLessonDoesNotRequireTransfer" fullname="DrivingSchool.Tests.TrainingCourseTests.SingleLessonDoesNotRequireTransfer" methodname="SingleLessonDoesNotRequireTransfer" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="237618357" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.000315" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1086" name="TimeoutCannotBeOverriddenByPassingStop" fullname="DrivingSchool.Tests.TrainingCourseTests.TimeoutCannotBeOverriddenByPassingStop" methodname="TimeoutCannotBeOverriddenByPassingStop" classname="DrivingSchool.Tests.TrainingCourseTests" runstate="Runnable" seed="1455492118" result="Passed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:23:42Z" duration="0.000268" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1105" name="DS.TrainingSceneTests.dll" fullname="C:/Users/AVSok/OneDrive/Documents/unity-driing/DrivingSchoolSim/Library/ScriptAssemblies/DS.TrainingSceneTests.dll" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2026-09-20 12:23:49Z" end-time="2026-09-20 12:24:20Z" duration="30.747919" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="28160" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1106" name="DrivingSchool" fullname="DrivingSchool" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2026-09-20 12:23:49Z" end-time="2026-09-20 12:24:20Z" duration="30.745567" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1107" name="Tests" fullname="DrivingSchool.Tests" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2026-09-20 12:23:49Z" end-time="2026-09-20 12:24:20Z" duration="30.744111" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestFixture" id="1102" name="TrainingSceneTests" fullname="DrivingSchool.Tests.TrainingSceneTests" classname="DrivingSchool.Tests.TrainingSceneTests" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2026-09-20 12:23:49Z" end-time="2026-09-20 12:24:20Z" duration="30.742337" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-case id="1104" name="ActualSceneKeyboardDriveCanPassStartStop" fullname="DrivingSchool.Tests.TrainingSceneTests.ActualSceneKeyboardDriveCanPassStartStop" methodname="ActualSceneKeyboardDriveCanPassStartStop" classname="DrivingSchool.Tests.TrainingSceneTests" runstate="Runnable" seed="28575112" result="Failed" start-time="2026-09-20 12:23:42Z" end-time="2026-09-20 12:24:20Z" duration="38.188876" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <failure>
+                <message><![CDATA[  Actual keyboard drive: Начните движение по въездной полосе z=-42
+  Expected: Passed
+  But was:  Running
+]]></message>
+                <stack-trace><![CDATA[at DrivingSchool.Tests.TrainingSceneTests+<ActualSceneKeyboardDriveCanPassStartStop>d__2.MoveNext () [0x001ea] in C:\Users\AVSok\OneDrive\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\TrainingScene\TrainingSceneTests.cs:53
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@0b7a23ab2e1d\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
+]]></stack-trace>
+              </failure>
+            </test-case>
+            <test-case id="1103" name="EveryAuthoredLessonAndWholeExamCanCompleteWithValidGateSamples" fullname="DrivingSchool.Tests.TrainingSceneTests.EveryAuthoredLessonAndWholeExamCanCompleteWithValidGateSamples" methodname="EveryAuthoredLessonAndWholeExamCanCompleteWithValidGateSamples" classname="DrivingSchool.Tests.TrainingSceneTests" runstate="Runnable" seed="130813386" result="Passed" start-time="2026-09-20 12:24:20Z" end-time="2026-09-20 12:24:20Z" duration="0.002184" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: C:/Users/AVSok/AppData/LocalLow/DrivingSchool/DrivingSchoolSim Prototype\TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,0 +1,8 @@
+{
+  "name": "DS.Input",
+  "rootNamespace": "DrivingSchool.Input",
+  "references": [
+    "DS.Contracts",
+    "Unity.InputSystem"
+  ]
+}

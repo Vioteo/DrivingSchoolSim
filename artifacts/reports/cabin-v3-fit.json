@@ -1,0 +1,54 @@
+{
+  "source": "C:\\Users\\AVSok\\OneDrive\\Documents\\unity-driing\\DrivingSchoolSim\\ArtSource\\DS_Sedan_A_cabin_v3.blend",
+  "sha256": "fb10a066c124e6a3baf937b61481e4116a5150255cd55f153159ed929cb70f93",
+  "checks": [
+    {
+      "name": "Front/rear upholstery longitudinal separation",
+      "passed": true,
+      "gapM": 0.37215951085090637
+    },
+    {
+      "name": "Seat_Front-0.4 floor mounting / roof clearance",
+      "passed": true,
+      "railBottomM": 0.3254999816417694,
+      "seatTopM": 1.2682719230651855
+    },
+    {
+      "name": "Seat_Front0.4 floor mounting / roof clearance",
+      "passed": true,
+      "railBottomM": 0.3254999816417694,
+      "seatTopM": 1.2682719230651855
+    },
+    {
+      "name": "Rear headrests/backrest ahead of rear glazing",
+      "passed": true,
+      "minPlaneClearanceM": 0.03247760236263275
+    },
+    {
+      "name": "Bench inside wheelhouse side walls",
+      "passed": true,
+      "maxHalfWidthM": 0.6150000095367432,
+      "wheelhouseInnerM": 0.633
+    },
+    {
+      "name": "Pedal_Brake 11-step floor clearance",
+      "passed": true,
+      "minFloorClearanceM": 0.07904652118682859,
+      "steps": 11
+    },
+    {
+      "name": "Pedal_Clutch 11-step floor clearance",
+      "passed": true,
+      "minFloorClearanceM": 0.07904652118682859,
+      "steps": 11
+    },
+    {
+      "name": "Pedal_Throttle 11-step floor clearance",
+      "passed": true,
+      "minFloorClearanceM": 0.07904652118682859,
+      "steps": 11
+    }
+  ],
+  "scope": "Cabin fit and pedal-to-floor clearance only. Does not certify wheel suspension sweeps, all mesh intersections, Unity collision, mirrors or VR.",
+  "passed": true
+}

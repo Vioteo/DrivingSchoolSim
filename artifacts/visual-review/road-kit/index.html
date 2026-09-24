@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visual Review — Дороги, тротуары и разметка</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: #121a2f;
+        --card: #1a2440;
+        --text: #e8edff;
+        --muted: #b6c0e3;
+        --accent: #7c8cff;
+        --ok: #86efac;
+        --warn: #fcd34d;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Inter, Arial, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top right, #2a2f5b 0%, transparent 38%),
+          radial-gradient(circle at 15% 15%, #1e2a57 0%, transparent 30%),
+          var(--bg);
+      }
+      .container { max-width: 1120px; margin: 32px auto; padding: 0 20px 40px; }
+      .hero {
+        background: linear-gradient(135deg, #1b2747 0%, #121a2f 100%);
+        border: 1px solid #2d3b65;
+        border-radius: 18px;
+        padding: 24px;
+      }
+      .eyebrow { color: #c7d2fe; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 8px; }
+      h1 { margin: 0; font-size: 34px; letter-spacing: -0.02em; }
+      .description { margin: 12px 0 0; color: var(--muted); line-height: 1.6; max-width: 860px; }
+      .grid { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .card { background: var(--panel); border: 1px solid #2a3a63; border-radius: 14px; padding: 14px; }
+      .label { margin: 0 0 12px; font-size: 14px; color: #c9d4ff; }
+      .shot { width: 100%; border-radius: 10px; border: 1px solid #344773; display: block; }
+      .qa { margin-top: 18px; background: var(--card); border: 1px solid #2e3f6c; border-radius: 14px; padding: 16px; }
+      .qa h2 { margin: 0 0 10px; font-size: 20px; }
+      ul { margin: 0; padding-left: 20px; color: var(--muted); line-height: 1.7; }
+      .pass { color: var(--ok); font-weight: 700; }
+      .warn { color: var(--warn); font-weight: 700; }
+      .verdict {
+        margin-top: 14px;
+        padding: 12px;
+        border-radius: 10px;
+        background: rgba(134, 239, 172, 0.1);
+        border: 1px solid rgba(134, 239, 172, 0.35);
+      }
+      @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <section class="hero">
+        <p class="eyebrow">Visual QA Demo</p>
+        <h1>Дороги, тротуары и разметка</h1>
+        <p class="description">16 оригинальных модулей: городская и загородная дорога, поворот, перекрёсток, обочина, тротуар, бордюр и девять вариантов разметки. Blender → FBX / GLB → Unity. Масштаб — метры.</p>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <p class="label">До — прежняя дорога района (Blender, архив)</p>
+          <img class="shot" src="../renders/district-street.png" alt="Скриншот до изменений" />
+        </article>
+        <article class="card">
+          <p class="label">После — новый городской модуль (Blender, v1)</p>
+          <img class="shot" src="urban-detail.png" alt="Скриншот после изменений" />
+        </article>
+      </section>
+
+      <section class="qa"><h2>Набор моделей</h2><p><a href="viewer.html" style="color:#fcd34d">Открыть 3D-просмотр всех 16 модулей →</a></p><img class="shot" src="kit-overview.png" alt="Все дорожные модули Blender v1"><p style="color:#b6c0e3">Прямой участок 20 м · дорога 8 м · тротуар 2 м · бордюр 15 см · поворот R14</p></section>
+<section class="grid"><article class="card"><p class="label">Гравийная обочина</p><img class="shot" src="rural-detail.png" alt="Загородная дорога и гравий"></article><article class="card"><p class="label">Поворот 90°</p><img class="shot" src="curve.png" alt="Поворот с тротуарами"></article><article class="card"><p class="label">Перекрёсток и пешеходные переходы</p><img class="shot" src="intersection.png" alt="Четыре зебры и пониженные бордюры"></article></section><section class="qa">
+        <h2>Самопроверка</h2>
+        <ul>
+          <li>Соответствие задаче: <span class="pass">PASS</span> — Все запрошенные категории созданы. 16 FBX проверены повторным импортом с погрешностью размеров менее 1 мм.</li>
+          <li>Целостность layout: <span class="pass">PASS</span> — Осмотрены прямые дороги, поворот, перекрёсток и общий вид. На итоговой раскладке нет наложения модулей.</li>
+          <li>Визуальная консистентность: <span class="pass">PASS</span> — Единые ширины и материалы. Уменьшен масштаб гравия; разметка отделена от поверхности.</li>
+          <li>Минимальность доказательств: <span class="pass">PASS</span> — Пять рендеров показывают весь набор и детали. Ранее существовавший район показан только как исходное состояние проекта: ракурсы отличаются.</li>
+        </ul>
+        <div class="verdict">
+          Итог: <strong>Blender / FBX: PASS</strong>. Проверка Unity выполняется. Только LOD0; вождение автомобиля и нормативная проверка разметки не проводились.
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+

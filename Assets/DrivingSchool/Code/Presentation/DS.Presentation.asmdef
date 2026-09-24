@@ -1,0 +1,15 @@
+{
+  "name": "DS.Presentation",
+  "rootNamespace": "DrivingSchool.Presentation",
+  "references": [
+    "DS.Contracts",
+    "DS.Simulation",
+    "DS.World",
+    "DS.Input",
+    "DS.Rules",
+    "DS.Learning",
+    "Unity.InputSystem",
+    "Unity.RenderPipelines.Universal.Runtime",
+    "Unity.RenderPipelines.Core.Runtime"
+  ]
+}

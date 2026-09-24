@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-19",
+  "images": [
+    {
+      "src": "before-front-low.png",
+      "ok": true
+    },
+    {
+      "src": "after-front-low.png",
+      "ok": true
+    },
+    {
+      "src": "before-underside.png",
+      "ok": true
+    },
+    {
+      "src": "after-underside.png",
+      "ok": true
+    },
+    {
+      "src": "before-front3quarter.png",
+      "ok": true
+    },
+    {
+      "src": "after-front3quarter.png",
+      "ok": true
+    },
+    {
+      "src": "after-cockpit-floor.png",
+      "ok": true
+    }
+  ],
+  "modelLoaded": true,
+  "pageErrors": [],
+  "visualReview": "Opened all 7 before/after renders plus report screenshot and GLB viewer screenshot. Front gap closed; broad underside gaps closed; all 3 pedals visible. Body shaping, upper pillar joints and suspension motion remain outside acceptance.",
+  "scope": "Focused shell repair; not production vehicle acceptance"
+}

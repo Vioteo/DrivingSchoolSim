@@ -1,0 +1,1 @@
+PASS: URP materials; ground pivot; identity root; dimensions (0.460, 0.750, 0.460); box foot + convex eight-sided hull. Static prop; Rigidbody not added.

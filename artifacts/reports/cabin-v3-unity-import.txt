@@ -1,0 +1,3 @@
+PASS: cabin_v3 prefab saved; required parts and renderer materials present.
+Imported bounds metres: (2.25, 1.48, 4.68)
+Parts: 469

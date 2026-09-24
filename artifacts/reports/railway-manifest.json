@@ -1,0 +1,404 @@
+{
+  "revision": "railway-v2",
+  "utc": "2026-09-24T09:12:11.651965+00:00",
+  "exporter": "5.0.1",
+  "units": "metres",
+  "sourceAxes": "X right, Z up, front -Y",
+  "checks": [
+    "rail head 0.240 m, deck 0.235 m, ramp 0.235 -> 0.018 m over 3.0 m",
+    "track parts are DriveSurface_* or Detail_* only",
+    "boom pivot at (0.0, -0.27, 0.95), 21 children",
+    "signal lamps: Lamp_Red_L, Lamp_Red_R, Lamp_White",
+    "signs: Socket_Front, Post, Plate_Back present; heights 2.7-3.5 m"
+  ],
+  "assets": [
+    {
+      "catalogId": "TK_RailwayCrossing_Tracks",
+      "label": "Одноколейный ж/д переезд с резинокордовым настилом",
+      "kind": "facility",
+      "boundsMin": [
+        -4.8,
+        -5.75,
+        -0.145
+      ],
+      "boundsMax": [
+        4.8,
+        5.75,
+        0.241
+      ],
+      "dimensionsM": [
+        9.6,
+        11.5,
+        0.386
+      ],
+      "triangles": 2728,
+      "materials": [
+        "RW_Asphalt",
+        "RW_Ballast",
+        "RW_Concrete",
+        "RW_Deck",
+        "RW_DeckSeam",
+        "RW_Fastening",
+        "RW_RailHead",
+        "RW_RailSteel",
+        "RW_Sleeper"
+      ],
+      "fbx": "Assets/DrivingSchool/Art/TrainingKit/TK_RailwayCrossing_Tracks.fbx",
+      "fbxSha256": "40e818d95c67001abcd02d71455aeebf59848a1bab4f5e7133cd39c1d67457e4"
+    },
+    {
+      "catalogId": "TK_RailwayBarrier",
+      "label": "Автоматический шлагбаум",
+      "kind": "barrier",
+      "boundsMin": [
+        -4.52,
+        -0.375,
+        0.0
+      ],
+      "boundsMax": [
+        0.65,
+        0.375,
+        1.13
+      ],
+      "dimensionsM": [
+        5.17,
+        0.75,
+        1.13
+      ],
+      "triangles": 2228,
+      "materials": [
+        "RW_Black",
+        "RW_Cabinet",
+        "RW_Concrete",
+        "RW_Housing",
+        "RW_LensRed",
+        "RW_Red",
+        "RW_RedOn",
+        "RW_Steel",
+        "RW_White"
+      ],
+      "fbx": "Assets/DrivingSchool/Art/TrainingKit/TK_RailwayBarrier.fbx",
+      "fbxSha256": "e28aa4221949c7e809e9d4d4f01f457e9b072aaa541eb178a79702438eecee39"
+    },
+    {
+      "catalogId": "TK_RailwaySignal",
+      "label": "Переездный светофор со знаком 1.3.1",
+      "kind": "signal",
+      "boundsMin": [
+        -0.5501,
+        -0.3,
+        0.0
+      ],
+      "boundsMax": [
+        0.5501,
+        0.27,
+        3.97
+      ],
+      "dimensionsM": [
+        1.1002,
+        0.57,
+        3.97
+      ],
+      "triangles": 3500,
+      "materials": [
+        "RW_Black",
+        "RW_Concrete",
+        "RW_Gasket",
+        "RW_Housing",
+        "RW_LensRed",
+        "RW_LensWhite",
+        "RW_RedOn",
+        "RW_Steel",
+        "RW_White",
+        "RW_WhiteOn",
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets/DrivingSchool/Art/TrainingKit/TK_RailwaySignal.fbx",
+      "fbxSha256": "227236c8ff04aeb024585605612ae6c07a2663e854851c13f634f60f4d091cbe"
+    },
+    {
+      "catalogId": "DS_Sign_RailwayBarrier",
+      "label": "Знак 1.1 «Железнодорожный переезд со шлагбаумом»",
+      "kind": "sign",
+      "boundsMin": [
+        -0.4373,
+        -0.099,
+        0.0
+      ],
+      "boundsMax": [
+        0.4373,
+        0.175,
+        2.955
+      ],
+      "dimensionsM": [
+        0.8747,
+        0.274,
+        2.955
+      ],
+      "triangles": 996,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets/DrivingSchool/Art/Traffic/DS_Sign_RailwayBarrier.fbx",
+      "fbxSha256": "a6fd1a264f7dced05e16a2a9da0714c3fec2e14e219fb2cba96bbad4ee30ebd3"
+    },
+    {
+      "catalogId": "DS_Sign_RailwayNoBarrier",
+      "label": "Знак 1.2 «Железнодорожный переезд без шлагбаума»",
+      "kind": "sign",
+      "boundsMin": [
+        -0.4373,
+        -0.1,
+        0.0
+      ],
+      "boundsMax": [
+        0.4373,
+        0.175,
+        2.955
+      ],
+      "dimensionsM": [
+        0.8747,
+        0.275,
+        2.955
+      ],
+      "triangles": 1220,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets/DrivingSchool/Art/Traffic/DS_Sign_RailwayNoBarrier.fbx",
+      "fbxSha256": "068a89a871038d9939f01fdd802265284337c3d641805b29992be957c9d1cca2"
+    },
+    {
+      "catalogId": "DS_Sign_SingleTrack",
+      "label": "Знак 1.3.1 «Однопутная железная дорога»",
+      "kind": "sign",
+      "boundsMin": [
+        -0.5501,
+        -0.103,
+        0.0
+      ],
+      "boundsMax": [
+        0.5501,
+        0.175,
+        2.8748
+      ],
+      "dimensionsM": [
+        1.1002,
+        0.278,
+        2.8748
+      ],
+      "triangles": 940,
+      "materials": [
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets/DrivingSchool/Art/Traffic/DS_Sign_SingleTrack.fbx",
+      "fbxSha256": "8d37493e5d777e1cf129cb56851c85a9b7289093bbae48834f272b56e6d58345"
+    },
+    {
+      "catalogId": "DS_Sign_MultiTrack",
+      "label": "Знак 1.3.2 «Многопутная железная дорога»",
+      "kind": "sign",
+      "boundsMin": [
+        -0.5624,
+        -0.103,
+        0.0
+      ],
+      "boundsMax": [
+        0.5624,
+        0.175,
+        3.0548
+      ],
+      "dimensionsM": [
+        1.1247,
+        0.278,
+        3.0548
+      ],
+      "triangles": 1216,
+      "materials": [
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets/DrivingSchool/Art/Traffic/DS_Sign_MultiTrack.fbx",
+      "fbxSha256": "7b07d5c2891ee61fdc5cc857098264a44dda8087eba43372c1170dad7cc3a0a5"
+    },
+    {
+      "catalogId": "DS_Sign_RailwayDist3_R",
+      "label": "Знак 1.4.1 (три полосы, справа)",
+      "kind": "sign",
+      "boundsMin": [
+        -0.1785,
+        -0.087,
+        0.0
+      ],
+      "boundsMax": [
+        0.1785,
+        0.175,
+        2.807
+      ],
+      "dimensionsM": [
+        0.357,
+        0.262,
+        2.807
+      ],
+      "triangles": 936,
+      "materials": [
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets/DrivingSchool/Art/Traffic/DS_Sign_RailwayDist3_R.fbx",
+      "fbxSha256": "f0ecefbc94781e72c6386183e494add4971e0b38b56659f95c4388aa56a241fa"
+    },
+    {
+      "catalogId": "DS_Sign_RailwayDist2_R",
+      "label": "Знак 1.4.2 (две полосы, справа)",
+      "kind": "sign",
+      "boundsMin": [
+        -0.1785,
+        -0.087,
+        0.0
+      ],
+      "boundsMax": [
+        0.1785,
+        0.175,
+        2.807
+      ],
+      "dimensionsM": [
+        0.357,
+        0.262,
+        2.807
+      ],
+      "triangles": 916,
+      "materials": [
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets/DrivingSchool/Art/Traffic/DS_Sign_RailwayDist2_R.fbx",
+      "fbxSha256": "76bbc60aacd694326b10b699520cddf64554ca7b007b857cf007d3ad10a5753d"
+    },
+    {
+      "catalogId": "DS_Sign_RailwayDist1_R",
+      "label": "Знак 1.4.3 (одна полоса, справа)",
+      "kind": "sign",
+      "boundsMin": [
+        -0.1785,
+        -0.087,
+        0.0
+      ],
+      "boundsMax": [
+        0.1785,
+        0.175,
+        2.807
+      ],
+      "dimensionsM": [
+        0.357,
+        0.262,
+        2.807
+      ],
+      "triangles": 904,
+      "materials": [
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets/DrivingSchool/Art/Traffic/DS_Sign_RailwayDist1_R.fbx",
+      "fbxSha256": "41e19ddefdf77ae2644899aa95934d5584f843890751695a59a8ce7ea2f2c1c9"
+    },
+    {
+      "catalogId": "DS_Sign_RailwayDist3_L",
+      "label": "Знак 1.4.4 (три полосы, слева)",
+      "kind": "sign",
+      "boundsMin": [
+        -0.1785,
+        -0.087,
+        0.0
+      ],
+      "boundsMax": [
+        0.1785,
+        0.175,
+        2.807
+      ],
+      "dimensionsM": [
+        0.357,
+        0.262,
+        2.807
+      ],
+      "triangles": 936,
+      "materials": [
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets/DrivingSchool/Art/Traffic/DS_Sign_RailwayDist3_L.fbx",
+      "fbxSha256": "56a5dd012f88fca5af25005feb4dfe2cf7c18f5c6e648a7b3e676b24108ccb71"
+    },
+    {
+      "catalogId": "DS_Sign_RailwayDist2_L",
+      "label": "Знак 1.4.5 (две полосы, слева)",
+      "kind": "sign",
+      "boundsMin": [
+        -0.1785,
+        -0.087,
+        0.0
+      ],
+      "boundsMax": [
+        0.1785,
+        0.175,
+        2.807
+      ],
+      "dimensionsM": [
+        0.357,
+        0.262,
+        2.807
+      ],
+      "triangles": 916,
+      "materials": [
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets/DrivingSchool/Art/Traffic/DS_Sign_RailwayDist2_L.fbx",
+      "fbxSha256": "50246fc192d794c1db9fd1288a6c0324c7144adca37946ef25fa0dca3765dbe1"
+    },
+    {
+      "catalogId": "DS_Sign_RailwayDist1_L",
+      "label": "Знак 1.4.6 (одна полоса, слева)",
+      "kind": "sign",
+      "boundsMin": [
+        -0.1785,
+        -0.087,
+        0.0
+      ],
+      "boundsMax": [
+        0.1785,
+        0.175,
+        2.807
+      ],
+      "dimensionsM": [
+        0.357,
+        0.262,
+        2.807
+      ],
+      "triangles": 904,
+      "materials": [
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets/DrivingSchool/Art/Traffic/DS_Sign_RailwayDist1_L.fbx",
+      "fbxSha256": "5e6ce3855e14e5643fbd34a1c214634c5e5cad232ae51954699f0d2406679834"
+    }
+  ]
+}

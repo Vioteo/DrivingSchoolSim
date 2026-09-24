@@ -1,0 +1,996 @@
+{
+  "revision": "traffic-v1",
+  "utc": "2026-09-20T05:56:42.913930+00:00",
+  "exporter": "5.0.1",
+  "units": "metres",
+  "sourceAxes": "X right, Z up, front -Y",
+  "lod": "Not authored",
+  "assets": [
+    {
+      "catalogId": "DS_Sign_Stop",
+      "label": "STOP",
+      "kind": "sign",
+      "boundsMin": [
+        -0.3741711974143982,
+        -0.09770000725984573,
+        0.0
+      ],
+      "boundsMax": [
+        0.3741711974143982,
+        0.17499999701976776,
+        2.824171304702759
+      ],
+      "dimensionsM": [
+        0.7483423948287964,
+        0.2727000042796135,
+        2.824171304702759
+      ],
+      "triangles": 1280,
+      "materials": [
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_Stop.fbx",
+      "fbxSha256": "df9bc4360d9655d976fff04f51abc005f6fd620138cc304a0c0d1e1fca64e935",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_Stop.glb",
+      "glbSha256": "8e99fbe67655e2cbb97ce319ac6a37ff394af2875c98c3f902f3166012dac98a"
+    },
+    {
+      "catalogId": "DS_Sign_Yield",
+      "label": "Уступите дорогу",
+      "kind": "sign",
+      "boundsMin": [
+        -0.39837169647216797,
+        -0.09099999815225601,
+        0.0
+      ],
+      "boundsMax": [
+        0.39837169647216797,
+        0.17499999701976776,
+        2.7659997940063477
+      ],
+      "dimensionsM": [
+        0.7967433929443359,
+        0.2659999951720238,
+        2.7659997940063477
+      ],
+      "triangles": 892,
+      "materials": [
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_Yield.fbx",
+      "fbxSha256": "c39abcea22f98b24e09fa006acd9fad80a21597b91986246279cb96f75e0e1ae",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_Yield.glb",
+      "glbSha256": "7115aadd3da8753af7e77f07f7addf5440e2741bd92664b20e7eaa924144f537"
+    },
+    {
+      "catalogId": "DS_Sign_Priority",
+      "label": "Главная дорога",
+      "kind": "sign",
+      "boundsMin": [
+        -0.4350000023841858,
+        -0.09099999815225601,
+        0.0
+      ],
+      "boundsMax": [
+        0.4350000023841858,
+        0.17499999701976776,
+        2.884999990463257
+      ],
+      "dimensionsM": [
+        0.8700000047683716,
+        0.2659999951720238,
+        2.884999990463257
+      ],
+      "triangles": 904,
+      "materials": [
+        "Traffic_Steel",
+        "Traffic_White",
+        "Traffic_Yellow"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_Priority.fbx",
+      "fbxSha256": "9fd523e6bb71d20b80bb562195d4ebb95f35a6b0544f7b5df9d063370d192e11",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_Priority.glb",
+      "glbSha256": "9d533d5a7589537c2466bca9054f3004dd09091955d447c0471a6ae2f62a329d"
+    },
+    {
+      "catalogId": "DS_Sign_Speed30",
+      "label": "Ограничение 30",
+      "kind": "sign",
+      "boundsMin": [
+        -0.35499998927116394,
+        -0.09770000725984573,
+        0.0
+      ],
+      "boundsMax": [
+        0.35499998927116394,
+        0.17499999701976776,
+        2.805000066757202
+      ],
+      "dimensionsM": [
+        0.7099999785423279,
+        0.2727000042796135,
+        2.805000066757202
+      ],
+      "triangles": 1872,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_Speed30.fbx",
+      "fbxSha256": "e2df6844a2af0f5149bb1a42ee9f54ed19518db4a5e1e35a835e03b2b09873ec",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_Speed30.glb",
+      "glbSha256": "b317ef7921a572fa0d5b05f18cedc6dec1c8a2319de4f8f49d049b85a2d5f593"
+    },
+    {
+      "catalogId": "DS_Sign_Speed40",
+      "label": "Ограничение 40",
+      "kind": "sign",
+      "boundsMin": [
+        -0.35499998927116394,
+        -0.09770000725984573,
+        0.0
+      ],
+      "boundsMax": [
+        0.35499998927116394,
+        0.17499999701976776,
+        2.805000066757202
+      ],
+      "dimensionsM": [
+        0.7099999785423279,
+        0.2727000042796135,
+        2.805000066757202
+      ],
+      "triangles": 1780,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_Speed40.fbx",
+      "fbxSha256": "e125c2f416454470bcf9cd2c3440981af889d958351c2176b6d2b335e0de6e51",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_Speed40.glb",
+      "glbSha256": "23479d44f0e7b44b39c7e008b2178bc174dc306ac24aa739ee87bdbbc9a07958"
+    },
+    {
+      "catalogId": "DS_Sign_Speed60",
+      "label": "Ограничение 60",
+      "kind": "sign",
+      "boundsMin": [
+        -0.35499998927116394,
+        -0.09770000725984573,
+        0.0
+      ],
+      "boundsMax": [
+        0.35499998927116394,
+        0.17499999701976776,
+        2.805000066757202
+      ],
+      "dimensionsM": [
+        0.7099999785423279,
+        0.2727000042796135,
+        2.805000066757202
+      ],
+      "triangles": 1844,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_Speed60.fbx",
+      "fbxSha256": "1523594e59222ede93ea2a71564893d9f9621f10e2c56b23e88e34dbb464874e",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_Speed60.glb",
+      "glbSha256": "a887e3354aa388dd7193a303cc96f39f79121d9698297e3ef485893060c1c43f"
+    },
+    {
+      "catalogId": "DS_Sign_NoEntry",
+      "label": "Въезд запрещён",
+      "kind": "sign",
+      "boundsMin": [
+        -0.35499998927116394,
+        -0.10199999809265137,
+        0.0
+      ],
+      "boundsMax": [
+        0.35499998927116394,
+        0.17499999701976776,
+        2.805000066757202
+      ],
+      "dimensionsM": [
+        0.7099999785423279,
+        0.27699999511241913,
+        2.805000066757202
+      ],
+      "triangles": 1636,
+      "materials": [
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_NoEntry.fbx",
+      "fbxSha256": "6fb4a9123fbdb11324a0766a73fcc0861645216ae8efb968ab16fe6d70a2f6b8",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_NoEntry.glb",
+      "glbSha256": "f2b1b00613365a15aff2a1269fefb90772e4a2879e9a42f5e66c1429b2f33c33"
+    },
+    {
+      "catalogId": "DS_Sign_Crossing",
+      "label": "Пешеходный переход",
+      "kind": "sign",
+      "boundsMin": [
+        -0.36000001430511475,
+        -0.11100000143051147,
+        0.0
+      ],
+      "boundsMax": [
+        0.36000001430511475,
+        0.17499999701976776,
+        2.809999942779541
+      ],
+      "dimensionsM": [
+        0.7200000286102295,
+        0.28599999845027924,
+        2.809999942779541
+      ],
+      "triangles": 1104,
+      "materials": [
+        "Traffic_Blue",
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_Crossing.fbx",
+      "fbxSha256": "4d076b5992560e17d405c7848521ace5745f543f6b482e455777d44a0e84a30b",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_Crossing.glb",
+      "glbSha256": "aa7216d5c8ccdce08f148cc202ff35f7f864de1c68aaa2dee54c36ecfc329359"
+    },
+    {
+      "catalogId": "DS_Sign_Parking",
+      "label": "Парковка",
+      "kind": "sign",
+      "boundsMin": [
+        -0.36000001430511475,
+        -0.09770001471042633,
+        0.0
+      ],
+      "boundsMax": [
+        0.36000001430511475,
+        0.17499999701976776,
+        2.809999942779541
+      ],
+      "dimensionsM": [
+        0.7200000286102295,
+        0.2727000117301941,
+        2.809999942779541
+      ],
+      "triangles": 984,
+      "materials": [
+        "Traffic_Blue",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_Parking.fbx",
+      "fbxSha256": "e3a9ab252223d75d7c7c6baab5b3335cc4503f3de4dfe1592f4e0a07a8df98ef",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_Parking.glb",
+      "glbSha256": "db95a933ad87381acdaede65bc65c00252f39aaaa62f42149df14e1fd302d017"
+    },
+    {
+      "catalogId": "DS_Sign_Straight",
+      "label": "Движение прямо",
+      "kind": "sign",
+      "boundsMin": [
+        -0.35499998927116394,
+        -0.10400000214576721,
+        0.0
+      ],
+      "boundsMax": [
+        0.35499998927116394,
+        0.17499999701976776,
+        2.805000066757202
+      ],
+      "dimensionsM": [
+        0.7099999785423279,
+        0.278999999165535,
+        2.805000066757202
+      ],
+      "triangles": 1648,
+      "materials": [
+        "Traffic_Blue",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_Straight.fbx",
+      "fbxSha256": "2dfafc9ff3b0f2a654aeeeb4c43b715e08645d94095fd90fd4fe431ef72d7d15",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_Straight.glb",
+      "glbSha256": "dbeb4853c6beffd21ea6a1eac5552e4f13c563ff7d3e60455cf41f15ab95e4e7"
+    },
+    {
+      "catalogId": "DS_Sign_Right",
+      "label": "Движение направо",
+      "kind": "sign",
+      "boundsMin": [
+        -0.35499998927116394,
+        -0.10400000214576721,
+        0.0
+      ],
+      "boundsMax": [
+        0.35499998927116394,
+        0.17499999701976776,
+        2.805000066757202
+      ],
+      "dimensionsM": [
+        0.7099999785423279,
+        0.278999999165535,
+        2.805000066757202
+      ],
+      "triangles": 1648,
+      "materials": [
+        "Traffic_Blue",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_Right.fbx",
+      "fbxSha256": "7232bc0f1ce2e34812a928319e2249a7679fd9060d5eff16759d077dfc69e0d7",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_Right.glb",
+      "glbSha256": "aa04448504425301f7cb25776ec4976b623af163d8a8f5a3a73355722e574327"
+    },
+    {
+      "catalogId": "DS_Sign_Roundabout",
+      "label": "Круговое движение",
+      "kind": "sign",
+      "boundsMin": [
+        -0.35499998927116394,
+        -0.10499999672174454,
+        0.0
+      ],
+      "boundsMax": [
+        0.35499998927116394,
+        0.17499999701976776,
+        2.805000066757202
+      ],
+      "dimensionsM": [
+        0.7099999785423279,
+        0.2799999937415123,
+        2.805000066757202
+      ],
+      "triangles": 2080,
+      "materials": [
+        "Traffic_Blue",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_Roundabout.fbx",
+      "fbxSha256": "576474e07ace355e3e195bbfdde756365b5bb2bfe5363a1ffa14a8543d76d0cd",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_Roundabout.glb",
+      "glbSha256": "094f3f004e30a27793df8ae2664f6e7ca7600c198a053b9e35975d63a793aade"
+    },
+    {
+      "catalogId": "DS_Signal_Vehicle",
+      "label": "Транспортный светофор",
+      "kind": "vehicle",
+      "boundsMin": [
+        -0.2150000035762787,
+        -0.3499999940395355,
+        0.0
+      ],
+      "boundsMax": [
+        0.2150000035762787,
+        0.17499999701976776,
+        3.365999937057495
+      ],
+      "dimensionsM": [
+        0.4300000071525574,
+        0.5249999910593033,
+        3.365999937057495
+      ],
+      "triangles": 3724,
+      "materials": [
+        "Traffic_AmberOn",
+        "Traffic_Gasket",
+        "Traffic_GreenOn",
+        "Traffic_Housing",
+        "Traffic_LensAmber",
+        "Traffic_LensGreen",
+        "Traffic_LensRed",
+        "Traffic_RedOn",
+        "Traffic_Steel"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Signal_Vehicle.fbx",
+      "fbxSha256": "3259805c3019c1a02c27e8139c60f1869f0db8f691f34e4e50709657efcc7c6b",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Signal_Vehicle.glb",
+      "glbSha256": "f1d53648a1f9f9f8129dd79369d966cbea06644a4323a66082504dd2aedb2f4c"
+    },
+    {
+      "catalogId": "DS_Signal_VehicleArrow",
+      "label": "Светофор с дополнительной секцией",
+      "kind": "vehicle",
+      "boundsMin": [
+        -0.2150000035762787,
+        -0.3499999940395355,
+        0.0
+      ],
+      "boundsMax": [
+        0.5299999713897705,
+        0.17499999701976776,
+        3.365999937057495
+      ],
+      "dimensionsM": [
+        0.7449999749660492,
+        0.5249999910593033,
+        3.365999937057495
+      ],
+      "triangles": 4620,
+      "materials": [
+        "Traffic_AmberOn",
+        "Traffic_Gasket",
+        "Traffic_GreenOn",
+        "Traffic_Housing",
+        "Traffic_LensAmber",
+        "Traffic_LensGreen",
+        "Traffic_LensRed",
+        "Traffic_RedOn",
+        "Traffic_Steel"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Signal_VehicleArrow.fbx",
+      "fbxSha256": "a8cabac10e479e292682586a343d7dc7d75a61ac4e978a3df42ab42c93253c1d",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Signal_VehicleArrow.glb",
+      "glbSha256": "73dfff76bf9dcdf5e24db4b50824290ed76968dea9922e272ea9e1eb9e8491a6"
+    },
+    {
+      "catalogId": "DS_Signal_Pedestrian",
+      "label": "Пешеходный светофор",
+      "kind": "pedestrian",
+      "boundsMin": [
+        -0.2150000035762787,
+        -0.3499999940395355,
+        0.0
+      ],
+      "boundsMax": [
+        0.2150000035762787,
+        0.17499999701976776,
+        3.365999937057495
+      ],
+      "dimensionsM": [
+        0.4300000071525574,
+        0.5249999910593033,
+        3.365999937057495
+      ],
+      "triangles": 2660,
+      "materials": [
+        "Traffic_Gasket",
+        "Traffic_GreenOn",
+        "Traffic_Housing",
+        "Traffic_LensGreen",
+        "Traffic_LensRed",
+        "Traffic_RedOn",
+        "Traffic_Steel"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Signal_Pedestrian.fbx",
+      "fbxSha256": "b4e98f58f404b404a802136441f1672448c22cdcef8b84f087423b2841592823",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Signal_Pedestrian.glb",
+      "glbSha256": "bd8fdc839c949b14ebc9752e214c5c857775f80754896a86383343651d673615"
+    },
+    {
+      "catalogId": "DS_Sign_NoStopping",
+      "label": "Остановка запрещена",
+      "kind": "sign",
+      "boundsMin": [
+        -0.35499998927116394,
+        -0.10599999874830246,
+        0.0
+      ],
+      "boundsMax": [
+        0.35499998927116394,
+        0.17499999701976776,
+        2.805000066757202
+      ],
+      "dimensionsM": [
+        0.7099999785423279,
+        0.2809999957680702,
+        2.805000066757202
+      ],
+      "triangles": 1648,
+      "materials": [
+        "Traffic_Blue",
+        "Traffic_Red",
+        "Traffic_Steel"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_NoStopping.fbx",
+      "fbxSha256": "57b4cf33ea607d46dcfc48bb8cebf946d671908f2747655774ddb33b4bae7d13",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_NoStopping.glb",
+      "glbSha256": "5e9710be15b52a427a4d757abc8ff2e32f44ca494d6a42debdeeb86a2512e85a"
+    },
+    {
+      "catalogId": "DS_Sign_NoParking",
+      "label": "Стоянка запрещена",
+      "kind": "sign",
+      "boundsMin": [
+        -0.35499998927116394,
+        -0.10599999874830246,
+        0.0
+      ],
+      "boundsMax": [
+        0.35499998927116394,
+        0.17499999701976776,
+        2.805000066757202
+      ],
+      "dimensionsM": [
+        0.7099999785423279,
+        0.2809999957680702,
+        2.805000066757202
+      ],
+      "triangles": 1636,
+      "materials": [
+        "Traffic_Blue",
+        "Traffic_Red",
+        "Traffic_Steel"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_NoParking.fbx",
+      "fbxSha256": "7a2428fd5eba7e0d975ca0c7584cb1ec6a3a7cd700077102d14f7f9091e87f90",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_NoParking.glb",
+      "glbSha256": "387b0027d8cf580a9f5a85996cf8b36999091635a18776a120f68df4312c2d98"
+    },
+    {
+      "catalogId": "DS_Sign_TownEntry",
+      "label": "Начало населённого пункта: ЛЕСНОЙ",
+      "kind": "town",
+      "boundsMin": [
+        -0.949999988079071,
+        -0.09470000118017197,
+        0.0
+      ],
+      "boundsMax": [
+        0.949999988079071,
+        0.17499999701976776,
+        2.7659997940063477
+      ],
+      "dimensionsM": [
+        1.899999976158142,
+        0.26969999819993973,
+        2.7659997940063477
+      ],
+      "triangles": 2156,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_TownEntry.fbx",
+      "fbxSha256": "336dfec400e6689c2e61d37f2e55eb57a31024452f3ee145b3da054819608e6e",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_TownEntry.glb",
+      "glbSha256": "7017bf389b069105fdc24e37f89e0632b005e3a7cf4c90e2264a6fea9fddede1"
+    },
+    {
+      "catalogId": "DS_Sign_TownExit",
+      "label": "Конец населённого пункта: ЛЕСНОЙ",
+      "kind": "town",
+      "boundsMin": [
+        -0.949999988079071,
+        -0.10599999874830246,
+        0.0
+      ],
+      "boundsMax": [
+        0.949999988079071,
+        0.17499999701976776,
+        2.7659997940063477
+      ],
+      "dimensionsM": [
+        1.899999976158142,
+        0.2809999957680702,
+        2.7659997940063477
+      ],
+      "triangles": 2168,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_TownExit.fbx",
+      "fbxSha256": "e29e1054e900fec986fc9a84923b893166e7a7d11ae3660b4969839ba5abc528",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_TownExit.glb",
+      "glbSha256": "d54310e7dbc868d68c626801249dbe7ae6f743f0060dd11f57d802d763b6b93d"
+    },
+    {
+      "catalogId": "DS_Plaque_Distance100",
+      "label": "Расстояние до объекта 100 м",
+      "kind": "plaque",
+      "boundsMin": [
+        -0.3199999928474426,
+        -0.09870000183582306,
+        0.0
+      ],
+      "boundsMax": [
+        0.3199999928474426,
+        0.10799999535083771,
+        0.36000001430511475
+      ],
+      "dimensionsM": [
+        0.6399999856948853,
+        0.20669999718666077,
+        0.36000001430511475
+      ],
+      "triangles": 1120,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Plaque_Distance100.fbx",
+      "fbxSha256": "6ecc958862e43ae5c6f7491ea099eb3654513fc1a46bc9f61087388afbbf1609",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Plaque_Distance100.glb",
+      "glbSha256": "03ce05adcf2cf58b69bb8009883e90ab26d06d5cfd1bf96ed124be8f56a3ea23"
+    },
+    {
+      "catalogId": "DS_Plaque_Distance300",
+      "label": "Расстояние до объекта 300 м",
+      "kind": "plaque",
+      "boundsMin": [
+        -0.3199999928474426,
+        -0.09870000183582306,
+        0.0
+      ],
+      "boundsMax": [
+        0.3199999928474426,
+        0.10799999535083771,
+        0.36000001430511475
+      ],
+      "dimensionsM": [
+        0.6399999856948853,
+        0.20669999718666077,
+        0.36000001430511475
+      ],
+      "triangles": 1376,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Plaque_Distance300.fbx",
+      "fbxSha256": "c3c132eee0114d40830b555aa5ec0135bb46be8ad6236fc30b2bb83fe9cee3cc",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Plaque_Distance300.glb",
+      "glbSha256": "1c1f1dce6f45099f4ec2d3b18f6eec78b4d293c20403f6e3208bb498bead7a0a"
+    },
+    {
+      "catalogId": "DS_Plaque_Zone100",
+      "label": "Зона действия 100 м",
+      "kind": "plaque",
+      "boundsMin": [
+        -0.3199999928474426,
+        -0.10400000214576721,
+        0.0
+      ],
+      "boundsMax": [
+        0.3199999928474426,
+        0.10799999535083771,
+        0.36000001430511475
+      ],
+      "dimensionsM": [
+        0.6399999856948853,
+        0.21199999749660492,
+        0.36000001430511475
+      ],
+      "triangles": 1144,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Plaque_Zone100.fbx",
+      "fbxSha256": "1b594e0a896c677acdb1961f55ce74283ead426c0cdb474d959888ed5af01e10",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Plaque_Zone100.glb",
+      "glbSha256": "6bd9518ccf6b65aac24ce1f35f7501ab585cdcc7b6aafc16b916e672306ae12e"
+    },
+    {
+      "catalogId": "DS_Plaque_ZoneStart",
+      "label": "Начало зоны действия",
+      "kind": "plaque",
+      "boundsMin": [
+        -0.3199999928474426,
+        -0.10400000214576721,
+        0.0
+      ],
+      "boundsMax": [
+        0.3199999928474426,
+        0.10799999535083771,
+        0.36000001430511475
+      ],
+      "dimensionsM": [
+        0.6399999856948853,
+        0.21199999749660492,
+        0.36000001430511475
+      ],
+      "triangles": 564,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Plaque_ZoneStart.fbx",
+      "fbxSha256": "af8947c55258f2d7dc45b1884c09938a99cba603ba7f069b76ec2a02017c13f1",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Plaque_ZoneStart.glb",
+      "glbSha256": "31b797ee7388a025378695456fad12a86531c7494b8612ed2aa5323a4adc9fad"
+    },
+    {
+      "catalogId": "DS_Plaque_ZoneEnd",
+      "label": "Конец зоны действия",
+      "kind": "plaque",
+      "boundsMin": [
+        -0.3199999928474426,
+        -0.10400000214576721,
+        0.0
+      ],
+      "boundsMax": [
+        0.3199999928474426,
+        0.10799999535083771,
+        0.36000001430511475
+      ],
+      "dimensionsM": [
+        0.6399999856948853,
+        0.21199999749660492,
+        0.36000001430511475
+      ],
+      "triangles": 564,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Plaque_ZoneEnd.fbx",
+      "fbxSha256": "8aa413f2e5f304274c1fde86fff4c591c54b93a97da6aa264bacf74b7b90e33a",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Plaque_ZoneEnd.glb",
+      "glbSha256": "f348c3aa78d16e8c6f61a88aa4880178496af1356bdd6aa1704d1c1d2a2d5a7c"
+    },
+    {
+      "catalogId": "DS_Plaque_ZoneContinue",
+      "label": "Продолжение зоны действия",
+      "kind": "plaque",
+      "boundsMin": [
+        -0.3199999928474426,
+        -0.10400000214576721,
+        0.0
+      ],
+      "boundsMax": [
+        0.3199999928474426,
+        0.10799999535083771,
+        0.36000001430511475
+      ],
+      "dimensionsM": [
+        0.6399999856948853,
+        0.21199999749660492,
+        0.36000001430511475
+      ],
+      "triangles": 588,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Plaque_ZoneContinue.fbx",
+      "fbxSha256": "3ce1966e91ee9c85cb01a0525520803d0ae1a0b2b4878f027360d250b2a9424f",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Plaque_ZoneContinue.glb",
+      "glbSha256": "2e384633eede0c84e3bcbce7ef3914b3e080e21630d98b29c393018a0d98db08"
+    },
+    {
+      "catalogId": "DS_Plaque_DirectionLeft",
+      "label": "Направление налево",
+      "kind": "plaque",
+      "boundsMin": [
+        -0.3199999928474426,
+        -0.10400000214576721,
+        0.0
+      ],
+      "boundsMax": [
+        0.3199999928474426,
+        0.10799999535083771,
+        0.36000001430511475
+      ],
+      "dimensionsM": [
+        0.6399999856948853,
+        0.21199999749660492,
+        0.36000001430511475
+      ],
+      "triangles": 564,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Plaque_DirectionLeft.fbx",
+      "fbxSha256": "e80a82eb7c9908774f7c45e5fd74c0de7e97fa5a5240761053b4b4122f504887",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Plaque_DirectionLeft.glb",
+      "glbSha256": "a4eb2914f97a6c3c42b65baae43ab5e6110fa5a8d7a8fbca0ac8de97c489d83e"
+    },
+    {
+      "catalogId": "DS_Plaque_DirectionRight",
+      "label": "Направление направо",
+      "kind": "plaque",
+      "boundsMin": [
+        -0.3199999928474426,
+        -0.10400000214576721,
+        0.0
+      ],
+      "boundsMax": [
+        0.3199999928474426,
+        0.10799999535083771,
+        0.36000001430511475
+      ],
+      "dimensionsM": [
+        0.6399999856948853,
+        0.21199999749660492,
+        0.36000001430511475
+      ],
+      "triangles": 564,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Plaque_DirectionRight.fbx",
+      "fbxSha256": "45073ec6c02d61de9e9102e405216a05c81e1dabdeedc349b3753be7d04575da",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Plaque_DirectionRight.glb",
+      "glbSha256": "acb4a23689465b1c5a27aa9401abdfbb9d9ff5af4ec236e7c36f129ebe657fbd"
+    },
+    {
+      "catalogId": "DS_Plaque_DirectionBoth",
+      "label": "Направления налево и направо",
+      "kind": "plaque",
+      "boundsMin": [
+        -0.3199999928474426,
+        -0.10400000214576721,
+        0.0
+      ],
+      "boundsMax": [
+        0.3199999928474426,
+        0.10799999535083771,
+        0.36000001430511475
+      ],
+      "dimensionsM": [
+        0.6399999856948853,
+        0.21199999749660492,
+        0.36000001430511475
+      ],
+      "triangles": 588,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Plaque_DirectionBoth.fbx",
+      "fbxSha256": "2fb67bec78262b71460f0dccfd9816d87ba01705d15c48290bf4f33134044a08",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Plaque_DirectionBoth.glb",
+      "glbSha256": "32eb2ece97ab6aac59957a56ecf822adf2a35ec08c4b1cc70f19ae33090c390f"
+    },
+    {
+      "catalogId": "DS_Plaque_ZoneLeft100",
+      "label": "Зона действия налево 100 м",
+      "kind": "plaque",
+      "boundsMin": [
+        -0.3199999928474426,
+        -0.10400000214576721,
+        -0.00279999990016222
+      ],
+      "boundsMax": [
+        0.3199999928474426,
+        0.10799999535083771,
+        0.36000001430511475
+      ],
+      "dimensionsM": [
+        0.6399999856948853,
+        0.21199999749660492,
+        0.36280001420527697
+      ],
+      "triangles": 1144,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Plaque_ZoneLeft100.fbx",
+      "fbxSha256": "90ec364716c8de2cd3a456d1f4760888d7ac98b6779cfb1aa54d628c1ffc45e6",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Plaque_ZoneLeft100.glb",
+      "glbSha256": "4985f7ae996db67a800630754238d46bb35c3cae27f0e03d8e8590dc5c935164"
+    },
+    {
+      "catalogId": "DS_Plaque_ZoneRight100",
+      "label": "Зона действия направо 100 м",
+      "kind": "plaque",
+      "boundsMin": [
+        -0.3199999928474426,
+        -0.10400000214576721,
+        -0.00279999990016222
+      ],
+      "boundsMax": [
+        0.3199999928474426,
+        0.10799999535083771,
+        0.36000001430511475
+      ],
+      "dimensionsM": [
+        0.6399999856948853,
+        0.21199999749660492,
+        0.36280001420527697
+      ],
+      "triangles": 1144,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Plaque_ZoneRight100.fbx",
+      "fbxSha256": "f8a7ad0400e2f0a303d9e2d739c0a6a2e1c3b9bece72a0af5ad85aa64878501b",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Plaque_ZoneRight100.glb",
+      "glbSha256": "6b32e4f6e3f7a85516a9d512f760695e491f0bf4322ea862abcf4c42d67d341f"
+    },
+    {
+      "catalogId": "DS_Sign_NoStopping_Zone100",
+      "label": "Остановка запрещена — 100 м",
+      "kind": "sign",
+      "boundsMin": [
+        -0.35499998927116394,
+        -0.10599999874830246,
+        0.0
+      ],
+      "boundsMax": [
+        0.35499998927116394,
+        0.17499999701976776,
+        2.805000066757202
+      ],
+      "dimensionsM": [
+        0.7099999785423279,
+        0.2809999957680702,
+        2.805000066757202
+      ],
+      "triangles": 2792,
+      "materials": [
+        "Traffic_Blue",
+        "Traffic_Ink",
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_NoStopping_Zone100.fbx",
+      "fbxSha256": "1e068a81a3e79f023ff648db7f63e7bf7da9d7e2fd6a5e2172d19e73d9e93858",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_NoStopping_Zone100.glb",
+      "glbSha256": "4722f2b27bf0162fc2a22d5f6833617e46d8dd7d9509d91a58774aa21c1c5170"
+    },
+    {
+      "catalogId": "DS_Sign_NoParking_ZoneEnd",
+      "label": "Конец зоны запрета стоянки",
+      "kind": "sign",
+      "boundsMin": [
+        -0.35499998927116394,
+        -0.10599999874830246,
+        0.0
+      ],
+      "boundsMax": [
+        0.35499998927116394,
+        0.17499999701976776,
+        2.805000066757202
+      ],
+      "dimensionsM": [
+        0.7099999785423279,
+        0.2809999957680702,
+        2.805000066757202
+      ],
+      "triangles": 2200,
+      "materials": [
+        "Traffic_Blue",
+        "Traffic_Ink",
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_NoParking_ZoneEnd.fbx",
+      "fbxSha256": "5c67005e1b25212cd454a161be844c2a24448a611dc2fd808618ad477871f3d2",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_NoParking_ZoneEnd.glb",
+      "glbSha256": "94fafcccb997cc1886230c572542998e23950fe3957667d37fa8d5812d4c9101"
+    }
+  ],
+  "sourceSha256": "906ce70b6fa8ddd8e0c6c7dd8c6c0e8458fc12f6140617577d2878a608c2a945"
+}

@@ -1,0 +1,2214 @@
+{
+  "source": "Original procedural authored geometry",
+  "objects": [
+    {
+      "name": "A_Pillar_Panel_-1",
+      "vertices": 4,
+      "triangles": 2,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "A_Pillar_Panel_1",
+      "vertices": 4,
+      "triangles": 2,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "A_Pillar_Trim_-1",
+      "vertices": 4,
+      "triangles": 2,
+      "materials": [
+        "Interior_Stone"
+      ]
+    },
+    {
+      "name": "A_Pillar_Trim_1",
+      "vertices": 4,
+      "triangles": 2,
+      "materials": [
+        "Interior_Stone"
+      ]
+    },
+    {
+      "name": "Armrest",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "B_Pillar_Panel_-1",
+      "vertices": 4,
+      "triangles": 2,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "B_Pillar_Panel_1",
+      "vertices": 4,
+      "triangles": 2,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "BeltBuckle",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "BeltBuckle.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "BeltRelease",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_Red"
+      ]
+    },
+    {
+      "name": "BeltRelease.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_Red"
+      ]
+    },
+    {
+      "name": "BumperFacia_-1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "BumperFacia_1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "C_Pillar_Panel_-1",
+      "vertices": 4,
+      "triangles": 2,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "C_Pillar_Panel_1",
+      "vertices": 4,
+      "triangles": 2,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "Cabin_Floor",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "Centre_Tunnel",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "CentreMirrorHousing",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "ClimateDial",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "ClimateDial.001",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "ClimateDial.002",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "ClimateFace",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "ClimateFace.001",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "ClimateFace.002",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Cluster_Display",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Display"
+      ]
+    },
+    {
+      "name": "Dash_Trim",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "DeadPedal",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Door_Armrest_Front-1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "Door_Armrest_Front1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "Door_Armrest_Rear-1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "Door_Armrest_Rear1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "Door_Trim_Front-1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "Door_Trim_Front1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "Door_Trim_Rear-1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "Door_Trim_Rear1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "DoorFront_L",
+      "vertices": 185,
+      "triangles": 288,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "DoorFront_R",
+      "vertices": 185,
+      "triangles": 288,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "DoorPull",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "DoorPull.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "DoorRear_L",
+      "vertices": 185,
+      "triangles": 288,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "DoorRear_R",
+      "vertices": 185,
+      "triangles": 288,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "DriverFloorMat",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "DRL_-1-1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_Red"
+      ]
+    },
+    {
+      "name": "DRL_-11",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_Red"
+      ]
+    },
+    {
+      "name": "DRL_1-1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_White"
+      ]
+    },
+    {
+      "name": "DRL_11",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_White"
+      ]
+    },
+    {
+      "name": "FrontWing_L",
+      "vertices": 185,
+      "triangles": 288,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "FrontWing_R",
+      "vertices": 185,
+      "triangles": 288,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "GaugeBezel",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "GaugeBezel.001",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "GaugeFace_km/h",
+      "vertices": 128,
+      "triangles": 252,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "GaugeFace_RPM",
+      "vertices": 128,
+      "triangles": 252,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Glass_Front_L",
+      "vertices": 4,
+      "triangles": 2,
+      "materials": [
+        "Glass"
+      ]
+    },
+    {
+      "name": "Glass_Front_R",
+      "vertices": 4,
+      "triangles": 2,
+      "materials": [
+        "Glass"
+      ]
+    },
+    {
+      "name": "Glass_Rear",
+      "vertices": 4,
+      "triangles": 2,
+      "materials": [
+        "Glass"
+      ]
+    },
+    {
+      "name": "Glass_Rear_L",
+      "vertices": 4,
+      "triangles": 2,
+      "materials": [
+        "Glass"
+      ]
+    },
+    {
+      "name": "Glass_Rear_R",
+      "vertices": 4,
+      "triangles": 2,
+      "materials": [
+        "Glass"
+      ]
+    },
+    {
+      "name": "Glass_Windshield",
+      "vertices": 4,
+      "triangles": 2,
+      "materials": [
+        "Glass"
+      ]
+    },
+    {
+      "name": "Glovebox",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "Grille_Recess_-1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Grille_Recess_1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "GrilleBar",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "GrilleBar.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "GrilleBar.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "GrilleBar.003",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "GrilleBar.004",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "GrilleBar.005",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "GrilleBar.006",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "GrilleBar.007",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "GrilleBar.008",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "GrilleBar.009",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "HandbrakeLever",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "Handle_DoorFront_L",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "Handle_DoorFront_R",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "Handle_DoorRear_L",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "Handle_DoorRear_R",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "Headliner",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "Hood",
+      "vertices": 625,
+      "triangles": 1152,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "Indicator_-1-1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_Amber"
+      ]
+    },
+    {
+      "name": "Indicator_-11",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_Amber"
+      ]
+    },
+    {
+      "name": "Indicator_1-1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_Amber"
+      ]
+    },
+    {
+      "name": "Indicator_11",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Lamp_Amber"
+      ]
+    },
+    {
+      "name": "Infotainment",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "Infotainment_Glass",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Display"
+      ]
+    },
+    {
+      "name": "Instrument_Hood",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "LampUnit_-1-1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "LampUnit_-11",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "LampUnit_1-1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "LampUnit_11",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "MirrorHousing_-1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "MirrorHousing_1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "MirrorSurface_Centre",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Mirror"
+      ]
+    },
+    {
+      "name": "MirrorSurface_L",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Mirror"
+      ]
+    },
+    {
+      "name": "MirrorSurface_R",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Mirror"
+      ]
+    },
+    {
+      "name": "NeedleHub",
+      "vertices": 32,
+      "triangles": 60,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "NeedleHub.001",
+      "vertices": 32,
+      "triangles": 60,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "NumberPlate_-1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Paint_White"
+      ]
+    },
+    {
+      "name": "NumberPlate_1",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Paint_White"
+      ]
+    },
+    {
+      "name": "PedalGrip",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "PedalGrip.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "PedalGrip.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "PedalGrip.003",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "PedalPad.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "PedalGrip.004",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "PedalGrip.005",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "PedalGrip.006",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "PedalGrip.007",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "PedalPad",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "PedalGrip.008",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "PedalGrip.009",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "PedalGrip.010",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "PedalGrip.011",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "PedalPad.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Projector",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Lamp_White"
+      ]
+    },
+    {
+      "name": "Projector.001",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Lamp_White"
+      ]
+    },
+    {
+      "name": "Projector.002",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Lamp_White"
+      ]
+    },
+    {
+      "name": "Projector.003",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Lamp_White"
+      ]
+    },
+    {
+      "name": "Projector.004",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Lamp_Red"
+      ]
+    },
+    {
+      "name": "Projector.005",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Lamp_Red"
+      ]
+    },
+    {
+      "name": "Projector.006",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Lamp_Red"
+      ]
+    },
+    {
+      "name": "Projector.007",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Lamp_Red"
+      ]
+    },
+    {
+      "name": "RearCentreBack",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "RearCentreCushion",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "RearParcelShelf",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "RearQuarter_L",
+      "vertices": 185,
+      "triangles": 288,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "RearQuarter_R",
+      "vertices": 185,
+      "triangles": 288,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "Roof",
+      "vertices": 25,
+      "triangles": 32,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "Backrest",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "Backrest_Insert",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Stone"
+      ]
+    },
+    {
+      "name": "Cushion",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "Cushion_Insert",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Stone"
+      ]
+    },
+    {
+      "name": "Headrest",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "HeadrestRod",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "HeadrestRod.001",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "Backrest.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "Backrest_Insert.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Stone"
+      ]
+    },
+    {
+      "name": "Cushion.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "Cushion_Insert.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Stone"
+      ]
+    },
+    {
+      "name": "Headrest.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "HeadrestRod.004",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "HeadrestRod.005",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "Backrest.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "Backrest_Insert.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Stone"
+      ]
+    },
+    {
+      "name": "Cushion.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "Cushion_Insert.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Stone"
+      ]
+    },
+    {
+      "name": "Headrest.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "HeadrestRod.002",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "HeadrestRod.003",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "Backrest.003",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "Backrest_Insert.003",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Stone"
+      ]
+    },
+    {
+      "name": "Cushion.003",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "Cushion_Insert.003",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Stone"
+      ]
+    },
+    {
+      "name": "Headrest.003",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "HeadrestRod.006",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "HeadrestRod.007",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "SteeringColumn",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Airbag",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "Steering_Rim",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "SunVisor",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "SunVisor.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "AutoGate",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AutoSelector",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "GearKnob",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "GearStick",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "ShiftBoot",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Leather"
+      ]
+    },
+    {
+      "name": "Trunk",
+      "vertices": 625,
+      "triangles": 1152,
+      "materials": [
+        "Paint_Atlantic"
+      ]
+    },
+    {
+      "name": "Vent",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Vent.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Vent.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "VentSlat",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "VentSlat.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "VentSlat.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "VentSlat.003",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "VentSlat.004",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "VentSlat.005",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "VentSlat.006",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "VentSlat.007",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "VentSlat.008",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "VentSlat.009",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "VentSlat.010",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "VentSlat.011",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.003",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.004",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.005",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.006",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.007",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.008",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.009",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "BrakeCaliper",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "BrakeRotor",
+      "vertices": 96,
+      "triangles": 188,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "RimLip",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "Tire",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "TreadChannel",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "TreadChannel.001",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "WheelBolt",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.001",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.002",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.003",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.004",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelHub",
+      "vertices": 48,
+      "triangles": 92,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.020",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.021",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.022",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.023",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.024",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.025",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.026",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.027",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.028",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.029",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "BrakeCaliper.002",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "BrakeRotor.002",
+      "vertices": 96,
+      "triangles": 188,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "RimLip.002",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "Tire.002",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "TreadChannel.004",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "TreadChannel.005",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "WheelBolt.010",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.011",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.012",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.013",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.014",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelHub.002",
+      "vertices": 48,
+      "triangles": 92,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.010",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.011",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.012",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.013",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.014",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.015",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.016",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.017",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.018",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.019",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "BrakeCaliper.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "BrakeRotor.001",
+      "vertices": 96,
+      "triangles": 188,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "RimLip.001",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "Tire.001",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "TreadChannel.002",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "TreadChannel.003",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "WheelBolt.005",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.006",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.007",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.008",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.009",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelHub.001",
+      "vertices": 48,
+      "triangles": 92,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.030",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.031",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.032",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.033",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.034",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.035",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.036",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.037",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.038",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "AlloySpoke.039",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "BrakeCaliper.003",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "BrakeRotor.003",
+      "vertices": 96,
+      "triangles": 188,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "RimLip.003",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "Tire.003",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "TreadChannel.006",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "TreadChannel.007",
+      "vertices": 576,
+      "triangles": 1152,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "WheelBolt.015",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.016",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.017",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.018",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelBolt.019",
+      "vertices": 16,
+      "triangles": 28,
+      "materials": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "WheelHub.003",
+      "vertices": 48,
+      "triangles": 92,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "WheelArchLiner",
+      "vertices": 98,
+      "triangles": 96,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "WheelArchLiner.001",
+      "vertices": 98,
+      "triangles": 96,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "WheelArchLiner.002",
+      "vertices": 98,
+      "triangles": 96,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "WheelArchLiner.003",
+      "vertices": 98,
+      "triangles": 96,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "WindowSwitch",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "WindowSwitch.001",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Rubber"
+      ]
+    }
+  ],
+  "trianglesBase": 34284
+}

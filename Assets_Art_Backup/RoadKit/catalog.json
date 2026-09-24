@@ -1,0 +1,850 @@
+{
+  "revision": "v1",
+  "createdUtc": "2026-09-20T05:51:29.150524+00:00",
+  "exporter": "5.0.1",
+  "source": "ArtSource\\DS_RoadKit_v1.blend",
+  "sourceSha256": "e2403f0859318136f3528cc433475d91fa51ec6e84374541a3ff32fc69fd45ec",
+  "units": "metres",
+  "blenderAxes": "X right / Y forward / Z up",
+  "roadWidth": 8,
+  "sidewalkWidth": 2,
+  "curbHeight": 0.15,
+  "markingOffset": 0.006,
+  "textureResolution": 512,
+  "moduleCount": 16,
+  "modules": [
+    {
+      "catalogId": "RK_Road_Urban_20m",
+      "sourceBounds": {
+        "min": [
+          -6.199999809265137,
+          0.0,
+          -0.2199999988079071
+        ],
+        "max": [
+          6.199999809265137,
+          20.0,
+          0.15000000596046448
+        ],
+        "size": [
+          12.399999618530273,
+          20.0,
+          0.3700000047683716
+        ],
+        "triangles": 588
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -6.199999809265137,
+          -3.584254670840892e-08,
+          -0.22000326216220856
+        ],
+        "max": [
+          6.199999809265137,
+          20.0,
+          0.15000000596046448
+        ],
+        "size": [
+          12.399999618530273,
+          20.000000035842547,
+          0.37000326812267303
+        ],
+        "triangles": 588
+      },
+      "reimportPass": true,
+      "fbxSha256": "4d2b2c9cca740da345fa1e87b678524f5c89f786277aaaee141e53e7a9a2e67b",
+      "glbSha256": "d20fdeba8fdb9813bc84df462131158f55e8fd933023aede97a402de669e8450",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {
+        "Socket_End": [
+          0.0,
+          20.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "materials": [
+        "RK_Asphalt",
+        "RK_Concrete",
+        "RK_Paving",
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK_Road_Rural_20m",
+      "sourceBounds": {
+        "min": [
+          -5.5,
+          0.0,
+          -0.2199999988079071
+        ],
+        "max": [
+          5.5,
+          20.0,
+          0.008999999612569809
+        ],
+        "size": [
+          11.0,
+          20.0,
+          0.2289999984204769
+        ],
+        "triangles": 108
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -5.5,
+          -3.584254670840892e-08,
+          -0.22000326216220856
+        ],
+        "max": [
+          5.5,
+          20.0,
+          0.008999999612569809
+        ],
+        "size": [
+          11.0,
+          20.000000035842547,
+          0.22900326177477837
+        ],
+        "triangles": 108
+      },
+      "reimportPass": true,
+      "fbxSha256": "5063c96b0b605cb54b88b914d673a4ca94144bda3f1ae8e663f38f286640e4c3",
+      "glbSha256": "71960040237100125b62d98480eb073a78d9a2542fd744638ad20f775c98908b",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {
+        "Socket_End.001": [
+          0.0,
+          20.0,
+          0.0
+        ],
+        "Socket_Start.001": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "materials": [
+        "RK_Asphalt",
+        "RK_Gravel",
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK_Road_Curve90_R14",
+      "sourceBounds": {
+        "min": [
+          -6.199999809265137,
+          0.0,
+          -0.2199999988079071
+        ],
+        "max": [
+          14.0,
+          20.200000762939453,
+          0.15000000596046448
+        ],
+        "size": [
+          20.199999809265137,
+          20.200000762939453,
+          0.3700000047683716
+        ],
+        "triangles": 3500
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -6.199999809265137,
+          -3.584254670840892e-08,
+          -0.22000329196453094
+        ],
+        "max": [
+          14.0,
+          20.200000762939453,
+          0.15000000596046448
+        ],
+        "size": [
+          20.199999809265137,
+          20.200000798782,
+          0.3700032979249954
+        ],
+        "triangles": 3500
+      },
+      "reimportPass": true,
+      "fbxSha256": "4dbc8e8ce2ed86472295c7970e28fea3316bee9a5e01bfecdac8e10e88993a1c",
+      "glbSha256": "53eb1c5a2ff9e9b57de23af0d446a600e0a073f4a7bd0b27142a140f84b31b8e",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {
+        "Socket_End.002": [
+          14.0,
+          14.0,
+          0.0
+        ],
+        "Socket_Start.002": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "materials": [
+        "RK_Asphalt",
+        "RK_Concrete",
+        "RK_Paving",
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK_Road_Cross_24m",
+      "sourceBounds": {
+        "min": [
+          -12.0,
+          -12.0,
+          -0.2199999988079071
+        ],
+        "max": [
+          12.0,
+          12.0,
+          0.15000000596046448
+        ],
+        "size": [
+          24.0,
+          24.0,
+          0.3700000047683716
+        ],
+        "triangles": 1676
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -12.0,
+          -12.0,
+          -0.2200019508600235
+        ],
+        "max": [
+          12.0,
+          12.0,
+          0.15000195801258087
+        ],
+        "size": [
+          24.0,
+          24.0,
+          0.37000390887260437
+        ],
+        "triangles": 1676
+      },
+      "reimportPass": true,
+      "fbxSha256": "2d5f61f057a99ff582ad3d3f7c4bf1d05a29136b0d6f927ec496e37be30664d7",
+      "glbSha256": "b962cb2d17f296484dcb8eb9b4b74d02e849509a4914c73537e7860eb218fd8a",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {
+        "Socket_East": [
+          12.0,
+          0.0,
+          0.0
+        ],
+        "Socket_North": [
+          0.0,
+          12.0,
+          0.0
+        ],
+        "Socket_South": [
+          0.0,
+          -12.0,
+          0.0
+        ],
+        "Socket_West": [
+          -12.0,
+          0.0,
+          0.0
+        ]
+      },
+      "materials": [
+        "RK_Asphalt",
+        "RK_Concrete",
+        "RK_Paving",
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK_Sidewalk_2x5m",
+      "sourceBounds": {
+        "min": [
+          -1.0,
+          0.0,
+          -0.2199999988079071
+        ],
+        "max": [
+          1.0,
+          5.0,
+          0.15000000596046448
+        ],
+        "size": [
+          2.0,
+          5.0,
+          0.3700000047683716
+        ],
+        "triangles": 12
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -1.0,
+          -3.584254670840892e-08,
+          -0.22000081837177277
+        ],
+        "max": [
+          1.0,
+          5.0,
+          0.15000000596046448
+        ],
+        "size": [
+          2.0,
+          5.000000035842547,
+          0.37000082433223724
+        ],
+        "triangles": 12
+      },
+      "reimportPass": true,
+      "fbxSha256": "ff43f5e4e10aaa8485d0cca4bc2722282f81b14c96f318ae9597e7bed2d2fb3c",
+      "glbSha256": "c1a03bec486656666ab0fbbcaea67e77ab514ced553f52ef2c4f3eec798e2fad",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {},
+      "materials": [
+        "RK_Paving"
+      ]
+    },
+    {
+      "catalogId": "RK_Curb_1m",
+      "sourceBounds": {
+        "min": [
+          -0.10000000149011612,
+          0.0,
+          -0.2199999988079071
+        ],
+        "max": [
+          0.10000000149011612,
+          1.0,
+          0.15000000596046448
+        ],
+        "size": [
+          0.20000000298023224,
+          1.0,
+          0.3700000047683716
+        ],
+        "triangles": 12
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -0.10000000149011612,
+          -3.584254670840892e-08,
+          -0.22000016272068024
+        ],
+        "max": [
+          0.10000000149011612,
+          1.0,
+          0.15000000596046448
+        ],
+        "size": [
+          0.20000000298023224,
+          1.0000000358425467,
+          0.3700001686811447
+        ],
+        "triangles": 12
+      },
+      "reimportPass": true,
+      "fbxSha256": "74d9a32f130dead969f92297f0e0862ef749df346115b09a8d7817e0be1d2abb",
+      "glbSha256": "02671f9368408a78bf61989ca48c5a3b876f95e807647cdff5c902898d861b81",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {},
+      "materials": [
+        "RK_Concrete"
+      ]
+    },
+    {
+      "catalogId": "RK_Shoulder_1p5x5m",
+      "sourceBounds": {
+        "min": [
+          -0.75,
+          0.0,
+          -0.2199999988079071
+        ],
+        "max": [
+          0.75,
+          5.0,
+          0.0
+        ],
+        "size": [
+          1.5,
+          5.0,
+          0.2199999988079071
+        ],
+        "triangles": 12
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -0.75,
+          -3.584254670840892e-08,
+          -0.22000081837177277
+        ],
+        "max": [
+          0.75,
+          5.0,
+          0.0
+        ],
+        "size": [
+          1.5,
+          5.000000035842547,
+          0.22000081837177277
+        ],
+        "triangles": 12
+      },
+      "reimportPass": true,
+      "fbxSha256": "e88304e47c8b131e59588206d9bf0a1c8877c0e03cd6be6883b69d8a54ec28b8",
+      "glbSha256": "bf5ca5714c50f8e34b317e8e63d54082682c5b52aa259041d030155144ac0507",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {},
+      "materials": [
+        "RK_Gravel"
+      ]
+    },
+    {
+      "catalogId": "RK_Marking_Solid_20m",
+      "sourceBounds": {
+        "min": [
+          -0.05999999865889549,
+          0.0,
+          0.006000000052154064
+        ],
+        "max": [
+          0.05999999865889549,
+          20.0,
+          0.008999999612569809
+        ],
+        "size": [
+          0.11999999731779099,
+          20.0,
+          0.0029999995604157448
+        ],
+        "triangles": 12
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -0.05999999865889549,
+          9.775240616960446e-10,
+          0.005996741820126772
+        ],
+        "max": [
+          0.05999999865889549,
+          20.0,
+          0.008999999612569809
+        ],
+        "size": [
+          0.11999999731779099,
+          19.999999999022474,
+          0.003003257792443037
+        ],
+        "triangles": 12
+      },
+      "reimportPass": true,
+      "fbxSha256": "94c2ef6ca17ff9d46c5b25db307b842cc748efa3947fdfd1271d892c5c71f503",
+      "glbSha256": "2d94ee807a302cea1d24f95341d8ae70b6366b0e166e4902f5ae8ba5305d36f7",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {},
+      "materials": [
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK_Marking_Dashed_20m",
+      "sourceBounds": {
+        "min": [
+          -0.05999999865889549,
+          0.0,
+          0.006000000052154064
+        ],
+        "max": [
+          0.05999999865889549,
+          18.0,
+          0.008999999612569809
+        ],
+        "size": [
+          0.11999999731779099,
+          18.0,
+          0.0029999995604157448
+        ],
+        "triangles": 48
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -0.05999999865889549,
+          9.775240616960446e-10,
+          0.0059970673173666
+        ],
+        "max": [
+          0.05999999865889549,
+          18.0,
+          0.008999999612569809
+        ],
+        "size": [
+          0.11999999731779099,
+          17.999999999022474,
+          0.003002932295203209
+        ],
+        "triangles": 48
+      },
+      "reimportPass": true,
+      "fbxSha256": "6dfb2e787e1ef88e5e0d479753338fc337ed28260c6c78f9ac437d3103f3d9be",
+      "glbSha256": "caa810bf7ba08dde631deff78ba7d888430f1d32aff4124b631b2827ab4688c5",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {},
+      "materials": [
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK_Marking_DoubleSolid_20m",
+      "sourceBounds": {
+        "min": [
+          -0.18000000715255737,
+          0.0,
+          0.006000000052154064
+        ],
+        "max": [
+          0.18000000715255737,
+          20.0,
+          0.008999999612569809
+        ],
+        "size": [
+          0.36000001430511475,
+          20.0,
+          0.0029999995604157448
+        ],
+        "triangles": 24
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -0.18000000715255737,
+          9.775240616960446e-10,
+          0.005996741820126772
+        ],
+        "max": [
+          0.18000000715255737,
+          20.0,
+          0.008999999612569809
+        ],
+        "size": [
+          0.36000001430511475,
+          19.999999999022474,
+          0.003003257792443037
+        ],
+        "triangles": 24
+      },
+      "reimportPass": true,
+      "fbxSha256": "fb33f5e0820af8b000433dc5bdaa36f2d255878de60d7560c1552e3ac1d39036",
+      "glbSha256": "68892781c78217d8556e7914c9d9f55b3158a626a9b8539999816c2d3a02810a",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {},
+      "materials": [
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK_Marking_Yellow_20m",
+      "sourceBounds": {
+        "min": [
+          -0.05999999865889549,
+          0.0,
+          0.006000000052154064
+        ],
+        "max": [
+          0.05999999865889549,
+          20.0,
+          0.008999999612569809
+        ],
+        "size": [
+          0.11999999731779099,
+          20.0,
+          0.0029999995604157448
+        ],
+        "triangles": 12
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -0.05999999865889549,
+          9.775240616960446e-10,
+          0.005996741820126772
+        ],
+        "max": [
+          0.05999999865889549,
+          20.0,
+          0.008999999612569809
+        ],
+        "size": [
+          0.11999999731779099,
+          19.999999999022474,
+          0.003003257792443037
+        ],
+        "triangles": 12
+      },
+      "reimportPass": true,
+      "fbxSha256": "be6dc4634740c1eb50d69d1c2ba7c5fe8fbe1bcd94eae329361bbf043161c4f5",
+      "glbSha256": "54e0e5cb32a4e9c6ad64bedb7b0af1a3ab66cead5e678ae266bef8c36c83ee7d",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {},
+      "materials": [
+        "RK_Yellow"
+      ]
+    },
+    {
+      "catalogId": "RK_Marking_Zebra_8x3m",
+      "sourceBounds": {
+        "min": [
+          -3.75,
+          0.0,
+          0.006000000052154064
+        ],
+        "max": [
+          3.75,
+          3.0,
+          0.008999999612569809
+        ],
+        "size": [
+          7.5,
+          3.0,
+          0.0029999995604157448
+        ],
+        "triangles": 96
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -3.75,
+          9.775240616960446e-10,
+          0.005999511107802391
+        ],
+        "max": [
+          3.75,
+          3.0,
+          0.008999999612569809
+        ],
+        "size": [
+          7.5,
+          2.999999999022476,
+          0.003000488504767418
+        ],
+        "triangles": 96
+      },
+      "reimportPass": true,
+      "fbxSha256": "c1ba7fbd86d558f816905398afbe9492d632bf194169975fa13c6be6077edb8b",
+      "glbSha256": "1d1e967ea12f2a9e21f68b50f835f8d5d4d0716fdbe0ad2b3028d0e7ea185870",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {},
+      "materials": [
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK_Marking_Stop_3p5m",
+      "sourceBounds": {
+        "min": [
+          -1.75,
+          0.0,
+          0.006000000052154064
+        ],
+        "max": [
+          1.75,
+          0.4000000059604645,
+          0.008999999612569809
+        ],
+        "size": [
+          3.5,
+          0.4000000059604645,
+          0.0029999995604157448
+        ],
+        "triangles": 12
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -1.75,
+          9.775240616960446e-10,
+          0.005999934859573841
+        ],
+        "max": [
+          1.75,
+          0.4000000059604645,
+          0.008999999612569809
+        ],
+        "size": [
+          3.5,
+          0.4000000049829404,
+          0.003000064752995968
+        ],
+        "triangles": 12
+      },
+      "reimportPass": true,
+      "fbxSha256": "3534913d582e7e2e01d77be5b2d0599de03aeba47902f15c362740df55668b45",
+      "glbSha256": "0f6f41c7b8aaed799dc8f464169c4966882dfae4e9cdedef56bdc32d7b5d0a40",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {},
+      "materials": [
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK_Marking_Arrow_Straight",
+      "sourceBounds": {
+        "min": [
+          -0.6499999761581421,
+          0.0,
+          0.006000000052154064
+        ],
+        "max": [
+          0.6499999761581421,
+          3.5,
+          0.008999999612569809
+        ],
+        "size": [
+          1.2999999523162842,
+          3.5,
+          0.0029999995604157448
+        ],
+        "triangles": 24
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -0.6499999761581421,
+          9.775240616960446e-10,
+          0.005999429617077112
+        ],
+        "max": [
+          0.6499999761581421,
+          3.5,
+          0.008999999612569809
+        ],
+        "size": [
+          1.2999999523162842,
+          3.499999999022476,
+          0.0030005699954926968
+        ],
+        "triangles": 24
+      },
+      "reimportPass": true,
+      "fbxSha256": "eb4cf76f612b435cbb5f2180c664f69fbaf8a9260ccb39596123f20eab11df31",
+      "glbSha256": "dab6d1cabbe752b34511d167dd53839299287123cb980bdc78be21f70a48a9e6",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {},
+      "materials": [
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK_Marking_Arrow_Left",
+      "sourceBounds": {
+        "min": [
+          -1.7999999523162842,
+          0.0,
+          0.006000000052154064
+        ],
+        "max": [
+          0.12999999523162842,
+          3.0999999046325684,
+          0.008999999612569809
+        ],
+        "size": [
+          1.9299999475479126,
+          3.0999999046325684,
+          0.0029999995604157448
+        ],
+        "triangles": 32
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -1.7999999523162842,
+          9.775240616960446e-10,
+          0.005999494809657335
+        ],
+        "max": [
+          0.12999999523162842,
+          3.0999999046325684,
+          0.008999999612569809
+        ],
+        "size": [
+          1.9299999475479126,
+          3.0999999036550445,
+          0.0030005048029124737
+        ],
+        "triangles": 32
+      },
+      "reimportPass": true,
+      "fbxSha256": "702cac615ee107056a953b70a404419e61f2f4980c63bd54822869db05f24446",
+      "glbSha256": "eca635b4cd0b1cfa6e65bdece167ff6951716864318da65186e11dda0b58ec66",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {},
+      "materials": [
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK_Marking_Parking_2p5x5m",
+      "sourceBounds": {
+        "min": [
+          -1.25,
+          0.0,
+          0.006000000052154064
+        ],
+        "max": [
+          1.25,
+          5.0,
+          0.008999999612569809
+        ],
+        "size": [
+          2.5,
+          5.0,
+          0.0029999995604157448
+        ],
+        "triangles": 36
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -1.25,
+          9.775240616960446e-10,
+          0.005999185610562563
+        ],
+        "max": [
+          1.25,
+          5.0,
+          0.008999999612569809
+        ],
+        "size": [
+          2.5,
+          4.999999999022476,
+          0.003000814002007246
+        ],
+        "triangles": 36
+      },
+      "reimportPass": true,
+      "fbxSha256": "c11e100c109d8d29d8246a1b68b415edbf59b9429993746b5583a39801fd8383",
+      "glbSha256": "59edb7f38ccd1ef1a26f6939af77451f61ab5156d02097c42ac452b64f172562",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {},
+      "materials": [
+        "RK_White"
+      ]
+    }
+  ]
+}

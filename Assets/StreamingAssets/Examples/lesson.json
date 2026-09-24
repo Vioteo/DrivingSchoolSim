@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "start-stop-demo",
+  "title": "Начало движения и остановка",
+  "worldId": "training-district",
+  "timeLimitSeconds": 120,
+  "targetDistanceM": 20,
+  "stopSpeedMps": 0.14,
+  "requiredStopSeconds": 2,
+  "contentStatus": "demonstration"
+}

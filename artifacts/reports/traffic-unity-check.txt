@@ -1,0 +1,45 @@
+Traffic v1 — Unity import / prefab / signal checks
+2026-09-24T09:20:28.7445865Z
+PASS DS_Plaque_DirectionBoth: bounds=(0.640, 0.360, 0.212) minY=0,0000; triangles=588; renderers=7; colliders=1; front=+Z; prefab root=identity
+PASS DS_Plaque_DirectionLeft: bounds=(0.640, 0.360, 0.212) minY=0,0000; triangles=564; renderers=6; colliders=1; front=+Z; prefab root=identity
+PASS DS_Plaque_DirectionRight: bounds=(0.640, 0.360, 0.212) minY=0,0000; triangles=564; renderers=6; colliders=1; front=+Z; prefab root=identity
+PASS DS_Plaque_Distance100: bounds=(0.640, 0.360, 0.207) minY=0,0000; triangles=1120; renderers=6; colliders=1; front=+Z; prefab root=identity
+PASS DS_Plaque_Distance300: bounds=(0.640, 0.360, 0.207) minY=0,0000; triangles=1376; renderers=6; colliders=1; front=+Z; prefab root=identity
+PASS DS_Plaque_Zone100: bounds=(0.640, 0.360, 0.212) minY=0,0000; triangles=1144; renderers=7; colliders=1; front=+Z; prefab root=identity
+PASS DS_Plaque_ZoneContinue: bounds=(0.640, 0.360, 0.212) minY=0,0000; triangles=588; renderers=7; colliders=1; front=+Z; prefab root=identity
+PASS DS_Plaque_ZoneEnd: bounds=(0.640, 0.360, 0.212) minY=0,0000; triangles=564; renderers=6; colliders=1; front=+Z; prefab root=identity
+PASS DS_Plaque_ZoneLeft100: bounds=(0.640, 0.363, 0.212) minY=-0,0028; triangles=1144; renderers=7; colliders=1; front=+Z; prefab root=identity
+PASS DS_Plaque_ZoneRight100: bounds=(0.640, 0.363, 0.212) minY=-0,0028; triangles=1144; renderers=7; colliders=1; front=+Z; prefab root=identity
+PASS DS_Plaque_ZoneStart: bounds=(0.640, 0.360, 0.212) minY=0,0000; triangles=564; renderers=6; colliders=1; front=+Z; prefab root=identity
+PASS DS_Sign_Crossing: bounds=(0.720, 2.810, 0.286) minY=0,0000; triangles=1104; renderers=27; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_MultiTrack: bounds=(1.125, 3.055, 0.278) minY=0,0000; triangles=1216; renderers=22; colliders=4; front=+Z; prefab root=identity
+PASS DS_Sign_NoEntry: bounds=(0.710, 2.805, 0.277) minY=0,0000; triangles=1636; renderers=15; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_NoParking: bounds=(0.710, 2.805, 0.281) minY=0,0000; triangles=1636; renderers=15; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_NoParking_ZoneEnd: bounds=(0.710, 2.805, 0.281) minY=0,0000; triangles=2200; renderers=21; colliders=3; front=+Z; prefab root=identity
+PASS DS_Sign_NoStopping: bounds=(0.710, 2.805, 0.281) minY=0,0000; triangles=1648; renderers=16; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_NoStopping_Zone100: bounds=(0.710, 2.805, 0.281) minY=0,0000; triangles=2792; renderers=23; colliders=3; front=+Z; prefab root=identity
+PASS DS_Sign_Parking: bounds=(0.720, 2.810, 0.273) minY=0,0000; triangles=984; renderers=15; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_Priority: bounds=(0.870, 2.885, 0.266) minY=0,0000; triangles=904; renderers=14; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_RailwayBarrier: bounds=(0.875, 2.955, 0.274) minY=0,0000; triangles=996; renderers=21; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_RailwayDist1_L: bounds=(0.357, 2.807, 0.262) minY=0,0000; triangles=904; renderers=14; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_RailwayDist1_R: bounds=(0.357, 2.807, 0.262) minY=0,0000; triangles=904; renderers=14; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_RailwayDist2_L: bounds=(0.357, 2.807, 0.262) minY=0,0000; triangles=916; renderers=15; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_RailwayDist2_R: bounds=(0.357, 2.807, 0.262) minY=0,0000; triangles=916; renderers=15; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_RailwayDist3_L: bounds=(0.357, 2.807, 0.262) minY=0,0000; triangles=936; renderers=16; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_RailwayDist3_R: bounds=(0.357, 2.807, 0.262) minY=0,0000; triangles=936; renderers=16; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_RailwayNoBarrier: bounds=(0.875, 2.955, 0.275) minY=0,0000; triangles=1220; renderers=24; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_Right: bounds=(0.710, 2.805, 0.279) minY=0,0000; triangles=1648; renderers=15; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_Roundabout: bounds=(0.710, 2.805, 0.280) minY=0,0000; triangles=2080; renderers=53; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_SingleTrack: bounds=(1.100, 2.875, 0.278) minY=0,0000; triangles=940; renderers=17; colliders=3; front=+Z; prefab root=identity
+PASS DS_Sign_Speed30: bounds=(0.710, 2.805, 0.273) minY=0,0000; triangles=1872; renderers=15; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_Speed40: bounds=(0.710, 2.805, 0.273) minY=0,0000; triangles=1780; renderers=15; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_Speed60: bounds=(0.710, 2.805, 0.273) minY=0,0000; triangles=1844; renderers=15; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_Stop: bounds=(0.748, 2.824, 0.273) minY=0,0000; triangles=1280; renderers=15; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_Straight: bounds=(0.710, 2.805, 0.279) minY=0,0000; triangles=1648; renderers=15; colliders=2; front=+Z; prefab root=identity
+PASS DS_Sign_TownEntry: bounds=(1.900, 2.766, 0.270) minY=0,0000; triangles=2156; renderers=20; colliders=3; front=+Z; prefab root=identity
+PASS DS_Sign_TownExit: bounds=(1.900, 2.766, 0.281) minY=0,0000; triangles=2168; renderers=21; colliders=3; front=+Z; prefab root=identity
+PASS DS_Sign_Yield: bounds=(0.797, 2.766, 0.266) minY=0,0000; triangles=892; renderers=14; colliders=2; front=+Z; prefab root=identity
+PASS DS_Signal_Pedestrian: bounds=(0.430, 3.366, 0.525) minY=0,0000; triangles=2660; renderers=47; colliders=4; front=+Z; prefab root=identity
+PASS DS_Signal_Vehicle: bounds=(0.430, 3.366, 0.525) minY=0,0000; triangles=3724; renderers=47; colliders=5; front=+Z; prefab root=identity
+PASS DS_Signal_VehicleArrow: bounds=(0.745, 3.366, 0.525) minY=0,0000; triangles=4620; renderers=60; colliders=6; front=+Z; prefab root=identity
+PASS: all available aspects, dark lens visibility, pedestrian rejection, arrow on/off, prefab creation. LODs and traffic scheduling not included.

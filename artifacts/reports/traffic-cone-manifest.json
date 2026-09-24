@@ -1,0 +1,26 @@
+{
+  "asset": "DS_TrafficCone",
+  "revision": 1,
+  "utc": "2026-09-20T11:27:05.029648+00:00",
+  "generator": "Blender 5.0.1",
+  "units": "metres",
+  "source_up": "Z",
+  "export_up": "Y",
+  "dimensions_m": [
+    0.46000000834465027,
+    0.46000000834465027,
+    0.75
+  ],
+  "triangles": 2604,
+  "material_slots": 3,
+  "textures": 0,
+  "uv_layers": 1,
+  "manifold": true,
+  "pivot": "ground centre",
+  "lods": "not prepared",
+  "files": {
+    "ArtSource\\DS_TrafficCone.blend": "08743438278f72ed9c08b65bbc9953c95ca7ac0f98815bea90d8b5f7d9415193",
+    "Assets\\DrivingSchool\\Art\\Props\\DS_TrafficCone.fbx": "7cdc830dbc065ca824030b8d5e546f7c46976deba4564a2b0af7b3583775a94d",
+    "artifacts\\visual-review\\traffic-cone\\DS_TrafficCone.glb": "6c5813409139c08de781e1718fe5b6e4f754637a1e06789a5f3fdfeba19f3476"
+  }
+}

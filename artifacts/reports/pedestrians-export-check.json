@@ -1,0 +1,252 @@
+{
+  "scope": "Blender reimport of final FBX and GLB; Unity has a separate report.",
+  "assets": [
+    {
+      "file": "Assets\\DrivingSchool\\Art\\Pedestrians\\DS_Pedestrian_A.fbx",
+      "sha256": "94887758666beed9230c81fee13327503fe598185ae0ba9b207c9ef1e7920c78",
+      "dimensionsM": [
+        0.716000497341156,
+        0.2990000769495964,
+        1.7889561988413334
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 1.5427880283919967e-18,
+          "maxDisplacementM": 0.00781575035268253,
+          "groundRangeM": [
+            0.0029999874532222748,
+            0.0029999874532222748
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7688076034534533,
+          "groundRangeM": [
+            -0.013429632410407066,
+            0.021400591358542442
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts\\visual-review\\pedestrians\\models\\DS_Pedestrian_A.glb",
+      "sha256": "572dc91ae891635a9ae38ab803e7a7b2fcfa278f6d66fda31a85a89677de56bc",
+      "dimensionsM": [
+        0.7160001695156097,
+        0.29899998754262924,
+        1.7889563255012035
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 1.5429191071920806e-18,
+          "maxDisplacementM": 0.007815735087693005,
+          "groundRangeM": [
+            -4.0978193283081055e-08,
+            -4.0978193283081055e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7708011354131216,
+          "groundRangeM": [
+            -8.754432201385498e-08,
+            1.3783574104309082e-07
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "Assets\\DrivingSchool\\Art\\Pedestrians\\DS_Pedestrian_B.fbx",
+      "sha256": "de70712745df50ead94647f91221c32131c3d4cacb7e7470a018e9ff54e10e76",
+      "dimensionsM": [
+        0.716000497341156,
+        0.3300000727176666,
+        1.7889561988413334
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 1.5427880283919967e-18,
+          "maxDisplacementM": 0.00781575035268253,
+          "groundRangeM": [
+            0.0029999874532222748,
+            0.0029999874532222748
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7688076034534533,
+          "groundRangeM": [
+            -0.013429632410407066,
+            0.021400591358542442
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts\\visual-review\\pedestrians\\models\\DS_Pedestrian_B.glb",
+      "sha256": "18d73b091647bcac8de84977267bf1cdb11aa385a40290c4e8034bbc5ae7490a",
+      "dimensionsM": [
+        0.7160001695156097,
+        0.32999998331069946,
+        1.7889563255012035
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 1.5429191071920806e-18,
+          "maxDisplacementM": 0.007815735087693005,
+          "groundRangeM": [
+            -4.0978193283081055e-08,
+            -4.0978193283081055e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7708011354131216,
+          "groundRangeM": [
+            -8.754432201385498e-08,
+            1.3783574104309082e-07
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "Assets\\DrivingSchool\\Art\\Pedestrians\\DS_Pedestrian_C.fbx",
+      "sha256": "2cc835a1c3b3109adce92b71bde28df7e7243b3a86b8281a6f40cd34cc64a984",
+      "dimensionsM": [
+        0.716000497341156,
+        0.46650007367134094,
+        1.7889561988413334
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 1.5427880283919967e-18,
+          "maxDisplacementM": 0.00781575035268253,
+          "groundRangeM": [
+            0.0029999874532222748,
+            0.0029999874532222748
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7688076034534533,
+          "groundRangeM": [
+            -0.013429632410407066,
+            0.021400591358542442
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts\\visual-review\\pedestrians\\models\\DS_Pedestrian_C.glb",
+      "sha256": "4f791dda837bae8fff0d577c6fc048820488b82470a5b5770070e3ccfdcca8e8",
+      "dimensionsM": [
+        0.7160001695156097,
+        0.4664999842643738,
+        1.7889563255012035
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 1.5429191071920806e-18,
+          "maxDisplacementM": 0.007815735087693005,
+          "groundRangeM": [
+            -4.0978193283081055e-08,
+            -4.0978193283081055e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7708011354131216,
+          "groundRangeM": [
+            -8.754432201385498e-08,
+            1.3783574104309082e-07
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

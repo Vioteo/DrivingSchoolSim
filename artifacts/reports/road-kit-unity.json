@@ -1,0 +1,201 @@
+{
+    "unityVersion": "6000.3.10f1",
+    "checkedUtc": "2026-09-20T05:56:25.1398795Z",
+    "passed": true,
+    "surfaceContactPass": true,
+    "socketSeamPass": true,
+    "modules": [
+        {
+            "name": "RK_Curb_1m",
+            "boundsMetres": {
+                "x": 0.20000006258487702,
+                "y": 0.3700001835823059,
+                "z": 1.0000001192092896
+            },
+            "renderTriangles": 12,
+            "renderers": 1,
+            "colliders": 1,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Marking_Arrow_Left",
+            "boundsMetres": {
+                "x": 1.9300003051757813,
+                "y": 0.0030003695283085109,
+                "z": 3.1000001430511476
+            },
+            "renderTriangles": 32,
+            "renderers": 1,
+            "colliders": 0,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Marking_Arrow_Straight",
+            "boundsMetres": {
+                "x": 1.3000001907348633,
+                "y": 0.00300041725859046,
+                "z": 3.500000476837158
+            },
+            "renderTriangles": 24,
+            "renderers": 1,
+            "colliders": 0,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Marking_Dashed_20m",
+            "boundsMetres": {
+                "x": 0.12000001966953278,
+                "y": 0.003002145793288946,
+                "z": 18.000001907348634
+            },
+            "renderTriangles": 48,
+            "renderers": 1,
+            "colliders": 0,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Marking_DoubleSolid_20m",
+            "boundsMetres": {
+                "x": 0.3600001037120819,
+                "y": 0.0030023842118680479,
+                "z": 20.000001907348634
+            },
+            "renderTriangles": 24,
+            "renderers": 1,
+            "colliders": 0,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Marking_Parking_2p5x5m",
+            "boundsMetres": {
+                "x": 2.500000476837158,
+                "y": 0.003000596072524786,
+                "z": 5.000000476837158
+            },
+            "renderTriangles": 36,
+            "renderers": 1,
+            "colliders": 0,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Marking_Solid_20m",
+            "boundsMetres": {
+                "x": 0.12000001966953278,
+                "y": 0.0030023842118680479,
+                "z": 20.000001907348634
+            },
+            "renderTriangles": 12,
+            "renderers": 1,
+            "colliders": 0,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Marking_Stop_3p5m",
+            "boundsMetres": {
+                "x": 3.5000007152557375,
+                "y": 0.003000047756358981,
+                "z": 0.40000006556510928
+            },
+            "renderTriangles": 12,
+            "renderers": 1,
+            "colliders": 0,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Marking_Yellow_20m",
+            "boundsMetres": {
+                "x": 0.12000001966953278,
+                "y": 0.0030023842118680479,
+                "z": 20.000001907348634
+            },
+            "renderTriangles": 12,
+            "renderers": 1,
+            "colliders": 0,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Marking_Zebra_8x3m",
+            "boundsMetres": {
+                "x": 7.500001430511475,
+                "y": 0.0030003576539456846,
+                "z": 3.000000476837158
+            },
+            "renderTriangles": 96,
+            "renderers": 1,
+            "colliders": 0,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Road_Cross_24m",
+            "boundsMetres": {
+                "x": 24.0000057220459,
+                "y": 0.3700029253959656,
+                "z": 24.000003814697267
+            },
+            "renderTriangles": 1676,
+            "renderers": 4,
+            "colliders": 3,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Road_Curve90_R14",
+            "boundsMetres": {
+                "x": 20.20000457763672,
+                "y": 0.37000247836112978,
+                "z": 20.20000457763672
+            },
+            "renderTriangles": 3500,
+            "renderers": 4,
+            "colliders": 3,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Road_Rural_20m",
+            "boundsMetres": {
+                "x": 11.00000286102295,
+                "y": 0.22900241613388062,
+                "z": 20.000001907348634
+            },
+            "renderTriangles": 108,
+            "renderers": 3,
+            "colliders": 2,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Road_Urban_20m",
+            "boundsMetres": {
+                "x": 12.400001525878907,
+                "y": 0.3700024485588074,
+                "z": 20.000001907348634
+            },
+            "renderTriangles": 588,
+            "renderers": 4,
+            "colliders": 3,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Shoulder_1p5x5m",
+            "boundsMetres": {
+                "x": 1.5000003576278687,
+                "y": 0.22000062465667725,
+                "z": 5.000000476837158
+            },
+            "renderTriangles": 12,
+            "renderers": 1,
+            "colliders": 1,
+            "axisAndScalePass": true
+        },
+        {
+            "name": "RK_Sidewalk_2x5m",
+            "boundsMetres": {
+                "x": 2.000000476837158,
+                "y": 0.3700006604194641,
+                "z": 5.000000476837158
+            },
+            "renderTriangles": 12,
+            "renderers": 1,
+            "colliders": 1,
+            "axisAndScalePass": true
+        }
+    ]
+}

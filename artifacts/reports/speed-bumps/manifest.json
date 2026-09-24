@@ -1,0 +1,67 @@
+{
+  "revision": 1,
+  "utc": "2026-09-20T05:56:58.608169+00:00",
+  "exporter": "Blender 5.0.1",
+  "units": "metres",
+  "sourceUp": "Z",
+  "exportUp": "Y",
+  "unityForward": "Z: drive over the hump; X: across road",
+  "pivot": "ground centre",
+  "models": [
+    {
+      "catalogId": "DS_SpeedBump_Rubber_3p5m",
+      "dimensionsBlenderXYZ": [
+        3.5,
+        0.5,
+        0.06499999761581421
+      ],
+      "triangles": 4364,
+      "materialSlots": 3,
+      "uvLayers": 1,
+      "closedMeshComponents": true,
+      "textures": 0,
+      "lods": "not prepared",
+      "sha256": {
+        "Assets\\DrivingSchool\\Art\\SpeedBumps\\DS_SpeedBump_Rubber_3p5m.fbx": "bde07ed5a6f0c1ad53246ba00d8498cdb09a19efef455f013197deacc02347db",
+        "artifacts\\visual-review\\speed-bumps\\DS_SpeedBump_Rubber_3p5m.glb": "af6af5350fd139df04af47ed0f0ebf4d3da2eded7d6d263439cc1fed6f391eed"
+      }
+    },
+    {
+      "catalogId": "DS_SpeedBump_Rubber_7m",
+      "dimensionsBlenderXYZ": [
+        7.0,
+        0.5,
+        0.06499999761581421
+      ],
+      "triangles": 7612,
+      "materialSlots": 3,
+      "uvLayers": 1,
+      "closedMeshComponents": true,
+      "textures": 0,
+      "lods": "not prepared",
+      "sha256": {
+        "Assets\\DrivingSchool\\Art\\SpeedBumps\\DS_SpeedBump_Rubber_7m.fbx": "7b7e48fd2768ea7eb0686bc42ce24a4ea3d7249591572d04d7c256fa8f5ce611",
+        "artifacts\\visual-review\\speed-bumps\\DS_SpeedBump_Rubber_7m.glb": "e32c2bcf8ac51c794956cc35c1f8b134abb137589ea6b15d154e6aafd0ec5e83"
+      }
+    },
+    {
+      "catalogId": "DS_SpeedBump_Asphalt_3p5m",
+      "dimensionsBlenderXYZ": [
+        3.5,
+        3.0,
+        0.09000000357627869
+      ],
+      "triangles": 2808,
+      "materialSlots": 2,
+      "uvLayers": 1,
+      "closedMeshComponents": true,
+      "textures": 0,
+      "lods": "not prepared",
+      "sha256": {
+        "Assets\\DrivingSchool\\Art\\SpeedBumps\\DS_SpeedBump_Asphalt_3p5m.fbx": "7ee4c7afd24f8319c03eb65a9739b786a9b810f074a72b1b64bd5ce320f71ceb",
+        "artifacts\\visual-review\\speed-bumps\\DS_SpeedBump_Asphalt_3p5m.glb": "ab435f40e5ea062abf298516910ecf48341c9b806a0948b469f33d2404975765"
+      }
+    }
+  ],
+  "sourceSha256": "f815ef699fb91851feea093b071202f729a5b56fdf92143eef125d2a3751a46b"
+}

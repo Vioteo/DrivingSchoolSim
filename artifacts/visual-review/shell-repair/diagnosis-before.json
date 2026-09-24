@@ -1,0 +1,7749 @@
+[
+  {
+    "name": "A_Pillar_Panel_-1",
+    "bounds": [
+      [
+        -0.83513,
+        0.54519,
+        0.88639
+      ],
+      [
+        -0.62295,
+        1.06987,
+        1.46545
+      ]
+    ],
+    "vertices": 4,
+    "faces": 1,
+    "boundary_edges": 4,
+    "non_manifold_edges": 4,
+    "mean_normal": [
+      -0.495,
+      -0.7091,
+      -0.5021
+    ],
+    "modifiers": [
+      "SOLIDIFY",
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "A_Pillar_Panel_1",
+    "bounds": [
+      [
+        0.63193,
+        0.53249,
+        0.87735
+      ],
+      [
+        0.84404,
+        1.05711,
+        1.45641
+      ]
+    ],
+    "vertices": 4,
+    "faces": 1,
+    "boundary_edges": 4,
+    "non_manifold_edges": 4,
+    "mean_normal": [
+      -0.495,
+      0.7091,
+      0.5021
+    ],
+    "modifiers": [
+      "SOLIDIFY",
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "A_Pillar_Trim_-1",
+    "bounds": [
+      [
+        -0.79366,
+        0.5302,
+        0.89695
+      ],
+      [
+        -0.61351,
+        1.02286,
+        1.42397
+      ]
+    ],
+    "vertices": 4,
+    "faces": 1,
+    "boundary_edges": 4,
+    "non_manifold_edges": 4,
+    "mean_normal": [
+      -0.4176,
+      -0.7237,
+      -0.5494
+    ],
+    "modifiers": [
+      "SOLIDIFY",
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "A_Pillar_Trim_1",
+    "bounds": [
+      [
+        0.62182,
+        0.51583,
+        0.88596
+      ],
+      [
+        0.80201,
+        1.00838,
+        1.41298
+      ]
+    ],
+    "vertices": 4,
+    "faces": 1,
+    "boundary_edges": 4,
+    "non_manifold_edges": 4,
+    "mean_normal": [
+      -0.4176,
+      0.7237,
+      0.5494
+    ],
+    "modifiers": [
+      "SOLIDIFY",
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Armrest",
+    "bounds": [
+      [
+        -0.115,
+        -0.525,
+        0.6975
+      ],
+      [
+        0.115,
+        -0.215,
+        0.7725
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "B_Pillar_Panel_-1",
+    "bounds": [
+      [
+        -0.91365,
+        -0.232,
+        0.88202
+      ],
+      [
+        -0.70902,
+        -0.17,
+        1.42905
+      ]
+    ],
+    "vertices": 4,
+    "faces": 1,
+    "boundary_edges": 4,
+    "non_manifold_edges": 4,
+    "mean_normal": [
+      0.9466,
+      0.0,
+      -0.3225
+    ],
+    "modifiers": [
+      "SOLIDIFY",
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "B_Pillar_Panel_1",
+    "bounds": [
+      [
+        0.68535,
+        -0.232,
+        0.87395
+      ],
+      [
+        0.88998,
+        -0.17,
+        1.42098
+      ]
+    ],
+    "vertices": 4,
+    "faces": 1,
+    "boundary_edges": 4,
+    "non_manifold_edges": 4,
+    "mean_normal": [
+      0.9466,
+      0.0,
+      0.3225
+    ],
+    "modifiers": [
+      "SOLIDIFY",
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "BeltBuckle",
+    "bounds": [
+      [
+        -0.168,
+        -0.245,
+        0.5775
+      ],
+      [
+        -0.132,
+        -0.195,
+        0.6425
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "BeltBuckle.001",
+    "bounds": [
+      [
+        0.132,
+        -0.245,
+        0.5775
+      ],
+      [
+        0.168,
+        -0.195,
+        0.6425
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "BeltRelease",
+    "bounds": [
+      [
+        -0.1635,
+        -0.254,
+        0.623
+      ],
+      [
+        -0.1365,
+        -0.242,
+        0.643
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "BeltRelease.001",
+    "bounds": [
+      [
+        0.1365,
+        -0.254,
+        0.623
+      ],
+      [
+        0.1635,
+        -0.242,
+        0.643
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "BumperFacia_-1",
+    "bounds": [
+      [
+        -0.765,
+        -2.305,
+        0.28
+      ],
+      [
+        0.765,
+        -2.145,
+        0.62
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "BumperFacia_1",
+    "bounds": [
+      [
+        -0.765,
+        2.115,
+        0.28
+      ],
+      [
+        0.765,
+        2.275,
+        0.62
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "C_Pillar_Panel_-1",
+    "bounds": [
+      [
+        -0.88605,
+        -1.39323,
+        0.8595
+      ],
+      [
+        -0.65454,
+        -0.79661,
+        1.45358
+      ]
+    ],
+    "vertices": 4,
+    "faces": 1,
+    "boundary_edges": 4,
+    "non_manifold_edges": 4,
+    "mean_normal": [
+      0.8131,
+      -0.5307,
+      0.2394
+    ],
+    "modifiers": [
+      "SOLIDIFY",
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "C_Pillar_Panel_1",
+    "bounds": [
+      [
+        0.64001,
+        -1.40279,
+        0.86381
+      ],
+      [
+        0.87142,
+        -0.80596,
+        1.45789
+      ]
+    ],
+    "vertices": 4,
+    "faces": 1,
+    "boundary_edges": 4,
+    "non_manifold_edges": 4,
+    "mean_normal": [
+      0.8131,
+      0.5307,
+      -0.2394
+    ],
+    "modifiers": [
+      "SOLIDIFY",
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Cabin_Floor",
+    "bounds": [
+      [
+        -0.76,
+        -1.295,
+        0.285
+      ],
+      [
+        0.76,
+        1.135,
+        0.325
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Centre_Tunnel",
+    "bounds": [
+      [
+        -0.125,
+        -0.555,
+        0.45
+      ],
+      [
+        0.125,
+        0.525,
+        0.69
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "CentreMirrorHousing",
+    "bounds": [
+      [
+        -0.12,
+        0.38,
+        1.273
+      ],
+      [
+        0.12,
+        0.42,
+        1.347
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "ClimateDial",
+    "bounds": [
+      [
+        -0.051,
+        0.4965,
+        0.8
+      ],
+      [
+        0.001,
+        0.5215,
+        0.852
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "ClimateDial.001",
+    "bounds": [
+      [
+        0.099,
+        0.4965,
+        0.8
+      ],
+      [
+        0.151,
+        0.5215,
+        0.852
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "ClimateDial.002",
+    "bounds": [
+      [
+        0.249,
+        0.4965,
+        0.8
+      ],
+      [
+        0.301,
+        0.5215,
+        0.852
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "ClimateFace",
+    "bounds": [
+      [
+        -0.046,
+        0.484,
+        0.805
+      ],
+      [
+        -0.004,
+        0.496,
+        0.847
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "ClimateFace.001",
+    "bounds": [
+      [
+        0.104,
+        0.484,
+        0.805
+      ],
+      [
+        0.146,
+        0.496,
+        0.847
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "ClimateFace.002",
+    "bounds": [
+      [
+        0.254,
+        0.484,
+        0.805
+      ],
+      [
+        0.296,
+        0.496,
+        0.847
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Cluster_Display",
+    "bounds": [
+      [
+        -0.415,
+        0.481,
+        0.932
+      ],
+      [
+        -0.345,
+        0.489,
+        1.032
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Dash_Trim",
+    "bounds": [
+      [
+        -0.72,
+        0.517,
+        0.862
+      ],
+      [
+        0.72,
+        0.531,
+        0.892
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Dashboard",
+    "bounds": [
+      [
+        -0.745,
+        0.54,
+        0.785
+      ],
+      [
+        0.745,
+        0.99,
+        0.995
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "DeadPedal",
+    "bounds": [
+      [
+        -0.7325,
+        0.63476,
+        0.37502
+      ],
+      [
+        -0.6675,
+        0.80524,
+        0.48498
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Door_Armrest_Front-1",
+    "bounds": [
+      [
+        -0.76,
+        0.2,
+        0.6475
+      ],
+      [
+        -0.64,
+        0.63,
+        0.7125
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Door_Armrest_Front1",
+    "bounds": [
+      [
+        0.64,
+        0.2,
+        0.6475
+      ],
+      [
+        0.76,
+        0.63,
+        0.7125
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Door_Armrest_Rear-1",
+    "bounds": [
+      [
+        -0.76,
+        -0.95,
+        0.6475
+      ],
+      [
+        -0.64,
+        -0.52,
+        0.7125
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Door_Armrest_Rear1",
+    "bounds": [
+      [
+        0.64,
+        -0.95,
+        0.6475
+      ],
+      [
+        0.76,
+        -0.52,
+        0.7125
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Door_Trim_Front-1",
+    "bounds": [
+      [
+        -0.8,
+        -0.14,
+        0.55
+      ],
+      [
+        -0.72,
+        0.97,
+        0.85
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Door_Trim_Front1",
+    "bounds": [
+      [
+        0.72,
+        -0.14,
+        0.55
+      ],
+      [
+        0.8,
+        0.97,
+        0.85
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Door_Trim_Rear-1",
+    "bounds": [
+      [
+        -0.8,
+        -1.23,
+        0.55
+      ],
+      [
+        -0.72,
+        -0.24,
+        0.85
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Door_Trim_Rear1",
+    "bounds": [
+      [
+        0.72,
+        -1.23,
+        0.55
+      ],
+      [
+        0.8,
+        -0.24,
+        0.85
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "DoorFront_L",
+    "bounds": [
+      [
+        -0.91,
+        -0.2,
+        0.28
+      ],
+      [
+        -0.85099,
+        1.00083,
+        0.92
+      ]
+    ],
+    "vertices": 185,
+    "faces": 144,
+    "boundary_edges": 80,
+    "non_manifold_edges": 80,
+    "mean_normal": [
+      -0.9925,
+      0.0178,
+      0.0003
+    ],
+    "modifiers": [
+      "SOLIDIFY"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "DoorFront_R",
+    "bounds": [
+      [
+        0.85099,
+        -0.2,
+        0.28
+      ],
+      [
+        0.91,
+        1.00083,
+        0.92
+      ]
+    ],
+    "vertices": 185,
+    "faces": 144,
+    "boundary_edges": 80,
+    "non_manifold_edges": 80,
+    "mean_normal": [
+      0.9925,
+      0.0178,
+      0.0003
+    ],
+    "modifiers": [
+      "SOLIDIFY"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "DoorPull",
+    "bounds": [
+      [
+        -0.718,
+        0.215,
+        0.796
+      ],
+      [
+        -0.69,
+        0.385,
+        0.824
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "DoorPull.001",
+    "bounds": [
+      [
+        0.69,
+        0.215,
+        0.796
+      ],
+      [
+        0.718,
+        0.385,
+        0.824
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "DoorRear_L",
+    "bounds": [
+      [
+        -0.91,
+        -1.24026,
+        0.28
+      ],
+      [
+        -0.86519,
+        -0.19998,
+        0.91558
+      ]
+    ],
+    "vertices": 185,
+    "faces": 144,
+    "boundary_edges": 80,
+    "non_manifold_edges": 80,
+    "mean_normal": [
+      -0.984,
+      -0.0189,
+      0.0008
+    ],
+    "modifiers": [
+      "SOLIDIFY"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "DoorRear_R",
+    "bounds": [
+      [
+        0.86519,
+        -1.24026,
+        0.28
+      ],
+      [
+        0.91,
+        -0.19998,
+        0.91558
+      ]
+    ],
+    "vertices": 185,
+    "faces": 144,
+    "boundary_edges": 80,
+    "non_manifold_edges": 80,
+    "mean_normal": [
+      0.984,
+      -0.0189,
+      0.0008
+    ],
+    "modifiers": [
+      "SOLIDIFY"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "DriverFloorMat",
+    "bounds": [
+      [
+        -0.665,
+        0.13,
+        0.3265
+      ],
+      [
+        -0.135,
+        0.83,
+        0.3355
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "DRL_-1-1",
+    "bounds": [
+      [
+        -0.7125,
+        -2.325,
+        0.7075
+      ],
+      [
+        -0.4175,
+        -2.315,
+        0.7205
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "DRL_-11",
+    "bounds": [
+      [
+        0.4175,
+        -2.325,
+        0.7075
+      ],
+      [
+        0.7125,
+        -2.315,
+        0.7205
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "DRL_1-1",
+    "bounds": [
+      [
+        -0.7125,
+        2.285,
+        0.7075
+      ],
+      [
+        -0.4175,
+        2.295,
+        0.7205
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "DRL_11",
+    "bounds": [
+      [
+        0.4175,
+        2.285,
+        0.7075
+      ],
+      [
+        0.7125,
+        2.295,
+        0.7205
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "FrontWing_L",
+    "bounds": [
+      [
+        -0.89519,
+        0.99513,
+        0.28
+      ],
+      [
+        -0.73,
+        2.22,
+        0.91259
+      ]
+    ],
+    "vertices": 185,
+    "faces": 144,
+    "boundary_edges": 80,
+    "non_manifold_edges": 80,
+    "mean_normal": [
+      -0.9552,
+      0.0947,
+      0.0006
+    ],
+    "modifiers": [
+      "SOLIDIFY"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "FrontWing_R",
+    "bounds": [
+      [
+        0.73,
+        0.99513,
+        0.28
+      ],
+      [
+        0.89519,
+        2.22,
+        0.91259
+      ]
+    ],
+    "vertices": 185,
+    "faces": 144,
+    "boundary_edges": 80,
+    "non_manifold_edges": 80,
+    "mean_normal": [
+      0.9552,
+      0.0947,
+      0.0006
+    ],
+    "modifiers": [
+      "SOLIDIFY"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "GaugeBezel",
+    "bounds": [
+      [
+        -0.617,
+        0.482,
+        0.888
+      ],
+      [
+        -0.413,
+        0.49,
+        1.092
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "GaugeBezel.001",
+    "bounds": [
+      [
+        -0.347,
+        0.482,
+        0.888
+      ],
+      [
+        -0.143,
+        0.49,
+        1.092
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "GaugeFace_km/h",
+    "bounds": [
+      [
+        -0.343,
+        0.49,
+        0.892
+      ],
+      [
+        -0.147,
+        0.504,
+        1.088
+      ]
+    ],
+    "vertices": 128,
+    "faces": 66,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "GaugeFace_RPM",
+    "bounds": [
+      [
+        -0.613,
+        0.49,
+        0.892
+      ],
+      [
+        -0.417,
+        0.504,
+        1.088
+      ]
+    ],
+    "vertices": 128,
+    "faces": 66,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Glass_Front_L",
+    "bounds": [
+      [
+        -0.864,
+        -0.145,
+        0.91
+      ],
+      [
+        -0.665,
+        1.0,
+        1.405
+      ]
+    ],
+    "vertices": 4,
+    "faces": 1,
+    "boundary_edges": 4,
+    "non_manifold_edges": 4,
+    "mean_normal": [
+      0.9454,
+      -0.0477,
+      -0.3224
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Glass_Front_R",
+    "bounds": [
+      [
+        0.665,
+        -0.145,
+        0.91
+      ],
+      [
+        0.864,
+        1.0,
+        1.405
+      ]
+    ],
+    "vertices": 4,
+    "faces": 1,
+    "boundary_edges": 4,
+    "non_manifold_edges": 4,
+    "mean_normal": [
+      0.9454,
+      0.0477,
+      0.3224
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Glass_Rear",
+    "bounds": [
+      [
+        -0.805,
+        -1.34,
+        0.91
+      ],
+      [
+        0.805,
+        -0.85,
+        1.4
+      ]
+    ],
+    "vertices": 4,
+    "faces": 1,
+    "boundary_edges": 4,
+    "non_manifold_edges": 4,
+    "mean_normal": [
+      0.0,
+      0.7071,
+      -0.7071
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Glass_Rear_L",
+    "bounds": [
+      [
+        -0.864,
+        -1.32,
+        0.91
+      ],
+      [
+        -0.684,
+        -0.215,
+        1.405
+      ]
+    ],
+    "vertices": 4,
+    "faces": 1,
+    "boundary_edges": 4,
+    "non_manifold_edges": 4,
+    "mean_normal": [
+      0.9501,
+      0.0291,
+      -0.3106
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Glass_Rear_R",
+    "bounds": [
+      [
+        0.684,
+        -1.32,
+        0.91
+      ],
+      [
+        0.864,
+        -0.215,
+        1.405
+      ]
+    ],
+    "vertices": 4,
+    "faces": 1,
+    "boundary_edges": 4,
+    "non_manifold_edges": 4,
+    "mean_normal": [
+      0.9501,
+      -0.0291,
+      0.3106
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Glass_Windshield",
+    "bounds": [
+      [
+        -0.78,
+        0.542,
+        0.935
+      ],
+      [
+        0.78,
+        1.025,
+        1.4
+      ]
+    ],
+    "vertices": 4,
+    "faces": 1,
+    "boundary_edges": 4,
+    "non_manifold_edges": 4,
+    "mean_normal": [
+      0.0,
+      -0.6936,
+      -0.7204
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Glovebox",
+    "bounds": [
+      [
+        0.17,
+        0.51,
+        0.72
+      ],
+      [
+        0.69,
+        0.54,
+        0.86
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Grille_Recess_-1",
+    "bounds": [
+      [
+        -0.41,
+        -2.3265,
+        0.41
+      ],
+      [
+        0.41,
+        -2.2995,
+        0.59
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Grille_Recess_1",
+    "bounds": [
+      [
+        -0.41,
+        2.2695,
+        0.41
+      ],
+      [
+        0.41,
+        2.2965,
+        0.59
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "GrilleBar",
+    "bounds": [
+      [
+        -0.375,
+        2.297,
+        0.4285
+      ],
+      [
+        0.375,
+        2.305,
+        0.4355
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "GrilleBar.001",
+    "bounds": [
+      [
+        -0.375,
+        2.297,
+        0.4625
+      ],
+      [
+        0.375,
+        2.305,
+        0.4695
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "GrilleBar.002",
+    "bounds": [
+      [
+        -0.375,
+        2.297,
+        0.4965
+      ],
+      [
+        0.375,
+        2.305,
+        0.5035
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "GrilleBar.003",
+    "bounds": [
+      [
+        -0.375,
+        2.297,
+        0.5305
+      ],
+      [
+        0.375,
+        2.305,
+        0.5375
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "GrilleBar.004",
+    "bounds": [
+      [
+        -0.375,
+        2.297,
+        0.5645
+      ],
+      [
+        0.375,
+        2.305,
+        0.5715
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "GrilleBar.005",
+    "bounds": [
+      [
+        -0.375,
+        -2.335,
+        0.4285
+      ],
+      [
+        0.375,
+        -2.327,
+        0.4355
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "GrilleBar.006",
+    "bounds": [
+      [
+        -0.375,
+        -2.335,
+        0.4625
+      ],
+      [
+        0.375,
+        -2.327,
+        0.4695
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "GrilleBar.007",
+    "bounds": [
+      [
+        -0.375,
+        -2.335,
+        0.4965
+      ],
+      [
+        0.375,
+        -2.327,
+        0.5035
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "GrilleBar.008",
+    "bounds": [
+      [
+        -0.375,
+        -2.335,
+        0.5305
+      ],
+      [
+        0.375,
+        -2.327,
+        0.5375
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "GrilleBar.009",
+    "bounds": [
+      [
+        -0.375,
+        -2.335,
+        0.5645
+      ],
+      [
+        0.375,
+        -2.327,
+        0.5715
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "HandbrakeLever",
+    "bounds": [
+      [
+        0.1125,
+        -0.25,
+        0.6575
+      ],
+      [
+        0.1475,
+        -0.05,
+        0.7025
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Handle_DoorFront_L",
+    "bounds": [
+      [
+        -0.931,
+        -0.05,
+        0.84024
+      ],
+      [
+        -0.905,
+        0.09,
+        0.86524
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Handle_DoorFront_R",
+    "bounds": [
+      [
+        0.905,
+        -0.05,
+        0.84024
+      ],
+      [
+        0.931,
+        0.09,
+        0.86524
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Handle_DoorRear_L",
+    "bounds": [
+      [
+        -0.931,
+        -1.09,
+        0.83181
+      ],
+      [
+        -0.905,
+        -0.95,
+        0.85681
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Handle_DoorRear_R",
+    "bounds": [
+      [
+        0.905,
+        -1.09,
+        0.83181
+      ],
+      [
+        0.931,
+        -0.95,
+        0.85681
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Headliner",
+    "bounds": [
+      [
+        -0.64,
+        -0.765,
+        1.395
+      ],
+      [
+        0.64,
+        0.465,
+        1.415
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Hood",
+    "bounds": [
+      [
+        -0.86433,
+        1.01476,
+        0.7551
+      ],
+      [
+        0.86433,
+        2.22,
+        0.94937
+      ]
+    ],
+    "vertices": 625,
+    "faces": 576,
+    "boundary_edges": 96,
+    "non_manifold_edges": 96,
+    "mean_normal": [
+      0.0,
+      0.1189,
+      0.9879
+    ],
+    "modifiers": [
+      "SOLIDIFY"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Indicator_-1-1",
+    "bounds": [
+      [
+        -0.7025,
+        -2.327,
+        0.6565
+      ],
+      [
+        -0.6775,
+        -2.317,
+        0.6915
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Indicator_-11",
+    "bounds": [
+      [
+        0.6775,
+        -2.327,
+        0.6565
+      ],
+      [
+        0.7025,
+        -2.317,
+        0.6915
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Indicator_1-1",
+    "bounds": [
+      [
+        -0.7025,
+        2.287,
+        0.6565
+      ],
+      [
+        -0.6775,
+        2.297,
+        0.6915
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Indicator_11",
+    "bounds": [
+      [
+        0.6775,
+        2.287,
+        0.6565
+      ],
+      [
+        0.7025,
+        2.297,
+        0.6915
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Infotainment",
+    "bounds": [
+      [
+        -0.02,
+        0.4965,
+        0.9975
+      ],
+      [
+        0.26,
+        0.5315,
+        1.1525
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Infotainment_Glass",
+    "bounds": [
+      [
+        -0.005,
+        0.4885,
+        1.012
+      ],
+      [
+        0.245,
+        0.4935,
+        1.138
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Instrument_Hood",
+    "bounds": [
+      [
+        -0.64,
+        0.51,
+        0.881
+      ],
+      [
+        -0.12,
+        0.73,
+        1.081
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "LampUnit_-1-1",
+    "bounds": [
+      [
+        -0.745,
+        -2.314,
+        0.6245
+      ],
+      [
+        -0.385,
+        -2.254,
+        0.7395
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "LampUnit_-11",
+    "bounds": [
+      [
+        0.385,
+        -2.314,
+        0.6245
+      ],
+      [
+        0.745,
+        -2.254,
+        0.7395
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "LampUnit_1-1",
+    "bounds": [
+      [
+        -0.745,
+        2.224,
+        0.6245
+      ],
+      [
+        -0.385,
+        2.284,
+        0.7395
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "LampUnit_11",
+    "bounds": [
+      [
+        0.385,
+        2.224,
+        0.6245
+      ],
+      [
+        0.745,
+        2.284,
+        0.7395
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "MirrorHousing_-1",
+    "bounds": [
+      [
+        -1.125,
+        0.7,
+        0.935
+      ],
+      [
+        -0.895,
+        0.84,
+        1.065
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "MirrorHousing_1",
+    "bounds": [
+      [
+        0.895,
+        0.7,
+        0.935
+      ],
+      [
+        1.125,
+        0.84,
+        1.065
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "MirrorSurface_Centre",
+    "bounds": [
+      [
+        -0.109,
+        0.372,
+        1.2825
+      ],
+      [
+        0.109,
+        0.378,
+        1.3375
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "MirrorSurface_L",
+    "bounds": [
+      [
+        -1.1025,
+        0.686,
+        0.954
+      ],
+      [
+        -0.9175,
+        0.694,
+        1.046
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "MirrorSurface_R",
+    "bounds": [
+      [
+        0.9175,
+        0.686,
+        0.954
+      ],
+      [
+        1.1025,
+        0.694,
+        1.046
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "NeedleHub",
+    "bounds": [
+      [
+        -0.523,
+        0.4685,
+        0.982
+      ],
+      [
+        -0.507,
+        0.4775,
+        0.998
+      ]
+    ],
+    "vertices": 32,
+    "faces": 18,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "NeedleHub.001",
+    "bounds": [
+      [
+        -0.253,
+        0.4685,
+        0.982
+      ],
+      [
+        -0.237,
+        0.4775,
+        0.998
+      ]
+    ],
+    "vertices": 32,
+    "faces": 18,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "NumberPlate_-1",
+    "bounds": [
+      [
+        -0.235,
+        -2.352,
+        0.3925
+      ],
+      [
+        0.235,
+        -2.338,
+        0.4975
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "NumberPlate_1",
+    "bounds": [
+      [
+        -0.235,
+        2.308,
+        0.3925
+      ],
+      [
+        0.235,
+        2.322,
+        0.4975
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalGrip",
+    "bounds": [
+      [
+        -0.4275,
+        0.7265,
+        0.467
+      ],
+      [
+        -0.3725,
+        0.7315,
+        0.471
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalGrip.001",
+    "bounds": [
+      [
+        -0.4275,
+        0.7265,
+        0.484
+      ],
+      [
+        -0.3725,
+        0.7315,
+        0.488
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalGrip.002",
+    "bounds": [
+      [
+        -0.4275,
+        0.7265,
+        0.501
+      ],
+      [
+        -0.3725,
+        0.7315,
+        0.505
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalGrip.003",
+    "bounds": [
+      [
+        -0.4275,
+        0.7265,
+        0.518
+      ],
+      [
+        -0.3725,
+        0.7315,
+        0.522
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalPad.001",
+    "bounds": [
+      [
+        -0.435,
+        0.72689,
+        0.44848
+      ],
+      [
+        -0.365,
+        0.77311,
+        0.55152
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalGrip.004",
+    "bounds": [
+      [
+        -0.5975,
+        0.7265,
+        0.467
+      ],
+      [
+        -0.5425,
+        0.7315,
+        0.471
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalGrip.005",
+    "bounds": [
+      [
+        -0.5975,
+        0.7265,
+        0.484
+      ],
+      [
+        -0.5425,
+        0.7315,
+        0.488
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalGrip.006",
+    "bounds": [
+      [
+        -0.5975,
+        0.7265,
+        0.501
+      ],
+      [
+        -0.5425,
+        0.7315,
+        0.505
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalGrip.007",
+    "bounds": [
+      [
+        -0.5975,
+        0.7265,
+        0.518
+      ],
+      [
+        -0.5425,
+        0.7315,
+        0.522
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalPad",
+    "bounds": [
+      [
+        -0.605,
+        0.72689,
+        0.44848
+      ],
+      [
+        -0.535,
+        0.77311,
+        0.55152
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalGrip.008",
+    "bounds": [
+      [
+        -0.2575,
+        0.7265,
+        0.467
+      ],
+      [
+        -0.2025,
+        0.7315,
+        0.471
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalGrip.009",
+    "bounds": [
+      [
+        -0.2575,
+        0.7265,
+        0.484
+      ],
+      [
+        -0.2025,
+        0.7315,
+        0.488
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalGrip.010",
+    "bounds": [
+      [
+        -0.2575,
+        0.7265,
+        0.501
+      ],
+      [
+        -0.2025,
+        0.7315,
+        0.505
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalGrip.011",
+    "bounds": [
+      [
+        -0.2575,
+        0.7265,
+        0.518
+      ],
+      [
+        -0.2025,
+        0.7315,
+        0.522
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "PedalPad.002",
+    "bounds": [
+      [
+        -0.265,
+        0.72689,
+        0.44848
+      ],
+      [
+        -0.195,
+        0.77311,
+        0.55152
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Projector",
+    "bounds": [
+      [
+        -0.661,
+        2.282,
+        0.64
+      ],
+      [
+        -0.609,
+        2.298,
+        0.692
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Projector.001",
+    "bounds": [
+      [
+        -0.546,
+        2.282,
+        0.64
+      ],
+      [
+        -0.494,
+        2.298,
+        0.692
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Projector.002",
+    "bounds": [
+      [
+        0.469,
+        2.282,
+        0.64
+      ],
+      [
+        0.521,
+        2.298,
+        0.692
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Projector.003",
+    "bounds": [
+      [
+        0.584,
+        2.282,
+        0.64
+      ],
+      [
+        0.636,
+        2.298,
+        0.692
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Projector.004",
+    "bounds": [
+      [
+        -0.661,
+        -2.328,
+        0.64
+      ],
+      [
+        -0.609,
+        -2.312,
+        0.692
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Projector.005",
+    "bounds": [
+      [
+        -0.546,
+        -2.328,
+        0.64
+      ],
+      [
+        -0.494,
+        -2.312,
+        0.692
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Projector.006",
+    "bounds": [
+      [
+        0.469,
+        -2.328,
+        0.64
+      ],
+      [
+        0.521,
+        -2.312,
+        0.692
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Projector.007",
+    "bounds": [
+      [
+        0.584,
+        -2.328,
+        0.64
+      ],
+      [
+        0.636,
+        -2.312,
+        0.692
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "RearCentreBack",
+    "bounds": [
+      [
+        -0.165,
+        -0.93,
+        0.53
+      ],
+      [
+        0.165,
+        -0.79,
+        1.09
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "RearCentreCushion",
+    "bounds": [
+      [
+        -0.15,
+        -0.895,
+        0.44
+      ],
+      [
+        0.15,
+        -0.385,
+        0.54
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "RearParcelShelf",
+    "bounds": [
+      [
+        -0.74,
+        -1.27,
+        0.8575
+      ],
+      [
+        0.74,
+        -0.97,
+        0.9025
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "RearQuarter_L",
+    "bounds": [
+      [
+        -0.91,
+        -2.25,
+        0.28
+      ],
+      [
+        -0.66282,
+        -1.23857,
+        0.907
+      ]
+    ],
+    "vertices": 185,
+    "faces": 144,
+    "boundary_edges": 80,
+    "non_manifold_edges": 80,
+    "mean_normal": [
+      -0.9281,
+      -0.1493,
+      -0.0001
+    ],
+    "modifiers": [
+      "SOLIDIFY"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "RearQuarter_R",
+    "bounds": [
+      [
+        0.66282,
+        -2.25,
+        0.28
+      ],
+      [
+        0.91,
+        -1.23857,
+        0.907
+      ]
+    ],
+    "vertices": 185,
+    "faces": 144,
+    "boundary_edges": 80,
+    "non_manifold_edges": 80,
+    "mean_normal": [
+      0.9281,
+      -0.1493,
+      -0.0001
+    ],
+    "modifiers": [
+      "SOLIDIFY"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Roof",
+    "bounds": [
+      [
+        -0.7,
+        -0.86,
+        1.37618
+      ],
+      [
+        0.7,
+        0.56,
+        1.47731
+      ]
+    ],
+    "vertices": 25,
+    "faces": 16,
+    "boundary_edges": 16,
+    "non_manifold_edges": 16,
+    "mean_normal": [
+      0.0,
+      -0.0025,
+      0.9908
+    ],
+    "modifiers": [
+      "SUBSURF",
+      "SOLIDIFY"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Backrest",
+    "bounds": [
+      [
+        -0.645,
+        -0.4496,
+        0.55451
+      ],
+      [
+        -0.155,
+        -0.2504,
+        1.16549
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Backrest_Insert",
+    "bounds": [
+      [
+        -0.55,
+        -0.29,
+        0.665
+      ],
+      [
+        -0.25,
+        -0.25,
+        1.095
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Cushion",
+    "bounds": [
+      [
+        -0.65,
+        -0.4,
+        0.465
+      ],
+      [
+        -0.15,
+        0.14,
+        0.615
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Cushion_Insert",
+    "bounds": [
+      [
+        -0.55,
+        -0.31,
+        0.61
+      ],
+      [
+        -0.25,
+        0.09,
+        0.63
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Headrest",
+    "bounds": [
+      [
+        -0.555,
+        -0.4225,
+        1.185
+      ],
+      [
+        -0.245,
+        -0.2975,
+        1.355
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "HeadrestRod",
+    "bounds": [
+      [
+        -0.505,
+        -0.37,
+        1.115
+      ],
+      [
+        -0.485,
+        -0.35,
+        1.265
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "HeadrestRod.001",
+    "bounds": [
+      [
+        -0.315,
+        -0.37,
+        1.115
+      ],
+      [
+        -0.295,
+        -0.35,
+        1.265
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Backrest.002",
+    "bounds": [
+      [
+        0.155,
+        -0.4496,
+        0.55451
+      ],
+      [
+        0.645,
+        -0.2504,
+        1.16549
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Backrest_Insert.002",
+    "bounds": [
+      [
+        0.25,
+        -0.29,
+        0.665
+      ],
+      [
+        0.55,
+        -0.25,
+        1.095
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Cushion.002",
+    "bounds": [
+      [
+        0.15,
+        -0.4,
+        0.465
+      ],
+      [
+        0.65,
+        0.14,
+        0.615
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Cushion_Insert.002",
+    "bounds": [
+      [
+        0.25,
+        -0.31,
+        0.61
+      ],
+      [
+        0.55,
+        0.09,
+        0.63
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Headrest.002",
+    "bounds": [
+      [
+        0.245,
+        -0.4225,
+        1.185
+      ],
+      [
+        0.555,
+        -0.2975,
+        1.355
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "HeadrestRod.004",
+    "bounds": [
+      [
+        0.295,
+        -0.37,
+        1.115
+      ],
+      [
+        0.315,
+        -0.35,
+        1.265
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "HeadrestRod.005",
+    "bounds": [
+      [
+        0.485,
+        -0.37,
+        1.115
+      ],
+      [
+        0.505,
+        -0.35,
+        1.265
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Backrest.001",
+    "bounds": [
+      [
+        -0.645,
+        -0.9596,
+        0.51451
+      ],
+      [
+        -0.155,
+        -0.7604,
+        1.12549
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Backrest_Insert.001",
+    "bounds": [
+      [
+        -0.55,
+        -0.8,
+        0.625
+      ],
+      [
+        -0.25,
+        -0.76,
+        1.055
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Cushion.001",
+    "bounds": [
+      [
+        -0.65,
+        -0.91,
+        0.425
+      ],
+      [
+        -0.15,
+        -0.37,
+        0.575
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Cushion_Insert.001",
+    "bounds": [
+      [
+        -0.55,
+        -0.82,
+        0.57
+      ],
+      [
+        -0.25,
+        -0.42,
+        0.59
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Headrest.001",
+    "bounds": [
+      [
+        -0.555,
+        -0.9325,
+        1.1
+      ],
+      [
+        -0.245,
+        -0.8075,
+        1.27
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "HeadrestRod.002",
+    "bounds": [
+      [
+        -0.505,
+        -0.88,
+        1.03
+      ],
+      [
+        -0.485,
+        -0.86,
+        1.18
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "HeadrestRod.003",
+    "bounds": [
+      [
+        -0.315,
+        -0.88,
+        1.03
+      ],
+      [
+        -0.295,
+        -0.86,
+        1.18
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Backrest.003",
+    "bounds": [
+      [
+        0.155,
+        -0.9596,
+        0.51451
+      ],
+      [
+        0.645,
+        -0.7604,
+        1.12549
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Backrest_Insert.003",
+    "bounds": [
+      [
+        0.25,
+        -0.8,
+        0.625
+      ],
+      [
+        0.55,
+        -0.76,
+        1.055
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Cushion.003",
+    "bounds": [
+      [
+        0.15,
+        -0.91,
+        0.425
+      ],
+      [
+        0.65,
+        -0.37,
+        0.575
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Cushion_Insert.003",
+    "bounds": [
+      [
+        0.25,
+        -0.82,
+        0.57
+      ],
+      [
+        0.55,
+        -0.42,
+        0.59
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Headrest.003",
+    "bounds": [
+      [
+        0.245,
+        -0.9325,
+        1.1
+      ],
+      [
+        0.555,
+        -0.8075,
+        1.27
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "HeadrestRod.006",
+    "bounds": [
+      [
+        0.295,
+        -0.88,
+        1.03
+      ],
+      [
+        0.315,
+        -0.86,
+        1.18
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "HeadrestRod.007",
+    "bounds": [
+      [
+        0.485,
+        -0.88,
+        1.03
+      ],
+      [
+        0.505,
+        -0.86,
+        1.18
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "SteeringColumn",
+    "bounds": [
+      [
+        -0.415,
+        0.265,
+        0.965
+      ],
+      [
+        -0.345,
+        0.535,
+        1.035
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Airbag",
+    "bounds": [
+      [
+        -0.44,
+        0.25,
+        0.972
+      ],
+      [
+        -0.32,
+        0.3,
+        1.062
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Steering_Rim",
+    "bounds": [
+      [
+        -0.56,
+        0.264,
+        0.855
+      ],
+      [
+        -0.2,
+        0.296,
+        1.215
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "SunVisor",
+    "bounds": [
+      [
+        -0.52,
+        0.455,
+        1.3675
+      ],
+      [
+        -0.2,
+        0.565,
+        1.3925
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "SunVisor.001",
+    "bounds": [
+      [
+        0.2,
+        0.455,
+        1.3675
+      ],
+      [
+        0.52,
+        0.565,
+        1.3925
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AutoGate",
+    "bounds": [
+      [
+        -0.07,
+        -0.065,
+        0.6825
+      ],
+      [
+        0.07,
+        0.165,
+        0.7175
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": true
+  },
+  {
+    "name": "AutoSelector",
+    "bounds": [
+      [
+        -0.03,
+        0.0,
+        0.715
+      ],
+      [
+        0.03,
+        0.1,
+        0.835
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": true
+  },
+  {
+    "name": "GearKnob",
+    "bounds": [
+      [
+        -0.032,
+        0.0145,
+        0.8475
+      ],
+      [
+        0.032,
+        0.0855,
+        0.9025
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "GearStick",
+    "bounds": [
+      [
+        -0.012,
+        0.038,
+        0.725
+      ],
+      [
+        0.012,
+        0.062,
+        0.865
+      ]
+    ],
+    "vertices": 64,
+    "faces": 34,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "ShiftBoot",
+    "bounds": [
+      [
+        -0.065,
+        -0.03,
+        0.6775
+      ],
+      [
+        0.065,
+        0.13,
+        0.7225
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Trunk",
+    "bounds": [
+      [
+        -0.87906,
+        -2.25,
+        0.75566
+      ],
+      [
+        0.87906,
+        -1.31985,
+        0.94308
+      ]
+    ],
+    "vertices": 625,
+    "faces": 576,
+    "boundary_edges": 96,
+    "non_manifold_edges": 96,
+    "mean_normal": [
+      0.0,
+      -0.136,
+      0.9712
+    ],
+    "modifiers": [
+      "SOLIDIFY"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Vent",
+    "bounds": [
+      [
+        -0.695,
+        0.5015,
+        0.9075
+      ],
+      [
+        -0.485,
+        0.5265,
+        0.9825
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Vent.001",
+    "bounds": [
+      [
+        0.485,
+        0.5015,
+        0.9075
+      ],
+      [
+        0.695,
+        0.5265,
+        0.9825
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "Vent.002",
+    "bounds": [
+      [
+        -0.04,
+        0.5015,
+        0.9075
+      ],
+      [
+        0.17,
+        0.5265,
+        0.9825
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "VentSlat",
+    "bounds": [
+      [
+        -0.6825,
+        0.487,
+        0.9235
+      ],
+      [
+        -0.4975,
+        0.497,
+        0.9265
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "VentSlat.001",
+    "bounds": [
+      [
+        -0.6825,
+        0.487,
+        0.9365
+      ],
+      [
+        -0.4975,
+        0.497,
+        0.9395
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "VentSlat.002",
+    "bounds": [
+      [
+        -0.6825,
+        0.487,
+        0.9495
+      ],
+      [
+        -0.4975,
+        0.497,
+        0.9525
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "VentSlat.003",
+    "bounds": [
+      [
+        -0.6825,
+        0.487,
+        0.9625
+      ],
+      [
+        -0.4975,
+        0.497,
+        0.9655
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "VentSlat.004",
+    "bounds": [
+      [
+        0.4975,
+        0.487,
+        0.9235
+      ],
+      [
+        0.6825,
+        0.497,
+        0.9265
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "VentSlat.005",
+    "bounds": [
+      [
+        0.4975,
+        0.487,
+        0.9365
+      ],
+      [
+        0.6825,
+        0.497,
+        0.9395
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "VentSlat.006",
+    "bounds": [
+      [
+        0.4975,
+        0.487,
+        0.9495
+      ],
+      [
+        0.6825,
+        0.497,
+        0.9525
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "VentSlat.007",
+    "bounds": [
+      [
+        0.4975,
+        0.487,
+        0.9625
+      ],
+      [
+        0.6825,
+        0.497,
+        0.9655
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "VentSlat.008",
+    "bounds": [
+      [
+        -0.0275,
+        0.487,
+        0.9235
+      ],
+      [
+        0.1575,
+        0.497,
+        0.9265
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "VentSlat.009",
+    "bounds": [
+      [
+        -0.0275,
+        0.487,
+        0.9365
+      ],
+      [
+        0.1575,
+        0.497,
+        0.9395
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "VentSlat.010",
+    "bounds": [
+      [
+        -0.0275,
+        0.487,
+        0.9495
+      ],
+      [
+        0.1575,
+        0.497,
+        0.9525
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "VentSlat.011",
+    "bounds": [
+      [
+        -0.0275,
+        0.487,
+        0.9625
+      ],
+      [
+        0.1575,
+        0.497,
+        0.9655
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke",
+    "bounds": [
+      [
+        -0.9035,
+        1.3465,
+        0.38
+      ],
+      [
+        -0.8765,
+        1.3735,
+        0.56
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.001",
+    "bounds": [
+      [
+        -0.9035,
+        1.37259,
+        0.36443
+      ],
+      [
+        -0.8765,
+        1.50023,
+        0.52592
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.002",
+    "bounds": [
+      [
+        -0.9035,
+        1.39387,
+        0.33952
+      ],
+      [
+        -0.8765,
+        1.5734,
+        0.42082
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.003",
+    "bounds": [
+      [
+        -0.9035,
+        1.39387,
+        0.25918
+      ],
+      [
+        -0.8765,
+        1.5734,
+        0.34048
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.004",
+    "bounds": [
+      [
+        -0.9035,
+        1.37259,
+        0.15408
+      ],
+      [
+        -0.8765,
+        1.50023,
+        0.31557
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.005",
+    "bounds": [
+      [
+        -0.9035,
+        1.3465,
+        0.12
+      ],
+      [
+        -0.8765,
+        1.3735,
+        0.3
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.006",
+    "bounds": [
+      [
+        -0.9035,
+        1.21977,
+        0.15408
+      ],
+      [
+        -0.8765,
+        1.34741,
+        0.31557
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.007",
+    "bounds": [
+      [
+        -0.9035,
+        1.1466,
+        0.25918
+      ],
+      [
+        -0.8765,
+        1.32613,
+        0.34048
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.008",
+    "bounds": [
+      [
+        -0.9035,
+        1.1466,
+        0.33952
+      ],
+      [
+        -0.8765,
+        1.32613,
+        0.42082
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.009",
+    "bounds": [
+      [
+        -0.9035,
+        1.21977,
+        0.36443
+      ],
+      [
+        -0.8765,
+        1.34741,
+        0.52592
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "BrakeCaliper",
+    "bounds": [
+      [
+        -0.8825,
+        1.4425,
+        0.2675
+      ],
+      [
+        -0.8175,
+        1.4975,
+        0.4125
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "BrakeRotor",
+    "bounds": [
+      [
+        -0.844,
+        1.19,
+        0.17
+      ],
+      [
+        -0.826,
+        1.53,
+        0.51
+      ]
+    ],
+    "vertices": 96,
+    "faces": 50,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "RimLip",
+    "bounds": [
+      [
+        -0.894,
+        1.133,
+        0.113
+      ],
+      [
+        -0.87,
+        1.587,
+        0.567
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Tire",
+    "bounds": [
+      [
+        -0.878,
+        1.033,
+        0.013
+      ],
+      [
+        -0.722,
+        1.687,
+        0.667
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "TreadChannel",
+    "bounds": [
+      [
+        -0.828,
+        1.038,
+        0.018
+      ],
+      [
+        -0.824,
+        1.682,
+        0.662
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "TreadChannel.001",
+    "bounds": [
+      [
+        -0.776,
+        1.038,
+        0.018
+      ],
+      [
+        -0.772,
+        1.682,
+        0.662
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt",
+    "bounds": [
+      [
+        -0.92,
+        1.354,
+        0.372
+      ],
+      [
+        -0.912,
+        1.366,
+        0.384
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.001",
+    "bounds": [
+      [
+        -0.92,
+        1.39014,
+        0.34574
+      ],
+      [
+        -0.912,
+        1.40214,
+        0.35774
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.002",
+    "bounds": [
+      [
+        -0.92,
+        1.37634,
+        0.30326
+      ],
+      [
+        -0.912,
+        1.38834,
+        0.31526
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.003",
+    "bounds": [
+      [
+        -0.92,
+        1.33166,
+        0.30326
+      ],
+      [
+        -0.912,
+        1.34366,
+        0.31526
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.004",
+    "bounds": [
+      [
+        -0.92,
+        1.31786,
+        0.34574
+      ],
+      [
+        -0.912,
+        1.32986,
+        0.35774
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelHub",
+    "bounds": [
+      [
+        -0.91,
+        1.301,
+        0.281
+      ],
+      [
+        -0.87,
+        1.419,
+        0.399
+      ]
+    ],
+    "vertices": 48,
+    "faces": 26,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.020",
+    "bounds": [
+      [
+        0.8765,
+        1.3465,
+        0.38
+      ],
+      [
+        0.9035,
+        1.3735,
+        0.56
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.021",
+    "bounds": [
+      [
+        0.8765,
+        1.37259,
+        0.36443
+      ],
+      [
+        0.9035,
+        1.50023,
+        0.52592
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.022",
+    "bounds": [
+      [
+        0.8765,
+        1.39387,
+        0.33952
+      ],
+      [
+        0.9035,
+        1.5734,
+        0.42082
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.023",
+    "bounds": [
+      [
+        0.8765,
+        1.39387,
+        0.25918
+      ],
+      [
+        0.9035,
+        1.5734,
+        0.34048
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.024",
+    "bounds": [
+      [
+        0.8765,
+        1.37259,
+        0.15408
+      ],
+      [
+        0.9035,
+        1.50023,
+        0.31557
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.025",
+    "bounds": [
+      [
+        0.8765,
+        1.3465,
+        0.12
+      ],
+      [
+        0.9035,
+        1.3735,
+        0.3
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.026",
+    "bounds": [
+      [
+        0.8765,
+        1.21977,
+        0.15408
+      ],
+      [
+        0.9035,
+        1.34741,
+        0.31557
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.027",
+    "bounds": [
+      [
+        0.8765,
+        1.1466,
+        0.25918
+      ],
+      [
+        0.9035,
+        1.32613,
+        0.34048
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.028",
+    "bounds": [
+      [
+        0.8765,
+        1.1466,
+        0.33952
+      ],
+      [
+        0.9035,
+        1.32613,
+        0.42082
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.029",
+    "bounds": [
+      [
+        0.8765,
+        1.21977,
+        0.36443
+      ],
+      [
+        0.9035,
+        1.34741,
+        0.52592
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "BrakeCaliper.002",
+    "bounds": [
+      [
+        0.8175,
+        1.4425,
+        0.2675
+      ],
+      [
+        0.8825,
+        1.4975,
+        0.4125
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "BrakeRotor.002",
+    "bounds": [
+      [
+        0.826,
+        1.19,
+        0.17
+      ],
+      [
+        0.844,
+        1.53,
+        0.51
+      ]
+    ],
+    "vertices": 96,
+    "faces": 50,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "RimLip.002",
+    "bounds": [
+      [
+        0.87,
+        1.133,
+        0.113
+      ],
+      [
+        0.894,
+        1.587,
+        0.567
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Tire.002",
+    "bounds": [
+      [
+        0.722,
+        1.033,
+        0.013
+      ],
+      [
+        0.878,
+        1.687,
+        0.667
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "TreadChannel.004",
+    "bounds": [
+      [
+        0.772,
+        1.038,
+        0.018
+      ],
+      [
+        0.776,
+        1.682,
+        0.662
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "TreadChannel.005",
+    "bounds": [
+      [
+        0.824,
+        1.038,
+        0.018
+      ],
+      [
+        0.828,
+        1.682,
+        0.662
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.010",
+    "bounds": [
+      [
+        0.912,
+        1.354,
+        0.372
+      ],
+      [
+        0.92,
+        1.366,
+        0.384
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.011",
+    "bounds": [
+      [
+        0.912,
+        1.39014,
+        0.34574
+      ],
+      [
+        0.92,
+        1.40214,
+        0.35774
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.012",
+    "bounds": [
+      [
+        0.912,
+        1.37634,
+        0.30326
+      ],
+      [
+        0.92,
+        1.38834,
+        0.31526
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.013",
+    "bounds": [
+      [
+        0.912,
+        1.33166,
+        0.30326
+      ],
+      [
+        0.92,
+        1.34366,
+        0.31526
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.014",
+    "bounds": [
+      [
+        0.912,
+        1.31786,
+        0.34574
+      ],
+      [
+        0.92,
+        1.32986,
+        0.35774
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelHub.002",
+    "bounds": [
+      [
+        0.87,
+        1.301,
+        0.281
+      ],
+      [
+        0.91,
+        1.419,
+        0.399
+      ]
+    ],
+    "vertices": 48,
+    "faces": 26,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.010",
+    "bounds": [
+      [
+        -0.9035,
+        -1.3735,
+        0.38
+      ],
+      [
+        -0.8765,
+        -1.3465,
+        0.56
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.011",
+    "bounds": [
+      [
+        -0.9035,
+        -1.34741,
+        0.36443
+      ],
+      [
+        -0.8765,
+        -1.21977,
+        0.52592
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.012",
+    "bounds": [
+      [
+        -0.9035,
+        -1.32613,
+        0.33952
+      ],
+      [
+        -0.8765,
+        -1.1466,
+        0.42082
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.013",
+    "bounds": [
+      [
+        -0.9035,
+        -1.32613,
+        0.25918
+      ],
+      [
+        -0.8765,
+        -1.1466,
+        0.34048
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.014",
+    "bounds": [
+      [
+        -0.9035,
+        -1.34741,
+        0.15408
+      ],
+      [
+        -0.8765,
+        -1.21977,
+        0.31557
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.015",
+    "bounds": [
+      [
+        -0.9035,
+        -1.3735,
+        0.12
+      ],
+      [
+        -0.8765,
+        -1.3465,
+        0.3
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.016",
+    "bounds": [
+      [
+        -0.9035,
+        -1.50023,
+        0.15408
+      ],
+      [
+        -0.8765,
+        -1.37259,
+        0.31557
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.017",
+    "bounds": [
+      [
+        -0.9035,
+        -1.5734,
+        0.25918
+      ],
+      [
+        -0.8765,
+        -1.39387,
+        0.34048
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.018",
+    "bounds": [
+      [
+        -0.9035,
+        -1.5734,
+        0.33952
+      ],
+      [
+        -0.8765,
+        -1.39387,
+        0.42082
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.019",
+    "bounds": [
+      [
+        -0.9035,
+        -1.50023,
+        0.36443
+      ],
+      [
+        -0.8765,
+        -1.37259,
+        0.52592
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "BrakeCaliper.001",
+    "bounds": [
+      [
+        -0.8825,
+        -1.2775,
+        0.2675
+      ],
+      [
+        -0.8175,
+        -1.2225,
+        0.4125
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "BrakeRotor.001",
+    "bounds": [
+      [
+        -0.844,
+        -1.53,
+        0.17
+      ],
+      [
+        -0.826,
+        -1.19,
+        0.51
+      ]
+    ],
+    "vertices": 96,
+    "faces": 50,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "RimLip.001",
+    "bounds": [
+      [
+        -0.894,
+        -1.587,
+        0.113
+      ],
+      [
+        -0.87,
+        -1.133,
+        0.567
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Tire.001",
+    "bounds": [
+      [
+        -0.878,
+        -1.687,
+        0.013
+      ],
+      [
+        -0.722,
+        -1.033,
+        0.667
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "TreadChannel.002",
+    "bounds": [
+      [
+        -0.828,
+        -1.682,
+        0.018
+      ],
+      [
+        -0.824,
+        -1.038,
+        0.662
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "TreadChannel.003",
+    "bounds": [
+      [
+        -0.776,
+        -1.682,
+        0.018
+      ],
+      [
+        -0.772,
+        -1.038,
+        0.662
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.005",
+    "bounds": [
+      [
+        -0.92,
+        -1.366,
+        0.372
+      ],
+      [
+        -0.912,
+        -1.354,
+        0.384
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.006",
+    "bounds": [
+      [
+        -0.92,
+        -1.32986,
+        0.34574
+      ],
+      [
+        -0.912,
+        -1.31786,
+        0.35774
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.007",
+    "bounds": [
+      [
+        -0.92,
+        -1.34366,
+        0.30326
+      ],
+      [
+        -0.912,
+        -1.33166,
+        0.31526
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.008",
+    "bounds": [
+      [
+        -0.92,
+        -1.38834,
+        0.30326
+      ],
+      [
+        -0.912,
+        -1.37634,
+        0.31526
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.009",
+    "bounds": [
+      [
+        -0.92,
+        -1.40214,
+        0.34574
+      ],
+      [
+        -0.912,
+        -1.39014,
+        0.35774
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelHub.001",
+    "bounds": [
+      [
+        -0.91,
+        -1.419,
+        0.281
+      ],
+      [
+        -0.87,
+        -1.301,
+        0.399
+      ]
+    ],
+    "vertices": 48,
+    "faces": 26,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.030",
+    "bounds": [
+      [
+        0.8765,
+        -1.3735,
+        0.38
+      ],
+      [
+        0.9035,
+        -1.3465,
+        0.56
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.031",
+    "bounds": [
+      [
+        0.8765,
+        -1.34741,
+        0.36443
+      ],
+      [
+        0.9035,
+        -1.21977,
+        0.52592
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.032",
+    "bounds": [
+      [
+        0.8765,
+        -1.32613,
+        0.33952
+      ],
+      [
+        0.9035,
+        -1.1466,
+        0.42082
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.033",
+    "bounds": [
+      [
+        0.8765,
+        -1.32613,
+        0.25918
+      ],
+      [
+        0.9035,
+        -1.1466,
+        0.34048
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.034",
+    "bounds": [
+      [
+        0.8765,
+        -1.34741,
+        0.15408
+      ],
+      [
+        0.9035,
+        -1.21977,
+        0.31557
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.035",
+    "bounds": [
+      [
+        0.8765,
+        -1.3735,
+        0.12
+      ],
+      [
+        0.9035,
+        -1.3465,
+        0.3
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.036",
+    "bounds": [
+      [
+        0.8765,
+        -1.50023,
+        0.15408
+      ],
+      [
+        0.9035,
+        -1.37259,
+        0.31557
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.037",
+    "bounds": [
+      [
+        0.8765,
+        -1.5734,
+        0.25918
+      ],
+      [
+        0.9035,
+        -1.39387,
+        0.34048
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.038",
+    "bounds": [
+      [
+        0.8765,
+        -1.5734,
+        0.33952
+      ],
+      [
+        0.9035,
+        -1.39387,
+        0.42082
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "AlloySpoke.039",
+    "bounds": [
+      [
+        0.8765,
+        -1.50023,
+        0.36443
+      ],
+      [
+        0.9035,
+        -1.37259,
+        0.52592
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "BrakeCaliper.003",
+    "bounds": [
+      [
+        0.8175,
+        -1.2775,
+        0.2675
+      ],
+      [
+        0.8825,
+        -1.2225,
+        0.4125
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "BrakeRotor.003",
+    "bounds": [
+      [
+        0.826,
+        -1.53,
+        0.17
+      ],
+      [
+        0.844,
+        -1.19,
+        0.51
+      ]
+    ],
+    "vertices": 96,
+    "faces": 50,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "RimLip.003",
+    "bounds": [
+      [
+        0.87,
+        -1.587,
+        0.113
+      ],
+      [
+        0.894,
+        -1.133,
+        0.567
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "Tire.003",
+    "bounds": [
+      [
+        0.722,
+        -1.687,
+        0.013
+      ],
+      [
+        0.878,
+        -1.033,
+        0.667
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "TreadChannel.006",
+    "bounds": [
+      [
+        0.772,
+        -1.682,
+        0.018
+      ],
+      [
+        0.776,
+        -1.038,
+        0.662
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "TreadChannel.007",
+    "bounds": [
+      [
+        0.824,
+        -1.682,
+        0.018
+      ],
+      [
+        0.828,
+        -1.038,
+        0.662
+      ]
+    ],
+    "vertices": 576,
+    "faces": 576,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      -0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.015",
+    "bounds": [
+      [
+        0.912,
+        -1.366,
+        0.372
+      ],
+      [
+        0.92,
+        -1.354,
+        0.384
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.016",
+    "bounds": [
+      [
+        0.912,
+        -1.32986,
+        0.34574
+      ],
+      [
+        0.92,
+        -1.31786,
+        0.35774
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.017",
+    "bounds": [
+      [
+        0.912,
+        -1.34366,
+        0.30326
+      ],
+      [
+        0.92,
+        -1.33166,
+        0.31526
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.018",
+    "bounds": [
+      [
+        0.912,
+        -1.38834,
+        0.30326
+      ],
+      [
+        0.92,
+        -1.37634,
+        0.31526
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelBolt.019",
+    "bounds": [
+      [
+        0.912,
+        -1.40214,
+        0.34574
+      ],
+      [
+        0.92,
+        -1.39014,
+        0.35774
+      ]
+    ],
+    "vertices": 16,
+    "faces": 10,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelHub.003",
+    "bounds": [
+      [
+        0.87,
+        -1.419,
+        0.281
+      ],
+      [
+        0.91,
+        -1.301,
+        0.399
+      ]
+    ],
+    "vertices": 48,
+    "faces": 26,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelArchLiner",
+    "bounds": [
+      [
+        -0.895,
+        -1.757,
+        0.34
+      ],
+      [
+        -0.65,
+        -0.963,
+        0.737
+      ]
+    ],
+    "vertices": 98,
+    "faces": 48,
+    "boundary_edges": 98,
+    "non_manifold_edges": 98,
+    "mean_normal": [
+      0.0,
+      -0.0,
+      -0.6367
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelArchLiner.001",
+    "bounds": [
+      [
+        -0.88131,
+        0.963,
+        0.34
+      ],
+      [
+        -0.65,
+        1.757,
+        0.737
+      ]
+    ],
+    "vertices": 98,
+    "faces": 48,
+    "boundary_edges": 98,
+    "non_manifold_edges": 98,
+    "mean_normal": [
+      0.0,
+      0.0,
+      -0.6367
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelArchLiner.002",
+    "bounds": [
+      [
+        0.65,
+        -1.757,
+        0.34
+      ],
+      [
+        0.895,
+        -0.963,
+        0.737
+      ]
+    ],
+    "vertices": 98,
+    "faces": 48,
+    "boundary_edges": 98,
+    "non_manifold_edges": 98,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.6367
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WheelArchLiner.003",
+    "bounds": [
+      [
+        0.65,
+        0.963,
+        0.34
+      ],
+      [
+        0.88131,
+        1.757,
+        0.737
+      ]
+    ],
+    "vertices": 98,
+    "faces": 48,
+    "boundary_edges": 98,
+    "non_manifold_edges": 98,
+    "mean_normal": [
+      0.0,
+      -0.0,
+      0.6367
+    ],
+    "modifiers": [],
+    "hidden_render": false
+  },
+  {
+    "name": "WindowSwitch",
+    "bounds": [
+      [
+        -0.7075,
+        0.3175,
+        0.7195
+      ],
+      [
+        -0.6725,
+        0.3825,
+        0.7285
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  },
+  {
+    "name": "WindowSwitch.001",
+    "bounds": [
+      [
+        0.6725,
+        0.3175,
+        0.7195
+      ],
+      [
+        0.7075,
+        0.3825,
+        0.7285
+      ]
+    ],
+    "vertices": 8,
+    "faces": 6,
+    "boundary_edges": 0,
+    "non_manifold_edges": 0,
+    "mean_normal": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "modifiers": [
+      "BEVEL",
+      "WEIGHTED_NORMAL"
+    ],
+    "hidden_render": false
+  }
+]

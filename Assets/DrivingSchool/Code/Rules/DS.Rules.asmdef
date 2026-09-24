@@ -1,0 +1,8 @@
+{
+  "name": "DS.Rules",
+  "rootNamespace": "DrivingSchool.Rules",
+  "references": [
+    "DS.Contracts"
+  ],
+  "noEngineReferences": true
+}

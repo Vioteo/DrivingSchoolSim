@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "asset": "DS_House_Cottage",
+      "format": "fbx",
+      "meshCount": 3,
+      "status": "PASS"
+    },
+    {
+      "asset": "DS_House_Cottage",
+      "format": "glb",
+      "meshCount": 1,
+      "status": "PASS"
+    },
+    {
+      "asset": "DS_House_Townhouse",
+      "format": "fbx",
+      "meshCount": 3,
+      "status": "PASS"
+    },
+    {
+      "asset": "DS_House_Townhouse",
+      "format": "glb",
+      "meshCount": 1,
+      "status": "PASS"
+    },
+    {
+      "asset": "DS_House_Brick5",
+      "format": "fbx",
+      "meshCount": 3,
+      "status": "PASS"
+    },
+    {
+      "asset": "DS_House_Brick5",
+      "format": "glb",
+      "meshCount": 1,
+      "status": "PASS"
+    },
+    {
+      "asset": "DS_House_Modern8",
+      "format": "fbx",
+      "meshCount": 3,
+      "status": "PASS"
+    },
+    {
+      "asset": "DS_House_Modern8",
+      "format": "glb",
+      "meshCount": 1,
+      "status": "PASS"
+    }
+  ],
+  "scope": "FBX and GLB reimport: LOD count, triangle count, UV presence, finite vertices, no zero-area polygons, world bounds within 2 mm"
+}

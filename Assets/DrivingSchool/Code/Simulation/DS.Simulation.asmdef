@@ -1,0 +1,8 @@
+{
+  "name": "DS.Simulation",
+  "rootNamespace": "DrivingSchool.Simulation",
+  "references": [
+    "DS.Contracts"
+  ],
+  "noEngineReferences": true
+}

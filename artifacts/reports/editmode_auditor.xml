@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="63" result="Passed" total="63" passed="63" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0,1689911">
+  <test-suite type="TestSuite" id="1000" name="DrivingSchoolSim Prototype" fullname="DrivingSchoolSim Prototype" runstate="Runnable" testcasecount="63" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.168991" total="63" passed="63" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1068" name="DS.Tests.dll" fullname="C:/Users/AVSok/OneDrive/Documents/unity-driing/DrivingSchoolSim/Library/ScriptAssemblies/DS.Tests.dll" runstate="Runnable" testcasecount="63" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.158544" total="63" passed="63" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="2036" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1069" name="DrivingSchool" fullname="DrivingSchool" runstate="Runnable" testcasecount="63" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.157580" total="63" passed="63" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1070" name="Tests" fullname="DrivingSchool.Tests" runstate="Runnable" testcasecount="63" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.156825" total="63" passed="63" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1001" name="ContractTests" fullname="DrivingSchool.Tests.ContractTests" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" testcasecount="23" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.108538" total="23" passed="23" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1006" name="AxleTorqueRejectsNanAndInfinity" fullname="DrivingSchool.Tests.ContractTests.AxleTorqueRejectsNanAndInfinity" methodname="AxleTorqueRejectsNanAndInfinity" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="431300287" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.020387" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1014" name="BrokenLaneSuccessorIsRejected" fullname="DrivingSchool.Tests.ContractTests.BrokenLaneSuccessorIsRejected" methodname="BrokenLaneSuccessorIsRejected" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="431483439" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.004884" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1005" name="ClutchCannotExceedCapacity" fullname="DrivingSchool.Tests.ContractTests.ClutchCannotExceedCapacity" methodname="ClutchCannotExceedCapacity" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="662731205" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.005568" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1007" name="ClutchTorqueRejectsNanAndInfinity" fullname="DrivingSchool.Tests.ContractTests.ClutchTorqueRejectsNanAndInfinity" methodname="ClutchTorqueRejectsNanAndInfinity" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="535577334" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000914" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1008" name="CommandsRejectNan" fullname="DrivingSchool.Tests.ContractTests.CommandsRejectNan" methodname="CommandsRejectNan" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="348404237" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000685" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1004" name="DisengagedClutchCannotTransmitTorque" fullname="DrivingSchool.Tests.ContractTests.DisengagedClutchCannotTransmitTorque" methodname="DisengagedClutchCannotTransmitTorque" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1070966997" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000284" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1015" name="FutureSchemaIsNotSilentlyLoaded" fullname="DrivingSchool.Tests.ContractTests.FutureSchemaIsNotSilentlyLoaded" methodname="FutureSchemaIsNotSilentlyLoaded" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1892119015" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000308" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1009" name="HoldingStillAtSpawnDoesNotPass" fullname="DrivingSchool.Tests.ContractTests.HoldingStillAtSpawnDoesNotPass" methodname="HoldingStillAtSpawnDoesNotPass" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="258599521" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.001853" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1012" name="InvalidStartIsRejected" fullname="DrivingSchool.Tests.ContractTests.InvalidStartIsRejected" methodname="InvalidStartIsRejected" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="461560276" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000476" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1018" name="KeyboardInputDefaultProducesValidCommand" fullname="DrivingSchool.Tests.ContractTests.KeyboardInputDefaultProducesValidCommand" methodname="KeyboardInputDefaultProducesValidCommand" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1721222326" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.002559" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1019" name="KeyboardInputResetClearsPedals" fullname="DrivingSchool.Tests.ContractTests.KeyboardInputResetClearsPedals" methodname="KeyboardInputResetClearsPedals" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1320105720" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.001091" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1002" name="NeutralCannotTransmitTorque" fullname="DrivingSchool.Tests.ContractTests.NeutralCannotTransmitTorque" methodname="NeutralCannotTransmitTorque" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="177594992" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000217" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1010" name="ReachingTargetThenStoppingPassesOnce" fullname="DrivingSchool.Tests.ContractTests.ReachingTargetThenStoppingPassesOnce" methodname="ReachingTargetThenStoppingPassesOnce" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1472873409" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000800" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1003" name="ReverseAndFinalDriveAffectTorque" fullname="DrivingSchool.Tests.ContractTests.ReverseAndFinalDriveAffectTorque" methodname="ReverseAndFinalDriveAffectTorque" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1250347681" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000332" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1021" name="SpeedLimitExceededGeneratesSingleRuleEvent" fullname="DrivingSchool.Tests.ContractTests.SpeedLimitExceededGeneratesSingleRuleEvent" methodname="SpeedLimitExceededGeneratesSingleRuleEvent" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1170593063" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.003444" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1020" name="SpeedLimitUnderLimitDoesNotTrigger" fullname="DrivingSchool.Tests.ContractTests.SpeedLimitUnderLimitDoesNotTrigger" methodname="SpeedLimitUnderLimitDoesNotTrigger" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1067464136" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000363" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1022" name="TheoryPackAuthorValidationSucceeds" fullname="DrivingSchool.Tests.ContractTests.TheoryPackAuthorValidationSucceeds" methodname="TheoryPackAuthorValidationSucceeds" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="892532079" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.001931" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1023" name="TheoryPackInvalidCorrectIndexRejected" fullname="DrivingSchool.Tests.ContractTests.TheoryPackInvalidCorrectIndexRejected" methodname="TheoryPackInvalidCorrectIndexRejected" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1990661006" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000937" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1024" name="TheoryPackOfficialWithoutSourceRejected" fullname="DrivingSchool.Tests.ContractTests.TheoryPackOfficialWithoutSourceRejected" methodname="TheoryPackOfficialWithoutSourceRejected" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1165830602" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000837" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1011" name="TimeoutAndCancellationAreTerminal" fullname="DrivingSchool.Tests.ContractTests.TimeoutAndCancellationAreTerminal" methodname="TimeoutAndCancellationAreTerminal" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1191233380" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000413" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1016" name="WorldLoadFallsBackToBackupOnCorruptPrimary" fullname="DrivingSchool.Tests.ContractTests.WorldLoadFallsBackToBackupOnCorruptPrimary" methodname="WorldLoadFallsBackToBackupOnCorruptPrimary" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1348032025" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.027321" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1013" name="WorldRoundTripAndBackup" fullname="DrivingSchool.Tests.ContractTests.WorldRoundTripAndBackup" methodname="WorldRoundTripAndBackup" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="146307840" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.008343" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1017" name="WorldValidatorRejectsInvalidDistrict" fullname="DrivingSchool.Tests.ContractTests.WorldValidatorRejectsInvalidDistrict" methodname="WorldValidatorRejectsInvalidDistrict" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1715549126" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.001634" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1025" name="FloatingOriginTests" fullname="DrivingSchool.Tests.FloatingOriginTests" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.015587" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1026" name="Canonical_ToUnityAndToWorld_RoundTripPrecision" fullname="DrivingSchool.Tests.FloatingOriginTests.Canonical_ToUnityAndToWorld_RoundTripPrecision" methodname="Canonical_ToUnityAndToWorld_RoundTripPrecision" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="1769730671" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.001301" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1033" name="CheckAndShift_GuardsAgainstNanAndInfinity_PreventsOriginCorruption" fullname="DrivingSchool.Tests.FloatingOriginTests.CheckAndShift_GuardsAgainstNanAndInfinity_PreventsOriginCorruption" methodname="CheckAndShift_GuardsAgainstNanAndInfinity_PreventsOriginCorruption" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="799740991" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.002135" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1028" name="ChunkCenter_ReturnsExactCoordinates" fullname="DrivingSchool.Tests.FloatingOriginTests.ChunkCenter_ReturnsExactCoordinates" methodname="ChunkCenter_ReturnsExactCoordinates" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="1986727976" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000522" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1027" name="ChunkIndices_AlignsWith256mGrid" fullname="DrivingSchool.Tests.FloatingOriginTests.ChunkIndices_AlignsWith256mGrid" methodname="ChunkIndices_AlignsWith256mGrid" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="707190867" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.001234" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1034" name="Shift_GuardsAgainstNanAndInfinity_PreventsOriginCorruption" fullname="DrivingSchool.Tests.FloatingOriginTests.Shift_GuardsAgainstNanAndInfinity_PreventsOriginCorruption" methodname="Shift_GuardsAgainstNanAndInfinity_PreventsOriginCorruption" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="917865592" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000932" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1030" name="Shift_MaintainsCanonicalWorldPositionsOfLandmarks" fullname="DrivingSchool.Tests.FloatingOriginTests.Shift_MaintainsCanonicalWorldPositionsOfLandmarks" methodname="Shift_MaintainsCanonicalWorldPositionsOfLandmarks" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="700003943" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000877" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1032" name="Shift_Traversing10kmHighwayGeneratesPeriodicShifts" fullname="DrivingSchool.Tests.FloatingOriginTests.Shift_Traversing10kmHighwayGeneratesPeriodicShifts" methodname="Shift_Traversing10kmHighwayGeneratesPeriodicShifts" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="420145333" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.003798" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1029" name="Shift_TriggersWhenDistanceThresholdExceeded" fullname="DrivingSchool.Tests.FloatingOriginTests.Shift_TriggersWhenDistanceThresholdExceeded" methodname="Shift_TriggersWhenDistanceThresholdExceeded" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="250560843" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.001416" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1031" name="Shift_VelocityIsInvariantAcrossOriginShift" fullname="DrivingSchool.Tests.FloatingOriginTests.Shift_VelocityIsInvariantAcrossOriginShift" methodname="Shift_VelocityIsInvariantAcrossOriginShift" classname="DrivingSchool.Tests.FloatingOriginTests" runstate="Runnable" seed="751514135" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000383" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1035" name="LogitechG27Tests" fullname="DrivingSchool.Tests.LogitechG27Tests" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" testcasecount="17" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.017284" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1040" name="AxisCalibration_BipolarNormalizesSteeringCorrectly" fullname="DrivingSchool.Tests.LogitechG27Tests.AxisCalibration_BipolarNormalizesSteeringCorrectly" methodname="AxisCalibration_BipolarNormalizesSteeringCorrectly" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1800813219" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.001156" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1037" name="AxisCalibration_HandlesInvertedPedal" fullname="DrivingSchool.Tests.LogitechG27Tests.AxisCalibration_HandlesInvertedPedal" methodname="AxisCalibration_HandlesInvertedPedal" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1934597198" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000571" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1036" name="AxisCalibration_NormalizesLinearCorrectly" fullname="DrivingSchool.Tests.LogitechG27Tests.AxisCalibration_NormalizesLinearCorrectly" methodname="AxisCalibration_NormalizesLinearCorrectly" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="2016194209" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000290" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1039" name="AxisCalibration_RejectsNanAndInfinity" fullname="DrivingSchool.Tests.LogitechG27Tests.AxisCalibration_RejectsNanAndInfinity" methodname="AxisCalibration_RejectsNanAndInfinity" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1595028995" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000255" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1038" name="AxisCalibration_ZeroSpan_ReturnsZeroWithoutNaN" fullname="DrivingSchool.Tests.LogitechG27Tests.AxisCalibration_ZeroSpan_ReturnsZeroWithoutNaN" methodname="AxisCalibration_ZeroSpan_ReturnsZeroWithoutNaN" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="544161079" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000220" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1043" name="LogitechG27_CenteringSpringIncreasesWithSpeed" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_CenteringSpringIncreasesWithSpeed" methodname="LogitechG27_CenteringSpringIncreasesWithSpeed" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="2082610492" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000581" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1045" name="LogitechG27_DampingAndFrictionOpposeAngularVelocity" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_DampingAndFrictionOpposeAngularVelocity" methodname="LogitechG27_DampingAndFrictionOpposeAngularVelocity" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="112126194" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000573" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1042" name="LogitechG27_DisconnectedDeviceReturnsNeutralSafeCommand" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_DisconnectedDeviceReturnsNeutralSafeCommand" methodname="LogitechG27_DisconnectedDeviceReturnsNeutralSafeCommand" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1615772972" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.001618" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1051" name="LogitechG27_DisconnectionImmediatelyZeroesTorque" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_DisconnectionImmediatelyZeroesTorque" methodname="LogitechG27_DisconnectionImmediatelyZeroesTorque" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1230469964" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000921" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1050" name="LogitechG27_DisposeCleansUpGracefully" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_DisposeCleansUpGracefully" methodname="LogitechG27_DisposeCleansUpGracefully" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="473086582" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000595" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1044" name="LogitechG27_EndStopAppliesRepulsiveTorqueBeyond450Deg" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_EndStopAppliesRepulsiveTorqueBeyond450Deg" methodname="LogitechG27_EndStopAppliesRepulsiveTorqueBeyond450Deg" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="465564874" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000492" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1047" name="LogitechG27_FFBRateLimiterConstrainsTorqueDelta" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_FFBRateLimiterConstrainsTorqueDelta" methodname="LogitechG27_FFBRateLimiterConstrainsTorqueDelta" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="543327980" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000461" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1046" name="LogitechG27_GripLossVibrationActivatesOnFrontSlip" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_GripLossVibrationActivatesOnFrontSlip" methodname="LogitechG27_GripLossVibrationActivatesOnFrontSlip" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1920922586" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000633" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1049" name="LogitechG27_PauseAndResumeZeroesAndRestoresFFB" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_PauseAndResumeZeroesAndRestoresFFB" methodname="LogitechG27_PauseAndResumeZeroesAndRestoresFFB" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="446502724" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000520" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1052" name="LogitechG27_SetNormalizedTorque_RespectsSlewRateLimit" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_SetNormalizedTorque_RespectsSlewRateLimit" methodname="LogitechG27_SetNormalizedTorque_RespectsSlewRateLimit" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1430464801" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000544" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1041" name="LogitechG27_SimulatedInputProducesValidCommand" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_SimulatedInputProducesValidCommand" methodname="LogitechG27_SimulatedInputProducesValidCommand" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1914901748" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.002649" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1048" name="LogitechG27_StopWatchdogIsIdempotentAndZeroesTorque" fullname="DrivingSchool.Tests.LogitechG27Tests.LogitechG27_StopWatchdogIsIdempotentAndZeroesTorque" methodname="LogitechG27_StopWatchdogIsIdempotentAndZeroesTorque" classname="DrivingSchool.Tests.LogitechG27Tests" runstate="Runnable" seed="1019958242" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.001094" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1053" name="RuleEvaluatorTests" fullname="DrivingSchool.Tests.RuleEvaluatorTests" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.012451" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1061" name="ExerciseBoundary_CrossingBoundary_TriggersFatalInfraction" fullname="DrivingSchool.Tests.RuleEvaluatorTests.ExerciseBoundary_CrossingBoundary_TriggersFatalInfraction" methodname="ExerciseBoundary_CrossingBoundary_TriggersFatalInfraction" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1269133248" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.001618" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1060" name="ExerciseBoundary_InsideBoundary_DoesNotTrigger" fullname="DrivingSchool.Tests.RuleEvaluatorTests.ExerciseBoundary_InsideBoundary_DoesNotTrigger" methodname="ExerciseBoundary_InsideBoundary_DoesNotTrigger" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="756636717" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000374" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1067" name="ExerciseBoundary_SpatialHysteresis_SuppressesJitterCascade" fullname="DrivingSchool.Tests.RuleEvaluatorTests.ExerciseBoundary_SpatialHysteresis_SuppressesJitterCascade" methodname="ExerciseBoundary_SpatialHysteresis_SuppressesJitterCascade" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1293190552" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000433" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1064" name="PenaltyScore_AccumulatesAcrossMultipleViolations" fullname="DrivingSchool.Tests.RuleEvaluatorTests.PenaltyScore_AccumulatesAcrossMultipleViolations" methodname="PenaltyScore_AccumulatesAcrossMultipleViolations" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1658097139" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.001351" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1065" name="Reset_ClearsAllInfractionsAndFatalStatus" fullname="DrivingSchool.Tests.RuleEvaluatorTests.Reset_ClearsAllInfractionsAndFatalStatus" methodname="Reset_ClearsAllInfractionsAndFatalStatus" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1707730409" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000583" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1054" name="SpeedLimit_BelowThreshold_DoesNotTrigger" fullname="DrivingSchool.Tests.RuleEvaluatorTests.SpeedLimit_BelowThreshold_DoesNotTrigger" methodname="SpeedLimit_BelowThreshold_DoesNotTrigger" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="991065923" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000384" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1055" name="SpeedLimit_DebounceWindow_RequiresSustainedExcess" fullname="DrivingSchool.Tests.RuleEvaluatorTests.SpeedLimit_DebounceWindow_RequiresSustainedExcess" methodname="SpeedLimit_DebounceWindow_RequiresSustainedExcess" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1076917098" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000574" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1056" name="SpeedLimit_EdgeTriggered_DoesNotSpamEvents" fullname="DrivingSchool.Tests.RuleEvaluatorTests.SpeedLimit_EdgeTriggered_DoesNotSpamEvents" methodname="SpeedLimit_EdgeTriggered_DoesNotSpamEvents" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="809471767" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000598" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1057" name="SpeedLimit_Hysteresis_ResetsAfterSlowingDown" fullname="DrivingSchool.Tests.RuleEvaluatorTests.SpeedLimit_Hysteresis_ResetsAfterSlowingDown" methodname="SpeedLimit_Hysteresis_ResetsAfterSlowingDown" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="68149145" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000491" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1066" name="StopLine_DynamicDt_IsTickRateIndependent" fullname="DrivingSchool.Tests.RuleEvaluatorTests.StopLine_DynamicDt_IsTickRateIndependent" methodname="StopLine_DynamicDt_IsTickRateIndependent" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="454627195" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000466" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1058" name="StopLine_PassingWithoutStopping_TriggersViolation" fullname="DrivingSchool.Tests.RuleEvaluatorTests.StopLine_PassingWithoutStopping_TriggersViolation" methodname="StopLine_PassingWithoutStopping_TriggersViolation" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="69128278" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000467" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1059" name="StopLine_StoppingCorrectly_PassesWithoutViolation" fullname="DrivingSchool.Tests.RuleEvaluatorTests.StopLine_StoppingCorrectly_PassesWithoutViolation" methodname="StopLine_StoppingCorrectly_PassesWithoutViolation" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="27712572" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000546" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1062" name="TurnSignal_OmissionTriggersPenalty" fullname="DrivingSchool.Tests.RuleEvaluatorTests.TurnSignal_OmissionTriggersPenalty" methodname="TurnSignal_OmissionTriggersPenalty" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="939885283" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000562" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1063" name="TurnSignal_ProperIndicatorUsage_PassesCleanly" fullname="DrivingSchool.Tests.RuleEvaluatorTests.TurnSignal_ProperIndicatorUsage_PassesCleanly" methodname="TurnSignal_ProperIndicatorUsage_PassesCleanly" classname="DrivingSchool.Tests.RuleEvaluatorTests" runstate="Runnable" seed="1197123282" result="Passed" start-time="2026-09-19 12:19:15Z" end-time="2026-09-19 12:19:15Z" duration="0.000344" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: C:/Users/AVSok/AppData/LocalLow/DrivingSchool/DrivingSchoolSim Prototype\TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

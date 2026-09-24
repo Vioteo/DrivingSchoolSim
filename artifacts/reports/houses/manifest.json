@@ -1,0 +1,337 @@
+{
+  "revision": "houses-v1",
+  "utc": "2026-09-19T18:30:32.258919+00:00",
+  "exporter": "5.0.1",
+  "units": "metres",
+  "sourceAxes": "X right, -Y front, Z up",
+  "assets": [
+    {
+      "id": "DS_House_Cottage",
+      "title": "Коттедж",
+      "w": 9.0,
+      "d": 8.0,
+      "floors": 2,
+      "style": "cottage",
+      "catalogId": "house.cottage.v1",
+      "lods": [
+        {
+          "name": "DS_House_Cottage_LOD0",
+          "triangles": 3800,
+          "materials": 11,
+          "bounds": {
+            "min": [
+              -5.0,
+              -5.699999809265137,
+              0.0
+            ],
+            "max": [
+              5.0,
+              4.550000190734863,
+              8.5600004196167
+            ]
+          }
+        },
+        {
+          "name": "DS_House_Cottage_LOD1",
+          "triangles": 1328,
+          "materials": 9,
+          "bounds": {
+            "min": [
+              -5.0,
+              -5.699999809265137,
+              0.0
+            ],
+            "max": [
+              5.0,
+              4.550000190734863,
+              8.5600004196167
+            ]
+          }
+        },
+        {
+          "name": "DS_House_Cottage_LOD2",
+          "triangles": 536,
+          "materials": 8,
+          "bounds": {
+            "min": [
+              -5.0,
+              -5.699999809265137,
+              0.0
+            ],
+            "max": [
+              5.0,
+              4.550000190734863,
+              8.430000305175781
+            ]
+          }
+        }
+      ],
+      "sha256": {
+        "DS_House_Cottage.fbx": "51d09d3a5a78a4bd59ee1dda69414e7ffb07b876e2afb1ee619e5bc45073d399",
+        "DS_House_Cottage.glb": "15093e1934f820704a696f572439f159f386bf7c6d6d023d989085eda1f5d4a9",
+        "DS_House_Cottage_v1.blend": "b97909168d545b254a4b218db8d3cbc0f8000af9e3dec5324a20083e05a2fe14"
+      },
+      "collision": {
+        "type": "BoxCollider",
+        "size": [
+          9.0,
+          6,
+          8.0
+        ],
+        "center": [
+          0,
+          3.0,
+          0
+        ]
+      },
+      "pivot": "ground centre",
+      "interior": false
+    },
+    {
+      "id": "DS_House_Townhouse",
+      "title": "Таунхаус",
+      "w": 16.0,
+      "d": 9.0,
+      "floors": 2,
+      "style": "townhouse",
+      "catalogId": "house.townhouse.v1",
+      "lods": [
+        {
+          "name": "DS_House_Townhouse_LOD0",
+          "triangles": 2372,
+          "materials": 8,
+          "bounds": {
+            "min": [
+              -8.5,
+              -6.199999809265137,
+              0.0
+            ],
+            "max": [
+              8.5,
+              5.050000190734863,
+              8.5600004196167
+            ]
+          }
+        },
+        {
+          "name": "DS_House_Townhouse_LOD1",
+          "triangles": 2036,
+          "materials": 7,
+          "bounds": {
+            "min": [
+              -8.5,
+              -6.199999809265137,
+              0.0
+            ],
+            "max": [
+              8.5,
+              5.050000190734863,
+              8.5600004196167
+            ]
+          }
+        },
+        {
+          "name": "DS_House_Townhouse_LOD2",
+          "triangles": 860,
+          "materials": 6,
+          "bounds": {
+            "min": [
+              -8.5,
+              -6.199999809265137,
+              0.0
+            ],
+            "max": [
+              8.5,
+              5.050000190734863,
+              8.430000305175781
+            ]
+          }
+        }
+      ],
+      "sha256": {
+        "DS_House_Townhouse.fbx": "5cda7c49dc124725eb67dbdb9dae26875f65b4cb4d055b9ebf495ffb823f5902",
+        "DS_House_Townhouse.glb": "520c3dc2f6bf62ae86e06a3d67800e1d6dfb9496e28cf6d93f5fef7d624c9c80",
+        "DS_House_Townhouse_v1.blend": "cfa2cfb47d5eaefc2f02b91166bad04a49ec4a77a13ddb27837394ad59e4a95d"
+      },
+      "collision": {
+        "type": "BoxCollider",
+        "size": [
+          16.0,
+          6,
+          9.0
+        ],
+        "center": [
+          0,
+          3.0,
+          0
+        ]
+      },
+      "pivot": "ground centre",
+      "interior": false
+    },
+    {
+      "id": "DS_House_Brick5",
+      "title": "Кирпичный дом · 5 этажей",
+      "w": 21.0,
+      "d": 12.0,
+      "floors": 5,
+      "style": "brick",
+      "catalogId": "house.brick.v1",
+      "lods": [
+        {
+          "name": "DS_House_Brick5_LOD0",
+          "triangles": 13704,
+          "materials": 8,
+          "bounds": {
+            "min": [
+              -10.8100004196167,
+              -7.699999809265137,
+              0.0
+            ],
+            "max": [
+              10.8100004196167,
+              7.380000114440918,
+              16.625
+            ]
+          }
+        },
+        {
+          "name": "DS_House_Brick5_LOD1",
+          "triangles": 6672,
+          "materials": 7,
+          "bounds": {
+            "min": [
+              -10.8100004196167,
+              -7.699999809265137,
+              0.0
+            ],
+            "max": [
+              10.8100004196167,
+              7.380000114440918,
+              16.625
+            ]
+          }
+        },
+        {
+          "name": "DS_House_Brick5_LOD2",
+          "triangles": 3240,
+          "materials": 7,
+          "bounds": {
+            "min": [
+              -10.699999809265137,
+              -7.699999809265137,
+              0.0
+            ],
+            "max": [
+              10.699999809265137,
+              7.380000114440918,
+              16.625
+            ]
+          }
+        }
+      ],
+      "sha256": {
+        "DS_House_Brick5.fbx": "395ab2902f75ea6155c2a25d08d4e95efcccc9aa4b5d1d4238764d1436805152",
+        "DS_House_Brick5.glb": "964eb75d4d40c9147af718868035056a7d98a36566b402ae9f334377aeef5fad",
+        "DS_House_Brick5_v1.blend": "16d8fe9a8f2567f4a775394d0a697bb2706d01431e851117e422f92f762d7415"
+      },
+      "collision": {
+        "type": "BoxCollider",
+        "size": [
+          21.0,
+          15,
+          12.0
+        ],
+        "center": [
+          0,
+          7.5,
+          0
+        ]
+      },
+      "pivot": "ground centre",
+      "interior": false
+    },
+    {
+      "id": "DS_House_Modern8",
+      "title": "Современный дом · 8 этажей",
+      "w": 19.0,
+      "d": 13.0,
+      "floors": 8,
+      "style": "modern",
+      "catalogId": "house.modern.v1",
+      "lods": [
+        {
+          "name": "DS_House_Modern8_LOD0",
+          "triangles": 13332,
+          "materials": 7,
+          "bounds": {
+            "min": [
+              -9.8100004196167,
+              -8.199999809265137,
+              0.0
+            ],
+            "max": [
+              9.8100004196167,
+              7.880000114440918,
+              25.625
+            ]
+          }
+        },
+        {
+          "name": "DS_House_Modern8_LOD1",
+          "triangles": 10860,
+          "materials": 7,
+          "bounds": {
+            "min": [
+              -9.8100004196167,
+              -8.199999809265137,
+              0.0
+            ],
+            "max": [
+              9.8100004196167,
+              7.880000114440918,
+              25.625
+            ]
+          }
+        },
+        {
+          "name": "DS_House_Modern8_LOD2",
+          "triangles": 5304,
+          "materials": 7,
+          "bounds": {
+            "min": [
+              -9.699999809265137,
+              -8.199999809265137,
+              0.0
+            ],
+            "max": [
+              9.699999809265137,
+              7.880000114440918,
+              25.625
+            ]
+          }
+        }
+      ],
+      "sha256": {
+        "DS_House_Modern8.fbx": "b26fe36df4f83d1d118889364ce0435d7ce9e08e8b944141797759f56f087628",
+        "DS_House_Modern8.glb": "9cff39c9361c3f277b180ff9f33c61b2cd24eec9164f99aad911d44e2f9d657f",
+        "DS_House_Modern8_v1.blend": "073cd86d06e5cc040406751b789ebdf2dae1ff8eae9d15e97aee9552e355f23e"
+      },
+      "collision": {
+        "type": "BoxCollider",
+        "size": [
+          19.0,
+          24,
+          13.0
+        ],
+        "center": [
+          0,
+          12.0,
+          0
+        ]
+      },
+      "pivot": "ground centre",
+      "interior": false
+    }
+  ]
+}

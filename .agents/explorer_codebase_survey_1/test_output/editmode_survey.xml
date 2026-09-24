@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="12" result="Passed" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0,1234091">
+  <test-suite type="TestSuite" id="1000" name="DrivingSchoolSim Prototype" fullname="DrivingSchoolSim Prototype" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.123409" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1014" name="DS.Tests.dll" fullname="C:/Users/AVSok/OneDrive/Documents/unity-driing/DrivingSchoolSim/Library/ScriptAssemblies/DS.Tests.dll" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.105516" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="36840" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1015" name="DrivingSchool" fullname="DrivingSchool" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.104296" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1016" name="Tests" fullname="DrivingSchool.Tests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.102669" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1001" name="ContractTests" fullname="DrivingSchool.Tests.ContractTests" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.098741" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1012" name="BrokenLaneSuccessorIsRejected" fullname="DrivingSchool.Tests.ContractTests.BrokenLaneSuccessorIsRejected" methodname="BrokenLaneSuccessorIsRejected" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="644973145" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.023863" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1005" name="ClutchCannotExceedCapacity" fullname="DrivingSchool.Tests.ContractTests.ClutchCannotExceedCapacity" methodname="ClutchCannotExceedCapacity" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="613295431" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.005545" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1006" name="CommandsRejectNan" fullname="DrivingSchool.Tests.ContractTests.CommandsRejectNan" methodname="CommandsRejectNan" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="520135041" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.001145" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1004" name="DisengagedClutchCannotTransmitTorque" fullname="DrivingSchool.Tests.ContractTests.DisengagedClutchCannotTransmitTorque" methodname="DisengagedClutchCannotTransmitTorque" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="516677945" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.000983" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1013" name="FutureSchemaIsNotSilentlyLoaded" fullname="DrivingSchool.Tests.ContractTests.FutureSchemaIsNotSilentlyLoaded" methodname="FutureSchemaIsNotSilentlyLoaded" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="865468970" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.000858" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1007" name="HoldingStillAtSpawnDoesNotPass" fullname="DrivingSchool.Tests.ContractTests.HoldingStillAtSpawnDoesNotPass" methodname="HoldingStillAtSpawnDoesNotPass" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="2128697948" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.002596" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1010" name="InvalidStartIsRejected" fullname="DrivingSchool.Tests.ContractTests.InvalidStartIsRejected" methodname="InvalidStartIsRejected" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="746486182" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.000837" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1002" name="NeutralCannotTransmitTorque" fullname="DrivingSchool.Tests.ContractTests.NeutralCannotTransmitTorque" methodname="NeutralCannotTransmitTorque" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="707843850" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.000508" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1008" name="ReachingTargetThenStoppingPassesOnce" fullname="DrivingSchool.Tests.ContractTests.ReachingTargetThenStoppingPassesOnce" methodname="ReachingTargetThenStoppingPassesOnce" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1255858095" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.001037" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1003" name="ReverseAndFinalDriveAffectTorque" fullname="DrivingSchool.Tests.ContractTests.ReverseAndFinalDriveAffectTorque" methodname="ReverseAndFinalDriveAffectTorque" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="197213857" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.000933" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1009" name="TimeoutAndCancellationAreTerminal" fullname="DrivingSchool.Tests.ContractTests.TimeoutAndCancellationAreTerminal" methodname="TimeoutAndCancellationAreTerminal" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1557918541" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.000604" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1011" name="WorldRoundTripAndBackup" fullname="DrivingSchool.Tests.ContractTests.WorldRoundTripAndBackup" methodname="WorldRoundTripAndBackup" classname="DrivingSchool.Tests.ContractTests" runstate="Runnable" seed="1814973174" result="Passed" start-time="2026-09-19 07:09:17Z" end-time="2026-09-19 07:09:17Z" duration="0.034187" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: C:/Users/AVSok/AppData/LocalLow/DrivingSchool/DrivingSchoolSim Prototype\TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

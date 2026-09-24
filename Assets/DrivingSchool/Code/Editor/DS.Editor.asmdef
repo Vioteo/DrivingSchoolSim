@@ -1,0 +1,20 @@
+{
+  "name": "DS.Editor",
+  "rootNamespace": "DrivingSchool.Editor",
+  "references": [
+    "DS.Contracts",
+    "DS.Simulation",
+    "DS.World",
+    "DS.Learning",
+    "DS.Presentation",
+    "Unity.RenderPipelines.Universal.Runtime",
+    "Unity.RenderPipelines.Core.Runtime",
+    "Unity.InputSystem",
+    "Unity.XR.Management",
+    "Unity.XR.OpenXR",
+    "Unity.TextMeshPro"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

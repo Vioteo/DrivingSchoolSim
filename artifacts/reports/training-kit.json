@@ -1,0 +1,54 @@
+{
+  "revision": 1,
+  "utc": "2026-09-20T11:52:04.590315+00:00",
+  "units": "metres",
+  "blender": "5.0.1",
+  "modules": [
+    {
+      "name": "TK_Hill_6x32",
+      "triangles": 268,
+      "sha256": "b3fdbabe5285fe73e91bf7699409f226b737a2d9253dd80e4ce91a29895b304f"
+    },
+    {
+      "name": "TK_GarageFrame_4x7",
+      "triangles": 120,
+      "sha256": "8ced71879417ee6c45d7f792ee6a560c77c6c1e3976c07e4c35efc8c308626d6"
+    },
+    {
+      "name": "TK_WheelStop_1p8",
+      "triangles": 48,
+      "sha256": "f4f8217ccdef953e70a21e98c2ca1371b24f491b8e64e69be26221c0986e6d33"
+    },
+    {
+      "name": "TK_Fence_5m",
+      "triangles": 276,
+      "sha256": "71de314aaef325b41a9a3c9e909f4b713c6915412bb5da5788be0c9b141e6345"
+    },
+    {
+      "name": "TK_Gate_8m",
+      "triangles": 48,
+      "sha256": "f874de60dd3bc930a4218042bd36f00fc7f0c36482797c784ed26d05c120640a"
+    },
+    {
+      "name": "TK_Lamp_7m",
+      "triangles": 48,
+      "sha256": "b24f2f939582d6f737e9d46899665f29fd0ce8445cf3885777dc4481ac18bc6a"
+    },
+    {
+      "name": "TK_InstructorShelter",
+      "triangles": 120,
+      "sha256": "decdf525c0cd48934e2a54ab1497eb0771b3e1862b7e4d842689f71966e8ea58"
+    },
+    {
+      "name": "TK_ZoneBoard",
+      "triangles": 36,
+      "sha256": "3760e9cb19ed71406e36c33a484670957ed5fe976f13912c17f9a2b8bd453513"
+    }
+  ],
+  "hill": {
+    "riseM": 1.2,
+    "slope": 0.1,
+    "widthM": 6,
+    "lengthM": 32
+  }
+}

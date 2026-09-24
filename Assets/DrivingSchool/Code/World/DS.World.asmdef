@@ -1,0 +1,7 @@
+{
+  "name": "DS.World",
+  "rootNamespace": "DrivingSchool.World",
+  "references": [
+    "DS.Contracts"
+  ]
+}

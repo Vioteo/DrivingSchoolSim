@@ -1,0 +1,389 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using DrivingSchool.Learning;
+using UnityEditor;
+using UnityEngine;
+
+namespace DrivingSchool.Editor
+{
+    public static partial class TrainingGroundBuilder
+    {
+        static Vector3 P(float x, float z) => new Vector3(x, 0, z);
+
+        static List<Vector3> Arc(Vector3 center, float r, float angleStart, float angleEnd, int steps = 24)
+        {
+            var pts = new List<Vector3>();
+            for (int i = 0; i <= steps; i++)
+            {
+                float a = Mathf.Lerp(angleStart, angleEnd, (float)i / steps) * Mathf.Deg2Rad;
+                pts.Add(center + new Vector3(Mathf.Cos(a) * r, 0, Mathf.Sin(a) * r));
+            }
+            return pts;
+        }
+
+        static void SegmentPaint(Vector3 a, Vector3 b, Material mat, float thickness = .14f)
+        {
+            var delta = b - a;
+            if (delta.magnitude < .005f) return;
+            var ob = Box("Road edge", (a + b) * .5f + Vector3.up * .035f, new Vector3(thickness, .012f, delta.magnitude + .015f), mat, markings);
+            ob.transform.rotation = Quaternion.LookRotation(delta.normalized);
+        }
+
+        static void Road(string name, IList<Vector3> path, float width, bool edges = true)
+        {
+            if (path.Count < 2) return;
+            var vertices = new Vector3[path.Count * 2];
+            var triangles = new List<int>();
+            for (int i = 0; i < path.Count; i++)
+            {
+                Vector3 f;
+                if (i == 0) f = (path[1] - path[0]).normalized;
+                else if (i == path.Count - 1) f = (path[i] - path[i - 1]).normalized;
+                else f = (path[i + 1] - path[i - 1]).normalized;
+
+                var right = Vector3.Cross(Vector3.up, f).normalized;
+                vertices[i * 2] = path[i] - right * width / 2 + Vector3.up * .015f;
+                vertices[i * 2 + 1] = path[i] + right * width / 2 + Vector3.up * .015f;
+                if (i > 0)
+                {
+                    int k = (i - 1) * 2;
+                    triangles.AddRange(new[] { k, k + 2, k + 1, k + 1, k + 2, k + 3 });
+                    if (edges)
+                    {
+                        SegmentPaint(vertices[k], vertices[k + 2], white);
+                        SegmentPaint(vertices[k + 1], vertices[k + 3], white);
+                    }
+                }
+            }
+            var mesh = new Mesh { name = name, vertices = vertices, triangles = triangles.ToArray() };
+            mesh.RecalculateNormals();
+            string pathName = Base + "/Art/TrainingKit/" + name + ".asset";
+            var old = AssetDatabase.LoadAssetAtPath<Mesh>(pathName);
+            if (old) { EditorUtility.CopySerialized(mesh, old); UnityEngine.Object.DestroyImmediate(mesh); mesh = old; }
+            else AssetDatabase.CreateAsset(mesh, pathName);
+            var go = new GameObject(name, typeof(MeshFilter), typeof(MeshRenderer));
+            go.transform.SetParent(environment);
+            go.GetComponent<MeshFilter>().sharedMesh = mesh;
+            go.GetComponent<MeshRenderer>().sharedMaterial = zoneAsphalt;
+            go.layer = 9;
+            go.isStatic = true;
+            var mc = go.AddComponent<MeshCollider>();
+            mc.sharedMesh = mesh;
+        }
+
+        static void Road(string name, float width, params Vector3[] points) => Road(name, (IList<Vector3>)points, width);
+        static void Arrow(float x, float z, float yaw) => Existing("RoadKit/RK_Marking_Arrow_Straight", new Vector3(x, .035f, z), yaw);
+        static void Apron(string name, float x, float z, float w, float l)
+        {
+            var b = Box(name, new Vector3(x, .01f, z), new Vector3(w, .015f, l), zoneAsphalt, environment, 9);
+            b.layer = 9;
+            if (!b.GetComponent<Collider>()) b.AddComponent<BoxCollider>();
+        }
+
+        static void Zebra(float x, float z, float yaw) => Existing("RoadKit/RK_Marking_Zebra_8x3m", new Vector3(x, .035f, z), yaw);
+        static void StopLine(float x, float z, float yaw, float height = .035f) => Existing("RoadKit/RK_Marking_Stop_3p5m", new Vector3(x, height, z), yaw);
+
+        static GameObject PlaceSign(string name, float x, float z, float yaw = 0)
+        {
+            string prefabPath = Base + "/Prefabs/Traffic/" + name + ".prefab";
+            var asset = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+            if (!asset)
+            {
+                string fbxPath = Base + "/Art/Traffic/" + name + ".fbx";
+                asset = AssetDatabase.LoadAssetAtPath<GameObject>(fbxPath);
+            }
+            if (!asset) return null;
+            var go = (GameObject)PrefabUtility.InstantiatePrefab(asset, props);
+            go.transform.SetPositionAndRotation(new Vector3(x, 0, z), Quaternion.Euler(0, yaw, 0));
+            go.layer = 0;
+            foreach (var c in go.GetComponentsInChildren<Collider>()) c.gameObject.layer = 0;
+            return go;
+        }
+
+        static void DoubleSidedZoneBoard(int number, Vector3 pos, float yaw)
+        {
+            Place(Kit + "TK_ZoneBoard.prefab", pos, yaw);
+            string numStr = number.ToString("00");
+            var fwd = Quaternion.Euler(0, yaw, 0) * Vector3.forward;
+            Text(numStr, pos + new Vector3(0, 2.2f, 0) + fwd * 0.08f, yaw, 0.75f, white, props);
+            GroundText(numStr, pos - fwd * 1.6f + Vector3.up * 0.045f, 1.3f);
+        }
+
+        static void Tree(float x, float z, float scale = 1.0f)
+        {
+            var tree = new GameObject("Tree").transform;
+            tree.SetParent(environment);
+            tree.position = new Vector3(x, 0, z);
+
+            var trunk = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            trunk.name = "Trunk";
+            trunk.transform.SetParent(tree);
+            trunk.transform.localPosition = new Vector3(0, 1.8f * scale, 0);
+            trunk.transform.localScale = new Vector3(0.35f * scale, 1.8f * scale, 0.35f * scale);
+            trunk.GetComponent<Renderer>().sharedMaterial = trunkMat;
+            trunk.layer = 0;
+            UnityEngine.Object.DestroyImmediate(trunk.GetComponent<Collider>());
+
+            var f1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            f1.name = "Foliage_Bottom";
+            f1.transform.SetParent(tree);
+            f1.transform.localPosition = new Vector3(0, 3.5f * scale, 0);
+            f1.transform.localScale = new Vector3(2.8f * scale, 2.3f * scale, 2.8f * scale);
+            f1.GetComponent<Renderer>().sharedMaterial = leafMat;
+            f1.layer = 0;
+            UnityEngine.Object.DestroyImmediate(f1.GetComponent<Collider>());
+
+            var f2 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            f2.name = "Foliage_Top";
+            f2.transform.SetParent(tree);
+            f2.transform.localPosition = new Vector3(0, 4.6f * scale, 0);
+            f2.transform.localScale = new Vector3(2.2f * scale, 2.0f * scale, 2.2f * scale);
+            f2.GetComponent<Renderer>().sharedMaterial = leafMat;
+            f2.layer = 0;
+            UnityEngine.Object.DestroyImmediate(f2.GetComponent<Collider>());
+        }
+
+        static void Bush(float x, float z, float scale = 1.0f)
+        {
+            var bush = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            bush.name = "Bush";
+            bush.transform.SetParent(environment);
+            bush.transform.position = new Vector3(x, 0.45f * scale, z);
+            bush.transform.localScale = new Vector3(1.5f * scale, 0.9f * scale, 1.5f * scale);
+            bush.GetComponent<Renderer>().sharedMaterial = leafMat;
+            bush.layer = 0;
+            UnityEngine.Object.DestroyImmediate(bush.GetComponent<Collider>());
+        }
+
+        static void LawnWithCurbs(string name, float cx, float cz, float sizeX, float sizeZ)
+        {
+            Box(name + " Turf", new Vector3(cx, 0.005f, cz), new Vector3(sizeX - 0.2f, 0.01f, sizeZ - 0.2f), grass, environment, 9);
+
+            float halfX = sizeX * 0.5f;
+            float halfZ = sizeZ * 0.5f;
+            float curbW = 0.28f;
+            float curbH = 0.08f;
+
+            Box(name + " Curb N", new Vector3(cx, curbH * 0.5f, cz + halfZ), new Vector3(sizeX + curbW, curbH, curbW), concrete, environment, 0);
+            Box(name + " Curb S", new Vector3(cx, curbH * 0.5f, cz - halfZ), new Vector3(sizeX + curbW, curbH, curbW), concrete, environment, 0);
+            Box(name + " Curb W", new Vector3(cx - halfX, curbH * 0.5f, cz), new Vector3(curbW, curbH, sizeZ), concrete, environment, 0);
+            Box(name + " Curb E", new Vector3(cx + halfX, curbH * 0.5f, cz), new Vector3(curbW, curbH, sizeZ), concrete, environment, 0);
+        }
+
+        static void Billboard(float x, float z, float yaw)
+        {
+            var root = new GameObject("Information Billboard 3").transform;
+            root.SetParent(props);
+            root.position = new Vector3(x, 0, z);
+            root.rotation = Quaternion.Euler(0, yaw, 0);
+
+            Box("Post L", new Vector3(-2.2f, 1.6f, 0), new Vector3(0.12f, 3.2f, 0.12f), asphalt, root, 0);
+            Box("Post R", new Vector3(2.2f, 1.6f, 0), new Vector3(0.12f, 3.2f, 0.12f), asphalt, root, 0);
+
+            Box("Board Frame", new Vector3(0, 2.3f, 0), new Vector3(4.8f, 1.8f, 0.08f), white, root, 0);
+            Box("Board Header", new Vector3(0, 3.0f, 0.05f), new Vector3(4.6f, 0.35f, 0.02f), teal, root, 0);
+
+            Text("ОБЯЗАННОСТИ НА АВТОДРОМЕ", new Vector3(0, 3.0f, 0.07f), 0, 0.19f, white, root);
+            string rules = "1. Скорость движения не более 20 км/ч\n2. Обязательное использование ремня безопасности\n3. Остановка перед знаком СТОП и стоп-линией\n4. Пропуск пешеходов на переходе\n5. Строгое соблюдение указаний инструктора";
+            Text(rules, new Vector3(0, 2.2f, 0.07f), 0, 0.14f, asphalt, root);
+        }
+
+        // One of each exercise, in metres; north is +Z. Reference footprint: 100 x 100.
+        static List<Vector3> Rounded(float radius, params Vector3[] corners)
+        {
+            var points = new List<Vector3> { corners[0] };
+            for (int i = 1; i < corners.Length - 1; i++)
+            {
+                var incoming = (corners[i] - corners[i - 1]).normalized;
+                var outgoing = (corners[i + 1] - corners[i]).normalized;
+                float r = Mathf.Min(radius, Mathf.Min(Vector3.Distance(corners[i], corners[i-1]), Vector3.Distance(corners[i], corners[i+1])) * .45f);
+                var a = corners[i] - incoming * r;
+                var b = corners[i] + outgoing * r;
+                points.Add(a);
+                for (int j = 1; j <= 16; j++)
+                {
+                    float t = j / 16f;
+                    points.Add((1-t)*(1-t)*a + 2*(1-t)*t*corners[i] + t*t*b);
+                }
+            }
+            points.Add(corners[corners.Length - 1]);
+            return points;
+        }
+
+        static void BuildConnectedLayout()
+        {
+            Box("Landscape", new Vector3(0, -.3f, 0), new Vector3(160, .3f, 160), grass, environment, 9);
+            Box("Autodrome Base / 100 x 100 m", new Vector3(0, -.05f, 0), new Vector3(100, .1f, 100), zoneAsphalt, environment, 9);
+
+            // Perimeter road, clockwise; its southern edge leaves room for the service apron.
+            var loop = new List<Vector3>();
+            loop.AddRange(Arc(P(-34,34),10,180,90));
+            loop.AddRange(Arc(P(34,34),10,90,0));
+            loop.AddRange(Arc(P(34,-24),10,0,-90));
+            loop.AddRange(Arc(P(-34,-24),10,-90,-180));
+            loop.Add(loop[0]);
+            Road("Perimeter loop", loop, 6);
+            foreach (float x in new[] {-24f, 0f, 24f}) { Arrow(x,44,90); Arrow(x,-34,270); }
+            Arrow(-44,-12,0); Arrow(44,12,180);
+
+            // Shared crossroad offset east, as in the reference. Open centre, no lines through it.
+            Road("Crossroad North",6,P(14,11),P(14,44));
+            Road("Crossroad South",6,P(14,-46),P(14,1));
+            Road("Crossroad West",6,P(-44,6),P(9,6));
+            Road("Crossroad East",6,P(19,6),P(44,6));
+            Apron("Crossroad centre",14,6,10,10);
+            Zebra(14,12,0); Zebra(14,0,0); Zebra(8,6,90); Zebra(20,6,90);
+            foreach (var s in new[] { new Vector3(18,15,180),new Vector3(10,-3,0),new Vector3(5,10,90),new Vector3(23,2,270) })
+                PlaceSign("DS_Signal_Vehicle",s.x,s.y,s.z);
+            GroundText("У8",new Vector3(14,.045f,6),1.3f);
+
+            // У3: one west-to-east hill, continuing along the crossroad's west arm.
+            Place(Kit+"TK_Hill_6x32.prefab",P(-20,6),90);
+            StopLine(-28,6,90,.835f);
+            GroundText("У3",new Vector3(-20,1.24f,6),1.5f);
+            PlaceSign("DS_Sign_Stop",-28,2,90);
+
+            // У4: a single stepped corridor in the north-west quarter.
+            Road("90 degree turns",Rounded(5,P(-30,44),P(-30,24),P(2,24),P(2,6)),6);
+            foreach(var p in new[] { P(-33,31),P(-27,31),P(-22,21),P(-22,27),P(-1,15),P(5,15) }) Cone(p.x,p.z);
+            Arrow(-30,34,180); Arrow(-20,24,90); Arrow(2,15,180);
+            GroundText("У4",new Vector3(-21,.045f,31),1.8f);
+
+            // У7: a parallel bay north of the westbound practice lane, in the north-east.
+            Road("Parallel parking approach",Rounded(6,P(44,23),P(14,23)),6);
+            Outline(30,28,10,4,white);
+            foreach(float x in new[] {25f,35f}) { Cone(x,26); Cone(x,30); }
+            Arrow(38,23,270); Arrow(21,23,270);
+            GroundText("У7",new Vector3(30,.045f,28),1.3f);
+            PlaceSign("DS_Sign_Parking",36,30,270);
+
+            // У5: one S corridor in the south-east, with gentle, tangent-continuous bends.
+            var snake = new List<Vector3>();
+            snake.Add(P(14,-26));
+            snake.AddRange(Arc(P(21,-18),8,270,360));
+            for(int i=1;i<=48;i++)
+            {
+                float t=i/48f;
+                snake.Add(P(29+4*Mathf.Pow(Mathf.Sin(t*Mathf.PI),2),-18+16*t));
+            }
+            snake.AddRange(Arc(P(37,-2),8,180,90).Skip(1));
+            snake.Add(P(44,6));
+            Road("Snake corridor",snake,5.5f);
+            Cone(26.25f,-18); Cone(31.75f,-18); Cone(30.25f,-10); Cone(35.75f,-10);
+            Arrow(21,-26,90); Arrow(29,-18,0);
+            GroundText("У5",new Vector3(38,.045f,-14),1.6f);
+
+            // У6: perpendicular reverse bay, with an unobstructed approach across the SW quarter.
+            Road("Garage approach",6,P(-44,-26),P(14,-26));
+            Outline(-19,-18,4,8,white);
+            Cone(-21,-22); Cone(-17,-22); Cone(-21,-14); Cone(-17,-14);
+            Place(Kit+"TK_WheelStop_1p8.prefab",P(-19,-14.3f));
+            GroundText("У6",new Vector3(-19,.045f,-18),1.2f);
+            Arrow(-31,-26,90);
+            PlaceSign("DS_Sign_Parking",-23,-14,180);
+
+            // У9: railway crossing on the western perimeter. The loop is one-way here (northbound),
+            // so the equipment faces south. Kit prefabs face -Z at yaw 0, traffic signs face +Z.
+            // Track module: deck and ramps span z 19.2..28.8 and x -47.6..-40.4; rails x -49.5..-38.5.
+            Place(Kit+"TK_RailwayCrossing_Tracks.prefab",P(-44,24),90);
+            Place(Kit+"TK_RailwaySignal.prefab",P(-39.3f,20.4f));    // right-hand side, with sign 1.3.1 on the mast
+            Place(Kit+"TK_RailwaySignal.prefab",P(-48.7f,20.4f));    // repeated on the left of the one-way road
+            PlaceSign("DS_Sign_Stop",-39.3f,18.6f,180);
+            StopLine(-44,19,0);
+            GroundText("У9",new Vector3(-36.5f,.045f,24),1.3f);
+
+            // У10: the northern straight. У2: independent pedestrian crossing on the south.
+            GroundText("У10",new Vector3(-3,.045f,44),1.4f);
+            StopLine(27,44,90);
+            PlaceSign("DS_Sign_Speed30",-28,48,90);
+            Zebra(-3,-34,90);
+            PlaceSign("DS_Sign_Crossing",1,-38,270);
+            PlaceSign("DS_Sign_Crossing",-7,-30,90);
+            GroundText("У2",new Vector3(-3,.045f,-30),1.3f);
+            StopLine(3,-34,270);
+
+            StopLine(14,-16,0);
+            GroundText("СТАРТ",new Vector3(19,.045f,-20),1.1f);
+            ServiceFacilities();
+        }
+
+        static void ServiceFacilities()
+        {
+            for(int i=0;i<=7;i++) SegmentPaint(P(-39+i*3,-48),P(-39+i*3,-41),white);
+            ParkedVehicle(P(-37.5f,-44.5f),0);
+            ParkedVehicle(P(-31.5f,-44.5f),0);
+            PlaceSign("DS_Sign_Parking",-16,-45,0);
+            Place(Kit+"TK_InstructorShelter.prefab",P(38,-44),0);
+            Billboard(29,-46,0);
+            Place(Kit+"TK_Gate_8m.prefab",P(14,-50));
+            for(float x=-47.5f;x<50;x+=5)
+            {
+                Place(Kit+"TK_Fence_5m.prefab",P(x,50));
+                if(x+2.5f<=9.5f || x-2.5f>=18.5f) Place(Kit+"TK_Fence_5m.prefab",P(x,-50));
+            }
+            for(float z=-47.5f;z<50;z+=5)
+            {
+                Place(Kit+"TK_Fence_5m.prefab",P(-50,z),90);
+                Place(Kit+"TK_Fence_5m.prefab",P(50,z),90);
+            }
+            foreach(var p in new[] {P(-39,39),P(39,39),P(-39,-38),P(39,-38)})
+                Place(Kit+"TK_Lamp_7m.prefab",p);
+            for(float x=-42;x<=42;x+=14) { Tree(x,55); Tree(x,-55); }
+        }
+
+        static void AddLessonBoard(int i, CourseLesson l)
+        {
+            // Keep sign posts off the driving surface; labels use the reference exercise numbers.
+            var positions = new[] {P(19,-17),P(3,-1),P(-23,-1),P(-35,28),P(3,48),P(30,33),P(38,-19),P(-25,-17),P(-10,-38),P(-38.6f,14.5f),P(19,-42)};
+            var numbers = new[] {1,8,3,4,10,7,5,6,2,9,0};
+            if(numbers[i]>0) DoubleSidedZoneBoard(numbers[i],positions[i],0);
+        }
+
+        static float Height(float x,float z) => Mathf.Abs(z-6)<=3 && x>=-36 && x<=-4
+            ? Mathf.Min(1.2f,Mathf.Min((x+36)*.1f,(-4-x)*.1f)) : 0;
+
+        public static TrainingCourse CreateCourse()
+        {
+            var none = new CourseGate[0];
+            return new TrainingCourse
+            {
+                id="reference-single-100m-v3",halfWidth=50,halfLength=50,examTime=1200,
+                lessons=new[] {
+                    L("start","Старт и остановка","Начните движение и остановитесь в рамке на 2 секунды.",14,-29,0,
+                        new[]{G("Начало движения",14,-24,0,5,4,direction:1),G("Остановка",14,-17,0,4.5f,7,2,whole:true,tolerance:12)},none),
+                    L("junction","У8 · Перекрёсток","Учебный проезд: остановитесь перед переходом, затем поверните налево. Автоматическая оценка фаз светофора пока не подключена.",14,-10,0,
+                        new[]{G("Перед перекрёстком",14,-5,0,4.5f,7,2,whole:true),G("Левый поворот",4,6,270,5,6,direction:1)},
+                        new[]{G("Западный проезд",-44,6,0,6,7,direction:1),G("По кольцу",-44,34,0,6,6,direction:1),G("Северная прямая",0,44,90,6,8,direction:1),G("Восточный проезд",44,6,180,6,8,direction:1),G("Южный проезд",-30,-34,270,6,8,direction:1),G("К эстакаде",-44,0,0,6,6,direction:1)}),
+                    L("hill","У3 · Эстакада","Остановитесь на подъёме; затем троньтесь без отката.",-40,6,90,
+                        new[]{G("Подъём",-33,6,90,5,4,direction:1),G("Остановка на подъёме",-29,6,90,4.5f,7,2,whole:true,tolerance:12),G("Спуск",-5,6,90,5,5,direction:1)},
+                        new[]{G("К северной дороге",14,32,0,6,8,direction:1),G("Восточная дуга",44,30,180,6,6,direction:1),G("Южная дорога",0,-34,270,6,8,direction:1),G("Западная дорога",-44,30,0,6,8,direction:1)}),
+                    L("90turns","У4 · Повороты на 90°","Пройдите один коридор с двумя поворотами.",-30,39,180,
+                        new[]{G("Вход",-30,32,180,5,5,direction:1),G("Поперечный участок",-20,24,90,5,5,direction:1),G("Выход",2,13,180,5,5,direction:1)},
+                        new[]{G("К северной прямой",14,34,0,6,8,direction:1),G("По восточной стороне",44,20,180,6,8,direction:1),G("По южной стороне",0,-34,270,6,8,direction:1),G("По западной стороне",-44,30,0,6,8,direction:1)}),
+                    L("shiftbrake","У10 · Разгон и торможение","На прямой включите вторую передачу, затем остановитесь.",-28,44,90,
+                        new[]{G("Вторая передача",0,44,90,5,14,gear:2,speed:5,direction:1),G("Торможение",23,44,90,4.5f,7,2,whole:true)},
+                        new[]{G("К парковке",44,29,180,6,6,direction:1)}),
+                    L("parallel","У7 · Параллельная парковка","Проедьте мимо кармана и зайдите задним ходом. Затем выезжайте налево по полосе.",38,23,270,
+                        new[]{G("Подготовка",22,23,270,5,5,direction:1),G("Парковка задним ходом",30,28,270,3.8f,9,2,-1,true,tolerance:10),G("Выезд",20,23,270,5,5,direction:1)},
+                        new[]{G("К змейке",14,-20,180,6,6,direction:1)}),
+                    L("slalom","У5 · Змейка","Пройдите S-образный коридор по разметке.",18,-26,90,
+                        new[]{G("Первый изгиб",29,-18,0,5,5,direction:1),G("Середина змейки",33,-10,0,5,5,direction:1),G("Второй изгиб",29,-2,0,5,5,direction:1),G("Выход",39,6,90,5,5,direction:1)},
+                        new[]{G("Южный проезд",0,-34,270,6,8,direction:1),G("К боксу",-44,-20,0,6,6,direction:1)}),
+                    L("boxpark","У6 · Въезд в бокс","Проедьте вдоль бокса, затем поверните и въедьте задним ходом.",-32,-26,90,
+                        new[]{G("Подготовка",-12,-26,90,5,5,direction:1),G("Бокс задним ходом",-19,-18,180,3.8f,7,2,-1,true,tolerance:10),G("Выезд",-19,-26,180,5,6,direction:1)},
+                        new[]{G("К переходу",14,-34,270,6,7,direction:1)}),
+                    L("crossing","У2 · Пешеходный переход","Остановитесь перед переходом и продолжите движение.",8,-34,270,
+                        new[]{G("Остановка перед переходом",4,-34,270,4.5f,7,2,whole:true),G("Проезд перехода",-9,-34,270,5,6,direction:1)},
+                        new[]{G("К переезду",-44,8,0,6,6,direction:1)}),
+                    L("railway","У9 · Железнодорожный переезд","Остановитесь перед стоп-линией, затем пересеките пути.",-44,11,0,
+                        new[]{G("Остановка перед путями",-44,16,0,4.5f,7,2,whole:true),G("Переезд",-44,29,0,5,5,direction:1)},
+                        new[]{G("Северный проезд",14,44,90,6,8,direction:1),G("Восточный проезд",44,10,180,6,8,direction:1),G("Южный проезд",22,-34,270,6,7,direction:1)}),
+                    L("finish","Финиш","Поверните к въезду и остановитесь.",14,-37,180,
+                        new[]{G("Финиш",14,-43,180,4.5f,7,3,whole:true)},none)
+                }
+            };
+        }
+    }
+}
+

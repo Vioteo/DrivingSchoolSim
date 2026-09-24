@@ -1,0 +1,187 @@
+{
+  "capturedAt": "2026-09-19T07:22:39.261Z",
+  "checks": [
+    {
+      "screen": "home",
+      "width": 1280,
+      "height": 720,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 750,
+      "viewportHeight": 720
+    },
+    {
+      "screen": "lessons",
+      "width": 1280,
+      "height": 720,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 901,
+      "viewportHeight": 720
+    },
+    {
+      "screen": "vehicle",
+      "width": 1280,
+      "height": 720,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 868,
+      "viewportHeight": 720
+    },
+    {
+      "screen": "calibration",
+      "width": 1280,
+      "height": 720,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 860,
+      "viewportHeight": 720
+    },
+    {
+      "screen": "drive",
+      "width": 1280,
+      "height": 720,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 777,
+      "viewportHeight": 720
+    },
+    {
+      "screen": "pause",
+      "width": 1280,
+      "height": 720,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 763,
+      "viewportHeight": 720
+    },
+    {
+      "screen": "theory",
+      "width": 1280,
+      "height": 720,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 720,
+      "viewportHeight": 720
+    },
+    {
+      "screen": "result",
+      "width": 1280,
+      "height": 720,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 780,
+      "viewportHeight": 720
+    },
+    {
+      "screen": "editor",
+      "width": 1280,
+      "height": 720,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 932,
+      "viewportHeight": 720
+    },
+    {
+      "screen": "vr",
+      "width": 1280,
+      "height": 720,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 835,
+      "viewportHeight": 720
+    },
+    {
+      "screen": "home",
+      "width": 1920,
+      "height": 1080,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 1080,
+      "viewportHeight": 1080
+    },
+    {
+      "screen": "lessons",
+      "width": 1920,
+      "height": 1080,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 1088,
+      "viewportHeight": 1080
+    },
+    {
+      "screen": "vehicle",
+      "width": 1920,
+      "height": 1080,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 1080,
+      "viewportHeight": 1080
+    },
+    {
+      "screen": "calibration",
+      "width": 1920,
+      "height": 1080,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 1080,
+      "viewportHeight": 1080
+    },
+    {
+      "screen": "drive",
+      "width": 1920,
+      "height": 1080,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 1130,
+      "viewportHeight": 1080
+    },
+    {
+      "screen": "pause",
+      "width": 1920,
+      "height": 1080,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 1080,
+      "viewportHeight": 1080
+    },
+    {
+      "screen": "theory",
+      "width": 1920,
+      "height": 1080,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 1080,
+      "viewportHeight": 1080
+    },
+    {
+      "screen": "result",
+      "width": 1920,
+      "height": 1080,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 1080,
+      "viewportHeight": 1080
+    },
+    {
+      "screen": "editor",
+      "width": 1920,
+      "height": 1080,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 1390,
+      "viewportHeight": 1080
+    },
+    {
+      "screen": "vr",
+      "width": 1920,
+      "height": 1080,
+      "overflow": false,
+      "broken": [],
+      "contentHeight": 1095,
+      "viewportHeight": 1080
+    }
+  ],
+  "errors": [],
+  "interactionTests": "PASS: home→lessons→vehicle→drive→pause→result; lesson choice; night; calibration missing/virtual/save; theory empty/wrong/correct; marker/unsaved/export/undo; VR lesson; FOV/apply"
+}

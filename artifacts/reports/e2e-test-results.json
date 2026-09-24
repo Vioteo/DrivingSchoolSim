@@ -1,0 +1,1314 @@
+{
+  "timestampUtc": "2026-09-19T12:18:28.398371+00:00",
+  "runner": "python pytest 9.1.1",
+  "exitCode": 0,
+  "totalTests": 160,
+  "passed": 160,
+  "failed": 0,
+  "skipped": 0,
+  "passRatePercent": 100.0,
+  "tiers": {
+    "Tier 1: Feature Coverage": {
+      "total": 104,
+      "passed": 104,
+      "failed": 0
+    },
+    "Tier 2: Boundary & Corner Cases": {
+      "total": 35,
+      "passed": 35,
+      "failed": 0
+    },
+    "Tier 3: Cross-Feature Combinations": {
+      "total": 15,
+      "passed": 15,
+      "failed": 0
+    },
+    "Tier 4: Real-World Scenarios": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0
+    }
+  },
+  "testCases": [
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_drivetrain_nan_inputs_propagation_defect",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_drivetrain_nan_inputs_propagation_defect",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00020910002058371902
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_drivetrain_infinity_inputs_propagation",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_drivetrain_infinity_inputs_propagation",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00019719998817890882
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_drivetrain_negative_rpm_unhandled",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_drivetrain_negative_rpm_unhandled",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00018010000349022448
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_drivetrain_instantaneous_redline_clutch_drop",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_drivetrain_instantaneous_redline_clutch_drop",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00020939999376423657
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_drivetrain_reverse_shift_at_150kph_stress",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_drivetrain_reverse_shift_at_150kph_stress",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0001779999874997884
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_driver_command_extreme_inputs_validation",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_driver_command_extreme_inputs_validation",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0007087000121828169
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_g27_centering_spring_at_300kph",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_g27_centering_spring_at_300kph",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00018229999113827944
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_g27_centering_spring_nan_speed_defect",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_g27_centering_spring_nan_speed_defect",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00017820001812651753
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_g27_end_stop_violent_collisions",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_g27_end_stop_violent_collisions",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00022509999689646065
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_g27_high_frequency_100hz_steering_oscillation",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_g27_high_frequency_100hz_steering_oscillation",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0035743999760597944
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_g27_rate_limiter_bounds",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_g27_rate_limiter_bounds",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00019839999731630087
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_g27_set_normalized_torque_bypasses_rate_limiter_defect",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_g27_set_normalized_torque_bypasses_rate_limiter_defect",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0001784000196494162
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_g27_disconnect_stale_torque_vulnerability",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_g27_disconnect_stale_torque_vulnerability",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00017740001203492284
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_g27_rapid_pause_resume_cycles",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_g27_rapid_pause_resume_cycles",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0015123000193852931
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_floating_origin_coordinates_at_limits",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_floating_origin_coordinates_at_limits",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00023239999427460134
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_floating_origin_submillimeter_precision_roundtrip",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_floating_origin_submillimeter_precision_roundtrip",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00019829999655485153
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_floating_origin_repeated_boundary_crossings_hysteresis",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_floating_origin_repeated_boundary_crossings_hysteresis",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00019270001212134957
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_floating_origin_velocity_invariance",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_floating_origin_velocity_invariance",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00019650001195259392
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_floating_origin_nan_corruption_defect",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_floating_origin_nan_corruption_defect",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00017520002438686788
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_floating_origin_small_threshold_infinite_shift_loop_defect",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_floating_origin_small_threshold_infinite_shift_loop_defect",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0003725999849848449
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_floating_origin_vertical_elevation_blindness",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_floating_origin_vertical_elevation_blindness",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0001773000112734735
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_rule_evaluator_stopline_tickrate_dependence_defect",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_rule_evaluator_stopline_tickrate_dependence_defect",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00018999999156221747
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_rule_evaluator_zero_speed_crossing",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_rule_evaluator_zero_speed_crossing",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0001917000045068562
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_rule_evaluator_reverse_corridor_boundary_jitter_cascading_defect",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_rule_evaluator_reverse_corridor_boundary_jitter_cascading_defect",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00027760001830756664
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_rule_evaluator_boundary_edge_exact_coordinates",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_rule_evaluator_boundary_edge_exact_coordinates",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0001858999894466251
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger1.py::test_adv_rule_evaluator_point_vs_sedan_footprint_vulnerability",
+      "file": "tests/test_adversarial_challenger1.py",
+      "test": "test_adv_rule_evaluator_point_vs_sedan_footprint_vulnerability",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00018999999156221747
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_persistence_readonly_destination_failure_and_tmp_leak",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_persistence_readonly_destination_failure_and_tmp_leak",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.005998100008582696
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_persistence_simulated_crash_during_write",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_persistence_simulated_crash_during_write",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.008577199972933158
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_persistence_disk_full_simulation",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_persistence_disk_full_simulation",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.003136999992420897
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_persistence_backup_chain_and_no_auto_rollback_vulnerability",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_persistence_backup_chain_and_no_auto_rollback_vulnerability",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00783019998925738
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_schema_missing_required_fields",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_schema_missing_required_fields",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.002382799983024597
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_schema_forward_compatibility_rejection",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_schema_forward_compatibility_rejection",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0013744000170845538
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_schema_orphan_disconnected_nodes_not_rejected_by_validator",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_schema_orphan_disconnected_nodes_not_rejected_by_validator",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.000455000001238659
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_schema_unvalidated_district_properties",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_schema_unvalidated_district_properties",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00043230000301264226
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_schema_invalid_lane_successors_and_cycles",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_schema_invalid_lane_successors_and_cycles",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0005472999764606357
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_autodrome_bounding_boxes_inventory",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_autodrome_bounding_boxes_inventory",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00019199997768737376
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_autodrome_ex02_slalom_kinematic_feasibility_defect",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_autodrome_ex02_slalom_kinematic_feasibility_defect",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00019060002523474395
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_autodrome_ex03_box_park_90_degree_reverse",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_autodrome_ex03_box_park_90_degree_reverse",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.000176099973032251
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_autodrome_ex04_parallel_bay_solvability",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_autodrome_ex04_parallel_bay_solvability",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0001584000128787011
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_autodrome_ex05_hill_ramp_stop_line_defect",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_autodrome_ex05_hill_ramp_stop_line_defect",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0001564999984111637
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_autodrome_ex06_u_turn_swept_path",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_autodrome_ex06_u_turn_swept_path",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00015860001440159976
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_masterplan_route_topological_closure",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_masterplan_route_topological_closure",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00018050000653602183
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_masterplan_districts_spatial_disjointness",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_masterplan_districts_spatial_disjointness",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00017059998936019838
+    },
+    {
+      "nodeid": "tests/test_adversarial_challenger2.py::test_adv_world_graph_open_crossroad_topology",
+      "file": "tests/test_adversarial_challenger2.py",
+      "test": "test_adv_world_graph_open_crossroad_topology",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00017030001617968082
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r1_01_sedan_dimensions_and_proportions",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r1_01_sedan_dimensions_and_proportions",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00026699999580159783
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r1_02_sedan_centre_of_mass_target",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r1_02_sedan_centre_of_mass_target",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00017270000535063446
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r1_03_three_control_pedals_clearance",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r1_03_three_control_pedals_clearance",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00043440001900307834
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r1_04_dual_gear_shifters_spec",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r1_04_dual_gear_shifters_spec",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00015869998605921865
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r1_05_steering_wheel_degrees_lock_to_lock",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r1_05_steering_wheel_degrees_lock_to_lock",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00015189999248832464
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r1_06_kinematic_pivot_ranges_in_demonstrator",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r1_06_kinematic_pivot_ranges_in_demonstrator",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.000450699997600168
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r1_07_three_rearview_mirrors_in_model",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r1_07_three_rearview_mirrors_in_model",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0004474000015761703
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r1_08_independent_lighting_materials",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r1_08_independent_lighting_materials",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00039739999920129776
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r1_09_multi_format_deliverables_present",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r1_09_multi_format_deliverables_present",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0004695999959949404
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r1_10_demonstrator_explicit_disclaimer",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r1_10_demonstrator_explicit_disclaimer",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00038559999666176736
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r2_01_modular_infrastructure_kit_assets",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r2_01_modular_infrastructure_kit_assets",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0004086000262759626
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r2_02_procedural_road_graph_schema",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r2_02_procedural_road_graph_schema",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0001886999816633761
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r2_03_masterplan_10x10km_dimensions",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r2_03_masterplan_10x10km_dimensions",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0001962999813258648
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r2_04_masterplan_five_districts",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r2_04_masterplan_five_districts",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00016570001025684178
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r2_05_masterplan_closed_training_routes",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r2_05_masterplan_closed_training_routes",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00016910000704228878
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r2_06_district_500m_demo_block_scenes",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r2_06_district_500m_demo_block_scenes",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0002837000065483153
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r2_07_day_night_lighting_renders_exist",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r2_07_day_night_lighting_renders_exist",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0004487000114750117
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r2_08_autodrome_eight_exercises_renders_exist",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r2_08_autodrome_eight_exercises_renders_exist",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.000680500001180917
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r2_09_autodrome_ex01_start_stop_geometry",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r2_09_autodrome_ex01_start_stop_geometry",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00023659999715164304
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r2_10_autodrome_ex02_slalom_spacing_meets_wheelbase",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r2_10_autodrome_ex02_slalom_spacing_meets_wheelbase",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00016689999029040337
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r2_11_autodrome_ex03_box_park_dimensions",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r2_11_autodrome_ex03_box_park_dimensions",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00018130001262761652
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r2_12_autodrome_ex04_parallel_bay_dimensions",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r2_12_autodrome_ex04_parallel_bay_dimensions",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0002693000133149326
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r3_01_nine_screens_inventory",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r3_01_nine_screens_inventory",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0005456999933812767
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r3_02_screen01_home_navigation_buttons",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r3_02_screen01_home_navigation_buttons",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00042729999404400587
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r3_03_screen02_lessons_catalog_eight_entries",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r3_03_screen02_lessons_catalog_eight_entries",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00044169998727738857
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r3_04_screen03_vehicle_conditions_options",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r3_04_screen03_vehicle_conditions_options",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00043810001807287335
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r3_05_screen04_g27_calibration_interface",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r3_05_screen04_g27_calibration_interface",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00042359999497421086
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r3_06_screen05_driving_hud_coaching_elements",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r3_06_screen05_driving_hud_coaching_elements",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00044940001680515707
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r3_07_screen06_pause_menu_settings",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r3_07_screen06_pause_menu_settings",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0006904999900143594
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r3_08_screen07_theory_exam_elements",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r3_08_screen07_theory_exam_elements",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0005895999784115702
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r3_09_screen08_trip_debrief_metrics_and_timeline",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r3_09_screen08_trip_debrief_metrics_and_timeline",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0005015000060666353
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r3_10_screen09_world_editor_map_tools",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r3_10_screen09_world_editor_map_tools",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.000666000007186085
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r3_11_dark_graphite_design_system_tokens",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r3_11_dark_graphite_design_system_tokens",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0005254000134300441
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r3_12_vr_stage_and_viewer_portal",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r3_12_vr_stage_and_viewer_portal",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00045029999455437064
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_01_driver_command_valid_default",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_01_driver_command_valid_default",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0002108000044245273
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_02_driver_command_manual_gear_range",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_02_driver_command_manual_gear_range",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00022020001779310405
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_03_vehicle_state_telemetry_fields",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_03_vehicle_state_telemetry_fields",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.000232299993513152
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_04_drivetrain_axle_torque_forward_gears",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_04_drivetrain_axle_torque_forward_gears",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00019649998284876347
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_05_drivetrain_axle_torque_neutral_zero",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_05_drivetrain_axle_torque_neutral_zero",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00018630002159625292
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_06_drivetrain_axle_torque_reverse_sign",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_06_drivetrain_axle_torque_reverse_sign",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0001832999987527728
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_07_drivetrain_clutch_torque_disengaged",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_07_drivetrain_clutch_torque_disengaged",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00017820001812651753
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_08_drivetrain_clutch_torque_capacity_limit",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_08_drivetrain_clutch_torque_capacity_limit",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00018170001567341387
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_09_lesson_session_state_machine_happy_path",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_09_lesson_session_state_machine_happy_path",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0002454000059515238
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_10_lesson_session_timeout_failure",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_10_lesson_session_timeout_failure",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00021160001051612198
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_11_lesson_session_cancel_is_terminal",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_11_lesson_session_cancel_is_terminal",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0002015999925788492
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_12_speed_limit_evaluator_under_limit",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_12_speed_limit_evaluator_under_limit",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00020099998801015317
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_13_speed_limit_evaluator_over_limit_triggers_once",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_13_speed_limit_evaluator_over_limit_triggers_once",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0002327999973203987
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_14_world_repository_transactional_roundtrip",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_14_world_repository_transactional_roundtrip",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.007371299987426028
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r4_15_force_feedback_watchdog_rate_limiting",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r4_15_force_feedback_watchdog_rate_limiting",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.00020790001144632697
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r5_01_task_cards_count_and_naming",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r5_01_task_cards_count_and_naming",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.001981700013857335
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r5_02_task_cards_seven_section_standard",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r5_02_task_cards_seven_section_standard",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0004560999805107713
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r5_03_architecture_decision_records_ten_adrs",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r5_03_architecture_decision_records_ten_adrs",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0005348999984562397
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r5_04_acceptance_criteria_matrix_nineteen_gates",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r5_04_acceptance_criteria_matrix_nineteen_gates",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0006325999856926501
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r5_05_evidence_manifest_audit_all_present",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r5_05_evidence_manifest_audit_all_present",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0002060999977402389
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r5_06_evidence_manifest_sha256_integrity",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r5_06_evidence_manifest_sha256_integrity",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0005842999962624162
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r5_07_theory_package_validator_happy_path",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r5_07_theory_package_validator_happy_path",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0002609000075608492
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r5_08_reproducible_commands_documented",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r5_08_reproducible_commands_documented",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0005054000066593289
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r5_09_unity_compile_log_clean",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r5_09_unity_compile_log_clean",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0026787999959196895
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r5_10_editmode_xml_all_tests_passed",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r5_10_editmode_xml_all_tests_passed",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0007801000028848648
+    },
+    {
+      "nodeid": "tests/test_tier1_features.py::test_r5_11_ui_qa_results_all_checks_passed",
+      "file": "tests/test_tier1_features.py",
+      "test": "test_r5_11_ui_qa_results_all_checks_passed",
+      "tier": "Tier 1: Feature Coverage",
+      "outcome": "PASSED",
+      "duration": 0.0006320000102277845
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r1_b01_steering_deflection_overshoot_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r1_b01_steering_deflection_overshoot_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.00024199998006224632
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r1_b02_negative_throttle_and_brake_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r1_b02_negative_throttle_and_brake_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.00025949999690055847
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r1_b03_clutch_exact_boundaries",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r1_b03_clutch_exact_boundaries",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0002548999909777194
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r1_b04_missing_asset_detection",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r1_b04_missing_asset_detection",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0003344000142533332
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r1_b05_clearance_values_above_hard_collision_floor",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r1_b05_clearance_values_above_hard_collision_floor",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0004394999996293336
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r2_b01_degenerate_road_segment_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r2_b01_degenerate_road_segment_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0005304999940562993
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r2_b02_zero_or_negative_road_width_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r2_b02_zero_or_negative_road_width_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0005646000208798796
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r2_b03_extreme_coordinates_nan_inf_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r2_b03_extreme_coordinates_nan_inf_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0005741000059060752
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r2_b04_disconnected_lane_successors_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r2_b04_disconnected_lane_successors_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0005589000065810978
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r2_b05_duplicate_node_ids_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r2_b05_duplicate_node_ids_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0005712000129278749
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r2_b06_masterplan_bounds_overshoot",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r2_b06_masterplan_bounds_overshoot",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0003414000093471259
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r3_b01_g27_save_without_connection_blocked",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r3_b01_g27_save_without_connection_blocked",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0004214000073261559
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r3_b02_theory_submit_empty_choice_blocked",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r3_b02_theory_submit_empty_choice_blocked",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.00036619999445974827
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r3_b03_editor_undo_on_empty_stack_safe",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r3_b03_editor_undo_on_empty_stack_safe",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.00036540001747198403
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r3_b04_fov_slider_bounds_enforced",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r3_b04_fov_slider_bounds_enforced",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0003685999836307019
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r3_b05_responsive_layout_overflow_guard",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r3_b05_responsive_layout_overflow_guard",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0004011999990325421
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r4_b01_driver_command_nan_throttle_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r4_b01_driver_command_nan_throttle_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.00048019998939707875
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r4_b02_driver_command_infinity_steering_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r4_b02_driver_command_infinity_steering_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.00047790000098757446
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r4_b03_driver_command_invalid_gear_out_of_range",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r4_b03_driver_command_invalid_gear_out_of_range",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.00024389999452978373
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r4_b04_drivetrain_axle_torque_invalid_final_drive",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r4_b04_drivetrain_axle_torque_invalid_final_drive",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0002579999854788184
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r4_b05_drivetrain_clutch_torque_invalid_pedal",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r4_b05_drivetrain_clutch_torque_invalid_pedal",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0001990000018849969
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r4_b06_drivetrain_clutch_torque_extreme_delta_omega",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r4_b06_drivetrain_clutch_torque_extreme_delta_omega",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0003335000074002892
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r4_b07_lesson_session_zero_time_limit_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r4_b07_lesson_session_zero_time_limit_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.00021840000408701599
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r4_b08_lesson_session_start_without_ready_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r4_b08_lesson_session_start_without_ready_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0002114999806508422
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r4_b09_lesson_session_nan_tick_dt_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r4_b09_lesson_session_nan_tick_dt_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.00022459999308921397
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r4_b10_lesson_session_holding_still_at_spawn_never_passes",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r4_b10_lesson_session_holding_still_at_spawn_never_passes",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.00025389998336322606
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r4_b11_world_repository_directory_traversal_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r4_b11_world_repository_directory_traversal_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0009272999886889011
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r4_b12_world_validator_future_schema_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r4_b12_world_validator_future_schema_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0007003000064287335
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r4_b13_force_feedback_watchdog_nan_target_zeroes_torque",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r4_b13_force_feedback_watchdog_nan_target_zeroes_torque",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.00018179998733103275
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r5_b01_theory_package_null_or_empty_questions_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r5_b01_theory_package_null_or_empty_questions_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.000302100001135841
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r5_b02_theory_package_invalid_correct_index_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r5_b02_theory_package_invalid_correct_index_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0004976999771315604
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r5_b03_theory_package_official_without_authority_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r5_b03_theory_package_official_without_authority_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.00034509997931309044
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r5_b04_theory_package_duplicate_question_ids_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r5_b04_theory_package_duplicate_question_ids_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.0005173000099603087
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r5_b05_evidence_manifest_tamper_detection",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r5_b05_evidence_manifest_tamper_detection",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.001333299995167181
+    },
+    {
+      "nodeid": "tests/test_tier2_boundaries.py::test_r5_b06_invalid_task_card_id_rejected",
+      "file": "tests/test_tier2_boundaries.py",
+      "test": "test_r5_b06_invalid_task_card_id_rejected",
+      "tier": "Tier 2: Boundary & Corner Cases",
+      "outcome": "PASSED",
+      "duration": 0.000588800001423806
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_01_driver_command_to_drivetrain_acceleration",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_01_driver_command_to_drivetrain_acceleration",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.00037640001391991973
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_02_clutch_depression_breaks_torque_at_high_rpm",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_02_clutch_depression_breaks_torque_at_high_rpm",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.0003691999881993979
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_03_speeding_infraction_triggers_session_event",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_03_speeding_infraction_triggers_session_event",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.0003896999987773597
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_04_world_editor_creates_node_validates_and_saves",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_04_world_editor_creates_node_validates_and_saves",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.00463589999708347
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_05_g27_calibration_maps_axis_to_driver_command",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_05_g27_calibration_maps_axis_to_driver_command",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.00020060001406818628
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_06_ffb_watchdog_zeroes_on_pause",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_06_ffb_watchdog_zeroes_on_pause",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.00020249999943189323
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_07_autodrome_slalom_cone_touch_penalty",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_07_autodrome_slalom_cone_touch_penalty",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.00018930001533590257
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_08_theory_exam_quiz_scoring_interaction",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_08_theory_exam_quiz_scoring_interaction",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.00019439999596215785
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_09_floating_origin_translation_preserves_canonical_coords",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_09_floating_origin_translation_preserves_canonical_coords",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.00018010000349022448
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_10_transmission_mode_switch_mt_to_at",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_10_transmission_mode_switch_mt_to_at",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.00019949997658841312
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_11_engine_stall_on_abrupt_clutch_release",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_11_engine_stall_on_abrupt_clutch_release",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.00019180000526830554
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_12_hill_start_handbrake_release_coordination",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_12_hill_start_handbrake_release_coordination",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.00021830000332556665
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_13_lighting_switches_sync_with_time_of_day",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_13_lighting_switches_sync_with_time_of_day",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.00019160000374540687
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_14_reverse_gear_activates_reverse_torque_and_mirror_telemetry",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_14_reverse_gear_activates_reverse_torque_and_mirror_telemetry",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.00022190000163391232
+    },
+    {
+      "nodeid": "tests/test_tier3_interactions.py::test_combo_15_world_persistence_atomic_replace_preserves_backup_on_corruption",
+      "file": "tests/test_tier3_interactions.py",
+      "test": "test_combo_15_world_persistence_atomic_replace_preserves_backup_on_corruption",
+      "tier": "Tier 3: Cross-Feature Combinations",
+      "outcome": "PASSED",
+      "duration": 0.004559900000458583
+    },
+    {
+      "nodeid": "tests/test_tier4_scenarios.py::test_scenario_01_student_lesson_1_start_and_stop_full_journey",
+      "file": "tests/test_tier4_scenarios.py",
+      "test": "test_scenario_01_student_lesson_1_start_and_stop_full_journey",
+      "tier": "Tier 4: Real-World Scenarios",
+      "outcome": "PASSED",
+      "duration": 0.0016846000216901302
+    },
+    {
+      "nodeid": "tests/test_tier4_scenarios.py::test_scenario_02_slalom_cone_touch_and_engine_stall_failure_journey",
+      "file": "tests/test_tier4_scenarios.py",
+      "test": "test_scenario_02_slalom_cone_touch_and_engine_stall_failure_journey",
+      "tier": "Tier 4: Real-World Scenarios",
+      "outcome": "PASSED",
+      "duration": 0.00022529999841935933
+    },
+    {
+      "nodeid": "tests/test_tier4_scenarios.py::test_scenario_03_theory_exam_regulatory_certification_journey",
+      "file": "tests/test_tier4_scenarios.py",
+      "test": "test_scenario_03_theory_exam_regulatory_certification_journey",
+      "tier": "Tier 4: Real-World Scenarios",
+      "outcome": "PASSED",
+      "duration": 0.00019210000755265355
+    },
+    {
+      "nodeid": "tests/test_tier4_scenarios.py::test_scenario_04_custom_autodrome_map_creation_and_topology_validation",
+      "file": "tests/test_tier4_scenarios.py",
+      "test": "test_scenario_04_custom_autodrome_map_creation_and_topology_validation",
+      "tier": "Tier 4: Real-World Scenarios",
+      "outcome": "PASSED",
+      "duration": 0.007217700011096895
+    },
+    {
+      "nodeid": "tests/test_tier4_scenarios.py::test_scenario_05_hardware_disconnect_and_safe_recovery_journey",
+      "file": "tests/test_tier4_scenarios.py",
+      "test": "test_scenario_05_hardware_disconnect_and_safe_recovery_journey",
+      "tier": "Tier 4: Real-World Scenarios",
+      "outcome": "PASSED",
+      "duration": 0.00021090000518597662
+    },
+    {
+      "nodeid": "tests/test_tier4_scenarios.py::test_scenario_06_reverse_box_parking_and_mirror_telemetry_journey",
+      "file": "tests/test_tier4_scenarios.py",
+      "test": "test_scenario_06_reverse_box_parking_and_mirror_telemetry_journey",
+      "tier": "Tier 4: Real-World Scenarios",
+      "outcome": "PASSED",
+      "duration": 0.000274300022283569
+    }
+  ]
+}

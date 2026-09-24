@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DrivingSchoolSim - Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="prototype.css">
+</head>
+<body>
+  <!-- Navigation header to jump between screens (for review) -->
+  <header class="prototype-nav">
+    <a href="#home">Home</a>
+    <a href="#lessons">Lessons</a>
+    <a href="#vehicle">Vehicle</a>
+    <a href="#calibration">G27</a>
+    <a href="#drive">Drive HUD</a>
+    <a href="#pause">Pause</a>
+    <a href="#theory">Theory</a>
+    <a href="#result">Result</a>
+    <a href="#editor">Editor</a>
+    <label style="margin-left: auto; color: var(--text-secondary); font-family: var(--font-heading); text-transform: uppercase; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+      <input type="checkbox" onchange="document.body.classList.toggle('vr-layout', this.checked)">
+      VR Layout
+    </label>
+  </header>
+  <div id="app"></div>
+  <script src="prototype.js"></script>
+</body>
+</html>

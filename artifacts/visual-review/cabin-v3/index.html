@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visual Review — DS Sedan A — законченный салон</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: #121a2f;
+        --card: #1a2440;
+        --text: #e8edff;
+        --muted: #b6c0e3;
+        --accent: #7c8cff;
+        --ok: #86efac;
+        --warn: #fcd34d;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Inter, Arial, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top right, #2a2f5b 0%, transparent 38%),
+          radial-gradient(circle at 15% 15%, #1e2a57 0%, transparent 30%),
+          var(--bg);
+      }
+      .container { max-width: 1120px; margin: 32px auto; padding: 0 20px 40px; }
+      .hero {
+        background: linear-gradient(135deg, #1b2747 0%, #121a2f 100%);
+        border: 1px solid #2d3b65;
+        border-radius: 18px;
+        padding: 24px;
+      }
+      .eyebrow { color: #c7d2fe; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 8px; }
+      h1 { margin: 0; font-size: 34px; letter-spacing: -0.02em; }
+      .description { margin: 12px 0 0; color: var(--muted); line-height: 1.6; max-width: 860px; }
+      .grid { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .card { background: var(--panel); border: 1px solid #2a3a63; border-radius: 14px; padding: 14px; }
+      .label { margin: 0 0 12px; font-size: 14px; color: #c9d4ff; }
+      .shot { width: 100%; border-radius: 10px; border: 1px solid #344773; display: block; }
+      .qa { margin-top: 18px; background: var(--card); border: 1px solid #2e3f6c; border-radius: 14px; padding: 16px; }
+      .qa h2 { margin: 0 0 10px; font-size: 20px; }
+      ul { margin: 0; padding-left: 20px; color: var(--muted); line-height: 1.7; }
+      .pass { color: var(--ok); font-weight: 700; }
+      .warn { color: var(--warn); font-weight: 700; }
+      .verdict {
+        margin-top: 14px;
+        padding: 12px;
+        border-radius: 10px;
+        background: rgba(134, 239, 172, 0.1);
+        border: 1px solid rgba(134, 239, 172, 0.35);
+      }
+      @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    a{color:#a9d7ff}h2{margin-top:32px}.shot{width:100%;height:auto}</style>
+  </head>
+  <body>
+    <main class="container">
+      <section class="hero">
+        <p class="eyebrow">Visual QA Demo</p>
+        <h1>DS Sedan A — законченный салон</h1>
+        <p class="description">Передние кресла с салазками и боковой поддержкой, полноценный задний диван с тремя подголовниками, пространство для ног и отделка дверей. Руль опущен, приборы открыты для обзора. Исходный закрытый кузов сохранён.</p>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <p class="label">До</p>
+          <img class="shot" src="before-frontseat-cutaway.png" alt="Скриншот до изменений" />
+        </article>
+        <article class="card">
+          <p class="label">После</p>
+          <img class="shot" src="after-frontseat-cutaway.png" alt="Скриншот после изменений" />
+        </article>
+      </section>
+
+      <section class="qa">
+        <h2>Самопроверка</h2>
+        <ul>
+          <li>Соответствие задаче: <span class="ok">PASS</span> — проверены сиденья, крепления, задний ряд, приборы и педали</li>
+          <li>Целостность layout: <span class="ok">PASS</span> — между рядами 372 мм; от задних подголовников/спинки до плоскости стекла минимум 32 мм</li>
+          <li>Визуальная консистентность: <span class="ok">PASS</span> — единая обивка, согласованные вставки и швы; кузов проверен спереди и сзади</li>
+          <li>Минимальность доказательств: <span class="ok">PASS</span> — фиксированные камеры и освещение до/после; разрез салона явно исключает крышу и ближнюю дверь</li>
+        </ul>
+        <div class="verdict">
+          Итог: <strong>PASS — статическая модель, посадка салона и обменные форматы</strong>. Unity: импорт, материалы и prefab проверены. Полный ход подвески, физика столкновений, отражения зеркал и VR не проверялись в этой доработке.
+        </div>
+      </section>
+    <h2>Обзор с места водителя</h2><section class="grid"><article class="card"><p class="label">До · Blender</p><a href="before-driver-eye.png"><img class="shot" src="before-driver-eye.png" alt="Обзор с места водителя: до" loading="lazy"></a></article><article class="card"><p class="label">После · Blender</p><a href="after-driver-eye.png"><img class="shot" src="after-driver-eye.png" alt="Обзор с места водителя: после" loading="lazy"></a></article></section><h2>Задний ряд и крепления</h2><section class="grid"><article class="card"><p class="label">До · Blender</p><a href="before-rearseat-cutaway.png"><img class="shot" src="before-rearseat-cutaway.png" alt="Задний ряд и крепления: до" loading="lazy"></a></article><article class="card"><p class="label">После · Blender</p><a href="after-rearseat-cutaway.png"><img class="shot" src="after-rearseat-cutaway.png" alt="Задний ряд и крепления: после" loading="lazy"></a></article></section><h2>Педальный узел</h2><section class="grid"><article class="card"><p class="label">До · Blender</p><a href="before-pedals.png"><img class="shot" src="before-pedals.png" alt="Педальный узел: до" loading="lazy"></a></article><article class="card"><p class="label">После · Blender</p><a href="after-pedals.png"><img class="shot" src="after-pedals.png" alt="Педальный узел: после" loading="lazy"></a></article></section><h2>Внешний вид после доработки</h2><section class="grid"><article class="card"><img class="shot" src="after-exterior3quarter.png" alt="Внешний вид автомобиля"></article><article class="card"><img class="shot" src="after-rear-exterior.png" alt="Внешний вид автомобиля"></article></section><section class="qa"><h2>Файлы и проверка</h2><p><a href="../viewer.html">Открыть автомобиль в 3D →</a> · <a href="../models/DS_Sedan_A_cabin_v3.glb" download>Скачать GLB</a></p><p>FBX и GLB повторно импортированы: 114,896 треугольников в каждом формате. Имена привязок сохранены.</p><p>Все три педали проверены на зазор до пола в 11 положениях (0–20°). Минимальный зазор — 79 мм. Это проверка до пола, не полный анализ пересечений механизма.</p><p>Ревизия: cabin_v3 · SHA-256 исходника: <code style="overflow-wrap:anywhere">fb10a066c124e6a3baf937b61481e4116a5150255cd55f153159ed929cb70f93</code></p></section></main>
+  </body>
+</html>
