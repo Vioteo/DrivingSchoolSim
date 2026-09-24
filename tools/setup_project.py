@@ -13,7 +13,9 @@ write('Packages/manifest.json',{'dependencies':{
  'com.unity.test-framework':'1.6.0','com.unity.modules.physics':'1.0.0',
  'com.unity.modules.vehicles':'1.0.0','com.unity.modules.jsonserialize':'1.0.0',
  'com.unity.modules.imgui':'1.0.0','com.unity.modules.ui':'1.0.0','com.unity.modules.audio':'1.0.0',
- 'com.unity.modules.animation':'1.0.0','com.unity.modules.imageconversion':'1.0.0'}})
+ 'com.unity.modules.animation':'1.0.0','com.unity.modules.imageconversion':'1.0.0',
+ # Инструмент разработчика: мост редактора к Claude (docs/unity-mcp.md). Версия закреплена тегом.
+ 'com.coplaydev.unity-mcp':'https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#v10.2.0'}})
 # .gitignore is maintained in git (Unity template); do not overwrite it here.
 modules={'Contracts':[], 'Simulation':['Contracts'], 'World':['Contracts'], 'Input':['Contracts'],
  'Rules':['Contracts'], 'Learning':['Contracts'], 'Presentation':['Contracts','Presentation.Physics','Simulation','World','Input','Rules','Learning'],
