@@ -1,0 +1,122 @@
+{
+  "materials": [
+    {
+      "name": "Ped_Skin",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_middleage_lightskinned_male_diffuse_d.jpg"
+    },
+    {
+      "name": "Ped_Suit",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_male_elegantsuit01_diffuse_28386b_d.jpg"
+    },
+    {
+      "name": "Ped_Shoes",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_shoes03_diffuse_d.jpg"
+    },
+    {
+      "name": "Ped_Gloves",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_Gloves03UV_d.jpg"
+    },
+    {
+      "name": "Ped_Hair",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_short01_diffuse_d.png"
+    },
+    {
+      "name": "Ped_Eyebrows",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_eyebrow002_d.png"
+    },
+    {
+      "name": "Ped_Eyes",
+      "alphaClip": true,
+      "doubleSided": false,
+      "diffuse": "MH_brown_eye_d.png"
+    },
+    {
+      "name": "Ped_Eyelashes",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_eyelashes01_d.png"
+    },
+    {
+      "name": "Ped_Puffer",
+      "diffuse": "Fabric_nylon_d.png",
+      "normal": "Fabric_nylon_n.png",
+      "color": [
+        0.03,
+        0.045,
+        0.09
+      ],
+      "smoothness": 0.44999999999999996,
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "Ped_Hat",
+      "diffuse": "Fabric_fur_d.png",
+      "normal": "Fabric_fur_n.png",
+      "color": [
+        0.02,
+        0.02,
+        0.025
+      ],
+      "smoothness": 0.09999999999999998,
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "Ped_HatBadge",
+      "color": [
+        0.8,
+        0.58,
+        0.12
+      ],
+      "alphaClip": false,
+      "doubleSided": false,
+      "smoothness": 0.65
+    },
+    {
+      "name": "Ped_Vest",
+      "color": [
+        0.5,
+        0.75,
+        0.03
+      ],
+      "alphaClip": false,
+      "doubleSided": false,
+      "smoothness": 0.4
+    },
+    {
+      "name": "Ped_Reflect",
+      "color": [
+        0.7,
+        0.72,
+        0.72
+      ],
+      "alphaClip": false,
+      "doubleSided": false,
+      "smoothness": 0.65
+    },
+    {
+      "name": "Ped_Baton",
+      "color": [
+        0.012,
+        0.012,
+        0.014
+      ],
+      "alphaClip": false,
+      "doubleSided": false,
+      "smoothness": 0.6
+    }
+  ]
+}

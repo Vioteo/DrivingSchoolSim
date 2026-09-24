@@ -36,16 +36,20 @@ namespace DrivingSchool.Editor
             public string[] Clips => Police ? PoliceClips : CivilClips;
         }
 
-        // Must match CHARACTERS and the clip lists in tools/build_pedestrians.py.
-        static readonly Spec[] Specs =
+        // Must match CHARACTERS, OUTFITS and the clip lists in tools/build_pedestrians.py:
+        // every character in every season is its own model, DS_Pedestrian_<character>_<season>.
+        static readonly string[] Seasons = { "Summer", "Autumn", "Winter" };
+        static readonly Spec[] Characters =
         {
-            new Spec("DS_Pedestrian_A", 1.55f, 1.95f, .24f),
-            new Spec("DS_Pedestrian_B", 1.55f, 1.95f, .24f),
-            new Spec("DS_Pedestrian_C", 1.55f, 1.95f, .24f),
-            new Spec("DS_Pedestrian_Child_A", 1.1f, 1.4f, .18f),
-            new Spec("DS_Pedestrian_Child_B", 1.1f, 1.4f, .18f),
-            new Spec("DS_Pedestrian_Police", 1.7f, 1.95f, .24f, police: true),
+            new Spec("DS_Pedestrian_A", 1.55f, 1.98f, .24f),
+            new Spec("DS_Pedestrian_B", 1.55f, 1.98f, .24f),
+            new Spec("DS_Pedestrian_C", 1.55f, 1.98f, .24f),
+            new Spec("DS_Pedestrian_Child_A", 1.1f, 1.45f, .19f),
+            new Spec("DS_Pedestrian_Child_B", 1.1f, 1.45f, .19f),
+            new Spec("DS_Pedestrian_Police", 1.65f, 1.98f, .24f, police: true),
         };
+        static readonly Spec[] Specs = Seasons.SelectMany(season => Characters.Select(c =>
+            new Spec(c.Name + "_" + season, c.MinHeight, c.MaxHeight, c.Radius, c.Police))).ToArray();
         static readonly string[] CivilClips = { "Idle", "Walk", "Run", "LookAround" };
         static readonly string[] PoliceClips = { "Idle", "Walk", "LookAround", "Signal_ArmsSide", "Signal_RightArmForward", "Signal_ArmUp" };
 
@@ -335,7 +339,9 @@ namespace DrivingSchool.Editor
                 for (int i = 0; i < prefabs.Length; i++)
                 {
                     var o = (GameObject)PrefabUtility.InstantiatePrefab(prefabs[i], scene);
-                    o.transform.position = new Vector3((i - (prefabs.Length - 1) / 2f) * .95f, 0, 0);
+                    // One row per season (Summer in front), characters side by side.
+                    int column = i % Characters.Length, row = i / Characters.Length;
+                    o.transform.position = new Vector3((column - (Characters.Length - 1) / 2f) * .95f, 0, -row * 1.8f);
                 }
                 var sun = new GameObject("Sun").AddComponent<Light>();
                 sun.type = LightType.Directional; sun.intensity = 2.2f;
@@ -351,8 +357,8 @@ namespace DrivingSchool.Editor
                 }
                 floor.GetComponent<Renderer>().sharedMaterial = mat;
                 var camera = new GameObject("Main Camera", typeof(Camera), typeof(AudioListener)).GetComponent<Camera>();
-                camera.tag = "MainCamera"; camera.transform.position = new Vector3(2.5f,2.4f,8.5f);
-                camera.transform.LookAt(new Vector3(0,.85f,0)); camera.fieldOfView = 36;
+                camera.tag = "MainCamera"; camera.transform.position = new Vector3(2.5f,3.2f,9.5f);
+                camera.transform.LookAt(new Vector3(0,.85f,-1.8f)); camera.fieldOfView = 36;
                 camera.clearFlags = CameraClearFlags.SolidColor; camera.backgroundColor = new Color(.14f,.19f,.21f);
                 EditorSceneManager.SaveScene(scene, Root + "/Scenes/PedestrianShowroom.unity");
                 var target = new RenderTexture(960,720,24);

@@ -33,39 +33,108 @@ FRAMES = {'adult': {'Idle': 61, 'Walk': 31, 'Run': 23, 'LookAround': 91},
           'child': {'Idle': 61, 'Walk': 25, 'Run': 19, 'LookAround': 91}}
 SIGNAL_FRAMES = 61
 RUN_FLIGHT = .045   # m, body rise while both feet are off the ground
-# MakeHuman (CC0) characters: macro morph values, skin and fitted proxies from the system asset pack.
-# build: 'child' selects the child clip timing. Age in years.
-EYES = [('eyes', 'eyes/low-poly/low-poly.mhclo'), ('eyelashes', 'eyelashes/eyelashes01/eyelashes01.mhclo')]
-CHARACTERS = [
-    dict(name='DS_Pedestrian_A', build='male', skin='skins/young_caucasian_male/young_caucasian_male.mhmat',
-         macro=dict(gender=1, age=27, muscle=.55, weight=.5, height=.55),
-         proxies=[('suit', 'clothes/male_casualsuit05/male_casualsuit05.mhclo'), ('shoes', 'clothes/shoes01/shoes01.mhclo'),
-                  ('hair', 'hair/short02/short02.mhclo'), ('eyebrows', 'eyebrows/eyebrow001/eyebrow001.mhclo')] + EYES),
-    dict(name='DS_Pedestrian_B', build='female', skin='skins/young_caucasian_female/young_caucasian_female.mhmat',
-         macro=dict(gender=0, age=32, muscle=.45, weight=.48, height=.5),
-         proxies=[('suit', 'clothes/female_elegantsuit01/female_elegantsuit01.mhclo'), ('shoes', 'clothes/shoes03/shoes03.mhclo'),
-                  ('hair', 'hair/ponytail01/ponytail01.mhclo'), ('eyebrows', 'eyebrows/eyebrow010/eyebrow010.mhclo')] + EYES),
-    dict(name='DS_Pedestrian_C', build='male', backpack=True, skin='skins/middleage_caucasian_male/middleage_caucasian_male.mhmat',
-         macro=dict(gender=1, age=35, muscle=.6, weight=.6, height=.4),
-         proxies=[('suit', 'clothes/male_worksuit01/male_worksuit01.mhclo'), ('shoes', 'clothes/shoes02/shoes02.mhclo'),
-                  ('hair', 'hair/short01/short01.mhclo'), ('eyebrows', 'eyebrows/eyebrow002/eyebrow002.mhclo')] + EYES),
+# MakeHuman (CC0) characters: macro morph values, skin, hair; clothing per season below.
+# build: 'child' selects the child clip timing. Age in years. Paths are relative to the MakeHuman
+# system assets or the CC0 community packs (tools/fetch_makehuman.py).
+FACE = [('eyes', 'eyes/low-poly/low-poly.mhclo'), ('eyelashes', 'eyelashes/eyelashes01/eyelashes01.mhclo')]
+CHARACTERS = {
+    'A': dict(build='male', skin='skins/young_caucasian_male/young_caucasian_male.mhmat',
+              macro=dict(gender=1, age=27, muscle=.55, weight=.5, height=.55),
+              face=[('hair', 'hair/short02/short02.mhclo'), ('eyebrows', 'eyebrows/eyebrow001/eyebrow001.mhclo')]),
+    'B': dict(build='female', skin='skins/young_caucasian_female/young_caucasian_female.mhmat',
+              macro=dict(gender=0, age=32, muscle=.45, weight=.48, height=.5),
+              face=[('hair', 'hair/ponytail01/ponytail01.mhclo'), ('eyebrows', 'eyebrows/eyebrow010/eyebrow010.mhclo')]),
+    'C': dict(build='male', backpack=True, skin='skins/middleage_caucasian_male/middleage_caucasian_male.mhmat',
+              macro=dict(gender=1, age=35, muscle=.6, weight=.6, height=.4),
+              face=[('hair', 'hair/short01/short01.mhclo'), ('eyebrows', 'eyebrows/eyebrow002/eyebrow002.mhclo')]),
     # Schoolboy with a satchel and schoolgirl with a braid, about 8 years old.
-    dict(name='DS_Pedestrian_Child_A', build='child', backpack=True,
-         skin='skins/young_caucasian_male/young_caucasian_male.mhmat', macro=dict(gender=1, age=8, weight=.5, height=.66),
-         proxies=[('suit', 'clothes/male_casualsuit06/male_casualsuit06.mhclo'), ('shoes', 'clothes/shoes06/shoes06.mhclo'),
-                  ('hair', 'hair/short03/short03.mhclo'), ('eyebrows', 'eyebrows/eyebrow001/eyebrow001.mhclo')] + EYES),
-    dict(name='DS_Pedestrian_Child_B', build='child',
-         skin='skins/young_caucasian_female/young_caucasian_female.mhmat', macro=dict(gender=0, age=8, weight=.5, height=.74),
-         proxies=[('suit', 'clothes/female_casualsuit01/female_casualsuit01.mhclo'), ('shoes', 'clothes/shoes05/shoes05.mhclo'),
-                  ('hair', 'hair/braid01/braid01.mhclo'), ('eyebrows', 'eyebrows/eyebrow010/eyebrow010.mhclo')] + EYES),
-    # Traffic police officer: suit retinted to uniform navy, then vest, peaked cap and baton (tools/pedestrian_mh.py).
-    dict(name='DS_Pedestrian_Police', build='male', police=True,
-         skin='skins/middleage_caucasian_male/middleage_caucasian_male.mhmat',
-         macro=dict(gender=1, age=38, muscle=.6, weight=.55, height=.45),
-         proxies=[('suit', 'clothes/male_elegantsuit01/male_elegantsuit01.mhclo'), ('shoes', 'clothes/shoes03/shoes03.mhclo'),
-                  ('hair', 'hair/short01/short01.mhclo'), ('eyebrows', 'eyebrows/eyebrow002/eyebrow002.mhclo')] + EYES,
-         materials={'suit': {'tint': (.16, .22, .42), 'tris': 9000}}),
-]
+    'Child_A': dict(build='child', backpack=True, skin='skins/young_caucasian_male/young_caucasian_male.mhmat',
+                    macro=dict(gender=1, age=8, weight=.5, height=.66),
+                    face=[('hair', 'hair/short03/short03.mhclo'), ('eyebrows', 'eyebrows/eyebrow001/eyebrow001.mhclo')]),
+    'Child_B': dict(build='child', skin='skins/young_caucasian_female/young_caucasian_female.mhmat',
+                    macro=dict(gender=0, age=8, weight=.5, height=.74),
+                    face=[('hair', 'hair/braid01/braid01.mhclo'), ('eyebrows', 'eyebrows/eyebrow010/eyebrow010.mhclo')]),
+    # Traffic police officer: suit retinted to uniform navy, vest, cap or winter hat, baton (tools/pedestrian_mh.py).
+    'Police': dict(build='male', police=True, skin='skins/middleage_caucasian_male/middleage_caucasian_male.mhmat',
+                   macro=dict(gender=1, age=38, muscle=.6, weight=.55, height=.45),
+                   face=[('hair', 'hair/short01/short01.mhclo'), ('eyebrows', 'eyebrows/eyebrow002/eyebrow002.mhclo')]),
+}
+C = 'clothes/'
+UNIFORM = {'suit': {'tint': (.16, .22, .42), 'tris': 9000}}
+GLOVES = ('gloves', C+'toigo_gloves_short/toigo_gloves_short.mhclo')
+def puffer(color, **k): return dict(kind='puffer', name='Puffer', color=color, quilt=.012, base=.024, **k)
+def hat(color, **k): return dict(kind='knit_hat', name='Hat', color=color, **k)
+def scarf(color): return dict(kind='scarf', name='Scarf', color=color)
+# Season -> character -> (MakeHuman clothes, generated garments, material options).
+OUTFITS = {
+    'Summer': {
+        'A': ([('top', C+'namuhekam_male_polo_shirt/namuhekam_male_polo_shirt.mhclo'),
+               ('pants', C+'cortu_cargo_pants/cortu_cargo_pants.mhclo'), ('shoes', C+'shoes01/shoes01.mhclo')],
+              [], {'top': {'tint': (.12, .2, .32)}}),
+        'B': ([('suit', C+'female_elegantsuit01/female_elegantsuit01.mhclo'),
+               ('shoes', C+'toigo_mj_cloth_shoes/toigo_mj_cloth_shoes.mhclo')], [], {}),
+        'C': ([('suit', C+'male_worksuit01/male_worksuit01.mhclo'), ('shoes', C+'shoes02/shoes02.mhclo')], [], {}),
+        'Child_A': ([('suit', C+'male_casualsuit06/male_casualsuit06.mhclo'), ('shoes', C+'shoes06/shoes06.mhclo')], [], {}),
+        'Child_B': ([('suit', C+'female_casualsuit01/female_casualsuit01.mhclo'), ('shoes', C+'shoes05/shoes05.mhclo')], [], {}),
+        'Police': ([('suit', C+'male_elegantsuit01/male_elegantsuit01.mhclo'), ('shoes', C+'shoes03/shoes03.mhclo')],
+                   [], UNIFORM),
+    },
+    'Autumn': {
+        'A': ([('suit', C+'male_casualsuit05/male_casualsuit05.mhclo'), ('shoes', C+'shoes01/shoes01.mhclo'),
+               ('hat', C+'jujube_newsboy_cap/jujube_newsboy_cap.mhclo')], [], {'hat': {'tint': (.12, .11, .10)}}),
+        'B': ([('top', C+'toigo_fisherman_sweater/toigo_fisherman_sweater.mhclo'),
+               ('pants', C+'toigo_wool_pants/toigo_wool_pants.mhclo'),
+               ('shoes', C+'toigo_ankle_boots_female/toigo_ankle_boots_female.mhclo')],
+              [dict(kind='coat', name='Coat', color=(.42, .28, .16), roughness=.85)], {'pants': {'tint': (.12, .12, .14)}}),
+        'C': ([('suit', C+'male_casualsuit03/male_casualsuit03.mhclo'),
+               ('shoes', C+'toigo_ankle_boots_male/toigo_ankle_boots_male.mhclo')],
+              [dict(kind='windbreaker', name='Jacket', color=(.16, .2, .1), base=.018)], {}),
+        'Child_A': ([('suit', C+'male_casualsuit06/male_casualsuit06.mhclo'),
+                     ('shoes', C+'scailman_semitransparent_water_boots/scailman_semitransparent_water_boots.mhclo')],
+                    [dict(kind='windbreaker', name='Jacket', color=(.05, .2, .55), base=.018)], {}),
+        'Child_B': ([('suit', C+'female_casualsuit01/female_casualsuit01.mhclo'),
+                     ('shoes', C+'scailman_semitransparent_water_boots/scailman_semitransparent_water_boots.mhclo')],
+                    [dict(kind='windbreaker', name='Jacket', color=(.85, .6, .04), base=.018)], {}),
+        'Police': ([('suit', C+'male_elegantsuit01/male_elegantsuit01.mhclo'), ('shoes', C+'shoes03/shoes03.mhclo'),
+                    GLOVES], [], UNIFORM),
+    },
+    'Winter': {
+        'A': ([('suit', C+'male_casualsuit06/male_casualsuit06.mhclo'), GLOVES, ('shoes', C+'shoes03/shoes03.mhclo')],
+              [puffer((.025, .025, .03)), hat((.18, .18, .19)), scarf((.3, .05, .05))], {}),
+        'B': ([('top', C+'toigo_fisherman_sweater/toigo_fisherman_sweater.mhclo'),
+               ('pants', C+'toigo_wool_pants/toigo_wool_pants.mhclo'), GLOVES,
+               ('shoes', C+'toigo_ankle_boots_female/toigo_ankle_boots_female.mhclo')],
+              [dict(kind='coat', name='Coat', color=(.07, .07, .09), roughness=.85), hat((.7, .66, .58), slouch=.02),
+               scarf((.7, .66, .58))], {'pants': {'tint': (.12, .12, .14)}}),
+        'C': ([('suit', C+'male_casualsuit03/male_casualsuit03.mhclo'), GLOVES,
+               ('shoes', C+'toigo_ankle_boots_male/toigo_ankle_boots_male.mhclo')],
+              [puffer((.06, .09, .06)), hat((.03, .03, .035))], {}),
+        'Child_A': ([('suit', C+'male_casualsuit06/male_casualsuit06.mhclo'), GLOVES,
+                     ('shoes', C+'shoes03/shoes03.mhclo')],
+                    [puffer((.55, .04, .03)), hat((.05, .15, .5), pompom=True, pompom_color=(.8, .8, .8)),
+                     scarf((.05, .15, .5))], {}),
+        'Child_B': ([('suit', C+'female_casualsuit01/female_casualsuit01.mhclo'), GLOVES,
+                     ('shoes', C+'toigo_ankle_boots_female/toigo_ankle_boots_female.mhclo')],
+                    [puffer((.3, .08, .4), long=True), hat((.8, .3, .45), pompom=True, pompom_color=(.9, .9, .9)),
+                     scarf((.8, .3, .45))], {}),
+        'Police': ([('suit', C+'male_elegantsuit01/male_elegantsuit01.mhclo'), ('shoes', C+'shoes03/shoes03.mhclo'),
+                    GLOVES],
+                   [puffer((.03, .045, .09)), dict(kind='fur_hat', name='Hat', color=(.02, .02, .025), badge=True)],
+                   UNIFORM),
+    },
+}
+
+def variants():
+    """One spec per character and season, named DS_Pedestrian_<character>_<season>."""
+    out = []
+    for season, chars in OUTFITS.items():
+        for key, (clothes, garments, materials) in chars.items():
+            base = CHARACTERS[key]
+            spec = dict(base, name=f'DS_Pedestrian_{key}_{season}', season=season,
+                        proxies=list(clothes) + base['face'] + FACE, garments=garments, materials=materials)
+            out.append(spec)
+    return out
+SPECS = variants()
 
 # ---------------------------------------------------------------- animation
 # Rotations are authored about armature axes and converted to bone-local space, so the sign
@@ -246,7 +315,7 @@ def animate(rig, spec):
 def create_character(spec):
     global parts
     kit = mh.Kit(TEXTURES)
-    J, roles, W, co = mh.build(spec, kit, fetch.assets())
+    J, roles, W, co = mh.build(spec, kit, [fetch.assets(), fetch.community()])
     rig = mh.rig_create(J, spec['name'])
     mh.relax_arms(rig, kit.parts)
     mh.extras(spec, kit, rig, roles)
@@ -303,7 +372,7 @@ def rel(p): return p.relative_to(ROOT).as_posix()
 
 def main():
     records=[]
-    for spec in CHARACTERS:
+    for spec in SPECS:
         spec['clips'] = POLICE_CLIPS if spec.get('police') else CIVIL_CLIPS
         scene=reset()
         name=spec['name']
@@ -334,7 +403,8 @@ def main():
         target=(0,0,.65) if child else (0,0,.95)
         render(WEB/(name+'-front.png'),(2,-6,2.3),target)
         render(WEB/(name+'-rear.png'),(-2,6,2.3),target)
-        # Side views of the gait: contact and passing positions.
+        if spec['season']!='Summer': continue
+        # Side views of the gait: contact and passing positions (one season is enough).
         show_clip(rig,'Walk',1); render(WEB/(name+'-walk.png'),(6,-1.5,1.4),target)
         if 'Run' in clips:
             show_clip(rig,'Run',4); render(WEB/(name+'-run.png'),(6,-1.5,1.4),target)
@@ -343,22 +413,23 @@ def main():
             if clip.startswith('Signal_'):
                 camera.ortho_scale=3.4
                 show_clip(rig,clip,1); render(WEB/(name+'-'+clip.lower()+'.png'),(3,-5,2.2),(0,0,1.15))
-    # Reimport the actual GLBs for a collective render and export verification.
-    scene=reset()
-    for i,rec in enumerate(records):
-        old=set(scene.objects)
-        bpy.ops.import_scene.gltf(filepath=str(WEB/'models'/(rec['name']+'.glb')))
-        imported=set(scene.objects)-old
-        for o in imported:
-            if o.animation_data:
-                o.animation_data.action=None
-                for track in o.animation_data.nla_tracks: track.mute=True
-            if o.type=='ARMATURE':
-                for p in o.pose.bones: p.rotation_euler=(0,0,0); p.location=(0,0,0)
-            if not o.parent: o.location.x+=(i-(len(records)-1)/2)*.95
-    camera=stage(); camera.ortho_scale=6.2
-    render(WEB/'lineup.png',(2,-8,2.8),target=(0,0,.93))
-    report={'revision':2,'utc':datetime.now(timezone.utc).isoformat(),'blender':bpy.app.version_string,
+    # Reimport the actual GLBs: one lineup per season, also an export check.
+    for season in OUTFITS:
+        scene=reset()
+        group=[r for r in records if r['name'].endswith('_'+season)]
+        for i,rec in enumerate(group):
+            old=set(scene.objects)
+            bpy.ops.import_scene.gltf(filepath=str(WEB/'models'/(rec['name']+'.glb')))
+            for o in set(scene.objects)-old:
+                if o.animation_data:
+                    o.animation_data.action=None
+                    for track in o.animation_data.nla_tracks: track.mute=True
+                if o.type=='ARMATURE':
+                    for p in o.pose.bones: p.rotation_euler=(0,0,0); p.location=(0,0,0)
+                if not o.parent: o.location.x+=(i-(len(group)-1)/2)*.95
+        camera=stage(); camera.ortho_scale=6.2
+        render(WEB/f'lineup-{season.lower()}.png',(2,-8,2.8),target=(0,0,.93))
+    report={'revision':3,'utc':datetime.now(timezone.utc).isoformat(),'blender':bpy.app.version_string,
         'units':'metres','sourceAxes':'Z up, -Y forward','fps':FPS,'assets':records,
         'scope':'Authored meshes, generic skeleton and in-place looping clips. No pedestrian navigation, LODs or traffic AI.'}
     (ROOT/'artifacts/reports/pedestrians-manifest.json').write_text(json.dumps(report,indent=2,ensure_ascii=False),encoding='utf-8')

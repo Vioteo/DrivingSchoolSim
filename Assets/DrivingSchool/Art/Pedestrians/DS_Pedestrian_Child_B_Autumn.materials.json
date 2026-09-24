@@ -1,0 +1,60 @@
+{
+  "materials": [
+    {
+      "name": "Ped_Skin",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_young_lightskinned_female_diffuse_d.jpg"
+    },
+    {
+      "name": "Ped_Suit",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_female_casualsuit01_diffuse_d.jpg",
+      "normal": "MH_female_casualsuit01_normal_n.png"
+    },
+    {
+      "name": "Ped_Shoes",
+      "alphaClip": true,
+      "doubleSided": false,
+      "diffuse": "MH_Botas_102_d.png"
+    },
+    {
+      "name": "Ped_Hair",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_braid01_diffuse_d.png"
+    },
+    {
+      "name": "Ped_Eyebrows",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_eyebrow010_d.png"
+    },
+    {
+      "name": "Ped_Eyes",
+      "alphaClip": true,
+      "doubleSided": false,
+      "diffuse": "MH_brown_eye_d.png"
+    },
+    {
+      "name": "Ped_Eyelashes",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_eyelashes01_d.png"
+    },
+    {
+      "name": "Ped_Jacket",
+      "diffuse": "Fabric_nylon_d.png",
+      "normal": "Fabric_nylon_n.png",
+      "color": [
+        0.85,
+        0.6,
+        0.04
+      ],
+      "smoothness": 0.44999999999999996,
+      "alphaClip": false,
+      "doubleSided": false
+    }
+  ]
+}

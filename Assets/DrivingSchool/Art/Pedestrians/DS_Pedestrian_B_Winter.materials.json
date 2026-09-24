@@ -1,0 +1,109 @@
+{
+  "materials": [
+    {
+      "name": "Ped_Skin",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_young_lightskinned_female_diffuse_d.jpg"
+    },
+    {
+      "name": "Ped_Top",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_shirt-knit_d.jpg"
+    },
+    {
+      "name": "Ped_Pants",
+      "alphaClip": true,
+      "doubleSided": false,
+      "diffuse": "MH_Pants_wool_1e1e23_d.png"
+    },
+    {
+      "name": "Ped_Gloves",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_Gloves03UV_d.jpg"
+    },
+    {
+      "name": "Ped_Shoes",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_BootsAnkle_d.jpg",
+      "normal": "MH_BootsAnkle-norm_n.png"
+    },
+    {
+      "name": "Ped_Hair",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_ponytail01_diffuse_d.png"
+    },
+    {
+      "name": "Ped_Eyebrows",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_eyebrow010_d.png"
+    },
+    {
+      "name": "Ped_Eyes",
+      "alphaClip": true,
+      "doubleSided": false,
+      "diffuse": "MH_brown_eye_d.png"
+    },
+    {
+      "name": "Ped_Eyelashes",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_eyelashes01_d.png"
+    },
+    {
+      "name": "Ped_Coat",
+      "diffuse": "Fabric_wool_d.png",
+      "normal": "Fabric_wool_n.png",
+      "color": [
+        0.07,
+        0.07,
+        0.09
+      ],
+      "smoothness": 0.15000000000000002,
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "Ped_CoatButton",
+      "color": [
+        0.02,
+        0.018,
+        0.016
+      ],
+      "alphaClip": false,
+      "doubleSided": false,
+      "smoothness": 0.6
+    },
+    {
+      "name": "Ped_Hat",
+      "diffuse": "Fabric_knit_d.png",
+      "normal": "Fabric_knit_n.png",
+      "color": [
+        0.7,
+        0.66,
+        0.58
+      ],
+      "smoothness": 0.09999999999999998,
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "Ped_Scarf",
+      "diffuse": "Fabric_knit_d.png",
+      "normal": "Fabric_knit_n.png",
+      "color": [
+        0.7,
+        0.66,
+        0.58
+      ],
+      "smoothness": 0.09999999999999998,
+      "alphaClip": false,
+      "doubleSided": false
+    }
+  ]
+}

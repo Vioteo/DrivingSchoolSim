@@ -92,6 +92,9 @@ class Proxy:
             elif key == 'material': self.material = parse_material(self.path.parent / w[1])
             elif key in ('x_scale', 'y_scale', 'z_scale'):
                 self.scale['xyz'.index(key[0])] = (int(w[1]), int(w[2]), float(w[3]))
+        if self.material is None:        # some community assets rely on the only .mhmat next to them
+            mats = sorted(self.path.parent.glob('*.mhmat'))
+            if mats: self.material = parse_material(mats[0])
         self.refs = np.array(self.refs); self.weights = np.array(self.weights); self.offsets = np.array(self.offsets)
 
     def fit(self, co):
@@ -294,16 +297,21 @@ def make_mesh(kit, name, verts, faces, uvs, material, W):
     if W.shape[1] > 4: W[W < np.sort(W, 1)[:, -4:-3]] = 0
     W /= np.maximum(W.sum(1, keepdims=True), 1e-9)
     for j, n in enumerate(NAMES):
+        g = o.vertex_groups.new(name=n)          # every mesh gets all groups in the same order
         idx = np.nonzero(W[:, j] > .01)[0]
-        if len(idx) == 0: continue
-        g = o.vertex_groups.new(name=n)
         for i in idx: g.add([int(i)], float(W[i, j]), 'REPLACE')
     kit.parts.append(o)
     return o
 
 # ---------------------------------------------------------------- assembly
-def build(spec, kit, A):
+def resolve(roots, rel):
+    for r in roots:
+        if (r / rel).exists(): return r / rel
+    raise FileNotFoundError(rel)
+
+def build(spec, kit, roots):
     """Morphed body, fitted proxies and our skeleton for one character spec; returns (J, parts by role)."""
+    A = roots[0]
     base_v, base_uv, base_f = load_obj(fetch.data('3dobjs/base.obj'))
     co = base_v.copy()
     for f, w in macro_targets(spec['macro']):
@@ -313,7 +321,7 @@ def build(spec, kit, A):
     roles = {}
     # Proxies first: their delete_verts hide the body underneath.
     hidden = set()
-    items = [(role, Proxy(A / p)) for role, p in spec['proxies']]
+    items = [(role, Proxy(resolve(roots, p))) for role, p in spec['proxies']]
     for role, px in items: hidden |= px.delete
     # Body: only faces whose vertices are all visible.
     skin = parse_material(A / spec['skin'])
@@ -338,12 +346,13 @@ def build(spec, kit, A):
             o.data.calc_loop_triangles(); n = len(o.data.loop_triangles)
             if n > opts['tris']:
                 m = o.modifiers.new('Budget', 'DECIMATE'); m.ratio = opts['tris']/n; apply_all(o)
-    if spec.get('police'):
-        # MakeHuman's smooth body-hugging helper: the base for the vest (removed after use).
-        tf = base_f['helper-tights']; tu = sorted({v for f, _ in tf for v in f}); tr = {v: i for i, v in enumerate(tu)}
-        kit.flat('Helper', (.5, .5, .5))
-        roles['tights'] = make_mesh(kit, 'Tights', ours[tu], [([tr[v] for v in f], []) for f, _ in tf], [],
-                                    'Helper', W[tu])
+    # MakeHuman's smooth helpers (body-hugging suit, skirt): bases for coats, jackets and the police
+    # vest; they follow the morphs and the skin weights and are removed after use.
+    kit.flat('Helper', (.5, .5, .5))
+    for role, group in (('tights', 'helper-tights'), ('skirt', 'helper-skirt')):
+        hf = base_f[group]; hu = sorted({v for f, _ in hf for v in f}); hr = {v: i for i, v in enumerate(hu)}
+        roles[role] = make_mesh(kit, role.capitalize(), ours[hu], [([hr[v] for v in f], t) for f, t in hf],
+                                base_uv, 'Helper', W[hu])
     J = skeleton(co)
     # Soles on Z = 0, pelvis over the origin.
     low = min(min(v.co.z for v in o.data.vertices) for o in kit.parts)
@@ -476,11 +485,35 @@ def dominant(o, v):
     return o.vertex_groups[best.group].name if best else ''
 
 def extras(spec, kit, rig, roles):
-    suit = roles['suit']
+    for g in spec.get('garments', []):
+        kind = g['kind']
+        if kind in ('puffer', 'windbreaker', 'coat'):
+            roles['outer'] = shell_garment(kit, rig, roles, g)
+        elif kind in ('knit_hat', 'fur_hat'):
+            roles['hat'] = knit_hat(kit, rig, roles, g); roles['hat']['snug'] = True
+        elif kind == 'scarf':
+            scarf(kit, rig, roles, g)
+    if 'hat' in roles and 'hair' in roles:
+        trim_hair(roles['hair'], roles['hat'], roles['hat'].get('snug', False))
+    if 'outer' in roles and 'hair' in roles:
+        # A braid or ponytail would poke through the jacket's back: keep hair above the collar only.
+        import bmesh
+        collar = max(v.co.z for v in roles['outer'].data.vertices) - .01
+        bm = bmesh.new(); bm.from_mesh(roles['hair'].data)
+        bmesh.ops.delete(bm, geom=[f for f in bm.faces if f.calc_center_median().z < collar], context='FACES')
+        bm.to_mesh(roles['hair'].data); bm.free()
     if spec.get('backpack'):
-        backpack(spec, kit, rig, suit)
+        backpack(spec, kit, rig, outermost(roles))
     if spec.get('police'):
-        police_kit(kit, rig, roles)
+        police_kit(kit, rig, roles, cap='hat' not in roles)
+    for role in ('tights', 'skirt'):
+        o = roles.pop(role); kit.parts.remove(o); bpy.data.objects.remove(o)
+    for o in kit.parts:
+        if o.get('thickness'):
+            m = o.modifiers.new('Thickness', 'SOLIDIFY'); m.thickness = o['thickness']; m.offset = -1; apply_all(o)
+
+def outermost(roles):
+    return roles.get('outer') or roles.get('suit') or roles.get('top')
 
 def backpack(spec, kit, rig, suit):
     chest, neck = bone_span(rig, 'Chest')
@@ -514,8 +547,8 @@ def backpack(spec, kit, rig, suit):
         wrap(o, suit, .004)
         m = o.modifiers.new('Thickness', 'SOLIDIFY'); m.thickness = .005; m.offset = 1; apply_all(o)
 
-def police_kit(kit, rig, roles):
-    suit = roles['suit']; body = roles['body']
+def police_kit(kit, rig, roles, cap=True):
+    suit = outermost(roles); body = roles['body']
     head0, head1 = bone_span(rig, 'Head'); H = head1.z
     spine = bone_span(rig, 'Spine')[0]; neck = bone_span(rig, 'Neck')[0]
     kit.flat('Vest', (.50, .75, .03), .6); kit.flat('Reflect', (.70, .72, .72), .35)
@@ -523,7 +556,7 @@ def police_kit(kit, rig, roles):
     kit.flat('Visor', (.01, .01, .012), .25); kit.flat('Badge', (.80, .58, .12), .35)
     kit.flat('Baton', (.012, .012, .014), .4)
     # Vest: MakeHuman's smooth tights helper over the torso, pushed out over the jacket, sleeveless.
-    tights = roles['tights']; kit.parts.remove(tights)
+    tights = roles['tights']
     import bmesh
     bm = bmesh.new(); bm.from_mesh(tights.data)
     deform = bm.verts.layers.deform.active
@@ -540,7 +573,6 @@ def police_kit(kit, rig, roles):
     bm.normal_update()
     for v in bm.verts: v.co += v.normal * .02
     me = bpy.data.meshes.new('Vest'); bm.to_mesh(me); bm.free()
-    bpy.data.objects.remove(tights)
     vest = bpy.data.objects.new('Vest', me); bpy.context.collection.objects.link(vest)
     m = vest.modifiers.new('Over jacket', 'SHRINKWRAP'); m.target = suit; m.wrap_method = 'NEAREST_SURFACEPOINT'
     m.wrap_mode = 'OUTSIDE'; m.offset = .01
@@ -571,7 +603,12 @@ def police_kit(kit, rig, roles):
     back = max(v.co.y for v in vest.data.vertices if abs(v.co.x) < .05 and abs(v.co.z - (hi - .1*(hi-lo))) < .03)
     text = label(kit, 'Vest lettering', 'ДПС', (0, back + .02, hi - .16*(hi-lo)), .05*H, 'Reflect')
     wrap(text, vest, .002)
-    # Peaked cap fitted to the head: band at forehead height, wide crown, visor, badge.
+    if cap: peaked_cap(kit, rig, body)
+    baton(kit, rig)
+
+def peaked_cap(kit, rig, body):
+    """Peaked cap fitted to the head: band at forehead height, wide crown, visor, badge."""
+    head0, head1 = bone_span(rig, 'Head')
     hv = [v.co for v in body.data.vertices if v.co.z > head0.z + .02 and
           (max(v.groups, key=lambda g: g.weight).group if v.groups else -1) == body.vertex_groups['Head'].index]
     top = max(c.z for c in hv); zb = top - .075
@@ -584,8 +621,280 @@ def police_kit(kit, rig, roles):
     ellipsoid(kit, 'Cap visor', (0, cy - ry - .012, zb + .004), (rx*.82, .045, .007), 'Visor', 'Head',
               rot=(.35, 0, 0), segments=24, rings=8)
     ellipsoid(kit, 'Cap badge', (0, cy - ry - .003, zb + .026), (.011, .004, .013), 'Badge', 'Head', segments=12, rings=6)
-    # Striped traffic baton gripped in the right hand, hanging forward-down.
+
+def baton(kit, rig):
+    """Striped traffic baton gripped in the right hand, hanging forward-down."""
     wr, tip = bone_span(rig, 'Hand_R')
     a = wr + (tip - wr)*.7; b = a + Vector((-.03, -.4, -.92)).normalized()*.5
     for i in range(8):
         cylinder(kit, 'Baton', a.lerp(b, i/8), a.lerp(b, (i+1)/8), .014, 'Baton' if i % 2 == 0 else 'Reflect', 'Hand_R')
+
+# ---------------------------------------------------------------- seasonal garments
+def _periodic_noise(n, scale, seed):
+    """Tileable noise: random field low-passed in the frequency domain, normalised to 0..1."""
+    rng = np.random.default_rng(seed)
+    f = np.fft.fft2(rng.standard_normal((n, n)))
+    k = np.fft.fftfreq(n)[:, None]**2 + np.fft.fftfreq(n)[None, :]**2
+    h = np.real(np.fft.ifft2(f * np.exp(-k * (n/scale)**2)))
+    return (h - h.min()) / (np.ptp(h) + 1e-9)
+
+def fabric_textures(kit, kind, n=512):
+    """Grey detail texture and normal map of a fabric, shared by all characters (tinted by the material)."""
+    d_name, n_name = f'Fabric_{kind}_d.png', f'Fabric_{kind}_n.png'
+    if not (kit.textures / d_name).exists():
+        y, x = np.mgrid[0:n, 0:n] / n
+        if kind == 'nylon':      # soft creases of a synthetic shell
+            h = .7*_periodic_noise(n, 6, 1) + .3*_periodic_noise(n, 40, 2); tone = .88 + .12*h
+        elif kind == 'wool':     # felted coat cloth: fine twill and fibre noise
+            twill = .5 + .5*np.sin(2*np.pi*(x + y)*96)
+            h = .35*twill + .65*_periodic_noise(n, 160, 3); tone = .86 + .14*h
+        elif kind == 'knit':     # knitted ribs with rows of stitches
+            rib = np.abs(np.sin(np.pi*x*32))
+            stitch = .6 + .4*np.abs(np.sin(np.pi*(y*64 + np.abs((x*32) % 1 - .5))))
+            h = rib*stitch; tone = .72 + .28*h
+        else:                    # 'fur'
+            h = .6*_periodic_noise(n, 220, 4) + .4*_periodic_noise(n, 60, 5); tone = .7 + .3*h
+        gy, gx = np.gradient(h)
+        strength = {'nylon': 6, 'wool': 3, 'knit': 10, 'fur': 5}[kind]
+        nm = np.dstack([-gx*strength*n/64, -gy*strength*n/64, np.ones_like(h)])
+        nm /= np.linalg.norm(nm, axis=2, keepdims=True)
+        for name, rgb in ((d_name, np.dstack([tone]*3)), (n_name, nm*.5 + .5)):
+            img = bpy.data.images.new(name, n, n)
+            img.pixels[:] = np.dstack([rgb, np.ones((n, n))])[::-1].ravel()
+            img.filepath_raw = str(kit.textures / name); img.file_format = 'PNG'; img.save()
+            bpy.data.images.remove(img)
+    return d_name, n_name
+
+def fabric_material(kit, name, kind, color, roughness):
+    d, nrm = fabric_textures(kit, kind)
+    m = bpy.data.materials.new('Ped_' + name); m.use_nodes = True
+    nodes = m.node_tree.nodes; bsdf = nodes.get('Principled BSDF')
+    tex = nodes.new('ShaderNodeTexImage'); tex.image = bpy.data.images.load(str(kit.textures / d), check_existing=True)
+    mix = nodes.new('ShaderNodeMix'); mix.data_type = 'RGBA'; mix.blend_type = 'MULTIPLY'
+    mix.inputs['Factor'].default_value = 1; mix.inputs[7].default_value = (*color, 1)
+    m.node_tree.links.new(tex.outputs['Color'], mix.inputs[6])
+    m.node_tree.links.new(mix.outputs[2], bsdf.inputs['Base Color'])
+    bsdf.inputs['Roughness'].default_value = roughness
+    kit.materials[name] = m
+    kit.unity[name] = {'name': 'Ped_' + name, 'diffuse': d, 'normal': nrm, 'color': list(color),
+                       'smoothness': 1 - roughness, 'alphaClip': False, 'doubleSided': False}
+
+def _object_from_bmesh(bm, name, groups_from):
+    me = bpy.data.meshes.new(name); bm.to_mesh(me)
+    o = bpy.data.objects.new(name, me); bpy.context.collection.objects.link(o)
+    for g in groups_from.vertex_groups: o.vertex_groups.new(name=g.name)   # same order = same deform indices
+    for p in me.polygons: p.use_smooth = True
+    return o
+
+def _union(parts):
+    """Temporary single mesh of several parts (a shrinkwrap target)."""
+    copies = []
+    for o in parts:
+        c = o.copy(); c.data = o.data.copy(); c.modifiers.clear(); bpy.context.collection.objects.link(c); copies.append(c)
+    activate(copies[0])
+    for c in copies: c.select_set(True)
+    bpy.ops.object.join()
+    return bpy.context.object
+
+def _weights(bm, groups_from):
+    deform = bm.verts.layers.deform.verify()
+    names = {g.index: g.name for g in groups_from.vertex_groups}
+    return lambda v: {names[k]: x for k, x in v[deform].items()}
+
+def shell_garment(kit, rig, roles, g):
+    """Puffer, windbreaker or coat: MakeHuman's tights helper (plus its skirt helper below the waist for long
+    garments) grown over the clothes, with straight hem, collar and cuffs cut by planes."""
+    import bmesh
+    kind = g['kind']; long = g.get('long', kind == 'coat')
+    H = bone_span(rig, 'Head')[1].z
+    hips = bone_span(rig, 'Hips')[0]; neck = bone_span(rig, 'Neck')[0]
+    knee = bone_span(rig, 'LowerLeg_L')[0]
+    waist = hips.z - .01*H; collar = neck.z + .03*H
+    hem = knee.z + .02*H if long else hips.z - g.get('drop', .07)*H
+    tights, skirt = roles['tights'], roles['skirt']
+    bm = bmesh.new(); bm.from_mesh(tights.data)
+    top = waist + .06*H           # torso part ends and the skirt part starts at this ring
+    cuts = [((0, 0, collar), (0, 0, 1)), ((0, 0, top), (0, 0, 1))]
+    wrists = []
+    for s in 'LR':
+        el, wr = bone_span(rig, 'Forearm_' + s); d = (wr - el).normalized()
+        wrists.append((wr - d*.015*H, d)); cuts.append((tuple(wr - d*.015*H), tuple(d)))
+    for co, no in cuts:
+        geom = bm.verts[:] + bm.edges[:] + bm.faces[:]
+        bmesh.ops.bisect_plane(bm, geom=geom, plane_co=co, plane_no=no)
+    w = _weights(bm, tights)
+    arm = lambda v: sum(x for n, x in w(v).items() if n.split('_')[0] in ('Shoulder', 'UpperArm', 'Forearm', 'Hand'))
+    def keep(f):
+        c = f.calc_center_median()
+        if c.z > collar or any((c - p).dot(d) > 0 for p, d in wrists): return False
+        # Sleeves hang below the ring and are kept down to the wrist.
+        return c.z > top or all(arm(v) > .5 for v in f.verts)
+    bmesh.ops.delete(bm, geom=[f for f in bm.faces if not keep(f)], context='FACES')
+    # Below that ring: the skirt helper (a tube round both legs), scaled to the torso part's ring so that
+    # the two parts meet edge to edge and read as one garment.
+    band = [v.co for v in bm.verts if abs(v.co.z - top) < .004 and arm(v) < .1]   # torso only, not the hanging arms
+    tx = max(abs(c.x) for c in band); ty0 = min(c.y for c in band); ty1 = max(c.y for c in band)
+    sk = bmesh.new(); sk.from_mesh(skirt.data)
+    for z in (top + .004, hem):
+        geom = sk.verts[:] + sk.edges[:] + sk.faces[:]
+        bmesh.ops.bisect_plane(sk, geom=geom, plane_co=(0, 0, z), plane_no=(0, 0, 1))
+    bmesh.ops.delete(sk, geom=[f for f in sk.faces if not (hem < f.calc_center_median().z < top + .004)], context='FACES')
+    ring = [v.co for v in sk.verts if abs(v.co.z - top - .004) < .003] or [v.co for v in sk.verts]
+    sx = max(abs(c.x) for c in ring); sy0 = min(c.y for c in ring); sy1 = max(c.y for c in ring)
+    for v in sk.verts:
+        u = max(0., min(1., (top - v.co.z) / max(.01, top - hem)))
+        flare = 1 + (.08 if long else .02)*u
+        v.co.x *= tx/sx * flare
+        v.co.y = (ty0 + ty1)/2 + (v.co.y - (sy0 + sy1)/2) * (ty1 - ty0)/(sy1 - sy0) * flare
+    tmp = bpy.data.meshes.new('tmp'); sk.to_mesh(tmp); sk.free(); bm.from_mesh(tmp); bpy.data.meshes.remove(tmp)
+    # Sew the two parts into one surface: bridge the torso's lower edge loop to the skirt's upper one.
+    near = lambda e: all(abs(v.co.z - top) < .006 for v in e.verts) and e.is_boundary and \
+                     all(arm(v) < .5 for v in e.verts)
+    seam = [e for e in bm.edges if near(e)]
+    try:
+        bmesh.ops.bridge_loops(bm, edges=seam)
+    except Exception as err:
+        print('garment seam not bridged:', err)
+    bm.normal_update()
+    for v in bm.verts: v.co += v.normal * g.get('base', .02)
+    uv = bm.loops.layers.uv.active
+    if uv:
+        for f in bm.faces:
+            for l in f.loops: l[uv].uv *= 6
+    o = _object_from_bmesh(bm, g['name'], tights); bm.free()
+    budget(o, g.get('tris', 2600))
+    target = _union([p for r, p in roles.items() if r in ('body', 'suit', 'top', 'pants')])
+    # Smooth first, then push everything that is still inside the clothes back out.
+    m = o.modifiers.new('Relax', 'SMOOTH'); m.factor = .5; m.iterations = 4
+    m = o.modifiers.new('Over clothes', 'SHRINKWRAP'); m.target = target
+    m.wrap_method = 'NEAREST_SURFACEPOINT'; m.wrap_mode = 'OUTSIDE'; m.offset = g.get('margin', .012)
+    apply_all(o)
+    bpy.data.objects.remove(target)
+    if g.get('quilt'):
+        # Horizontal quilting of a down jacket.
+        bm = bmesh.new(); bm.from_mesh(o.data); bm.normal_update()
+        period = g.get('period', .1)*H/1.75
+        for v in bm.verts:
+            v.co += v.normal * g['quilt'] * (.5 - .5*math.cos(2*math.pi*(v.co.z - hem)/period))
+        bm.to_mesh(o.data); bm.free()
+    fabric_material(kit, g['name'], {'coat': 'wool'}.get(kind, 'nylon'), g['color'], g.get('roughness', .55))
+    o.data.materials.append(kit.materials[g['name']])
+    o['thickness'] = .006          # applied last, after vest, scarf and backpack were laid onto it
+    if long:
+        # Buttons down the front of a coat.
+        kit.flat(g['name'] + 'Button', (.02, .018, .016), .4)
+        front = min(v.co.y for v in o.data.vertices if abs(v.co.x) < .02 and abs(v.co.z - hem) < .03)
+        for i in range(4):
+            z = hem + (collar - hem)*(.12 + .2*i)
+            ys = [v.co.y for v in o.data.vertices if abs(v.co.x) < .02 and abs(v.co.z - z) < .02]
+            if ys: ellipsoid(kit, 'Button', (0, min(ys) - .004, z), (.009, .004, .009), g['name'] + 'Button', 'Chest',
+                             segments=10, rings=6)
+    kit.parts.append(o)
+    return o
+
+def budget(o, tris):
+    o.data.calc_loop_triangles(); n = len(o.data.loop_triangles)
+    if n > tris:
+        m = o.modifiers.new('Budget', 'DECIMATE'); m.ratio = tris/n; apply_all(o)
+
+def knit_hat(kit, rig, roles, g):
+    """Hat following the skull: knitted with a turned-up cuff (optional pompom) or a fur hat."""
+    import bmesh
+    fur = g['kind'] == 'fur_hat'
+    body = roles['body']
+    eyes = [v.co for v in roles['eyes'].data.vertices]
+    eye_z = sum(c.z for c in eyes)/len(eyes); eye_y = min(c.y for c in eyes)
+    lift = .05 if fur else .03
+    def cut(y): return eye_z + lift - .3*max(0., y - eye_y)
+    bm = bmesh.new(); bm.from_mesh(body.data)
+    w = _weights(bm, body)
+    def head(v): return w(v).get('Head', 0) > .5
+    bmesh.ops.delete(bm, geom=[f for f in bm.faces if not (all(head(v) for v in f.verts)
+                     and f.calc_center_median().z > cut(f.calc_center_median().y))], context='FACES')
+    for v in bm.verts:
+        if v.is_boundary: v.co.z = cut(v.co.y)
+    bm.normal_update()
+    top = max(v.co.z for v in bm.verts)
+    for v in bm.verts:
+        u = (v.co.z - cut(v.co.y)) / max(.01, top - cut(v.co.y))
+        if fur:
+            off = .028 + .006*u
+        else:
+            off = .011 + g.get('slouch', .012)*u*u + (.006 if v.co.z - cut(v.co.y) < .045 else 0)   # cuff fold
+        v.co += v.normal * off
+    uv = bm.loops.layers.uv.verify()
+    for f in bm.faces:
+        for l in f.loops:
+            c = l.vert.co
+            l[uv].uv = (math.atan2(c.x, -c.y)/math.tau*3 + .5, (c.z - eye_z)*8)
+    o = _object_from_bmesh(bm, g['name'], body); bm.free()
+    budget(o, 900)
+    m = o.modifiers.new('Relax', 'SMOOTH'); m.factor = .5; m.iterations = 3
+    m = o.modifiers.new('Thickness', 'SOLIDIFY'); m.thickness = .005; m.offset = -1
+    apply_all(o)
+    fabric_material(kit, g['name'], 'fur' if fur else 'knit', g['color'], .9)
+    o.data.materials.append(kit.materials[g['name']])
+    kit.parts.append(o)
+    if g.get('pompom'):
+        kit.flat(g['name'] + 'Pompom', g.get('pompom_color', g['color']), .95)
+        c = max(o.data.vertices, key=lambda v: v.co.z).co
+        ellipsoid(kit, 'Pompom', (c.x, c.y, c.z + .03), (.04, .04, .035), g['name'] + 'Pompom', 'Head',
+                  segments=16, rings=10)
+    if fur and g.get('badge'):
+        kit.flat('HatBadge', (.80, .58, .12), .35)
+        front = min((v.co for v in o.data.vertices if abs(v.co.x) < .015), key=lambda c: c.y - c.z*.2)
+        ellipsoid(kit, 'Hat badge', (0, front.y - .004, front.z), (.012, .004, .014), 'HatBadge', 'Head',
+                  segments=12, rings=6)
+    return o
+
+def scarf(kit, rig, roles, g):
+    """Knitted scarf: a loop round the neck and one end hanging down the front."""
+    body = roles['body']
+    neck = [v.co for v in body.data.vertices
+            if v.groups and body.vertex_groups[max(v.groups, key=lambda e: e.weight).group].name == 'Neck']
+    cx = sum(c.x for c in neck)/len(neck); cy = sum(c.y for c in neck)/len(neck)
+    rx = max(abs(c.x - cx) for c in neck); ry = max(abs(c.y - cy) for c in neck)
+    z0 = min(c.z for c in neck) + .005; z1 = z0 + .065
+    fabric_material(kit, g['name'], 'knit', g['color'], .9)
+    loop = ring(kit, 'Scarf', [(cx, cy, z0 - .01, rx + .03, ry + .035), (cx, cy, z0 + .02, rx + .042, ry + .045),
+                               (cx, cy, z1 - .015, rx + .038, ry + .04), (cx, cy, z1, rx + .022, ry + .026)],
+                g['name'], None, closed=True)
+    uv = loop.data.uv_layers.new(name='UVMap')
+    for p in loop.data.polygons:
+        for li in p.loop_indices:
+            c = loop.data.vertices[loop.data.loops[li].vertex_index].co
+            uv.data[li].uv = (math.atan2(c.x - cx, -(c.y - cy))/math.tau*4, (c.z - z0)*10)
+    copy_weights(loop, body)
+    outer = outermost(roles)
+    x = cx + .035
+    pts = [Vector((x, cy - ry - .06, z0 - i*.03)) for i in range(9)]
+    vs = []; fs = []
+    for i, p in enumerate(pts):
+        vs += [p - Vector((.04, 0, 0)), p + Vector((.04, 0, 0))]
+        if i: fs.append((2*i-2, 2*i-1, 2*i+1, 2*i))
+    me = bpy.data.meshes.new('Scarf end'); me.from_pydata(vs, [], fs); me.update()
+    end = bpy.data.objects.new('Scarf end', me); bpy.context.collection.objects.link(end)
+    uv = me.uv_layers.new(name='UVMap')
+    for p in me.polygons:
+        for li in p.loop_indices:
+            c = me.vertices[me.loops[li].vertex_index].co; uv.data[li].uv = ((c.x - x)*12, c.z*10)
+    finish(kit, end, g['name'])
+    wrap(end, outer, .012)
+    m = end.modifiers.new('Thickness', 'SOLIDIFY'); m.thickness = .008; m.offset = 1; apply_all(end)
+
+def trim_hair(hair, hat, snug=True):
+    """Removes hair cards that would poke through the hat; hair below its rim (nape, ponytail) stays."""
+    import bmesh
+    zs = [v.co.z for v in hat.data.vertices]
+    rim = min(zs)
+    xs = [v.co.x for v in hat.data.vertices]; ys = [v.co.y for v in hat.data.vertices]
+    cx, cy = (min(xs) + max(xs))/2, (min(ys) + max(ys))/2
+    rx, ry = (max(xs) - min(xs))/2 + .01, (max(ys) - min(ys))/2 + .01
+    bm = bmesh.new(); bm.from_mesh(hair.data)
+    def inside(c):
+        e = ((c.x - cx)/rx)**2 + ((c.y - cy)/ry)**2
+        if not snug:      # a ready-made cap sits over the hair: only the crown under it goes
+            return c.z > rim + .02 and e < .9
+        return (c.z > rim + .01 and e < 1.3) or (c.z > rim - .03 and e < 1.05)
+    bmesh.ops.delete(bm, geom=[f for f in bm.faces if inside(f.calc_center_median())], context='FACES')
+    bm.to_mesh(hair.data); bm.free()

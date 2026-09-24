@@ -1,0 +1,92 @@
+{
+  "materials": [
+    {
+      "name": "Ped_Skin",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_young_lightskinned_male_diffuse_d.jpg"
+    },
+    {
+      "name": "Ped_Suit",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_male_casualsuit06_diffuse_d.jpg",
+      "normal": "MH_male_casualsuit06_normal_n.png"
+    },
+    {
+      "name": "Ped_Gloves",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_Gloves03UV_d.jpg"
+    },
+    {
+      "name": "Ped_Shoes",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_shoes03_diffuse_d.jpg"
+    },
+    {
+      "name": "Ped_Hair",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_short02_diffuse_d.png"
+    },
+    {
+      "name": "Ped_Eyebrows",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_eyebrow001_d.png"
+    },
+    {
+      "name": "Ped_Eyes",
+      "alphaClip": true,
+      "doubleSided": false,
+      "diffuse": "MH_brown_eye_d.png"
+    },
+    {
+      "name": "Ped_Eyelashes",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_eyelashes01_d.png"
+    },
+    {
+      "name": "Ped_Puffer",
+      "diffuse": "Fabric_nylon_d.png",
+      "normal": "Fabric_nylon_n.png",
+      "color": [
+        0.025,
+        0.025,
+        0.03
+      ],
+      "smoothness": 0.44999999999999996,
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "Ped_Hat",
+      "diffuse": "Fabric_knit_d.png",
+      "normal": "Fabric_knit_n.png",
+      "color": [
+        0.18,
+        0.18,
+        0.19
+      ],
+      "smoothness": 0.09999999999999998,
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "Ped_Scarf",
+      "diffuse": "Fabric_knit_d.png",
+      "normal": "Fabric_knit_n.png",
+      "color": [
+        0.3,
+        0.05,
+        0.05
+      ],
+      "smoothness": 0.09999999999999998,
+      "alphaClip": false,
+      "doubleSided": false
+    }
+  ]
+}

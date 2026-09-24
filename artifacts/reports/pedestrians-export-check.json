@@ -2,12 +2,12 @@
   "scope": "Blender reimport of final FBX and GLB; Unity has a separate report.",
   "assets": [
     {
-      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_A.fbx",
-      "sha256": "50603d05c6193cd55605d94f231b0475109ae35ca7e3b60a32fbcb088925e1d8",
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_A_Summer.fbx",
+      "sha256": "db97c1b4c37638b698af6269c3d1f3101e8e03255fd1c6355e84262b451e66a1",
       "dimensionsM": [
-        0.6913865804672241,
-        0.3606252446770668,
-        1.8459783549570687
+        0.6678752899169922,
+        0.34206583350896835,
+        1.8459782060692653
       ],
       "bones": 20,
       "animations": [
@@ -18,10 +18,10 @@
             61.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.014311452669570165,
+          "maxDisplacementM": 0.014311435288598594,
           "groundRangeM": [
-            1.3628098827211943e-07,
-            4.319972504163161e-07
+            -1.8561171089004347e-07,
+            1.2172473873306444e-07
           ],
           "pass": true
         },
@@ -32,10 +32,10 @@
             31.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.8109584578090094,
+          "maxDisplacementM": 0.8109578753434917,
           "groundRangeM": [
-            -1.827475983873228e-07,
-            3.620639290602412e-07
+            5.495979671366058e-09,
+            5.944219765297021e-07
           ],
           "pass": true
         },
@@ -46,10 +46,10 @@
             23.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 1.152950282113255,
+          "maxDisplacementM": 1.1529502036582604,
           "groundRangeM": [
-            -0.003171292133629322,
-            0.036442261189222336
+            -0.0031714700162410736,
+            0.036442480981349945
           ],
           "pass": true
         },
@@ -60,10 +60,10 @@
             91.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.1534888651900148,
+          "maxDisplacementM": 0.15348896011612298,
           "groundRangeM": [
-            1.4350179355915316e-07,
-            1.4350179355915316e-07
+            5.39710178770747e-08,
+            5.39710178770747e-08
           ],
           "pass": true
         }
@@ -71,12 +71,12 @@
       "pass": true
     },
     {
-      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_A.glb",
-      "sha256": "2674f3bb6b6e20652e0ae000236be54230dd4f8c91c550321630ea688134d497",
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_A_Summer.glb",
+      "sha256": "912ad53dd6d1d48e62b47be79d2519f4666a9c50128607d23c1a6472924a89d5",
       "dimensionsM": [
-        0.6913866102695465,
-        0.360625222325325,
-        1.8459784639865688
+        0.6678741574287415,
+        0.34206597879529,
+        1.845978789147921
       ],
       "bones": 20,
       "animations": [
@@ -87,10 +87,10 @@
             61.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.01431143970533743,
+          "maxDisplacementM": 0.01431152940614845,
           "groundRangeM": [
-            -1.5146741816352005e-07,
-            1.3972615420243528e-07
+            -4.691537469625473e-08,
+            1.7811544239521027e-07
           ],
           "pass": true
         },
@@ -101,10 +101,10 @@
             31.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.8109569949871598,
+          "maxDisplacementM": 0.8109569254895533,
           "groundRangeM": [
-            -3.0419323593378067e-07,
-            4.172325134277344e-07
+            -1.7881393432617188e-07,
+            1.955777406692505e-07
           ],
           "pass": true
         },
@@ -115,10 +115,10 @@
             23.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 1.1529508120124865,
+          "maxDisplacementM": 1.1529491281578832,
           "groundRangeM": [
-            -0.00317172659561038,
-            0.036441974341869354
+            -0.0031711896881461143,
+            0.036442019045352936
           ],
           "pass": true
         },
@@ -129,10 +129,10 @@
             91.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.15348903596215968,
+          "maxDisplacementM": 0.15348898135301703,
           "groundRangeM": [
-            3.4472293464204995e-08,
-            3.4472293464204995e-08
+            6.693881005048752e-08,
+            6.693881005048752e-08
           ],
           "pass": true
         }
@@ -140,12 +140,12 @@
       "pass": true
     },
     {
-      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_B.fbx",
-      "sha256": "6100851075dd6279a605c2e055c6407dab5ea555c72cb6fc0844fa3e274e4e17",
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_B_Summer.fbx",
+      "sha256": "97a2f535ad42e125d025197bddc61ec9b8394150a69d384a86962fef6ba20eeb",
       "dimensionsM": [
-        0.5416176319122314,
-        0.32500791549682617,
-        1.6328561991044879
+        0.5416172742843628,
+        0.32645436376333237,
+        1.6279855820753681
       ],
       "bones": 20,
       "animations": [
@@ -156,10 +156,10 @@
             61.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.012210266254593833,
+          "maxDisplacementM": 0.012191503323226934,
           "groundRangeM": [
-            -6.850451228501697e-08,
-            7.105505517301935e-08
+            -2.570601225215796e-07,
+            7.5305635505174e-08
           ],
           "pass": true
         },
@@ -170,10 +170,10 @@
             31.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.6915530315674069,
+          "maxDisplacementM": 0.690989899303015,
           "groundRangeM": [
-            -1.1252961229502034e-07,
-            2.1909909264650196e-07
+            -2.2803371280133433e-07,
+            8.666923179134756e-08
           ],
           "pass": true
         },
@@ -184,10 +184,10 @@
             23.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.9622492148862496,
+          "maxDisplacementM": 0.9570967051567761,
           "groundRangeM": [
-            -0.0038580968976020813,
-            0.03629650920629501
+            -0.0036508485209196806,
+            0.034974001348018646
           ],
           "pass": true
         },
@@ -198,10 +198,10 @@
             91.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.13220869151580533,
+          "maxDisplacementM": 0.13220863193473473,
           "groundRangeM": [
-            -6.850451228501697e-08,
-            -6.850451228501697e-08
+            -1.0462785837717092e-07,
+            -1.0462785837717092e-07
           ],
           "pass": true
         }
@@ -209,12 +209,12 @@
       "pass": true
     },
     {
-      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_B.glb",
-      "sha256": "c68524f0b57ae958adf4fb867893248b9439e6e1c98257243a32550a450777b6",
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_B_Summer.glb",
+      "sha256": "b6e5ee66dd691feaac2bd34c9646c3ae44c7f5d4531a7d9db7e95c16d8c3767b",
       "dimensionsM": [
-        0.5416181087493896,
-        0.325007788836956,
-        1.6328564500579006
+        0.5416173934936523,
+        0.326454259455204,
+        1.6279852192552227
       ],
       "bones": 20,
       "animations": [
@@ -225,10 +225,10 @@
             61.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.012210253256768345,
+          "maxDisplacementM": 0.01219154368213971,
           "groundRangeM": [
-            -3.8364404986168665e-07,
-            -1.4811271853432117e-07
+            -1.405715011060238e-07,
+            1.0954681783914566e-07
           ],
           "pass": true
         },
@@ -239,10 +239,10 @@
             31.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.6915528058669023,
+          "maxDisplacementM": 0.6909900991999448,
           "groundRangeM": [
-            -2.665910869836807e-07,
-            4.976755008101463e-08
+            -1.461012288928032e-07,
+            1.4753959476365708e-07
           ],
           "pass": true
         },
@@ -253,10 +253,10 @@
             23.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.9622487198861972,
+          "maxDisplacementM": 0.9570966904390847,
           "groundRangeM": [
-            -0.00385835743509233,
-            0.0362965390086174
+            -0.0036509681958705187,
+            0.0349743589758873
           ],
           "pass": true
         },
@@ -267,10 +267,10 @@
             91.0
           ],
           "loopSeamM": 0.0,
-          "maxDisplacementM": 0.13220861226699057,
+          "maxDisplacementM": 0.13220869606985905,
           "groundRangeM": [
-            -2.0024863545131666e-07,
-            -2.0024863545131666e-07
+            -9.943558154645871e-08,
+            -9.943558154645871e-08
           ],
           "pass": true
         }
@@ -278,8 +278,8 @@
       "pass": true
     },
     {
-      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_C.fbx",
-      "sha256": "049e9080af0423e288401394ebbd7caf9168be9394daf44d87a95eb23ca3cb3d",
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_C_Summer.fbx",
+      "sha256": "172c3328f7c1af395f4375547b5130bec23d074ef30f22d4600476cdc7d3010f",
       "dimensionsM": [
         0.6214781999588013,
         0.49835652112960815,
@@ -347,8 +347,8 @@
       "pass": true
     },
     {
-      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_C.glb",
-      "sha256": "9b271999dca6c0e6bd2b9e7be3dbc480a63c771e6a50dbd6243a7389f39077a0",
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_C_Summer.glb",
+      "sha256": "d69a386944edc8d1678c917870d6468a4a20cb9ab5b2727c721980f43dd0ca6e",
       "dimensionsM": [
         0.6214781105518341,
         0.49835677444934845,
@@ -416,8 +416,8 @@
       "pass": true
     },
     {
-      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_A.fbx",
-      "sha256": "43730df889cd0dc83733e3eda11ed70479ec5b2798f2b7b4664eea1a7196f8f6",
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_A_Summer.fbx",
+      "sha256": "25ced76c8aef4fef566a71715dc99a8468f3ad291fae7a6d6d688571105abd19",
       "dimensionsM": [
         0.44934186339378357,
         0.35827556252479553,
@@ -485,8 +485,8 @@
       "pass": true
     },
     {
-      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Child_A.glb",
-      "sha256": "6b0b473580e029e0d0f9dfa33311d344461667715e0bab6ce9e47338eea0d3cb",
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Child_A_Summer.glb",
+      "sha256": "8881ca59d43e83df9746f3235f8feb33727c214171af0d427cfed2dca949aaa5",
       "dimensionsM": [
         0.4493415653705597,
         0.35827572643756866,
@@ -554,8 +554,8 @@
       "pass": true
     },
     {
-      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_B.fbx",
-      "sha256": "67c0ae8ee06f3b4105edfaf0a784cf8ba9d3a2d0fdddcdcfd45f35d22231cc51",
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_B_Summer.fbx",
+      "sha256": "4b12f1fd4bf523347deab5b77f71377a2e5fe061cd9bc50110ba9887adf33661",
       "dimensionsM": [
         0.4112767279148102,
         0.24790816381573677,
@@ -623,8 +623,8 @@
       "pass": true
     },
     {
-      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Child_B.glb",
-      "sha256": "ad1cb0aacf467a00bca7ef8078d290c4fd394b15d4512490d0e49f4a5c4b7e51",
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Child_B_Summer.glb",
+      "sha256": "ddcab1721a5b7aa6289a68980351a945252e702848f0106e2349a66f984af938",
       "dimensionsM": [
         0.41127611696720123,
         0.24790790677070618,
@@ -692,8 +692,8 @@
       "pass": true
     },
     {
-      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Police.fbx",
-      "sha256": "6c67bd7559483554700b5982c4b62eedb5f72877379d047434601ce77dc96776",
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Police_Summer.fbx",
+      "sha256": "3cebd7a6a5e0548cdfd610eb4059ea04816436ac76bc6c662410a3fa3045f3b8",
       "dimensionsM": [
         0.666054368019104,
         0.4347463920712471,
@@ -789,8 +789,8 @@
       "pass": true
     },
     {
-      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Police.glb",
-      "sha256": "3885eee209328f522f3b9732963fec511908c2a1734022794733980652efde60",
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Police_Summer.glb",
+      "sha256": "5f887cdc2d55e5eb3226acd6310dbdc0aa1523a4677187eb2b6b775e31df05f1",
       "dimensionsM": [
         0.666054368019104,
         0.43474654480814934,
@@ -834,6 +834,1774 @@
           ],
           "loopSeamM": 0.0,
           "maxDisplacementM": 0.1931715708390168,
+          "groundRangeM": [
+            1.9275425700016058e-08,
+            1.9275425700016058e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Signal_ArmsSide",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.005540331548297456,
+          "groundRangeM": [
+            1.9275425700016058e-08,
+            1.9275425700016058e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Signal_RightArmForward",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.010276909659744359,
+          "groundRangeM": [
+            1.9275425700016058e-08,
+            1.9275425700016058e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Signal_ArmUp",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.010659388194566225,
+          "groundRangeM": [
+            1.9275425700016058e-08,
+            1.9275425700016058e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_A_Autumn.fbx",
+      "sha256": "218fd07e5c803a1c4c0539b8810a8b601d8d0811474d88141085f2a9fabb2830",
+      "dimensionsM": [
+        0.6913870573043823,
+        0.3606252521276474,
+        1.8557226118157253
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.015450093411911048,
+          "groundRangeM": [
+            -1.8561171089004347e-07,
+            1.2172473873306444e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.8109578753434917,
+          "groundRangeM": [
+            5.495979671366058e-09,
+            5.944219765297021e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            23.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 1.1529502036582604,
+          "groundRangeM": [
+            -0.0031714700162410736,
+            0.036442480981349945
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.17137587474490795,
+          "groundRangeM": [
+            5.39710178770747e-08,
+            5.39710178770747e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_A_Autumn.glb",
+      "sha256": "85a747fd1348b1a4b0aa9749f48ac9c9e9762400b43564723ac6d7e5a1da271b",
+      "dimensionsM": [
+        0.6913861334323883,
+        0.36062540858983994,
+        1.8557231948943809
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.01545015510400048,
+          "groundRangeM": [
+            -4.691537469625473e-08,
+            1.7811544239521027e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.8109569254895533,
+          "groundRangeM": [
+            -1.7881393432617188e-07,
+            1.955777406692505e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            23.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 1.1529491281578832,
+          "groundRangeM": [
+            -0.0031711896881461143,
+            0.036442019045352936
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.17137593995752193,
+          "groundRangeM": [
+            6.693881005048752e-08,
+            6.693881005048752e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_B_Autumn.fbx",
+      "sha256": "7adf3191c9b7c9d7ad95b520388a146bad4d71a34e62c65af9a00bb7794ddcda",
+      "dimensionsM": [
+        0.5646802186965942,
+        0.3068444989621639,
+        1.634812028877377
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.012170299328919483,
+          "groundRangeM": [
+            -1.0445496201327842e-07,
+            1.8448788807745586e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.6901811738210075,
+          "groundRangeM": [
+            -1.8628838915901724e-07,
+            2.8099978521822777e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            23.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.9528783961407674,
+          "groundRangeM": [
+            -0.0037413304671645164,
+            0.035165924578905106
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.13220863707352573,
+          "groundRangeM": [
+            -3.146374183415901e-08,
+            -3.146374183415901e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_B_Autumn.glb",
+      "sha256": "73ca925de3a46b483263a736c212fc7d83a4c3061c90e12df3e49cf680a47ba6",
+      "dimensionsM": [
+        0.5646802186965942,
+        0.30684446915984154,
+        1.6348122170051482
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.012170288567697312,
+          "groundRangeM": [
+            -2.7439091354608536e-07,
+            -5.5530108511447906e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.6901814119564195,
+          "groundRangeM": [
+            -3.797758836299181e-07,
+            7.3127921496052295e-09
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            23.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.9528781737872002,
+          "groundRangeM": [
+            -0.0037416298873722553,
+            0.035166025161743164
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.13220866399886116,
+          "groundRangeM": [
+            -2.1959151297323842e-07,
+            -2.1959151297323842e-07
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_C_Autumn.fbx",
+      "sha256": "dc4db6ea0218adad768b9208533138d583fdfefe6da9a3942232264b3f14c027",
+      "dimensionsM": [
+        0.6455508172512054,
+        0.5231494009494781,
+        1.7094234461405478
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.0132969673326706,
+          "groundRangeM": [
+            -2.3327132225858804e-08,
+            3.3501419238746166e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.755863668139412,
+          "groundRangeM": [
+            -1.3723393976761145e-07,
+            3.117478684089292e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            23.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 1.041480091840318,
+          "groundRangeM": [
+            -0.004164351616054773,
+            0.0348903127014637
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.14569817976598853,
+          "groundRangeM": [
+            -2.3327132225858804e-08,
+            -2.3327132225858804e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_C_Autumn.glb",
+      "sha256": "e54bda53d99be216e6f827bbcfa049b5aeed0b56449ab335b6da288b5abb06b5",
+      "dimensionsM": [
+        0.6455506086349487,
+        0.5231488049030304,
+        1.709423955849843
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.013296948728223002,
+          "groundRangeM": [
+            -6.726477295160294e-07,
+            -4.012836143374443e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7558632954198857,
+          "groundRangeM": [
+            -4.127505235373974e-07,
+            -1.043081283569336e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            23.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 1.0414790467086694,
+          "groundRangeM": [
+            -0.00416534673422575,
+            0.034889936447143555
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.14569837797200713,
+          "groundRangeM": [
+            -4.138271378906211e-07,
+            -4.138271378906211e-07
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_A_Autumn.fbx",
+      "sha256": "df5a6cf18aad857e2d27e124298d536b8c4da8aa42729b10cab81503c1b9ca73",
+      "dimensionsM": [
+        0.47262468934059143,
+        0.376310259103775,
+        1.3148920225417058
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.010976825694586502,
+          "groundRangeM": [
+            -5.5599890913526906e-08,
+            1.726905480836649e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            25.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.560934489310622,
+          "groundRangeM": [
+            -0.0005252822884358466,
+            0.0008737507159821689
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            19.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7780649888635726,
+          "groundRangeM": [
+            -0.0026275592390447855,
+            0.036047738045454025
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.12835223543310498,
+          "groundRangeM": [
+            3.106242019157435e-08,
+            3.106242019157435e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Child_A_Autumn.glb",
+      "sha256": "15ca7628d441c04263cfe409dee58a93a89b9795ec1d8bd732cf44c8c827d017",
+      "dimensionsM": [
+        0.47262459993362427,
+        0.37631046772003174,
+        1.3148920210745842
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.010976845238203007,
+          "groundRangeM": [
+            -2.5331974029541016e-07,
+            -5.878973752260208e-09
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            25.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.5609337095632033,
+          "groundRangeM": [
+            -0.0005254140123724937,
+            0.0008737770840525627
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            19.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7780640616954237,
+          "groundRangeM": [
+            -0.002627764130011201,
+            0.03604736924171448
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.1283523177432185,
+          "groundRangeM": [
+            -8.66797478238368e-08,
+            -8.66797478238368e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_B_Autumn.fbx",
+      "sha256": "bea8fac49770af6c76c663230348f083eb7b45460e4a7d2816db61c4528d4df1",
+      "dimensionsM": [
+        0.4380408525466919,
+        0.23091835156083107,
+        1.2924101416909437
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.010128568162626672,
+          "groundRangeM": [
+            5.5482580307852913e-08,
+            2.1014034246036317e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            25.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.5457193360649033,
+          "groundRangeM": [
+            -0.0012851227074861526,
+            0.00024307264538947493
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            19.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7675133002777282,
+          "groundRangeM": [
+            -0.002627211855724454,
+            0.03605204075574875
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.11016330362687,
+          "groundRangeM": [
+            1.1278751088639183e-07,
+            1.1278751088639183e-07
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Child_B_Autumn.glb",
+      "sha256": "25b1e8a8fb27be4ae98ebb5e0b32fb32b385ff940c84c65ad28f7cc1f817f8e7",
+      "dimensionsM": [
+        0.4380408525466919,
+        0.23091837391257286,
+        1.2924100177453397
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.010128527468576778,
+          "groundRangeM": [
+            1.3466342352330685e-07,
+            4.1176099330186844e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            25.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.5457193332608523,
+          "groundRangeM": [
+            -0.0012851436622440815,
+            0.00024285474501084536
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            19.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7675128393643275,
+          "groundRangeM": [
+            -0.002627371111884713,
+            0.03605206310749054
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.11016331220472603,
+          "groundRangeM": [
+            2.3673311488892068e-07,
+            2.3673311488892068e-07
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Police_Autumn.fbx",
+      "sha256": "03c1cfa5ac4cbbe99e30314b0e30f762f81bf9dfe2a5ef43529e2bb507d27376",
+      "dimensionsM": [
+        0.666054368019104,
+        0.4347463920712471,
+        1.7573187093148022
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.02052329490497254,
+          "groundRangeM": [
+            -1.505254658695776e-07,
+            1.3340520865767758e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7804522058902373,
+          "groundRangeM": [
+            -1.468305725893515e-07,
+            3.5345470905667753e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.19317164741352946,
+          "groundRangeM": [
+            2.5807878500927472e-08,
+            2.5807878500927472e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Signal_ArmsSide",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.005540401014006634,
+          "groundRangeM": [
+            2.5807878500927472e-08,
+            2.5807878500927472e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Signal_RightArmForward",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.010276671373824204,
+          "groundRangeM": [
+            2.5807878500927472e-08,
+            2.5807878500927472e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Signal_ArmUp",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.010659530342318282,
+          "groundRangeM": [
+            2.5807878500927472e-08,
+            2.5807878500927472e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Police_Autumn.glb",
+      "sha256": "b763f632538c079c9b1555013a5c3965a2add227cb6ea08b841583d0198cc837",
+      "dimensionsM": [
+        0.666054368019104,
+        0.43474654480814934,
+        1.7573182390100968
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.02052352498839941,
+          "groundRangeM": [
+            -1.847821096134794e-07,
+            1.9275425700016058e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7804518580025732,
+          "groundRangeM": [
+            -1.4328342956559936e-07,
+            4.2497777030803263e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.1931715708390168,
+          "groundRangeM": [
+            1.9275425700016058e-08,
+            1.9275425700016058e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Signal_ArmsSide",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.005540331548297456,
+          "groundRangeM": [
+            1.9275425700016058e-08,
+            1.9275425700016058e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Signal_RightArmForward",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.010276909659744359,
+          "groundRangeM": [
+            1.9275425700016058e-08,
+            1.9275425700016058e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Signal_ArmUp",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.010659388194566225,
+          "groundRangeM": [
+            1.9275425700016058e-08,
+            1.9275425700016058e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_A_Winter.fbx",
+      "sha256": "1adab07cddef0137a44b6f70a0fab8d0a568552056549f56aee62a143b166e36",
+      "dimensionsM": [
+        0.7130573987960815,
+        0.3672972023487091,
+        1.8756746504030986
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.014360885717951502,
+          "groundRangeM": [
+            -2.50446220206868e-07,
+            2.1317954690402985e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.8303028142726758,
+          "groundRangeM": [
+            -3.943152364627167e-07,
+            1.844067725187415e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            23.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 1.162719828287756,
+          "groundRangeM": [
+            -0.0028234354685992002,
+            0.03669629245996475
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.1534887863100481,
+          "groundRangeM": [
+            -4.5033530682303535e-08,
+            -4.5033530682303535e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_A_Winter.glb",
+      "sha256": "19f1c66d9c196a584edb9079306d9500f248e828c0941244d5f9287c4a431e9d",
+      "dimensionsM": [
+        0.7130568623542786,
+        0.3672970160841942,
+        1.8756747551962576
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.014360893301882182,
+          "groundRangeM": [
+            -1.4684064808534458e-07,
+            2.20905349124223e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.8303058404108181,
+          "groundRangeM": [
+            -2.0786410459550098e-07,
+            4.6193599700927734e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            23.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 1.1627205738555144,
+          "groundRangeM": [
+            -0.002824073191732168,
+            0.03669707477092743
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.1534890044268043,
+          "groundRangeM": [
+            -3.061740017074044e-08,
+            -3.061740017074044e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_B_Winter.fbx",
+      "sha256": "0f939a51f6d628aa9c7cdcf023395b70bc4dfbea37c9ecf39a0118cc10d2cd29",
+      "dimensionsM": [
+        0.5637521147727966,
+        0.3094732128083706,
+        1.6561427431031461
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.012757691051746768,
+          "groundRangeM": [
+            -1.0445496201327842e-07,
+            1.8448788807745586e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.6901811738210075,
+          "groundRangeM": [
+            -1.8628838915901724e-07,
+            2.8099978521822777e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            23.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.9528783961407674,
+          "groundRangeM": [
+            -0.0037413304671645164,
+            0.035165924578905106
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.13220863707352573,
+          "groundRangeM": [
+            -3.146374183415901e-08,
+            -3.146374183415901e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_B_Winter.glb",
+      "sha256": "1c067437d8bd4fe72eb9e1d6829bf51ea1a52b2d997f275b03e9826635d8d831",
+      "dimensionsM": [
+        0.563752144575119,
+        0.30947325751185417,
+        1.6561429312309173
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.01275768199792444,
+          "groundRangeM": [
+            -2.7439091354608536e-07,
+            -5.5530108511447906e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.6901814119564195,
+          "groundRangeM": [
+            -3.797758836299181e-07,
+            7.3127921496052295e-09
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            23.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.9528781737872002,
+          "groundRangeM": [
+            -0.0037416298873722553,
+            0.035166025161743164
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.13220866399886116,
+          "groundRangeM": [
+            -2.1959151297323842e-07,
+            -2.1959151297323842e-07
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_C_Winter.fbx",
+      "sha256": "677c561fb76c7b5cc715cd792dd3c4b0928e52f831591ef548bddfaecb8f6dfe",
+      "dimensionsM": [
+        0.6746577024459839,
+        0.5378634333610535,
+        1.714061283550521
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.013477205116151636,
+          "groundRangeM": [
+            -2.3327132225858804e-08,
+            3.3501419238746166e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.755863668139412,
+          "groundRangeM": [
+            -1.3723393976761145e-07,
+            3.117478684089292e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            23.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 1.041480091840318,
+          "groundRangeM": [
+            -0.004164351616054773,
+            0.0348903127014637
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.14569817976598853,
+          "groundRangeM": [
+            -2.3327132225858804e-08,
+            -2.3327132225858804e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_C_Winter.glb",
+      "sha256": "de716380e85bfb8cc3d942abdc9b836cc7d33d3f26db89e89b7a0bdc6c6b46df",
+      "dimensionsM": [
+        0.6746575236320496,
+        0.5378628373146057,
+        1.7140617932598161
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.01347719804720862,
+          "groundRangeM": [
+            -6.726477295160294e-07,
+            -4.012836143374443e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7558632954198857,
+          "groundRangeM": [
+            -4.127505235373974e-07,
+            -1.043081283569336e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            23.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 1.0414790467086694,
+          "groundRangeM": [
+            -0.00416534673422575,
+            0.034889936447143555
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.14569837797200713,
+          "groundRangeM": [
+            -4.138271378906211e-07,
+            -4.138271378906211e-07
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_A_Winter.fbx",
+      "sha256": "5b76293bef777963095b40ab8bfb67c435f83f1e8214f62bc54e083c02292d0d",
+      "dimensionsM": [
+        0.5090917348861694,
+        0.3966609537601471,
+        1.3895320504936528
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.011020764279924045,
+          "groundRangeM": [
+            1.1043042036362749e-08,
+            2.2411711597669637e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            25.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.5570635341810042,
+          "groundRangeM": [
+            -0.0009079269366338849,
+            4.800043097930029e-05
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            19.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7841643190748484,
+          "groundRangeM": [
+            -0.0026540181133896112,
+            0.0360778346657753
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.1285819246382031,
+          "groundRangeM": [
+            3.873974563362026e-08,
+            3.873974563362026e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Child_A_Winter.glb",
+      "sha256": "0fb9a7e9d68e3981ad8cfd4825fb4e5f4cd780b57de08c579a5028571d22f7a5",
+      "dimensionsM": [
+        0.5090916752815247,
+        0.39666101336479187,
+        1.3895320930033108
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.011020763052356329,
+          "groundRangeM": [
+            -1.640196103380731e-07,
+            4.0318234084679716e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            25.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.5570634395390287,
+          "groundRangeM": [
+            -0.0009082457982003689,
+            4.785324199474417e-05
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            19.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7841638182151333,
+          "groundRangeM": [
+            -0.0026541994884610176,
+            0.03607769310474396
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.12858212769748498,
+          "groundRangeM": [
+            -1.229792019330489e-07,
+            -1.229792019330489e-07
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_B_Winter.fbx",
+      "sha256": "662862863147a44de35d41c34bd4a05394fbca9223b5659482bb8db45cc5a261",
+      "dimensionsM": [
+        0.4628264605998993,
+        0.2592489533126354,
+        1.364204131310899
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.010318025761017311,
+          "groundRangeM": [
+            -1.2716435016102423e-08,
+            1.7418835795979248e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            25.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.53851527079939,
+          "groundRangeM": [
+            -0.0012779678218066692,
+            0.000666378065943718
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            19.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.755839964996841,
+          "groundRangeM": [
+            -0.002626928733661771,
+            0.03605391085147858
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.11174987327641606,
+          "groundRangeM": [
+            3.7008803133176116e-08,
+            3.7008803133176116e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Child_B_Winter.glb",
+      "sha256": "ac318a0cfe7c92edd86ad08d95c25f580dd264e1c11305ec80fdb1e56f38968f",
+      "dimensionsM": [
+        0.4628262221813202,
+        0.259248960763216,
+        1.3642039129535988
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.010318024493915693,
+          "groundRangeM": [
+            4.6100467443466187e-08,
+            3.0046794563531876e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            25.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.5385150986944045,
+          "groundRangeM": [
+            -0.0012780260294675827,
+            0.0006663844105787575
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Run",
+          "frames": [
+            1.0,
+            19.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7558394918726755,
+          "groundRangeM": [
+            -0.0026268677320331335,
+            0.03605412691831589
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.11174978902493168,
+          "groundRangeM": [
+            1.36156813823618e-07,
+            1.36156813823618e-07
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Police_Winter.fbx",
+      "sha256": "e37f7b3c0bbadc14447dac0bb860221a05e444937bb13d3c2e6b5a211eee9a18",
+      "dimensionsM": [
+        0.6836995482444763,
+        0.44925110787153244,
+        1.7686903218636303
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.02052329490497254,
+          "groundRangeM": [
+            -1.505254658695776e-07,
+            1.3340520865767758e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7804522058902373,
+          "groundRangeM": [
+            -1.468305725893515e-07,
+            3.5345470905667753e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.15714782079238035,
+          "groundRangeM": [
+            2.5807878500927472e-08,
+            2.5807878500927472e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Signal_ArmsSide",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.005540401014006634,
+          "groundRangeM": [
+            2.5807878500927472e-08,
+            2.5807878500927472e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Signal_RightArmForward",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.010276671373824204,
+          "groundRangeM": [
+            2.5807878500927472e-08,
+            2.5807878500927472e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Signal_ArmUp",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.010659530342318282,
+          "groundRangeM": [
+            2.5807878500927472e-08,
+            2.5807878500927472e-08
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "file": "artifacts/visual-review/pedestrians/models/DS_Pedestrian_Police_Winter.glb",
+      "sha256": "8f9481c765c6995bb9d029f4921020f9cab4c9fffd591b22bc161a4162c5809b",
+      "dimensionsM": [
+        0.6836994886398315,
+        0.449251264333725,
+        1.7686898515589249
+      ],
+      "bones": 20,
+      "animations": [
+        {
+          "clip": "Idle",
+          "frames": [
+            1.0,
+            61.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.02052352498839941,
+          "groundRangeM": [
+            -1.847821096134794e-07,
+            1.9275425700016058e-08
+          ],
+          "pass": true
+        },
+        {
+          "clip": "Walk",
+          "frames": [
+            1.0,
+            31.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.7804518580025732,
+          "groundRangeM": [
+            -1.4328342956559936e-07,
+            4.2497777030803263e-07
+          ],
+          "pass": true
+        },
+        {
+          "clip": "LookAround",
+          "frames": [
+            1.0,
+            91.0
+          ],
+          "loopSeamM": 0.0,
+          "maxDisplacementM": 0.15714780155469343,
           "groundRangeM": [
             1.9275425700016058e-08,
             1.9275425700016058e-08

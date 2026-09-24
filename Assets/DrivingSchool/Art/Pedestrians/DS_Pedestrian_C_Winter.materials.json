@@ -1,0 +1,102 @@
+{
+  "materials": [
+    {
+      "name": "Ped_Skin",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_middleage_lightskinned_male_diffuse_d.jpg"
+    },
+    {
+      "name": "Ped_Suit",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_male_casualsuit03_diffuse_d.jpg",
+      "normal": "MH_male_casualsuit03_normal_n.png"
+    },
+    {
+      "name": "Ped_Gloves",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_Gloves03UV_d.jpg"
+    },
+    {
+      "name": "Ped_Shoes",
+      "alphaClip": false,
+      "doubleSided": false,
+      "diffuse": "MH_BootsAnkleM_d.jpg",
+      "normal": "MH_BootsAnkle-norm_n.png"
+    },
+    {
+      "name": "Ped_Hair",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_short01_diffuse_d.png"
+    },
+    {
+      "name": "Ped_Eyebrows",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_eyebrow002_d.png"
+    },
+    {
+      "name": "Ped_Eyes",
+      "alphaClip": true,
+      "doubleSided": false,
+      "diffuse": "MH_brown_eye_d.png"
+    },
+    {
+      "name": "Ped_Eyelashes",
+      "alphaClip": true,
+      "doubleSided": true,
+      "diffuse": "MH_eyelashes01_d.png"
+    },
+    {
+      "name": "Ped_Puffer",
+      "diffuse": "Fabric_nylon_d.png",
+      "normal": "Fabric_nylon_n.png",
+      "color": [
+        0.06,
+        0.09,
+        0.06
+      ],
+      "smoothness": 0.44999999999999996,
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "Ped_Hat",
+      "diffuse": "Fabric_knit_d.png",
+      "normal": "Fabric_knit_n.png",
+      "color": [
+        0.03,
+        0.03,
+        0.035
+      ],
+      "smoothness": 0.09999999999999998,
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "Ped_Pack",
+      "color": [
+        0.04,
+        0.045,
+        0.05
+      ],
+      "alphaClip": false,
+      "doubleSided": false,
+      "smoothness": 0.4
+    },
+    {
+      "name": "Ped_PackTrim",
+      "color": [
+        0.02,
+        0.02,
+        0.025
+      ],
+      "alphaClip": false,
+      "doubleSided": false,
+      "smoothness": 0.30000000000000004
+    }
+  ]
+}
