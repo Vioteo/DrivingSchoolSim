@@ -1,0 +1,2234 @@
+{
+  "kit": "transit",
+  "prefix": "PT_",
+  "script": "tools/build_transit.py",
+  "generator": "tools/transit_kit",
+  "utc": "2026-09-24T14:17:22.071253+00:00",
+  "blender": "5.0.1",
+  "axes": "Blender: X right, Y back (front -Y), Z up; FBX -Z forward / Y up",
+  "assets": [
+    {
+      "id": "PT_Bus_City12",
+      "title": "Городской автобус 12 м, низкопольный",
+      "kind": "bus",
+      "fbx": "Assets/DrivingSchool/Art/Transit/PT_Bus_City12.fbx",
+      "fbx_sha256": "9d0263b96a60ccdbf2eac86240c42c5219eec1ed6499ce2ad0c2b1d9562cd70d",
+      "glb": "artifacts/visual-review/transit/models/PT_Bus_City12.glb",
+      "triangles": 18418,
+      "bounds_min": [
+        -1.44,
+        -6.11,
+        0.0
+      ],
+      "bounds_max": [
+        1.44,
+        6.415,
+        3.19
+      ],
+      "size": [
+        2.88,
+        12.525,
+        3.19
+      ],
+      "reimport_size": [
+        2.88,
+        12.525,
+        3.19
+      ],
+      "materials": [
+        "PT_Display",
+        "PT_Display_Amber",
+        "PT_Glass_Tinted",
+        "PT_Lamp_Amber",
+        "PT_Lamp_Red",
+        "PT_Lamp_White",
+        "PT_Mirror",
+        "PT_Paint_BusBlue",
+        "PT_Paint_BusWhite",
+        "PT_Plastic_Black",
+        "PT_Plastic_Grey",
+        "PT_Plate_White",
+        "PT_Rubber",
+        "PT_Steel_Dark",
+        "PT_Steel_Wheel",
+        "PT_Trim_Black"
+      ],
+      "sockets": {
+        "Socket_CentreOfMass": [
+          0.0,
+          0.2,
+          1.05
+        ],
+        "Socket_DriverEye": [
+          0.62,
+          -4.625,
+          2.02
+        ],
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "kind": "bus",
+        "length": 12.0,
+        "width": 2.55,
+        "height": 3.1900000000000004,
+        "wheelbase": 5.95,
+        "wheels": {
+          "Wheel_FL": 0.478,
+          "Wheel_FR": 0.478,
+          "Wheel_RL": 0.478,
+          "Wheel_RR": 0.478
+        },
+        "arch_r": 0.55,
+        "half_w": 1.275,
+        "tyre_out": {
+          "F": 1.1875,
+          "R": 1.2574999999999998
+        },
+        "doors": [
+          1,
+          2,
+          3
+        ]
+      },
+      "checks": [
+        {
+          "id": "Корень в начале координат, без поворота",
+          "status": "PASS",
+          "value": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "target": "loc 0, rot 0"
+        },
+        {
+          "id": "Лицевая сторона -Y (Socket_Front)",
+          "status": "PASS",
+          "value": [
+            0,
+            -1,
+            0
+          ],
+          "target": "(0,-1,0)"
+        },
+        {
+          "id": "Верх +Z (Socket_Up)",
+          "status": "PASS",
+          "value": [
+            0,
+            0,
+            1
+          ],
+          "target": "(0,0,1)"
+        },
+        {
+          "id": "Длина кузова, м",
+          "status": "PASS",
+          "value": 12.0,
+          "target": 12.0
+        },
+        {
+          "id": "Ширина кузова, м",
+          "status": "PASS",
+          "value": 2.55,
+          "target": 2.55
+        },
+        {
+          "id": "Габаритная высота, м",
+          "status": "PASS",
+          "value": 3.19,
+          "target": "3.1900000000000004 +-0.06"
+        },
+        {
+          "id": "Ниже земли ничего нет (кроме реборд)",
+          "status": "PASS",
+          "value": 0.0,
+          "target": ">= 0"
+        },
+        {
+          "id": "Корпус симметричен по X",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0"
+        },
+        {
+          "id": "Начало координат посередине базы",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0"
+        },
+        {
+          "id": "Мотор/кабина спереди: нос по -Y",
+          "status": "PASS",
+          "value": -5.665,
+          "target": "< 0"
+        },
+        {
+          "id": "Водитель слева по ходу (Blender +X)",
+          "status": "PASS",
+          "value": 0.62,
+          "target": "> 0 (трамвай: у оси)"
+        },
+        {
+          "id": "Двери справа по ходу (Blender -X)",
+          "status": "PASS",
+          "value": 6,
+          "target": "все пивоты дверей при x < 0"
+        },
+        {
+          "id": "Wheel_FL: центр на высоте радиуса",
+          "status": "PASS",
+          "value": 0.478,
+          "target": 0.478
+        },
+        {
+          "id": "Wheel_FL: шина касается земли",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0 +-0.005"
+        },
+        {
+          "id": "Wheel_FR: центр на высоте радиуса",
+          "status": "PASS",
+          "value": 0.478,
+          "target": 0.478
+        },
+        {
+          "id": "Wheel_FR: шина касается земли",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0 +-0.005"
+        },
+        {
+          "id": "Wheel_RL: центр на высоте радиуса",
+          "status": "PASS",
+          "value": 0.478,
+          "target": 0.478
+        },
+        {
+          "id": "Wheel_RL: шина касается земли",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0 +-0.005"
+        },
+        {
+          "id": "Wheel_RR: центр на высоте радиуса",
+          "status": "PASS",
+          "value": 0.478,
+          "target": 0.478
+        },
+        {
+          "id": "Wheel_RR: шина касается земли",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0 +-0.005"
+        },
+        {
+          "id": "Шина (F) не выступает за кузов, м",
+          "status": "PASS",
+          "value": -0.087,
+          "target": "<= +0.005"
+        },
+        {
+          "id": "Шина (R) не выступает за кузов, м",
+          "status": "PASS",
+          "value": -0.018,
+          "target": "<= +0.005"
+        },
+        {
+          "id": "Зазор шина - арка, м",
+          "status": "PASS",
+          "value": 0.072,
+          "target": ">= 0.06"
+        },
+        {
+          "id": "Имя-контракт Wheel_FL",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт Wheel_FR",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт Wheel_RL",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт Wheel_RR",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт Socket_DriverEye",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт MirrorSurface_L",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт MirrorSurface_R",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт Socket_CentreOfMass",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт COL_Body",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Wheel_FL: левое переднее (x>0, y<0 в Blender)",
+          "status": "PASS",
+          "value": [
+            1.05,
+            -2.975
+          ],
+          "target": "x > 0, y < 0"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            2.88,
+            12.525,
+            3.19
+          ],
+          "target": [
+            2.88,
+            12.525,
+            3.19
+          ]
+        },
+        {
+          "id": "Бюджет треугольников",
+          "status": "PASS",
+          "value": 18418,
+          "target": "<= 35000"
+        }
+      ]
+    },
+    {
+      "id": "PT_Minibus_Route",
+      "title": "Маршрутное такси (микроавтобус)",
+      "kind": "minibus",
+      "fbx": "Assets/DrivingSchool/Art/Transit/PT_Minibus_Route.fbx",
+      "fbx_sha256": "d15944107a3558ba26b88a5704b2e4d3c6fc141bf5889be271664dc0e5cc13c1",
+      "glb": "artifacts/visual-review/transit/models/PT_Minibus_Route.glb",
+      "triangles": 17840,
+      "bounds_min": [
+        -1.36,
+        -2.965,
+        0.0
+      ],
+      "bounds_max": [
+        1.36,
+        4.03,
+        2.92
+      ],
+      "size": [
+        2.72,
+        6.995,
+        2.92
+      ],
+      "reimport_size": [
+        2.72,
+        6.995,
+        2.92
+      ],
+      "materials": [
+        "PT_Display",
+        "PT_Display_Amber",
+        "PT_Glass_Tinted",
+        "PT_Ink",
+        "PT_Lamp_Amber",
+        "PT_Lamp_Red",
+        "PT_Lamp_White",
+        "PT_Mirror",
+        "PT_Paint_MinibusBlue",
+        "PT_Plastic_Black",
+        "PT_Plastic_Grey",
+        "PT_Plate_White",
+        "PT_Rubber",
+        "PT_Steel_Dark",
+        "PT_Steel_Wheel",
+        "PT_Trim_Black"
+      ],
+      "sockets": {
+        "Socket_CentreOfMass.001": [
+          0.0,
+          0.1,
+          0.85
+        ],
+        "Socket_DriverEye.001": [
+          0.45,
+          -1.05,
+          1.85
+        ],
+        "Socket_Front.001": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up.001": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "kind": "minibus",
+        "length": 6.7,
+        "width": 2.06,
+        "height": 2.9200000000000004,
+        "wheelbase": 3.745,
+        "wheels": {
+          "Wheel_FL": 0.364,
+          "Wheel_FR": 0.364,
+          "Wheel_RL": 0.364,
+          "Wheel_RR": 0.364
+        },
+        "arch_r": 0.44,
+        "half_w": 1.0183214285714286,
+        "tyre_out": {
+          "F": 0.9825,
+          "R": 0.9825
+        },
+        "doors": [
+          "Slide"
+        ],
+        "windscreen_rake": 41.29537255792288,
+        "windscreen_h": 0.74,
+        "forehead": 0.6400000000000001
+      },
+      "checks": [
+        {
+          "id": "Корень в начале координат, без поворота",
+          "status": "PASS",
+          "value": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "target": "loc 0, rot 0"
+        },
+        {
+          "id": "Лицевая сторона -Y (Socket_Front)",
+          "status": "PASS",
+          "value": [
+            0,
+            -1,
+            0
+          ],
+          "target": "(0,-1,0)"
+        },
+        {
+          "id": "Верх +Z (Socket_Up)",
+          "status": "PASS",
+          "value": [
+            0,
+            0,
+            1
+          ],
+          "target": "(0,0,1)"
+        },
+        {
+          "id": "Длина кузова, м",
+          "status": "PASS",
+          "value": 6.7,
+          "target": 6.7
+        },
+        {
+          "id": "Ширина кузова, м",
+          "status": "PASS",
+          "value": 2.06,
+          "target": 2.06
+        },
+        {
+          "id": "Габаритная высота, м",
+          "status": "PASS",
+          "value": 2.92,
+          "target": "2.9200000000000004 +-0.06"
+        },
+        {
+          "id": "Ниже земли ничего нет (кроме реборд)",
+          "status": "PASS",
+          "value": 0.0,
+          "target": ">= 0"
+        },
+        {
+          "id": "Корпус симметричен по X",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0"
+        },
+        {
+          "id": "Начало координат посередине базы",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0"
+        },
+        {
+          "id": "Мотор/кабина спереди: нос по -Y",
+          "status": "PASS",
+          "value": -2.468,
+          "target": "< 0"
+        },
+        {
+          "id": "Водитель слева по ходу (Blender +X)",
+          "status": "PASS",
+          "value": 0.45,
+          "target": "> 0 (трамвай: у оси)"
+        },
+        {
+          "id": "Двери справа по ходу (Blender -X)",
+          "status": "PASS",
+          "value": 1,
+          "target": "все пивоты дверей при x < 0"
+        },
+        {
+          "id": "Wheel_FL: центр на высоте радиуса",
+          "status": "PASS",
+          "value": 0.364,
+          "target": 0.364
+        },
+        {
+          "id": "Wheel_FL: шина касается земли",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0 +-0.005"
+        },
+        {
+          "id": "Wheel_FR: центр на высоте радиуса",
+          "status": "PASS",
+          "value": 0.364,
+          "target": 0.364
+        },
+        {
+          "id": "Wheel_FR: шина касается земли",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0 +-0.005"
+        },
+        {
+          "id": "Wheel_RL: центр на высоте радиуса",
+          "status": "PASS",
+          "value": 0.364,
+          "target": 0.364
+        },
+        {
+          "id": "Wheel_RL: шина касается земли",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0 +-0.005"
+        },
+        {
+          "id": "Wheel_RR: центр на высоте радиуса",
+          "status": "PASS",
+          "value": 0.364,
+          "target": 0.364
+        },
+        {
+          "id": "Wheel_RR: шина касается земли",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0 +-0.005"
+        },
+        {
+          "id": "Шина (F) не выступает за кузов, м",
+          "status": "PASS",
+          "value": -0.036,
+          "target": "<= +0.005"
+        },
+        {
+          "id": "Шина (R) не выступает за кузов, м",
+          "status": "PASS",
+          "value": -0.036,
+          "target": "<= +0.005"
+        },
+        {
+          "id": "Зазор шина - арка, м",
+          "status": "PASS",
+          "value": 0.076,
+          "target": ">= 0.06"
+        },
+        {
+          "id": "Наклон лобового стекла от вертикали, град",
+          "status": "PASS",
+          "value": 41.3,
+          "target": "30..45"
+        },
+        {
+          "id": "Высота лобового стекла, м",
+          "status": "PASS",
+          "value": 0.74,
+          "target": ">= 0.7"
+        },
+        {
+          "id": "«Лоб» над стеклом до крыши, м",
+          "status": "PASS",
+          "value": 0.64,
+          "target": ">= 0.5"
+        },
+        {
+          "id": "Имя-контракт Wheel_FL",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт Wheel_FR",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт Wheel_RL",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт Wheel_RR",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт Socket_DriverEye",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт MirrorSurface_L",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт MirrorSurface_R",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт Socket_CentreOfMass",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт COL_Body",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Wheel_FL: левое переднее (x>0, y<0 в Blender)",
+          "status": "PASS",
+          "value": [
+            0.875,
+            -1.873
+          ],
+          "target": "x > 0, y < 0"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            2.72,
+            6.995,
+            2.92
+          ],
+          "target": [
+            2.72,
+            6.995,
+            2.92
+          ]
+        },
+        {
+          "id": "Бюджет треугольников",
+          "status": "PASS",
+          "value": 17840,
+          "target": "<= 35000"
+        }
+      ]
+    },
+    {
+      "id": "PT_Tram_City",
+      "title": "Трамвай односекционный",
+      "kind": "tram",
+      "fbx": "Assets/DrivingSchool/Art/Transit/PT_Tram_City.fbx",
+      "fbx_sha256": "2e22f9f32865036c7ee89ba065acbd1e2b6fcbb029fe770996ace9d7ddbbb1ef",
+      "glb": "artifacts/visual-review/transit/models/PT_Tram_City.glb",
+      "triangles": 14534,
+      "bounds_min": [
+        -1.58,
+        -7.674,
+        -0.025
+      ],
+      "bounds_max": [
+        1.58,
+        8.15,
+        3.74
+      ],
+      "size": [
+        3.16,
+        15.824,
+        3.765
+      ],
+      "reimport_size": [
+        3.16,
+        15.824,
+        3.765
+      ],
+      "materials": [
+        "PT_Display",
+        "PT_Display_Amber",
+        "PT_Glass_Tinted",
+        "PT_Lamp_Amber",
+        "PT_Lamp_Red",
+        "PT_Lamp_White",
+        "PT_Mirror",
+        "PT_Paint_TramCream",
+        "PT_Paint_TramRed",
+        "PT_Plastic_Black",
+        "PT_Plastic_Grey",
+        "PT_Rubber",
+        "PT_Steel_Bright",
+        "PT_Steel_Dark",
+        "PT_Steel_Wheel",
+        "PT_Trim_Black"
+      ],
+      "sockets": {
+        "Socket_CentreOfMass.002": [
+          0.0,
+          0.0,
+          1.2
+        ],
+        "Socket_DriverEye.002": [
+          0.25,
+          -6.75,
+          2.25
+        ],
+        "Socket_Front.002": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up.002": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "kind": "tram",
+        "length": 15.3,
+        "width": 2.5,
+        "height": 3.75,
+        "bogie_base": 7.0,
+        "wheel_r": 0.355,
+        "rail_c": 0.7975,
+        "flange": 0.025,
+        "half_w": 1.25,
+        "doors": [
+          1,
+          2,
+          3
+        ],
+        "skirt": 0.38,
+        "well_half": 1.53,
+        "well_top": 0.84,
+        "bogie_y": 3.5,
+        "door_spans": [
+          [
+            5.1,
+            6.4
+          ],
+          [
+            -0.65,
+            0.65
+          ],
+          [
+            -6.4,
+            -5.1
+          ]
+        ]
+      },
+      "checks": [
+        {
+          "id": "Корень в начале координат, без поворота",
+          "status": "PASS",
+          "value": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "target": "loc 0, rot 0"
+        },
+        {
+          "id": "Лицевая сторона -Y (Socket_Front)",
+          "status": "PASS",
+          "value": [
+            0,
+            -1,
+            0
+          ],
+          "target": "(0,-1,0)"
+        },
+        {
+          "id": "Верх +Z (Socket_Up)",
+          "status": "PASS",
+          "value": [
+            0,
+            0,
+            1
+          ],
+          "target": "(0,0,1)"
+        },
+        {
+          "id": "Длина кузова, м",
+          "status": "PASS",
+          "value": 15.3,
+          "target": 15.3
+        },
+        {
+          "id": "Ширина кузова, м",
+          "status": "PASS",
+          "value": 2.5,
+          "target": 2.5
+        },
+        {
+          "id": "Габаритная высота, м",
+          "status": "PASS",
+          "value": 3.74,
+          "target": "3.75 +-0.06"
+        },
+        {
+          "id": "Ниже земли ничего нет (кроме реборд)",
+          "status": "PASS",
+          "value": -0.025,
+          "target": ">= -0.025"
+        },
+        {
+          "id": "Корпус симметричен по X",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0"
+        },
+        {
+          "id": "Начало координат посередине базы",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0"
+        },
+        {
+          "id": "Мотор/кабина спереди: нос по -Y",
+          "status": "PASS",
+          "value": -7.502,
+          "target": "< 0"
+        },
+        {
+          "id": "Водитель слева по ходу (Blender +X)",
+          "status": "PASS",
+          "value": 0.25,
+          "target": "> 0 (трамвай: у оси)"
+        },
+        {
+          "id": "Двери справа по ходу (Blender -X)",
+          "status": "PASS",
+          "value": 6,
+          "target": "все пивоты дверей при x < 0"
+        },
+        {
+          "id": "Четыре колёсные пары",
+          "status": "PASS",
+          "value": 4,
+          "target": 4
+        },
+        {
+          "id": "Wheelset_F1: ось на высоте радиуса",
+          "status": "PASS",
+          "value": 0.355,
+          "target": 0.355
+        },
+        {
+          "id": "Wheelset_F2: ось на высоте радиуса",
+          "status": "PASS",
+          "value": 0.355,
+          "target": 0.355
+        },
+        {
+          "id": "Wheelset_R1: ось на высоте радиуса",
+          "status": "PASS",
+          "value": 0.355,
+          "target": 0.355
+        },
+        {
+          "id": "Wheelset_R2: ось на высоте радиуса",
+          "status": "PASS",
+          "value": 0.355,
+          "target": 0.355
+        },
+        {
+          "id": "Колесо стоит на головке рельса (z=0 у RAIL_C)",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0 +-0.005"
+        },
+        {
+          "id": "Тележка F при повороте 8.0° в проёме фартука, м",
+          "status": "PASS",
+          "value": 0.048,
+          "target": ">= 0.03 до края проёма"
+        },
+        {
+          "id": "Тележка F ниже потолка ниши, м",
+          "status": "PASS",
+          "value": 0.105,
+          "target": ">= 0.02"
+        },
+        {
+          "id": "Тележка R при повороте 8.0° в проёме фартука, м",
+          "status": "PASS",
+          "value": 0.048,
+          "target": ">= 0.03 до края проёма"
+        },
+        {
+          "id": "Тележка R ниже потолка ниши, м",
+          "status": "PASS",
+          "value": 0.105,
+          "target": ">= 0.02"
+        },
+        {
+          "id": "Двери не заходят на проёмы тележек, м",
+          "status": "PASS",
+          "value": 0.07,
+          "target": ">= 0.01"
+        },
+        {
+          "id": "Имя-контракт Bogie_F_Pivot",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт Bogie_R_Pivot",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт Pantograph_Pivot",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт Socket_DriverEye",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт MirrorSurface_L",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт MirrorSurface_R",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "Имя-контракт COL_Body",
+          "status": "PASS",
+          "value": true,
+          "target": "есть"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            3.16,
+            15.824,
+            3.765
+          ],
+          "target": [
+            3.16,
+            15.824,
+            3.765
+          ]
+        },
+        {
+          "id": "Бюджет треугольников",
+          "status": "PASS",
+          "value": 14534,
+          "target": "<= 35000"
+        }
+      ]
+    },
+    {
+      "id": "PT_Road_TramUrban_20m",
+      "title": "Улица с трамвайными путями в одном уровне",
+      "kind": "track",
+      "fbx": "Assets/DrivingSchool/Art/Transit/PT_Road_TramUrban_20m.fbx",
+      "fbx_sha256": "b98f394c81e912cfd9f01ae5b03784357a83cd7e7d7b9affafcb48b905576ef1",
+      "glb": "artifacts/visual-review/transit/models/PT_Road_TramUrban_20m.glb",
+      "triangles": 912,
+      "bounds_min": [
+        -9.2,
+        -20.0,
+        -0.22
+      ],
+      "bounds_max": [
+        9.2,
+        0.0,
+        0.15
+      ],
+      "size": [
+        18.4,
+        20.0,
+        0.37
+      ],
+      "reimport_size": [
+        18.4,
+        20.0,
+        0.37
+      ],
+      "materials": [
+        "PT_Asphalt",
+        "PT_Concrete",
+        "PT_Groove",
+        "PT_Marking_White",
+        "PT_Paving",
+        "PT_Rail_Steel",
+        "PT_TrackSlab"
+      ],
+      "sockets": {
+        "Socket_End": [
+          0.0,
+          -20.0,
+          0.0
+        ],
+        "Socket_Front.003": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Tram_L_End": [
+          1.75,
+          -20.0,
+          0.0
+        ],
+        "Socket_Tram_L_Start": [
+          1.75,
+          0.0,
+          0.0
+        ],
+        "Socket_Tram_R_End": [
+          -1.75,
+          -20.0,
+          0.0
+        ],
+        "Socket_Tram_R_Start": [
+          -1.75,
+          0.0,
+          0.0
+        ],
+        "Socket_Up.003": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "kind": "track",
+        "length": 20.0,
+        "width": 18.4,
+        "track_centres": [
+          -1.75,
+          1.75
+        ],
+        "rail_top": 0.0,
+        "groove_depth": 0.04,
+        "rails": [
+          -2.5475,
+          -0.9525,
+          0.9525,
+          2.5475
+        ]
+      },
+      "checks": [
+        {
+          "id": "Корень в начале координат, без поворота",
+          "status": "PASS",
+          "value": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "target": "loc 0, rot 0"
+        },
+        {
+          "id": "Лицевая сторона -Y (Socket_Front)",
+          "status": "PASS",
+          "value": [
+            0,
+            -1,
+            0
+          ],
+          "target": "(0,-1,0)"
+        },
+        {
+          "id": "Верх +Z (Socket_Up)",
+          "status": "PASS",
+          "value": [
+            0,
+            0,
+            1
+          ],
+          "target": "(0,0,1)"
+        },
+        {
+          "id": "Рельсы не выше дороги",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0"
+        },
+        {
+          "id": "Socket_End на -Y длины модуля",
+          "status": "PASS",
+          "value": [
+            0,
+            -20.0,
+            0
+          ],
+          "target": [
+            0,
+            -20.0,
+            0
+          ]
+        },
+        {
+          "id": "Рельс у x=+2.5475",
+          "status": "PASS",
+          "value": [
+            2.52,
+            2.575
+          ],
+          "target": "головка вокруг центра"
+        },
+        {
+          "id": "Рельс у x=+0.9525",
+          "status": "PASS",
+          "value": [
+            0.925,
+            0.98
+          ],
+          "target": "головка вокруг центра"
+        },
+        {
+          "id": "Рельс у x=-0.9525",
+          "status": "PASS",
+          "value": [
+            -0.98,
+            -0.925
+          ],
+          "target": "головка вокруг центра"
+        },
+        {
+          "id": "Рельс у x=-2.5475",
+          "status": "PASS",
+          "value": [
+            -2.575,
+            -2.52
+          ],
+          "target": "головка вокруг центра"
+        },
+        {
+          "id": "Ширина колеи по центрам головок, м",
+          "status": "PASS",
+          "value": 1.595,
+          "target": "1.595 (1520 + 75)"
+        },
+        {
+          "id": "Желоб глубже реборды трамвая, м",
+          "status": "PASS",
+          "value": 0.04,
+          "target": "> 0.035"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            18.4,
+            20.0,
+            0.37
+          ],
+          "target": [
+            18.4,
+            20.0,
+            0.37
+          ]
+        },
+        {
+          "id": "Бюджет треугольников",
+          "status": "PASS",
+          "value": 912,
+          "target": "<= 20000"
+        }
+      ]
+    },
+    {
+      "id": "PT_TramTrack_Grass_20m",
+      "title": "Обособленный трамвайный путь на газоне",
+      "kind": "track",
+      "fbx": "Assets/DrivingSchool/Art/Transit/PT_TramTrack_Grass_20m.fbx",
+      "fbx_sha256": "5026fa4fd0870269a4491c8ef6aaa051d5cd4733d64b99d1d9c793fe1dc791d2",
+      "glb": "artifacts/visual-review/transit/models/PT_TramTrack_Grass_20m.glb",
+      "triangles": 132,
+      "bounds_min": [
+        -3.45,
+        -20.0,
+        -0.22
+      ],
+      "bounds_max": [
+        3.45,
+        0.0,
+        0.15
+      ],
+      "size": [
+        6.9,
+        20.0,
+        0.37
+      ],
+      "reimport_size": [
+        6.9,
+        20.0,
+        0.37
+      ],
+      "materials": [
+        "PT_Concrete",
+        "PT_Grass",
+        "PT_Rail_Steel"
+      ],
+      "sockets": {
+        "Socket_End.001": [
+          0.0,
+          -20.0,
+          0.0
+        ],
+        "Socket_Front.004": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start.001": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Tram_L_End.001": [
+          1.75,
+          -20.0,
+          0.0
+        ],
+        "Socket_Tram_L_Start.001": [
+          1.75,
+          0.0,
+          0.0
+        ],
+        "Socket_Tram_R_End.001": [
+          -1.75,
+          -20.0,
+          0.0
+        ],
+        "Socket_Tram_R_Start.001": [
+          -1.75,
+          0.0,
+          0.0
+        ],
+        "Socket_Up.004": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "kind": "track",
+        "length": 20.0,
+        "width": 6.9,
+        "track_centres": [
+          -1.75,
+          1.75
+        ],
+        "rail_top": 0.0,
+        "rails": [
+          -2.5475,
+          -0.9525,
+          0.9525,
+          2.5475
+        ]
+      },
+      "checks": [
+        {
+          "id": "Корень в начале координат, без поворота",
+          "status": "PASS",
+          "value": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "target": "loc 0, rot 0"
+        },
+        {
+          "id": "Лицевая сторона -Y (Socket_Front)",
+          "status": "PASS",
+          "value": [
+            0,
+            -1,
+            0
+          ],
+          "target": "(0,-1,0)"
+        },
+        {
+          "id": "Верх +Z (Socket_Up)",
+          "status": "PASS",
+          "value": [
+            0,
+            0,
+            1
+          ],
+          "target": "(0,0,1)"
+        },
+        {
+          "id": "Рельсы не выше дороги",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0"
+        },
+        {
+          "id": "Socket_End на -Y длины модуля",
+          "status": "PASS",
+          "value": [
+            0,
+            -20.0,
+            0
+          ],
+          "target": [
+            0,
+            -20.0,
+            0
+          ]
+        },
+        {
+          "id": "Рельс у x=+2.5475",
+          "status": "PASS",
+          "value": [
+            2.5125,
+            2.5825
+          ],
+          "target": "головка вокруг центра"
+        },
+        {
+          "id": "Рельс у x=+0.9525",
+          "status": "PASS",
+          "value": [
+            0.9175,
+            0.9875
+          ],
+          "target": "головка вокруг центра"
+        },
+        {
+          "id": "Рельс у x=-0.9525",
+          "status": "PASS",
+          "value": [
+            -0.9875,
+            -0.9175
+          ],
+          "target": "головка вокруг центра"
+        },
+        {
+          "id": "Рельс у x=-2.5475",
+          "status": "PASS",
+          "value": [
+            -2.5825,
+            -2.5125
+          ],
+          "target": "головка вокруг центра"
+        },
+        {
+          "id": "Ширина колеи по центрам головок, м",
+          "status": "PASS",
+          "value": 1.595,
+          "target": "1.595 (1520 + 75)"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            6.9,
+            20.0,
+            0.37
+          ],
+          "target": [
+            6.9,
+            20.0,
+            0.37
+          ]
+        },
+        {
+          "id": "Бюджет треугольников",
+          "status": "PASS",
+          "value": 132,
+          "target": "<= 20000"
+        }
+      ]
+    },
+    {
+      "id": "PT_TramTrack_Grass_Curve90_R25",
+      "title": "Обособленный путь, поворот 90° R25",
+      "kind": "track_curve",
+      "fbx": "Assets/DrivingSchool/Art/Transit/PT_TramTrack_Grass_Curve90_R25.fbx",
+      "fbx_sha256": "a02d9ff457521670bd6fcb39e0389a98eaa5b9dd9a895c3cdf462d36a31a96d9",
+      "glb": "artifacts/visual-review/transit/models/PT_TramTrack_Grass_Curve90_R25.glb",
+      "triangles": 5676,
+      "bounds_min": [
+        -25.0,
+        -28.45,
+        -0.22
+      ],
+      "bounds_max": [
+        3.45,
+        0.0,
+        0.15
+      ],
+      "size": [
+        28.45,
+        28.45,
+        0.37
+      ],
+      "reimport_size": [
+        28.45,
+        28.45,
+        0.37
+      ],
+      "materials": [
+        "PT_Concrete",
+        "PT_Grass",
+        "PT_Rail_Steel"
+      ],
+      "sockets": {
+        "Socket_End.002": [
+          -25.0,
+          -25.0,
+          0.0
+        ],
+        "Socket_Front.005": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start.002": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Tram_L_End.002": [
+          -25.0,
+          -26.75,
+          0.0
+        ],
+        "Socket_Tram_L_Start.002": [
+          1.75,
+          0.0,
+          0.0
+        ],
+        "Socket_Tram_R_End.002": [
+          -25.0,
+          -23.25,
+          0.0
+        ],
+        "Socket_Tram_R_Start.002": [
+          -1.75,
+          0.0,
+          0.0
+        ],
+        "Socket_Up.005": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "kind": "track_curve",
+        "radius": 25.0,
+        "width": 6.9,
+        "track_centres": [
+          -1.75,
+          1.75
+        ],
+        "rail_top": 0.0
+      },
+      "checks": [
+        {
+          "id": "Корень в начале координат, без поворота",
+          "status": "PASS",
+          "value": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "target": "loc 0, rot 0"
+        },
+        {
+          "id": "Лицевая сторона -Y (Socket_Front)",
+          "status": "PASS",
+          "value": [
+            0,
+            -1,
+            0
+          ],
+          "target": "(0,-1,0)"
+        },
+        {
+          "id": "Верх +Z (Socket_Up)",
+          "status": "PASS",
+          "value": [
+            0,
+            0,
+            1
+          ],
+          "target": "(0,0,1)"
+        },
+        {
+          "id": "Рельсы не выше дороги",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "0"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            28.45,
+            28.45,
+            0.37
+          ],
+          "target": [
+            28.45,
+            28.45,
+            0.37
+          ]
+        },
+        {
+          "id": "Бюджет треугольников",
+          "status": "PASS",
+          "value": 5676,
+          "target": "<= 20000"
+        }
+      ]
+    },
+    {
+      "id": "PT_Sign_5_16_BusStop",
+      "title": "5.16 «Место остановки автобуса и (или) троллейбуса» (стилизовано)",
+      "kind": "sign",
+      "fbx": "Assets/DrivingSchool/Art/Transit/PT_Sign_5_16_BusStop.fbx",
+      "fbx_sha256": "f69668743e85ce04975500ef42afe955fe76dad1b779dd34f75dffb51cb3bc99",
+      "glb": "artifacts/visual-review/transit/models/PT_Sign_5_16_BusStop.glb",
+      "triangles": 300,
+      "bounds_min": [
+        -0.3,
+        -0.065,
+        0.0
+      ],
+      "bounds_max": [
+        0.3,
+        0.175,
+        2.75
+      ],
+      "size": [
+        0.6,
+        0.24,
+        2.75
+      ],
+      "reimport_size": [
+        0.6,
+        0.24,
+        2.75
+      ],
+      "materials": [
+        "PT_Ink",
+        "PT_Sign_Blue",
+        "PT_Sign_White",
+        "PT_Steel"
+      ],
+      "sockets": {
+        "Socket_Front.006": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up.006": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "kind": "sign",
+        "height": 2.75,
+        "plate": 0.6
+      },
+      "checks": [
+        {
+          "id": "Корень в начале координат, без поворота",
+          "status": "PASS",
+          "value": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "target": "loc 0, rot 0"
+        },
+        {
+          "id": "Лицевая сторона -Y (Socket_Front)",
+          "status": "PASS",
+          "value": [
+            0,
+            -1,
+            0
+          ],
+          "target": "(0,-1,0)"
+        },
+        {
+          "id": "Верх +Z (Socket_Up)",
+          "status": "PASS",
+          "value": [
+            0,
+            0,
+            1
+          ],
+          "target": "(0,0,1)"
+        },
+        {
+          "id": "Высота стойки, м",
+          "status": "PASS",
+          "value": 2.75,
+          "target": 2.75
+        },
+        {
+          "id": "Щит смотрит в -Y (к водителю)",
+          "status": "PASS",
+          "value": -0.01,
+          "target": "< 0"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.6,
+            0.24,
+            2.75
+          ],
+          "target": [
+            0.6,
+            0.24,
+            2.75
+          ]
+        },
+        {
+          "id": "Бюджет треугольников",
+          "status": "PASS",
+          "value": 300,
+          "target": "<= 20000"
+        }
+      ]
+    },
+    {
+      "id": "PT_Sign_5_17_TramStop",
+      "title": "5.17 «Место остановки трамвая» (стилизовано)",
+      "kind": "sign",
+      "fbx": "Assets/DrivingSchool/Art/Transit/PT_Sign_5_17_TramStop.fbx",
+      "fbx_sha256": "e0617e7524802ac7ddbdf202549d3adb7f86bcce198d534e705b102d15dff8a0",
+      "glb": "artifacts/visual-review/transit/models/PT_Sign_5_17_TramStop.glb",
+      "triangles": 436,
+      "bounds_min": [
+        -0.3,
+        -0.065,
+        0.0
+      ],
+      "bounds_max": [
+        0.3,
+        0.175,
+        2.75
+      ],
+      "size": [
+        0.6,
+        0.24,
+        2.75
+      ],
+      "reimport_size": [
+        0.6,
+        0.24,
+        2.75
+      ],
+      "materials": [
+        "PT_Ink",
+        "PT_Sign_Blue",
+        "PT_Sign_White",
+        "PT_Steel"
+      ],
+      "sockets": {
+        "Socket_Front.007": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up.007": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "kind": "sign",
+        "height": 2.75,
+        "plate": 0.6
+      },
+      "checks": [
+        {
+          "id": "Корень в начале координат, без поворота",
+          "status": "PASS",
+          "value": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "target": "loc 0, rot 0"
+        },
+        {
+          "id": "Лицевая сторона -Y (Socket_Front)",
+          "status": "PASS",
+          "value": [
+            0,
+            -1,
+            0
+          ],
+          "target": "(0,-1,0)"
+        },
+        {
+          "id": "Верх +Z (Socket_Up)",
+          "status": "PASS",
+          "value": [
+            0,
+            0,
+            1
+          ],
+          "target": "(0,0,1)"
+        },
+        {
+          "id": "Высота стойки, м",
+          "status": "PASS",
+          "value": 2.75,
+          "target": 2.75
+        },
+        {
+          "id": "Щит смотрит в -Y (к водителю)",
+          "status": "PASS",
+          "value": -0.01,
+          "target": "< 0"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.6,
+            0.24,
+            2.75
+          ],
+          "target": [
+            0.6,
+            0.24,
+            2.75
+          ]
+        },
+        {
+          "id": "Бюджет треугольников",
+          "status": "PASS",
+          "value": 436,
+          "target": "<= 20000"
+        }
+      ]
+    },
+    {
+      "id": "PT_BusStop_Shelter",
+      "title": "Остановочный павильон",
+      "kind": "stop",
+      "fbx": "Assets/DrivingSchool/Art/Transit/PT_BusStop_Shelter.fbx",
+      "fbx_sha256": "62763705d1a3e11ba5b17ba97a48bb88e060602236ba4c89c96674aaacc400d0",
+      "glb": "artifacts/visual-review/transit/models/PT_BusStop_Shelter.glb",
+      "triangles": 6532,
+      "bounds_min": [
+        -2.75,
+        -0.9,
+        0.0
+      ],
+      "bounds_max": [
+        2.2,
+        0.8,
+        2.56
+      ],
+      "size": [
+        4.95,
+        1.7,
+        2.56
+      ],
+      "reimport_size": [
+        4.95,
+        1.7,
+        2.56
+      ],
+      "materials": [
+        "PT_Glass_Clear",
+        "PT_Ink",
+        "PT_Shelter_Frame",
+        "PT_Sign_Blue",
+        "PT_Sign_White",
+        "PT_Wood"
+      ],
+      "sockets": {
+        "Socket_Front.008": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up.008": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "kind": "stop",
+        "width": 4.95,
+        "depth": 1.7,
+        "height": 2.56
+      },
+      "checks": [
+        {
+          "id": "Корень в начале координат, без поворота",
+          "status": "PASS",
+          "value": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "target": "loc 0, rot 0"
+        },
+        {
+          "id": "Лицевая сторона -Y (Socket_Front)",
+          "status": "PASS",
+          "value": [
+            0,
+            -1,
+            0
+          ],
+          "target": "(0,-1,0)"
+        },
+        {
+          "id": "Верх +Z (Socket_Up)",
+          "status": "PASS",
+          "value": [
+            0,
+            0,
+            1
+          ],
+          "target": "(0,0,1)"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            4.95,
+            1.7,
+            2.56
+          ],
+          "target": [
+            4.95,
+            1.7,
+            2.56
+          ]
+        },
+        {
+          "id": "Бюджет треугольников",
+          "status": "PASS",
+          "value": 6532,
+          "target": "<= 20000"
+        }
+      ]
+    },
+    {
+      "id": "PT_TramStop_Platform_30m",
+      "title": "Трамвайная посадочная площадка 30 м",
+      "kind": "platform",
+      "fbx": "Assets/DrivingSchool/Art/Transit/PT_TramStop_Platform_30m.fbx",
+      "fbx_sha256": "b3ac372404cb1056821f1d9ea5d97d9e953fa5b15db9776fd4ebd39fae835992",
+      "glb": "artifacts/visual-review/transit/models/PT_TramStop_Platform_30m.glb",
+      "triangles": 1184,
+      "bounds_min": [
+        -1.25,
+        -15.0,
+        -0.22
+      ],
+      "bounds_max": [
+        1.25,
+        15.0,
+        2.75
+      ],
+      "size": [
+        2.5,
+        30.0,
+        2.97
+      ],
+      "reimport_size": [
+        2.5,
+        30.0,
+        2.97
+      ],
+      "materials": [
+        "PT_Concrete",
+        "PT_Glass_Clear",
+        "PT_Ink",
+        "PT_Marking_Yellow",
+        "PT_Paving",
+        "PT_Shelter_Frame",
+        "PT_Sign_Blue",
+        "PT_Sign_White",
+        "PT_Steel",
+        "PT_Wood"
+      ],
+      "sockets": {
+        "Socket_Front.009": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up.009": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "kind": "platform",
+        "length": 30.0,
+        "width": 2.5,
+        "height": 0.2,
+        "ramp": 1.6,
+        "tram_side": "-X (Unity: left of the platform)"
+      },
+      "checks": [
+        {
+          "id": "Корень в начале координат, без поворота",
+          "status": "PASS",
+          "value": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "target": "loc 0, rot 0"
+        },
+        {
+          "id": "Лицевая сторона -Y (Socket_Front)",
+          "status": "PASS",
+          "value": [
+            0,
+            -1,
+            0
+          ],
+          "target": "(0,-1,0)"
+        },
+        {
+          "id": "Верх +Z (Socket_Up)",
+          "status": "PASS",
+          "value": [
+            0,
+            0,
+            1
+          ],
+          "target": "(0,0,1)"
+        },
+        {
+          "id": "Высота площадки, м",
+          "status": "PASS",
+          "value": 0.2,
+          "target": 0.2
+        },
+        {
+          "id": "Длина площадки, м",
+          "status": "PASS",
+          "value": 30.0,
+          "target": 30.0
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            2.5,
+            30.0,
+            2.97
+          ],
+          "target": [
+            2.5,
+            30.0,
+            2.97
+          ]
+        },
+        {
+          "id": "Бюджет треугольников",
+          "status": "PASS",
+          "value": 1184,
+          "target": "<= 20000"
+        }
+      ]
+    },
+    {
+      "id": "PT_Marking_1_17_Zigzag_20m",
+      "title": "Разметка 1.17 (зигзаг), стилизовано",
+      "kind": "marking",
+      "fbx": "Assets/DrivingSchool/Art/Transit/PT_Marking_1_17_Zigzag_20m.fbx",
+      "fbx_sha256": "6ca6ce9326540db563f16cfcf69afda4ed413c2f092a1297b02dae4e5ae6077e",
+      "glb": "artifacts/visual-review/transit/models/PT_Marking_1_17_Zigzag_20m.glb",
+      "triangles": 240,
+      "bounds_min": [
+        -0.0354,
+        -20.0354,
+        0.006
+      ],
+      "bounds_max": [
+        1.0354,
+        0.0354,
+        0.009
+      ],
+      "size": [
+        1.0707,
+        20.0707,
+        0.003
+      ],
+      "reimport_size": [
+        1.0707,
+        20.0707,
+        0.003
+      ],
+      "materials": [
+        "PT_Marking_Yellow"
+      ],
+      "sockets": {
+        "Socket_End.003": [
+          0.0,
+          -20.0,
+          0.0
+        ],
+        "Socket_Front.010": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start.003": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Up.010": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "kind": "marking",
+        "length": 20.0,
+        "width": 1.1
+      },
+      "checks": [
+        {
+          "id": "Корень в начале координат, без поворота",
+          "status": "PASS",
+          "value": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "target": "loc 0, rot 0"
+        },
+        {
+          "id": "Лицевая сторона -Y (Socket_Front)",
+          "status": "PASS",
+          "value": [
+            0,
+            -1,
+            0
+          ],
+          "target": "(0,-1,0)"
+        },
+        {
+          "id": "Верх +Z (Socket_Up)",
+          "status": "PASS",
+          "value": [
+            0,
+            0,
+            1
+          ],
+          "target": "(0,0,1)"
+        },
+        {
+          "id": "Разметка лежит на 6..9 мм",
+          "status": "PASS",
+          "value": [
+            0.006,
+            0.009
+          ],
+          "target": "0.006..0.009"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            1.0707,
+            20.0707,
+            0.003
+          ],
+          "target": [
+            1.0707,
+            20.0707,
+            0.003
+          ]
+        },
+        {
+          "id": "Бюджет треугольников",
+          "status": "PASS",
+          "value": 240,
+          "target": "<= 20000"
+        }
+      ]
+    }
+  ],
+  "source": "ArtSource/DS_TransitKit.blend",
+  "source_sha256": "60757b60b22b6d0c4f7258c0e7628470a6186549c9653767b7f5fe08baa9ae34",
+  "failed_checks": []
+}
