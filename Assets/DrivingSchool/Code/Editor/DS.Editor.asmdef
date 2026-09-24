@@ -13,7 +13,9 @@
     "Unity.InputSystem",
     "Unity.XR.Management",
     "Unity.XR.OpenXR",
-    "Unity.TextMeshPro"
+    "Unity.TextMeshPro",
+    "DS.Presentation.UI",
+    "UnityEngine.UI"
   ],
   "includePlatforms": [
     "Editor"

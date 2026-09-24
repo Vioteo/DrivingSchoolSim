@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Настройки — макет</title>
+<meta name="description" content="Интерактивный макет экрана «Настройки» DrivingSchoolSim: вкладки, применение, несохранённые изменения, подтверждение разрешения, клавиатурная навигация.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Цвета — только через токены ниже. */
+:root{
+  /* Тема по умолчанию — «Асфальт». Дополнительные темы (Графит, Знак, Бирюза) — THEMES в скрипте, пункт «Тема интерфейса». */
+  --bg-dark:#161718; --bg-panel:#1E2021; --bg-card:#26292B; --bg-row-hover:#2D3033;
+  --accent:#FFD84D; --accent-soft:rgba(255,216,77,.10); --accent-line:rgba(255,216,77,.5); --on-accent:#1A1A1A;
+  --cyan:#F2F2F2; --red:#E5484D; --green:#3DBE6B;
+  --text:#F4F4F2; --text-2:#B3B5B6; --muted:#6E7173;
+  --line:rgba(255,255,255,.08); --track:#3A3D40;
+  --chrome:#0F1011; --chrome-a:rgba(15,16,17,.9); --glass:rgba(30,32,33,.95);
+  --drive-a:#2A2C2E; --drive-b:#232527; --drive-shade:rgba(22,23,24,.6); --drive-shade2:rgba(22,23,24,.93);
+  --f-head:'Golos Text',system-ui,sans-serif; --f-body:'Golos Text',system-ui,sans-serif; --f-mono:'Roboto Mono',ui-monospace,monospace;
+  --r:2px; --t:150ms ease-in-out;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg-dark);color:var(--text-2);font:15px/1.45 var(--f-body);overflow-x:hidden}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+h1,h2,h3{font-family:var(--f-head);color:var(--text);text-transform:uppercase;letter-spacing:.03em;font-weight:700}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ---- Панель ревью (не часть игры) ---- */
+.review{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;padding:8px 16px;background:var(--chrome);border-bottom:1px dashed var(--line);font-size:12px;color:var(--muted)}
+.review b{color:var(--text-2);font-weight:600}
+.review .seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line)}
+.review .seg button{padding:3px 10px;font-size:12px;color:var(--text-2)}
+.review .seg button[aria-pressed=true]{background:var(--accent-soft);color:var(--accent)}
+.review a{color:var(--cyan)}
+
+/* ---- Игровой кадр ---- */
+.stage{position:relative;height:calc(100vh - 38px);min-height:520px;display:flex;flex-direction:column}
+.stage.in-drive{background:linear-gradient(180deg,var(--drive-shade),var(--drive-shade2)),repeating-linear-gradient(115deg,var(--drive-a) 0 40px,var(--drive-b) 40px 80px)}
+.topbar{display:flex;align-items:center;gap:16px;padding:20px clamp(16px,4vw,56px) 0}
+.crumb{font-family:var(--f-head);font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.crumb span{color:var(--text-2)}
+.topbar h1{font-size:clamp(26px,3vw,40px);margin-right:auto}
+.dirty{display:none;align-items:center;gap:8px;font-size:13px;color:var(--accent)}
+.dirty.on{display:inline-flex}
+.dirty i{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+
+.tabs{display:flex;gap:4px;padding:16px clamp(16px,4vw,56px) 0;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs .key{font:600 11px var(--f-mono);color:var(--muted);border:1px solid var(--line);padding:1px 5px;align-self:center}
+.tab{font:700 17px var(--f-head);text-transform:uppercase;letter-spacing:.05em;padding:10px 18px 12px;color:var(--text-2);border-bottom:3px solid transparent;white-space:nowrap;transition:var(--t)}
+.tab:hover{color:var(--text)}
+.tab[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent)}
+
+.body{flex:1;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,380px);gap:clamp(16px,3vw,40px);padding:20px clamp(16px,4vw,56px);min-height:0}
+.list{display:flex;flex-direction:column;gap:2px;overflow:auto;padding-right:4px}
+.group{font:700 13px var(--f-head);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:16px 14px 6px}
+.group:first-child{padding-top:0}
+
+.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,300px);align-items:center;gap:16px;min-height:52px;padding:8px 14px;background:var(--bg-card);border-left:3px solid transparent;transition:background var(--t),border-color var(--t)}
+.row:hover{background:var(--bg-row-hover)}
+.row:focus{outline:none}
+.row:focus-visible,.row.focus{border-left-color:var(--accent);background:var(--accent-soft)}
+.row .name{color:var(--text);font-weight:500;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row .changed{width:6px;height:6px;border-radius:50%;background:var(--accent);visibility:hidden}
+.row.is-changed .changed{visibility:visible}
+.row.disabled .name,.row.disabled .ctl{opacity:.45}
+.badge{font:600 10px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:3px 6px;border:1px solid currentColor;border-radius:var(--r)}
+.badge.stub{color:var(--muted)}
+.badge.lock{color:var(--cyan)}
+.badge.restart{color:var(--accent)}
+
+/* Переключатель ◀ значение ▶ — удобен для руля/крестовины и стрелок */
+.cycler{display:grid;grid-template-columns:32px 1fr 32px;align-items:center;height:36px;border:1px solid var(--line);background:var(--bg-panel)}
+.cycler button{height:100%;color:var(--text-2)}
+.cycler button:hover{color:var(--accent);background:var(--accent-soft)}
+.cycler output{text-align:center;color:var(--text);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 4px}
+.cycler .pips{display:flex;gap:3px;justify-content:center;grid-column:1/-1;margin-top:-6px;pointer-events:none}
+
+.slider{display:grid;grid-template-columns:1fr 64px;gap:12px;align-items:center}
+.slider output{font:600 14px var(--f-mono);color:var(--text);text-align:right}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:linear-gradient(var(--accent),var(--accent)) 0/var(--p,50%) 100% no-repeat,var(--track);border-radius:2px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;background:var(--bg-panel);border:3px solid var(--accent);border-radius:50%}
+input[type=range]::-moz-range-thumb{width:12px;height:12px;background:var(--bg-panel);border:3px solid var(--accent);border-radius:50%}
+input[type=range]:disabled{filter:grayscale(1)}
+
+.switch{justify-self:start;display:inline-flex;align-items:center;gap:10px;color:var(--text)}
+.switch .track{width:44px;height:24px;border-radius:12px;background:var(--track);position:relative;transition:var(--t)}
+.switch .track::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--text-2);transition:var(--t)}
+.switch[aria-checked=true] .track{background:var(--accent)}
+.switch[aria-checked=true] .track::after{left:23px;background:var(--on-accent)}
+
+.action{justify-self:start;height:36px;padding:0 16px;border:1px solid var(--line);background:var(--bg-panel);color:var(--text);font-weight:500}
+.action:hover{border-color:var(--accent-line);color:var(--accent)}
+
+/* Правая колонка: пояснение к активной настройке */
+.help{background:var(--bg-panel);border:1px solid var(--line);padding:20px;align-self:start;position:sticky;top:20px}
+.help h3{font-size:22px;margin-bottom:8px}
+.help p{margin-bottom:12px}
+.help dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px;border-top:1px solid var(--line);padding-top:12px}
+.help dt{color:var(--muted)}
+.help dd{color:var(--text-2);font-family:var(--f-mono);font-size:12px}
+.device{display:flex;align-items:center;gap:10px;padding:10px 12px;margin-bottom:14px;background:var(--bg-card);font-size:13px}
+.device i{width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px rgba(229,72,77,.2)}
+.device.ok i{background:var(--green);box-shadow:0 0 0 3px rgba(61,190,107,.2)}
+
+/* Нижняя панель: подсказки клавиш + действия */
+.footer{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;padding:14px clamp(16px,4vw,56px);border-top:1px solid var(--line);background:var(--chrome-a)}
+.hints{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;margin-right:auto}
+.hints kbd{font:600 11px var(--f-mono);color:var(--text);border:1px solid var(--line);border-bottom-width:2px;padding:1px 6px;margin-right:6px;background:var(--bg-card)}
+.btn{height:44px;padding:0 22px;font:700 16px var(--f-head);text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--line);background:var(--bg-card);color:var(--text);transition:var(--t)}
+.btn:hover{border-color:var(--accent-line);color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.1);color:var(--on-accent)}
+.btn:disabled{opacity:.35;pointer-events:none}
+
+/* Диалоги */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+.scrim.on{display:flex}
+.dialog{width:min(520px,100%);background:var(--bg-panel);border:1px solid var(--line);border-top:3px solid var(--accent);padding:24px}
+.dialog h2{font-size:26px;margin-bottom:8px}
+.dialog p{margin-bottom:20px}
+.dialog .count{font:600 40px var(--f-mono);color:var(--accent);margin-bottom:12px}
+.dialog .row-btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
+
+.toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%);background:var(--bg-card);border-left:3px solid var(--green);color:var(--text);padding:10px 18px;display:none;z-index:20}
+
+/* Главное меню (точка входа) */
+.menu{flex:1;display:grid;grid-template-columns:minmax(0,420px) 1fr;gap:40px;padding:clamp(24px,6vh,72px) clamp(16px,4vw,56px)}
+.menu h1{font-size:clamp(34px,4vw,56px);line-height:1}
+.menu .sub{color:var(--muted);margin:6px 0 32px}
+.menu nav{display:flex;flex-direction:column;gap:4px}
+.menu nav button{text-align:left;padding:14px 18px;font:700 22px var(--f-head);text-transform:uppercase;letter-spacing:.04em;background:var(--bg-card);border-left:3px solid transparent;color:var(--text);display:flex;justify-content:space-between;align-items:center}
+.menu nav button:hover,.menu nav button:focus-visible{border-left-color:var(--accent);background:var(--accent-soft);outline:none;color:var(--accent)}
+.menu nav button[aria-disabled=true]{color:var(--muted)}
+.menu .aside{align-self:end;justify-self:end;max-width:420px;background:var(--bg-panel);border:1px solid var(--line);padding:20px}
+
+.pause{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.pause .card{width:min(440px,100%);background:var(--glass);border:1px solid var(--line);padding:24px}
+.pause h2{font-size:30px;margin-bottom:16px}
+.pause nav{display:flex;flex-direction:column;gap:4px}
+.pause nav button{text-align:left;padding:12px 16px;font:700 19px var(--f-head);text-transform:uppercase;background:var(--bg-card);border-left:3px solid transparent;color:var(--text)}
+.pause nav button:hover,.pause nav button:focus-visible{border-left-color:var(--accent);background:var(--accent-soft);outline:none}
+
+[hidden]{display:none!important}
+
+@media (max-width:860px){
+  .stage{height:auto}
+  .body{overflow:visible}
+  .body{grid-template-columns:1fr}
+  .help{position:static;order:-1}
+  .help dl{display:none}
+  .row{grid-template-columns:1fr}
+  .menu{grid-template-columns:1fr}
+  .menu .aside{justify-self:stretch}
+}
+</style>
+</head>
+<body>
+
+<div class="review" role="note">
+  <b>Макет, не игра.</b>
+  Открыто из:
+  <span class="seg" id="ctxSeg">
+    <button aria-pressed="true" data-ctx="menu">Главного меню</button>
+    <button aria-pressed="false" data-ctx="drive">Паузы во время поездки</button>
+  </span>
+  Руль G29:
+  <span class="seg" id="devSeg">
+    <button aria-pressed="false" data-dev="1">подключён</button>
+    <button aria-pressed="true" data-dev="0">не найден</button>
+  </span>
+  <span>Спецификация: <a href="../../../docs/ui-settings.md">docs/ui-settings.md</a></span>
+</div>
+
+<div class="stage" id="stage">
+
+  <!-- Главное меню -->
+  <section id="scr-menu" class="menu" aria-label="Главное меню">
+    <div>
+      <h1>DrivingSchoolSim</h1>
+      <div class="sub">Подготовка к практическому экзамену · категория B</div>
+      <nav id="menuNav">
+        <button data-go="none">Продолжить занятие</button>
+        <button data-go="none">Занятия</button>
+        <button data-go="none">Теория ПДД</button>
+        <button aria-disabled="true" data-go="none">Экзаменационный маршрут <span class="badge stub">скоро</span></button>
+        <button data-go="settings">Настройки</button>
+        <button data-go="exit">Выход</button>
+      </nav>
+    </div>
+    <div class="aside">
+      <h3 style="font-size:18px;margin-bottom:6px">Точка входа</h3>
+      <p>Настройки открываются из главного меню и из паузы. В обоих случаях это один экран; во время поездки часть пунктов заблокирована.</p>
+    </div>
+  </section>
+
+  <!-- Пауза -->
+  <section id="scr-pause" class="pause" aria-label="Пауза" hidden>
+    <div class="card">
+      <h2>Пауза</h2>
+      <nav id="pauseNav">
+        <button data-go="resume">Продолжить</button>
+        <button data-go="settings">Настройки</button>
+        <button data-go="none">Начать занятие заново</button>
+        <button data-go="menu">Выйти в меню</button>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Настройки -->
+  <section id="scr-settings" aria-label="Настройки" hidden style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <div class="topbar">
+      <h1>Настройки</h1>
+      <span class="dirty" id="dirty"><i></i><span id="dirtyText">Есть несохранённые изменения</span></span>
+    </div>
+    <div class="crumb" style="padding:4px clamp(16px,4vw,56px) 0" id="crumb"></div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="body">
+      <div class="list" id="list" role="tabpanel"></div>
+      <aside class="help" id="help" aria-live="polite"></aside>
+    </div>
+    <div class="footer">
+      <div class="hints">
+        <span><kbd>↑↓</kbd>Пункт</span>
+        <span><kbd>←→</kbd>Значение</span>
+        <span><kbd>Q</kbd><kbd>E</kbd>Вкладка</span>
+        <span><kbd>R</kbd>Сброс пункта</span>
+        <span><kbd>Esc</kbd>Назад</span>
+      </div>
+      <button class="btn" id="btnDefaults">По умолчанию</button>
+      <button class="btn" id="btnRevert" disabled>Отменить</button>
+      <button class="btn primary" id="btnApply" disabled>Применить</button>
+    </div>
+  </section>
+</div>
+
+<!-- Диалог: несохранённые изменения -->
+<div class="scrim" id="dlgUnsaved" role="dialog" aria-modal="true" aria-labelledby="dlgUnsavedT">
+  <div class="dialog">
+    <h2 id="dlgUnsavedT">Сохранить изменения?</h2>
+    <p id="dlgUnsavedP">Изменённые настройки ещё не применены.</p>
+    <div class="row-btns">
+      <button class="btn" data-a="cancel">Остаться</button>
+      <button class="btn" data-a="discard">Не сохранять</button>
+      <button class="btn primary" data-a="save">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<!-- Диалог: подтверждение режима экрана -->
+<div class="scrim" id="dlgConfirm" role="dialog" aria-modal="true" aria-labelledby="dlgConfirmT">
+  <div class="dialog">
+    <h2 id="dlgConfirmT">Оставить этот режим экрана?</h2>
+    <div class="count" id="countdown">15</div>
+    <p>Если изображение пропало или нечитаемо, ничего не нажимайте — прежний режим вернётся автоматически.</p>
+    <div class="row-btns">
+      <button class="btn" data-a="revert">Вернуть прежний</button>
+      <button class="btn primary" data-a="keep">Оставить</button>
+    </div>
+  </div>
+</div>
+
+<!-- Диалог: выход / сброс -->
+<div class="scrim" id="dlgAsk" role="dialog" aria-modal="true" aria-labelledby="dlgAskT">
+  <div class="dialog">
+    <h2 id="dlgAskT"></h2>
+    <p id="dlgAskP"></p>
+    <div class="row-btns">
+      <button class="btn" data-a="no">Отмена</button>
+      <button class="btn primary" data-a="yes" id="dlgAskYes"></button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Схема настроек. Ключи и значения по умолчанию = docs/ui-settings.md.
+// status: ok — работает в текущей сборке; stub — подсистемы нет, пункт виден и подписан.
+// lockDrive — нельзя менять во время поездки; confirm — применяется с 15-секундным откатом.
+const RES = ['1280 × 720','1600 × 900','1920 × 1080','2560 × 1440'];
+const TABS = [
+ {id:'graphics', title:'Графика', groups:[
+  {title:'Экран', items:[
+   {key:'graphics.displayMode', label:'Режим экрана', type:'cycle', options:['Полный экран','Окно без рамки','Окно'], def:0, confirm:true,
+    help:'Полный экран даёт наименьшую задержку. Окно без рамки удобно, если рядом открыт другой монитор.'},
+   {key:'graphics.resolution', label:'Разрешение', type:'cycle', options:RES, def:2, confirm:true,
+    help:'Целевое разрешение проекта — 1920 × 1080. Интерфейс проверяется на 1920 × 1080 и 1280 × 720.'},
+   {key:'graphics.vSync', label:'Вертикальная синхронизация', type:'switch', def:true,
+    help:'Убирает разрывы кадра. При включении ограничение FPS не действует.'},
+   {key:'graphics.fpsLimit', label:'Ограничение FPS', type:'cycle', options:['30','60','120','Без ограничения'], def:1, dependsOff:'graphics.vSync',
+    help:'Не влияет на физику: шаг симуляции фиксированный и не зависит от FPS.'},
+  ]},
+  {title:'Качество', items:[
+   {key:'graphics.qualityPreset', label:'Общее качество', type:'cycle', options:['Низкое','Среднее','Высокое','Своё'], def:2,
+    help:'Пресет задаёт пункты ниже. Если изменить любой из них вручную, пресет станет «Своё».'},
+   {key:'graphics.mirrorQuality', label:'Качество зеркал', type:'cycle', options:['Низкое','Среднее','Высокое'], def:1,
+    help:'Разрешение и частота обновления трёх зеркал заднего вида. Зеркала — главный потребитель GPU в салоне.'},
+   {key:'graphics.shadows', label:'Тени', type:'cycle', options:['Выкл.','Низкие','Средние','Высокие'], def:2, preset:true, help:'Качество теней от солнца и фар.'},
+   {key:'graphics.antiAliasing', label:'Сглаживание', type:'cycle', options:['Выкл.','FXAA','SMAA','MSAA 4×'], def:2, preset:true, help:'MSAA даёт самый чистый край, но дороже по производительности.'},
+   {key:'graphics.drawDistance', label:'Дальность прорисовки', type:'slider', min:200, max:1500, step:50, unit:' м', def:800, preset:true,
+    help:'Дальность отрисовки объектов и трафика. На площадке автодрома почти не влияет.'},
+  ]},
+ ]},
+ {id:'controls', title:'Управление', device:true, groups:[
+  {title:'Устройство', items:[
+   {key:'controls.device', label:'Устройство ввода', type:'cycle', options:['Клавиатура','Logitech G29'], def:0, lockDrive:true,
+    help:'Руль G29 выбирается, только когда он подключён. Если руль отключится во время поездки, газ сбрасывается в 0 и включается пауза.'},
+   {key:'controls.calibrate', label:'Калибровка руля и педалей', type:'action', text:'Открыть →', needsWheel:true,
+    help:'Отдельный экран: проверка осей, крайних положений педалей и передач H-шифтера.'},
+  ]},
+  {title:'Руль', items:[
+   {key:'controls.steeringLock', label:'Угол поворота руля', type:'slider', min:180, max:900, step:10, unit:'°', def:900, needsWheel:true,
+    help:'У G29 900° — от упора до упора. Угол должен совпадать с настройкой драйвера Logitech, иначе руль и колёса разойдутся.'},
+   {key:'controls.steeringDeadzone', label:'Мёртвая зона руля', type:'slider', min:0, max:10, step:1, unit:' %', def:0, needsWheel:true,
+    help:'Для исправного G29 не нужна. Увеличивайте, только если машину тянет в сторону при отпущенном руле.'},
+   {key:'controls.steeringLinearity', label:'Линейность', type:'slider', min:0, max:100, step:5, unit:' %', def:0,
+    help:'0 % — отклик линейный. Больше — точнее в центре и резче у краёв.'},
+   {key:'controls.keyboardSteerSpeed', label:'Скорость руления с клавиатуры', type:'slider', min:20, max:200, step:10, unit:' %', def:100, keyboardOnly:true,
+    help:'С какой скоростью колёса поворачиваются и возвращаются в центр, пока клавиша нажата.'},
+  ]},
+  {title:'Педали', items:[
+   {key:'controls.invertPedals', label:'Инвертировать педали', type:'switch', def:false, needsWheel:true,
+    help:'Включите, если отпущенная педаль в калибровке показывает 100 %.'},
+   {key:'controls.pedalDeadzone', label:'Мёртвая зона педалей', type:'slider', min:0, max:15, step:1, unit:' %', def:3, needsWheel:true,
+    help:'Защищает от самопроизвольного газа и тормоза из-за изношенных потенциометров.'},
+  ]},
+  {title:'Обратная связь', items:[
+   {key:'controls.ffbStrength', label:'Сила обратной связи (FFB)', type:'slider', min:0, max:100, step:5, unit:' %', def:60, stub:true, needsWheel:true,
+    help:'Force feedback пока не реализован. Когда появится, первое включение будет со слабым усилием.'},
+   {key:'controls.rebind', label:'Переназначение кнопок', type:'action', text:'Открыть →', stub:true, help:'Пока не реализовано. Раскладка фиксированная.'},
+  ]},
+ ]},
+ {id:'audio', title:'Звук', groups:[
+  {title:'Громкость', items:[
+   {key:'audio.master', label:'Общая', type:'slider', min:0, max:100, step:5, unit:' %', def:80, stub:true, help:'Звука в проекте пока нет. Значения сохраняются заранее.'},
+   {key:'audio.engine', label:'Двигатель', type:'slider', min:0, max:100, step:5, unit:' %', def:80, stub:true, help:'Звук двигателя помогает трогаться без тахометра — это часть навыка.'},
+   {key:'audio.environment', label:'Окружение и трафик', type:'slider', min:0, max:100, step:5, unit:' %', def:70, stub:true, help:'Другие машины, пешеходы, погода.'},
+   {key:'audio.instructor', label:'Голос инструктора', type:'slider', min:0, max:100, step:5, unit:' %', def:100, stub:true, help:'Подсказки и замечания инструктора.'},
+   {key:'audio.ui', label:'Интерфейс', type:'slider', min:0, max:100, step:5, unit:' %', def:60, stub:true, help:'Щелчки меню и уведомления.'},
+  ]},
+  {title:'Поведение', items:[
+   {key:'audio.muteInBackground', label:'Без звука в свёрнутом окне', type:'switch', def:true, stub:true, help:'Отключать звук, когда окно игры не в фокусе.'},
+  ]},
+ ]},
+ {id:'gameplay', title:'Обучение', groups:[
+  {title:'Автомобиль', items:[
+   {key:'gameplay.transmission', label:'Коробка передач', type:'cycle', options:['МКПП','АКПП'], def:0, lockDrive:true,
+    help:'Тип коробки учебного автомобиля для новых поездок.'},
+   {key:'gameplay.antiStall', label:'Помощник: двигатель не глохнет', type:'switch', def:false, lockDrive:true,
+    help:'Для первых занятий. Включённый помощник отмечается в разборе поездки.'},
+   {key:'gameplay.autoClutch', label:'Помощник: автосцепление', type:'switch', def:false, lockDrive:true,
+    help:'Сцепление выжимается само при переключении передач. Отмечается в разборе поездки.'},
+  ]},
+  {title:'Инструктор', items:[
+   {key:'gameplay.instructorHints', label:'Подсказки инструктора', type:'cycle', options:['Все','Только ошибки','Выкл.'], def:0,
+    help:'«Все» — предупреждения перед манёвром. «Только ошибки» — замечания после нарушения. Штрафы начисляются всегда.'},
+   {key:'gameplay.subtitles', label:'Субтитры', type:'switch', def:true, help:'Текст подсказок внизу экрана.'},
+  ]},
+  {title:'Камера и HUD', items:[
+   {key:'gameplay.defaultCamera', label:'Камера при старте', type:'cycle', options:['Из салона','Сзади'], def:0,
+    help:'Основной вид для обучения — из салона: так видны зеркала и приборы.'},
+   {key:'gameplay.fov', label:'Угол обзора (FOV)', type:'slider', min:50, max:100, step:1, unit:'°', def:75,
+    help:'Вертикальный угол обзора из салона. Меньше — ближе к реальной перспективе на одном мониторе.'},
+   {key:'gameplay.hud', label:'Показывать HUD', type:'cycle', options:['Полный','Минимальный','Выкл.'], def:0,
+    help:'Минимальный HUD — скорость, передача и замечания. Приборная панель в салоне работает всегда.'},
+  ]},
+  {title:'Интерфейс', items:[
+   {key:'gameplay.uiTheme', label:'Тема интерфейса', type:'cycle', options:['Асфальт','Графит','Знак','Бирюза'], def:0, preview:true,
+    help:'Цвета меню и HUD. Изменение видно сразу; без «Применить» тема вернётся к прежней.'},
+   {key:'gameplay.uiScale', label:'Масштаб интерфейса', type:'slider', min:80, max:130, step:5, unit:' %', def:100,
+    help:'Размер меню и HUD. Полезно на больших мониторах и при слабом зрении.'},
+   {key:'gameplay.language', label:'Язык интерфейса', type:'cycle', options:['Русский'], def:0, help:'Пока доступен только русский.'},
+  ]},
+ ]},
+];
+
+// ---- состояние ----
+const items = TABS.flatMap(t => t.groups.flatMap(g => g.items));
+const byKey = Object.fromEntries(items.map(i => [i.key, i]));
+let saved = Object.fromEntries(items.filter(i => i.type !== 'action').map(i => [i.key, i.def]));
+let draft = {...saved};
+let tab = 0, ctx = 'menu', wheel = false, screen = 'menu', focusKey = null;
+
+const $ = s => document.querySelector(s);
+const dirtyKeys = () => Object.keys(draft).filter(k => draft[k] !== saved[k]);
+const fmt = (it, v) => it.type === 'cycle' ? it.options[v] : it.type === 'switch' ? (v ? 'Вкл.' : 'Выкл.') : v + (it.unit || '');
+
+function disabledReason(it) {
+  if (it.stub) return {badge:'stub', text:'скоро'};
+  if (ctx === 'drive' && it.lockDrive) return {badge:'lock', text:'после поездки'};
+  if (it.needsWheel && !wheel) return {badge:'lock', text:'нет руля'};
+  if (it.keyboardOnly && draft['controls.device'] === 1) return {badge:'lock', text:'только клавиатура'};
+  if (it.dependsOff && draft[it.dependsOff]) return {badge:'lock', text:'vsync вкл.'};
+  return null;
+}
+
+function renderTabs() {
+  $('#tabs').innerHTML = '<span class="key">Q</span>' + TABS.map((t, i) =>
+    `<button class="tab" role="tab" aria-selected="${i === tab}" data-tab="${i}">${t.title}</button>`).join('') + '<span class="key">E</span>';
+}
+
+function control(it, v, dis) {
+  const d = dis ? 'disabled' : '';
+  if (it.type === 'cycle') return `<div class="cycler"><button ${d} data-step="-1" aria-label="Предыдущее" tabindex="-1">◀</button><output>${it.options[v]}</output><button ${d} data-step="1" aria-label="Следующее" tabindex="-1">▶</button></div>`;
+  if (it.type === 'switch') return `<button class="switch" role="switch" aria-checked="${v}" ${d} tabindex="-1"><span class="track"></span>${v ? 'Вкл.' : 'Выкл.'}</button>`;
+  if (it.type === 'slider') { const p = (v - it.min) / (it.max - it.min) * 100;
+    return `<div class="slider"><input type="range" min="${it.min}" max="${it.max}" step="${it.step}" value="${v}" style="--p:${p}%" ${d} tabindex="-1" aria-label="${it.label}"><output>${v}${it.unit}</output></div>`; }
+  if (it.type === 'action') return `<button class="action" ${d} tabindex="-1">${it.text}</button>`;
+}
+
+function renderList() {
+  applyTheme(draft['gameplay.uiTheme']);
+  const t = TABS[tab];
+  let html = '';
+  for (const g of t.groups) {
+    html += `<div class="group">${g.title}</div>`;
+    for (const it of g.items) {
+      const r = disabledReason(it), v = draft[it.key];
+      const changed = it.type !== 'action' && v !== saved[it.key];
+      const extra = it.confirm ? '<span class="badge restart">с подтверждением</span>' : '';
+      html += `<div class="row ${r ? 'disabled' : ''} ${changed ? 'is-changed' : ''} ${it.key === focusKey ? 'focus' : ''}" tabindex="0" data-key="${it.key}">
+        <div class="name"><span class="changed" title="Изменено"></span>${it.label}${r ? `<span class="badge ${r.badge}">${r.text}</span>` : extra}</div>
+        <div class="ctl">${control(it, v, !!r)}</div></div>`;
+    }
+  }
+  $('#list').innerHTML = html;
+  if (!focusKey || !byKey[focusKey] || !t.groups.some(g => g.items.includes(byKey[focusKey]))) focusKey = t.groups[0].items[0].key;
+  renderHelp();
+  renderFooter();
+}
+
+function renderHelp() {
+  const it = byKey[focusKey], r = disabledReason(it);
+  const dev = TABS[tab].device ? `<div class="device ${wheel ? 'ok' : ''}"><i></i>${wheel ? 'Logitech G29 подключён' : 'Руль не найден — доступна клавиатура'}</div>` : '';
+  const meta = it.type === 'action' ? '' : `<dl><dt>Ключ</dt><dd>${it.key}</dd><dt>По умолчанию</dt><dd>${fmt(it, it.def)}</dd>
+    <dt>Применение</dt><dd>${it.confirm ? 'с откатом через 15 с' : it.preview ? 'предпросмотр сразу, сохранение по «Применить»' : it.lockDrive ? 'до начала поездки' : 'сразу после «Применить»'}</dd></dl>`;
+  const note = r ? `<p style="color:var(--cyan)">${{stub:'Функция ещё не реализована. Значение сохраняется, но ни на что не влияет.', lock:reasonText(it)}[r.badge]}</p>` : '';
+  $('#help').innerHTML = `${dev}<h3>${it.label}</h3><p>${it.help}</p>${note}${meta}`;
+}
+function reasonText(it) {
+  if (ctx === 'drive' && it.lockDrive) return 'Меняется только до начала поездки. Выйдите в меню или начните занятие заново.';
+  if (it.needsWheel && !wheel) return 'Подключите руль G29, чтобы изменить этот параметр.';
+  if (it.keyboardOnly) return 'Действует только при управлении с клавиатуры.';
+  if (it.dependsOff) return 'Отключите вертикальную синхронизацию, чтобы задать лимит.';
+  return '';
+}
+
+function renderFooter() {
+  const n = dirtyKeys().length;
+  $('#btnApply').disabled = $('#btnRevert').disabled = n === 0;
+  $('#dirty').classList.toggle('on', n > 0);
+  $('#dirtyText').textContent = n === 1 ? 'Изменён 1 параметр' : `Изменено параметров: ${n}`;
+  $('#crumb').innerHTML = ctx === 'menu' ? 'Главное меню / <span>Настройки</span>' : 'Поездка · пауза / <span>Настройки</span>';
+}
+
+function setValue(key, v) {
+  const it = byKey[key];
+  draft[key] = v;
+  if (it.preset) draft['graphics.qualityPreset'] = 3;
+  if (key === 'graphics.qualityPreset' && v < 3) {
+    const P = [[1,1,400],[2,2,800],[3,3,1200]][v];
+    Object.assign(draft, {'graphics.shadows':P[0],'graphics.antiAliasing':P[1],'graphics.drawDistance':P[2]});
+  }
+  renderList(); focusRow(key);
+}
+
+function step(key, dir) {
+  const it = byKey[key]; if (disabledReason(it)) return;
+  const v = draft[key];
+  if (it.type === 'cycle') {
+    let n = (v + dir + it.options.length) % it.options.length;
+    if (key === 'controls.device' && n === 1 && !wheel) { toast('Руль G29 не подключён'); return; }
+    if (key === 'graphics.qualityPreset' && n === 3) n = (n + dir + 4) % 4; // «Своё» не выбирается вручную
+    setValue(key, n);
+  } else if (it.type === 'switch') setValue(key, !v);
+  else if (it.type === 'slider') setValue(key, Math.min(it.max, Math.max(it.min, v + dir * it.step)));
+}
+
+function focusRow(key) {
+  focusKey = key;
+  document.querySelectorAll('.row').forEach(r => r.classList.toggle('focus', r.dataset.key === key));
+  const el = document.querySelector(`.row[data-key="${CSS.escape(key)}"]`);
+  if (el && document.activeElement !== el) el.focus({preventScroll:false});
+  renderHelp();
+}
+
+function activate(key) {
+  const it = byKey[key]; if (disabledReason(it)) return;
+  if (it.type === 'action') toast(it.key === 'controls.calibrate' ? 'Переход на экран калибровки' : '');
+  else if (it.type !== 'slider') step(key, 1);
+}
+
+// ---- применение ----
+let timer = null;
+function apply() {
+  const needConfirm = dirtyKeys().some(k => byKey[k].confirm);
+  const prev = {...saved};
+  saved = {...draft};
+  renderList();
+  if (!needConfirm) return toast('Настройки применены и сохранены');
+  let s = 15; $('#countdown').textContent = s; openDlg('#dlgConfirm');
+  timer = setInterval(() => { s--; $('#countdown').textContent = s; if (s <= 0) finishConfirm(false, prev); }, 1000);
+  $('#dlgConfirm').onclick = e => { const a = e.target.dataset.a; if (a) finishConfirm(a === 'keep', prev); };
+}
+function finishConfirm(keep, prev) {
+  clearInterval(timer); closeDlg('#dlgConfirm');
+  if (!keep) { for (const k of Object.keys(byKey)) if (byKey[k].confirm) { saved[k] = prev[k]; draft[k] = prev[k]; } toast('Прежний режим экрана восстановлен'); }
+  else toast('Настройки применены и сохранены');
+  renderList();
+}
+
+// ---- диалоги ----
+let dlgBack = null;
+function openDlg(id) { $(id).classList.add('on'); dlgBack = document.activeElement; setTimeout(() => $(id).querySelector('.btn.primary').focus()); }
+function closeDlg(id) { $(id).classList.remove('on'); dlgBack && dlgBack.focus && dlgBack.focus(); }
+function ask(title, text, yes, cb) {
+  $('#dlgAskT').textContent = title; $('#dlgAskP').textContent = text; $('#dlgAskYes').textContent = yes;
+  openDlg('#dlgAsk');
+  $('#dlgAsk').onclick = e => { const a = e.target.dataset.a; if (!a) return; closeDlg('#dlgAsk'); if (a === 'yes') cb(); };
+}
+function leaveSettings() {
+  if (!dirtyKeys().length) return go(ctx === 'menu' ? 'menu' : 'pause');
+  $('#dlgUnsavedP').textContent = `Не применено параметров: ${dirtyKeys().length}. Если выйти без сохранения, они вернутся к прежним значениям.`;
+  openDlg('#dlgUnsaved');
+  $('#dlgUnsaved').onclick = e => {
+    const a = e.target.dataset.a; if (!a) return; closeDlg('#dlgUnsaved');
+    if (a === 'save') { apply(); if (!$('#dlgConfirm').classList.contains('on')) go(ctx === 'menu' ? 'menu' : 'pause'); }
+    if (a === 'discard') { draft = {...saved}; go(ctx === 'menu' ? 'menu' : 'pause'); }
+  };
+}
+
+// ---- экраны ----
+function go(s) {
+  screen = s;
+  applyTheme(draft['gameplay.uiTheme']);
+  $('#scr-menu').hidden = s !== 'menu';
+  $('#scr-pause').hidden = s !== 'pause';
+  $('#scr-settings').hidden = s !== 'settings';
+  $('#stage').classList.toggle('in-drive', ctx === 'drive');
+  if (s === 'settings') { renderTabs(); renderList(); focusRow(focusKey); }
+  else setTimeout(() => document.querySelector(`#scr-${s} nav button`)?.focus());
+}
+function toast(m) { if (!m) return; const t = $('#toast'); t.textContent = m; t.style.display = 'block'; clearTimeout(t._h); t._h = setTimeout(() => t.style.display = 'none', 2200); }
+
+// ---- события ----
+$('#tabs').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) { tab = +b.dataset.tab; focusKey = null; renderTabs(); renderList(); focusRow(focusKey); } });
+$('#list').addEventListener('click', e => {
+  const row = e.target.closest('.row'); if (!row) return;
+  const key = row.dataset.key; focusRow(key);
+  const b = e.target.closest('[data-step]'); if (b) return step(key, +b.dataset.step);
+  if (e.target.closest('.switch,.action')) activate(key);
+});
+$('#list').addEventListener('input', e => { const row = e.target.closest('.row'); if (row && e.target.type === 'range') setValue(row.dataset.key, +e.target.value); });
+$('#list').addEventListener('focusin', e => { const row = e.target.closest('.row'); if (row && row.dataset.key !== focusKey) { focusKey = row.dataset.key; document.querySelectorAll('.row').forEach(r => r.classList.toggle('focus', r === row)); renderHelp(); } });
+$('#btnApply').onclick = apply;
+$('#btnRevert').onclick = () => { draft = {...saved}; renderList(); toast('Изменения отменены'); };
+$('#btnDefaults').onclick = () => ask('Сбросить вкладку?', `Все параметры вкладки «${TABS[tab].title}» вернутся к значениям по умолчанию. Их ещё нужно будет применить.`, 'Сбросить',
+  () => { TABS[tab].groups.forEach(g => g.items.forEach(i => { if (i.type !== 'action' && !disabledReason(i)) draft[i.key] = i.def; })); renderList(); });
+
+document.addEventListener('keydown', e => {
+  if (document.querySelector('.scrim.on')) {
+    if (e.key === 'Escape') { const d = document.querySelector('.scrim.on'); d.querySelector('[data-a="cancel"],[data-a="no"],[data-a="revert"]')?.click(); }
+    return;
+  }
+  if (screen === 'menu' || screen === 'pause') {
+    const btns = [...document.querySelectorAll(`#scr-${screen} nav button`)];
+    const i = btns.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown') { e.preventDefault(); btns[(i + 1) % btns.length].focus(); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); btns[(i - 1 + btns.length) % btns.length].focus(); }
+    if (e.key === 'Escape') screen === 'pause' ? toast('Поездка продолжается') : ask('Выйти из программы?', 'Прогресс занятий сохранён.', 'Выйти', () => toast('Выход из программы'));
+    return;
+  }
+  const rows = [...document.querySelectorAll('.row')].map(r => r.dataset.key);
+  const i = rows.indexOf(focusKey);
+  const k = e.key.toLowerCase();
+  if (e.key === 'ArrowDown') { e.preventDefault(); focusRow(rows[Math.min(rows.length - 1, i + 1)]); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); focusRow(rows[Math.max(0, i - 1)]); }
+  else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); step(focusKey, e.key === 'ArrowLeft' ? -1 : 1); }
+  else if (e.key === 'Enter' || e.key === ' ') { if (e.target.closest('.footer')) return; e.preventDefault(); activate(focusKey); }
+  else if (k === 'q' || k === 'й' || k === 'e' || k === 'у') { tab = (tab + (k === 'q' || k === 'й' ? -1 : 1) + TABS.length) % TABS.length; focusKey = null; renderTabs(); renderList(); focusRow(focusKey); }
+  else if (k === 'r' || k === 'к') { const it = byKey[focusKey]; if (it.type !== 'action' && !disabledReason(it)) setValue(focusKey, it.def); }
+  else if (e.key === 'Escape') leaveSettings();
+});
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-go]'); if (!b || b.getAttribute('aria-disabled') === 'true') return;
+  const g = b.dataset.go;
+  if (g === 'settings') go('settings');
+  else if (g === 'menu') { ctx = 'menu'; setCtxButtons(); go('menu'); }
+  else if (g === 'resume') toast('Поездка продолжается');
+  else if (g === 'exit') ask('Выйти из программы?', 'Прогресс занятий сохранён.', 'Выйти', () => toast('Выход из программы'));
+  else toast('В этом макете показан только путь к настройкам');
+});
+function setCtxButtons() { document.querySelectorAll('#ctxSeg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.ctx === ctx)); }
+$('#ctxSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; ctx = b.dataset.ctx; setCtxButtons(); go(ctx === 'menu' ? 'menu' : 'pause'); };
+$('#devSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; wheel = b.dataset.dev === '1';
+  document.querySelectorAll('#devSeg button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  if (!wheel && draft['controls.device'] === 1) { draft['controls.device'] = 0; saved['controls.device'] = 0; toast('Руль отключён — переключено на клавиатуру'); }
+  if (screen === 'settings') renderList(); };
+
+
+// ---- темы интерфейса (порядок = options пункта gameplay.uiTheme) ----
+const THEMES = [
+  {id:'asphalt', v:{}},
+  {id:'graphite', v:{'--bg-dark':'#0F1216','--bg-panel':'#161A20','--bg-card':'#1C2129','--bg-row-hover':'#222833',
+    '--accent':'#4DA3FF','--accent-soft':'rgba(77,163,255,.12)','--accent-line':'rgba(77,163,255,.5)','--on-accent':'#08121F',
+    '--cyan':'#7CC4FF','--text':'#F2F5F8','--text-2':'#A9B3C1','--muted':'#626C7A','--track':'#2C333E',
+    '--chrome':'#0A0D10','--chrome-a':'rgba(10,13,16,.88)','--glass':'rgba(22,26,32,.94)','--drive-a':'#1A2230','--drive-b':'#161D28','--drive-shade':'rgba(15,18,22,.6)','--drive-shade2':'rgba(15,18,22,.93)'}},
+  {id:'sign', v:{'--bg-dark':'#0E1320','--bg-panel':'#141B2B','--bg-card':'#1A2335','--bg-row-hover':'#202B41',
+    '--accent':'#FFFFFF','--accent-soft':'rgba(255,255,255,.08)','--accent-line':'rgba(255,255,255,.55)','--on-accent':'#1348A8',
+    '--cyan':'#8FB8FF','--text':'#FFFFFF','--text-2':'#B4C0D6','--muted':'#66738C','--track':'#2A3550',
+    '--chrome':'#0A0F1A','--chrome-a':'rgba(19,72,168,.92)','--glass':'rgba(20,27,43,.95)','--drive-a':'#1A2440','--drive-b':'#152036','--drive-shade':'rgba(14,19,32,.6)','--drive-shade2':'rgba(14,19,32,.93)'}},
+  {id:'teal', v:{'--bg-dark':'#0D1414','--bg-panel':'#131C1D','--bg-card':'#192425','--bg-row-hover':'#1F2D2E',
+    '--accent':'#2EC4A6','--accent-soft':'rgba(46,196,166,.12)','--accent-line':'rgba(46,196,166,.5)','--on-accent':'#04201A',
+    '--cyan':'#8EE3D0','--text':'#EEF6F4','--text-2':'#A3B8B4','--muted':'#5E7470','--track':'#28393A',
+    '--chrome':'#091010','--chrome-a':'rgba(9,16,16,.9)','--glass':'rgba(19,28,29,.95)','--drive-a':'#1A2A2B','--drive-b':'#152223','--drive-shade':'rgba(13,20,20,.6)','--drive-shade2':'rgba(13,20,20,.93)'}},
+];
+function applyTheme(n) {
+  const root = document.documentElement; root.removeAttribute('style');
+  for (const [k, v] of Object.entries((THEMES[n] || THEMES[0]).v)) root.style.setProperty(k, v);
+}
+// ?theme=graphite — для скриншотов ревью
+{ const t = THEMES.findIndex(x => x.id === new URLSearchParams(location.search).get('theme')); if (t > 0) saved['gameplay.uiTheme'] = draft['gameplay.uiTheme'] = t; }
+go(location.hash === '#settings' ? 'settings' : 'menu');
+</script>
+</body>
+</html>
