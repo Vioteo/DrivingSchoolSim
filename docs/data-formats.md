@@ -20,6 +20,57 @@
 - `SessionPhase`: Briefing, Ready, Running, Passed, Failed, Cancelled. `SessionResult`: `string lessonId,reason`; `SessionPhase phase`; `float elapsedSeconds`; `string[] enabledAssists`; `RuleEvent[] events`. Массивы по умолчанию пусты; LessonSession пока их не заполняет.
 - `TheoryContentPack`: `int schemaVersion=1`; `string id,revision,source`; `bool isOfficial`; `TheoryQuestion[] questions`. `TheoryQuestion`: `string id,text,explanation,ruleReference,topic`; `string[] answers`; `int correctIndex`. Нет media links, jurisdiction, подтверждения provenance или validators.
 
+## Граф дорог v2 (T11, T27)
+
+Источник истины: `Assets/DrivingSchool/Code/Contracts/WorldDocumentV2.cs`. Логика — `Simulation/RoadGraph/` (pure C#): `WorldValidatorV2`, `WorldMigration` (v1 → v2), `ConflictZoneBuilder`, `Polyline`. Формат совместим с JsonUtility: массивы простых DTO, enum как int.
+
+- `Vec3d` struct `double x,y,z`. `CubicCurve` struct `p0..p3`.
+- `WorldDocumentV2`: `schemaVersion=2`, `id,name,revision`, `chunkSizeM=256` и массивы: `nodes` (`RoadNode` из v1), `segments`, `lanes`, `junctions`, `connections`, `conflictZones`, `stopLines`, `crossings`, `signalGroups`, `signalPlans`, `signals`, `boundaries`, `signs`, `approaches`, `sidewalks`, `zones`, `spawnPoints`, `objects`, `districts`. Все id уникальны во всём документе.
+- `RoadSegmentV2`: `id,fromNode,toNode`, `curve`, `speedLimitKph, laneWidthM`, `lanesForward, lanesBackward`.
+- `LaneV2`: `id,segmentId`, `index` (> 0 по направлению сегмента, < 0 против; |1| — у оси), `widthM, speedLimitKph`, `centerline` (шаг ≤ 2 м после миграции), `successors` (прямое продолжение вне перекрёстков, начало преемника совпадает с концом полосы ±5 см), `leftNeighborId, rightNeighborId, oncomingLaneId`, `allowedManeuvers` (`LaneManeuver` flags: Straight/Right/Left/UTurn; None = без ограничений).
+- `Junction`: `id,nodeId,signalPlanId`, `connectionIds`. `LaneConnection`: `id,junctionId,fromLaneId,toLaneId,signalGroupId`, `maneuver` (ровно один флаг), `speedLimitKph`, `centerline` (начинается в конце `fromLane`, заканчивается в начале `toLane`). Полосы и связи — одно пространство путей для маршрутов.
+- `ConflictZone`: `id,junctionId,connectionA,connectionB`, диапазоны `fromSA..toSA`, `fromSB..toSB` вдоль связей, `merge` (обе ведут в одну полосу). Строится `ConflictZoneBuilder`: центры ближе 2,4 м (игровой параметр) или общий выезд; связи из одной полосы не конфликтуют.
+- `StopLine`: `id,laneId,s`. `PedestrianCrossing`: `id,signalGroupId`, концы `a,b`, `widthM`, `laneIds` (пересекаемые полосы/связи — проверяется геометрически), `sidewalkIds`.
+- `SignalGroup`: `id,junctionId`, `kind` (Vehicle/VehicleArrow/Pedestrian), `connectionIds, crossingIds`. `SignalPlan`: `id,junctionId,offsetSeconds`, `stages`. `SignalStage`: `greenGroupIds`, `greenSeconds, greenFlashSeconds, amberSeconds, allRedSeconds, redAmberSeconds`. `TrafficSignalAttachment`: `id,signalGroupId,catalogId`, поза.
+- `LaneBoundary`: `id,laneId`, `side` (Left/Right), `type` (`MarkingType`: None/Solid/Dashed/DoubleSolid/SolidDashed/DashedSolid), `fromS..toS`; участки одной стороны полосы не перекрываются.
+- `SignPlacement`: `id`, `code` (ГОСТ Р 52290-2004, строка), `value`, `catalogId`, `plaques`, поза, `laneIds`, `atS`, `untilNextJunction`, `zoneEndLaneId, zoneEndS`. Неизвестный код отклоняется, если валидатору передан справочник знаков.
+- `JunctionApproach`: `id,junctionId,laneId,stopLineId`, `priority` (Equal/Main/Secondary/Signalized), `sourceSignIds`. Main требует знак 2.1 или 2.3.x, Secondary — 2.4 или 2.5, Signalized — план светофора у перекрёстка.
+- `SidewalkPath`: `id,widthM`, `points`, `linkedIds` (тротуары и переходы). `Zone`: `id,laneId`, `kind` (Parking/NoStopping/NoParking/KeepJunctionClear), `fromS..toS`. `SpawnPoint`: `id,pathId`, `role` (Vehicle → полоса/связь, Pedestrian → тротуар), `edge`, `s`.
+- Миграция v1 → v2: узлы степени ≥ 3 становятся перекрёстками, полосы у них обрезаются на половину ширины самой широкой дороги, successors v1 через узел превращаются в кубические `LaneConnection`. Геометрия перекрёстка схематическая, топология точная. Разметка, знаки и приоритет в v1 отсутствуют и после миграции пусты.
+
+## Рантайм графа и светофоры (T31, T32, T16)
+
+- `SignalAspect` (Contracts): Off, Red, RedAmber, Amber, Green, GreenFlashing, AmberFlashing. Пешеходные группы — только Red, Green, GreenFlashing, Off. `TrafficSignalView.Aspect` расширен теми же значениями в том же порядке (новые добавлены в конец, сохранённые в сценах значения не меняются).
+- `RoadGraphIndex` (Simulation/RoadGraph): пути (полосы и связи) по id, `Next`/`Previous`, сетка 16 м, покрытие знаков, `SpeedLimitAt(path, s)` (минимум из 3.24 и лимита пути).
+- `LaneLocator.Locate(x, z, heading, previous) → LanePosition` (`PathId, S, D, HeadingError, OffRoad, AgainstDirection`). Гистерезис 0,3 м, допуск за краем полосы 0,6 м — игровые параметры.
+- `SignalController` (Simulation/Traffic): аспект — функция времени симуляции и плана; режимы Normal / FlashingAmber / Off; `TimeToChange`. `ValidatePlan` запрещает одновременный зелёный пересекающимся прямым направлениям и прямому направлению с пешеходами на его переходе; разрешённые повороты могут делить зелёный (уступают по правилам).
+- `LaneFollowerAgent` + `DriverProfile` (Simulation/Traffic): кинематика `(path, s, d, v, a)` по маршруту, IDM, торможение к меньшему ограничению впереди, остановка у стоп-линии/препятствия; параметры профиля — игровые.
+
+## Диспетчер трафика и протокол (T35, T40)
+
+Код: `Simulation/Traffic/` (pure C#), Unity-обвязка — `Presentation/TrafficDirectorHost.cs`, `TrafficVehicleView.cs`.
+
+- `TrafficDirector(WorldDocumentV2, TrafficProfile, seed)`: `SetPlayer(PlayerSample)`, `Tick(tick, simSeconds)`, `OnChunkReady/OnChunkUnloaded(cx, cz)`, `ReportContact(agentId, otherId)`, `Snapshot`. Для сценариев и тестов — `AddVehicle(route, s, speed, profile, id)`, `Freeze(id)`, `ReverseProcessingOrder`.
+- `TrafficProfile`: `MaxVehicles` (8), `SpawnIntervalSeconds`, `MinSpawnDistanceM` (150), `HiddenSpawnDistanceM` (40), `ViewConeDeg` (120), `NearRadiusM` (250), `DecisionHz` (10), `BackgroundHz` (2), `RouteHorizonM`, `JunctionLookaheadM`, `DeadlockSeconds` (6, игровое правило), `HazardNoticeRangeM`, `ChunkSizeM`, `Drivers` (`DriverProfile[]`). Все значения — игровые параметры.
+- `PlayerSample`: поза, курс, скорость, поворотники, аварийка, габариты, `Present`.
+- `TrafficSnapshot`: `Tick, SimSeconds`, `Participants` (`ParticipantState`: id, вид, путь/`S`/`D`, скорость, ускорение, курс, позиция, габариты, поворотники, стоп-сигнал, аварийка, угол колёс, уровень детализации, профиль, `Decision` — причина для отладки), `Signals` (`SignalState`), `Reservations`, `Permits`, `Notices` (доставленные в этом тике), `Events` (`contact`).
+- Протокол (`ManeuverProtocol.cs`): `ManeuverRequest` (агент, путь, `ManeuverKind`, ETA, длительность, `ReservationClaim`), `ManeuverPermit` (разрешено/нет, причина, чей конфликт, срок, запасной вариант), `ManeuverNotice` (`NoticeKind`: OpenGap, Hold, SlowDown, YieldToPedestrian, HazardAhead, Cancel). Реализованы `EnterConflictZone`, `Hold`, `Cancel`, `HazardAhead`; остальные виды — T33/T34/T36.
+- `ReservationTable`: `TryReserve`, `Release`, `ExpireUntil`, `AssertConsistent`. Ключ зоны конфликта — `"<zoneId>#A|B"` (сторона связи): конфликтуют только разные стороны одной зоны, поэтому машины, едущие друг за другом через одну связь, не блокируют друг друга. Прочие ключи конфликтуют при равенстве; `PathSpan` — участки полос.
+- «Наблюдаемая заявка» игрока: владелец `player`, связь, на которой игрок находится или в которую въезжает (по поворотнику, иначе прямо). Неиспользованные разрешения ИИ, конфликтующие с ней, отзываются.
+
+## Раскладка района (T29)
+
+Источник истины: `Assets/DrivingSchool/Code/Contracts/DistrictLayout.cs`; компилятор — `Simulation/RoadGraph/DistrictCompiler.cs`, шаблоны модулей — `Simulation/RoadGraph/RoadKitTemplates.cs`, справочник знаков — `SignCatalog.cs`.
+
+- `DistrictLayout`: `schemaVersion=1`, `id,name,revision`, `instances`, `joins`, `openSockets`, `signs`, `approaches`, `signalPlans`.
+- `ModuleInstance`: `id` (без `/`), `catalogId` (модуль Road Kit), поза корня префаба `x,y,z`, `yawDeg` (0 = +Z, 90 = +X), `speedLimitKph` (0 = по шаблону, 60).
+- `SocketJoin`: `instanceA,socketA,instanceB,socketB` — сокеты должны совпасть с точностью 1 см и смотреть навстречу (0,1°), профили (число полос в каждую сторону и ширина) равны. Модули не сдвигаются: несовпадение — ошибка с величиной зазора.
+- `SocketRef` в `openSockets`: край района; для въезжающих полос создаются точки появления машин. Сокет, не соединённый и не отмеченный открытым, — ошибка «Dangling socket».
+- `LayoutSign`: `id,code,value,instanceId,laneId` (локальный id полосы в шаблоне), `plaques` (id префабов табличек), `atS`, `untilNextJunction`. Ставится на 3,4 м правее центра полосы (центр тротуара Road Kit v1), лицом к потоку; зона «до перекрёстка» кончается на стоп-линии.
+- `LayoutApproach`: `instanceId,socket,priority,signIds` для въезда перекрёстка; без записи въезд равнозначный.
+- `LayoutSignalPlan`: `instanceId,offsetSeconds`, `stages` (`LayoutSignalStage`: `greenSockets` — въезды с зелёным, `walkSockets` — переходы через рукава с зелёным для пешеходов, длительности как в `SignalStage`). Группы: `<inst>/sg.<socket>` (все связи въезда), `<inst>/pg.<socket>` (переход); головы светофоров ставятся компилятором. План обязан давать зелёный каждому въезду.
+- Итоговые id графа: `<instanceId>/<localId>`; отпечаток графа — `GraphFingerprint.Compute` (SHA256 канонического дампа, не зависит от форматирования JSON).
+
 ## Файлы примеров
 
 `world.json` v1: training-district, 5 nodes, 4 segments, 16 lanes, spawn-car и demo district500m. Successors не моделируют точную геометрию манёвров, приоритет или конфликтные зоны. `lesson.json`: start-stop-demo, 120s, target20m, stop≤0.14m/s в течение2s. `theory.json`: одна авторская демонстрация; `isOfficial=false`.

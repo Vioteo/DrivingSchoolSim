@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Runs the NUnit EditMode tests that touch only pure modules. Not a substitute for Unity -runTests. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Modules/PureModules.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../../../Assets/DrivingSchool/Code/Tests/EngineModelTests.cs" />
+    <Compile Include="../../../Assets/DrivingSchool/Code/Tests/RuleEvaluatorTests.cs" />
+    <Compile Include="../../../Assets/DrivingSchool/Code/Tests/TrainingCourseTests.cs" />
+    <Compile Include="../../../Assets/DrivingSchool/Code/Tests/City/**/*.cs" />
+  </ItemGroup>
+</Project>

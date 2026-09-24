@@ -1,6 +1,6 @@
 # Тестовый полигон автомобиля
 
-Карточка: [T27](tasks/T27.md). Сцена `Assets/DrivingSchool/Scenes/VehicleTestRange.unity` не хранится руками — её собирает генератор.
+Карточка: [T41](tasks/T41.md). Сцена `Assets/DrivingSchool/Scenes/VehicleTestRange.unity` не хранится руками — её собирает генератор.
 
 ## Как собрать и запустить
 

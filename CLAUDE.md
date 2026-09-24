@@ -18,6 +18,7 @@
 - `Assets/StreamingAssets/Examples/` — примеры world/lesson/theory/vehicle JSON.
 - `ArtSource/` — Blender-исходники, `tools/` — Python-скрипты (Blender-экспорт, setup).
 - `docs/` — требования, архитектура, ADR, форматы данных, приёмка, план, карточки задач `docs/tasks/T01–T26.md`.
+- Город (тестовый район из модулей, ИИ-трафик, пешеходы): `docs/city.md`, карточки T27–T40, ADR-011…015 (единый диспетчер трафика — ADR-014, разрешения и уведомления — ADR-015).
 - Актуальное состояние: `docs/audit-2026-09-23.md` (свежее) и `docs/current-state.md` (от 19.09).
 - Репозиторий: GitHub `vioteo/drivingschoolsim`, основная ветка `master`. История git — источник истины о версиях; бэкап-папки (`*_Backup`, `artifacts/backup-*`) устарели и будут удалены.
 

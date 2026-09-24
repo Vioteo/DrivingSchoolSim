@@ -7,7 +7,11 @@ namespace DrivingSchool.Presentation
     [ExecuteAlways]
     public sealed class TrafficSignalView : MonoBehaviour
     {
-        public enum Aspect { Off, Red, RedAmber, Amber, Green }
+        // New values are appended so aspects already serialized in scenes keep their meaning.
+        public enum Aspect { Off, Red, RedAmber, Amber, Green, GreenFlashing, AmberFlashing }
+
+        /// <summary>Blink period of flashing aspects, seconds (visual only).</summary>
+        public const float BlinkPeriod = 1f;
 
         [SerializeField] bool pedestrian;
         [SerializeField] Aspect aspect = Aspect.Red;
@@ -35,17 +39,25 @@ namespace DrivingSchool.Presentation
         public void SetAspect(Aspect value, bool additionalArrow = false)
         {
             if (!Enum.IsDefined(typeof(Aspect), value)) throw new ArgumentOutOfRangeException(nameof(value));
-            if (pedestrian && (value == Aspect.Amber || value == Aspect.RedAmber))
+            if (pedestrian && (value == Aspect.Amber || value == Aspect.RedAmber || value == Aspect.AmberFlashing))
                 throw new ArgumentException("Pedestrian signals have red and green lamps only.", nameof(value));
             aspect = value;
             arrow = additionalArrow && HasArrow;
             Apply();
         }
 
+        /// <summary>Maps the simulation aspect (T32) to this view.</summary>
+        public void SetAspect(Contracts.SignalAspect value, bool additionalArrow = false) => SetAspect((Aspect)(int)value, additionalArrow);
+
         void OnEnable() => Apply();
+        void Update()
+        {
+            if (aspect == Aspect.GreenFlashing || aspect == Aspect.AmberFlashing) Apply();
+        }
+
         void OnValidate()
         {
-            if (pedestrian && (aspect == Aspect.Amber || aspect == Aspect.RedAmber)) aspect = Aspect.Red;
+            if (pedestrian && (aspect == Aspect.Amber || aspect == Aspect.RedAmber || aspect == Aspect.AmberFlashing)) aspect = Aspect.Red;
             arrow &= HasArrow;
             Apply();
         }
@@ -53,8 +65,9 @@ namespace DrivingSchool.Presentation
         void Apply()
         {
             Set(redLamps, aspect == Aspect.Red || aspect == Aspect.RedAmber);
-            Set(amberLamps, aspect == Aspect.Amber || aspect == Aspect.RedAmber);
-            Set(greenLamps, aspect == Aspect.Green);
+            bool blinkOn = Mathf.Repeat(Time.realtimeSinceStartup, BlinkPeriod) < BlinkPeriod / 2;
+            Set(amberLamps, aspect == Aspect.Amber || aspect == Aspect.RedAmber || (aspect == Aspect.AmberFlashing && blinkOn));
+            Set(greenLamps, aspect == Aspect.Green || (aspect == Aspect.GreenFlashing && blinkOn));
             Set(arrowLamps, arrow);
         }
 

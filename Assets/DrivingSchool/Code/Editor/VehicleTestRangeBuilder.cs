@@ -14,7 +14,7 @@ using UnityEngine.Rendering.Universal;
 namespace DrivingSchool.Editor
 {
     /// <summary>
-    /// Reproducible vehicle test range (T27): straight road with speed bumps and a cone slalom, a 90° curve,
+    /// Reproducible vehicle test range (T41): straight road with speed bumps and a cone slalom, a 90° curve,
     /// a second straight, a manoeuvring pad with an ice patch and a parked car for collision tests, lamp posts
     /// for night driving. The player sedan gets the full vehicle stack (physics, visuals, lights, dashboard,
     /// mirrors, windshield rain) and the scene gets weather and the test director.
