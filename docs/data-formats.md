@@ -35,6 +35,14 @@
 - `SidewalkPath`: `id,widthM`, `points`, `linkedIds` (тротуары и переходы). `Zone`: `id,laneId`, `kind` (Parking/NoStopping/NoParking/KeepJunctionClear), `fromS..toS`. `SpawnPoint`: `id,pathId`, `role` (Vehicle → полоса/связь, Pedestrian → тротуар), `edge`, `s`.
 - Миграция v1 → v2: узлы степени ≥ 3 становятся перекрёстками, полосы у них обрезаются на половину ширины самой широкой дороги, successors v1 через узел превращаются в кубические `LaneConnection`. Геометрия перекрёстка схематическая, топология точная. Разметка, знаки и приоритет в v1 отсутствуют и после миграции пусты.
 
+## Рантайм графа и светофоры (T31, T32, T16)
+
+- `SignalAspect` (Contracts): Off, Red, RedAmber, Amber, Green, GreenFlashing, AmberFlashing. Пешеходные группы — только Red, Green, GreenFlashing, Off. `TrafficSignalView.Aspect` расширен теми же значениями в том же порядке (новые добавлены в конец, сохранённые в сценах значения не меняются).
+- `RoadGraphIndex` (Simulation/RoadGraph): пути (полосы и связи) по id, `Next`/`Previous`, сетка 16 м, покрытие знаков, `SpeedLimitAt(path, s)` (минимум из 3.24 и лимита пути).
+- `LaneLocator.Locate(x, z, heading, previous) → LanePosition` (`PathId, S, D, HeadingError, OffRoad, AgainstDirection`). Гистерезис 0,3 м, допуск за краем полосы 0,6 м — игровые параметры.
+- `SignalController` (Simulation/Traffic): аспект — функция времени симуляции и плана; режимы Normal / FlashingAmber / Off; `TimeToChange`. `ValidatePlan` запрещает одновременный зелёный пересекающимся прямым направлениям и прямому направлению с пешеходами на его переходе; разрешённые повороты могут делить зелёный (уступают по правилам).
+- `LaneFollowerAgent` + `DriverProfile` (Simulation/Traffic): кинематика `(path, s, d, v, a)` по маршруту, IDM, торможение к меньшему ограничению впереди, остановка у стоп-линии/препятствия; параметры профиля — игровые.
+
 ## Раскладка района (T29)
 
 Источник истины: `Assets/DrivingSchool/Code/Contracts/DistrictLayout.cs`; компилятор — `Simulation/RoadGraph/DistrictCompiler.cs`, шаблоны модулей — `Simulation/RoadGraph/RoadKitTemplates.cs`, справочник знаков — `SignCatalog.cs`.

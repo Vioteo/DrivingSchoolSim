@@ -38,6 +38,27 @@ namespace DrivingSchool.Tests
             return layout;
         }
 
+        /// <summary>n straights in a row along +Z from the origin, both ends open.</summary>
+        public static DistrictLayout StraightChain(int n)
+        {
+            var first = new ModuleInstance { id = "s0", catalogId = Straight };
+            var instances = new List<ModuleInstance> { first }; var joins = new List<SocketJoin>();
+            for (int i = 1; i < n; i++)
+            {
+                var s = DistrictCompiler.Dock("s" + i, T(Straight), "Socket_Start", instances[i - 1], T(Straight), "Socket_End");
+                instances.Add(s);
+                joins.Add(new SocketJoin { instanceA = "s" + (i - 1), socketA = "Socket_End", instanceB = s.id, socketB = "Socket_Start" });
+            }
+            return new DistrictLayout
+            {
+                id = "chain", instances = instances.ToArray(), joins = joins.ToArray(),
+                openSockets = new[] { new SocketRef { instanceId = "s0", socket = "Socket_Start" }, new SocketRef { instanceId = "s" + (n - 1), socket = "Socket_End" } },
+            };
+        }
+
+        /// <summary>Forward lanes of a straight chain, s0/f .. s(n-1)/f.</summary>
+        public static string[] ForwardRoute(int n) => Enumerable.Range(0, n).Select(i => "s" + i + "/f").ToArray();
+
         public static LayoutSignalPlan TwoPhasePlan(string instanceId = "c") => new LayoutSignalPlan
         {
             instanceId = instanceId,
