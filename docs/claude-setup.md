@@ -16,7 +16,7 @@
 Скопируйте в настройки проекта (Project instructions):
 
 ```
-Я разрабатываю DrivingSchoolSim — учебный симулятор вождения по ПДД РФ на Unity 6000.3 (URP), эталон — City Car Driving. Папка проекта: C:\Users\AVSok\OneDrive\Documents\unity-driing\DrivingSchoolSim.
+Я разрабатываю DrivingSchoolSim — учебный симулятор вождения по ПДД РФ на Unity 6000.3 (URP), эталон — City Car Driving. Папка проекта: C:\Users\AVSok\Projects\unity-driing\DrivingSchoolSim.
 
 Перед любой работой с кодом прочитай CLAUDE.md в корне проекта и следуй ему. Актуальное состояние — docs/audit-2026-09-23.md.
 
