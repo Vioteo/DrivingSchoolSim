@@ -3,6 +3,7 @@
   "rootNamespace": "DrivingSchool.Presentation",
   "references": [
     "DS.Contracts",
+    "DS.Presentation.Physics",
     "DS.Simulation",
     "DS.World",
     "DS.Input",

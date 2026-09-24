@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using DrivingSchool.Contracts;
 using DrivingSchool.Simulation;
@@ -6,37 +6,61 @@ using DrivingSchool.Simulation;
 namespace DrivingSchool.Presentation.Physics
 {
     /// <summary>
-    /// Production vehicle dynamics and drivetrain adapter for Unity.
-    /// Bridges deterministic pure C# drivetrain math with Unity physical simulation.
+    /// Unity adapter of the pure VehicleSolver (T10). Four raycast suspensions give normal loads and contact
+    /// velocities; the solver returns tyre forces that are applied to the Rigidbody in FixedUpdate.
+    /// A kinematic (or missing) Rigidbody switches to the headless PlanarChassis so EditMode tests can drive
+    /// the car without PhysX. Wheel order: 0 FL, 1 FR, 2 RL, 3 RR.
     /// </summary>
+    [DefaultExecutionOrder(-50)]
     public sealed class VehiclePhysicsAdapter : MonoBehaviour
     {
+        static readonly string[] WheelNames = { "Wheel_FL", "Wheel_FR", "Wheel_RL", "Wheel_RR" };
+
         [Header("Chassis Specifications (from vehicle.json)")]
         [SerializeField] float massKg = 1350f;
         [SerializeField] float wheelbaseM = 2.72f;
         [SerializeField] float trackM = 1.71f;
         [SerializeField] float wheelRadiusM = 0.327f;
         [SerializeField] Vector3 centreOfMass = new Vector3(0f, 0.51f, -0.1f);
-
-        [Header("Drivetrain Specifications")]
-        [SerializeField] float finalDriveRatio = 4.1f;
-        [SerializeField] float reverseRatio = -3.5f;
-        [SerializeField] float maxClutchTorqueNm = 240f;
-        [SerializeField] float maxBrakeTorqueNm = 3500f;
-        [SerializeField] float handbrakeTorqueNm = 2500f;
         [SerializeField] float maxSteeringAngleDeg = 32f;
+        public TextAsset vehicleJson;                       // optional overwrite of the spec
+        public TransmissionType transmission = TransmissionType.Manual;
+        public DriveLayout drive = DriveLayout.RearWheelDrive;
 
-        static readonly float[] ForwardGearRatios = { 3.6f, 2.1f, 1.4f, 1.05f, 0.84f, 0.69f };
+        [Header("Suspension (raycast)")]
+        [Tooltip("Measure wheel positions and radius from Wheel_* children; otherwise use wheelbase/track above.")]
+        public bool measureFromModel = true;
+        public float travelUpM = 0.12f, travelDownM = 0.10f;
+        [Range(0.1f, 1f)] public float dampingRatio = 0.35f;
+        public float antiRollNpm = 9000f;
+        public LayerMask groundMask = ~0;
 
-        public EngineModel Engine { get; private set; }
-        public int CurrentGear { get; private set; } = 0; // -1 R, 0 N, 1..6
+        [Header("Surface")]
+        public SurfaceType surface = SurfaceType.DryAsphalt; // set by weather
+
+        public VehicleSolver Solver { get; private set; }
+        public EngineModel Engine => Solver?.Engine;
+        public int CurrentGear => Solver != null ? Solver.Gearbox.CurrentGear : 0;
         public VehicleState CurrentState { get; private set; }
+        public DriverCommand LastCommand { get; private set; }
         public Rigidbody Body { get; private set; }
+        public bool Headless => Body == null || Body.isKinematic;
 
-        long currentTick = 0;
-        double simulationSeconds = 0.0;
-        float currentSpeedMps = 0f;
-        float currentSteerAngleDeg = 0f;
+        /// <summary>Wheel centre in car-local space (after suspension), for visuals.</summary>
+        public readonly Vector3[] WheelCentreLocal = new Vector3[4];
+        public readonly float[] Compression = new float[4];
+        public readonly bool[] Grounded = new bool[4];
+        public float WheelRadius => wheelRadiusM;
+        public float WheelbaseM => wheelbaseM;
+        public float TrackM => trackM;
+
+        readonly Vector3[] restLocal = new Vector3[4];
+        readonly WheelContact[] contacts = new WheelContact[4];
+        readonly Vector3[] hitPoint = new Vector3[4], hitNormal = new Vector3[4];
+        readonly float[] springRate = new float[4], damper = new float[4], lastCompression = new float[4];
+        PlanarChassis planar;
+        long tick;
+        bool configured;
 
         void Awake()
         {
@@ -44,12 +68,32 @@ namespace DrivingSchool.Presentation.Physics
             SetupRigidbody();
         }
 
+        /// <summary>Builds (or rebuilds) the solver from the serialized spec. Keeps the name for older callers.</summary>
         public void InitializeEngine()
         {
-            if (Engine == null)
-            {
-                Engine = new EngineModel();
-            }
+            if (Solver == null) Rebuild();
+        }
+
+        public void SetTransmission(TransmissionType type)
+        {
+            transmission = type; Rebuild();
+        }
+
+        public VehicleSpec BuildSpec()
+        {
+            var spec = new VehicleSpec();
+            if (vehicleJson != null) JsonUtility.FromJsonOverwrite(vehicleJson.text, spec);
+            spec.massKg = massKg; spec.wheelbaseM = wheelbaseM; spec.trackM = trackM; spec.wheelRadiusM = wheelRadiusM;
+            spec.centreOfMassM = new[] { centreOfMass.x, centreOfMass.y, centreOfMass.z };
+            spec.maxSteerDeg = maxSteeringAngleDeg; spec.transmission = transmission; spec.drive = drive;
+            return spec;
+        }
+
+        void Rebuild()
+        {
+            MeasureWheels();
+            Solver = new VehicleSolver(BuildSpec());
+            planar = null;
         }
 
         public void SetupRigidbody()
@@ -60,158 +104,212 @@ namespace DrivingSchool.Presentation.Physics
                 if (GetComponent<Collider>() == null)
                 {
                     var box = gameObject.AddComponent<BoxCollider>();
-                    box.size = new Vector3(trackM, 1.5f, wheelbaseM);
+                    box.center = new Vector3(0f, 0.8f, 0f);
+                    box.size = new Vector3(trackM + 0.1f, 1.0f, wheelbaseM + 1.6f);
                 }
                 Body.mass = massKg;
                 Body.centerOfMass = centreOfMass;
+                Body.interpolation = RigidbodyInterpolation.Interpolate;
+                Body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+                // Pitch/yaw ≈ 2000–2200 kg·m², roll ≈ 550 kg·m² for a 1350 kg sedan; PhysX derives it from the hull box otherwise.
+                Body.inertiaTensor = new Vector3(massKg * 1.5f, massKg * 1.6f, massKg * 0.4f);
+                Body.inertiaTensorRotation = Quaternion.identity;
             }
+            ConfigureSuspension();
         }
 
-        /// <summary>
-        /// Deterministic simulation step. Can be called directly in unit tests or in FixedUpdate.
-        /// </summary>
+        void MeasureWheels()
+        {
+            bool found = false;
+            if (measureFromModel)
+            {
+                var all = GetComponentsInChildren<Transform>(true);
+                var pos = new Vector3[4]; int n = 0; float radius = 0f;
+                for (int k = 0; k < 4; k++)
+                    foreach (var t in all)
+                        if (t.name == WheelNames[k])
+                        {
+                            var b = RendererBounds(t);
+                            pos[k] = transform.InverseTransformPoint(b.size.sqrMagnitude > 0 ? b.center : t.position);
+                            if (b.size.y > 0.2f) radius += b.size.y * 0.5f;
+                            n++; break;
+                        }
+                if (n == 4)
+                {
+                    found = true;
+                    for (int k = 0; k < 4; k++) restLocal[k] = pos[k];
+                    wheelbaseM = Mathf.Abs(0.5f * (pos[0].z + pos[1].z) - 0.5f * (pos[2].z + pos[3].z));
+                    trackM = 0.5f * (Mathf.Abs(pos[1].x - pos[0].x) + Mathf.Abs(pos[3].x - pos[2].x));
+                    if (radius > 0.4f) wheelRadiusM = radius / 4f;
+                    if (pos[0].z < pos[2].z || pos[0].x > pos[1].x)
+                        Debug.LogError($"{name}: Wheel_FL is not front-left in car space (FL {pos[0]}, FR {pos[1]}, RL {pos[2]}). Check the model rotation under the car root.", this);
+                }
+            }
+            if (!found)
+            {
+                float y = wheelRadiusM;
+                restLocal[0] = new Vector3(-trackM / 2, y, wheelbaseM / 2); restLocal[1] = new Vector3(trackM / 2, y, wheelbaseM / 2);
+                restLocal[2] = new Vector3(-trackM / 2, y, -wheelbaseM / 2); restLocal[3] = new Vector3(trackM / 2, y, -wheelbaseM / 2);
+            }
+            for (int k = 0; k < 4; k++) WheelCentreLocal[k] = restLocal[k];
+            configured = false;
+        }
+
+        static Bounds RendererBounds(Transform t)
+        {
+            var rs = t.GetComponentsInChildren<Renderer>();
+            if (rs.Length == 0) return new Bounds(t.position, Vector3.zero);
+            // Calipers sit inside the wheel empty; the tyre is the largest renderer.
+            Bounds best = rs[0].bounds;
+            foreach (var r in rs) if (r.bounds.size.y > best.size.y) best = r.bounds;
+            return best;
+        }
+
+        void ConfigureSuspension()
+        {
+            if (Solver == null) return;
+            float g = 9.81f, zc = centreOfMass.z;
+            float zf = 0.5f * (restLocal[0].z + restLocal[1].z), zr = 0.5f * (restLocal[2].z + restLocal[3].z);
+            float frontShare = Mathf.Clamp01((zc - zr) / Mathf.Max(0.1f, zf - zr));
+            for (int k = 0; k < 4; k++)
+            {
+                float load = massKg * g * 0.5f * (k < 2 ? frontShare : 1f - frontShare);
+                // The car sits in the modelled pose when the spring is compressed by travelDown.
+                springRate[k] = load / travelDownM;
+                damper[k] = 2f * dampingRatio * Mathf.Sqrt(springRate[k] * load / g);
+                lastCompression[k] = travelDownM;
+            }
+            configured = true;
+        }
+
+        void FixedUpdate()
+        {
+            // Driven externally (VehicleController); nothing here keeps a parked car quiet in PhysX.
+        }
+
+        /// <summary>One physics step: raycasts, solver, forces. Call from FixedUpdate (or tests).</summary>
         public VehicleState Step(DriverCommand cmd, float dtSeconds)
         {
             if (dtSeconds <= 0f || float.IsNaN(dtSeconds) || float.IsInfinity(dtSeconds))
                 throw new ArgumentOutOfRangeException(nameof(dtSeconds), "dtSeconds must be positive and finite.");
-
             cmd.Validate();
             InitializeEngine();
+            if (!configured) ConfigureSuspension();
+            tick++;
+            LastCommand = cmd;
 
-            currentTick++;
-            simulationSeconds += dtSeconds;
+            if (Headless) return CurrentState = StepHeadless(cmd, dtSeconds);
 
-            // 1. Process Gear Shifting
-            ProcessGearShift(cmd.requestedGear, cmd.clutch);
-
-            // 2. Wheel & Input Shaft Angular Velocities
-            float gearRatio = GetGearRatio(CurrentGear);
-            float wheelAngularVel = currentSpeedMps / wheelRadiusM;
-            double inputShaftRadS = (CurrentGear != 0) ? (wheelAngularVel * gearRatio * finalDriveRatio) : 0.0;
-            double engineRadS = Engine.Rpm * (2.0 * Math.PI / 60.0);
-
-            // 3. Progressive Clutch Torque Calculation
-            // Clutch pedal: 1.0 = fully disengaged, 0.0 = fully engaged
-            // Progressive bite curve between 0.8 and 0.0 pedal position
-            double clutchTorque = 0.0;
-            if (CurrentGear != 0)
+            float mu = SurfaceFrictionModel.GetFrictionCoefficient(surface);
+            for (int k = 0; k < 4; k++)
             {
-                float normalizedPedal = Mathf.Clamp01(cmd.clutch);
-                float engagement = Mathf.Clamp01((1.0f - normalizedPedal) / 0.85f);
-                float progressiveCapacity = maxClutchTorqueNm * (engagement * engagement);
-
-                double slipRadS = engineRadS - inputShaftRadS;
-                double rawTorque = slipRadS * 8.0;
-                clutchTorque = Math.Max(-progressiveCapacity, Math.Min(progressiveCapacity, rawTorque));
-            }
-
-            // 4. Update Engine with Clutch Load
-            Engine.Update(
-                throttle: cmd.throttle,
-                ignition: cmd.ignition,
-                starter: cmd.starter,
-                loadTorqueNm: (float)Math.Abs(clutchTorque),
-                dtSeconds: dtSeconds
-            );
-
-            // 5. Axle Drive Torque
-            double axleTorque = 0.0;
-            if (CurrentGear != 0 && Engine.Phase == EnginePhase.Running)
-            {
-                axleTorque = DrivetrainMath.AxleTorque(
-                    clutchTorqueNm: clutchTorque,
-                    gearRatio: gearRatio,
-                    finalDrive: finalDriveRatio,
-                    efficiency: 0.9
-                );
-            }
-
-            // 6. Brake System (65% Front, 35% Rear + 100% Handbrake on Rear)
-            float totalServiceBrake = cmd.brake * maxBrakeTorqueNm;
-            float frontBrakeTorque = totalServiceBrake * 0.65f;
-            float rearBrakeTorque = totalServiceBrake * 0.35f + (cmd.handbrake ? handbrakeTorqueNm : 0f);
-            float totalBrakeTorque = frontBrakeTorque + rearBrakeTorque;
-
-            // 7. Vehicle Acceleration & Velocity Integration
-            float driveForce = (float)(axleTorque / wheelRadiusM);
-            float brakeForce = totalBrakeTorque / wheelRadiusM;
-
-            // Rolling resistance and aerodynamic drag
-            float rollingResistance = massKg * 9.81f * 0.015f * Math.Sign(currentSpeedMps);
-            float aeroDrag = 0.5f * 1.225f * 0.32f * 2.2f * currentSpeedMps * Math.Abs(currentSpeedMps);
-            float opposingForce = rollingResistance + aeroDrag;
-
-            // Net longitudinal force
-            float netForce = driveForce - opposingForce;
-
-            // Apply braking against current velocity
-            if (brakeForce > 0f)
-            {
-                float brakeDecelForce = brakeForce * (Math.Abs(currentSpeedMps) > 0.05f ? Math.Sign(currentSpeedMps) : (driveForce >= 0f ? 1f : -1f));
-                if (Math.Abs(currentSpeedMps) < 0.1f && Math.Abs(driveForce) < brakeForce)
+                Vector3 up = transform.up;
+                Vector3 origin = transform.TransformPoint(restLocal[k] + Vector3.up * travelUpM);
+                float maxLen = travelUpM + travelDownM + wheelRadiusM;
+                if (GroundRay(origin, -up, maxLen, out var hit))
                 {
-                    // Full stop lock
-                    currentSpeedMps = 0f;
-                    netForce = 0f;
+                    float comp = maxLen - hit.distance;
+                    float vComp = (comp - lastCompression[k]) / dtSeconds;
+                    lastCompression[k] = comp;
+                    float fz = Mathf.Max(0f, springRate[k] * comp + damper[k] * vComp);
+                    Compression[k] = comp; Grounded[k] = true; hitPoint[k] = hit.point; hitNormal[k] = hit.normal;
+                    WheelCentreLocal[k] = restLocal[k] + Vector3.up * (comp - travelDownM);
+
+                    Vector3 n = hit.normal;
+                    Vector3 f = Vector3.ProjectOnPlane(transform.forward, n).normalized;
+                    Vector3 r = Vector3.Cross(n, f);
+                    Vector3 v = Body.GetPointVelocity(hit.point);
+                    float localMu = mu;
+                    var tag = hit.collider.GetComponentInParent<SurfaceTag>();
+                    if (tag != null) localMu = (tag.followWeather && surface != SurfaceType.DryAsphalt ? Mathf.Min(mu, SurfaceFrictionModel.GetFrictionCoefficient(tag.surface)) : SurfaceFrictionModel.GetFrictionCoefficient(tag.surface)) * tag.frictionScale;
+                    contacts[k] = new WheelContact { grounded = true, normalForceN = fz, velocityRightMps = Vector3.Dot(v, r), velocityForwardMps = Vector3.Dot(v, f), frictionCoefficient = localMu };
                 }
                 else
                 {
-                    netForce -= brakeDecelForce;
+                    Compression[k] = 0f; lastCompression[k] = 0f; Grounded[k] = false;
+                    WheelCentreLocal[k] = restLocal[k] - Vector3.up * travelDownM;
+                    contacts[k] = new WheelContact { grounded = false, velocityForwardMps = Vector3.Dot(Body.GetPointVelocity(transform.TransformPoint(restLocal[k])), transform.forward) };
                 }
             }
 
-            float accel = netForce / massKg;
-            currentSpeedMps += accel * dtSeconds;
-
-            // Rigidbody sync if active in scene
-            if (Body != null && !Body.isKinematic)
+            // Anti-roll bars move load from the extended to the compressed wheel of each axle.
+            for (int axle = 0; axle < 2; axle++)
             {
-                Vector3 forwardVelocity = transform.forward * currentSpeedMps;
-                Body.linearVelocity = forwardVelocity;
+                int l = axle * 2, rr = l + 1;
+                if (!Grounded[l] || !Grounded[rr]) continue;
+                float d = (Compression[l] - Compression[rr]) * antiRollNpm;
+                contacts[l].normalForceN = Mathf.Max(0f, contacts[l].normalForceN + d);
+                contacts[rr].normalForceN = Mathf.Max(0f, contacts[rr].normalForceN - d);
             }
 
-            // 8. Steering with Ackermann Geometry
-            currentSteerAngleDeg = cmd.steering * maxSteeringAngleDeg;
-            var (leftAngle, rightAngle) = CalculateAckermann(cmd.steering, wheelbaseM, trackM, maxSteeringAngleDeg);
+            var state = Solver.Step(cmd, contacts, dtSeconds);
 
-            // 9. Publish VehicleState
-            CurrentState = new VehicleState
+            for (int k = 0; k < 4; k++)
             {
-                tick = currentTick,
-                simulationSeconds = simulationSeconds,
-                signedSpeedMps = currentSpeedMps,
-                engineRpm = Engine.Rpm,
-                steeringRadians = currentSteerAngleDeg * Mathf.Deg2Rad,
-                clutchTorqueNm = (float)clutchTorque,
-                gear = CurrentGear,
-                engine = Engine.Phase,
-                leftIndicator = cmd.steering < -0.3f,
-                rightIndicator = cmd.steering > 0.3f,
-                lowBeam = cmd.ignition,
-                highBeam = false,
-                brakeLight = cmd.brake > 0.05f || cmd.handbrake
-            };
-
-            return CurrentState;
-        }
-
-        void ProcessGearShift(int requestedGear, float clutchPedal)
-        {
-            if (requestedGear == CurrentGear) return;
-
-            // Shifting allowed when clutch is pressed (> 0.6) or shifting to neutral (0)
-            if (clutchPedal >= 0.6f || requestedGear == 0)
-            {
-                CurrentGear = requestedGear;
+                if (!Grounded[k]) continue;
+                Vector3 n = hitNormal[k];
+                Vector3 f = Vector3.ProjectOnPlane(transform.forward, n).normalized;
+                Vector3 r = Vector3.Cross(n, f);
+                var w = Solver.Wheels[k];
+                Body.AddForceAtPosition(n * contacts[k].normalForceN, hitPoint[k]);
+                // Tyre forces act at the contact patch, lifted slightly to tame the roll moment of a rigid body.
+                Vector3 at = hitPoint[k] + transform.up * (0.25f * wheelRadiusM);
+                Body.AddForceAtPosition(r * w.forceRightN + f * w.forceForwardN, at);
             }
+            Body.AddForce(transform.forward * Solver.DragForceForwardN);
+            return CurrentState = state;
         }
 
-        float GetGearRatio(int gear)
+        readonly RaycastHit[] hits = new RaycastHit[8];
+
+        bool GroundRay(Vector3 origin, Vector3 dir, float length, out RaycastHit best)
         {
-            if (gear == 0) return 0f;
-            if (gear == -1) return reverseRatio;
-            if (gear >= 1 && gear <= ForwardGearRatios.Length) return ForwardGearRatios[gear - 1];
-            return 0f;
+            best = default; float bestD = float.MaxValue;
+            int n = UnityEngine.Physics.RaycastNonAlloc(origin, dir, hits, length, groundMask, QueryTriggerInteraction.Ignore);
+            for (int i = 0; i < n; i++)
+            {
+                if (hits[i].collider.attachedRigidbody == Body || hits[i].collider.transform.IsChildOf(transform)) continue;
+                if (hits[i].distance < bestD) { bestD = hits[i].distance; best = hits[i]; }
+            }
+            return bestD < float.MaxValue;
+        }
+
+        VehicleState StepHeadless(DriverCommand cmd, float dt)
+        {
+            if (planar == null)
+            {
+                planar = new PlanarChassis { X = transform.position.x, Z = transform.position.z, Yaw = transform.eulerAngles.y * Mathf.Deg2Rad };
+            }
+            planar.Surface = surface;
+            planar.Step(Solver, cmd, dt);
+            for (int k = 0; k < 4; k++) { Grounded[k] = true; Compression[k] = travelDownM; WheelCentreLocal[k] = restLocal[k]; }
+            var p = new Vector3((float)planar.X, transform.position.y, (float)planar.Z);
+            var q = Quaternion.Euler(0f, planar.Yaw * Mathf.Rad2Deg, 0f);
+            if (Body != null) { Body.position = p; Body.rotation = q; }
+            transform.SetPositionAndRotation(p, q);
+            return Solver.State;
+        }
+
+        /// <summary>Teleports the car and restarts the drivetrain in the parked, engine-off state.</summary>
+        public void ResetAt(Vector3 position, Quaternion rotation)
+        {
+            Rebuild();
+            ConfigureSuspension();
+            transform.SetPositionAndRotation(position, rotation);
+            if (Body != null)
+            {
+                Body.position = position; Body.rotation = rotation;
+                if (!Body.isKinematic)
+                {
+#if UNITY_6000_0_OR_NEWER
+                    Body.linearVelocity = Vector3.zero;
+#else
+                    Body.velocity = Vector3.zero;
+#endif
+                    Body.angularVelocity = Vector3.zero;
+                }
+            }
+            UnityEngine.Physics.SyncTransforms();
         }
 
         /// <summary>
@@ -220,27 +318,15 @@ namespace DrivingSchool.Presentation.Physics
         /// </summary>
         public static (float leftSteerDeg, float rightSteerDeg) CalculateAckermann(
             float normalizedSteer, float wheelbase, float track, float maxSteerDeg = 32f)
+            => SteeringGeometry.Ackermann(normalizedSteer, wheelbase, track, maxSteerDeg);
+
+        void OnDrawGizmosSelected()
         {
-            if (Mathf.Abs(normalizedSteer) < 0.001f) return (0f, 0f);
-
-            float centerAngleRad = Mathf.Abs(normalizedSteer) * maxSteerDeg * Mathf.Deg2Rad;
-            float turningRadius = wheelbase / Mathf.Tan(centerAngleRad);
-
-            float innerAngleRad = Mathf.Atan(wheelbase / (turningRadius - track * 0.5f));
-            float outerAngleRad = Mathf.Atan(wheelbase / (turningRadius + track * 0.5f));
-
-            float innerDeg = innerAngleRad * Mathf.Rad2Deg;
-            float outerDeg = outerAngleRad * Mathf.Rad2Deg;
-
-            if (normalizedSteer < 0f)
+            Gizmos.color = Color.cyan;
+            for (int k = 0; k < 4; k++)
             {
-                // Turning Left: Left wheel is inner (larger angle), Right wheel is outer
-                return (-innerDeg, -outerDeg);
-            }
-            else
-            {
-                // Turning Right: Right wheel is inner (larger angle), Left wheel is outer
-                return (outerDeg, innerDeg);
+                var c = transform.TransformPoint(Application.isPlaying ? WheelCentreLocal[k] : restLocal[k]);
+                Gizmos.DrawWireSphere(c, wheelRadiusM);
             }
         }
     }
