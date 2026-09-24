@@ -95,6 +95,27 @@ def run(parts, meta):
         tread = [v for v in wheels if abs(abs(v[0]) - meta['rail_c']) < 0.03]
         tz = min(v[2] for v in tread)
         check('Колесо стоит на головке рельса (z=0 у RAIL_C)', abs(tz) < 0.005, round(tz, 4), '0 +-0.005')
+        # bogie swing in the R25 curve of the track kit: the turned bogie must
+        # stay inside its opening in the skirts and under the well ceiling
+        ang = math.asin(meta['bogie_y'] / 25.0)
+        for b in ('F', 'R'):
+            bx, by_, bz = _world(parts, by, f'Bogie_{b}_Pivot')
+            pts = [(x - bx, y - by_, z) for n, ms in W.items() if n.startswith((f'Bogie_{b}_', 'Wheelset_' + b))
+                   for V, F in ms for x, y, z in V]
+            worst_y, worst_z = 0.0, 0.0
+            for sgn in (-1, 1):
+                c, s_ = math.cos(sgn * ang), math.sin(sgn * ang)
+                for x, y, z in pts:
+                    worst_y = max(worst_y, abs(x * s_ + y * c))
+                    worst_z = max(worst_z, z)
+            check(f'Тележка {b} при повороте {math.degrees(ang):.1f}° в проёме фартука, м',
+                  worst_y <= meta['well_half'] - 0.03, round(meta['well_half'] - worst_y, 3), '>= 0.03 до края проёма')
+            check(f'Тележка {b} ниже потолка ниши, м', worst_z <= meta['well_top'] - 0.02,
+                  round(meta['well_top'] - worst_z, 3), '>= 0.02')
+        # clearance between each door span and each bogie opening (negative = overlap)
+        wells = [(sy * meta['bogie_y'] - meta['well_half'], sy * meta['bogie_y'] + meta['well_half']) for sy in (-1, 1)]
+        gap = min(max(lo - d1, d0 - hi) for d0, d1 in meta['door_spans'] for lo, hi in wells)
+        check('Двери не заходят на проёмы тележек, м', gap >= 0.01, round(gap, 3), '>= 0.01')
         for n in ('Bogie_F_Pivot', 'Bogie_R_Pivot', 'Pantograph_Pivot', 'Socket_DriverEye', 'MirrorSurface_L',
                   'MirrorSurface_R', 'COL_Body'):
             check(f'Имя-контракт {n}', n in by, n in by, 'есть')

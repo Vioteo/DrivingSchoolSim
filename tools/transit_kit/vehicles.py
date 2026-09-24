@@ -10,7 +10,7 @@ The glazing is modelled as dark tinted glass on the outside of a closed body
 import math
 from vehicle_kit.geom import Part, lathe, cylinder, tube, rbox, quad, merge, grid, orient_to, slab
 from .body import Profile
-from .common import (box, box_between, panel_x, panel_y, mesh, empty, text, road_wheel, flanged_wheel, to_blender)
+from .common import (box, box_between, prism, panel_x, panel_y, mesh, empty, text, road_wheel, flanged_wheel, to_blender)
 
 GLASS_OFF = 0.004     # glass lies this far outside the skin
 LIVERY_OFF = 0.003    # paint bands
@@ -90,10 +90,41 @@ def wheelhouse(parts, name, wy, ra, x_in, z0, z_top):
     parts.append(mesh(name, 'PT_Plastic_Black', merge(*vfs)))
 
 
+def underbody(parts, P, name='Underbody', inset=0.06):
+    """Dark plate just under the flat body bottom (the painted shell would
+    otherwise show its colour from below). One plate per run between arches."""
+    z = P.zb + P.rb
+    vfs = []
+    for run in P.outline(z, z):
+        right = [(x - inset, y) for x, y, _, _ in run]
+        left = [(-x, y) for x, y in reversed(right)]
+        vfs.append(prism(right + left, P.zb - 0.012, P.zb - 0.004))
+    parts.append(mesh(name, 'PT_Plastic_Black', merge(*vfs)))
+
+
+def arch_liners(parts, P, name='WheelArch_Liners'):
+    """Dark liners under the arch and bogie-well ceilings plus the well end
+    walls: looking into an opening shows black plastic, not body paint."""
+    vfs = []
+    for wy, wz, ra in P.arches:
+        rows = []
+        for y in [y for y in P.ys() if wy - ra <= y <= wy + ra]:
+            x = P.station(y).hw - 0.012
+            z = P.zb_at(y) - 0.006
+            rows.append([(-x, y, z), (x, y, z)])
+        vfs.append(orient_to(grid(rows), lambda c: (0.0, 0.0, -1.0)))
+    for y0, y1, zc in P.cutouts:
+        x = min(P.station(y0).hw, P.station(y1).hw) - 0.012
+        vfs.append(box_between(zc - 0.014, zc - 0.006, -x, x, y0, y1))
+        vfs.append(box_between(P.zb, zc, -x, x, y0, y0 + 0.008))
+        vfs.append(box_between(P.zb, zc, -x, x, y1 - 0.008, y1))
+    parts.append(mesh(name, 'PT_Plastic_Black', merge(*vfs)))
+
+
 def skin_point(P, x_target, end):
     """Point on the plan outline near an end with |x| ~ x_target (right side)."""
     best = None
-    for x, y, nx, ny in P.outline(P.zb + P.rb + 0.01, P.zb + P.rb + 0.02):
+    for x, y, nx, ny in (pt for run in P.outline(P.zb + P.rb + 0.01, P.zb + P.rb + 0.02) for pt in run):
         if (end == 'front' and y > 0) or (end == 'rear' and y < 0):
             d = abs(x - x_target)
             if best is None or d < best[0]:
@@ -133,6 +164,8 @@ def bus():
     parts = [mesh('Body', paint, P.shell(), smooth=True)]
     wheelhouse(parts, 'Wheelhouse_F', L_F, RA, 0.72, 0.30, R + RA)
     wheelhouse(parts, 'Wheelhouse_R', L_R, RA, 0.58, 0.30, R + RA)
+    underbody(parts, P)
+    arch_liners(parts, P)
     # glazing: side ribbon, wrapped windscreen, rear window
     y_ws = NOSE - 0.18 - 0.35
     y_rw = TAIL + 0.25 + 0.3
@@ -193,6 +226,105 @@ def bus():
 
 
 # ------------------------------------------------------------------ minibus
+def rrect(y0, y1, z0, z1, r, n=4):
+    """Rounded rectangle in the (y, z) plane of a side face."""
+    r = min(r, (y1 - y0) / 2, (z1 - z0) / 2)
+    pts = []
+    for cy, cz, a0 in ((y1 - r, z0 + r, -90), (y1 - r, z1 - r, 0), (y0 + r, z1 - r, 90), (y0 + r, z0 + r, 180)):
+        for i in range(n + 1):
+            a = math.radians(a0 + 90 * i / n)
+            pts.append((cy + r * math.cos(a), cz + r * math.sin(a)))
+    return pts
+
+
+def offset_convex(poly, d):
+    """Grow a convex polygon by d (miter joins)."""
+    n = len(poly)
+    area = sum(poly[i][0] * poly[(i + 1) % n][1] - poly[(i + 1) % n][0] * poly[i][1] for i in range(n))
+    sg = 1 if area > 0 else -1
+    out = []
+    for i in range(n):
+        p0, p1, p2 = poly[i - 1], poly[i], poly[(i + 1) % n]
+        norms = []
+        for a, b in ((p0, p1), (p1, p2)):
+            ex, ey = b[0] - a[0], b[1] - a[1]
+            l = math.hypot(ex, ey) or 1.0
+            norms.append((sg * ey / l, -sg * ex / l))
+        nx, ny = norms[0][0] + norms[1][0], norms[0][1] + norms[1][1]
+        k = 1 + norms[0][0] * norms[1][0] + norms[0][1] * norms[1][1]
+        k = max(k, 0.3)
+        out.append((p1[0] + d * nx / k, p1[1] + d * ny / k))
+    return out
+
+
+def framed_window(parts, name, poly, x, s, frame=0.025):
+    """Glass pane with a black rubber surround on a side face."""
+    parts.append(mesh(name + '_Seal', 'PT_Trim_Black', side_poly(offset_convex(poly, frame), x, 0.004, s)))
+    parts.append(mesh(name, 'PT_Glass_Tinted', side_poly(poly, x + s * 0.002, 0.004, s)))
+
+
+def top_patch(P, y0, y1, half_x, off, n=8, m=8):
+    """Grid lying `off` above the sloped top surface between y0 and y1
+    (windscreen, cowl, roof display). half_x(station) -> half width."""
+    rows = []
+    for i in range(n + 1):
+        y = y0 + (y1 - y0) * i / n
+        st = P.station(y)
+        slope = (P.zt_at(y + 0.01) - P.zt_at(y - 0.01)) / 0.02
+        l = math.sqrt(slope * slope + 1)
+        xs = half_x(st)
+        rows.append([(xs * (2 * k / m - 1), y - slope / l * off, st.zt + off / l) for k in range(m + 1)])
+    return orient_to(grid(rows), lambda c: (0.0, 0.5, 1.0))
+
+
+def slope_quad(P, x0, x1, y0, y1, off):
+    """Flat plate lying `off` above the sloped top between y0 and y1."""
+    rows = []
+    for y in (y0, y1):
+        slope = (P.zt_at(y + 0.01) - P.zt_at(y - 0.01)) / 0.02
+        l = math.sqrt(slope * slope + 1)
+        rows.append([(x, y - slope / l * off, P.zt_at(y) + off / l) for x in (x0, x1)])
+    return orient_to(grid(rows), lambda c: (0.0, 0.5, 1.0))
+
+
+def slope_text(P, name, body, size, x, y, material, off=GLASS_OFF + 0.003):
+    """Text lying on the sloped top (windscreen / roof peak), readable from the front."""
+    slope = (P.zt_at(y + 0.01) - P.zt_at(y - 0.01)) / 0.02
+    l = math.sqrt(slope * slope + 1)
+    t = text(name, body, size, (x, y - slope / l * off, P.zt_at(y) + off / l), '+Y', material)
+    # tilt the upright text back onto the slope: its normal becomes (0, -slope, 1)
+    t.rot = (math.atan(-slope), 0, math.pi)
+    return t
+
+
+def wrap_solid(P, z0, z1, y_open, end, out, inn):
+    """Solid U-shaped part hugging the body end in plan (bumpers)."""
+    ys = [y for y in P.ys() if (y >= y_open if end == 'front' else y <= y_open)]
+    ys.sort(reverse=(end != 'front'))
+    pts = [(P.station(y).hw, y) for y in ys]
+    outer, inner = [], []
+    for i, (x, y) in enumerate(pts):
+        p, q = pts[max(i - 1, 0)], pts[min(i + 1, len(pts) - 1)]
+        tx, ty = q[0] - p[0], q[1] - p[1]
+        l = math.hypot(tx, ty) or 1.0
+        nx, ny = ty / l, -tx / l                 # right of the travel direction = outwards here
+        if end != 'front':
+            nx, ny = -nx, -ny
+        outer.append((x + nx * out, y + ny * out))
+        inner.append((x - nx * inn, y - ny * inn))
+    poly = outer + [(-x, y) for x, y in reversed(outer)] + [(-x, y) for x, y in inner] + list(reversed(inner))
+    return prism(poly, z0, z1)
+
+
+def arch_flare(P, wy, wz, ra, x, s, r=0.035):
+    """Black plastic flare following a wheel arch on the side face."""
+    rr = ra + 0.02
+    th0 = math.asin(max(-1.0, min(1.0, (P.zb - wz) / rr)))
+    pts = [(s * x, wy + rr * math.cos(th0 + (math.pi - 2 * th0) * i / 20), wz + rr * math.sin(th0 + (math.pi - 2 * th0) * i / 20))
+           for i in range(21)]
+    return tube(pts, r, 8)
+
+
 def minibus():
     """PT_Minibus_Route: route minibus (marshrutka) on a light-commercial
     chassis: short bonnet, raised roof, sliding door on the right."""
@@ -201,82 +333,130 @@ def minibus():
     HW, H = 1.035, 2.62                       # width 2.07 m
     R, TW, RIM = 0.364, 0.215, 0.2032         # 215/75 R16C
     RA = 0.44
+    ZB = 0.40
     paint = 'PT_Paint_MinibusYellow'
-    zt_keys = [(TAIL, H), (0.75, H), (1.75, 1.18), (2.25, 1.03), (NOSE, 0.98)]
-    rt_keys = [(TAIL, 0.2), (0.75, 0.2), (1.75, 0.1), (NOSE, 0.1)]
+    zt_keys = [(TAIL, H), (0.75, H), (0.95, 2.36), (1.75, 1.18), (2.25, 1.03), (NOSE, 0.98)]
+    rt_keys = [(TAIL, 0.2), (0.75, 0.2), (0.95, 0.12), (1.75, 0.1), (NOSE, 0.1)]
     hw_keys = [(TAIL, HW), (1.4, HW), (NOSE, 0.96)]
-    P = Profile(TAIL, NOSE, HW, 0.40, H, 0.08, 0.2, rc_front=0.28, rc_rear=0.12, re_front=0.1, re_rear=0.1,
+    P = Profile(TAIL, NOSE, HW, ZB, H, 0.08, 0.2, rc_front=0.28, rc_rear=0.12, re_front=0.1, re_rear=0.1,
                 hw_keys=hw_keys, zt_keys=zt_keys, rt_keys=rt_keys, arches=[(L_F, R, RA), (L_R, R, RA)], step=0.08)
     parts = [mesh('Body', paint, P.shell(), smooth=True)]
-    wheelhouse(parts, 'Wheelhouse_F', L_F, RA, 0.64, 0.40, R + RA)
-    wheelhouse(parts, 'Wheelhouse_R', L_R, RA, 0.64, 0.40, R + RA)
-    # windscreen: a patch of the sloped top surface, lifted along its normal
-    y0, y1 = 0.80, 1.70
-    rows = []
-    ys = [y0 + (y1 - y0) * i / 8 for i in range(9)]
-    for y in ys:
-        st = P.station(y)
-        slope = (P.zt_at(y + 0.01) - P.zt_at(y - 0.01)) / 0.02
-        n = (0.0, -slope, 1.0)
-        l = math.sqrt(n[1] ** 2 + 1)
-        xs = st.hw - st.rt - 0.03
-        rows.append([(xs * (2 * k / 8 - 1), y + n[1] / l * GLASS_OFF, st.zt + GLASS_OFF / l) for k in range(9)])
-    ws = orient_to(grid(rows), lambda c: (0.0, 1.44, 1.0))
-    parts.append(mesh('Glass_Windscreen', 'PT_Glass_Tinted', ws))
-    # side glazing
+    wheelhouse(parts, 'Wheelhouse_F', L_F, RA, 0.64, ZB, R + RA)
+    wheelhouse(parts, 'Wheelhouse_R', L_R, RA, 0.64, ZB, R + RA)
+    underbody(parts, P)
+    arch_liners(parts, P)
+    # windscreen, cowl with wipers, LED route display under the roof peak
+    parts.append(mesh('Glass_Windscreen', 'PT_Glass_Tinted',
+                      top_patch(P, 0.98, 1.66, lambda st: st.hw - st.rt - 0.04, GLASS_OFF)))
+    parts.append(mesh('Windscreen_Seal', 'PT_Trim_Black',
+                      top_patch(P, 0.96, 1.69, lambda st: st.hw - st.rt - 0.015, GLASS_OFF - 0.002)))
+    parts.append(mesh('RouteDisplay_Front', 'PT_Display',
+                      top_patch(P, 0.80, 0.94, lambda st: st.hw - st.rt - 0.05, GLASS_OFF, n=2)))
+    parts.append(slope_text(P, 'RouteDisplay_Front_Text', '107', 0.09, 0.0, 0.87, 'PT_Display_Amber'))
+    parts.append(mesh('Cowl', 'PT_Trim_Black', top_patch(P, 1.72, 1.84, lambda st: st.hw - st.rt - 0.05, 0.004, n=2)))
+    wipers = []
+    for x0 in (-0.62, 0.02):
+        a = (x0, 1.70, P.zt_at(1.70) + 0.02)
+        b = (x0 + 0.52, 1.30, P.zt_at(1.30) + 0.02)
+        wipers.append(tube([a, b], 0.009, 6))
+    parts.append(mesh('Wipers', 'PT_Trim_Black', merge(*wipers)))
+    # roof: marker lamps on the front edge of the raised roof, hatch, seam of the roof cap
+    lamps = [box((x, 0.80, H - 0.03), (0.07, 0.05, 0.035)) for x in (-0.7, -0.35, 0.35, 0.7)]
+    parts.append(mesh('Roof_MarkerLamps', 'PT_Lamp_Amber', merge(*lamps)))
+    parts.append(mesh('Roof_Hatch', 'PT_Plastic_Grey', rbox((0, -1.4, H + 0.03), (0.7, 0.7, 0.08), 0.02), smooth=True))
+    parts.append(mesh('RoofCap_Seam', 'PT_Trim_Black', P.band(2.28, 2.30, 0.003, y_max=0.7, wrap_rear=True)))
+    # sides: framed windows, cladding, arch flares, marker lamps
     for s, sfx in ((-1, 'L'), (1, 'R')):
         x = s * HW
         cab = [(0.80, 1.30), (1.45, 1.30), (1.45, P.zt_at(1.45) - 0.18), (0.80, P.zt_at(0.80) - 0.22)]
-        parts.append(mesh('Glass_Cab_' + sfx, 'PT_Glass_Tinted', side_poly(cab, x, GLASS_OFF, s)))
-        panes = [(-3.55, -2.45), (-2.35, -1.25), (-1.15, -0.62), (0.68, 0.72)] if s > 0 else \
-                [(-3.55, -2.45), (-2.35, -1.25), (-1.15, -0.05), (0.05, 0.72)]
-        vfs = [panel_x(x, a, b, 1.35, 2.25, GLASS_OFF, s) for a, b in panes if b - a > 0.1]
-        parts.append(mesh('Glass_Side_' + sfx, 'PT_Glass_Tinted', merge(*vfs)))
-        # cab door seam
-        parts.append(mesh('DoorSeam_Cab_' + sfx, 'PT_Trim_Black', panel_x(x, 0.72, 0.745, 0.45, 2.30, 0.006, s)))
+        framed_window(parts, 'Glass_Cab_' + sfx, cab, x, s)
+        panes = [(-3.55, -2.45), (-2.35, -1.25), (-1.15, -0.66)] if s > 0 else \
+                [(-3.55, -2.45), (-2.35, -1.25), (-1.15, -0.05), (0.05, 0.68)]
+        for k, (a, b) in enumerate(panes):
+            framed_window(parts, f'Glass_Side_{sfx}{k + 1}', rrect(a, b, 1.36, 2.22, 0.07), x, s)
+        # sliding vents in the rear side windows
+        parts.append(mesh('WindowVents_' + sfx, 'PT_Trim_Black',
+                          merge(*[panel_x(x, a + 0.02, b - 0.02, 1.95, 1.975, 0.009, s) for a, b in panes[:2]])))
+        parts.append(mesh('Cladding_' + sfx, 'PT_Plastic_Black', P.band(ZB + 0.09, 0.64, 0.006, sides=(s,), y_min=-3.7, y_max=2.2)))
+        parts.append(mesh('ArchFlares_' + sfx, 'PT_Plastic_Black',
+                          merge(*[arch_flare(P, wy, R, RA, HW, s) for wy in (L_F, L_R)]), smooth=True))
+        parts.append(mesh('SideMarkers_' + sfx, 'PT_Lamp_Amber',
+                          merge(*[box((s * (HW + 0.009), y, 0.52), (0.012, 0.07, 0.035)) for y in (0.9, -1.0, -3.2)])))
+        parts.append(mesh('MudFlaps_' + sfx, 'PT_Rubber',
+                          merge(*[box_between(0.14, 0.52, s * (HW - 0.2), s * (HW - 0.02), wy - RA - 0.03, wy - RA - 0.01)
+                                  for wy in (L_F, L_R)])))
+        # cab door outline and handle
+        parts.append(mesh('DoorSeams_Cab_' + sfx, 'PT_Trim_Black', merge(
+            panel_x(x, 0.72, 0.735, 0.62, 2.30, 0.006, s),
+            panel_x(x, 1.595, 1.61, 0.62, 1.28, 0.006, s))))
+        parts.append(mesh('DoorHandle_Cab_' + sfx, 'PT_Trim_Black', panel_x(x, 0.80, 0.98, 1.12, 1.16, 0.02, s)))
+    parts.append(mesh('FuelFlap', 'PT_Trim_Black', panel_x(-HW, -2.95, -2.78, 0.98, 1.12, 0.004, -1)))
     # sliding passenger door (translates along -Y from Door_Slide_Pivot)
     piv = 'Door_Slide_Pivot'
     yd0, yd1 = -0.58, 0.66
     px = HW + 0.012
     parts.append(mesh('Door_Slide_Seal', 'PT_Trim_Black', panel_x(HW, yd0 - 0.02, yd1 + 0.02, 0.42, 2.32, 0.008, 1)))
     parts.append(empty(piv, (px, yd1, 0.0)))
-    leaf = box_between(0.44, 2.30, px, px + 0.03, yd0, yd1)
-    parts.append(mesh('Door_Slide', paint, ([(a - px, b - yd1, c) for a, b, c in leaf[0]], leaf[1]), parent=piv))
-    g = box_between(1.35, 2.20, px + 0.03, px + 0.034, yd0 + 0.08, yd1 - 0.08)
-    parts.append(mesh('Door_Slide_Glass', 'PT_Glass_Tinted', ([(a - px, b - yd1, c) for a, b, c in g[0]], g[1]), parent=piv))
+
+    def local(vf):
+        return [(a - px, b - yd1, c) for a, b, c in vf[0]], vf[1]
+    parts.append(mesh('Door_Slide', paint, local(box_between(0.44, 2.30, px, px + 0.03, yd0, yd1)), parent=piv))
+    win = rrect(yd0 + 0.1, yd1 - 0.1, 1.36, 2.20, 0.07)
+    parts.append(mesh('Door_Slide_Glass_Seal', 'PT_Trim_Black', local(side_poly(offset_convex(win, 0.025), px + 0.03, 0.004, 1)),
+                      parent=piv))
+    parts.append(mesh('Door_Slide_Glass', 'PT_Glass_Tinted', local(side_poly(win, px + 0.032, 0.004, 1)), parent=piv))
+    parts.append(mesh('Door_Slide_Handle', 'PT_Trim_Black', local(box_between(1.12, 1.16, px + 0.03, px + 0.05, 0.40, 0.58)),
+                      parent=piv))
+    parts.append(mesh('Door_Slide_Cladding', 'PT_Plastic_Black', local(box_between(ZB + 0.09, 0.64, px + 0.03, px + 0.036, yd0, yd1)),
+                      parent=piv))
     parts.append(mesh('Door_Slide_Rail', 'PT_Trim_Black', panel_x(HW, -3.2, yd1, 1.28, 1.31, 0.012, 1)))
-    # rear end
-    parts.append(mesh('Glass_Rear', 'PT_Glass_Tinted', panel_y(TAIL, -0.78, 0.78, 1.50, 2.25, GLASS_OFF, -1)))
+    parts.append(mesh('Door_Step', 'PT_Steel_Dark', box_between(0.30, 0.38, HW - 0.25, HW + 0.06, yd0 + 0.05, yd1 - 0.05)))
+    # rear: two-leaf doors with framed windows, lamp clusters, bumper
+    for s, sfx in ((-1, 'L'), (1, 'R')):
+        win = [(s * 0.06, 1.45), (s * 0.80, 1.45), (s * 0.80, 2.22), (s * 0.06, 2.22)]
+        v, f = prism(offset_convex(win, 0.025), TAIL - 0.004, TAIL)
+        parts.append(mesh('Glass_Rear_Seal_' + sfx, 'PT_Trim_Black', ([(a, c, b) for a, b, c in v], f)))
+        v, f = prism(win, TAIL - 0.006, TAIL - 0.002)
+        parts.append(mesh('Glass_Rear_' + sfx, 'PT_Glass_Tinted', ([(a, c, b) for a, b, c in v], f)))
+        lamp_box(parts, 'Taillight_' + sfx, 'PT_Lamp_Red', (s * 0.86, TAIL - 0.01, 1.00), (0.11, 0.03, 0.30))
+        lamp_box(parts, 'Brake_' + sfx, 'PT_Lamp_Red', (s * 0.86, TAIL - 0.01, 1.22), (0.11, 0.03, 0.12))
+        lamp_box(parts, 'Indicator_R' + sfx, 'PT_Lamp_Amber', (s * 0.86, TAIL - 0.01, 0.78), (0.11, 0.03, 0.12))
+        parts.append(mesh('RearHandle_' + sfx, 'PT_Trim_Black', panel_y(TAIL, s * 0.12, s * 0.28, 1.14, 1.18, 0.02, -1)))
     parts.append(mesh('RearDoorSeam', 'PT_Trim_Black', panel_y(TAIL, -0.012, 0.012, 0.45, 2.40, 0.006, -1)))
-    parts.append(mesh('Bumper_Rear', 'PT_Plastic_Black', box_between(0.38, 0.56, -0.98, 0.98, TAIL - 0.07, TAIL + 0.06)))
+    lamp_box(parts, 'Brake_Centre', 'PT_Lamp_Red', (0.0, TAIL - 0.01, 2.36), (0.36, 0.03, 0.05))
+    parts.append(mesh('Bumper_Rear', 'PT_Plastic_Black', wrap_solid(P, 0.36, 0.60, TAIL + 0.35, 'rear', 0.05, 0.03)))
+    parts.append(mesh('RearStep', 'PT_Steel_Dark', box_between(0.33, 0.37, -0.45, 0.45, TAIL - 0.2, TAIL + 0.05)))
+    plate(parts, 'NumberPlate_Rear', (0.0, TAIL - 0.065, 0.72), '-Y')
+    lamp_box(parts, 'PlateLamp', 'PT_Lamp_White', (0.0, TAIL - 0.02, 0.81), (0.12, 0.04, 0.02))
+    # front: wrap-round bumper, grille with bars, headlamps wrapping the corners
+    parts.append(mesh('Bumper_Front', 'PT_Plastic_Grey', wrap_solid(P, 0.40, 0.60, NOSE - 0.45, 'front', 0.06, 0.03)))
+    parts.append(mesh('Bumper_Lip', 'PT_Plastic_Black', wrap_solid(P, 0.36, 0.40, NOSE - 0.30, 'front', 0.07, 0.02)))
+    grille = [(-0.36, 0.62), (0.36, 0.62), (0.42, 0.80), (-0.42, 0.80)]
+    v, f = prism(grille, NOSE, NOSE + 0.012)
+    parts.append(mesh('Grille', 'PT_Trim_Black', ([(a, c, b) for a, b, c in v], f)))
+    bars = [box((0, NOSE + 0.016, z), (0.72 + (z - 0.62) * 0.66, 0.012, 0.018)) for z in (0.67, 0.71, 0.75)]
+    parts.append(mesh('Grille_Bars', 'PT_Steel_Bright', merge(*bars)))
     for s, sfx in ((-1, 'L'), (1, 'R')):
-        lamp_box(parts, 'Taillight_' + sfx, 'PT_Lamp_Red', (s * 0.84, TAIL - 0.005, 0.98), (0.10, 0.03, 0.26))
-        lamp_box(parts, 'Brake_' + sfx, 'PT_Lamp_Red', (s * 0.84, TAIL - 0.005, 1.16), (0.10, 0.03, 0.08))
-        lamp_box(parts, 'Indicator_R' + sfx, 'PT_Lamp_Amber', (s * 0.84, TAIL - 0.005, 0.80), (0.10, 0.03, 0.08))
-    plate(parts, 'NumberPlate_Rear', (0.0, TAIL - 0.075, 0.70), '-Y')
-    # front end
-    parts.append(mesh('Bumper_Front', 'PT_Plastic_Grey', box_between(0.38, 0.56, -0.95, 0.95, NOSE - 0.14, NOSE + 0.07)))
-    parts.append(mesh('Grille', 'PT_Trim_Black', panel_y(NOSE, -0.28, 0.28, 0.57, 0.66, 0.012, 1)))
-    for s, sfx in ((-1, 'L'), (1, 'R')):
-        lamp_box(parts, 'Headlight_' + sfx, 'PT_Lamp_White', (s * 0.50, NOSE + 0.004, 0.72), (0.26, 0.03, 0.10))
-        lamp_box(parts, 'Indicator_F' + sfx, 'PT_Lamp_Amber', (s * 0.50, NOSE + 0.004, 0.64), (0.26, 0.03, 0.04))
-        mirror(parts, sfx, [(s * (HW - 0.02), 1.62, 1.32), (s * (HW + 0.14), 1.66, 1.40), (s * (HW + 0.2), 1.70, 1.46)],
-               (s * (HW + 0.2), 1.70, 1.46), (0.12, 0.07, 0.26))
-    plate(parts, 'NumberPlate_Front', (0.0, NOSE + 0.07, 0.47), '+Y')
+        lamp_box(parts, 'Headlight_' + sfx, 'PT_Lamp_White', (s * 0.555, NOSE + 0.008, 0.73), (0.25, 0.03, 0.13))
+        parts.append(mesh('Headlight_Bezel_' + sfx, 'PT_Trim_Black', box((s * 0.555, NOSE + 0.004, 0.73), (0.29, 0.02, 0.16))))
+        parts.append(mesh('Indicator_F' + sfx, 'PT_Lamp_Amber', P.band(0.68, 0.79, 0.006, y_min=NOSE - 0.25, sides=(s,))))
+        lamp_box(parts, 'FogLamp_' + sfx, 'PT_Lamp_White', (s * 0.72, NOSE + 0.065, 0.47), (0.12, 0.02, 0.06))
+        mirror(parts, sfx, [(s * (HW - 0.02), 1.60, 1.30), (s * (HW + 0.16), 1.66, 1.42), (s * (HW + 0.24), 1.70, 1.52)],
+               (s * (HW + 0.24), 1.70, 1.62), (0.18, 0.08, 0.34))
+    plate(parts, 'NumberPlate_Front', (0.0, NOSE + 0.08, 0.50), '+Y')
     # route boards: behind the windscreen (right corner) and in a side window
-    st = P.station(1.62)
-    parts.append(mesh('RouteBoard_Front', 'PT_Plate_White', box((0.52, 1.62, st.zt + 0.02), (0.44, 0.03, 0.02))))
-    parts.append(text('RouteBoard_Front_Text', '107', 0.14, (0.52, 1.66, st.zt + 0.06), '+Y', 'PT_Ink'))
-    parts.append(mesh('RouteBoard_Side', 'PT_Plate_White', panel_x(HW, -1.95, -1.45, 1.95, 2.18, 0.008, 1)))
-    parts.append(text('RouteBoard_Side_Text', '107', 0.15, (HW + 0.01, -1.70, 2.065), '+X', 'PT_Ink'))
+    parts.append(mesh('RouteBoard_Front', 'PT_Plate_White', slope_quad(P, 0.28, 0.72, 1.50, 1.62, GLASS_OFF + 0.003)))
+    parts.append(slope_text(P, 'RouteBoard_Front_Text', '107', 0.10, 0.50, 1.56, 'PT_Ink', off=GLASS_OFF + 0.006))
+    parts.append(mesh('RouteBoard_Side', 'PT_Plate_White', panel_x(HW, -1.95, -1.45, 1.93, 2.16, 0.009, 1)))
+    parts.append(text('RouteBoard_Side_Text', '107', 0.15, (HW + 0.011, -1.70, 2.045), '+X', 'PT_Ink'))
     # wheels
     for s, sfx in ((-1, 'L'), (1, 'R')):
         road_wheel(parts, 'Wheel_F' + sfx, (s * 0.875, L_F, R), R, TW, RIM, s)
         road_wheel(parts, 'Wheel_R' + sfx, (s * 0.875, L_R, R), R, TW, RIM, s)
     parts.append(empty('Socket_DriverEye', (-0.45, 1.00, 1.86)))
     parts.append(empty('Socket_CentreOfMass', (0.0, -0.1, 0.85)))
-    parts.append(mesh('COL_Body', 'PT_Collision', box_between(0.40, H, -HW, HW, TAIL, NOSE)))
-    meta = dict(kind='minibus', length=NOSE - TAIL, width=2 * HW, height=H, wheelbase=L_F - L_R,
+    parts.append(mesh('COL_Body', 'PT_Collision', box_between(ZB, H, -HW, HW, TAIL, NOSE)))
+    meta = dict(kind='minibus', length=NOSE - TAIL, width=2 * HW, height=H + 0.07, wheelbase=L_F - L_R,
                 wheels={'Wheel_FL': R, 'Wheel_FR': R, 'Wheel_RL': R, 'Wheel_RR': R}, arch_r=RA, half_w=P.hw_at(L_F),
                 tyre_out={'F': 0.875 + TW / 2, 'R': 0.875 + TW / 2}, doors=['Slide'])
     return finish('PT_Minibus_Route', 'Маршрутное такси (микроавтобус)', parts, meta)
@@ -293,30 +473,34 @@ def tram():
     one-ended (driver's cab in front), three double doors on the right."""
     NOSE, TAIL = 7.65, -7.65                  # length 15.3 m
     HW, H = 1.25, 3.25                        # width 2.5 m
-    BOGIE = 3.75                              # bogie centres, base 7.5 m
+    BOGIE = 3.5                               # bogie centres, base 7.0 m
     AXLE = 0.97                               # half bogie wheelbase
     R = TRAM_WHEEL_R
     paint = 'PT_Paint_TramCream'
-    P = Profile(TAIL, NOSE, HW, 0.78, H, 0.08, 0.30, rc_front=0.9, rc_rear=0.9, re_front=0.25, re_rear=0.25, step=0.15,
-                n_end=10)
+    SKIRT = 0.38                              # side skirts hide most of the running gear
+    WELL = (1.53, 0.84)                       # bogie opening: half length, ceiling height
+    P = Profile(TAIL, NOSE, HW, SKIRT, H, 0.08, 0.30, rc_front=0.9, rc_rear=0.9, re_front=0.25, re_rear=0.25, step=0.15,
+                n_end=10, cutouts=[(by - WELL[0], by + WELL[0], WELL[1]) for by in (BOGIE, -BOGIE)])
     parts = [mesh('Body', paint, P.shell(), smooth=True)]
-    y_ws, y_rw = 6.3, -6.4
+    underbody(parts, P)
+    arch_liners(parts, P, 'BogieWell_Liners')
+    y_ws, y_rw = 6.4, -6.4
     parts.append(mesh('Glass_Side', 'PT_Glass_Tinted', P.band(1.32, 2.50, GLASS_OFF, y_min=y_rw, y_max=y_ws)))
     parts.append(mesh('Glass_Windscreen', 'PT_Glass_Tinted', P.band(1.22, 2.35, GLASS_OFF, y_min=y_ws, wrap_front=True)))
     parts.append(mesh('Glass_Rear', 'PT_Glass_Tinted', P.band(1.40, 2.45, GLASS_OFF, y_max=y_rw, wrap_rear=True)))
-    doors = [(1, 5.5), (2, 0.0), (3, -5.5)]
+    doors = [(1, 5.75), (2, 0.0), (3, -5.75)]
     door_w = 1.3
     posts = [y_ws, y_rw, 3.9, 2.4, 1.1, -1.1, -2.4, -3.9]
     posts += [yc + s * (door_w / 2 + 0.06) for _, yc in doors for s in (-1, 1)]
     pillars(parts, P, posts, 1.32, 2.50, sides=(1,))
     pillars(parts, P, [y_ws, y_rw, 5.0, 3.7, 2.4, 1.1, -0.2, -1.5, -2.8, -4.1, -5.4], 1.32, 2.50, sides=(-1,))
-    parts.append(mesh('Livery_Skirt', 'PT_Paint_TramRed', P.band(0.87, 1.25, LIVERY_OFF, wrap_front=True, wrap_rear=True)))
+    parts.append(mesh('Livery_Skirt', 'PT_Paint_TramRed', P.band(SKIRT + 0.08, 1.25, LIVERY_OFF, wrap_front=True, wrap_rear=True)))
+    parts.append(mesh('Skirt_Edge', 'PT_Plastic_Black', P.band(SKIRT + 0.08, SKIRT + 0.15, 0.006, wrap_front=True, wrap_rear=True)))
     parts.append(mesh('Livery_Roofline', 'PT_Paint_TramRed', P.band(2.58, 2.72, LIVERY_OFF, y_min=y_rw, y_max=y_ws)))
     parts.append(mesh('Bumper_Front', 'PT_Plastic_Black', P.band(0.87, 0.95, 0.012, y_min=6.0, wrap_front=True)))
     for idx, yc in doors:
-        door_leaves(parts, idx, 1, HW, yc, door_w, 0.80, 2.62, paint, glass_z=(1.0, 2.48))
-        parts.append(mesh(f'Door_{idx}_Step', 'PT_Steel_Dark', box_between(0.40, 0.78, HW - 0.28, HW - 0.02,
-                                                                             yc - door_w / 2, yc + door_w / 2)))
+        # steps are inside the doorway; the leaves reach down to the skirt edge
+        door_leaves(parts, idx, 1, HW, yc, door_w, SKIRT + 0.17, 2.62, paint, glass_z=(1.0, 2.48))
     # front: route display, lamps
     parts.append(mesh('Display_Front', 'PT_Display', panel_y(NOSE, -0.33, 0.33, 2.40, 2.64, 0.02, 1)))
     parts.append(text('Display_Front_Text', '7', 0.2, (0.0, NOSE + 0.022, 2.52), '+Y', 'PT_Display_Amber'))
@@ -332,10 +516,9 @@ def tram():
         lamp_box(parts, 'Indicator_R' + sfx, 'PT_Lamp_Amber', (s * x, y, 1.05), (0.10, 0.12, 0.10))
         mirror(parts, sfx, [(s * (HW - 0.02), 6.2, 2.25), (s * (HW + 0.22), 6.35, 2.25), (s * (HW + 0.26), 6.45, 2.1)],
                (s * (HW + 0.26), 6.45, 1.95), (0.14, 0.07, 0.32))
-    # towing coupler under the rear overhang: bracket from the underframe
-    parts.append(mesh('Coupler_Rear', 'PT_Steel_Dark', merge(box((0, TAIL + 0.55, 0.74), (0.5, 0.3, 0.08)),
-                                                            box((0, TAIL + 0.05, 0.66), (0.16, 1.1, 0.12)),
-                                                            box((0, TAIL - 0.52, 0.66), (0.26, 0.06, 0.22)))))
+    # towing coupler emerging from the rear apron
+    parts.append(mesh('Coupler_Rear', 'PT_Steel_Dark', merge(box((0, TAIL - 0.05, 0.52), (0.16, 0.8, 0.12)),
+                                                            box((0, TAIL - 0.47, 0.52), (0.26, 0.06, 0.22)))))
     parts.append(mesh('Display_Side', 'PT_Display', panel_x(HW, 4.2, 4.9, 2.30, 2.50, 0.012, 1)))
     parts.append(text('Display_Side_Text', '7', 0.14, (HW + 0.014, 4.55, 2.40), '+X', 'PT_Display_Amber'))
     # roof equipment
@@ -373,6 +556,15 @@ def tram():
         springs = merge(*[cylinder((sx * 0.98, sy * 0.97, 0.52), (sx * 0.98, sy * 0.97, 0.7), 0.07, 10)
                           for sx in (-1, 1) for sy in (-1, 1)])
         parts.append(mesh(f'Bogie_{bname}_Springs', 'PT_Rubber', springs, parent=bp))
+        # axle boxes on the side frames, magnetic track brakes over the rails
+        parts.append(mesh(f'Bogie_{bname}_AxleBoxes', 'PT_Steel_Dark',
+                          merge(*[box((sx * 0.98, sy * 0.97, R), (0.16, 0.30, 0.30)) for sx in (-1, 1) for sy in (-1, 1)]),
+                          parent=bp))
+        brakes = []
+        for sx in (-1, 1):
+            brakes.append(box((sx * RAIL_C, 0, 0.075), (0.08, 1.0, 0.09)))
+            brakes += [box((sx * RAIL_C, sy * 0.38, 0.26), (0.05, 0.05, 0.3)) for sy in (-1, 1)]
+        parts.append(mesh(f'Bogie_{bname}_TrackBrakes', 'PT_Plastic_Black', merge(*brakes), parent=bp))
         for k, ay in ((1, AXLE), (2, -AXLE)):
             ws = f'Wheelset_{bname}{k}'
             parts.append(empty(ws, (0, ay, R), parent=bp))
@@ -384,7 +576,9 @@ def tram():
     parts.append(empty('Socket_CentreOfMass', (0.0, 0.0, 1.2)))
     parts.append(mesh('COL_Body', 'PT_Collision', box_between(0.78, H, -HW, HW, TAIL, NOSE)))
     meta = dict(kind='tram', length=NOSE - TAIL, width=2 * HW, height=H + 0.5, bogie_base=2 * BOGIE,
-                wheel_r=R, rail_c=RAIL_C, flange=TRAM_FLANGE, half_w=HW, doors=[d for d, _ in doors])
+                wheel_r=R, rail_c=RAIL_C, flange=TRAM_FLANGE, half_w=HW, doors=[d for d, _ in doors],
+                skirt=SKIRT, well_half=WELL[0], well_top=WELL[1], bogie_y=BOGIE,
+                door_spans=[(yc - door_w / 2, yc + door_w / 2) for _, yc in doors])
     return finish('PT_Tram_City', 'Трамвай односекционный', parts, meta)
 
 

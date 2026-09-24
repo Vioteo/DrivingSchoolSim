@@ -57,12 +57,13 @@ class Profile:
     """
 
     def __init__(self, tail, nose, hw, zb, zt, rb, rt, rc_front, rc_rear, re_front=0.0, re_rear=0.0,
-                 hw_keys=None, zt_keys=None, rt_keys=None, arches=(), step=0.12, n_end=7):
+                 hw_keys=None, zt_keys=None, rt_keys=None, arches=(), cutouts=(), step=0.12, n_end=7):
         self.tail, self.nose = tail, nose
         self.hw, self.zb, self.zt, self.rb, self.rt = hw, zb, zt, rb, rt
         self.rc_front, self.rc_rear, self.re_front, self.re_rear = rc_front, rc_rear, re_front, re_rear
         self.hw_keys, self.zt_keys, self.rt_keys = hw_keys, zt_keys, rt_keys
         self.arches = list(arches)
+        self.cutouts = list(cutouts)          # [(y0, y1, z_top)]: rectangular openings (tram bogies)
         self.step, self.n_end = step, n_end
 
     # ---------------------------------------------------------- laws
@@ -81,6 +82,9 @@ class Profile:
             d = abs(y - wy)
             if d <= ra:
                 z = max(z, wz + math.sqrt(max(0.0, ra * ra - d * d)))
+        for y0, y1, zc in self.cutouts:
+            if y0 <= y <= y1:
+                z = max(z, zc)
         return z
 
     def end_theta(self, y):
@@ -116,6 +120,8 @@ class Profile:
                 ys.add(round(wy + ra * math.sin(math.pi / 2 * k / 8), 5))
             ys.add(round(wy - ra - 0.002, 5))
             ys.add(round(wy + ra + 0.002, 5))
+        for y0, y1, _ in self.cutouts:
+            ys.update((round(y0 - 0.002, 5), round(y0, 5), round(y1, 5), round(y1 + 0.002, 5)))
         for keys in (self.hw_keys, self.zt_keys, self.rt_keys):
             for y, _ in keys or ():
                 ys.add(round(y, 5))
@@ -127,21 +133,33 @@ class Profile:
     # ---------------------------------------------------------- overlays
     def outline(self, z0, z1, y_min=None, y_max=None):
         """Plan outline (right side, x >= 0) of the body at heights z0..z1,
-        from the tail centre to the nose centre: [(x, y, nx, ny)]."""
-        pts = []
+        from the tail centre to the nose centre, as runs [[(x, y, nx, ny)]].
+        A new run starts wherever an arch or cutout interrupts the skin, so
+        bands never bridge an opening."""
+        runs, cur = [], []
         ys = [y for y in self.ys() if (y_min is None or y >= y_min) and (y_max is None or y <= y_max)]
         for y in ys:
             st = self.station(y)
             if st.zb + st.rb > z0 + 1e-4 or st.zt - st.rt < z1 - 1e-4:
+                if cur:
+                    runs.append(cur)
+                cur = []
                 continue
-            pts.append((st.hw, y))
+            cur.append((st.hw, y))
+        if cur:
+            runs.append(cur)
         out = []
-        for i, (x, y) in enumerate(pts):
-            p = pts[max(i - 1, 0)]
-            q = pts[min(i + 1, len(pts) - 1)]
-            tx, ty = q[0] - p[0], q[1] - p[1]
-            l = math.hypot(tx, ty) or 1.0
-            out.append((x, y, ty / l, -tx / l))
+        for pts in runs:
+            if len(pts) < 2:
+                continue
+            run = []
+            for i, (x, y) in enumerate(pts):
+                p = pts[max(i - 1, 0)]
+                q = pts[min(i + 1, len(pts) - 1)]
+                tx, ty = q[0] - p[0], q[1] - p[1]
+                l = math.hypot(tx, ty) or 1.0
+                run.append((x, y, ty / l, -tx / l))
+            out.append(run)
         return out
 
     def band(self, z0, z1, offset, y_min=None, y_max=None, sides=(1, -1), wrap_front=False, wrap_rear=False):
@@ -149,11 +167,11 @@ class Profile:
 
         Without wrapping it covers the side faces only; wrap_front/rear
         continue it around the nose/tail (windscreens, livery bands)."""
-        outl = self.outline(z0, z1, y_min, y_max)
         pieces = []
-        for s in sides:
-            pts = [(s * (x + nx * offset), y + ny * offset) for x, y, nx, ny in outl]
-            pieces.append(_strip(pts, z0, z1, self._outward))
+        for run in self.outline(z0, z1, y_min, y_max):
+            for s in sides:
+                pts = [(s * (x + nx * offset), y + ny * offset) for x, y, nx, ny in run]
+                pieces.append(_strip(pts, z0, z1, self._outward))
         if wrap_front or wrap_rear:
             for y_end, flag, sign in ((self.nose, wrap_front, 1), (self.tail, wrap_rear, -1)):
                 if not flag:
