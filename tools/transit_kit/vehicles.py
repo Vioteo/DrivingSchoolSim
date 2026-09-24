@@ -316,6 +316,29 @@ def wrap_solid(P, z0, z1, y_open, end, out, inn):
     return prism(poly, z0, z1)
 
 
+def swept_band(P, y_min, zf, off, s, y_max=None):
+    """Strip on the body side/corner whose bottom and top follow zf(station)
+    -> (z0, z1): swept headlamps that climb along the wing."""
+    pts = []
+    for y in P.ys():
+        if y < y_min or (y_max is not None and y > y_max):
+            continue
+        st = P.station(y)
+        z0, z1 = zf(st)
+        if st.zb + st.rb > z0 or st.zt - st.rt < z1 - 0.03:
+            continue
+        pts.append((st.hw, y, z0, z1))
+    rows = [[], []]
+    for i, (x, y, z0, z1) in enumerate(pts):
+        p, q = pts[max(i - 1, 0)], pts[min(i + 1, len(pts) - 1)]
+        tx, ty = q[0] - p[0], q[1] - p[1]
+        l = math.hypot(tx, ty) or 1.0
+        nx, ny = ty / l, -tx / l
+        rows[0].append((s * (x + nx * off), y + ny * off, z0))
+        rows[1].append((s * (x + nx * off), y + ny * off, z1))
+    return orient_to(grid(rows), lambda c: (c[0], c[1] - (P.nose - P.rc_front), 0.0))
+
+
 def arch_flare(P, wy, wz, ra, x, s, r=0.035):
     """Black plastic flare following a wheel arch on the side face."""
     rr = ra + 0.02
@@ -340,12 +363,14 @@ def minibus():
     paint = 'PT_Paint_MinibusBlue'
     # side profile of the top: roof, convex forehead from the roof down to
     # the windscreen top (~0.7 m tall), raked windscreen, sloping bonnet
-    WS_TOP, WS_BASE = (1.40, 2.00), (2.05, 1.24)
-    zt_keys = [(TAIL, H), (0.15, H), (0.48, 2.68), (0.80, 2.57), (1.06, 2.39), (1.26, 2.17), WS_TOP, WS_BASE,
-               (2.45, 1.16), (NOSE, 1.10)]
-    rt_keys = [(TAIL, 0.2), (0.15, 0.2), (1.40, 0.16), (2.05, 0.12), (NOSE, 0.12)]
-    hw_keys = [(TAIL, HW), (1.6, HW), (NOSE, 0.95)]
-    P = Profile(TAIL, NOSE, HW, ZB, H, 0.08, 0.2, rc_front=0.28, rc_rear=0.12, re_front=0.08, re_rear=0.1,
+    # bonnet drops towards a tall front panel (bonnet edge ~1.1 m); the nose
+    # is strongly rounded in plan so the headlamps sit on the corners
+    WS_TOP, WS_BASE = (1.35, 2.08), (2.00, 1.34)
+    zt_keys = [(TAIL, H), (0.15, H), (0.46, 2.68), (0.76, 2.58), (1.00, 2.43), (1.20, 2.25), WS_TOP, WS_BASE,
+               (2.40, 1.25), (2.70, 1.16), (NOSE, 1.12)]
+    rt_keys = [(TAIL, 0.2), (0.15, 0.2), (1.35, 0.16), (2.00, 0.12), (NOSE, 0.10)]
+    hw_keys = [(TAIL, HW), (1.6, HW), (2.3, 1.00), (NOSE, 0.93)]
+    P = Profile(TAIL, NOSE, HW, ZB, H, 0.08, 0.2, rc_front=0.46, rc_rear=0.12, re_front=0.06, re_rear=0.1,
                 hw_keys=hw_keys, zt_keys=zt_keys, rt_keys=rt_keys, arches=[(L_F, R, RA), (L_R, R, RA)], step=0.08)
     parts = [mesh('Body', paint, P.shell(), smooth=True)]
     wheelhouse(parts, 'Wheelhouse_F', L_F, RA, 0.64, ZB, R + RA)
@@ -359,13 +384,13 @@ def minibus():
                       top_patch(P, WS_TOP[0] + 0.005, WS_BASE[0] - 0.01, lambda st: st.hw - st.rt - 0.015, GLASS_OFF - 0.002)))
     parts.append(mesh('RouteDisplay_Front', 'PT_Display', slope_quad(P, -0.74, -0.22, 1.85, 1.96, GLASS_OFF + 0.003)))
     parts.append(slope_text(P, 'RouteDisplay_Front_Text', '107', 0.09, -0.48, 1.905, 'PT_Display_Amber', off=GLASS_OFF + 0.006))
-    parts.append(mesh('Cowl', 'PT_Trim_Black', top_patch(P, 2.06, 2.14, lambda st: st.hw - st.rt - 0.06, 0.004, n=2)))
-    parts.append(mesh('BonnetVents', 'PT_Trim_Black', merge(slope_quad(P, -0.62, -0.26, 2.20, 2.25, 0.004),
-                                                            slope_quad(P, 0.26, 0.62, 2.20, 2.25, 0.004))))
+    parts.append(mesh('Cowl', 'PT_Trim_Black', top_patch(P, 2.01, 2.08, lambda st: st.hw - st.rt - 0.06, 0.004, n=2)))
+    parts.append(mesh('BonnetVents', 'PT_Trim_Black', merge(slope_quad(P, -0.58, -0.24, 2.13, 2.18, 0.004),
+                                                            slope_quad(P, 0.24, 0.58, 2.13, 2.18, 0.004))))
     wipers = []
     for x0 in (-0.70, 0.02):
-        a = (x0, 2.02, P.zt_at(2.02) + 0.02)
-        b = (x0 + 0.40, 1.62, P.zt_at(1.62) + 0.02)
+        a = (x0, 1.97, P.zt_at(1.97) + 0.02)
+        b = (x0 + 0.40, 1.57, P.zt_at(1.57) + 0.02)
         wipers.append(tube([a, b], 0.009, 6))
     parts.append(mesh('Wipers', 'PT_Trim_Black', merge(*wipers)))
     # roof: air-conditioning unit over the rear of the saloon, hatch
@@ -376,7 +401,7 @@ def minibus():
     for s, sfx in ((-1, 'L'), (1, 'R')):
         x = s * HW
         # cab window: front edge parallel to the windscreen, below the rounded top edge
-        cab = [(1.00, 1.32), (1.80, 1.32), (1.36, 1.86), (1.00, 1.86)]
+        cab = [(1.00, 1.38), (1.82, 1.38), (1.40, 1.88), (1.00, 1.88)]
         framed_window(parts, 'Glass_Cab_' + sfx, cab, x, s)
         panes = [(-3.55, -2.40), (-2.30, -0.70)] if s > 0 else \
                 [(-3.55, -2.40), (-2.30, -1.00), (-0.90, 0.78)]
@@ -436,24 +461,37 @@ def minibus():
     parts.append(mesh('RearStep', 'PT_Steel_Dark', box_between(0.33, 0.37, -0.45, 0.45, TAIL - 0.2, TAIL + 0.05)))
     plate(parts, 'NumberPlate_Rear', (0.0, TAIL - 0.065, 0.72), '-Y')
     lamp_box(parts, 'PlateLamp', 'PT_Lamp_White', (0.0, TAIL - 0.02, 0.81), (0.12, 0.04, 0.02))
-    # front: big black bumper, tall black grille with bars, large headlamps
-    # swept round the corners with amber indicators below
-    parts.append(mesh('Bumper_Front', 'PT_Plastic_Black', wrap_solid(P, 0.38, 0.70, NOSE - 0.50, 'front', 0.07, 0.03)))
-    grille = [(-0.30, 0.64), (0.30, 0.64), (0.40, 0.90), (-0.40, 0.90)]
+    # front: big black bumper with a lower intake, tall grille between the
+    # headlamps up to the bonnet edge, headlamps on the rounded corners that
+    # sweep back and up along the wings under the bonnet line
+    parts.append(mesh('Bumper_Front', 'PT_Plastic_Black', wrap_solid(P, 0.36, 0.66, NOSE - 0.55, 'front', 0.07, 0.03)))
+    parts.append(mesh('Bumper_Intake', 'PT_Trim_Black', panel_y(NOSE + 0.07, -0.36, 0.36, 0.40, 0.50, 0.006, 1)))
+    cap = P.station(NOSE)
+    g_top = cap.zt - cap.rt - 0.02
+    grille = [(-0.34, 0.67), (0.34, 0.67), (0.42, g_top), (-0.42, g_top)]
+    v, f = prism(offset_convex(grille, 0.02), NOSE, NOSE + 0.010)
+    parts.append(mesh('Grille_Surround', 'PT_Plastic_Grey', ([(a, c, b) for a, b, c in v], f)))
     v, f = prism(grille, NOSE, NOSE + 0.014)
     parts.append(mesh('Grille', 'PT_Trim_Black', ([(a, c, b) for a, b, c in v], f)))
-    bars = [box((0, NOSE + 0.018, z), (0.60 + (z - 0.64) * 0.77, 0.012, 0.022)) for z in (0.70, 0.76, 0.82)]
+    zs = [0.67 + (g_top - 0.67) * k / 4 for k in (1, 2, 3)]
+    bars = [box((0, NOSE + 0.018, z), (0.68 + (z - 0.67) / (g_top - 0.67) * 0.16, 0.012, 0.03)) for z in zs]
     parts.append(mesh('Grille_Bars', 'PT_Plastic_Grey', merge(*bars)))
+
+    def lamp_zone(st, grow=0.0):
+        # upper edge just under the bonnet crease, lower edge rises going back
+        t = min(1.0, max(0.0, (NOSE - st.y) / 0.55))
+        z1 = st.zt - st.rt - 0.012 + grow
+        return z1 - (0.17 - 0.08 * t) - 2 * grow, z1
     for s, sfx in ((-1, 'L'), (1, 'R')):
-        parts.append(mesh('Headlight_' + sfx, 'PT_Lamp_White', merge(
-            box((s * 0.535, NOSE + 0.008, 0.835), (0.25, 0.03, 0.12)),
-            P.band(0.79, 0.89, 0.006, y_min=NOSE - 0.32, sides=(s,)))))
-        parts.append(mesh('Headlight_Bezel_' + sfx, 'PT_Trim_Black', box((s * 0.535, NOSE + 0.004, 0.83), (0.29, 0.02, 0.16))))
-        parts.append(mesh('Indicator_F' + sfx, 'PT_Lamp_Amber', P.band(0.745, 0.785, 0.006, y_min=NOSE - 0.28, sides=(s,))))
-        lamp_box(parts, 'FogLamp_' + sfx, 'PT_Lamp_White', (s * 0.72, NOSE + 0.075, 0.47), (0.12, 0.02, 0.06))
+        parts.append(mesh('Headlight_Bezel_' + sfx, 'PT_Trim_Black',
+                          swept_band(P, NOSE - 0.57, lambda st: lamp_zone(st, 0.015), 0.004, s)))
+        parts.append(mesh('Headlight_' + sfx, 'PT_Lamp_White', swept_band(P, NOSE - 0.42, lamp_zone, 0.007, s)))
+        parts.append(mesh('Indicator_F' + sfx, 'PT_Lamp_Amber',
+                          swept_band(P, NOSE - 0.55, lamp_zone, 0.007, s, y_max=NOSE - 0.43)))
+        lamp_box(parts, 'FogLamp_' + sfx, 'PT_Lamp_White', (s * 0.56, NOSE + 0.075, 0.45), (0.12, 0.02, 0.06))
         mirror(parts, sfx, [(s * (HW - 0.02), 1.85, 1.36), (s * (HW + 0.16), 1.89, 1.48), (s * (HW + 0.24), 1.92, 1.58)],
                (s * (HW + 0.24), 1.92, 1.68), (0.18, 0.08, 0.34))
-    plate(parts, 'NumberPlate_Front', (0.0, NOSE + 0.09, 0.56), '+Y')
+    plate(parts, 'NumberPlate_Front', (0.0, NOSE + 0.085, 0.58), '+Y')
     # route board in a side window of the door side
     parts.append(mesh('RouteBoard_Side', 'PT_Plate_White', panel_x(HW, -1.75, -1.25, 2.00, 2.23, 0.009, 1)))
     parts.append(text('RouteBoard_Side_Text', '107', 0.15, (HW + 0.011, -1.50, 2.115), '+X', 'PT_Ink'))
