@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Шрифты интерфейса</title>
+<meta name="description" content="Сравнение четырёх пар шрифтов с кириллицей и лицензией OFL на игровых текстах DrivingSchoolSim в теме «Асфальт».">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&family=Roboto+Mono:wght@500;700&family=Roboto+Condensed:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&family=PT+Sans+Narrow:wght@400;700&family=PT+Sans:wght@400;700&family=PT+Mono&family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-dark:#161718; --bg-panel:#1E2021; --bg-card:#26292B; --accent:#FFD84D; --on-accent:#1A1A1A;
+  --text:#F4F4F2; --text-2:#B3B5B6; --muted:#6E7173; --line:rgba(255,255,255,.08); --red:#E5484D; --green:#3DBE6B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg-dark);color:var(--text-2);font:15px/1.5 system-ui,sans-serif;padding:24px 16px 48px}
+.wrap{max-width:1500px;margin:0 auto}
+header.page{margin-bottom:20px}
+header.page h1{font:700 28px system-ui,sans-serif;color:var(--text);margin-bottom:6px}
+header.page p{max-width:900px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr));gap:16px}
+.card{background:var(--bg-panel);border:1px solid var(--line);display:flex;flex-direction:column}
+.card.rec{border-color:rgba(255,216,77,.5)}
+.meta{padding:14px 16px;border-bottom:1px solid var(--line);font:13px/1.45 system-ui,sans-serif}
+.meta b{color:var(--text);font-size:16px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.meta .tag{font-size:11px;font-weight:700;color:var(--on-accent);background:var(--accent);padding:2px 6px;letter-spacing:.04em}
+.meta dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin-top:8px}
+.meta dt{color:var(--muted)}
+.meta dd{color:var(--text-2)}
+.meta a{color:var(--text-2)}
+.demo{padding:16px;display:flex;flex-direction:column;gap:14px;flex:1}
+.h{font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--text);font-size:34px;line-height:1.05}
+.tabs{display:flex;gap:14px;border-bottom:1px solid var(--line)}
+.tabs span{font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:15px;padding-bottom:6px;color:var(--text-2)}
+.tabs span.on{color:var(--accent);border-bottom:3px solid var(--accent)}
+.row{display:flex;justify-content:space-between;align-items:center;background:var(--bg-card);padding:9px 12px;color:var(--text);font-size:15px}
+.row .v{color:var(--text);font-weight:500}
+.hud{display:flex;flex-wrap:wrap;gap:12px;align-items:stretch}
+.speed{background:rgba(0,0,0,.35);padding:8px 14px;display:flex;align-items:baseline;gap:6px}
+.speed .n{font-size:56px;font-weight:700;color:var(--text);line-height:1}
+.speed .u{font-size:14px;color:var(--text-2)}
+.gear{background:rgba(0,0,0,.35);padding:8px 14px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.gear .n{font-size:38px;font-weight:700;color:var(--accent);line-height:1}
+.gear .u{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.limit{width:64px;height:64px;border-radius:50%;background:#fff;border:7px solid #D7263D;display:flex;align-items:center;justify-content:center;color:#111;font-weight:700;font-size:22px;align-self:center}
+.hint{border-left:3px solid var(--accent);background:rgba(0,0,0,.35);padding:10px 12px;color:var(--text);font-size:16px}
+.hint small{display:block;color:var(--accent);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.viol{border-left:3px solid var(--red);background:rgba(229,72,77,.10);padding:10px 12px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.viol .t{color:var(--text);font-size:15px}
+.viol .t small{display:block;color:var(--text-2);font-size:12px}
+.viol .p{font-size:26px;font-weight:700;color:var(--red);white-space:nowrap}
+.small{font-size:12px;color:var(--text-2)}
+.glyphs{font-size:20px;color:var(--text);letter-spacing:.02em;line-height:1.35;overflow-wrap:anywhere}
+.digits{font-size:22px;color:var(--text)}
+.note{margin-top:20px;font-size:13px;color:var(--muted);max-width:1000px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="page">
+  <h1>Шрифты интерфейса — сравнение</h1>
+  <p>Четыре пары: заголовки и текст плюс моноширинный шрифт для цифр приборов. Лицензия и наличие кириллицы у всех проверены по репозиторию google/fonts (файлы METADATA.pb и OFL.txt). Все под SIL Open Font License 1.1: шрифт можно встраивать в игру и продавать вместе с ней, но нельзя продавать сам шрифт отдельно. К сборке нужно приложить текст лицензии.</p>
+</header>
+
+<div class="grid" id="grid"></div>
+
+<p class="note">Для Unity: TMP-атлас собирается из TTF/OTF, диапазоны 0x0020–0x007E, 0x0400–0x045F, плюс «№ « » — … ° ×». Шаблон проверки — строка «Съешь ещё этих…» и буквы Ё/ё. Barlow Condensed из старого прототипа (latin, latin-ext, vietnamese) кириллицы не содержит, в TMP русские заголовки показывались бы квадратами.</p>
+</div>
+
+<script>
+const PAIRS = [
+  {name:'Golos Text + Roboto Mono', rec:true,
+   head:"'Golos Text'", body:"'Golos Text'", mono:"'Roboto Mono'",
+   who:'Golos Text — А. Королькова, В. Кузьмин (ParaType), 2019. Roboto Mono — C. Robertson.',
+   lic:'OFL 1.1 · OFL 1.1', src:'github.com/googlefonts/golos-text · github.com/googlefonts/robotomono',
+   why:'Рисовался как интерфейсный шрифт для русского языка (изначально для Госуслуг). Крупный x-height, хорошо читается мелким кеглем в HUD и в VR.'},
+  {name:'Roboto Condensed + Inter + IBM Plex Mono',
+   head:"'Roboto Condensed'", body:"'Inter'", mono:"'IBM Plex Mono'",
+   who:'Roboto Condensed — C. Robertson; Inter — R. Andersson; IBM Plex Mono — IBM, Bold Monday.',
+   lic:'OFL 1.1 · OFL 1.1 · OFL 1.1 (зарезервированное имя «Plex»)', src:'github.com/googlefonts/roboto-classic · github.com/rsms/inter · github.com/IBM/plex',
+   why:'Так сейчас в макете настроек. Узкие заголовки экономят место, но три семейства — больше атласов.'},
+  {name:'PT Sans Narrow + PT Sans + PT Mono',
+   head:"'PT Sans Narrow'", body:"'PT Sans'", mono:"'PT Mono'",
+   who:'ParaType, 2010 (проект «Общедоступные шрифты»).',
+   lic:'OFL 1.1', src:'paratype.com/public · google/fonts ofl/ptsans',
+   why:'Одно семейство, создано для кириллицы. Привычный и надёжный, но выглядит старше остальных.'},
+  {name:'Manrope + JetBrains Mono',
+   head:"'Manrope'", body:"'Manrope'", mono:"'JetBrains Mono'",
+   who:'Manrope — М. Шаранда, 2018. JetBrains Mono — JetBrains, Ф. Нуруллин, К. Буленков.',
+   lic:'OFL 1.1 · OFL 1.1', src:'github.com/googlefonts/manrope · github.com/JetBrains/JetBrainsMono',
+   why:'Геометричный и современный, «автомобильный» характер. Кириллица аккуратная, но мелкий текст читается хуже, чем у Golos.'},
+];
+document.getElementById('grid').innerHTML = PAIRS.map(p => `
+ <section class="card ${p.rec ? 'rec' : ''}">
+  <div class="meta"><b>${p.name}${p.rec ? '<span class="tag">РЕКОМЕНДУЮ</span>' : ''}</b>
+   <dl><dt>Лицензия</dt><dd>${p.lic}</dd><dt>Авторы</dt><dd>${p.who}</dd><dt>Источник</dt><dd>${p.src}</dd><dt>Почему</dt><dd>${p.why}</dd></dl></div>
+  <div class="demo" style="font-family:${p.body}">
+   <div class="h" style="font-family:${p.head}">Настройки</div>
+   <div class="tabs" style="font-family:${p.head}"><span>Графика</span><span>Управление</span><span class="on">Обучение</span></div>
+   <div class="row"><span>Подсказки инструктора</span><span class="v">◀ Только ошибки ▶</span></div>
+   <div class="hud">
+    <div class="speed"><span class="n" style="font-family:${p.mono}">48</span><span class="u">км/ч</span></div>
+    <div class="gear"><span class="n" style="font-family:${p.mono}">3</span><span class="u">передача</span></div>
+    <div class="limit" style="font-family:${p.head}">40</div>
+   </div>
+   <div class="hint"><small style="font-family:${p.head}">Инструктор</small>Через 80 м поворот направо. Проверьте правое зеркало и включите указатель поворота.</div>
+   <div class="viol"><div class="t">Не включён указатель поворота<small>Пример оформления, вес не сверен с методикой</small></div><div class="p" style="font-family:${p.mono}">+3</div></div>
+   <div class="small">Мелкий текст 12 px: ул. Центральная, 1,2 км · 00:12:34 · Съешь ещё этих мягких французских булок, да выпей же чаю.</div>
+   <div class="glyphs">АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ<br>абвгдеёжзийклмнопрстуфхцчшщъыьэюя<br>№ « » — … ° × ₽</div>
+   <div class="digits" style="font-family:${p.mono}">0123456789 · 1111 / 8888 · 3 000 об/мин</div>
+  </div>
+ </section>`).join('');
+</script>
+</body>
+</html>

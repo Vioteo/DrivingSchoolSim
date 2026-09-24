@@ -167,7 +167,7 @@ input[type=range]:disabled{filter:grayscale(1)}
     <button aria-pressed="true" data-ctx="menu">Главного меню</button>
     <button aria-pressed="false" data-ctx="drive">Паузы во время поездки</button>
   </span>
-  Руль G27:
+  Руль G29:
   <span class="seg" id="devSeg">
     <button aria-pressed="false" data-dev="1">подключён</button>
     <button aria-pressed="true" data-dev="0">не найден</button>
@@ -307,16 +307,16 @@ const TABS = [
  ]},
  {id:'controls', title:'Управление', device:true, groups:[
   {title:'Устройство', items:[
-   {key:'controls.device', label:'Устройство ввода', type:'cycle', options:['Клавиатура','Logitech G27'], def:0, lockDrive:true,
-    help:'Руль G27 выбирается, только когда он подключён. Если руль отключится во время поездки, газ сбрасывается в 0 и включается пауза.'},
+   {key:'controls.device', label:'Устройство ввода', type:'cycle', options:['Клавиатура','Logitech G29'], def:0, lockDrive:true,
+    help:'Руль G29 выбирается, только когда он подключён. Если руль отключится во время поездки, газ сбрасывается в 0 и включается пауза.'},
    {key:'controls.calibrate', label:'Калибровка руля и педалей', type:'action', text:'Открыть →', needsWheel:true,
     help:'Отдельный экран: проверка осей, крайних положений педалей и передач H-шифтера.'},
   ]},
   {title:'Руль', items:[
    {key:'controls.steeringLock', label:'Угол поворота руля', type:'slider', min:180, max:900, step:10, unit:'°', def:900, needsWheel:true,
-    help:'У G27 900° — от упора до упора. Угол должен совпадать с настройкой драйвера Logitech, иначе руль и колёса разойдутся.'},
+    help:'У G29 900° — от упора до упора. Угол должен совпадать с настройкой драйвера Logitech, иначе руль и колёса разойдутся.'},
    {key:'controls.steeringDeadzone', label:'Мёртвая зона руля', type:'slider', min:0, max:10, step:1, unit:' %', def:0, needsWheel:true,
-    help:'Для исправного G27 не нужна. Увеличивайте, только если машину тянет в сторону при отпущенном руле.'},
+    help:'Для исправного G29 не нужна. Увеличивайте, только если машину тянет в сторону при отпущенном руле.'},
    {key:'controls.steeringLinearity', label:'Линейность', type:'slider', min:0, max:100, step:5, unit:' %', def:0,
     help:'0 % — отклик линейный. Больше — точнее в центре и резче у краёв.'},
    {key:'controls.keyboardSteerSpeed', label:'Скорость руления с клавиатуры', type:'slider', min:20, max:200, step:10, unit:' %', def:100, keyboardOnly:true,
@@ -435,7 +435,7 @@ function renderList() {
 
 function renderHelp() {
   const it = byKey[focusKey], r = disabledReason(it);
-  const dev = TABS[tab].device ? `<div class="device ${wheel ? 'ok' : ''}"><i></i>${wheel ? 'Logitech G27 подключён' : 'Руль не найден — доступна клавиатура'}</div>` : '';
+  const dev = TABS[tab].device ? `<div class="device ${wheel ? 'ok' : ''}"><i></i>${wheel ? 'Logitech G29 подключён' : 'Руль не найден — доступна клавиатура'}</div>` : '';
   const meta = it.type === 'action' ? '' : `<dl><dt>Ключ</dt><dd>${it.key}</dd><dt>По умолчанию</dt><dd>${fmt(it, it.def)}</dd>
     <dt>Применение</dt><dd>${it.confirm ? 'с откатом через 15 с' : it.preview ? 'предпросмотр сразу, сохранение по «Применить»' : it.lockDrive ? 'до начала поездки' : 'сразу после «Применить»'}</dd></dl>`;
   const note = r ? `<p style="color:var(--cyan)">${{stub:'Функция ещё не реализована. Значение сохраняется, но ни на что не влияет.', lock:reasonText(it)}[r.badge]}</p>` : '';
@@ -443,7 +443,7 @@ function renderHelp() {
 }
 function reasonText(it) {
   if (ctx === 'drive' && it.lockDrive) return 'Меняется только до начала поездки. Выйдите в меню или начните занятие заново.';
-  if (it.needsWheel && !wheel) return 'Подключите руль G27, чтобы изменить этот параметр.';
+  if (it.needsWheel && !wheel) return 'Подключите руль G29, чтобы изменить этот параметр.';
   if (it.keyboardOnly) return 'Действует только при управлении с клавиатуры.';
   if (it.dependsOff) return 'Отключите вертикальную синхронизацию, чтобы задать лимит.';
   return '';
@@ -473,7 +473,7 @@ function step(key, dir) {
   const v = draft[key];
   if (it.type === 'cycle') {
     let n = (v + dir + it.options.length) % it.options.length;
-    if (key === 'controls.device' && n === 1 && !wheel) { toast('Руль G27 не подключён'); return; }
+    if (key === 'controls.device' && n === 1 && !wheel) { toast('Руль G29 не подключён'); return; }
     if (key === 'graphics.qualityPreset' && n === 3) n = (n + dir + 4) % 4; // «Своё» не выбирается вручную
     setValue(key, n);
   } else if (it.type === 'switch') setValue(key, !v);

@@ -41,3 +41,7 @@
 ## ADR-010 — Исходник ассета и проверка привязаны к хешу
 
 Принято для проектирования. .blend — редактируемый источник, FBX/GLB — экспорты, prefab — интеграция. Каждый evidence указывает SHA256, exporter, renderer и сцену. Не использовать прежний общий PASS после изменения модели. Целевые бюджеты LOD не переименовываются в фактические без подсчёта импортированных треугольников. T02/T26; A02/A19.
+
+## ADR-011 — Настройки игрока: чистая модель + Unity-адаптеры
+
+Принято для проектирования (24.09.2026). Новый asmdef `DS.Settings` (`noEngineReferences: true`, без ссылок) содержит `[Serializable] GameSettings` с вложенными группами `graphics`/`controls`/`audio`/`gameplay`, полями и значениями по умолчанию из `docs/ui-settings.md` §4, `int version`; `SettingsValidator.Sanitize` (clamp диапазонов, неизвестные индексы → default, NaN → default) и `SettingsMigrator` (цепочка v→v+1). В `Presentation`: `SettingsStore` (JsonUtility, `Application.persistentDataPath/settings.json`, запись через временный файл и замену, битый файл → defaults + warning) и `SettingsApplier` (Screen, QualitySettings, URP, камеры, UI-тема). Input получает мёртвые зоны/линейность как параметры от Presentation, а не ссылкой на `DS.Settings`. Не в `Contracts`: настройки — не порт между модулями симуляции, а состояние оболочки; Contracts остаётся набором DTO симуляции/правил/курса. Не `PlayerPrefs`: реестр Windows, нет версии и диффа. Цена: ещё один asmdef и ручное сопоставление JSON-ключей с полями (JsonUtility не поддерживает словари). T27; A03.
