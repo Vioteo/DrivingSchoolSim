@@ -17,6 +17,24 @@
 - `SessionPhase`: Briefing, Ready, Running, Passed, Failed, Cancelled. `SessionResult`: `string lessonId,reason`; `SessionPhase phase`; `float elapsedSeconds`; `string[] enabledAssists`; `RuleEvent[] events`. Массивы по умолчанию пусты; LessonSession пока их не заполняет.
 - `TheoryContentPack`: `int schemaVersion=1`; `string id,revision,source`; `bool isOfficial`; `TheoryQuestion[] questions`. `TheoryQuestion`: `string id,text,explanation,ruleReference,topic`; `string[] answers`; `int correctIndex`. Нет media links, jurisdiction, подтверждения provenance или validators.
 
+## Граф дорог v2 (T11, T27)
+
+Источник истины: `Assets/DrivingSchool/Code/Contracts/WorldDocumentV2.cs`. Логика — `Simulation/RoadGraph/` (pure C#): `WorldValidatorV2`, `WorldMigration` (v1 → v2), `ConflictZoneBuilder`, `Polyline`. Формат совместим с JsonUtility: массивы простых DTO, enum как int.
+
+- `Vec3d` struct `double x,y,z`. `CubicCurve` struct `p0..p3`.
+- `WorldDocumentV2`: `schemaVersion=2`, `id,name,revision`, `chunkSizeM=256` и массивы: `nodes` (`RoadNode` из v1), `segments`, `lanes`, `junctions`, `connections`, `conflictZones`, `stopLines`, `crossings`, `signalGroups`, `signalPlans`, `signals`, `boundaries`, `signs`, `approaches`, `sidewalks`, `zones`, `spawnPoints`, `objects`, `districts`. Все id уникальны во всём документе.
+- `RoadSegmentV2`: `id,fromNode,toNode`, `curve`, `speedLimitKph, laneWidthM`, `lanesForward, lanesBackward`.
+- `LaneV2`: `id,segmentId`, `index` (> 0 по направлению сегмента, < 0 против; |1| — у оси), `widthM, speedLimitKph`, `centerline` (шаг ≤ 2 м после миграции), `successors` (прямое продолжение вне перекрёстков, начало преемника совпадает с концом полосы ±5 см), `leftNeighborId, rightNeighborId, oncomingLaneId`, `allowedManeuvers` (`LaneManeuver` flags: Straight/Right/Left/UTurn; None = без ограничений).
+- `Junction`: `id,nodeId,signalPlanId`, `connectionIds`. `LaneConnection`: `id,junctionId,fromLaneId,toLaneId,signalGroupId`, `maneuver` (ровно один флаг), `speedLimitKph`, `centerline` (начинается в конце `fromLane`, заканчивается в начале `toLane`). Полосы и связи — одно пространство путей для маршрутов.
+- `ConflictZone`: `id,junctionId,connectionA,connectionB`, диапазоны `fromSA..toSA`, `fromSB..toSB` вдоль связей, `merge` (обе ведут в одну полосу). Строится `ConflictZoneBuilder`: центры ближе 2,4 м (игровой параметр) или общий выезд; связи из одной полосы не конфликтуют.
+- `StopLine`: `id,laneId,s`. `PedestrianCrossing`: `id,signalGroupId`, концы `a,b`, `widthM`, `laneIds` (пересекаемые полосы/связи — проверяется геометрически), `sidewalkIds`.
+- `SignalGroup`: `id,junctionId`, `kind` (Vehicle/VehicleArrow/Pedestrian), `connectionIds, crossingIds`. `SignalPlan`: `id,junctionId,offsetSeconds`, `stages`. `SignalStage`: `greenGroupIds`, `greenSeconds, greenFlashSeconds, amberSeconds, allRedSeconds, redAmberSeconds`. `TrafficSignalAttachment`: `id,signalGroupId,catalogId`, поза.
+- `LaneBoundary`: `id,laneId`, `side` (Left/Right), `type` (`MarkingType`: None/Solid/Dashed/DoubleSolid/SolidDashed/DashedSolid), `fromS..toS`; участки одной стороны полосы не перекрываются.
+- `SignPlacement`: `id`, `code` (ГОСТ Р 52290-2004, строка), `value`, `catalogId`, `plaques`, поза, `laneIds`, `atS`, `untilNextJunction`, `zoneEndLaneId, zoneEndS`. Неизвестный код отклоняется, если валидатору передан справочник знаков.
+- `JunctionApproach`: `id,junctionId,laneId,stopLineId`, `priority` (Equal/Main/Secondary/Signalized), `sourceSignIds`. Main требует знак 2.1 или 2.3.x, Secondary — 2.4 или 2.5, Signalized — план светофора у перекрёстка.
+- `SidewalkPath`: `id,widthM`, `points`, `linkedIds` (тротуары и переходы). `Zone`: `id,laneId`, `kind` (Parking/NoStopping/NoParking/KeepJunctionClear), `fromS..toS`. `SpawnPoint`: `id,pathId`, `role` (Vehicle → полоса/связь, Pedestrian → тротуар), `edge`, `s`.
+- Миграция v1 → v2: узлы степени ≥ 3 становятся перекрёстками, полосы у них обрезаются на половину ширины самой широкой дороги, successors v1 через узел превращаются в кубические `LaneConnection`. Геометрия перекрёстка схематическая, топология точная. Разметка, знаки и приоритет в v1 отсутствуют и после миграции пусты.
+
 ## Файлы примеров
 
 `world.json` v1: training-district, 5 nodes, 4 segments, 16 lanes, spawn-car и demo district500m. Successors не моделируют точную геометрию манёвров, приоритет или конфликтные зоны. `lesson.json`: start-stop-demo, 120s, target20m, stop≤0.14m/s в течение2s. `theory.json`: одна авторская демонстрация; `isOfficial=false`.
