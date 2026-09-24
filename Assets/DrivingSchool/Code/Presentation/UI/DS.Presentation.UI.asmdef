@@ -1,0 +1,9 @@
+{
+  "name": "DS.Presentation.UI",
+  "rootNamespace": "DrivingSchool.Presentation.UI",
+  "references": [
+    "Unity.InputSystem",
+    "Unity.TextMeshPro",
+    "UnityEngine.UI"
+  ]
+}

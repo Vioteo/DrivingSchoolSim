@@ -3,6 +3,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.TextCore.LowLevel;
+using DrivingSchool.Presentation.UI;
 
 namespace DrivingSchool.Editor
 {
@@ -36,6 +38,7 @@ namespace DrivingSchool.Editor
         {
             AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
             Directory.CreateDirectory("Assets/DrivingSchool/Prefabs/UI");
+            BuildFonts();
             
             BuildHUD();
             BuildMainMenu();
@@ -104,7 +107,8 @@ namespace DrivingSchool.Editor
         private static TMP_FontAsset GetFont()
         {
             if (s_DefaultFont != null) return s_DefaultFont;
-            s_DefaultFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset");
+            s_DefaultFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(UIFontPath); // кириллица; LiberationSans — только запасной вариант
+            if (s_DefaultFont == null) s_DefaultFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset");
             if (s_DefaultFont == null)
             {
                 var guids = AssetDatabase.FindAssets("t:TMP_FontAsset");
@@ -192,101 +196,210 @@ namespace DrivingSchool.Editor
         // ==========================================
         private static void BuildMainMenu()
         {
+            var theme = BuildThemes();
             var canvas = CreateCanvas("MainMenu");
+            var menu = canvas.AddComponent<MainMenuController>();
+            menu.defaultTheme = theme;
+
             var bg = CreateFill("Background", canvas.transform);
-            AddImage(bg.gameObject, BgColor);
+            AddThemedImage(bg.gameObject, ThemeRole.BgDark, theme);
 
-            // Top Bar
-            var topBar = CreateFixed("TopBar", bg, new Vector2(0.5f, 1), new Vector2(1920, 100), new Vector2(0, 0), new Vector2(0.5f, 1));
-            AddImage(topBar.gameObject, new Color(0.05f, 0.07f, 0.09f, 0.98f));
+            var title = CreateFixed("Title", bg, new Vector2(0, 1), new Vector2(1000, 90), new Vector2(96, -110), new Vector2(0, 1));
+            AddThemedText(title.gameObject, "DrivingSchoolSim", 72, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Bold);
+            var subtitle = CreateFixed("Subtitle", bg, new Vector2(0, 1), new Vector2(1000, 40), new Vector2(96, -204), new Vector2(0, 1));
+            AddThemedText(subtitle.gameObject, "Подготовка к практическому экзамену · категория B", 26, ThemeRole.Muted, theme, TextAlignmentOptions.Left);
 
-            var logo = CreateFixed("Logo", topBar, new Vector2(0, 0.5f), new Vector2(700, 70), new Vector2(60, 0), new Vector2(0, 0.5f));
-            AddText(logo.gameObject, "<b>DRIVING ACADEMY</b>  <color=#5999D3>SIMULATOR</color>", 32, TextWhite, TextAlignmentOptions.Left);
+            // Пункты сверху вниз; порядок = порядок навигации. Фон справа свободен под 3D-сцену меню.
+            var list = CreateFixed("Items", bg, new Vector2(0, 1), new Vector2(560, 6 * 80), new Vector2(96, -290), new Vector2(0, 1));
+            string[] labels = { "Продолжить занятие", "Занятия", "Теория ПДД", "Экзаменационный маршрут", "Настройки", "Выход" };
+            var buttons = new Button[labels.Length];
+            for (int i = 0; i < labels.Length; i++)
+                buttons[i] = CreateMenuItem($"Item{i}_{labels[i]}", list, new Vector2(0, -i * 80), new Vector2(560, 72), labels[i], 30, theme, i == 3 ? "скоро" : null);
+            menu.continueButton = buttons[0];
+            menu.lessonsButton = buttons[1];
+            menu.theoryButton = buttons[2];
+            menu.examButton = buttons[3];
+            menu.settingsButton = buttons[4];
+            menu.exitButton = buttons[5];
+            buttons[3].interactable = false;
 
-            var profile = CreateFixed("StudentCard", topBar, new Vector2(1, 0.5f), new Vector2(450, 70), new Vector2(-60, 0), new Vector2(1, 0.5f));
-            AddImage(profile.gameObject, PanelColor);
-            var pName = CreateFixed("Name", profile, new Vector2(0, 0.5f), new Vector2(280, 50), new Vector2(25, 0), new Vector2(0, 0.5f));
-            AddText(pName.gameObject, "Cadet: Alexey S.\n<size=75%><color=#A0B0C0>Category B (Manual)</color></size>", 20, AccentGold, TextAlignmentOptions.Left);
-            var pText = CreateFixed("Progress", profile, new Vector2(1, 0.5f), new Vector2(120, 50), new Vector2(-20, 0), new Vector2(1, 0.5f));
-            AddText(pText.gameObject, "<b>68%</b>\n<size=60%><color=#8090A0>Completed</color></size>", 24, TextWhite, TextAlignmentOptions.Right);
+            var hint = CreateFixed("Hint", bg, new Vector2(0, 0), new Vector2(1200, 40), new Vector2(96, 56), new Vector2(0, 0));
+            AddThemedText(hint.gameObject, "↑↓ Tab — выбор     Enter — открыть     Esc — выход", 20, ThemeRole.Muted, theme, TextAlignmentOptions.Left);
 
-            // Continue Training (Left Middle)
-            var continuePanel = CreateFixed("ContinuePanel", bg, new Vector2(0, 0.5f), new Vector2(880, 340), new Vector2(60, 110), new Vector2(0, 0.5f));
-            AddImage(continuePanel.gameObject, PanelColor);
-            
-            var cImage = CreateFixed("Image", continuePanel, new Vector2(0, 0.5f), new Vector2(340, 300), new Vector2(20, 0), new Vector2(0, 0.5f));
-            AddImage(cImage.gameObject, CardBgColor);
-            var cImgTxt = CreateFill("Txt", cImage);
-            AddText(cImgTxt.gameObject, "[ LESSON 14 PREVIEW ]\n<size=60%>City Intersections</size>", 22, TextDim, TextAlignmentOptions.Center);
-
-            var cTitle = CreateFixed("Title", continuePanel, new Vector2(0, 1), new Vector2(480, 35), new Vector2(380, -30), new Vector2(0, 1));
-            AddText(cTitle.gameObject, "CONTINUE TRAINING:", 20, AccentGold, TextAlignmentOptions.Left, FontStyles.Bold);
-            
-            var cLesson = CreateFixed("Lesson", continuePanel, new Vector2(0, 1), new Vector2(480, 80), new Vector2(380, -70), new Vector2(0, 1));
-            AddText(cLesson.gameObject, "Lesson 14 - Complex City Intersections", 28, AccentCyan, TextAlignmentOptions.Left, FontStyles.Bold);
-            
-            var cDesc = CreateFixed("Desc", continuePanel, new Vector2(0, 1), new Vector2(480, 80), new Vector2(380, -155), new Vector2(0, 1));
-            AddText(cDesc.gameObject, "Master multi-lane turns, tram tracks, priority signs, and busy pedestrian crossings.", 20, TextWhite, TextAlignmentOptions.Left);
-            
-            var cBtn = CreateFixed("BtnStart", continuePanel, new Vector2(0, 0), new Vector2(260, 55), new Vector2(380, 25), new Vector2(0, 0));
-            AddImage(cBtn.gameObject, AccentGold);
-            var cBtnTxt = CreateFill("Txt", cBtn);
-            AddText(cBtnTxt.gameObject, "START LESSON", 24, Color.black, TextAlignmentOptions.Center, FontStyles.Bold);
-
-            // Right Hero: Vehicle & Simulator Status
-            var heroPanel = CreateFixed("HeroPanel", bg, new Vector2(1, 0.5f), new Vector2(880, 600), new Vector2(-60, -20), new Vector2(1, 0.5f));
-            AddImage(heroPanel.gameObject, PanelColor);
-            
-            var hTitle = CreateFixed("Title", heroPanel, new Vector2(0.5f, 1), new Vector2(820, 50), new Vector2(0, -25), new Vector2(0.5f, 1));
-            AddText(hTitle.gameObject, "VEHICLE STATUS & SIMULATION PROFILE", 24, AccentCyan, TextAlignmentOptions.Left, FontStyles.Bold);
-
-            var carFrame = CreateFixed("CarFrame", heroPanel, new Vector2(0.5f, 1), new Vector2(820, 300), new Vector2(0, -85), new Vector2(0.5f, 1));
-            AddImage(carFrame.gameObject, CardBgColor);
-            var carTxt = CreateFill("Txt", carFrame);
-            AddText(carTxt.gameObject, "[ 3D VEHICLE VIEWPORT ]\n<size=70%>Training Sedan - Category B\n5-Speed Manual | Rear Parking Sensors | ABS Active</size>", 24, TextDim, TextAlignmentOptions.Center);
-
-            var specGrid = CreateFixed("SpecGrid", heroPanel, new Vector2(0.5f, 0), new Vector2(820, 180), new Vector2(0, 25), new Vector2(0.5f, 0));
-            AddImage(specGrid.gameObject, new Color(0.09f, 0.12f, 0.15f));
-            var specTxt = CreateFill("Txt", specGrid, 25, 25, 20, 20);
-            AddText(specTxt.gameObject, "<b>Selected Route:</b> Autodrome Training Ground (120x120m)\n<b>Physics Profile:</b> Hardcore Realistic (Clutch bite simulation, engine stall on)\n<b>Weather:</b> Clear Day (Dry Asphalt, 22°C)\n<b>Instructor:</b> Active Voice Prompts & Rule Violation Auditing", 20, TextWhite, TextAlignmentOptions.Left);
-
-            // 3 Cards below ContinuePanel (Left side)
-            var cards = CreateFixed("Cards", bg, new Vector2(0, 0.5f), new Vector2(880, 240), new Vector2(60, -200), new Vector2(0, 0.5f));
-            
-            string[] cardHeaders = { "AUTODROME", "TRAFFIC RULES", "FREE DRIVE" };
-            string[] cardSub = { "8/8 Completed", "Ticket 12 of 40", "Open City Map" };
-            string[] cardDetails = { 
-                "- Slalom: <color=#4CAF50>[PASSED]</color>\n- Hill Start: <color=#4CAF50>[PASSED]</color>\n- Parallel Park: <color=#4CAF50>[PASSED]</color>",
-                "Score: 19/20 Avg\nReady for exam\nTime limit: 20 min",
-                "Explore 10x10 km\nDynamic traffic\nCustom weather"
-            };
-            
-            for(int i = 0; i < 3; i++)
-            {
-                var card = CreateFixed($"Card{i}", cards, new Vector2(0, 0.5f), new Vector2(280, 240), new Vector2(i * 300, 0), new Vector2(0, 0.5f));
-                AddImage(card.gameObject, PanelColor);
-                
-                var topH = CreateFixed("TopH", card, new Vector2(0.5f, 1), new Vector2(260, 65), new Vector2(0, -15), new Vector2(0.5f, 1));
-                AddText(topH.gameObject, $"<b>{cardHeaders[i]}</b>\n<size=70%><color=#80A0C0>{cardSub[i]}</color></size>", 22, AccentGold, TextAlignmentOptions.Center);
-
-                var stat = CreateFixed("Stat", card, new Vector2(0.5f, 0), new Vector2(250, 135), new Vector2(0, 15), new Vector2(0.5f, 0));
-                AddText(stat.gameObject, cardDetails[i], 19, TextWhite, TextAlignmentOptions.Left);
-            }
-
-            // G27 Status Bar
-            var g27 = CreateFixed("G27", bg, new Vector2(0, 0), new Vector2(880, 45), new Vector2(60, 95), new Vector2(0, 0));
-            AddImage(g27.gameObject, PanelColor);
-            var g27Txt = CreateFill("Txt", g27, 20, 20, 0, 0);
-            AddText(g27Txt.gameObject, "Hardware: Logitech G27 <color=#4CAF50>[CONNECTED]</color>   |   Clutch: <color=#4CAF50>[CALIBRATED]</color>   |   H-Shifter: <color=#4CAF50>[READY]</color>", 18, TextDim, TextAlignmentOptions.Left);
-
-            // Bottom Nav Bar
-            var navBar = CreateFixed("NavBar", bg, new Vector2(0.5f, 0), new Vector2(1920, 75), new Vector2(0, 0), new Vector2(0.5f, 0));
-            AddImage(navBar.gameObject, new Color(0.05f, 0.07f, 0.09f, 1f));
-            var navTxt = CreateFill("Txt", navBar);
-            AddText(navTxt.gameObject, "<color=#FFD700>HOME</color>        CAREER        AUTODROME        THEORY        CONTROLS        SETTINGS        EXIT", 22, TextDim, TextAlignmentOptions.Center, FontStyles.Bold);
+            // Диалог выхода: Escape на главном экране не закрывает программу без подтверждения (T03 §5).
+            var dialog = CreateFill("ExitDialog", canvas.transform);
+            var shade = AddImage(dialog.gameObject, new Color(0, 0, 0, 0.72f));
+            shade.raycastTarget = true; // клики мимо диалога не доходят до меню
+            var panel = CreateFixed("Panel", dialog, new Vector2(0.5f, 0.5f), new Vector2(680, 280), Vector2.zero);
+            AddThemedImage(panel.gameObject, ThemeRole.BgPanel, theme);
+            var top = CreateFixed("AccentLine", panel, new Vector2(0.5f, 1), new Vector2(680, 6), Vector2.zero, new Vector2(0.5f, 1));
+            AddThemedImage(top.gameObject, ThemeRole.Accent, theme);
+            var dTitle = CreateFixed("Title", panel, new Vector2(0, 1), new Vector2(620, 60), new Vector2(32, -36), new Vector2(0, 1));
+            AddThemedText(dTitle.gameObject, "Выйти из программы?", 40, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Bold);
+            var dBody = CreateFixed("Body", panel, new Vector2(0, 1), new Vector2(620, 40), new Vector2(32, -100), new Vector2(0, 1));
+            AddThemedText(dBody.gameObject, "Вы вернётесь на рабочий стол Windows.", 24, ThemeRole.Text2, theme, TextAlignmentOptions.Left);
+            menu.exitCancelButton = CreateMenuItem("Cancel", panel, new Vector2(-252, 32), new Vector2(200, 64), "Отмена", 26, theme, null, new Vector2(1, 0));
+            menu.exitConfirmButton = CreateMenuItem("Confirm", panel, new Vector2(-32, 32), new Vector2(200, 64), "Выйти", 26, theme, null, new Vector2(1, 0));
+            menu.exitDialog = dialog.gameObject;
+            dialog.gameObject.SetActive(false);
 
             SavePrefab(canvas, "MainMenu");
         }
+
+        private static Button CreateMenuItem(string name, Transform parent, Vector2 position, Vector2 size, string text, int fontSize, UITheme theme, string badge, Vector2? anchor = null)
+        {
+            var a = anchor ?? new Vector2(0, 1);
+            var rt = CreateFixed(name, parent, a, size, position, a);
+            var bgImage = AddImage(rt.gameObject, theme.bgCard);
+            var button = rt.gameObject.AddComponent<Button>();
+            button.transition = Selectable.Transition.None; // вид целиком ведёт MenuItemView по теме
+            button.targetGraphic = bgImage;
+
+            var bar = CreateFixed("FocusBar", rt, new Vector2(0, 0.5f), new Vector2(6, size.y), Vector2.zero, new Vector2(0, 0.5f));
+            var barImage = AddImage(bar.gameObject, theme.accent);
+            barImage.raycastTarget = false;
+            barImage.enabled = false;
+
+            var labelRt = CreateFill("Label", rt, 28, badge != null ? 150 : 16, 0, 0);
+            var label = AddThemedText(labelRt.gameObject, text, fontSize, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Medium, themed: false);
+            label.raycastTarget = false;
+            label.textWrappingMode = TextWrappingModes.NoWrap;
+
+            if (badge != null)
+            {
+                var badgeRt = CreateFixed("Badge", rt, new Vector2(1, 0.5f), new Vector2(130, 40), new Vector2(-20, 0), new Vector2(1, 0.5f));
+                var b = AddThemedText(badgeRt.gameObject, badge, 20, ThemeRole.Muted, theme, TextAlignmentOptions.Right);
+                b.raycastTarget = false;
+            }
+
+            var view = rt.gameObject.AddComponent<MenuItemView>();
+            view.background = bgImage;
+            view.focusBar = barImage;
+            view.label = label;
+            view.fallbackTheme = theme;
+            return button;
+        }
+
+        private static Image AddThemedImage(GameObject go, ThemeRole role, UITheme theme)
+        {
+            var img = AddImage(go, theme.Get(role));
+            go.AddComponent<ThemedGraphic>().role = role;
+            return img;
+        }
+
+        private static TextMeshProUGUI AddThemedText(GameObject go, string text, int fontSize, ThemeRole role, UITheme theme,
+            TextAlignmentOptions align = TextAlignmentOptions.Left, FontWeight weight = FontWeight.Regular, bool themed = true)
+        {
+            var tmp = AddText(go, text, fontSize, theme.Get(role), align);
+            tmp.fontWeight = weight;
+            if (themed) go.AddComponent<ThemedGraphic>().role = role;
+            return tmp;
+        }
+
+        // ==========================================
+        // Шрифты и темы (docs/ui-settings.md §6, §8)
+        // ==========================================
+        private const string FontRoot = "Assets/DrivingSchool/Art/Fonts";
+        private const string ThemeRoot = "Assets/DrivingSchool/Data/UI/Themes";
+        public const string UIFontPath = FontRoot + "/GolosText/GolosText-Regular SDF.asset";
+
+        /// <summary>ASCII, кириллица 0x0400–0x045F, типографика и стрелки. ◀ ▶ ✓ в шрифтах нет — такие значки рисуются спрайтами.</summary>
+        public static string UICharset()
+        {
+            var sb = new System.Text.StringBuilder();
+            for (int c = 0x20; c < 0x7F; c++) sb.Append((char)c);
+            for (int c = 0x400; c < 0x460; c++) sb.Append((char)c);
+            sb.Append("\u00A0«»—–…°×№·₽↑↓←→");
+            return sb.ToString();
+        }
+
+        [MenuItem("Driving School/Build UI Fonts")]
+        public static void BuildFonts()
+        {
+            var regular = BuildFontAsset("GolosText", "GolosText-Regular");
+            var medium = BuildFontAsset("GolosText", "GolosText-Medium");
+            var bold = BuildFontAsset("GolosText", "GolosText-Bold");
+            var monoMedium = BuildFontAsset("RobotoMono", "RobotoMono-Medium");
+            var monoBold = BuildFontAsset("RobotoMono", "RobotoMono-Bold");
+            // fontWeight = Medium/Bold у текста берёт настоящие начертания, а не синтетическое утолщение.
+            if (regular != null)
+            {
+                if (medium != null) regular.fontWeightTable[5].regularTypeface = medium;
+                if (bold != null) regular.fontWeightTable[7].regularTypeface = bold;
+                EditorUtility.SetDirty(regular);
+            }
+            if (monoMedium != null && monoBold != null) { monoMedium.fontWeightTable[7].regularTypeface = monoBold; EditorUtility.SetDirty(monoMedium); }
+            AssetDatabase.SaveAssets();
+            s_DefaultFont = null;
+            Debug.Log("UI_FONTS_BUILT");
+        }
+
+        private static TMP_FontAsset BuildFontAsset(string family, string file)
+        {
+            string ttf = $"{FontRoot}/{family}/{file}.ttf", path = $"{FontRoot}/{family}/{file} SDF.asset";
+            var font = AssetDatabase.LoadAssetAtPath<Font>(ttf);
+            if (font == null) { Debug.LogError($"UI_FONT_MISSING {ttf}"); return null; }
+
+            var fa = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(path);
+            if (fa == null)
+            {
+                fa = TMP_FontAsset.CreateFontAsset(font, 90, 9, GlyphRenderMode.SDFAA, 2048, 2048, AtlasPopulationMode.Dynamic, true);
+                fa.name = file + " SDF";
+                AssetDatabase.CreateAsset(fa, path);
+                fa.atlasTextures[0].name = file + " Atlas";
+                AssetDatabase.AddObjectToAsset(fa.atlasTextures[0], fa);
+                fa.material.name = file + " Material";
+                AssetDatabase.AddObjectToAsset(fa.material, fa);
+            }
+            else
+            {
+                // Пересборка без смены GUID: ссылки из префабов сохраняются.
+                fa.atlasPopulationMode = AtlasPopulationMode.Dynamic;
+                fa.ClearFontAssetData();
+            }
+            if (!fa.TryAddCharacters(UICharset(), out string missing))
+                Debug.LogError($"UI_FONT_GLYPHS_MISSING {file}: {missing}");
+            // Статический атлас: набор символов фиксирован и проверяется тестом, в сборку TTF не нужен.
+            fa.atlasPopulationMode = AtlasPopulationMode.Static;
+            EditorUtility.SetDirty(fa);
+            return fa;
+        }
+
+        // Порядок: bgDark, bgPanel, bgCard, bgRowHover, accent, accentSoft, onAccent, text, text2, muted, line, red, green, info.
+        private static readonly (string id, string name, string[] c)[] Themes =
+        {
+            ("Asphalt", "Асфальт", new[] { "#161718", "#1E2021", "#26292B", "#2D3033", "#FFD84D", "#FFD84D1A", "#1A1A1A", "#F4F4F2", "#B3B5B6", "#6E7173", "#FFFFFF14", "#E5484D", "#3DBE6B", "#4DA3FF" }),
+            ("Graphite", "Графит", new[] { "#0F1216", "#161A20", "#1C2129", "#222833", "#4DA3FF", "#4DA3FF1F", "#08121F", "#F2F5F8", "#A9B3C1", "#626C7A", "#FFFFFF14", "#E5484D", "#3DBE6B", "#7CC4FF" }),
+            ("Sign", "Знак", new[] { "#0E1320", "#141B2B", "#1A2335", "#202B41", "#FFFFFF", "#FFFFFF14", "#1348A8", "#FFFFFF", "#B4C0D6", "#66738C", "#FFFFFF14", "#E5484D", "#3DBE6B", "#8FB8FF" }),
+            ("Teal", "Бирюза", new[] { "#0D1414", "#131C1D", "#192425", "#1F2D2E", "#2EC4A6", "#2EC4A61F", "#04201A", "#EEF6F4", "#A3B8B4", "#5E7470", "#FFFFFF14", "#E5484D", "#3DBE6B", "#8EE3D0" }),
+        };
+
+        [MenuItem("Driving School/Build UI Themes")]
+        public static void BuildThemesMenu() { BuildThemes(); Debug.Log("UI_THEMES_BUILT"); }
+
+        /// <summary>Создаёт/обновляет ассеты тем. Возвращает тему по умолчанию («Асфальт»).</summary>
+        public static UITheme BuildThemes()
+        {
+            Directory.CreateDirectory(ThemeRoot);
+            UITheme first = null;
+            foreach (var (id, name, c) in Themes)
+            {
+                string path = $"{ThemeRoot}/UITheme_{id}.asset";
+                var t = AssetDatabase.LoadAssetAtPath<UITheme>(path);
+                if (t == null) { t = ScriptableObject.CreateInstance<UITheme>(); AssetDatabase.CreateAsset(t, path); }
+                t.displayName = name;
+                t.bgDark = Hex(c[0]); t.bgPanel = Hex(c[1]); t.bgCard = Hex(c[2]); t.bgRowHover = Hex(c[3]);
+                t.accent = Hex(c[4]); t.accentSoft = Hex(c[5]); t.onAccent = Hex(c[6]);
+                t.text = Hex(c[7]); t.text2 = Hex(c[8]); t.muted = Hex(c[9]); t.line = Hex(c[10]);
+                t.red = Hex(c[11]); t.green = Hex(c[12]); t.info = Hex(c[13]);
+                EditorUtility.SetDirty(t);
+                if (first == null) first = t;
+            }
+            AssetDatabase.SaveAssets();
+            return first;
+        }
+
+        private static Color Hex(string html) { return ColorUtility.TryParseHtmlString(html, out var c) ? c : Color.magenta; }
 
         // ==========================================
         // 3. LESSON CATALOG

@@ -23,9 +23,11 @@ for m,refs in modules.items():
     if m in ('Contracts','Simulation','Rules','Learning'):obj['noEngineReferences']=True
     if m=='Input':obj['references']+=['Unity.InputSystem']
     if m=='Presentation':obj['references']+=['Unity.InputSystem','Unity.RenderPipelines.Universal.Runtime','Unity.RenderPipelines.Core.Runtime']
-    if m=='Editor':obj['includePlatforms']=['Editor'];obj['references']+=['Unity.RenderPipelines.Universal.Runtime','Unity.RenderPipelines.Core.Runtime','Unity.InputSystem','Unity.XR.Management','Unity.XR.OpenXR']
+    if m=='Editor':obj['includePlatforms']=['Editor'];obj['references']+=['Unity.RenderPipelines.Universal.Runtime','Unity.RenderPipelines.Core.Runtime','Unity.InputSystem','Unity.XR.Management','Unity.XR.OpenXR','Unity.TextMeshPro','DS.Presentation.UI','UnityEngine.UI']
     write(f'Assets/DrivingSchool/Code/{m}/DS.{m}.asmdef',obj)
-write('Assets/DrivingSchool/Code/Tests/DS.Tests.asmdef',{'name':'DS.Tests','references':['DS.Contracts','DS.Simulation','DS.World','DS.Learning'], 'optionalUnityReferences':['TestAssemblies'],'includePlatforms':['Editor']})
+# UI-слой: uGUI/TMP + Input System, без ссылок на симуляцию (ADR-001, docs/ui-settings.md).
+write('Assets/DrivingSchool/Code/Presentation/UI/DS.Presentation.UI.asmdef',{'name':'DS.Presentation.UI','rootNamespace':'DrivingSchool.Presentation.UI','references':['Unity.InputSystem','Unity.TextMeshPro','UnityEngine.UI']})
+write('Assets/DrivingSchool/Code/Tests/DS.Tests.asmdef',{'name':'DS.Tests','references':['DS.Contracts','DS.Simulation','DS.World','DS.Learning','DS.Input','DS.Rules','DS.Presentation.Physics','DS.Presentation.UI','DS.Editor','Unity.TextMeshPro','UnityEngine.UI'], 'optionalUnityReferences':['TestAssemblies'],'includePlatforms':['Editor']})
 
 nodes=[{'id':'south','x':0,'y':0,'z':-250},{'id':'centre','x':0,'y':0,'z':0},{'id':'north','x':0,'y':0,'z':250},{'id':'west','x':-250,'y':0,'z':0},{'id':'east','x':250,'y':0,'z':0}]
 segments=[{'id':n+'-centre','fromNode':n,'toNode':'centre','widthM':14,'laneCount':4,'speedLimitKph':60} for n in ('south','north','west','east')]
