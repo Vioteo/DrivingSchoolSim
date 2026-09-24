@@ -213,7 +213,13 @@ namespace DrivingSchool.Input
                 handbrake = handbrake,
                 ignition = ignition,
                 starter = starter,
-                requestedGear = gear
+                requestedGear = gear,
+                turnSignal = LeftIndicatorState ? TurnSignal.Left : RightIndicatorState ? TurnSignal.Right : TurnSignal.Off,
+                hazard = HazardLightsState,
+                headlights = LowBeamState || HighBeamState ? HeadlightMode.LowBeam : HeadlightMode.Off,
+                highBeam = HighBeamState,
+                horn = HornState,
+                wipers = WipersState ? WiperMode.Low : WiperMode.Off
             };
 
             cmd.Validate();

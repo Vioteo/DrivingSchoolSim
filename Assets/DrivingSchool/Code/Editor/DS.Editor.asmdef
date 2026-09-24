@@ -7,6 +7,7 @@
     "DS.World",
     "DS.Learning",
     "DS.Presentation",
+    "DS.Presentation.Physics",
     "Unity.RenderPipelines.Universal.Runtime",
     "Unity.RenderPipelines.Core.Runtime",
     "Unity.InputSystem",

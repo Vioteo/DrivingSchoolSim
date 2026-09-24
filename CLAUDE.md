@@ -56,8 +56,9 @@ $u='E:\unityroot\6000.3.10f1\Editor\Unity.exe'; $p=(Get-Location).Path
 & $u -batchmode -nographics -projectPath $p -runTests -testPlatform EditMode `
   -testResults "$p/artifacts/reports/editmode.xml" -logFile "$p/artifacts/reports/editmode.log"
 ```
-Подробные команды C00–C05 — `docs/acceptance.md`. Новый тест сначала должен падать на неверном входе.
 В облачной сессии (Linux, без Unity) Unity-проверки не запускаются — статус **NOT_RUN**, а не PASS; проверка переносится на машину с Unity.
+Чистые модули (Contracts/Simulation/Rules/Learning + `Tests/Vehicle`) можно проверить без Unity (.NET 8): `dotnet test tests/dotnet/DS.PureTests.csproj --logger "trx;LogFileName=$PWD/artifacts/reports/dotnet-pure-tests.trx"`. Это не заменяет EditMode в Unity.
+Подробные команды C00–C05 — `docs/acceptance.md`. Тестовый полигон машины и самопроверка F8 — `docs/vehicle-test-range.md`. Новый тест сначала должен падать на неверном входе.
 
 ## Как работаем с задачами
 - Одна задача = одна карточка (`docs/tasks/Txx.md` или новая) = один небольшой diff. Перед изменениями прочитать карточку, `docs/architecture.md` и затрагиваемые файлы целиком.

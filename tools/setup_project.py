@@ -16,8 +16,8 @@ write('Packages/manifest.json',{'dependencies':{
  'com.unity.modules.animation':'1.0.0','com.unity.modules.imageconversion':'1.0.0'}})
 # .gitignore is maintained in git (Unity template); do not overwrite it here.
 modules={'Contracts':[], 'Simulation':['Contracts'], 'World':['Contracts'], 'Input':['Contracts'],
- 'Rules':['Contracts'], 'Learning':['Contracts'], 'Presentation':['Contracts','Simulation','World','Input','Rules','Learning'],
- 'Editor':['Contracts','Simulation','World','Learning','Presentation']}
+ 'Rules':['Contracts'], 'Learning':['Contracts'], 'Presentation':['Contracts','Presentation.Physics','Simulation','World','Input','Rules','Learning'],
+ 'Editor':['Contracts','Simulation','World','Learning','Presentation','Presentation.Physics']}
 for m,refs in modules.items():
     obj={'name':'DS.'+m,'rootNamespace':'DrivingSchool.'+m,'references':['DS.'+x for x in refs]}
     if m in ('Contracts','Simulation','Rules','Learning'):obj['noEngineReferences']=True
@@ -25,7 +25,8 @@ for m,refs in modules.items():
     if m=='Presentation':obj['references']+=['Unity.InputSystem','Unity.RenderPipelines.Universal.Runtime','Unity.RenderPipelines.Core.Runtime']
     if m=='Editor':obj['includePlatforms']=['Editor'];obj['references']+=['Unity.RenderPipelines.Universal.Runtime','Unity.RenderPipelines.Core.Runtime','Unity.InputSystem','Unity.XR.Management','Unity.XR.OpenXR']
     write(f'Assets/DrivingSchool/Code/{m}/DS.{m}.asmdef',obj)
-write('Assets/DrivingSchool/Code/Tests/DS.Tests.asmdef',{'name':'DS.Tests','references':['DS.Contracts','DS.Simulation','DS.World','DS.Learning'], 'optionalUnityReferences':['TestAssemblies'],'includePlatforms':['Editor']})
+write('Assets/DrivingSchool/Code/Presentation/Physics/DS.Presentation.Physics.asmdef',{'name':'DS.Presentation.Physics','rootNamespace':'DrivingSchool.Presentation.Physics','references':['DS.Contracts','DS.Simulation']})
+write('Assets/DrivingSchool/Code/Tests/DS.Tests.asmdef',{'name':'DS.Tests','references':['DS.Contracts','DS.Simulation','DS.World','DS.Learning','DS.Input','DS.Rules','DS.Presentation.Physics'], 'optionalUnityReferences':['TestAssemblies'],'includePlatforms':['Editor']})
 
 nodes=[{'id':'south','x':0,'y':0,'z':-250},{'id':'centre','x':0,'y':0,'z':0},{'id':'north','x':0,'y':0,'z':250},{'id':'west','x':-250,'y':0,'z':0},{'id':'east','x':250,'y':0,'z':0}]
 segments=[{'id':n+'-centre','fromNode':n,'toNode':'centre','widthM':14,'laneCount':4,'speedLimitKph':60} for n in ('south','north','west','east')]

@@ -125,27 +125,46 @@ namespace DrivingSchool.Simulation
             }
         }
 
-        void SimulateRunning(float throttle, float loadTorqueNm, float dtSeconds)
-        {
-            float internalFriction = 12f + (Rpm / 1000f) * 4f;
+        public float FlywheelInertia => flywheelInertia;
 
+        /// <summary>
+        /// Torque available at the crankshaft flange before any clutch load (gross minus internal friction)
+        /// at the current rpm. Zero unless the engine is running. Used by the drivetrain lock-up solve.
+        /// </summary>
+        public float NetTorqueAt(float throttle)
+        {
+            if (Phase != EnginePhase.Running) return 0f;
+            return GrossTorque(throttle) - InternalFriction();
+        }
+
+        /// <summary>Keeps a running engine on the speed imposed by a locked clutch; stalls below stallRpm.</summary>
+        public void LockToRpm(float rpm)
+        {
+            if (float.IsNaN(rpm) || float.IsInfinity(rpm)) throw new ArgumentOutOfRangeException(nameof(rpm));
+            if (Phase != EnginePhase.Running) return;
+            Rpm = Math.Min(cutoffRpm, rpm);
+            if (Rpm < stallRpm) { Phase = EnginePhase.Stalled; Rpm = 0f; OutputTorqueNm = 0f; }
+        }
+
+        float InternalFriction() => 12f + (Rpm / 1000f) * 4f;
+
+        float GrossTorque(float throttle)
+        {
             float iacTorque = 0f;
             if (Rpm < idleRpm + 150f)
             {
                 float idleDeficit = Math.Max(0f, (idleRpm + 50f) - Rpm);
-                iacTorque = Math.Min(60f, idleDeficit * 0.45f + internalFriction);
+                iacTorque = Math.Min(60f, idleDeficit * 0.45f + InternalFriction());
             }
-
             bool fuelCutoff = Rpm >= redlineRpm;
-            float combustionTorque = 0f;
+            float combustionTorque = fuelCutoff ? 0f : CalculateMaxTorque(Rpm) * throttle;
+            return Math.Max(iacTorque, combustionTorque);
+        }
 
-            if (!fuelCutoff)
-            {
-                float fullThrottleTorque = CalculateMaxTorque(Rpm);
-                combustionTorque = fullThrottleTorque * throttle;
-            }
-
-            float grossTorque = Math.Max(iacTorque, combustionTorque);
+        void SimulateRunning(float throttle, float loadTorqueNm, float dtSeconds)
+        {
+            float internalFriction = InternalFriction();
+            float grossTorque = GrossTorque(throttle);
             OutputTorqueNm = grossTorque;
 
             float netTorque = grossTorque - internalFriction - loadTorqueNm;
