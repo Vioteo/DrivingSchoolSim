@@ -1,0 +1,705 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="28ab54f0-e339-483c-abcb-4d068f6c8419" name="@vm 2026-09-24 14:31:56" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-24T14:31:56.0167146+00:00" queuing="2026-09-24T14:31:56.0167147+00:00" start="2026-09-24T14:31:55.0912678+00:00" finish="2026-09-24T14:32:14.7945622+00:00" />
+  <TestSettings name="default" id="fbe2bc0a-75a8-4a26-b101-306693c521ae">
+    <Deployment runDeploymentRoot="_vm_2026-09-24_14_31_56" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="c507e430-a532-4bc7-83bc-8bc5e8f7c3cf" testId="affa073a-c422-8108-235d-1d30513d0de3" testName="GatesCannotBeCompletedOutOfOrder" computerName="vm" duration="00:00:00.0001770" startTime="2026-09-24T14:32:14.5937443+00:00" endTime="2026-09-24T14:32:14.5939213+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c507e430-a532-4bc7-83bc-8bc5e8f7c3cf" />
+    <UnitTestResult executionId="61c6c9ca-6c91-4c19-a187-c716ce3f25e1" testId="fa62e0f3-c274-f921-4f69-a14b42857df8" testName="SpeedLimit_DebounceWindow_RequiresSustainedExcess" computerName="vm" duration="00:00:00.0003230" startTime="2026-09-24T14:32:09.1924066+00:00" endTime="2026-09-24T14:32:09.1927290+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="61c6c9ca-6c91-4c19-a187-c716ce3f25e1" />
+    <UnitTestResult executionId="9ad8ebbf-f4fd-40a0-be0b-39febd41dbd0" testId="7c5c9e9b-b876-1b2b-5c0b-a05cf688e62c" testName="FourWayStandoffIsResolved" computerName="vm" duration="00:00:00.0965609" startTime="2026-09-24T14:31:56.3130832+00:00" endTime="2026-09-24T14:31:56.4096429+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9ad8ebbf-f4fd-40a0-be0b-39febd41dbd0" />
+    <UnitTestResult executionId="b98b0985-bf3f-40d3-86a4-2da1743cdf75" testId="c2eb5da3-efee-13c0-f339-9436ec329505" testName="SidewalksAreLinkedAcrossJoins" computerName="vm" duration="00:00:00.0016320" startTime="2026-09-24T14:31:55.9000958+00:00" endTime="2026-09-24T14:31:55.9017275+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b98b0985-bf3f-40d3-86a4-2da1743cdf75" />
+    <UnitTestResult executionId="410f5312-0c65-42f5-8c51-7e2c2e761e68" testId="def81e69-a9b3-9241-44a0-5112251837f2" testName="EndOfRouteIsAPlaceToStopNotACrash" computerName="vm" duration="00:00:00.0056720" startTime="2026-09-24T14:31:55.9813673+00:00" endTime="2026-09-24T14:31:55.9870395+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="410f5312-0c65-42f5-8c51-7e2c2e761e68" />
+    <UnitTestResult executionId="3e15d6d9-2269-49cd-acb8-e3c6ea37ec4e" testId="f140304a-6e8f-120c-f007-8fa4b2a9ea7c" testName="TurnsAreClassifiedForRightHandTraffic" computerName="vm" duration="00:00:00.0051520" startTime="2026-09-24T14:32:14.6960645+00:00" endTime="2026-09-24T14:32:14.7012165+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3e15d6d9-2269-49cd-acb8-e3c6ea37ec4e" />
+    <UnitTestResult executionId="f8d546d4-2f2a-47a4-9eb5-5d13a3b59763" testId="27a087a1-dfb6-6f57-d71f-230a0348393d" testName="CarRightOfLaneCentreIsOnItsLane" computerName="vm" duration="00:00:00.0036620" startTime="2026-09-24T14:31:56.0572445+00:00" endTime="2026-09-24T14:31:56.0609062+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f8d546d4-2f2a-47a4-9eb5-5d13a3b59763" />
+    <UnitTestResult executionId="da14887d-6997-4ad1-932c-7aa761249dd7" testId="c35b2277-1130-4ba5-cbb6-9898ceb96838" testName="SecondaryApproachNeedsYieldSign" computerName="vm" duration="00:00:00.0068260" startTime="2026-09-24T14:31:55.8932177+00:00" endTime="2026-09-24T14:31:55.9000433+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="da14887d-6997-4ad1-932c-7aa761249dd7" />
+    <UnitTestResult executionId="926406ee-853d-4adc-ab03-ba260bc2de02" testId="526a34e0-82d3-a22d-4d25-6cd7f916abba" testName="StopLine_PassingWithoutStopping_TriggersViolation" computerName="vm" duration="00:00:00.0003360" startTime="2026-09-24T14:32:09.1937935+00:00" endTime="2026-09-24T14:32:09.1941294+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="926406ee-853d-4adc-ab03-ba260bc2de02" />
+    <UnitTestResult executionId="29b938fa-f83f-4860-81ec-bf409a0532f0" testId="2b3dafa7-2372-0dc2-dd79-c3acde4eabcd" testName="LeftFromSouthConflictsWithStraightFromEast" computerName="vm" duration="00:00:00.0007520" startTime="2026-09-24T14:32:09.1729544+00:00" endTime="2026-09-24T14:32:09.1737059+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="29b938fa-f83f-4860-81ec-bf409a0532f0" />
+    <UnitTestResult executionId="cdf7ad39-8563-4b4a-ad34-9a056193c8cb" testId="ec70d5ed-87d5-7549-ecd4-6cac03cf0be6" testName="ExamIncludesTransfersAndFinalFinish" computerName="vm" duration="00:00:00.0043370" startTime="2026-09-24T14:32:14.5887351+00:00" endTime="2026-09-24T14:32:14.5930717+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cdf7ad39-8563-4b4a-ad34-9a056193c8cb" />
+    <UnitTestResult executionId="b38f3116-c1eb-4467-848c-41cc7b9ddfcc" testId="9ab230fe-3660-256c-298c-1fef3f6a6197" testName="CrossingApproachesAreNeverGreenTogether" computerName="vm" duration="00:00:00.0018740" startTime="2026-09-24T14:32:09.2022569+00:00" endTime="2026-09-24T14:32:09.2041312+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b38f3116-c1eb-4467-848c-41cc7b9ddfcc" />
+    <UnitTestResult executionId="ef6eb695-e79a-4777-a97d-5dc499446248" testId="38612215-34dd-7130-3c72-839f5d2b0d12" testName="DrivingAgainstTheLaneIsFlagged" computerName="vm" duration="00:00:00.0004330" startTime="2026-09-24T14:31:56.0609481+00:00" endTime="2026-09-24T14:31:56.0613810+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ef6eb695-e79a-4777-a97d-5dc499446248" />
+    <UnitTestResult executionId="924a6ea9-c48b-444d-addf-662602e11380" testId="d2179277-7e00-9072-d6dc-c615c27e6732" testName="StraightSegmentGetsThirdPointHandlesAndRightHandLanes" computerName="vm" duration="00:00:00.0009030" startTime="2026-09-24T14:32:14.6951091+00:00" endTime="2026-09-24T14:32:14.6960158+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="924a6ea9-c48b-444d-addf-662602e11380" />
+    <UnitTestResult executionId="980653d5-db92-480a-ad2c-20f589486ecf" testId="a4db64a7-b845-5fd0-ebfd-9368f1474225" testName="SameSeedSameHistoryAndVisitOrderDoesNotMatter" computerName="vm" duration="00:00:01.2633450" startTime="2026-09-24T14:32:10.6678388+00:00" endTime="2026-09-24T14:32:11.9311837+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="980653d5-db92-480a-ad2c-20f589486ecf" />
+    <UnitTestResult executionId="fbe20d3e-61c8-4a63-acd4-a0d6af004533" testId="4066516f-4c63-146e-67e1-2185181e4a49" testName="NoVehiclesInUnloadedChunks" computerName="vm" duration="00:00:00.1824300" startTime="2026-09-24T14:32:10.4853317+00:00" endTime="2026-09-24T14:32:10.6677609+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fbe20d3e-61c8-4a63-acd4-a0d6af004533" />
+    <UnitTestResult executionId="5b11edcb-3487-48d9-adf2-23cb23e68e71" testId="4784971f-dcc5-17a2-cd53-57e771cadbe5" testName="EveryTemplateIsAValidGraphFragment" computerName="vm" duration="00:00:00.0010000" startTime="2026-09-24T14:32:09.1719124+00:00" endTime="2026-09-24T14:32:09.1729124+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5b11edcb-3487-48d9-adf2-23cb23e68e71" />
+    <UnitTestResult executionId="b9dda811-f9db-4c7d-93d5-25484b36501a" testId="468ba884-8e90-363b-2b1b-996408a9a33c" testName="EqualJunctionTrafficFromTheRightGoesFirst" computerName="vm" duration="00:00:00.0565090" startTime="2026-09-24T14:31:56.1954187+00:00" endTime="2026-09-24T14:31:56.2519266+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b9dda811-f9db-4c7d-93d5-25484b36501a" />
+    <UnitTestResult executionId="220692d7-94b4-4b26-b887-be033ea67114" testId="73f2939d-b37c-4778-ef9f-adb4fa7f5d72" testName="ExerciseBoundary_InsideBoundary_DoesNotTrigger" computerName="vm" duration="00:00:00.0001610" startTime="2026-09-24T14:32:09.1890023+00:00" endTime="2026-09-24T14:32:09.1891636+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="220692d7-94b4-4b26-b887-be033ea67114" />
+    <UnitTestResult executionId="a11a87f0-e57f-440d-8023-f76d7b717942" testId="5d593890-101c-2217-a2fc-7bc7eb4a4cef" testName="BrokenSuccessorIsRejectedBeforeMigration" computerName="vm" duration="00:00:00.0003930" startTime="2026-09-24T14:32:14.6732371+00:00" endTime="2026-09-24T14:32:14.6736296+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a11a87f0-e57f-440d-8023-f76d7b717942" />
+    <UnitTestResult executionId="b2c0e8f8-b112-48e1-bb68-844f42dc890c" testId="ba172a31-59d3-7111-cf78-af5b5af26182" testName="TurnSignal_OmissionTriggersPenalty" computerName="vm" duration="00:00:00.0001789" startTime="2026-09-24T14:32:09.1943940+00:00" endTime="2026-09-24T14:32:09.1945734+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b2c0e8f8-b112-48e1-bb68-844f42dc890c" />
+    <UnitTestResult executionId="e15dda4e-bce1-4a65-8500-2c6132ae82de" testId="bbd943bf-9bb0-3472-ec9a-677d5a8d59a2" testName="DiscontinuousRouteIsRejected" computerName="vm" duration="00:00:00.0008170" startTime="2026-09-24T14:31:55.9804976+00:00" endTime="2026-09-24T14:31:55.9813142+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e15dda4e-bce1-4a65-8500-2c6132ae82de" />
+    <UnitTestResult executionId="fe6c1f65-bafa-4a7e-8e21-d45a5cdb1875" testId="4de35a42-e998-b2a1-bfea-634ec5802c96" testName="SuccessfulStart_EntersRunning_AndMaintainsIdleRpm" computerName="vm" duration="00:00:00.0008560" startTime="2026-09-24T14:31:55.9237146+00:00" endTime="2026-09-24T14:31:55.9245707+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fe6c1f65-bafa-4a7e-8e21-d45a5cdb1875" />
+    <UnitTestResult executionId="7721b0e1-df97-4058-bccf-353b887a82f9" testId="00035f99-0002-c170-0b32-585db1aebbee" testName="PlanWithCrossingThroughMovementsIsRejected" computerName="vm" duration="00:00:00.0038380" startTime="2026-09-24T14:32:09.2151742+00:00" endTime="2026-09-24T14:32:09.2190115+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7721b0e1-df97-4058-bccf-353b887a82f9" />
+    <UnitTestResult executionId="2025a396-1f22-49c3-9a9e-f6d263778dbd" testId="b900813f-14ce-141d-3bd7-03afd604b352" testName="Starter_TransitionsToCranking_AndSpinsEngine" computerName="vm" duration="00:00:00.0004010" startTime="2026-09-24T14:31:55.9232559+00:00" endTime="2026-09-24T14:31:55.9236570+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2025a396-1f22-49c3-9a9e-f6d263778dbd" />
+    <UnitTestResult executionId="cd2c10e8-4e5f-4c75-925b-fb14bb7293b8" testId="79f3aa74-34f7-39ca-2e31-e191eb75c554" testName="StopLineMatchesStopBarOfTheMesh" computerName="vm" duration="00:00:00.0004730" startTime="2026-09-24T14:32:09.1766635+00:00" endTime="2026-09-24T14:32:09.1771366+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cd2c10e8-4e5f-4c75-925b-fb14bb7293b8" />
+    <UnitTestResult executionId="badba1a2-5fa2-4889-be26-f6ca6317864d" testId="844d60c9-3375-583c-7422-0eab6910624f" testName="PassesThroughJunctionWithoutJumps" computerName="vm" duration="00:00:00.0070340" startTime="2026-09-24T14:31:56.0023720+00:00" endTime="2026-09-24T14:31:56.0094058+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="badba1a2-5fa2-4889-be26-f6ca6317864d" />
+    <UnitTestResult executionId="2aecedd8-0e4c-4632-b274-977f560d1949" testId="6163f6a2-9d25-6b66-ad76-2e72523d3849" testName="MisplacedModuleReportsBothInstancesAndGap" computerName="vm" duration="00:00:00.0006390" startTime="2026-09-24T14:31:55.8887702+00:00" endTime="2026-09-24T14:31:55.8894085+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2aecedd8-0e4c-4632-b274-977f560d1949" />
+    <UnitTestResult executionId="2052471b-2c29-4589-866f-a8a430eac021" testId="a84b948f-ae45-c05b-899d-50fc581358b4" testName="CompilationIsDeterministic" computerName="vm" duration="00:00:00.0808540" startTime="2026-09-24T14:31:55.7835198+00:00" endTime="2026-09-24T14:31:55.8643039+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2052471b-2c29-4589-866f-a8a430eac021" />
+    <UnitTestResult executionId="bf472e3c-3841-400b-bb2f-a20a4a78fc01" testId="44238a07-f7dc-a517-1b2a-b127ccd68321" testName="DuplicateIdsAcrossKindsAreRejected" computerName="vm" duration="00:00:00.0056190" startTime="2026-09-24T14:32:14.6103208+00:00" endTime="2026-09-24T14:32:14.6159396+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bf472e3c-3841-400b-bb2f-a20a4a78fc01" />
+    <UnitTestResult executionId="7d16f82a-3d9c-440e-b159-a28c0fe150cf" testId="2a4a62ee-431c-9beb-f4ca-2bbcd54c8ffb" testName="TimeoutCannotBeOverriddenByPassingStop" computerName="vm" duration="00:00:00.0001700" startTime="2026-09-24T14:32:14.5979561+00:00" endTime="2026-09-24T14:32:14.5981256+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7d16f82a-3d9c-440e-b159-a28c0fe150cf" />
+    <UnitTestResult executionId="e94ae109-690d-4120-a48b-ee07235f420b" testId="65e42514-6126-10f4-637a-574a12746011" testName="ReverseParkingCannotPassByDrivingForward" computerName="vm" duration="00:00:00.0002400" startTime="2026-09-24T14:32:14.5966251+00:00" endTime="2026-09-24T14:32:14.5968654+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e94ae109-690d-4120-a48b-ee07235f420b" />
+    <UnitTestResult executionId="b06022f3-aa76-474e-a782-8d4a5c389368" testId="17065e67-7fac-bde4-6fdf-8a2163b0c619" testName="ZeroLengthSegmentIsRejected" computerName="vm" duration="00:00:00.0004280" startTime="2026-09-24T14:32:14.7017743+00:00" endTime="2026-09-24T14:32:14.7022023+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b06022f3-aa76-474e-a782-8d4a5c389368" />
+    <UnitTestResult executionId="65acbb68-99a3-47dc-9ff5-0e3803ef01bd" testId="e6fe757f-9624-5174-c225-c55deae97345" testName="Reset_ClearsAllInfractionsAndFatalStatus" computerName="vm" duration="00:00:00.0004430" startTime="2026-09-24T14:32:09.1917596+00:00" endTime="2026-09-24T14:32:09.1922020+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="65acbb68-99a3-47dc-9ff5-0e3803ef01bd" />
+    <UnitTestResult executionId="fc68b883-3c48-40ae-9e58-afc891346a22" testId="c3824a8d-0dbc-28fc-147a-2e98cae7a4cd" testName="MustFitEntireVehicleInParkingBay" computerName="vm" duration="00:00:00.0002360" startTime="2026-09-24T14:32:14.5961002+00:00" endTime="2026-09-24T14:32:14.5963364+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fc68b883-3c48-40ae-9e58-afc891346a22" />
+    <UnitTestResult executionId="eaa0a22f-6b6c-44c2-944e-95750959b8ed" testId="06c28a1e-59be-0425-69cb-0e855db41910" testName="DanglingSocketIsRejected" computerName="vm" duration="00:00:00.0083750" startTime="2026-09-24T14:31:55.8747609+00:00" endTime="2026-09-24T14:31:55.8831357+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eaa0a22f-6b6c-44c2-944e-95750959b8ed" />
+    <UnitTestResult executionId="f82146ea-5ecb-4c7f-9500-89ce951b48ea" testId="72f9fca0-006b-a650-2427-4bddb0596384" testName="HillRollbackUsesAuthoredHeading(90)" computerName="vm" duration="00:00:00.0003130" startTime="2026-09-24T14:32:14.5947310+00:00" endTime="2026-09-24T14:32:14.5950443+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f82146ea-5ecb-4c7f-9500-89ce951b48ea" />
+    <UnitTestResult executionId="42c68c4e-e2c8-4318-9cdf-99388d8b7e07" testId="e525da14-6533-e5d0-ebe0-fb5967d95d94" testName="SpeedLimit_EdgeTriggered_DoesNotSpamEvents" computerName="vm" duration="00:00:00.0002880" startTime="2026-09-24T14:32:09.1927607+00:00" endTime="2026-09-24T14:32:09.1930483+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="42c68c4e-e2c8-4318-9cdf-99388d8b7e07" />
+    <UnitTestResult executionId="cc2b9848-abf7-4e62-9302-0425a6de1340" testId="3ffd0ed4-8c25-9f96-a3f7-bf065f0ca39f" testName="MainRoadGoesBeforeTrafficFromTheRight" computerName="vm" duration="00:00:00.0299600" startTime="2026-09-24T14:31:56.4407994+00:00" endTime="2026-09-24T14:31:56.4707582+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cc2b9848-abf7-4e62-9302-0425a6de1340" />
+    <UnitTestResult executionId="7002df05-6e7c-4ea9-afdc-f3b78d1746ed" testId="fd21017e-45f8-4f3d-5211-86851785c08e" testName="RotatedBayUsesRotatedVehicleFootprint" computerName="vm" duration="00:00:00.0001270" startTime="2026-09-24T14:32:14.5968915+00:00" endTime="2026-09-24T14:32:14.5970183+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7002df05-6e7c-4ea9-afdc-f3b78d1746ed" />
+    <UnitTestResult executionId="7daa244b-3f5a-4a33-ac0a-69aff663cf52" testId="ae34ba29-b282-934a-abae-d5df9f9b73be" testName="StopLine_StoppingCorrectly_PassesWithoutViolation" computerName="vm" duration="00:00:00.0002340" startTime="2026-09-24T14:32:09.1941495+00:00" endTime="2026-09-24T14:32:09.1943834+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7daa244b-3f5a-4a33-ac0a-69aff663cf52" />
+    <UnitTestResult executionId="d7fdca04-4b8c-47f8-b2d5-fd35befca149" testId="8c6cba87-3289-3f9a-478f-058bc8080dcf" testName="SignalPlanCreatesGroupsHeadsAndSignalizedApproaches" computerName="vm" duration="00:00:00.0052880" startTime="2026-09-24T14:31:55.9017688+00:00" endTime="2026-09-24T14:31:55.9070568+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d7fdca04-4b8c-47f8-b2d5-fd35befca149" />
+    <UnitTestResult executionId="827fb185-939b-4a13-a960-0362837c8e38" testId="4262c86f-19da-b172-f8ac-2c6a72ad0d6f" testName="LeftTurnConflictsWithOncomingStraight" computerName="vm" duration="00:00:00.0050170" startTime="2026-09-24T14:32:14.6900465+00:00" endTime="2026-09-24T14:32:14.6950637+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="827fb185-939b-4a13-a960-0362837c8e38" />
+    <UnitTestResult executionId="ddb45280-9423-4853-bd26-b90baaca3214" testId="0971ac10-89be-1e18-1400-e8110363e654" testName="FaultThresholdAndTerminalStateAreStable" computerName="vm" duration="00:00:00.0005960" startTime="2026-09-24T14:32:14.5931302+00:00" endTime="2026-09-24T14:32:14.5937259+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ddb45280-9423-4853-bd26-b90baaca3214" />
+    <UnitTestResult executionId="7c5b4c4b-55e2-428e-acef-66257a33fd40" testId="e34abc2c-6762-a724-dbc0-814d5dfb377c" testName="CrossWithArmsCompilesAndStitchesLanes" computerName="vm" duration="00:00:00.0082560" startTime="2026-09-24T14:31:55.8664406+00:00" endTime="2026-09-24T14:31:55.8746960+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7c5b4c4b-55e2-428e-acef-66257a33fd40" />
+    <UnitTestResult executionId="62db051a-4df8-4e1d-8a55-3f210242e19e" testId="73bbdf6c-5f2d-f33f-1570-7dcbe93ae94b" testName="ConnectionForbiddenByLaneManeuversIsRejected" computerName="vm" duration="00:00:00.0061940" startTime="2026-09-24T14:32:14.5983603+00:00" endTime="2026-09-24T14:32:14.6045542+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="62db051a-4df8-4e1d-8a55-3f210242e19e" />
+    <UnitTestResult executionId="d35a9416-f092-4cd2-a82f-1a013483d3a6" testId="7c506d1d-398f-a97c-5dc5-0b0f7f3c15d1" testName="CrossingConnectionsWithoutZoneAreRejected" computerName="vm" duration="00:00:00.0029450" startTime="2026-09-24T14:32:09.1689205+00:00" endTime="2026-09-24T14:32:09.1718653+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d35a9416-f092-4cd2-a82f-1a013483d3a6" />
+    <UnitTestResult executionId="ae963cff-b1bd-4b2b-b206-ea9d31999269" testId="b74209f7-4d02-cee0-6641-6163c3e6a54c" testName="TimeToChangeCountsDownToAmber" computerName="vm" duration="00:00:00.0008760" startTime="2026-09-24T14:32:09.2190629+00:00" endTime="2026-09-24T14:32:09.2199388+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ae963cff-b1bd-4b2b-b206-ea9d31999269" />
+    <UnitTestResult executionId="799eb54e-6407-41f2-bd51-6489f9d69962" testId="02ab8f66-dd8d-3218-9316-60977155b632" testName="TenMinutesOnAnEqualJunctionWithoutOverlapsOrGridlock" computerName="vm" duration="00:00:02.1527750" startTime="2026-09-24T14:32:11.9312488+00:00" endTime="2026-09-24T14:32:14.0840237+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="799eb54e-6407-41f2-bd51-6489f9d69962">
+      <Output>
+        <StdOut>vehicles seen in 10 min: 214</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4a238ff9-cc6f-4438-a3f6-e61aef1c0be4" testId="49a42fd5-4260-5fd2-c95e-5b35b728e671" testName="MainApproachNeedsPrioritySign" computerName="vm" duration="00:00:00.0113230" startTime="2026-09-24T14:32:14.6159827+00:00" endTime="2026-09-24T14:32:14.6273054+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4a238ff9-cc6f-4438-a3f6-e61aef1c0be4" />
+    <UnitTestResult executionId="dcfb440f-5223-47c4-a9a8-736cedfb556e" testId="0fc7776b-c40e-b6ac-03b4-1cc9121a4dcc" testName="SignCatalogCoversKitSignsAndIsMarkedUnverified" computerName="vm" duration="00:00:00.0007429" startTime="2026-09-24T14:32:09.1758680+00:00" endTime="2026-09-24T14:32:09.1766105+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dcfb440f-5223-47c4-a9a8-736cedfb556e" />
+    <UnitTestResult executionId="a2d9546b-c403-4e56-8f18-7c55f33f17cd" testId="341b8a0c-2910-cb12-d0b7-05eabe8de6b9" testName="IgnitionOnly_TransitionsToIgnitionPhase_ZeroRpm" computerName="vm" duration="00:00:00.0002680" startTime="2026-09-24T14:31:55.9213638+00:00" endTime="2026-09-24T14:31:55.9216316+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a2d9546b-c403-4e56-8f18-7c55f33f17cd" />
+    <UnitTestResult executionId="50cfaad2-6576-40fa-88b4-7340294052c5" testId="fa91558b-bf86-4826-c320-b79e6ca5d2a5" testName="AspectDependsOnTimeOnlyNotOnTickRate" computerName="vm" duration="00:00:00.0072180" startTime="2026-09-24T14:32:09.1949869+00:00" endTime="2026-09-24T14:32:09.2022045+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="50cfaad2-6576-40fa-88b4-7340294052c5" />
+    <UnitTestResult executionId="3c9e94e3-12f2-42bf-a348-0b8680a30c75" testId="d3360998-e660-db2e-4d5e-fff6e51b57ba" testName="SideKeysConflictOnlyAcrossSides" computerName="vm" duration="00:00:00.0005320" startTime="2026-09-24T14:32:09.1608970+00:00" endTime="2026-09-24T14:32:09.1614287+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3c9e94e3-12f2-42bf-a348-0b8680a30c75" />
+    <UnitTestResult executionId="1d2f4d6e-d2ff-4d6a-b6d8-a5d5cb2a90eb" testId="7175470e-fb7e-488a-7f42-868843b95fb1" testName="LaneCenterlinesAreSampledAtMostTwoMetresApart" computerName="vm" duration="00:00:00.0053060" startTime="2026-09-24T14:32:14.6847039+00:00" endTime="2026-09-24T14:32:14.6900101+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1d2f4d6e-d2ff-4d6a-b6d8-a5d5cb2a90eb" />
+    <UnitTestResult executionId="ac736057-02de-4b09-aa8d-30a55d330594" testId="336d7a13-a8e7-559d-ee5a-1fd4f4068817" testName="ExampleWorldMigratesWithoutLosingNodesLanesOrTopology" computerName="vm" duration="00:00:00.0109940" startTime="2026-09-24T14:32:14.6736443+00:00" endTime="2026-09-24T14:32:14.6846377+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ac736057-02de-4b09-aa8d-30a55d330594" />
+    <UnitTestResult executionId="0d63e6f6-3492-4b74-b942-126e55c0cef7" testId="d1c01c95-4fc6-3582-6ac9-a0c3f54d5a3e" testName="StopsBeforeTheStopLineOnRed" computerName="vm" duration="00:00:00.0128450" startTime="2026-09-24T14:31:56.0297444+00:00" endTime="2026-09-24T14:31:56.0425888+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0d63e6f6-3492-4b74-b942-126e55c0cef7" />
+    <UnitTestResult executionId="15879c99-1f19-4254-aa08-9ad71eb486f0" testId="ce081005-f682-ad2f-c9cb-0eda277a1f74" testName="CrossHasTwelveConnectionsStopLinesAndCrossings" computerName="vm" duration="00:00:00.0008780" startTime="2026-09-24T14:32:09.1679943+00:00" endTime="2026-09-24T14:32:09.1688726+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="15879c99-1f19-4254-aa08-9ad71eb486f0" />
+    <UnitTestResult executionId="acc20077-3ea2-4bfd-aae1-023023fe5145" testId="e01eb593-ba82-ebb2-7e82-9db46f7ef430" testName="ExcessiveLoad_CausesEngineToStall" computerName="vm" duration="00:00:00.0043520" startTime="2026-09-24T14:31:55.9138008+00:00" endTime="2026-09-24T14:31:55.9181525+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="acc20077-3ea2-4bfd-aae1-023023fe5145" />
+    <UnitTestResult executionId="f79caca9-2492-4e37-ad95-c1d2cbd6558e" testId="48e2dffc-b478-c598-a245-4c411765ff58" testName="SimultaneousRequestsForOneZoneGetExactlyOnePermit" computerName="vm" duration="00:00:00.0061620" startTime="2026-09-24T14:32:09.1614931+00:00" endTime="2026-09-24T14:32:09.1676541+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f79caca9-2492-4e37-ad95-c1d2cbd6558e" />
+    <UnitTestResult executionId="55aa91b3-7052-4e81-8628-42da7515ee7b" testId="88e1e185-9834-df02-b4ab-9bd59d0a03ba" testName="SwayingOnTheBoundaryDoesNotFlipTheLane" computerName="vm" duration="00:00:00.0182440" startTime="2026-09-24T14:31:56.1769131+00:00" endTime="2026-09-24T14:31:56.1951563+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="55aa91b3-7052-4e81-8628-42da7515ee7b" />
+    <UnitTestResult executionId="88a2d961-b81d-4ecb-a979-0860f080b231" testId="abcf8ccc-79f5-6ccd-ec3e-181f11d5fcae" testName="DifferentProfilesCannotBeJoined" computerName="vm" duration="00:00:00.0041790" startTime="2026-09-24T14:31:55.8831766+00:00" endTime="2026-09-24T14:31:55.8873549+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="88a2d961-b81d-4ecb-a979-0860f080b231" />
+    <UnitTestResult executionId="a7d80f52-738b-4593-93e5-7b1c65333bde" testId="f6eb8cad-9e12-a26f-4266-26cf3375954d" testName="AcceleratesGentlyToTheSpeedLimitAndHoldsTheLaneCentre" computerName="vm" duration="00:00:00.0552490" startTime="2026-09-24T14:31:55.9251826+00:00" endTime="2026-09-24T14:31:55.9804312+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a7d80f52-738b-4593-93e5-7b1c65333bde" />
+    <UnitTestResult executionId="2e8ce874-9456-4de9-9175-7f8a266a887a" testId="1a1d71c0-c691-ebe5-cf23-c79dcf4bcabb" testName="InvalidNumbersAreRejected" computerName="vm" duration="00:00:00.0006150" startTime="2026-09-24T14:32:14.5954670+00:00" endTime="2026-09-24T14:32:14.5960818+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2e8ce874-9456-4de9-9175-7f8a266a887a" />
+    <UnitTestResult executionId="a2755472-b94d-46dc-88f6-530078b0a06d" testId="b78ab025-a7a4-24c4-fac2-58cef1968d0d" testName="PlayersVisibleClaimIsRespected" computerName="vm" duration="00:00:00.0058129" startTime="2026-09-24T14:31:56.4708204+00:00" endTime="2026-09-24T14:31:56.4766332+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a2755472-b94d-46dc-88f6-530078b0a06d" />
+    <UnitTestResult executionId="8f85c814-7d64-42a2-9ce9-5030ce7eb950" testId="e7634bc3-b8b9-eeb5-37d0-cb73de99a36b" testName="SpeedSignZoneEndsAtTheNextStopLine" computerName="vm" duration="00:00:00.0034370" startTime="2026-09-24T14:31:55.9070788+00:00" endTime="2026-09-24T14:31:55.9105159+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8f85c814-7d64-42a2-9ce9-5030ce7eb950" />
+    <UnitTestResult executionId="af3b7af0-5f9b-42a0-abad-709d2e7748cf" testId="620df316-06a1-2e07-2e56-99939f6549e6" testName="HoldMustBeContinuousAndAligned" computerName="vm" duration="00:00:00.0003040" startTime="2026-09-24T14:32:14.5951516+00:00" endTime="2026-09-24T14:32:14.5954565+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="af3b7af0-5f9b-42a0-abad-709d2e7748cf" />
+    <UnitTestResult executionId="4b2ceb20-407b-478b-9504-f059681fe764" testId="84dfee3f-ab66-71c8-373f-19e9728a2cf6" testName="PlanMustServeEveryApproach" computerName="vm" duration="00:00:00.0036730" startTime="2026-09-24T14:31:55.8894911+00:00" endTime="2026-09-24T14:31:55.8931637+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4b2ceb20-407b-478b-9504-f059681fe764" />
+    <UnitTestResult executionId="b34b1c32-a07b-45c5-9c66-807bb4b2f684" testId="3d9fe4d6-23e9-b7a4-4c6f-db8ef41b0855" testName="LeftTurnYieldsToOncomingStraight" computerName="vm" duration="00:00:00.0310030" startTime="2026-09-24T14:31:56.4097209+00:00" endTime="2026-09-24T14:31:56.4407230+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b34b1c32-a07b-45c5-9c66-807bb4b2f684" />
+    <UnitTestResult executionId="fe1e27bf-428c-4548-a826-4321c107753c" testId="88a34674-e929-4a0c-8af8-aeb8492d63fa" testName="HardBrakingLeaderIsNotRammed" computerName="vm" duration="00:00:00.0152410" startTime="2026-09-24T14:31:55.9870823+00:00" endTime="2026-09-24T14:31:56.0023224+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fe1e27bf-428c-4548-a826-4321c107753c" />
+    <UnitTestResult executionId="073664ed-9889-4208-901e-e3f0c885d56d" testId="f6567e4a-fc09-7bc8-dc7a-956ec0de8450" testName="LeftTurnThroughJunctionFollowsTheTurnConnection" computerName="vm" duration="00:00:00.0031300" startTime="2026-09-24T14:31:56.1731158+00:00" endTime="2026-09-24T14:31:56.1762453+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="073664ed-9889-4208-901e-e3f0c885d56d" />
+    <UnitTestResult executionId="77400fd7-430f-4197-a5a6-7269739aef64" testId="2ff0587c-5caa-8542-4af4-cc3d29272dc4" testName="HillRollbackUsesAuthoredHeading(180)" computerName="vm" duration="00:00:00.0000260" startTime="2026-09-24T14:32:14.5950845+00:00" endTime="2026-09-24T14:32:14.5951102+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="77400fd7-430f-4197-a5a6-7269739aef64" />
+    <UnitTestResult executionId="81579f2d-68c0-4816-825d-5d36d06e4ec1" testId="89e9fe51-d7b6-d0d8-3248-f8504d0368b7" testName="HillRollbackUsesAuthoredHeading(0)" computerName="vm" duration="00:00:00.0003490" startTime="2026-09-24T14:32:14.5943151+00:00" endTime="2026-09-24T14:32:14.5946636+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="81579f2d-68c0-4816-825d-5d36d06e4ec1" />
+    <UnitTestResult executionId="5f6c24c3-c125-4c5b-a4d3-e76a16d0444a" testId="949aaa53-7e75-44f9-4c8b-e576c9906a67" testName="NobodyEntersTheJunctionOnRed" computerName="vm" duration="00:00:01.2603600" startTime="2026-09-24T14:32:09.2248702+00:00" endTime="2026-09-24T14:32:10.4852297+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5f6c24c3-c125-4c5b-a4d3-e76a16d0444a" />
+    <UnitTestResult executionId="96b63c6d-4035-4490-9fa5-bd11c547a362" testId="56e5f24d-e67f-64ed-6dd8-2795b68c4306" testName="ReservationsNeverOverlapUnderRandomTraffic" computerName="vm" duration="00:00:12.6840580" startTime="2026-09-24T14:31:56.4767217+00:00" endTime="2026-09-24T14:32:09.1607789+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="96b63c6d-4035-4490-9fa5-bd11c547a362" />
+    <UnitTestResult executionId="01594878-ec99-46d5-b052-1a8ce42aecfa" testId="10acdb05-d25e-416a-8089-240712dce5c1" testName="ExerciseBoundary_SpatialHysteresis_SuppressesJitterCascade" computerName="vm" duration="00:00:00.0003520" startTime="2026-09-24T14:32:09.1891743+00:00" endTime="2026-09-24T14:32:09.1895258+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="01594878-ec99-46d5-b052-1a8ce42aecfa" />
+    <UnitTestResult executionId="12dbb971-d107-4238-9a0e-652fe5fc794d" testId="f37c07fe-4561-7681-bd50-823c0c3ce054" testName="TurnSignal_ProperIndicatorUsage_PassesCleanly" computerName="vm" duration="00:00:00.0002190" startTime="2026-09-24T14:32:09.1946167+00:00" endTime="2026-09-24T14:32:09.1948359+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="12dbb971-d107-4238-9a0e-652fe5fc794d" />
+    <UnitTestResult executionId="9aa07e72-32f9-4ce8-8a9a-5ff3ced7ac79" testId="7cbc5524-f077-57a2-aeec-c97ba7e5c258" testName="StopsTwoAndAHalfMetresBehindAStandingObstacle" computerName="vm" duration="00:00:00.0143730" startTime="2026-09-24T14:31:56.0426439+00:00" endTime="2026-09-24T14:31:56.0570164+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9aa07e72-32f9-4ce8-8a9a-5ff3ced7ac79" />
+    <UnitTestResult executionId="231dcce2-21e0-4883-b685-faadb90118ba" testId="7d33f6da-7d35-0a42-9741-111c4984c42b" testName="InvalidInputs_ThrowArgumentOutOfRangeException" computerName="vm" duration="00:00:00.0012970" startTime="2026-09-24T14:31:55.9219400+00:00" endTime="2026-09-24T14:31:55.9232372+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="231dcce2-21e0-4883-b685-faadb90118ba" />
+    <UnitTestResult executionId="c6ddd2ff-7047-4ec6-a5b6-d03603189742" testId="ba856a05-2517-5f59-d26c-e7851605eb64" testName="VehiclesNeverAppearInFrontOfThePlayer" computerName="vm" duration="00:00:00.5041270" startTime="2026-09-24T14:32:14.0840950+00:00" endTime="2026-09-24T14:32:14.5882211+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c6ddd2ff-7047-4ec6-a5b6-d03603189742" />
+    <UnitTestResult executionId="9b0045d7-f76b-4a3a-9810-37a4b5294f44" testId="a790b701-49d9-f2a2-c63c-4d284845753a" testName="StopLine_DynamicDt_IsTickRateIndependent" computerName="vm" duration="00:00:00.0004380" startTime="2026-09-24T14:32:09.1933333+00:00" endTime="2026-09-24T14:32:09.1937712+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9b0045d7-f76b-4a3a-9810-37a4b5294f44" />
+    <UnitTestResult executionId="a4837fac-d055-4ac5-839a-d7f23164a155" testId="692bad6a-bad9-e7bb-1dc5-29aa80afc611" testName="UnsupportedVersionIsRejected" computerName="vm" duration="00:00:00.0004740" startTime="2026-09-24T14:32:14.7012621+00:00" endTime="2026-09-24T14:32:14.7017358+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a4837fac-d055-4ac5-839a-d7f23164a155" />
+    <UnitTestResult executionId="e2d27446-5680-4cc6-bd50-5f04043355ba" testId="4a17d7b6-7870-e43a-6d4e-df14204e2efb" testName="UnknownReferencesAreRejected" computerName="vm" duration="00:00:00.0168920" startTime="2026-09-24T14:32:14.6388289+00:00" endTime="2026-09-24T14:32:14.6557205+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e2d27446-5680-4cc6-bd50-5f04043355ba" />
+    <UnitTestResult executionId="3f78fc05-86fd-4b0e-ba34-c7ac834e4604" testId="a21e42f5-35c1-f23f-da32-2d0efebeba7b" testName="ExpiredPermitIsReleasedAndTheOtherCarGoes" computerName="vm" duration="00:00:00.0609770" startTime="2026-09-24T14:31:56.2519871+00:00" endTime="2026-09-24T14:31:56.3129630+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3f78fc05-86fd-4b0e-ba34-c7ac834e4604" />
+    <UnitTestResult executionId="8bc1977a-edf5-46cf-b259-d6eb48ff879f" testId="dad1f132-4484-62e2-c5a2-4a0c68c04a30" testName="FlashingAmberModeForUnregulatedJunction" computerName="vm" duration="00:00:00.0008860" startTime="2026-09-24T14:32:09.2041759+00:00" endTime="2026-09-24T14:32:09.2050613+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8bc1977a-edf5-46cf-b259-d6eb48ff879f" />
+    <UnitTestResult executionId="c7d43d98-aa6c-42f1-bf31-fcaa395be224" testId="672883a3-7fc5-a52b-ddda-c70bdfa42cb8" testName="ExerciseBoundary_CrossingBoundary_TriggersFatalInfraction" computerName="vm" duration="00:00:00.0013640" startTime="2026-09-24T14:32:09.1875894+00:00" endTime="2026-09-24T14:32:09.1889527+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c7d43d98-aa6c-42f1-bf31-fcaa395be224" />
+    <UnitTestResult executionId="9e7cd2d2-b52d-4648-ae53-77c0a024606b" testId="91398936-32fb-8882-2359-227aa0efe648" testName="SingleLessonDoesNotRequireTransfer" computerName="vm" duration="00:00:00.0002790" startTime="2026-09-24T14:32:14.5976487+00:00" endTime="2026-09-24T14:32:14.5979280+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9e7cd2d2-b52d-4648-ae53-77c0a024606b" />
+    <UnitTestResult executionId="c4a105b9-8e03-4d5d-9244-6f226ffaadab" testId="2b151caf-4dc3-02e0-7940-ccf8fcf170bf" testName="SpeedSignZoneIsRespected" computerName="vm" duration="00:00:00.0201970" startTime="2026-09-24T14:31:56.0094959+00:00" endTime="2026-09-24T14:31:56.0296925+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c4a105b9-8e03-4d5d-9244-6f226ffaadab" />
+    <UnitTestResult executionId="2e8ebb13-74f7-432a-8991-e9f9fcecdd83" testId="91530478-2bfc-b8cc-b8fe-4b72f6417fcf" testName="OverlappingOrOutOfLaneBoundariesAreRejected" computerName="vm" duration="00:00:00.0114330" startTime="2026-09-24T14:32:14.6273478+00:00" endTime="2026-09-24T14:32:14.6387809+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2e8ebb13-74f7-432a-8991-e9f9fcecdd83" />
+    <UnitTestResult executionId="615fb9d6-a8a1-49e0-b353-955e0fd968bf" testId="6a05377e-bb70-cf47-dd01-57cbac494474" testName="HillRollbackUsesAuthoredHeading(270)" computerName="vm" duration="00:00:00.0000090" startTime="2026-09-24T14:32:14.5951147+00:00" endTime="2026-09-24T14:32:14.5951238+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="615fb9d6-a8a1-49e0-b353-955e0fd968bf" />
+    <UnitTestResult executionId="6e142e86-5269-4e58-8cfe-c0ab86a842c6" testId="715161a6-e00d-e30b-c687-557fa51da314" testName="VehicleSpawnOnSidewalkIsRejected" computerName="vm" duration="00:00:00.0057080" startTime="2026-09-24T14:32:14.6672846+00:00" endTime="2026-09-24T14:32:14.6729927+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6e142e86-5269-4e58-8cfe-c0ab86a842c6" />
+    <UnitTestResult executionId="4f4dc857-f798-4977-bcb8-5f0bcd8bab5e" testId="5f5cb3ba-b43d-bd4f-8e84-376911457359" testName="ShiftedConnectionIsRejected" computerName="vm" duration="00:00:00.0020790" startTime="2026-09-24T14:32:09.1737462+00:00" endTime="2026-09-24T14:32:09.1758254+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4f4dc857-f798-4977-bcb8-5f0bcd8bab5e" />
+    <UnitTestResult executionId="3f263419-7c76-4ce1-be60-360c89731519" testId="1df7434f-7595-9205-752b-6610e85c48f1" testName="HillRollbackFailsAfterEntry" computerName="vm" duration="00:00:00.0002060" startTime="2026-09-24T14:32:14.5939329+00:00" endTime="2026-09-24T14:32:14.5941387+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3f263419-7c76-4ce1-be60-360c89731519" />
+    <UnitTestResult executionId="bcf18583-5830-40c1-9fe1-d84a02f5453e" testId="b3c00df0-dcf3-7106-b961-85ff1dcbffe6" testName="SpeedLimit_BelowThreshold_DoesNotTrigger" computerName="vm" duration="00:00:00.0001670" startTime="2026-09-24T14:32:09.1922212+00:00" endTime="2026-09-24T14:32:09.1923880+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bcf18583-5830-40c1-9fe1-d84a02f5453e" />
+    <UnitTestResult executionId="8e600880-ef9c-4975-8d5d-c853e47501c2" testId="39cfbcd8-9c5e-1831-18df-569067f405b9" testName="PedestriansNeverWalkAcrossGreenThroughTraffic" computerName="vm" duration="00:00:00.0090950" startTime="2026-09-24T14:32:09.2060360+00:00" endTime="2026-09-24T14:32:09.2151308+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8e600880-ef9c-4975-8d5d-c853e47501c2" />
+    <UnitTestResult executionId="be61d07b-da03-4425-9469-d7728db43a62" testId="74979460-159e-b0bc-2c97-4d76a6276e2b" testName="GreenFlashesThenAmberThenRedAmberForTheOthers" computerName="vm" duration="00:00:00.0008890" startTime="2026-09-24T14:32:09.2051047+00:00" endTime="2026-09-24T14:32:09.2059937+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="be61d07b-da03-4425-9469-d7728db43a62" />
+    <UnitTestResult executionId="d1a1c8b8-584c-42cd-b9b0-b682f2f6dab0" testId="266a328e-add2-ca07-e875-bf3bd724983e" testName="CrossingMustActuallyCrossItsLanes" computerName="vm" duration="00:00:00.0056710" startTime="2026-09-24T14:32:14.6046061+00:00" endTime="2026-09-24T14:32:14.6102770+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d1a1c8b8-584c-42cd-b9b0-b682f2f6dab0" />
+    <UnitTestResult executionId="db1a2afb-63b0-49d0-8ca7-412f92996b44" testId="cb1173c7-de7b-e249-46b7-07f57f26a0e3" testName="ShiftGateRequiresGearAndMeasuredSpeed" computerName="vm" duration="00:00:00.0002110" startTime="2026-09-24T14:32:14.5970435+00:00" endTime="2026-09-24T14:32:14.5972546+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="db1a2afb-63b0-49d0-8ca7-412f92996b44" />
+    <UnitTestResult executionId="1e369344-92c4-4f8d-b0cd-98d945b23b00" testId="c919fb72-c376-faf9-ec06-88183aebb002" testName="ReverseEntryLatchClearsOnExit" computerName="vm" duration="00:00:00.0002060" startTime="2026-09-24T14:32:14.5963848+00:00" endTime="2026-09-24T14:32:14.5965910+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1e369344-92c4-4f8d-b0cd-98d945b23b00" />
+    <UnitTestResult executionId="aa6d9b97-5df7-4606-9f4c-f5edc34dd59e" testId="10d963ab-af54-56c7-c38b-986bee192f41" testName="TurningOffIgnition_StopsEngine" computerName="vm" duration="00:00:00.0003080" startTime="2026-09-24T14:31:55.9245917+00:00" endTime="2026-09-24T14:31:55.9248998+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="aa6d9b97-5df7-4606-9f4c-f5edc34dd59e" />
+    <UnitTestResult executionId="527c5903-3f6f-46cf-ba6d-581fd3babbab" testId="ebc43ce4-3033-b270-3665-e02e69ced169" testName="HundredParticipantsThousandTicksFitTheBudget" computerName="vm" duration="00:00:00.1116440" startTime="2026-09-24T14:31:56.0613977+00:00" endTime="2026-09-24T14:31:56.1730413+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="527c5903-3f6f-46cf-ba6d-581fd3babbab">
+      <Output>
+        <StdOut>100 x 1000 Locate: 108 ms</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ec0effa3-1374-4236-afa1-5a3f673ffad4" testId="7d52ee24-9d99-011f-2942-a0fd34671e54" testName="LoopOfCurrentKitDoesNotCloseByFourMetres" computerName="vm" duration="00:00:00.0013519" startTime="2026-09-24T14:31:55.8873773+00:00" endTime="2026-09-24T14:31:55.8887290+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ec0effa3-1374-4236-afa1-5a3f673ffad4" />
+    <UnitTestResult executionId="a0f324e7-3734-4587-9d97-b52ffdff2aef" testId="68f7ba4f-c5c4-f465-42a5-6b19a8d6a932" testName="TemplatesMatchRoadKitCatalogSource" computerName="vm" duration="00:00:00.0102030" startTime="2026-09-24T14:32:09.1771792+00:00" endTime="2026-09-24T14:32:09.1873825+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a0f324e7-3734-4587-9d97-b52ffdff2aef" />
+    <UnitTestResult executionId="b51b8136-fe72-4e03-9ed0-e5bd39351353" testId="e07f0a6b-cc81-2252-9f28-cca37e686ab1" testName="SidewalkIsOffRoad" computerName="vm" duration="00:00:00.0006210" startTime="2026-09-24T14:31:56.1762718+00:00" endTime="2026-09-24T14:31:56.1768926+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b51b8136-fe72-4e03-9ed0-e5bd39351353" />
+    <UnitTestResult executionId="bb9f0b2d-32e4-41ab-9402-438306a490f2" testId="4d113c19-eb30-0455-5fae-2dcbcc629303" testName="UnknownSignCodeIsRejectedWhenCatalogGiven" computerName="vm" duration="00:00:00.0063460" startTime="2026-09-24T14:32:14.6557640+00:00" endTime="2026-09-24T14:32:14.6621102+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bb9f0b2d-32e4-41ab-9402-438306a490f2" />
+    <UnitTestResult executionId="29962231-aaf4-4f5c-8686-3066ce4a018e" testId="234b4af6-bfb0-7017-cbcc-e115859d5223" testName="FullThrottleInNeutral_ReachesRedline_DoesNotExceedCutoff" computerName="vm" duration="00:00:00.0031650" startTime="2026-09-24T14:31:55.9181770+00:00" endTime="2026-09-24T14:31:55.9213422+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="29962231-aaf4-4f5c-8686-3066ce4a018e" />
+    <UnitTestResult executionId="85a5bfb3-91d8-4459-b099-7e4788bd8ad7" testId="1ebcac3e-7e25-134d-c109-595dd1b2f170" testName="PenaltyScore_AccumulatesAcrossMultipleViolations" computerName="vm" duration="00:00:00.0021410" startTime="2026-09-24T14:32:09.1895725+00:00" endTime="2026-09-24T14:32:09.1917133+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="85a5bfb3-91d8-4459-b099-7e4788bd8ad7" />
+    <UnitTestResult executionId="acea9ced-bf38-42f2-9623-62e0b9f40940" testId="d60b56fb-4c86-fd8a-d2cf-537bfb11df5a" testName="ContactStopsTheCarWithHazardsAndWarnsTheOnesBehind" computerName="vm" duration="00:00:00.0046930" startTime="2026-09-24T14:32:09.2201266+00:00" endTime="2026-09-24T14:32:09.2248196+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="acea9ced-bf38-42f2-9623-62e0b9f40940" />
+    <UnitTestResult executionId="eb05b290-ba18-4763-a96b-57d199f8727a" testId="2b5abf3e-db46-2ece-83d5-74bdc4c0b71d" testName="InitialState_IsOff_ZeroRpm" computerName="vm" duration="00:00:00.0002780" startTime="2026-09-24T14:31:55.9216472+00:00" endTime="2026-09-24T14:31:55.9219253+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eb05b290-ba18-4763-a96b-57d199f8727a" />
+    <UnitTestResult executionId="28facf14-fa9a-4e2b-9a07-65d5c3c6bbe7" testId="296e9d00-2101-e817-0f1d-fc78b2441d14" testName="ValidSemanticsPass" computerName="vm" duration="00:00:00.0051020" startTime="2026-09-24T14:32:14.6621500+00:00" endTime="2026-09-24T14:32:14.6672519+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="28facf14-fa9a-4e2b-9a07-65d5c3c6bbe7" />
+    <UnitTestResult executionId="8b094a4d-351f-4e91-bd73-33ef8ce352ed" testId="01118ce3-79ee-78c9-31ab-68944e1139e4" testName="SpeedLimit_Hysteresis_ResetsAfterSlowingDown" computerName="vm" duration="00:00:00.0002420" startTime="2026-09-24T14:32:09.1930803+00:00" endTime="2026-09-24T14:32:09.1933224+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8b094a4d-351f-4e91-bd73-33ef8ce352ed" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="HillRollbackUsesAuthoredHeading(90)" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="72f9fca0-006b-a650-2427-4bddb0596384">
+      <Execution id="f82146ea-5ecb-4c7f-9500-89ce951b48ea" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="HillRollbackUsesAuthoredHeading(90)" />
+    </UnitTest>
+    <UnitTest name="SecondaryApproachNeedsYieldSign" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="c35b2277-1130-4ba5-cbb6-9898ceb96838">
+      <Execution id="da14887d-6997-4ad1-932c-7aa761249dd7" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.DistrictCompilerTests" name="SecondaryApproachNeedsYieldSign" />
+    </UnitTest>
+    <UnitTest name="UnsupportedVersionIsRejected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="692bad6a-bad9-e7bb-1dc5-29aa80afc611">
+      <Execution id="a4837fac-d055-4ac5-839a-d7f23164a155" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldMigrationTests" name="UnsupportedVersionIsRejected" />
+    </UnitTest>
+    <UnitTest name="TurningOffIgnition_StopsEngine" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="10d963ab-af54-56c7-c38b-986bee192f41">
+      <Execution id="aa6d9b97-5df7-4606-9f4c-f5edc34dd59e" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.EngineModelTests" name="TurningOffIgnition_StopsEngine" />
+    </UnitTest>
+    <UnitTest name="StraightSegmentGetsThirdPointHandlesAndRightHandLanes" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="d2179277-7e00-9072-d6dc-c615c27e6732">
+      <Execution id="924a6ea9-c48b-444d-addf-662602e11380" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldMigrationTests" name="StraightSegmentGetsThirdPointHandlesAndRightHandLanes" />
+    </UnitTest>
+    <UnitTest name="EveryTemplateIsAValidGraphFragment" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="4784971f-dcc5-17a2-cd53-57e771cadbe5">
+      <Execution id="5b11edcb-3487-48d9-adf2-23cb23e68e71" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ModuleTemplateTests" name="EveryTemplateIsAValidGraphFragment" />
+    </UnitTest>
+    <UnitTest name="CrossHasTwelveConnectionsStopLinesAndCrossings" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="ce081005-f682-ad2f-c9cb-0eda277a1f74">
+      <Execution id="15879c99-1f19-4254-aa08-9ad71eb486f0" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ModuleTemplateTests" name="CrossHasTwelveConnectionsStopLinesAndCrossings" />
+    </UnitTest>
+    <UnitTest name="MisplacedModuleReportsBothInstancesAndGap" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="6163f6a2-9d25-6b66-ad76-2e72523d3849">
+      <Execution id="2aecedd8-0e4c-4632-b274-977f560d1949" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.DistrictCompilerTests" name="MisplacedModuleReportsBothInstancesAndGap" />
+    </UnitTest>
+    <UnitTest name="StopsBeforeTheStopLineOnRed" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="d1c01c95-4fc6-3582-6ac9-a0c3f54d5a3e">
+      <Execution id="0d63e6f6-3492-4b74-b942-126e55c0cef7" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.LaneFollowerTests" name="StopsBeforeTheStopLineOnRed" />
+    </UnitTest>
+    <UnitTest name="CrossingApproachesAreNeverGreenTogether" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="9ab230fe-3660-256c-298c-1fef3f6a6197">
+      <Execution id="b38f3116-c1eb-4467-848c-41cc7b9ddfcc" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.SignalControllerTests" name="CrossingApproachesAreNeverGreenTogether" />
+    </UnitTest>
+    <UnitTest name="FlashingAmberModeForUnregulatedJunction" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="dad1f132-4484-62e2-c5a2-4a0c68c04a30">
+      <Execution id="8bc1977a-edf5-46cf-b259-d6eb48ff879f" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.SignalControllerTests" name="FlashingAmberModeForUnregulatedJunction" />
+    </UnitTest>
+    <UnitTest name="VehicleSpawnOnSidewalkIsRejected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="715161a6-e00d-e30b-c687-557fa51da314">
+      <Execution id="6e142e86-5269-4e58-8cfe-c0ab86a842c6" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldCitySemanticsTests" name="VehicleSpawnOnSidewalkIsRejected" />
+    </UnitTest>
+    <UnitTest name="CrossingConnectionsWithoutZoneAreRejected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="7c506d1d-398f-a97c-5dc5-0b0f7f3c15d1">
+      <Execution id="d35a9416-f092-4cd2-a82f-1a013483d3a6" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ModuleTemplateTests" name="CrossingConnectionsWithoutZoneAreRejected" />
+    </UnitTest>
+    <UnitTest name="ShiftGateRequiresGearAndMeasuredSpeed" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="cb1173c7-de7b-e249-46b7-07f57f26a0e3">
+      <Execution id="db1a2afb-63b0-49d0-8ca7-412f92996b44" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="ShiftGateRequiresGearAndMeasuredSpeed" />
+    </UnitTest>
+    <UnitTest name="LeftTurnThroughJunctionFollowsTheTurnConnection" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="f6567e4a-fc09-7bc8-dc7a-956ec0de8450">
+      <Execution id="073664ed-9889-4208-901e-e3f0c885d56d" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.LaneLocatorTests" name="LeftTurnThroughJunctionFollowsTheTurnConnection" />
+    </UnitTest>
+    <UnitTest name="LaneCenterlinesAreSampledAtMostTwoMetresApart" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="7175470e-fb7e-488a-7f42-868843b95fb1">
+      <Execution id="1d2f4d6e-d2ff-4d6a-b6d8-a5d5cb2a90eb" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldMigrationTests" name="LaneCenterlinesAreSampledAtMostTwoMetresApart" />
+    </UnitTest>
+    <UnitTest name="LeftFromSouthConflictsWithStraightFromEast" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="2b3dafa7-2372-0dc2-dd79-c3acde4eabcd">
+      <Execution id="29b938fa-f83f-4860-81ec-bf409a0532f0" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ModuleTemplateTests" name="LeftFromSouthConflictsWithStraightFromEast" />
+    </UnitTest>
+    <UnitTest name="ExerciseBoundary_CrossingBoundary_TriggersFatalInfraction" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="672883a3-7fc5-a52b-ddda-c70bdfa42cb8">
+      <Execution id="c7d43d98-aa6c-42f1-bf31-fcaa395be224" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.RuleEvaluatorTests" name="ExerciseBoundary_CrossingBoundary_TriggersFatalInfraction" />
+    </UnitTest>
+    <UnitTest name="FullThrottleInNeutral_ReachesRedline_DoesNotExceedCutoff" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="234b4af6-bfb0-7017-cbcc-e115859d5223">
+      <Execution id="29962231-aaf4-4f5c-8686-3066ce4a018e" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.EngineModelTests" name="FullThrottleInNeutral_ReachesRedline_DoesNotExceedCutoff" />
+    </UnitTest>
+    <UnitTest name="Reset_ClearsAllInfractionsAndFatalStatus" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="e6fe757f-9624-5174-c225-c55deae97345">
+      <Execution id="65acbb68-99a3-47dc-9ff5-0e3803ef01bd" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.RuleEvaluatorTests" name="Reset_ClearsAllInfractionsAndFatalStatus" />
+    </UnitTest>
+    <UnitTest name="PassesThroughJunctionWithoutJumps" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="844d60c9-3375-583c-7422-0eab6910624f">
+      <Execution id="badba1a2-5fa2-4889-be26-f6ca6317864d" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.LaneFollowerTests" name="PassesThroughJunctionWithoutJumps" />
+    </UnitTest>
+    <UnitTest name="ReverseParkingCannotPassByDrivingForward" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="65e42514-6126-10f4-637a-574a12746011">
+      <Execution id="e94ae109-690d-4120-a48b-ee07235f420b" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="ReverseParkingCannotPassByDrivingForward" />
+    </UnitTest>
+    <UnitTest name="HillRollbackUsesAuthoredHeading(180)" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="2ff0587c-5caa-8542-4af4-cc3d29272dc4">
+      <Execution id="77400fd7-430f-4197-a5a6-7269739aef64" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="HillRollbackUsesAuthoredHeading(180)" />
+    </UnitTest>
+    <UnitTest name="ContactStopsTheCarWithHazardsAndWarnsTheOnesBehind" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="d60b56fb-4c86-fd8a-d2cf-537bfb11df5a">
+      <Execution id="acea9ced-bf38-42f2-9623-62e0b9f40940" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrafficDirectorTests" name="ContactStopsTheCarWithHazardsAndWarnsTheOnesBehind" />
+    </UnitTest>
+    <UnitTest name="UnknownReferencesAreRejected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="4a17d7b6-7870-e43a-6d4e-df14204e2efb">
+      <Execution id="e2d27446-5680-4cc6-bd50-5f04043355ba" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldCitySemanticsTests" name="UnknownReferencesAreRejected" />
+    </UnitTest>
+    <UnitTest name="GreenFlashesThenAmberThenRedAmberForTheOthers" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="74979460-159e-b0bc-2c97-4d76a6276e2b">
+      <Execution id="be61d07b-da03-4425-9469-d7728db43a62" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.SignalControllerTests" name="GreenFlashesThenAmberThenRedAmberForTheOthers" />
+    </UnitTest>
+    <UnitTest name="ConnectionForbiddenByLaneManeuversIsRejected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="73bbdf6c-5f2d-f33f-1570-7dcbe93ae94b">
+      <Execution id="62db051a-4df8-4e1d-8a55-3f210242e19e" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldCitySemanticsTests" name="ConnectionForbiddenByLaneManeuversIsRejected" />
+    </UnitTest>
+    <UnitTest name="CompilationIsDeterministic" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="a84b948f-ae45-c05b-899d-50fc581358b4">
+      <Execution id="2052471b-2c29-4589-866f-a8a430eac021" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.DistrictCompilerTests" name="CompilationIsDeterministic" />
+    </UnitTest>
+    <UnitTest name="SidewalkIsOffRoad" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="e07f0a6b-cc81-2252-9f28-cca37e686ab1">
+      <Execution id="b51b8136-fe72-4e03-9ed0-e5bd39351353" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.LaneLocatorTests" name="SidewalkIsOffRoad" />
+    </UnitTest>
+    <UnitTest name="RotatedBayUsesRotatedVehicleFootprint" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="fd21017e-45f8-4f3d-5211-86851785c08e">
+      <Execution id="7002df05-6e7c-4ea9-afdc-f3b78d1746ed" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="RotatedBayUsesRotatedVehicleFootprint" />
+    </UnitTest>
+    <UnitTest name="PenaltyScore_AccumulatesAcrossMultipleViolations" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="1ebcac3e-7e25-134d-c109-595dd1b2f170">
+      <Execution id="85a5bfb3-91d8-4459-b099-7e4788bd8ad7" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.RuleEvaluatorTests" name="PenaltyScore_AccumulatesAcrossMultipleViolations" />
+    </UnitTest>
+    <UnitTest name="CrossWithArmsCompilesAndStitchesLanes" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="e34abc2c-6762-a724-dbc0-814d5dfb377c">
+      <Execution id="7c5b4c4b-55e2-428e-acef-66257a33fd40" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.DistrictCompilerTests" name="CrossWithArmsCompilesAndStitchesLanes" />
+    </UnitTest>
+    <UnitTest name="TenMinutesOnAnEqualJunctionWithoutOverlapsOrGridlock" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="02ab8f66-dd8d-3218-9316-60977155b632">
+      <Execution id="799eb54e-6407-41f2-bd51-6489f9d69962" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrafficDirectorTests" name="TenMinutesOnAnEqualJunctionWithoutOverlapsOrGridlock" />
+    </UnitTest>
+    <UnitTest name="HardBrakingLeaderIsNotRammed" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="88a34674-e929-4a0c-8af8-aeb8492d63fa">
+      <Execution id="fe1e27bf-428c-4548-a826-4321c107753c" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.LaneFollowerTests" name="HardBrakingLeaderIsNotRammed" />
+    </UnitTest>
+    <UnitTest name="TemplatesMatchRoadKitCatalogSource" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="68f7ba4f-c5c4-f465-42a5-6b19a8d6a932">
+      <Execution id="a0f324e7-3734-4587-9d97-b52ffdff2aef" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ModuleTemplateTests" name="TemplatesMatchRoadKitCatalogSource" />
+    </UnitTest>
+    <UnitTest name="AcceleratesGentlyToTheSpeedLimitAndHoldsTheLaneCentre" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="f6eb8cad-9e12-a26f-4266-26cf3375954d">
+      <Execution id="a7d80f52-738b-4593-93e5-7b1c65333bde" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.LaneFollowerTests" name="AcceleratesGentlyToTheSpeedLimitAndHoldsTheLaneCentre" />
+    </UnitTest>
+    <UnitTest name="MustFitEntireVehicleInParkingBay" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="c3824a8d-0dbc-28fc-147a-2e98cae7a4cd">
+      <Execution id="fc68b883-3c48-40ae-9e58-afc891346a22" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="MustFitEntireVehicleInParkingBay" />
+    </UnitTest>
+    <UnitTest name="PlayersVisibleClaimIsRespected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="b78ab025-a7a4-24c4-fac2-58cef1968d0d">
+      <Execution id="a2755472-b94d-46dc-88f6-530078b0a06d" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ManeuverProtocolTests" name="PlayersVisibleClaimIsRespected" />
+    </UnitTest>
+    <UnitTest name="HillRollbackUsesAuthoredHeading(0)" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="89e9fe51-d7b6-d0d8-3248-f8504d0368b7">
+      <Execution id="81579f2d-68c0-4816-825d-5d36d06e4ec1" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="HillRollbackUsesAuthoredHeading(0)" />
+    </UnitTest>
+    <UnitTest name="SimultaneousRequestsForOneZoneGetExactlyOnePermit" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="48e2dffc-b478-c598-a245-4c411765ff58">
+      <Execution id="f79caca9-2492-4e37-ad95-c1d2cbd6558e" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ManeuverProtocolTests" name="SimultaneousRequestsForOneZoneGetExactlyOnePermit" />
+    </UnitTest>
+    <UnitTest name="UnknownSignCodeIsRejectedWhenCatalogGiven" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="4d113c19-eb30-0455-5fae-2dcbcc629303">
+      <Execution id="bb9f0b2d-32e4-41ab-9402-438306a490f2" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldCitySemanticsTests" name="UnknownSignCodeIsRejectedWhenCatalogGiven" />
+    </UnitTest>
+    <UnitTest name="SuccessfulStart_EntersRunning_AndMaintainsIdleRpm" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="4de35a42-e998-b2a1-bfea-634ec5802c96">
+      <Execution id="fe6c1f65-bafa-4a7e-8e21-d45a5cdb1875" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.EngineModelTests" name="SuccessfulStart_EntersRunning_AndMaintainsIdleRpm" />
+    </UnitTest>
+    <UnitTest name="SingleLessonDoesNotRequireTransfer" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="91398936-32fb-8882-2359-227aa0efe648">
+      <Execution id="9e7cd2d2-b52d-4648-ae53-77c0a024606b" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="SingleLessonDoesNotRequireTransfer" />
+    </UnitTest>
+    <UnitTest name="StopsTwoAndAHalfMetresBehindAStandingObstacle" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="7cbc5524-f077-57a2-aeec-c97ba7e5c258">
+      <Execution id="9aa07e72-32f9-4ce8-8a9a-5ff3ced7ac79" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.LaneFollowerTests" name="StopsTwoAndAHalfMetresBehindAStandingObstacle" />
+    </UnitTest>
+    <UnitTest name="SignCatalogCoversKitSignsAndIsMarkedUnverified" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="0fc7776b-c40e-b6ac-03b4-1cc9121a4dcc">
+      <Execution id="dcfb440f-5223-47c4-a9a8-736cedfb556e" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ModuleTemplateTests" name="SignCatalogCoversKitSignsAndIsMarkedUnverified" />
+    </UnitTest>
+    <UnitTest name="SpeedLimit_BelowThreshold_DoesNotTrigger" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="b3c00df0-dcf3-7106-b961-85ff1dcbffe6">
+      <Execution id="bcf18583-5830-40c1-9fe1-d84a02f5453e" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.RuleEvaluatorTests" name="SpeedLimit_BelowThreshold_DoesNotTrigger" />
+    </UnitTest>
+    <UnitTest name="EqualJunctionTrafficFromTheRightGoesFirst" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="468ba884-8e90-363b-2b1b-996408a9a33c">
+      <Execution id="b9dda811-f9db-4c7d-93d5-25484b36501a" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ManeuverProtocolTests" name="EqualJunctionTrafficFromTheRightGoesFirst" />
+    </UnitTest>
+    <UnitTest name="ExamIncludesTransfersAndFinalFinish" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="ec70d5ed-87d5-7549-ecd4-6cac03cf0be6">
+      <Execution id="cdf7ad39-8563-4b4a-ad34-9a056193c8cb" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="ExamIncludesTransfersAndFinalFinish" />
+    </UnitTest>
+    <UnitTest name="InitialState_IsOff_ZeroRpm" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="2b5abf3e-db46-2ece-83d5-74bdc4c0b71d">
+      <Execution id="eb05b290-ba18-4763-a96b-57d199f8727a" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.EngineModelTests" name="InitialState_IsOff_ZeroRpm" />
+    </UnitTest>
+    <UnitTest name="DrivingAgainstTheLaneIsFlagged" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="38612215-34dd-7130-3c72-839f5d2b0d12">
+      <Execution id="ef6eb695-e79a-4777-a97d-5dc499446248" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.LaneLocatorTests" name="DrivingAgainstTheLaneIsFlagged" />
+    </UnitTest>
+    <UnitTest name="DiscontinuousRouteIsRejected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="bbd943bf-9bb0-3472-ec9a-677d5a8d59a2">
+      <Execution id="e15dda4e-bce1-4a65-8500-2c6132ae82de" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.LaneFollowerTests" name="DiscontinuousRouteIsRejected" />
+    </UnitTest>
+    <UnitTest name="StopLine_DynamicDt_IsTickRateIndependent" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="a790b701-49d9-f2a2-c63c-4d284845753a">
+      <Execution id="9b0045d7-f76b-4a3a-9810-37a4b5294f44" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.RuleEvaluatorTests" name="StopLine_DynamicDt_IsTickRateIndependent" />
+    </UnitTest>
+    <UnitTest name="MainRoadGoesBeforeTrafficFromTheRight" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="3ffd0ed4-8c25-9f96-a3f7-bf065f0ca39f">
+      <Execution id="cc2b9848-abf7-4e62-9302-0425a6de1340" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ManeuverProtocolTests" name="MainRoadGoesBeforeTrafficFromTheRight" />
+    </UnitTest>
+    <UnitTest name="SidewalksAreLinkedAcrossJoins" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="c2eb5da3-efee-13c0-f339-9436ec329505">
+      <Execution id="b98b0985-bf3f-40d3-86a4-2da1743cdf75" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.DistrictCompilerTests" name="SidewalksAreLinkedAcrossJoins" />
+    </UnitTest>
+    <UnitTest name="ReverseEntryLatchClearsOnExit" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="c919fb72-c376-faf9-ec06-88183aebb002">
+      <Execution id="1e369344-92c4-4f8d-b0cd-98d945b23b00" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="ReverseEntryLatchClearsOnExit" />
+    </UnitTest>
+    <UnitTest name="ExerciseBoundary_InsideBoundary_DoesNotTrigger" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="73f2939d-b37c-4778-ef9f-adb4fa7f5d72">
+      <Execution id="220692d7-94b4-4b26-b887-be033ea67114" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.RuleEvaluatorTests" name="ExerciseBoundary_InsideBoundary_DoesNotTrigger" />
+    </UnitTest>
+    <UnitTest name="HillRollbackUsesAuthoredHeading(270)" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="6a05377e-bb70-cf47-dd01-57cbac494474">
+      <Execution id="615fb9d6-a8a1-49e0-b353-955e0fd968bf" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="HillRollbackUsesAuthoredHeading(270)" />
+    </UnitTest>
+    <UnitTest name="TurnsAreClassifiedForRightHandTraffic" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="f140304a-6e8f-120c-f007-8fa4b2a9ea7c">
+      <Execution id="3e15d6d9-2269-49cd-acb8-e3c6ea37ec4e" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldMigrationTests" name="TurnsAreClassifiedForRightHandTraffic" />
+    </UnitTest>
+    <UnitTest name="SideKeysConflictOnlyAcrossSides" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="d3360998-e660-db2e-4d5e-fff6e51b57ba">
+      <Execution id="3c9e94e3-12f2-42bf-a348-0b8680a30c75" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ManeuverProtocolTests" name="SideKeysConflictOnlyAcrossSides" />
+    </UnitTest>
+    <UnitTest name="PlanMustServeEveryApproach" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="84dfee3f-ab66-71c8-373f-19e9728a2cf6">
+      <Execution id="4b2ceb20-407b-478b-9504-f059681fe764" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.DistrictCompilerTests" name="PlanMustServeEveryApproach" />
+    </UnitTest>
+    <UnitTest name="ReservationsNeverOverlapUnderRandomTraffic" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="56e5f24d-e67f-64ed-6dd8-2795b68c4306">
+      <Execution id="96b63c6d-4035-4490-9fa5-bd11c547a362" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ManeuverProtocolTests" name="ReservationsNeverOverlapUnderRandomTraffic" />
+    </UnitTest>
+    <UnitTest name="EndOfRouteIsAPlaceToStopNotACrash" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="def81e69-a9b3-9241-44a0-5112251837f2">
+      <Execution id="410f5312-0c65-42f5-8c51-7e2c2e761e68" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.LaneFollowerTests" name="EndOfRouteIsAPlaceToStopNotACrash" />
+    </UnitTest>
+    <UnitTest name="TimeoutCannotBeOverriddenByPassingStop" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="2a4a62ee-431c-9beb-f4ca-2bbcd54c8ffb">
+      <Execution id="7d16f82a-3d9c-440e-b159-a28c0fe150cf" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="TimeoutCannotBeOverriddenByPassingStop" />
+    </UnitTest>
+    <UnitTest name="DanglingSocketIsRejected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="06c28a1e-59be-0425-69cb-0e855db41910">
+      <Execution id="eaa0a22f-6b6c-44c2-944e-95750959b8ed" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.DistrictCompilerTests" name="DanglingSocketIsRejected" />
+    </UnitTest>
+    <UnitTest name="LeftTurnConflictsWithOncomingStraight" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="4262c86f-19da-b172-f8ac-2c6a72ad0d6f">
+      <Execution id="827fb185-939b-4a13-a960-0362837c8e38" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldMigrationTests" name="LeftTurnConflictsWithOncomingStraight" />
+    </UnitTest>
+    <UnitTest name="TimeToChangeCountsDownToAmber" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="b74209f7-4d02-cee0-6641-6163c3e6a54c">
+      <Execution id="ae963cff-b1bd-4b2b-b206-ea9d31999269" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.SignalControllerTests" name="TimeToChangeCountsDownToAmber" />
+    </UnitTest>
+    <UnitTest name="ValidSemanticsPass" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="296e9d00-2101-e817-0f1d-fc78b2441d14">
+      <Execution id="28facf14-fa9a-4e2b-9a07-65d5c3c6bbe7" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldCitySemanticsTests" name="ValidSemanticsPass" />
+    </UnitTest>
+    <UnitTest name="InvalidInputs_ThrowArgumentOutOfRangeException" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="7d33f6da-7d35-0a42-9741-111c4984c42b">
+      <Execution id="231dcce2-21e0-4883-b685-faadb90118ba" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.EngineModelTests" name="InvalidInputs_ThrowArgumentOutOfRangeException" />
+    </UnitTest>
+    <UnitTest name="OverlappingOrOutOfLaneBoundariesAreRejected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="91530478-2bfc-b8cc-b8fe-4b72f6417fcf">
+      <Execution id="2e8ebb13-74f7-432a-8991-e9f9fcecdd83" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldCitySemanticsTests" name="OverlappingOrOutOfLaneBoundariesAreRejected" />
+    </UnitTest>
+    <UnitTest name="NoVehiclesInUnloadedChunks" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="4066516f-4c63-146e-67e1-2185181e4a49">
+      <Execution id="fbe20d3e-61c8-4a63-acd4-a0d6af004533" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrafficDirectorTests" name="NoVehiclesInUnloadedChunks" />
+    </UnitTest>
+    <UnitTest name="FaultThresholdAndTerminalStateAreStable" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="0971ac10-89be-1e18-1400-e8110363e654">
+      <Execution id="ddb45280-9423-4853-bd26-b90baaca3214" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="FaultThresholdAndTerminalStateAreStable" />
+    </UnitTest>
+    <UnitTest name="GatesCannotBeCompletedOutOfOrder" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="affa073a-c422-8108-235d-1d30513d0de3">
+      <Execution id="c507e430-a532-4bc7-83bc-8bc5e8f7c3cf" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="GatesCannotBeCompletedOutOfOrder" />
+    </UnitTest>
+    <UnitTest name="ShiftedConnectionIsRejected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="5f5cb3ba-b43d-bd4f-8e84-376911457359">
+      <Execution id="4f4dc857-f798-4977-bcb8-5f0bcd8bab5e" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ModuleTemplateTests" name="ShiftedConnectionIsRejected" />
+    </UnitTest>
+    <UnitTest name="Starter_TransitionsToCranking_AndSpinsEngine" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="b900813f-14ce-141d-3bd7-03afd604b352">
+      <Execution id="2025a396-1f22-49c3-9a9e-f6d263778dbd" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.EngineModelTests" name="Starter_TransitionsToCranking_AndSpinsEngine" />
+    </UnitTest>
+    <UnitTest name="ExampleWorldMigratesWithoutLosingNodesLanesOrTopology" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="336d7a13-a8e7-559d-ee5a-1fd4f4068817">
+      <Execution id="ac736057-02de-4b09-aa8d-30a55d330594" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldMigrationTests" name="ExampleWorldMigratesWithoutLosingNodesLanesOrTopology" />
+    </UnitTest>
+    <UnitTest name="SwayingOnTheBoundaryDoesNotFlipTheLane" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="88e1e185-9834-df02-b4ab-9bd59d0a03ba">
+      <Execution id="55aa91b3-7052-4e81-8628-42da7515ee7b" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.LaneLocatorTests" name="SwayingOnTheBoundaryDoesNotFlipTheLane" />
+    </UnitTest>
+    <UnitTest name="SpeedLimit_DebounceWindow_RequiresSustainedExcess" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="fa62e0f3-c274-f921-4f69-a14b42857df8">
+      <Execution id="61c6c9ca-6c91-4c19-a187-c716ce3f25e1" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.RuleEvaluatorTests" name="SpeedLimit_DebounceWindow_RequiresSustainedExcess" />
+    </UnitTest>
+    <UnitTest name="PedestriansNeverWalkAcrossGreenThroughTraffic" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="39cfbcd8-9c5e-1831-18df-569067f405b9">
+      <Execution id="8e600880-ef9c-4975-8d5d-c853e47501c2" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.SignalControllerTests" name="PedestriansNeverWalkAcrossGreenThroughTraffic" />
+    </UnitTest>
+    <UnitTest name="ExerciseBoundary_SpatialHysteresis_SuppressesJitterCascade" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="10acdb05-d25e-416a-8089-240712dce5c1">
+      <Execution id="01594878-ec99-46d5-b052-1a8ce42aecfa" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.RuleEvaluatorTests" name="ExerciseBoundary_SpatialHysteresis_SuppressesJitterCascade" />
+    </UnitTest>
+    <UnitTest name="BrokenSuccessorIsRejectedBeforeMigration" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="5d593890-101c-2217-a2fc-7bc7eb4a4cef">
+      <Execution id="a11a87f0-e57f-440d-8023-f76d7b717942" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldMigrationTests" name="BrokenSuccessorIsRejectedBeforeMigration" />
+    </UnitTest>
+    <UnitTest name="ZeroLengthSegmentIsRejected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="17065e67-7fac-bde4-6fdf-8a2163b0c619">
+      <Execution id="b06022f3-aa76-474e-a782-8d4a5c389368" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldMigrationTests" name="ZeroLengthSegmentIsRejected" />
+    </UnitTest>
+    <UnitTest name="HoldMustBeContinuousAndAligned" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="620df316-06a1-2e07-2e56-99939f6549e6">
+      <Execution id="af3b7af0-5f9b-42a0-abad-709d2e7748cf" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="HoldMustBeContinuousAndAligned" />
+    </UnitTest>
+    <UnitTest name="TurnSignal_OmissionTriggersPenalty" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="ba172a31-59d3-7111-cf78-af5b5af26182">
+      <Execution id="b2c0e8f8-b112-48e1-bb68-844f42dc890c" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.RuleEvaluatorTests" name="TurnSignal_OmissionTriggersPenalty" />
+    </UnitTest>
+    <UnitTest name="AspectDependsOnTimeOnlyNotOnTickRate" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="fa91558b-bf86-4826-c320-b79e6ca5d2a5">
+      <Execution id="50cfaad2-6576-40fa-88b4-7340294052c5" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.SignalControllerTests" name="AspectDependsOnTimeOnlyNotOnTickRate" />
+    </UnitTest>
+    <UnitTest name="SpeedSignZoneIsRespected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="2b151caf-4dc3-02e0-7940-ccf8fcf170bf">
+      <Execution id="c4a105b9-8e03-4d5d-9244-6f226ffaadab" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.LaneFollowerTests" name="SpeedSignZoneIsRespected" />
+    </UnitTest>
+    <UnitTest name="HundredParticipantsThousandTicksFitTheBudget" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="ebc43ce4-3033-b270-3665-e02e69ced169">
+      <Execution id="527c5903-3f6f-46cf-ba6d-581fd3babbab" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.LaneLocatorTests" name="HundredParticipantsThousandTicksFitTheBudget" />
+    </UnitTest>
+    <UnitTest name="PlanWithCrossingThroughMovementsIsRejected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="00035f99-0002-c170-0b32-585db1aebbee">
+      <Execution id="7721b0e1-df97-4058-bccf-353b887a82f9" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.SignalControllerTests" name="PlanWithCrossingThroughMovementsIsRejected" />
+    </UnitTest>
+    <UnitTest name="NobodyEntersTheJunctionOnRed" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="949aaa53-7e75-44f9-4c8b-e576c9906a67">
+      <Execution id="5f6c24c3-c125-4c5b-a4d3-e76a16d0444a" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrafficDirectorTests" name="NobodyEntersTheJunctionOnRed" />
+    </UnitTest>
+    <UnitTest name="SpeedSignZoneEndsAtTheNextStopLine" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="e7634bc3-b8b9-eeb5-37d0-cb73de99a36b">
+      <Execution id="8f85c814-7d64-42a2-9ce9-5030ce7eb950" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.DistrictCompilerTests" name="SpeedSignZoneEndsAtTheNextStopLine" />
+    </UnitTest>
+    <UnitTest name="SpeedLimit_Hysteresis_ResetsAfterSlowingDown" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="01118ce3-79ee-78c9-31ab-68944e1139e4">
+      <Execution id="8b094a4d-351f-4e91-bd73-33ef8ce352ed" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.RuleEvaluatorTests" name="SpeedLimit_Hysteresis_ResetsAfterSlowingDown" />
+    </UnitTest>
+    <UnitTest name="DuplicateIdsAcrossKindsAreRejected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="44238a07-f7dc-a517-1b2a-b127ccd68321">
+      <Execution id="bf472e3c-3841-400b-bb2f-a20a4a78fc01" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldCitySemanticsTests" name="DuplicateIdsAcrossKindsAreRejected" />
+    </UnitTest>
+    <UnitTest name="MainApproachNeedsPrioritySign" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="49a42fd5-4260-5fd2-c95e-5b35b728e671">
+      <Execution id="4a238ff9-cc6f-4438-a3f6-e61aef1c0be4" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldCitySemanticsTests" name="MainApproachNeedsPrioritySign" />
+    </UnitTest>
+    <UnitTest name="StopLine_StoppingCorrectly_PassesWithoutViolation" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="ae34ba29-b282-934a-abae-d5df9f9b73be">
+      <Execution id="7daa244b-3f5a-4a33-ac0a-69aff663cf52" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.RuleEvaluatorTests" name="StopLine_StoppingCorrectly_PassesWithoutViolation" />
+    </UnitTest>
+    <UnitTest name="HillRollbackFailsAfterEntry" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="1df7434f-7595-9205-752b-6610e85c48f1">
+      <Execution id="3f263419-7c76-4ce1-be60-360c89731519" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="HillRollbackFailsAfterEntry" />
+    </UnitTest>
+    <UnitTest name="TurnSignal_ProperIndicatorUsage_PassesCleanly" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="f37c07fe-4561-7681-bd50-823c0c3ce054">
+      <Execution id="12dbb971-d107-4238-9a0e-652fe5fc794d" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.RuleEvaluatorTests" name="TurnSignal_ProperIndicatorUsage_PassesCleanly" />
+    </UnitTest>
+    <UnitTest name="IgnitionOnly_TransitionsToIgnitionPhase_ZeroRpm" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="341b8a0c-2910-cb12-d0b7-05eabe8de6b9">
+      <Execution id="a2d9546b-c403-4e56-8f18-7c55f33f17cd" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.EngineModelTests" name="IgnitionOnly_TransitionsToIgnitionPhase_ZeroRpm" />
+    </UnitTest>
+    <UnitTest name="FourWayStandoffIsResolved" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="7c5c9e9b-b876-1b2b-5c0b-a05cf688e62c">
+      <Execution id="9ad8ebbf-f4fd-40a0-be0b-39febd41dbd0" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ManeuverProtocolTests" name="FourWayStandoffIsResolved" />
+    </UnitTest>
+    <UnitTest name="SpeedLimit_EdgeTriggered_DoesNotSpamEvents" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="e525da14-6533-e5d0-ebe0-fb5967d95d94">
+      <Execution id="42c68c4e-e2c8-4318-9cdf-99388d8b7e07" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.RuleEvaluatorTests" name="SpeedLimit_EdgeTriggered_DoesNotSpamEvents" />
+    </UnitTest>
+    <UnitTest name="SameSeedSameHistoryAndVisitOrderDoesNotMatter" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="a4db64a7-b845-5fd0-ebfd-9368f1474225">
+      <Execution id="980653d5-db92-480a-ad2c-20f589486ecf" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrafficDirectorTests" name="SameSeedSameHistoryAndVisitOrderDoesNotMatter" />
+    </UnitTest>
+    <UnitTest name="LeftTurnYieldsToOncomingStraight" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="3d9fe4d6-23e9-b7a4-4c6f-db8ef41b0855">
+      <Execution id="b34b1c32-a07b-45c5-9c66-807bb4b2f684" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ManeuverProtocolTests" name="LeftTurnYieldsToOncomingStraight" />
+    </UnitTest>
+    <UnitTest name="LoopOfCurrentKitDoesNotCloseByFourMetres" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="7d52ee24-9d99-011f-2942-a0fd34671e54">
+      <Execution id="ec0effa3-1374-4236-afa1-5a3f673ffad4" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.DistrictCompilerTests" name="LoopOfCurrentKitDoesNotCloseByFourMetres" />
+    </UnitTest>
+    <UnitTest name="ExpiredPermitIsReleasedAndTheOtherCarGoes" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="a21e42f5-35c1-f23f-da32-2d0efebeba7b">
+      <Execution id="3f78fc05-86fd-4b0e-ba34-c7ac834e4604" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ManeuverProtocolTests" name="ExpiredPermitIsReleasedAndTheOtherCarGoes" />
+    </UnitTest>
+    <UnitTest name="InvalidNumbersAreRejected" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="1a1d71c0-c691-ebe5-cf23-c79dcf4bcabb">
+      <Execution id="2e8ce874-9456-4de9-9175-7f8a266a887a" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrainingCourseTests" name="InvalidNumbersAreRejected" />
+    </UnitTest>
+    <UnitTest name="StopLineMatchesStopBarOfTheMesh" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="79f3aa74-34f7-39ca-2e31-e191eb75c554">
+      <Execution id="cd2c10e8-4e5f-4c75-925b-fb14bb7293b8" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.ModuleTemplateTests" name="StopLineMatchesStopBarOfTheMesh" />
+    </UnitTest>
+    <UnitTest name="StopLine_PassingWithoutStopping_TriggersViolation" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="526a34e0-82d3-a22d-4d25-6cd7f916abba">
+      <Execution id="926406ee-853d-4adc-ab03-ba260bc2de02" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.RuleEvaluatorTests" name="StopLine_PassingWithoutStopping_TriggersViolation" />
+    </UnitTest>
+    <UnitTest name="CrossingMustActuallyCrossItsLanes" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="266a328e-add2-ca07-e875-bf3bd724983e">
+      <Execution id="d1a1c8b8-584c-42cd-b9b0-b682f2f6dab0" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.WorldCitySemanticsTests" name="CrossingMustActuallyCrossItsLanes" />
+    </UnitTest>
+    <UnitTest name="VehiclesNeverAppearInFrontOfThePlayer" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="ba856a05-2517-5f59-d26c-e7851605eb64">
+      <Execution id="c6ddd2ff-7047-4ec6-a5b6-d03603189742" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.TrafficDirectorTests" name="VehiclesNeverAppearInFrontOfThePlayer" />
+    </UnitTest>
+    <UnitTest name="CarRightOfLaneCentreIsOnItsLane" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="27a087a1-dfb6-6f57-d71f-230a0348393d">
+      <Execution id="f8d546d4-2f2a-47a4-9eb5-5d13a3b59763" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.LaneLocatorTests" name="CarRightOfLaneCentreIsOnItsLane" />
+    </UnitTest>
+    <UnitTest name="DifferentProfilesCannotBeJoined" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="abcf8ccc-79f5-6ccd-ec3e-181f11d5fcae">
+      <Execution id="88a2d961-b81d-4ecb-a979-0860f080b231" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.DistrictCompilerTests" name="DifferentProfilesCannotBeJoined" />
+    </UnitTest>
+    <UnitTest name="SignalPlanCreatesGroupsHeadsAndSignalizedApproaches" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="8c6cba87-3289-3f9a-478f-058bc8080dcf">
+      <Execution id="d7fdca04-4b8c-47f8-b2d5-fd35befca149" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.DistrictCompilerTests" name="SignalPlanCreatesGroupsHeadsAndSignalizedApproaches" />
+    </UnitTest>
+    <UnitTest name="ExcessiveLoad_CausesEngineToStall" storage="/home/user/drivingschoolsim/tools/purecheck/tests/bin/debug/net8.0/puretests.dll" id="e01eb593-ba82-ebb2-7e82-9db46f7ef430">
+      <Execution id="acc20077-3ea2-4bfd-aae1-023023fe5145" />
+      <TestMethod codeBase="/home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll" adapterTypeName="executor://nunit3testexecutor/" className="DrivingSchool.Tests.EngineModelTests" name="ExcessiveLoad_CausesEngineToStall" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="affa073a-c422-8108-235d-1d30513d0de3" executionId="c507e430-a532-4bc7-83bc-8bc5e8f7c3cf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fa62e0f3-c274-f921-4f69-a14b42857df8" executionId="61c6c9ca-6c91-4c19-a187-c716ce3f25e1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7c5c9e9b-b876-1b2b-5c0b-a05cf688e62c" executionId="9ad8ebbf-f4fd-40a0-be0b-39febd41dbd0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c2eb5da3-efee-13c0-f339-9436ec329505" executionId="b98b0985-bf3f-40d3-86a4-2da1743cdf75" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="def81e69-a9b3-9241-44a0-5112251837f2" executionId="410f5312-0c65-42f5-8c51-7e2c2e761e68" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f140304a-6e8f-120c-f007-8fa4b2a9ea7c" executionId="3e15d6d9-2269-49cd-acb8-e3c6ea37ec4e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="27a087a1-dfb6-6f57-d71f-230a0348393d" executionId="f8d546d4-2f2a-47a4-9eb5-5d13a3b59763" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c35b2277-1130-4ba5-cbb6-9898ceb96838" executionId="da14887d-6997-4ad1-932c-7aa761249dd7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="526a34e0-82d3-a22d-4d25-6cd7f916abba" executionId="926406ee-853d-4adc-ab03-ba260bc2de02" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2b3dafa7-2372-0dc2-dd79-c3acde4eabcd" executionId="29b938fa-f83f-4860-81ec-bf409a0532f0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ec70d5ed-87d5-7549-ecd4-6cac03cf0be6" executionId="cdf7ad39-8563-4b4a-ad34-9a056193c8cb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9ab230fe-3660-256c-298c-1fef3f6a6197" executionId="b38f3116-c1eb-4467-848c-41cc7b9ddfcc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="38612215-34dd-7130-3c72-839f5d2b0d12" executionId="ef6eb695-e79a-4777-a97d-5dc499446248" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d2179277-7e00-9072-d6dc-c615c27e6732" executionId="924a6ea9-c48b-444d-addf-662602e11380" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a4db64a7-b845-5fd0-ebfd-9368f1474225" executionId="980653d5-db92-480a-ad2c-20f589486ecf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4066516f-4c63-146e-67e1-2185181e4a49" executionId="fbe20d3e-61c8-4a63-acd4-a0d6af004533" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4784971f-dcc5-17a2-cd53-57e771cadbe5" executionId="5b11edcb-3487-48d9-adf2-23cb23e68e71" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="468ba884-8e90-363b-2b1b-996408a9a33c" executionId="b9dda811-f9db-4c7d-93d5-25484b36501a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="73f2939d-b37c-4778-ef9f-adb4fa7f5d72" executionId="220692d7-94b4-4b26-b887-be033ea67114" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5d593890-101c-2217-a2fc-7bc7eb4a4cef" executionId="a11a87f0-e57f-440d-8023-f76d7b717942" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ba172a31-59d3-7111-cf78-af5b5af26182" executionId="b2c0e8f8-b112-48e1-bb68-844f42dc890c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bbd943bf-9bb0-3472-ec9a-677d5a8d59a2" executionId="e15dda4e-bce1-4a65-8500-2c6132ae82de" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4de35a42-e998-b2a1-bfea-634ec5802c96" executionId="fe6c1f65-bafa-4a7e-8e21-d45a5cdb1875" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="00035f99-0002-c170-0b32-585db1aebbee" executionId="7721b0e1-df97-4058-bccf-353b887a82f9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b900813f-14ce-141d-3bd7-03afd604b352" executionId="2025a396-1f22-49c3-9a9e-f6d263778dbd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="79f3aa74-34f7-39ca-2e31-e191eb75c554" executionId="cd2c10e8-4e5f-4c75-925b-fb14bb7293b8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="844d60c9-3375-583c-7422-0eab6910624f" executionId="badba1a2-5fa2-4889-be26-f6ca6317864d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6163f6a2-9d25-6b66-ad76-2e72523d3849" executionId="2aecedd8-0e4c-4632-b274-977f560d1949" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a84b948f-ae45-c05b-899d-50fc581358b4" executionId="2052471b-2c29-4589-866f-a8a430eac021" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="44238a07-f7dc-a517-1b2a-b127ccd68321" executionId="bf472e3c-3841-400b-bb2f-a20a4a78fc01" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2a4a62ee-431c-9beb-f4ca-2bbcd54c8ffb" executionId="7d16f82a-3d9c-440e-b159-a28c0fe150cf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="65e42514-6126-10f4-637a-574a12746011" executionId="e94ae109-690d-4120-a48b-ee07235f420b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="17065e67-7fac-bde4-6fdf-8a2163b0c619" executionId="b06022f3-aa76-474e-a782-8d4a5c389368" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e6fe757f-9624-5174-c225-c55deae97345" executionId="65acbb68-99a3-47dc-9ff5-0e3803ef01bd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c3824a8d-0dbc-28fc-147a-2e98cae7a4cd" executionId="fc68b883-3c48-40ae-9e58-afc891346a22" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="06c28a1e-59be-0425-69cb-0e855db41910" executionId="eaa0a22f-6b6c-44c2-944e-95750959b8ed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="72f9fca0-006b-a650-2427-4bddb0596384" executionId="f82146ea-5ecb-4c7f-9500-89ce951b48ea" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e525da14-6533-e5d0-ebe0-fb5967d95d94" executionId="42c68c4e-e2c8-4318-9cdf-99388d8b7e07" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3ffd0ed4-8c25-9f96-a3f7-bf065f0ca39f" executionId="cc2b9848-abf7-4e62-9302-0425a6de1340" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fd21017e-45f8-4f3d-5211-86851785c08e" executionId="7002df05-6e7c-4ea9-afdc-f3b78d1746ed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ae34ba29-b282-934a-abae-d5df9f9b73be" executionId="7daa244b-3f5a-4a33-ac0a-69aff663cf52" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8c6cba87-3289-3f9a-478f-058bc8080dcf" executionId="d7fdca04-4b8c-47f8-b2d5-fd35befca149" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4262c86f-19da-b172-f8ac-2c6a72ad0d6f" executionId="827fb185-939b-4a13-a960-0362837c8e38" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0971ac10-89be-1e18-1400-e8110363e654" executionId="ddb45280-9423-4853-bd26-b90baaca3214" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e34abc2c-6762-a724-dbc0-814d5dfb377c" executionId="7c5b4c4b-55e2-428e-acef-66257a33fd40" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="73bbdf6c-5f2d-f33f-1570-7dcbe93ae94b" executionId="62db051a-4df8-4e1d-8a55-3f210242e19e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7c506d1d-398f-a97c-5dc5-0b0f7f3c15d1" executionId="d35a9416-f092-4cd2-a82f-1a013483d3a6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b74209f7-4d02-cee0-6641-6163c3e6a54c" executionId="ae963cff-b1bd-4b2b-b206-ea9d31999269" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="02ab8f66-dd8d-3218-9316-60977155b632" executionId="799eb54e-6407-41f2-bd51-6489f9d69962" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="49a42fd5-4260-5fd2-c95e-5b35b728e671" executionId="4a238ff9-cc6f-4438-a3f6-e61aef1c0be4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0fc7776b-c40e-b6ac-03b4-1cc9121a4dcc" executionId="dcfb440f-5223-47c4-a9a8-736cedfb556e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="341b8a0c-2910-cb12-d0b7-05eabe8de6b9" executionId="a2d9546b-c403-4e56-8f18-7c55f33f17cd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fa91558b-bf86-4826-c320-b79e6ca5d2a5" executionId="50cfaad2-6576-40fa-88b4-7340294052c5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d3360998-e660-db2e-4d5e-fff6e51b57ba" executionId="3c9e94e3-12f2-42bf-a348-0b8680a30c75" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7175470e-fb7e-488a-7f42-868843b95fb1" executionId="1d2f4d6e-d2ff-4d6a-b6d8-a5d5cb2a90eb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="336d7a13-a8e7-559d-ee5a-1fd4f4068817" executionId="ac736057-02de-4b09-aa8d-30a55d330594" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d1c01c95-4fc6-3582-6ac9-a0c3f54d5a3e" executionId="0d63e6f6-3492-4b74-b942-126e55c0cef7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ce081005-f682-ad2f-c9cb-0eda277a1f74" executionId="15879c99-1f19-4254-aa08-9ad71eb486f0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e01eb593-ba82-ebb2-7e82-9db46f7ef430" executionId="acc20077-3ea2-4bfd-aae1-023023fe5145" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="48e2dffc-b478-c598-a245-4c411765ff58" executionId="f79caca9-2492-4e37-ad95-c1d2cbd6558e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="88e1e185-9834-df02-b4ab-9bd59d0a03ba" executionId="55aa91b3-7052-4e81-8628-42da7515ee7b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="abcf8ccc-79f5-6ccd-ec3e-181f11d5fcae" executionId="88a2d961-b81d-4ecb-a979-0860f080b231" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f6eb8cad-9e12-a26f-4266-26cf3375954d" executionId="a7d80f52-738b-4593-93e5-7b1c65333bde" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1a1d71c0-c691-ebe5-cf23-c79dcf4bcabb" executionId="2e8ce874-9456-4de9-9175-7f8a266a887a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b78ab025-a7a4-24c4-fac2-58cef1968d0d" executionId="a2755472-b94d-46dc-88f6-530078b0a06d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e7634bc3-b8b9-eeb5-37d0-cb73de99a36b" executionId="8f85c814-7d64-42a2-9ce9-5030ce7eb950" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="620df316-06a1-2e07-2e56-99939f6549e6" executionId="af3b7af0-5f9b-42a0-abad-709d2e7748cf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="84dfee3f-ab66-71c8-373f-19e9728a2cf6" executionId="4b2ceb20-407b-478b-9504-f059681fe764" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3d9fe4d6-23e9-b7a4-4c6f-db8ef41b0855" executionId="b34b1c32-a07b-45c5-9c66-807bb4b2f684" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="88a34674-e929-4a0c-8af8-aeb8492d63fa" executionId="fe1e27bf-428c-4548-a826-4321c107753c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f6567e4a-fc09-7bc8-dc7a-956ec0de8450" executionId="073664ed-9889-4208-901e-e3f0c885d56d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2ff0587c-5caa-8542-4af4-cc3d29272dc4" executionId="77400fd7-430f-4197-a5a6-7269739aef64" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="89e9fe51-d7b6-d0d8-3248-f8504d0368b7" executionId="81579f2d-68c0-4816-825d-5d36d06e4ec1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="949aaa53-7e75-44f9-4c8b-e576c9906a67" executionId="5f6c24c3-c125-4c5b-a4d3-e76a16d0444a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="56e5f24d-e67f-64ed-6dd8-2795b68c4306" executionId="96b63c6d-4035-4490-9fa5-bd11c547a362" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="10acdb05-d25e-416a-8089-240712dce5c1" executionId="01594878-ec99-46d5-b052-1a8ce42aecfa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f37c07fe-4561-7681-bd50-823c0c3ce054" executionId="12dbb971-d107-4238-9a0e-652fe5fc794d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7cbc5524-f077-57a2-aeec-c97ba7e5c258" executionId="9aa07e72-32f9-4ce8-8a9a-5ff3ced7ac79" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7d33f6da-7d35-0a42-9741-111c4984c42b" executionId="231dcce2-21e0-4883-b685-faadb90118ba" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ba856a05-2517-5f59-d26c-e7851605eb64" executionId="c6ddd2ff-7047-4ec6-a5b6-d03603189742" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a790b701-49d9-f2a2-c63c-4d284845753a" executionId="9b0045d7-f76b-4a3a-9810-37a4b5294f44" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="692bad6a-bad9-e7bb-1dc5-29aa80afc611" executionId="a4837fac-d055-4ac5-839a-d7f23164a155" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4a17d7b6-7870-e43a-6d4e-df14204e2efb" executionId="e2d27446-5680-4cc6-bd50-5f04043355ba" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a21e42f5-35c1-f23f-da32-2d0efebeba7b" executionId="3f78fc05-86fd-4b0e-ba34-c7ac834e4604" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dad1f132-4484-62e2-c5a2-4a0c68c04a30" executionId="8bc1977a-edf5-46cf-b259-d6eb48ff879f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="672883a3-7fc5-a52b-ddda-c70bdfa42cb8" executionId="c7d43d98-aa6c-42f1-bf31-fcaa395be224" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="91398936-32fb-8882-2359-227aa0efe648" executionId="9e7cd2d2-b52d-4648-ae53-77c0a024606b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2b151caf-4dc3-02e0-7940-ccf8fcf170bf" executionId="c4a105b9-8e03-4d5d-9244-6f226ffaadab" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="91530478-2bfc-b8cc-b8fe-4b72f6417fcf" executionId="2e8ebb13-74f7-432a-8991-e9f9fcecdd83" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6a05377e-bb70-cf47-dd01-57cbac494474" executionId="615fb9d6-a8a1-49e0-b353-955e0fd968bf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="715161a6-e00d-e30b-c687-557fa51da314" executionId="6e142e86-5269-4e58-8cfe-c0ab86a842c6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5f5cb3ba-b43d-bd4f-8e84-376911457359" executionId="4f4dc857-f798-4977-bcb8-5f0bcd8bab5e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1df7434f-7595-9205-752b-6610e85c48f1" executionId="3f263419-7c76-4ce1-be60-360c89731519" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b3c00df0-dcf3-7106-b961-85ff1dcbffe6" executionId="bcf18583-5830-40c1-9fe1-d84a02f5453e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="39cfbcd8-9c5e-1831-18df-569067f405b9" executionId="8e600880-ef9c-4975-8d5d-c853e47501c2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="74979460-159e-b0bc-2c97-4d76a6276e2b" executionId="be61d07b-da03-4425-9469-d7728db43a62" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="266a328e-add2-ca07-e875-bf3bd724983e" executionId="d1a1c8b8-584c-42cd-b9b0-b682f2f6dab0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cb1173c7-de7b-e249-46b7-07f57f26a0e3" executionId="db1a2afb-63b0-49d0-8ca7-412f92996b44" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c919fb72-c376-faf9-ec06-88183aebb002" executionId="1e369344-92c4-4f8d-b0cd-98d945b23b00" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="10d963ab-af54-56c7-c38b-986bee192f41" executionId="aa6d9b97-5df7-4606-9f4c-f5edc34dd59e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ebc43ce4-3033-b270-3665-e02e69ced169" executionId="527c5903-3f6f-46cf-ba6d-581fd3babbab" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7d52ee24-9d99-011f-2942-a0fd34671e54" executionId="ec0effa3-1374-4236-afa1-5a3f673ffad4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="68f7ba4f-c5c4-f465-42a5-6b19a8d6a932" executionId="a0f324e7-3734-4587-9d97-b52ffdff2aef" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e07f0a6b-cc81-2252-9f28-cca37e686ab1" executionId="b51b8136-fe72-4e03-9ed0-e5bd39351353" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4d113c19-eb30-0455-5fae-2dcbcc629303" executionId="bb9f0b2d-32e4-41ab-9402-438306a490f2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="234b4af6-bfb0-7017-cbcc-e115859d5223" executionId="29962231-aaf4-4f5c-8686-3066ce4a018e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1ebcac3e-7e25-134d-c109-595dd1b2f170" executionId="85a5bfb3-91d8-4459-b099-7e4788bd8ad7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d60b56fb-4c86-fd8a-d2cf-537bfb11df5a" executionId="acea9ced-bf38-42f2-9623-62e0b9f40940" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2b5abf3e-db46-2ece-83d5-74bdc4c0b71d" executionId="eb05b290-ba18-4763-a96b-57d199f8727a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="296e9d00-2101-e817-0f1d-fc78b2441d14" executionId="28facf14-fa9a-4e2b-9a07-65d5c3c6bbe7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="01118ce3-79ee-78c9-31ab-68944e1139e4" executionId="8b094a4d-351f-4e91-bd73-33ef8ce352ed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="111" executed="111" passed="111" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>NUnit Adapter 4.6.0.0: Test execution started
+Running all tests in /home/user/DrivingSchoolSim/tools/purecheck/Tests/bin/Debug/net8.0/PureTests.dll
+   NUnit3TestExecutor discovered 111 of 111 NUnit test cases using Current Discovery mode, Non-Explicit run
+100 x 1000 Locate: 108 ms
+
+vehicles seen in 10 min: 214
+
+NUnit Adapter 4.6.0.0: Test execution complete
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>
