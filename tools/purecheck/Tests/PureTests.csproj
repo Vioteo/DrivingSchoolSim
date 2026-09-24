@@ -20,5 +20,6 @@
     <Compile Include="../../../Assets/DrivingSchool/Code/Tests/RuleEvaluatorTests.cs" />
     <Compile Include="../../../Assets/DrivingSchool/Code/Tests/TrainingCourseTests.cs" />
     <Compile Include="../../../Assets/DrivingSchool/Code/Tests/City/**/*.cs" />
+    <Compile Include="../../../Assets/DrivingSchool/Code/Tests/Vehicle/**/*.cs" />
   </ItemGroup>
 </Project>

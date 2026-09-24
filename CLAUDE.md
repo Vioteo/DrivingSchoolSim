@@ -52,14 +52,16 @@
 Статус пишется только так: **PASS / FAIL / NOT_RUN / BLOCKED** + команда + exit code + путь к логу. Компиляция ≠ тесты ≠ работает в Play Mode.
 
 ```powershell
-$u='E:\unityroot\6000.3.10f1\Editor\Unity.exe'; $p=(Get-Location).Path
-# EditMode тесты (Editor проекта должен быть закрыт)
-& $u -batchmode -nographics -projectPath $p -runTests -testPlatform EditMode `
-  -testResults "$p/artifacts/reports/editmode.xml" -logFile "$p/artifacts/reports/editmode.log"
+# Компиляция + все EditMode-тесты в Unity (Editor проекта закрыт). Exit: 0 PASS, 1 FAIL, 2 BLOCKED
+powershell -ExecutionPolicy Bypass -File tools\check.ps1
+# Чистые модули без Unity (.NET 8 SDK): Contracts/Simulation/Rules/Learning + Tests/City, Tests/Vehicle и др.
+dotnet test tools/purecheck/Tests/PureTests.csproj --logger "trx;LogFileName=purecheck.trx" --results-directory artifacts/reports
 ```
-В облачной сессии (Linux, без Unity) Unity-проверки не запускаются — статус **NOT_RUN**, а не PASS; проверка переносится на машину с Unity.
-Чистые модули (Contracts/Simulation/Rules/Learning + `Tests/Vehicle`) можно проверить без Unity (.NET 8): `dotnet test tests/dotnet/DS.PureTests.csproj --logger "trx;LogFileName=$PWD/artifacts/reports/dotnet-pure-tests.trx"`. Это не заменяет EditMode в Unity.
-Подробные команды C00–C05 — `docs/acceptance.md`. Тестовый полигон машины и самопроверка F8 — `docs/vehicle-test-range.md`. Новый тест сначала должен падать на неверном входе.
+В облачной сессии (Linux, без Unity) Unity-проверки не запускаются — статус **NOT_RUN**, а не PASS; проверка переносится на машину с Unity. purecheck не заменяет EditMode в Unity.
+Подробные команды C00–C05 — `docs/acceptance.md`. Тестовый полигон машины и самопроверка F8 — `docs/vehicle-test-range.md`. Все генераторы и Unity-проверки разом — `tools\verify-unity.ps1` (итог в `artifacts/reports/verify-*.md`). Новый тест сначала должен падать на неверном входе.
+- Тест проверяет **настоящий C#-код** через NUnit. Python-копия логики (`tests/sim_contracts.py`) и поиск строк в .cs — не тесты игры, PASS по ним не засчитывается.
+- Не удалять и не ослаблять существующий тест, чтобы он «прошёл». Если тест неверен — сказать об этом и объяснить.
+- Номер новой карточки/ADR — следующий свободный **в `master` на момент мержа**; параллельные ветки не должны занимать одинаковые номера (уже было: четыре разные T27).
 
 ## Как работаем с задачами
 - Одна задача = одна карточка (`docs/tasks/Txx.md` или новая) = один небольшой diff. Перед изменениями прочитать карточку, `docs/architecture.md` и затрагиваемые файлы целиком.
