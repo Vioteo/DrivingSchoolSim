@@ -14,8 +14,9 @@ write('Packages/manifest.json',{'dependencies':{
  'com.unity.modules.vehicles':'1.0.0','com.unity.modules.jsonserialize':'1.0.0',
  'com.unity.modules.imgui':'1.0.0','com.unity.modules.ui':'1.0.0','com.unity.modules.audio':'1.0.0',
  'com.unity.modules.animation':'1.0.0','com.unity.modules.imageconversion':'1.0.0',
- # Инструмент разработчика: мост редактора к Claude (docs/unity-mcp.md). Версия закреплена тегом.
- 'com.coplaydev.unity-mcp':'https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#v10.2.0'}})
+ 'com.unity.modules.particlesystem':'1.0.0',  # WeatherController: дождь и снег
+ # Инструмент разработчика: мост редактора для Unity CLI и MCP (docs/unity-mcp.md)
+ 'com.unity.pipeline':'0.7.0-exp.1'}})
 # .gitignore is maintained in git (Unity template); do not overwrite it here.
 modules={'Contracts':[], 'Simulation':['Contracts'], 'World':['Contracts'], 'Input':['Contracts'],
  'Rules':['Contracts'], 'Learning':['Contracts'], 'Presentation':['Contracts','Presentation.Physics','Simulation','World','Input','Rules','Learning'],
