@@ -7,38 +7,38 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ped_Accent.001
-    second: {fileID: 2100000, guid: 602bd82c4b34aec4d988b50d8deed607, type: 2}
+      name: Ped_Eyebrows
+    second: {fileID: 2100000, guid: 9311f3ddeb1cc944ba6bd8bb6c9a86f8, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ped_Cream.001
-    second: {fileID: 2100000, guid: ef36287225488c44dadb69025b2e6efc, type: 2}
+      name: Ped_Eyelashes
+    second: {fileID: 2100000, guid: 51e739f58afea634292c019a15be2c6a, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ped_Dark.001
-    second: {fileID: 2100000, guid: 9a8b6f458492aeb4c9858a7e9a838ba2, type: 2}
+      name: Ped_Eyes
+    second: {fileID: 2100000, guid: 51f24755236b66746aecffd05261f901, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ped_Hair.001
-    second: {fileID: 2100000, guid: 55cff308c7947a14cbc33c719156ad8b, type: 2}
+      name: Ped_Hair
+    second: {fileID: 2100000, guid: 7464151aa0a4e3948b82831e1b69ef8d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ped_Outer.001
-    second: {fileID: 2100000, guid: a854fdf2e5e97fb49bbf605dd7cb62ef, type: 2}
+      name: Ped_Shoes
+    second: {fileID: 2100000, guid: 8c011bfac2a2a0445adc69fdec4e951d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ped_Skin.001
-    second: {fileID: 2100000, guid: 3eaa58b7bb9f2ff4e892709dceacefc3, type: 2}
+      name: Ped_Skin
+    second: {fileID: 2100000, guid: 692b6840c598dce4998485e52b0c4439, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ped_Trouser.001
-    second: {fileID: 2100000, guid: 0710cee6cd215e14f8823c21f8f6b788, type: 2}
+      name: Ped_Suit
+    second: {fileID: 2100000, guid: 4425187329c33764c992efc6cdc3faa9, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -100,6 +100,64 @@ ModelImporter:
       internalID: 2667949614841947897
       firstFrame: 0
       lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Run
+      takeName: Run
+      internalID: 5522812681064789136
+      firstFrame: 0
+      lastFrame: 22
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: LookAround
+      takeName: LookAround
+      internalID: -6747532249613684151
+      firstFrame: 0
+      lastFrame: 90
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -7,38 +7,48 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ped_Accent.002
-    second: {fileID: 2100000, guid: 1d749f66b355cf743a4e916d07e07205, type: 2}
+      name: Ped_Eyebrows
+    second: {fileID: 2100000, guid: 7c91dd565b73f3348865b23cbd25fff4, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ped_Cream.002
-    second: {fileID: 2100000, guid: 64fda71898723804896578ceca441cb2, type: 2}
+      name: Ped_Eyelashes
+    second: {fileID: 2100000, guid: 2ff49033333c4f34ab4ae823afe3e96e, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ped_Dark.002
-    second: {fileID: 2100000, guid: 0bd279de00c9bc2439429e05c199454f, type: 2}
+      name: Ped_Eyes
+    second: {fileID: 2100000, guid: c9d3dbe1df46f1a4db093f1f418394b3, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ped_Hair.002
-    second: {fileID: 2100000, guid: e84201121af76084e93213c8c9b30071, type: 2}
+      name: Ped_Hair
+    second: {fileID: 2100000, guid: 07010544836938f458d3c5ecf3c61f0e, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ped_Outer.002
-    second: {fileID: 2100000, guid: b27310a17bb6afd4b81a539f93026744, type: 2}
+      name: Ped_Pack
+    second: {fileID: 2100000, guid: e7527f3a8d768144f92b0618a8ab08f9, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ped_Skin.002
-    second: {fileID: 2100000, guid: 055552a0476a428469d18cebaba0406c, type: 2}
+      name: Ped_PackTrim
+    second: {fileID: 2100000, guid: fe61d004e14fad045bcefe7b14c6a8a2, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ped_Trouser.002
-    second: {fileID: 2100000, guid: 60159d810e3474440a58499873ca82a4, type: 2}
+      name: Ped_Shoes
+    second: {fileID: 2100000, guid: fb7cfc8c6070e314ab7c281904de523b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ped_Skin
+    second: {fileID: 2100000, guid: 547f30b7f63c39444a9b57e088a28369, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ped_Suit
+    second: {fileID: 2100000, guid: 7c90be66d45741a419211e8a6e38b3d6, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -100,6 +110,64 @@ ModelImporter:
       internalID: 2667949614841947897
       firstFrame: 0
       lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Run
+      takeName: Run
+      internalID: 5522812681064789136
+      firstFrame: 0
+      lastFrame: 22
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: LookAround
+      takeName: LookAround
+      internalID: -6747532249613684151
+      firstFrame: 0
+      lastFrame: 90
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -48,21 +48,61 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7435895740231385623, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7435895740231385623, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -6051916365854594113, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
       propertyPath: m_AABB.m_Extent.x
-      value: 0.78611887
+      value: 1.0233991
       objectReference: {fileID: 0}
     - target: {fileID: -6051916365854594113, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
       propertyPath: m_AABB.m_Extent.y
-      value: 1.3231252
+      value: 1.5742137
       objectReference: {fileID: 0}
     - target: {fileID: -6051916365854594113, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
       propertyPath: m_AABB.m_Extent.z
-      value: 0.562334
+      value: 0.89013875
+      objectReference: {fileID: 0}
+    - target: {fileID: -3709552778454261238, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: -3709552778454261238, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.0000007
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
       propertyPath: m_Name
       value: DS_Pedestrian_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 1276869816569631619, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725110676261045871, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2269551151341027709, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2269551151341027709, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2269551151341027709, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3654140343439988547, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
       propertyPath: m_Controller
@@ -74,6 +114,9 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1152643020514967564}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7591455559947946396}
   m_SourcePrefab: {fileID: 100100000, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
 --- !u!1 &8897954596763965265 stripped
@@ -81,6 +124,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e56be01c9f3f2d458dfd4571ada45f0, type: 3}
   m_PrefabInstance: {fileID: 8627361272354482688}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1152643020514967564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897954596763965265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3a8b7f17fb24a47ad13dc9cea512066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DS.Presentation::DrivingSchool.Presentation.PedestrianAnimator
+  walkSpeed: 1.5089045
+  runSpeed: 4.0282245
+  damping: 0.12
+  hasSignals: 0
 --- !u!136 &7591455559947946396
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -101,6 +160,6 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.24
-  m_Height: 1.8462502
+  m_Height: 1.9484282
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9231251, z: 0}
+  m_Center: {x: 0, y: 0.9742141, z: 0}

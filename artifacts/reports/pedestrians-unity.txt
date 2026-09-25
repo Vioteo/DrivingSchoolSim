@@ -1,0 +1,40 @@
+DS_Pedestrian_A: bounds=(0.847, 1.948, 0.580); renderers=1
+  natural speed: Walk 1,51 m/s, Run 4,03 m/s
+  Idle 2,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+  Walk 1,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+  Run 0,73s floor range, 31 samples: -0,0034 .. 0,0340 m
+  LookAround 3,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+DS_Pedestrian_B: bounds=(0.642, 1.717, 0.599); renderers=1
+  natural speed: Walk 1,25 m/s, Run 3,35 m/s
+  Idle 2,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+  Walk 1,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+  Run 0,73s floor range, 31 samples: -0,0035 .. 0,0343 m
+  LookAround 3,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+DS_Pedestrian_C: bounds=(0.728, 1.800, 0.636); renderers=1
+  natural speed: Walk 1,36 m/s, Run 3,63 m/s
+  Idle 2,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+  Walk 1,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+  Run 0,73s floor range, 31 samples: -0,0031 .. 0,0338 m
+  LookAround 3,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+DS_Pedestrian_Child_A: bounds=(0.528, 1.375, 0.458); renderers=1
+  natural speed: Walk 1,28 m/s, Run 3,46 m/s
+  Idle 2,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+  Walk 0,80s floor range, 31 samples: -0,0009 .. 0,0005 m
+  Run 0,60s floor range, 31 samples: -0,0033 .. 0,0329 m
+  LookAround 3,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+DS_Pedestrian_Child_B: bounds=(0.484, 1.341, 0.430); renderers=1
+  natural speed: Walk 1,28 m/s, Run 3,44 m/s
+  Idle 2,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+  Walk 0,80s floor range, 31 samples: -0,0013 .. 0,0009 m
+  Run 0,60s floor range, 31 samples: -0,0032 .. 0,0335 m
+  LookAround 3,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+DS_Pedestrian_Police: bounds=(0.849, 1.850, 0.551); renderers=1
+  natural speed: Walk 1,40 m/s
+  Idle 2,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+  Walk 1,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+  LookAround 3,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+  Signal_ArmsSide 2,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+  Signal_RightArmForward 2,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+  Signal_ArmUp 2,00s floor range, 31 samples: 0,0000 .. 0,0000 m
+PASS: Unity import, URP materials, rig, clips, natural clip speeds and sampled ground contact of every clip.
+No navigation or traffic AI verified.
