@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DrivingSchool.Contracts;
 using DrivingSchool.Learning;
 using DrivingSchool.Simulation;
 using DrivingSchool.Presentation.Physics;
@@ -35,6 +36,8 @@ namespace DrivingSchool.Presentation
         {
             var k=Keyboard.current;
             if(k!=null && k.cKey.wasPressedThisFrame)cameraMode=(cameraMode+1)%3;
+            if(k!=null && k.f7Key.wasPressedThisFrame && (session==null || session.Phase!=CoursePhase.Running))
+                vehicle.Adapter.SetTransmission(vehicle.Adapter.transmission==TransmissionType.Manual?TransmissionType.Automatic:TransmissionType.Manual);
             if(k!=null && k.escapeKey.wasPressedThisFrame && session!=null) {session.Cancel();SaveResult();}
             vehicle.inputEnabled=session!=null && session.Phase==CoursePhase.Running;
             var gate=session?.CurrentGate;
@@ -51,7 +54,8 @@ namespace DrivingSchool.Presentation
         }
         void FixedUpdate()
         {
-            if(session==null || session.Phase!=CoursePhase.Running || (!Application.isFocused && !Application.isBatchMode))return;
+            // Пауза при потере фокуса (безопасность руля/FFB); в пакетном режиме и с runInBackground (автотесты) не нужна.
+            if(session==null || session.Phase!=CoursePhase.Running || (!Application.isFocused && !Application.isBatchMode && !Application.runInBackground))return;
             if(vehicle.CollisionCount>contacts) { session.Fault("Касание конуса или ограждения",2);contacts=vehicle.CollisionCount; }
             var p=vehicle.transform.position;
             var state = vehicle.Adapter.CurrentState;
@@ -128,7 +132,11 @@ namespace DrivingSchool.Presentation
             GUILayout.Space(10);
             var state = vehicle.Adapter.CurrentState;
             GUILayout.Label(Mathf.Abs(state.signedSpeedMps*3.6f).ToString("F0")+" км/ч  ·  Передача "+(state.gear<0?"R":state.gear.ToString()),title);
-            GUILayout.Label("W / ↑ — газ    S / ↓ — тормоз\nA D / ← → — руль    Пробел — ручник\nQ — D/R на остановке    E — 1/2\nC — камера / вид всей площадки",bodyStyle);
+            bool at=vehicle.Adapter.transmission==TransmissionType.Automatic;
+            GUILayout.Label("КПП: "+(at?"автомат":"механика")+" (F7 — сменить до старта)\n"+
+                "I — зажигание    Enter — стартер\nW / ↑ — газ    S / ↓ — тормоз    A D — руль\n"+
+                (at?"1 — D    R — задний    N — нейтраль    P — паркинг\n":"Shift — сцепление    1–6 / R / N — передачи\n")+
+                "Пробел — ручник    Q / E — поворотники\nC — камера / вид всей площадки",bodyStyle);
             GUILayout.Label("Тестовое вождение: полная физика (VehicleSolver).",bodyStyle);
             GUILayout.EndArea();GUI.matrix=Matrix4x4.identity;
         }

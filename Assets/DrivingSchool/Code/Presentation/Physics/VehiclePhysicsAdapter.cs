@@ -108,12 +108,14 @@ namespace DrivingSchool.Presentation.Physics
                     box.size = new Vector3(trackM + 0.1f, 1.0f, wheelbaseM + 1.6f);
                 }
                 Body.mass = massKg;
-                Body.centerOfMass = centreOfMass;
                 Body.interpolation = RigidbodyInterpolation.Interpolate;
                 Body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
                 // Pitch/yaw ≈ 2000–2200 kg·m², roll ≈ 550 kg·m² for a 1350 kg sedan; PhysX derives it from the hull box otherwise.
                 Body.inertiaTensor = new Vector3(massKg * 1.5f, massKg * 1.6f, massKg * 0.4f);
                 Body.inertiaTensorRotation = Quaternion.identity;
+                // Centre of mass goes last: while the inertia tensor is still automatic, Unity 6 recomputes the mass
+                // properties and a freshly created body silently drops an earlier centerOfMass (reads back as zero).
+                Body.centerOfMass = centreOfMass;
             }
             ConfigureSuspension();
         }

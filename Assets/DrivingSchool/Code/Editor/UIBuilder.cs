@@ -303,12 +303,14 @@ namespace DrivingSchool.Editor
         private const string ThemeRoot = "Assets/DrivingSchool/Data/UI/Themes";
         public const string UIFontPath = FontRoot + "/GolosText/GolosText-Regular SDF.asset";
 
-        /// <summary>ASCII, кириллица 0x0400–0x045F, типографика и стрелки. ◀ ▶ ✓ в шрифтах нет — такие значки рисуются спрайтами.</summary>
+        /// <summary>ASCII, кириллица 0x0400–0x045F, типографика и стрелки. ◀ ▶ ✓ в шрифтах нет — такие значки рисуются спрайтами.
+        /// Исключены Ѐ Ѝ ѐ ѝ (U+0400, U+040D, U+0450, U+045D): в Golos Text их нет, в русском они не используются.</summary>
         public static string UICharset()
         {
             var sb = new System.Text.StringBuilder();
             for (int c = 0x20; c < 0x7F; c++) sb.Append((char)c);
-            for (int c = 0x400; c < 0x460; c++) sb.Append((char)c);
+            for (int c = 0x400; c < 0x460; c++)
+                if (c != 0x400 && c != 0x40D && c != 0x450 && c != 0x45D) sb.Append((char)c);
             sb.Append("\u00A0«»—–…°×№·₽↑↓←→");
             return sb.ToString();
         }
