@@ -226,7 +226,7 @@ namespace DrivingSchool.Editor
             mesh.RecalculateNormals();
             if (mesh.normals[0].y < 0f) { tri.Reverse(); mesh.SetTriangles(tri, 0); mesh.RecalculateNormals(); }
             mesh.RecalculateBounds();
-            string path = MatDir + "/" + name.Replace(' ', '_') + "_" + radius.ToString("F2") + ".asset";
+            string path = MatDir + "/" + name.Replace(' ', '_') + "_" + radius.ToString("F2", System.Globalization.CultureInfo.InvariantCulture) + ".asset"; // имя файла не должно зависеть от языка Windows
             AssetDatabase.CreateAsset(mesh, path);
             go.AddComponent<MeshFilter>().sharedMesh = mesh; go.AddComponent<MeshRenderer>();
             if (collider) go.AddComponent<MeshCollider>().sharedMesh = mesh;

@@ -68,12 +68,14 @@ namespace DrivingSchool.Presentation
         {
             var list = VehicleRigUtil.FindPrefix(model, "Wiper_Pivot");
             wipers = new VehicleRigUtil.Pose[list.Count]; wiperSign = new float[list.Count]; wiperAxis = new Vector3[list.Count];
+            Vector3 normal = WindshieldNormal();
             for (int i = 0; i < list.Count; i++)
             {
                 var t = list[i];
                 wipers[i] = new VehicleRigUtil.Pose(car, t);
-                // Rotation axis ≈ windshield normal: the pivot axis closest to car "up" tilted back.
-                wiperAxis[i] = VehicleRigUtil.AlignedAxisInCar(car, t, (Vector3.up - 0.6f * Vector3.forward).normalized);
+                // Blades sweep in the windshield plane, so they rotate about the glass normal. The pivot's own local
+                // axes are aligned with the car (local Y = car up), which swung the blades flat over the bonnet.
+                wiperAxis[i] = normal;
                 // Pick the sweep direction in which the blade tip rises.
                 Vector3 tip = FarthestPoint(t);
                 Vector3 pivot = car.InverseTransformPoint(t.position);
@@ -81,6 +83,21 @@ namespace DrivingSchool.Presentation
                 float rise = (Quaternion.AngleAxis(20f, wiperAxis[i]) * arm).y - arm.y;
                 wiperSign[i] = rise >= 0f ? 1f : -1f;
             }
+        }
+
+        /// <summary>Car-space outward normal of Glass_Windshield (up and forward for a raked screen).</summary>
+        Vector3 WindshieldNormal()
+        {
+            var glass = VehicleRigUtil.Find(model, "Glass_Windshield");
+            var r = glass != null ? glass.GetComponentInChildren<Renderer>(true) : null;
+            if (r != null)
+            {
+                var b = VehicleRigUtil.CarSpaceBounds(car, r);
+                // The raked screen runs from front-bottom (max z, min y) to rear-top (min z, max y).
+                var up = new Vector3(0f, b.size.y, -b.size.z);
+                if (up.sqrMagnitude > 1e-6f) return Vector3.Cross(Vector3.right, up.normalized).normalized;
+            }
+            return (Vector3.up + 0.6f * Vector3.forward).normalized;
         }
 
         Vector3 FarthestPoint(Transform pivot)

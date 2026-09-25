@@ -31,6 +31,30 @@ namespace DrivingSchool.Presentation
         public WindshieldWetnessModel Water => water;
         public int BladeCount => blades.Count;
 
+        /// <summary>Mean water level over the cells the blades can reach in a full sweep (the wiped zone only).</summary>
+        public float SweptCoverage() { SweptZone(out float coverage, out _); return coverage; }
+
+        /// <summary>Share of the visible glass (mask) that a full sweep of all blades passes over.</summary>
+        public float SweptShare() { SweptZone(out _, out float share); return share; }
+
+        void SweptZone(out float coverage, out float share)
+        {
+            coverage = share = 0f;
+            if (water == null || blades.Count == 0) return;
+            var probe = new WindshieldWetnessModel(water.Width, water.Height, water.WidthM, water.HeightM);
+            for (int i = 0; i < probe.Cells.Length; i++) probe.Cells[i] = 1f;
+            foreach (var b in blades) probe.Wipe(b, 0f, 1f);
+            float sum = 0f; int swept = 0, glass = 0, sweptGlass = 0;
+            for (int i = 0; i < probe.Cells.Length; i++)
+            {
+                bool s = probe.Cells[i] == 0f;
+                if (s) { sum += water.Cells[i]; swept++; }
+                if (mask[i]) { glass++; if (s) sweptGlass++; }
+            }
+            coverage = swept > 0 ? sum / swept : 0f;
+            share = glass > 0 ? (float)sweptGlass / glass : 0f;
+        }
+
         void Start()
         {
             if (adapter == null) adapter = GetComponentInParent<VehiclePhysicsAdapter>();

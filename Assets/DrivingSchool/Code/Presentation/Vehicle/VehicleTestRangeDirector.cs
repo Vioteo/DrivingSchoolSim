@@ -176,11 +176,16 @@ namespace DrivingSchool.Presentation
             {
                 weather.SetPreset(WeatherPreset.HeavyRain, true); windshield.Water.Clear();
                 c = baseCmd; c.handbrake = true; yield return Hold(src, c, 4f);
-                float wet = windshield.Water.Coverage;
+                float wet = windshield.Water.Coverage, wetSwept = windshield.SweptCoverage();
                 c.wipers = WiperMode.High; yield return Hold(src, c, 0.95f);
-                float wiped = windshield.Water.Coverage;
+                float wiped = windshield.Water.Coverage, wipedSwept = windshield.SweptCoverage();
                 Check("Дождь намокает на стекле", wet > 0.05f, $"покрытие {wet:P0}");
-                Check("Дворники убирают воду", wiped < wet * 0.75f && windshield.BladeCount > 0, $"{wet:P0} → {wiped:P0}, щёток: {windshield.BladeCount}");
+                // Считаем только зону, которую щётки проходят: остальное стекло в ливень остаётся мокрым.
+                float share = windshield.SweptShare();
+                Check("Дворники убирают воду", wipedSwept < wetSwept * 0.5f && windshield.BladeCount > 0,
+                    $"зона щёток {wetSwept:P0} → {wipedSwept:P0}, всё стекло {wet:P0} → {wiped:P0}, щёток: {windshield.BladeCount}");
+                // Щётки должны ходить по стеклу: при неверной оси вращения они «чистили» полосу у капота (6%).
+                Check("Щётки проходят по стеклу", share >= 0.25f, $"зона щёток {share:P0} стекла");
                 Check("Мокрая дорога снижает сцепление", a.surface == SurfaceType.WetAsphalt);
                 c.wipers = WiperMode.Off; yield return Hold(src, c, 1.5f);
                 Check("Дворники паркуются", a.CurrentState.wiperAngle01 == 0f);
