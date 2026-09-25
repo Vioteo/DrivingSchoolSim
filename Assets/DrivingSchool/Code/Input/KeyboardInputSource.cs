@@ -17,6 +17,10 @@ namespace DrivingSchool.Input
         public float steeringRate = 2.5f;
         public float returnRate = 3.5f;
         public float pedalRate = 5.0f;
+        [Tooltip("Keyboard throttle is pressed gradually (a key is not a pedal): 0→1 in ~0.7 s, released quickly.")]
+        public float throttleRiseRate = 1.4f, brakeRiseRate = 2.5f;
+        [Tooltip("Forward speed of the car, set by the vehicle controller: steering gets slower and shorter at speed.")]
+        public float vehicleSpeedMps;
         public bool automatic;              // AT: gear keys drive the selector
         public Keyboard KeyboardDevice { get; set; }
 
@@ -74,10 +78,16 @@ namespace DrivingSchool.Input
             float targetSteer = 0f;
             if (kb.aKey.isPressed || kb.leftArrowKey.isPressed) targetSteer -= 1f;
             if (kb.dKey.isPressed || kb.rightArrowKey.isPressed) targetSteer += 1f;
-            steering = Mathf.MoveTowards(steering, targetSteer, (Math.Abs(targetSteer) > 0.01f ? steeringRate : returnRate) * dt);
+            // A key is on/off: at speed the virtual steering wheel turns slower and not to full lock, otherwise a tap
+            // throws a 1.3-tonne car sideways and it feels weightless.
+            float v = Math.Abs(vehicleSpeedMps);
+            targetSteer *= Mathf.Lerp(1f, 0.3f, Mathf.Clamp01((v - 5f) / 25f));
+            float speedFactor = 1f / (1f + v / 15f);
+            steering = Mathf.MoveTowards(steering, targetSteer, (Math.Abs(targetSteer) > 0.01f ? steeringRate * speedFactor : returnRate) * dt);
 
-            throttle = Mathf.MoveTowards(throttle, (kb.wKey.isPressed || kb.upArrowKey.isPressed) ? 1f : 0f, pedalRate * dt);
-            brake = Mathf.MoveTowards(brake, (kb.sKey.isPressed || kb.downArrowKey.isPressed) ? 1f : 0f, pedalRate * dt);
+            bool gas = kb.wKey.isPressed || kb.upArrowKey.isPressed, brk = kb.sKey.isPressed || kb.downArrowKey.isPressed;
+            throttle = Mathf.MoveTowards(throttle, gas ? 1f : 0f, (gas ? throttleRiseRate : pedalRate) * dt);
+            brake = Mathf.MoveTowards(brake, brk ? 1f : 0f, (brk ? brakeRiseRate : pedalRate) * dt);
             // The clutch is released slower than pressed, like a foot finding the bite point.
             bool clutchDown = kb.leftShiftKey.isPressed || kb.leftCtrlKey.isPressed;
             clutch = Mathf.MoveTowards(clutch, clutchDown ? 1f : 0f, (clutchDown ? pedalRate : 1.6f) * dt);

@@ -134,7 +134,7 @@ namespace DrivingSchool.Simulation
         public float NetTorqueAt(float throttle)
         {
             if (Phase != EnginePhase.Running) return 0f;
-            return GrossTorque(throttle) - InternalFriction();
+            return GrossTorque(throttle) - InternalFriction(throttle);
         }
 
         /// <summary>Keeps a running engine on the speed imposed by a locked clutch; stalls below stallRpm.</summary>
@@ -146,15 +146,21 @@ namespace DrivingSchool.Simulation
             if (Rpm < stallRpm) { Phase = EnginePhase.Stalled; Rpm = 0f; OutputTorqueNm = 0f; }
         }
 
-        float InternalFriction() => 12f + (Rpm / 1000f) * 4f;
+        /// <summary>
+        /// Mechanical friction plus pumping loss. With the throttle closed the engine pumps against manifold vacuum,
+        /// which is what makes engine braking noticeable; the loss fades quickly as the throttle opens (≈40 Nm extra at 5000 rpm for a 1.6 l engine).
+        /// </summary>
+        float InternalFriction(float throttle) => 12f + (Rpm / 1000f) * 4f + (1f - throttle) * (1f - throttle) * (Rpm / 1000f) * 8f;
 
         float GrossTorque(float throttle)
         {
             float iacTorque = 0f;
             if (Rpm < idleRpm + 150f)
             {
-                float idleDeficit = Math.Max(0f, (idleRpm + 50f) - Rpm);
-                iacTorque = Math.Min(60f, idleDeficit * 0.45f + InternalFriction());
+                // Idle air control: proportional around the target so falling revs settle back to idle instead of
+                // hanging anywhere between the target and idle + 150 rpm.
+                float idleError = (idleRpm + 50f) - Rpm;
+                iacTorque = Math.Max(0f, Math.Min(60f, idleError * 0.45f + InternalFriction(throttle)));
             }
             bool fuelCutoff = Rpm >= redlineRpm;
             float combustionTorque = fuelCutoff ? 0f : CalculateMaxTorque(Rpm) * throttle;
@@ -163,7 +169,7 @@ namespace DrivingSchool.Simulation
 
         void SimulateRunning(float throttle, float loadTorqueNm, float dtSeconds)
         {
-            float internalFriction = InternalFriction();
+            float internalFriction = InternalFriction(throttle);
             float grossTorque = GrossTorque(throttle);
             OutputTorqueNm = grossTorque;
 

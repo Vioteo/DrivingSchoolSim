@@ -33,6 +33,7 @@ namespace DrivingSchool.Presentation
         void Update()
         {
             Keyboard.automatic = Adapter.transmission == TransmissionType.Automatic;
+            Keyboard.vehicleSpeedMps = Adapter.CurrentState.signedSpeedMps;
             if (inputEnabled && ReferenceEquals(Source, Keyboard)) Keyboard.Poll(Time.deltaTime);
         }
 

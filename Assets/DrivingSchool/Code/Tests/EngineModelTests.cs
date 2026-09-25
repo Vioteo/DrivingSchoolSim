@@ -136,5 +136,19 @@ namespace DrivingSchool.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => engine.Update(0.5f, true, false, float.NaN, 0.05f));
             Assert.Throws<ArgumentOutOfRangeException>(() => engine.Update(0.5f, true, false, 0f, float.NaN));
         }
+
+        [Test]
+        public void ClosedThrottle_RevsDropQuickly_EngineBraking()
+        {
+            for (int i = 0; i < 15; i++) engine.Update(0f, true, true, 0f, 0.05f);
+            for (int i = 0; i < 300; i++) engine.Update(1f, true, false, 0f, 0.01f);   // to the limiter
+            Assert.GreaterOrEqual(engine.Rpm, 6400f);
+            for (int i = 0; i < 100; i++) engine.Update(0f, true, false, 0f, 0.01f);   // 1 s off throttle, no load
+            // Friction plus pumping loss: a free-revving 1.6 l engine falls ~3000 rpm per second from the limiter.
+            Assert.Less(engine.Rpm, 3500f);
+            Assert.AreEqual(EnginePhase.Running, engine.Phase);
+            for (int i = 0; i < 300; i++) engine.Update(0f, true, false, 0f, 0.01f);
+            Assert.That(engine.Rpm, Is.InRange(800f, 950f), "idle control catches the falling revs");
+        }
     }
 }
