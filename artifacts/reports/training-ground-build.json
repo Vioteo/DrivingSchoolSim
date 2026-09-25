@@ -1,10 +1,10 @@
 {
-    "utc": "2026-09-24T09:23:15.9584785Z",
+    "utc": "2026-09-24T21:57:16.4558605Z",
     "unity": "6000.3.10f1",
     "scene": "Assets/DrivingSchool/Scenes/Autodrome_Training.unity",
     "lessonCount": 11,
-    "renderers": 5141,
-    "colliders": 2253,
+    "renderers": 5610,
+    "colliders": 2713,
     "modelSources": [
         "Assets/DrivingSchool/Prefabs/Props/DS_TrafficCone.prefab",
         "Assets/DrivingSchool/Prefabs/TrainingKit/TK_RailwayCrossing_Tracks.prefab",
