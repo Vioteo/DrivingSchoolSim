@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/DrivingSchool/Scenes/Autodrome_Training.unity
     guid: cbb0a0cb2595b2f47b4489fc116ea826
+  - enabled: 1
+    path: Assets/DrivingSchool/Scenes/VehicleTestRange.unity
+    guid: d897c5aba10880b428e0fc9938e4c22a
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9350dc77e1ac2aa499df759e9342606c, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 82bf77daca0b62e45b26956ba648306b, type: 2}
