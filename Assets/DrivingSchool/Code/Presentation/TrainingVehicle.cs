@@ -38,7 +38,7 @@ namespace DrivingSchool.Presentation
             Speed=0; Gear=1; yaw=heading; steering=0; ContactCount=0; contactCooldown=0;
             transform.SetPositionAndRotation(position,Quaternion.Euler(0,heading,0));
             if(body) { body.position=position; body.rotation=transform.rotation; }
-            Physics.SyncTransforms();
+            UnityEngine.Physics.SyncTransforms();
         }
         void FixedUpdate()
         {
@@ -62,7 +62,7 @@ namespace DrivingSchool.Presentation
             Vector3 motion=heading*Vector3.forward*(Speed*dt);
             Vector3 candidate=transform.position+motion;
             // Layer 10 contains solid props only; road/ramp support is layer 9.
-            bool blocked=Physics.CheckBox(candidate+Vector3.up*.75f,new Vector3(width/2,.6f,length/2),heading,1<<10,QueryTriggerInteraction.Ignore);
+            bool blocked=UnityEngine.Physics.CheckBox(candidate+Vector3.up*.75f,new Vector3(width/2,.6f,length/2),heading,1<<10,QueryTriggerInteraction.Ignore);
             contactCooldown-=dt;
             if(blocked)
             {
@@ -80,7 +80,7 @@ namespace DrivingSchool.Presentation
         }
         static float Surface(Vector3 p)
         {
-            return Physics.Raycast(new Vector3(p.x,5,p.z),Vector3.down,out var hit,8,1<<9,QueryTriggerInteraction.Ignore)?hit.point.y:0;
+            return UnityEngine.Physics.Raycast(new Vector3(p.x,5,p.z),Vector3.down,out var hit,8,1<<9,QueryTriggerInteraction.Ignore)?hit.point.y:0;
         }
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "DS.TrainingSceneTests",
-  "references": ["DS.Presentation", "DS.Editor", "DS.Learning", "Unity.InputSystem"],
+  "references": ["DS.Presentation", "DS.Editor", "DS.Learning", "Unity.InputSystem", "DS.Input"],
   "optionalUnityReferences": ["TestAssemblies"],
   "includePlatforms": ["Editor"]
 }

@@ -41,7 +41,7 @@ namespace DrivingSchool.Tests
             var director=Object.FindFirstObjectByType<TrainingGroundDirector>();
             Assert.That(director,Is.Not.Null);director.Begin(0,false);
             var vehicle=director.vehicle;
-            vehicle.KeyboardDevice=keyboard;
+            vehicle.Keyboard.KeyboardDevice=keyboard;
             float stopZ=TrainingGroundBuilder.CreateCourse().lessons[0].gates[1].z;
             InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.W));
             float deadline=Time.realtimeSinceStartup+30;
@@ -49,7 +49,7 @@ namespace DrivingSchool.Tests
             { InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.W));yield return null; }
             InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.S));
             yield return new WaitForSeconds(3);
-            Assert.That(vehicle.ContactCount,Is.Zero,"Straight corridor must be unobstructed");
+            Assert.That(vehicle.CollisionCount,Is.Zero,"Straight corridor must be unobstructed");
             Assert.That(director.Session.Phase,Is.EqualTo(CoursePhase.Passed),"Actual keyboard drive: "+director.Session.Message+" z="+vehicle.transform.position.z);
             InputSystem.QueueStateEvent(keyboard,new KeyboardState());
             InputSystem.RemoveDevice(keyboard);

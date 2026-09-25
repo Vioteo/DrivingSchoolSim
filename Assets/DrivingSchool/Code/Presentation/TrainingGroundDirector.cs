@@ -3,13 +3,15 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DrivingSchool.Learning;
+using DrivingSchool.Simulation;
+using DrivingSchool.Presentation.Physics;
 
 namespace DrivingSchool.Presentation
 {
     public sealed class TrainingGroundDirector : MonoBehaviour
     {
         public TextAsset courseFile;
-        public TrainingVehicle vehicle;
+        public VehicleController vehicle;
         public Camera view;
         public Transform marker;
         TrainingCourse course;
@@ -22,26 +24,26 @@ namespace DrivingSchool.Presentation
         void Start() { course=JsonUtility.FromJson<TrainingCourse>(courseFile.text); CourseSession.Validate(course); PositionCar(0); }
         void PositionCar(int index)
         {
-            var l=course.lessons[index];vehicle.ResetAt(new Vector3(l.startX,0,l.startZ),l.startYaw);
+            var l=course.lessons[index];vehicle.ResetAt(new Vector3(l.startX,0,l.startZ),Quaternion.Euler(0,l.startYaw,0));
         }
         public void Begin(int lesson, bool fullExam)
         {
             session?.Cancel(); selected=fullExam?0:lesson; exam=fullExam; saved=false; saveStatus=""; contacts=0;
-            PositionCar(selected);session=new CourseSession(course,selected,exam);session.Start();vehicle.driving=true;
+            PositionCar(selected);session=new CourseSession(course,selected,exam);session.Start();vehicle.inputEnabled=true;
         }
         void Update()
         {
             var k=Keyboard.current;
             if(k!=null && k.cKey.wasPressedThisFrame)cameraMode=(cameraMode+1)%3;
             if(k!=null && k.escapeKey.wasPressedThisFrame && session!=null) {session.Cancel();SaveResult();}
-            vehicle.driving=session!=null && session.Phase==CoursePhase.Running;
+            vehicle.inputEnabled=session!=null && session.Phase==CoursePhase.Running;
             var gate=session?.CurrentGate;
             if(marker)
             {
                 marker.gameObject.SetActive(gate!=null && (!exam || session.Transferring));
                 if(gate!=null)
                 {
-                    float y=Physics.Raycast(new Vector3(gate.x,5,gate.z),Vector3.down,out var hit,8,1<<9)?hit.point.y+.05f:.05f;
+                    float y=UnityEngine.Physics.Raycast(new Vector3(gate.x,5,gate.z),Vector3.down,out var hit,8,1<<9)?hit.point.y+.05f:.05f;
                     marker.SetPositionAndRotation(new Vector3(gate.x,y,gate.z),Quaternion.Euler(0,gate.yaw,0));
                     marker.localScale=new Vector3(gate.width,1,gate.length);
                 }
@@ -50,9 +52,10 @@ namespace DrivingSchool.Presentation
         void FixedUpdate()
         {
             if(session==null || session.Phase!=CoursePhase.Running || (!Application.isFocused && !Application.isBatchMode))return;
-            if(vehicle.ContactCount>contacts) { session.Fault("Касание конуса или ограждения",2);contacts=vehicle.ContactCount; }
+            if(vehicle.CollisionCount>contacts) { session.Fault("Касание конуса или ограждения",2);contacts=vehicle.CollisionCount; }
             var p=vehicle.transform.position;
-            session.Tick(Time.fixedDeltaTime,p.x,p.z,vehicle.transform.eulerAngles.y,vehicle.Speed,vehicle.Gear);
+            var state = vehicle.Adapter.CurrentState;
+            session.Tick(Time.fixedDeltaTime,p.x,p.z,vehicle.transform.eulerAngles.y,state.signedSpeedMps,state.gear);
             if(session.Phase!=CoursePhase.Running)SaveResult();
         }
         void LateUpdate()
@@ -123,9 +126,10 @@ namespace DrivingSchool.Presentation
                 if(GUILayout.Button("Отменить заезд")){session.Cancel();SaveResult();}
             }
             GUILayout.Space(10);
-            GUILayout.Label(Mathf.Abs(vehicle.Speed*3.6f).ToString("F0")+" км/ч  ·  Передача "+(vehicle.Gear<0?"R":vehicle.Gear.ToString()),title);
+            var state = vehicle.Adapter.CurrentState;
+            GUILayout.Label(Mathf.Abs(state.signedSpeedMps*3.6f).ToString("F0")+" км/ч  ·  Передача "+(state.gear<0?"R":state.gear.ToString()),title);
             GUILayout.Label("W / ↑ — газ    S / ↓ — тормоз\nA D / ← → — руль    Пробел — ручник\nQ — D/R на остановке    E — 1/2\nC — камера / вид всей площадки",bodyStyle);
-            GUILayout.Label("Тестовое вождение: упрощённая кинематика.",bodyStyle);
+            GUILayout.Label("Тестовое вождение: полная физика (VehicleSolver).",bodyStyle);
             GUILayout.EndArea();GUI.matrix=Matrix4x4.identity;
         }
     }
