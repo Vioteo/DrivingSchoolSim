@@ -17,7 +17,7 @@ Export follows docs/art-pipeline.md section 4: axis_forward='-Z', axis_up='Y',
 FBX_SCALE_UNITS; models face -Y in Blender, Socket_Front / Socket_Up empties
 let the Unity builder verify the axes after import.
 """
-import bpy, bmesh, sys, math, json, hashlib, datetime
+import bpy, bmesh, sys, math, json, hashlib, datetime, re
 from pathlib import Path
 from mathutils import Vector
 
@@ -146,8 +146,37 @@ def measure(objs, evaluated=True):
                 size=[round(b - a, 4) for a, b in zip(lo, hi)], materials=sorted(mats))
 
 
+SUFFIX = re.compile(r'\.\d{3}$')
+
+
 def export(root):
+    """Exports one asset. Blender keeps object names unique per file, so parts of every vehicle after the first
+    get '.001', '.002'… (Wheel_FL.001). The names are a contract with Unity code, so for the export the asset's
+    objects take their plain names and any other object holding such a name is parked under a temporary one."""
     objs = [root] + list(root.children_recursive)
+    wanted = {o: SUFFIX.sub('', o.name) for o in objs}
+    if len(set(wanted.values())) != len(wanted):
+        raise RuntimeError(f'{root.name}: duplicate part names inside one asset')
+    plain = set(wanted.values())
+    parked = [(o, o.name) for o in bpy.data.objects if o not in wanted and o.name in plain]
+    for o, n in parked:
+        o.name = n + '__parked'
+    renamed = [(o, o.name) for o in objs if o.name != wanted[o]]
+    for o, _ in renamed:
+        o.name = wanted[o]
+    bad = [o.name for o in objs if o.name != wanted[o]]
+    if bad:
+        raise RuntimeError(f'{root.name}: could not restore contract names: {bad}')
+    try:
+        return _export(root, objs)
+    finally:
+        for o, n in renamed:
+            o.name = n
+        for o, n in parked:
+            o.name = n
+
+
+def _export(root, objs):
     bpy.ops.object.select_all(action='DESELECT')
     for o in objs:
         o.select_set(True)

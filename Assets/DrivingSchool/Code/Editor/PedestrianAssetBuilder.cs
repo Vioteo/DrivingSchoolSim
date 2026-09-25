@@ -87,6 +87,9 @@ namespace DrivingSchool.Editor
             // Drop remaps from earlier builds (material names changed when the generator stopped sharing them).
             foreach (var old in importer.GetExternalObjectMap().Keys.ToArray()) importer.RemoveRemap(old);
             importer.SaveAndReimport();
+            // SaveAndReimport replaces the importer object; settings written to the old one are silently lost
+            // (clipAnimations stayed at an earlier two-clip list and 'Run' went missing).
+            importer = (ModelImporter)AssetImporter.GetAtPath(path);
             var clips = importer.defaultClipAnimations;
             foreach (var c in clips)
             {
@@ -101,9 +104,13 @@ namespace DrivingSchool.Editor
             if (!names.SequenceEqual(spec.Clips.OrderBy(n => n)))
                 throw new InvalidOperationException(name + ": clips " + string.Join(",", names) + ", expected " + string.Join(",", spec.Clips));
             importer.clipAnimations = clips;
+            // Save now: creating material assets below makes Unity re-read this importer from disk,
+            // which silently dropped unsaved clip settings ('Run' went missing on DS_Pedestrian_B/C).
+            importer.SaveAndReimport();
             // Material set written by tools/build_pedestrians.py next to the FBX.
             var records = JsonUtility.FromJson<MaterialFile>(
                 File.ReadAllText(Art + "/" + name + ".materials.json")).materials.ToDictionary(r => r.name);
+            var remaps = new List<KeyValuePair<AssetImporter.SourceAssetIdentifier, Material>>();
             foreach (var source in AssetDatabase.LoadAllAssetsAtPath(path).OfType<Material>())
             {
                 if (!records.TryGetValue(source.name, out var rec))
@@ -113,8 +120,10 @@ namespace DrivingSchool.Editor
                 var material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
                 ConfigureMaterial(material, rec);
                 AssetDatabase.CreateAsset(material, materialPath);
-                importer.AddRemap(new AssetImporter.SourceAssetIdentifier(source), material);
+                remaps.Add(new KeyValuePair<AssetImporter.SourceAssetIdentifier, Material>(new AssetImporter.SourceAssetIdentifier(source), material));
             }
+            importer = (ModelImporter)AssetImporter.GetAtPath(path);
+            foreach (var r in remaps) importer.AddRemap(r.Key, r.Value);
             importer.SaveAndReimport();
             var animations = AssetDatabase.LoadAllAssetsAtPath(path).OfType<AnimationClip>()
                 .Where(c => !c.name.StartsWith("__preview__")).ToDictionary(c => c.name);

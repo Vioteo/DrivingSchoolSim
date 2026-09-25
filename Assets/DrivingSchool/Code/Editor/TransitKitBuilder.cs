@@ -113,6 +113,9 @@ namespace DrivingSchool.Editor
             importer.importAnimation = false;
             importer.importNormals = ModelImporterNormals.Import;
             importer.materialImportMode = ModelImporterMaterialImportMode.ImportStandard;
+            // Materials must stay inside the FBX so they can be remapped below. The legacy 'External' location
+            // extracted 96 loose .mat files next to the models and left the remap loop with nothing to map.
+            importer.materialLocation = ModelImporterMaterialLocation.InPrefab;
             importer.isReadable = false;
             importer.generateSecondaryUV = isStatic;
             importer.SaveAndReimport();
