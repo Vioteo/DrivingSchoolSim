@@ -145,13 +145,16 @@ namespace DrivingSchool.Presentation
                         c.Apply(steerRot, wheelRestCentre[k] + Vector3.up * lift + steerRot * (c.RestPositionInCar - wheelRestCentre[k]));
             }
 
-            steeringWheel?.Apply(Quaternion.AngleAxis(s.SteeringWheelDeg, columnAxis));
+            // columnAxis and needleAxis point away from the driver. Unity rotations are left-handed, so a positive
+            // angle about an axis pointing away from the viewer turns counter-clockwise on screen: negate to get
+            // clockwise (steering right = rim turns clockwise, needles sweep clockwise).
+            steeringWheel?.Apply(Quaternion.AngleAxis(-s.SteeringWheelDeg, columnAxis));
 
             smoothedRpm = Mathf.Lerp(smoothedRpm, st.engineRpm, 1f - Mathf.Exp(-12f * Time.deltaTime));
             smoothedSpeed = Mathf.Lerp(smoothedSpeed, Mathf.Abs(st.signedSpeedMps) * 3.6f, 1f - Mathf.Exp(-8f * Time.deltaTime));
             bool power = cmd.ignition;
-            needleRpm?.Apply(Quaternion.AngleAxis(needleDirection * needleSweepDeg * Mathf.Clamp01(smoothedRpm / tachoMaxRpm), needleAxis));
-            needleSpeed?.Apply(Quaternion.AngleAxis(needleDirection * needleSweepDeg * Mathf.Clamp01((power ? smoothedSpeed : 0f) / speedoMaxKph), needleAxis));
+            needleRpm?.Apply(Quaternion.AngleAxis(-needleDirection * needleSweepDeg * Mathf.Clamp01(smoothedRpm / tachoMaxRpm), needleAxis));
+            needleSpeed?.Apply(Quaternion.AngleAxis(-needleDirection * needleSweepDeg * Mathf.Clamp01((power ? smoothedSpeed : 0f) / speedoMaxKph), needleAxis));
 
             float k2 = 1f - Mathf.Exp(-20f * Time.deltaTime);
             clutchV = Mathf.Lerp(clutchV, cmd.clutch, k2); brakeV = Mathf.Lerp(brakeV, cmd.brake, k2); throttleV = Mathf.Lerp(throttleV, cmd.throttle, k2);
