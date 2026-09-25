@@ -1,0 +1,217 @@
+{
+    "unityVersion": "6000.3.10f1",
+    "checkedUtc": "2026-09-25T06:55:49.9230509Z",
+    "passed": true,
+    "trackSeamPass": true,
+    "assets": [
+        {
+            "name": "PT_BusStop_Shelter",
+            "boundsMetres": {
+                "x": 4.950001239776611,
+                "y": 2.560000419616699,
+                "z": 1.700000286102295
+            },
+            "expectedMetres": {
+                "x": 4.949999809265137,
+                "y": 2.559999942779541,
+                "z": 1.7000000476837159
+            },
+            "minY": -1.1920928955078126e-7,
+            "triangles": 6532,
+            "colliders": 2,
+            "layer": "SolidProp not defined in TagManager: default layer used",
+            "pass": true,
+            "note": ""
+        },
+        {
+            "name": "PT_Bus_City12",
+            "boundsMetres": {
+                "x": 2.8800008296966554,
+                "y": 3.1900010108947756,
+                "z": 12.525003433227539
+            },
+            "expectedMetres": {
+                "x": 2.880000114440918,
+                "y": 3.190000057220459,
+                "z": 12.524999618530274
+            },
+            "minY": -4.76837158203125e-7,
+            "triangles": 18418,
+            "colliders": 1,
+            "layer": "(default)",
+            "pass": true,
+            "note": ""
+        },
+        {
+            "name": "PT_Marking_1_17_Zigzag_20m",
+            "boundsMetres": {
+                "x": 1.0707108974456788,
+                "y": 0.0030023925937712194,
+                "z": 20.070711135864259
+            },
+            "expectedMetres": {
+                "x": 1.0707000494003297,
+                "y": 0.003000000026077032,
+                "z": 20.07069969177246
+            },
+            "minY": 0.005999996326863766,
+            "triangles": 240,
+            "colliders": 0,
+            "layer": "SolidProp not defined in TagManager: default layer used",
+            "pass": true,
+            "note": ""
+        },
+        {
+            "name": "PT_Minibus_Route",
+            "boundsMetres": {
+                "x": 2.720000743865967,
+                "y": 2.9200003147125246,
+                "z": 6.995001316070557
+            },
+            "expectedMetres": {
+                "x": 2.7200000286102297,
+                "y": 2.9200000762939455,
+                "z": 6.994999885559082
+            },
+            "minY": -2.384185791015625e-7,
+            "triangles": 17840,
+            "colliders": 1,
+            "layer": "(default)",
+            "pass": true,
+            "note": ""
+        },
+        {
+            "name": "PT_Road_TramUrban_20m",
+            "boundsMetres": {
+                "x": 18.40000343322754,
+                "y": 0.3700024485588074,
+                "z": 20.000001907348634
+            },
+            "expectedMetres": {
+                "x": 18.399999618530275,
+                "y": 0.3700000047683716,
+                "z": 20.0
+            },
+            "minY": -0.2200000286102295,
+            "triangles": 912,
+            "colliders": 1,
+            "layer": "DriveSurface not defined in TagManager: default layer used",
+            "pass": true,
+            "note": ""
+        },
+        {
+            "name": "PT_Sign_5_16_BusStop",
+            "boundsMetres": {
+                "x": 0.6000001430511475,
+                "y": 2.750000238418579,
+                "z": 0.24000033736228944
+            },
+            "expectedMetres": {
+                "x": 0.6000000238418579,
+                "y": 2.75,
+                "z": 0.23999999463558198
+            },
+            "minY": 0.0,
+            "triangles": 300,
+            "colliders": 2,
+            "layer": "SolidProp not defined in TagManager: default layer used",
+            "pass": true,
+            "note": ""
+        },
+        {
+            "name": "PT_Sign_5_17_TramStop",
+            "boundsMetres": {
+                "x": 0.6000001430511475,
+                "y": 2.750000238418579,
+                "z": 0.24000033736228944
+            },
+            "expectedMetres": {
+                "x": 0.6000000238418579,
+                "y": 2.75,
+                "z": 0.23999999463558198
+            },
+            "minY": 0.0,
+            "triangles": 436,
+            "colliders": 2,
+            "layer": "SolidProp not defined in TagManager: default layer used",
+            "pass": true,
+            "note": ""
+        },
+        {
+            "name": "PT_TramStop_Platform_30m",
+            "boundsMetres": {
+                "x": 2.500000476837158,
+                "y": 2.970003604888916,
+                "z": 30.000003814697267
+            },
+            "expectedMetres": {
+                "x": 2.5,
+                "y": 2.9700000286102297,
+                "z": 30.0
+            },
+            "minY": -0.22000181674957276,
+            "triangles": 1184,
+            "colliders": 2,
+            "layer": "DriveSurface not defined in TagManager: default layer used",
+            "pass": true,
+            "note": ""
+        },
+        {
+            "name": "PT_TramTrack_Grass_20m",
+            "boundsMetres": {
+                "x": 6.900001525878906,
+                "y": 0.3700024485588074,
+                "z": 20.000001907348634
+            },
+            "expectedMetres": {
+                "x": 6.900000095367432,
+                "y": 0.3700000047683716,
+                "z": 20.0
+            },
+            "minY": -0.2200000286102295,
+            "triangles": 132,
+            "colliders": 1,
+            "layer": "DriveSurface not defined in TagManager: default layer used",
+            "pass": true,
+            "note": ""
+        },
+        {
+            "name": "PT_TramTrack_Grass_Curve90_R25",
+            "boundsMetres": {
+                "x": 28.450008392333986,
+                "y": 0.37000343203544619,
+                "z": 28.45000457763672
+            },
+            "expectedMetres": {
+                "x": 28.450000762939454,
+                "y": 0.3700000047683716,
+                "z": 28.450000762939454
+            },
+            "minY": -0.2200000286102295,
+            "triangles": 5676,
+            "colliders": 1,
+            "layer": "DriveSurface not defined in TagManager: default layer used",
+            "pass": true,
+            "note": ""
+        },
+        {
+            "name": "PT_Tram_City",
+            "boundsMetres": {
+                "x": 3.160000801086426,
+                "y": 3.765000820159912,
+                "z": 15.82400131225586
+            },
+            "expectedMetres": {
+                "x": 3.1600000858306886,
+                "y": 3.765000104904175,
+                "z": 15.824000358581543
+            },
+            "minY": -0.025000572204589845,
+            "triangles": 14534,
+            "colliders": 1,
+            "layer": "(default)",
+            "pass": true,
+            "note": ""
+        }
+    ]
+}
