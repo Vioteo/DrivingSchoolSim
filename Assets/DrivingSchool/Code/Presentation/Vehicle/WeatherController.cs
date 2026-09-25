@@ -15,6 +15,14 @@ namespace DrivingSchool.Presentation
     public sealed class WeatherController : MonoBehaviour
     {
         public static WeatherConditions Current { get; private set; } = WeatherConditions.FromPreset(WeatherPreset.ClearDay);
+        /// <summary>
+        /// Rain / snow intensity that actually reaches the car glass. Follows the particle emission blend and the time
+        /// the drops need to fall from the emitter (≈1 s rain, ≈5.5 s snow), so the windows do not get wet before the
+        /// precipitation is visible and stay wet while the last drops are still falling.
+        /// </summary>
+        public static float GlassRain01 { get; private set; }
+        public static float GlassSnow01 { get; private set; }
+        public const float RainFallSeconds = 1.0f, SnowFallSeconds = 5.5f, BlendSeconds = 3f;
 
         public WeatherPreset preset = WeatherPreset.ClearDay;
         public Light sun;
@@ -27,6 +35,7 @@ namespace DrivingSchool.Presentation
         ParticleSystem rain, snow;
         readonly Dictionary<Material, float> drySmoothness = new Dictionary<Material, float>();
         float transition = 1f; WeatherConditions from, to;
+        float changeTime, glassFromRain, glassFromSnow; bool glassSettled = true;
 
         void Start()
         {
@@ -37,6 +46,7 @@ namespace DrivingSchool.Presentation
                         if (m != null && m.HasProperty("_Smoothness") && !drySmoothness.ContainsKey(m)) drySmoothness[m] = m.GetFloat("_Smoothness");
             rain = CreatePrecipitation("Rain", false);
             snow = CreatePrecipitation("Snow", true);
+            ShieldVehicles(rain); ShieldVehicles(snow);
             SetPreset(preset, true);
         }
 
@@ -52,6 +62,8 @@ namespace DrivingSchool.Presentation
             from = Current; to = WeatherConditions.FromPreset(p);
             transition = instant ? 1f : 0f;
             Current = to; // gameplay (grip, wipers) switches at once; visuals blend
+            glassFromRain = GlassRain01; glassFromSnow = GlassSnow01; changeTime = Time.time; glassSettled = instant;
+            if (instant) { GlassRain01 = to.rainIntensity01; GlassSnow01 = to.snowIntensity01; }
             foreach (var v in vehicles) if (v != null) v.surface = to.surface;
             if (instant) ApplyVisuals(to, to, 1f);
         }
@@ -63,6 +75,14 @@ namespace DrivingSchool.Presentation
                 int n = System.Enum.GetValues(typeof(WeatherPreset)).Length;
                 if (Keyboard.current.f5Key.wasPressedThisFrame) SetPreset((WeatherPreset)(((int)preset + 1) % n));
                 if (Keyboard.current.f6Key.wasPressedThisFrame) SetPreset((WeatherPreset)(((int)preset + n - 1) % n));
+            }
+            if (!glassSettled)
+            {
+                float since = Time.time - changeTime;
+                float tr = Mathf.Clamp01((since - RainFallSeconds) / BlendSeconds), ts = Mathf.Clamp01((since - SnowFallSeconds) / BlendSeconds);
+                GlassRain01 = Mathf.Lerp(glassFromRain, to.rainIntensity01, tr);
+                GlassSnow01 = Mathf.Lerp(glassFromSnow, to.snowIntensity01, ts);
+                glassSettled = tr >= 1f && ts >= 1f;
             }
             if (transition < 1f)
             {
@@ -116,6 +136,23 @@ namespace DrivingSchool.Presentation
             if (ps == null) return;
             var e = ps.emission; e.rateOverTime = rate;
             if (rate > 0f && !ps.isPlaying) ps.Play(); else if (rate <= 0f && ps.isPlaying) ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
+
+        /// <summary>Drops and flakes die on the car body instead of falling through the roof into the cabin.</summary>
+        void ShieldVehicles(ParticleSystem ps)
+        {
+            if (ps == null) return;
+            var trigger = ps.trigger;
+            foreach (var v in vehicles)
+            {
+                if (v == null) continue;
+                foreach (var c in v.GetComponents<Collider>()) { trigger.AddCollider(c); trigger.enabled = true; }
+            }
+            trigger.enter = ParticleSystemOverlapAction.Kill;
+            trigger.inside = ParticleSystemOverlapAction.Kill;
+            trigger.outside = ParticleSystemOverlapAction.Ignore;
+            trigger.exit = ParticleSystemOverlapAction.Ignore;
+            trigger.radiusScale = 1f;
         }
 
         ParticleSystem CreatePrecipitation(string name, bool isSnow)

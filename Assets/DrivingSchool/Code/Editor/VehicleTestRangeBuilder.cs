@@ -52,7 +52,8 @@ namespace DrivingSchool.Editor
             ice = Lit("Ice", new Color(0.78f, 0.86f, 0.93f), 0.9f);
             concrete = Lit("Concrete", new Color(0.62f, 0.62f, 0.60f), 0.2f);
             var telltaleMat = Unlit("Telltale", cutout: true, transparent: false);
-            var waterMat = Unlit("WindshieldWater", cutout: false, transparent: true);
+            var waterMat = Unlit("WindshieldWater", cutout: false, transparent: true);   // dial scales
+            var glassWaterMat = GlassWater("GlassWater");                                   // drops and snow on the windows
             var mirrorMat = Unlit("MirrorView", cutout: false, transparent: false);
             var precipMat = Particles("Precipitation");
 
@@ -69,7 +70,7 @@ namespace DrivingSchool.Editor
             var cam = new GameObject("Main Camera", typeof(Camera), typeof(AudioListener)).GetComponent<Camera>();
             cam.tag = "MainCamera"; cam.nearClipPlane = 0.05f; cam.farClipPlane = 1200f; cam.GetUniversalAdditionalCameraData();
 
-            var player = CreatePlayer(cam, telltaleMat, waterMat, mirrorMat, out var controller, out var visual);
+            var player = CreatePlayer(cam, telltaleMat, waterMat, glassWaterMat, mirrorMat, out var controller, out var visual);
             var rig = cam.gameObject.AddComponent<DriverCameraRig>(); rig.car = player.transform; rig.model = visual.transform;
 
             var weather = new GameObject("03 / WEATHER").AddComponent<WeatherController>();
@@ -137,6 +138,16 @@ namespace DrivingSchool.Editor
                 m.SetFloat("_ZWrite", 0f); m.EnableKeyword("_SURFACE_TYPE_TRANSPARENT"); m.renderQueue = (int)RenderQueue.Transparent + 100;
                 m.SetOverrideTag("RenderType", "Transparent");
             }
+            EditorUtility.SetDirty(m); return m;
+        }
+
+        static Material GlassWater(string name)
+        {
+            string path = MatDir + "/" + name + ".mat";
+            var shader = Shader.Find("DrivingSchool/GlassWater");
+            var m = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (m == null) { m = new Material(shader); AssetDatabase.CreateAsset(m, path); }
+            else if (m.shader != shader) m.shader = shader;
             EditorUtility.SetDirty(m); return m;
         }
 
@@ -359,7 +370,7 @@ namespace DrivingSchool.Editor
 
         // ------------------------------------------------------------------ player
 
-        static GameObject CreatePlayer(Camera cam, Material telltale, Material water, Material mirror, out VehicleController controller, out GameObject visual)
+        static GameObject CreatePlayer(Camera cam, Material telltale, Material water, Material glassWater, Material mirror, out VehicleController controller, out GameObject visual)
         {
             var player = new GameObject("05 / PLAYER / DS_Sedan_A");
             visual = Sedan(player.transform);
@@ -379,8 +390,8 @@ namespace DrivingSchool.Editor
             controller = player.AddComponent<VehicleController>();
             var visuals = player.AddComponent<VehicleVisuals>(); visuals.adapter = adapter; visuals.model = visual.transform;
             var lights = player.AddComponent<VehicleLightsView>(); lights.adapter = adapter; lights.model = visual.transform;
-            var dash = player.AddComponent<DashboardView>(); dash.adapter = adapter; dash.model = visual.transform; dash.templateMaterial = telltale;
-            var rain = player.AddComponent<WindshieldRainView>(); rain.adapter = adapter; rain.visuals = visuals; rain.model = visual.transform; rain.templateMaterial = water;
+            var dash = player.AddComponent<DashboardView>(); dash.adapter = adapter; dash.model = visual.transform; dash.templateMaterial = telltale; dash.dialMaterial = water;
+            var rain = player.AddComponent<WindshieldRainView>(); rain.adapter = adapter; rain.visuals = visuals; rain.model = visual.transform; rain.templateMaterial = glassWater;
             var mirrors = player.AddComponent<VehicleMirrorRig>(); mirrors.model = visual.transform; mirrors.viewer = cam; mirrors.templateMaterial = mirror;
             return player;
         }
