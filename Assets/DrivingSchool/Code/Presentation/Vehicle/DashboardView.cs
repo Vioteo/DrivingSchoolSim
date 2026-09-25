@@ -20,6 +20,8 @@ namespace DrivingSchool.Presentation
         public VehiclePhysicsAdapter adapter;
         public Transform model;
         public Material templateMaterial;         // URP Unlit (assigned by the scene builder so the shader ships in builds)
+        [Tooltip("Transparent URP Unlit for the printed dial scales; created at runtime when empty.")]
+        public Material dialMaterial;
         [Tooltip("Car-space offset added to the automatically found telltale row position.")]
         public Vector3 rowOffset = Vector3.zero;
         public float iconSizeM = 0.016f, iconGapM = 0.004f;
@@ -35,6 +37,9 @@ namespace DrivingSchool.Presentation
 
         public bool IsLit(Telltale t) => icons.TryGetValue(t, out var r) && r != null && r.enabled;
         public string GearText { get; private set; } = "";
+        public int DialCount { get; private set; }
+        /// <summary>Car-space position of a telltale icon (for tests and the self-check).</summary>
+        public bool TryGetIconPosition(Telltale t, out Vector3 carPos) { carPos = default; if (!icons.TryGetValue(t, out var r) || r == null) return false; carPos = car.InverseTransformPoint(r.transform.position); return true; }
 
         void Start()
         {
@@ -50,33 +55,127 @@ namespace DrivingSchool.Presentation
 
         void BuildRow()
         {
-            Vector3 centre; Vector3 right = Vector3.right;
-            var rpm = VehicleRigUtil.Find(model, "GaugeFace_RPM"); var spd = VehicleRigUtil.Find(model, "GaugeFace_km");
-            var hood = VehicleRigUtil.Find(model, "Instrument_Hood") ?? VehicleRigUtil.Find(model, "Cluster_Display");
-            if (rpm != null && spd != null)
+            var root = new GameObject("Dashboard_Telltales").transform; root.SetParent(car, false);
+            var cluster = VehicleRigUtil.Find(model, "Cluster_Display");
+            if (cluster != null && cluster.GetComponentInChildren<Renderer>(true) != null) BuildClusterLayout(root, CarBounds(cluster));
+            else BuildFallbackRow(root);
+            gearMat = gearGlyph.sharedMaterial;
+            BuildDials(root);
+        }
+
+        /// <summary>
+        /// Telltales on the display between the two dials, where the driver sees them over the steering-wheel rim:
+        /// turn arrows (large) and high beam on top, the gear in the middle, the other lamps in two rows below.
+        /// </summary>
+        void BuildClusterLayout(Transform root, Bounds b)
+        {
+            Vector3 eyeP = EyeInCar();
+            Vector3 anchor = new Vector3(b.center.x, b.max.y, b.min.z) + rowOffset;
+            Vector3 toEye = (eyeP - anchor).normalized;
+            Quaternion face = Quaternion.LookRotation(-toEye, Vector3.up); // quad normal (−Z) points at the eye
+            Vector3 right = face * Vector3.right, up = face * Vector3.up;
+            Vector3 P(float dx, float dy) => anchor + right * dx + up * dy + toEye * 0.003f;
+            float big = iconSizeM * 1.4f, small = iconSizeM * 1.0f, pitch = small + iconGapM * 0.5f;
+            float w = Mathf.Max(0.05f, b.size.x);
+            Add(root, Telltale.TurnLeft, P(-0.315f * w, -0.013f), face, big);
+            Add(root, Telltale.TurnRight, P(0.315f * w, -0.013f), face, big);
+            Add(root, Telltale.HighBeam, P(0f, -0.013f), face, small);
+            gearGlyph = Quad("Telltale_Gear", root, P(0f, -0.036f), face, iconSizeM * 1.5f, TelltaleIcons.Glyph('N'), Color.white);
+            // The lower half of the cluster is behind the steering-wheel rim, so the other lamps go into the upper
+            // inner part of the dials (as on most real clusters): engine lamps in the tachometer, lights and
+            // handbrake/seat belt in the speedometer.
+            PlaceInDial(root, "GaugeFace_RPM", new[] { Telltale.Battery, Telltale.Oil, Telltale.CheckEngine }, small, pitch);
+            PlaceInDial(root, "GaugeFace_km", new[] { Telltale.LowBeam, Telltale.Parking, Telltale.Handbrake, Telltale.Seatbelt }, small, pitch);
+            // The model's static "N" and odometer sit where the live gear is drawn now.
+            foreach (var t in model.GetComponentsInChildren<Transform>(true))
+                if (t.name.StartsWith("Gear_Display", StringComparison.Ordinal) || t.name.StartsWith("Odometer", StringComparison.Ordinal))
+                    foreach (var r in t.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
+        }
+
+        void PlaceInDial(Transform root, string facePrefix, Telltale[] lamps, float size, float pitch)
+        {
+            Transform faceT = null;
+            foreach (var t in model.GetComponentsInChildren<Transform>(true)) if (t.name.StartsWith(facePrefix, StringComparison.Ordinal)) { faceT = t; break; }
+            Vector3 centre;
+            if (faceT != null)
             {
-                var a = CarBounds(rpm); var b = CarBounds(spd);
-                centre = 0.5f * (a.center + b.center); centre.y = Mathf.Min(a.min.y, b.min.y) + iconSizeM * 0.2f;
+                var b = CarBounds(faceT);
+                float radius = 0.5f * Mathf.Min(b.size.x, b.size.y);
+                centre = new Vector3(b.center.x, b.center.y + 0.31f * radius, b.min.z - 0.006f); // between the hub and the numbers
             }
-            else if (hood != null) { var h = CarBounds(hood); centre = new Vector3(h.center.x, h.center.y - 0.02f, h.min.z + 0.05f); }
+            else centre = EyeInCar() + new Vector3(0f, -0.2f, 0.65f);
+            centre += rowOffset;
+            Quaternion face = Quaternion.LookRotation(-(EyeInCar() - centre).normalized, Vector3.up);
+            for (int i = 0; i < lamps.Length; i++) Add(root, lamps[i], centre + face * Vector3.right * ((i - 0.5f * (lamps.Length - 1)) * pitch), face, size);
+        }
+
+        void BuildFallbackRow(Transform root)
+        {
+            Vector3 centre;
+            var hood = VehicleRigUtil.Find(model, "Instrument_Hood");
+            if (hood != null) { var h = CarBounds(hood); centre = new Vector3(h.center.x, h.center.y - 0.02f, h.min.z - 0.01f); }
             else centre = EyeInCar() + new Vector3(0f, -0.28f, 0.62f);
             centre += rowOffset;
             Vector3 toEye = (EyeInCar() - centre).normalized;
-            centre += toEye * 0.004f; // just in front of the gauge faces
-            Quaternion face = Quaternion.LookRotation(-toEye, Vector3.up); // quad normal (−Z) points at the eye
-
+            centre += toEye * 0.004f;
+            Quaternion face = Quaternion.LookRotation(-toEye, Vector3.up);
             var list = (Telltale[])Enum.GetValues(typeof(Telltale));
             float step = iconSizeM + iconGapM, x0 = -0.5f * step * (list.Length - 1);
-            var root = new GameObject("Dashboard_Telltales").transform; root.SetParent(car, false);
-            for (int i = 0; i < list.Length; i++)
+            for (int i = 0; i < list.Length; i++) Add(root, list[i], centre + face * Vector3.right * (x0 + i * step), face, iconSizeM);
+            gearGlyph = Quad("Telltale_Gear", root, centre + face * Vector3.up * (iconSizeM * 1.6f), face, iconSizeM * 1.3f, TelltaleIcons.Glyph('N'), Color.white);
+        }
+
+        void Add(Transform root, Telltale t, Vector3 pos, Quaternion rot, float size) => icons[t] = Quad("Telltale_" + t, root, pos, rot, size, TelltaleIcons.Draw(t), ColorOf(t));
+
+        // ------------------------------------------------------------------ dials
+
+        /// <summary>
+        /// Printed scales of the tachometer (0–8 ×1000 rpm, red from redline) and speedometer (0–200 km/h). They are drawn
+        /// here because the imported model has labels at every 1600 rpm; the zero is at −130° and the scale sweeps
+        /// 260° clockwise, matching VehicleVisuals.
+        /// </summary>
+        void BuildDials(Transform root)
+        {
+            var visuals = GetComponent<VehicleVisuals>();
+            float sweep = visuals != null ? visuals.needleSweepDeg : 260f;
+            float tachoMax = visuals != null ? visuals.tachoMaxRpm : 8000f, speedoMax = visuals != null ? visuals.speedoMaxKph : 200f;
+            float redline = adapter != null && adapter.Solver != null ? adapter.Solver.Spec.redlineRpm : 6500f;
+            int dials = 0;
+            foreach (var t in model.GetComponentsInChildren<Transform>(true))
             {
-                var r = Quad("Telltale_" + list[i], root, centre + face * Vector3.right * (x0 + i * step), face, iconSizeM, TelltaleIcons.Draw(list[i]), ColorOf(list[i]));
-                icons[list[i]] = r;
+                if (!t.name.StartsWith("GaugeFace_", StringComparison.Ordinal)) continue;
+                bool tacho = t.name.IndexOf("RPM", StringComparison.OrdinalIgnoreCase) >= 0;
+                var b = CarBounds(t);
+                float radius = 0.5f * Mathf.Min(b.size.x, b.size.y);
+                if (radius < 0.02f) continue;
+                Vector2 c = new Vector2(b.center.x, b.center.y);
+                // Hide the model's own ticks and numbers inside this face.
+                foreach (var r in model.GetComponentsInChildren<Renderer>(true))
+                    if (r.name.StartsWith("GaugeNumber", StringComparison.Ordinal) || r.name.StartsWith("GaugeTick", StringComparison.Ordinal))
+                    {
+                        var rb = VehicleRigUtil.CarSpaceBounds(car, r);
+                        if ((new Vector2(rb.center.x, rb.center.y) - c).magnitude < radius * 1.05f) r.enabled = false;
+                    }
+                Texture2D tex = tacho
+                    ? GaugeDial.Draw(radius, sweep, tachoMax / 1000f, 1f, 0.5f, 1f, redline / 1000f)
+                    : GaugeDial.Draw(radius, sweep, speedoMax, 20f, 10f, 20f, float.MaxValue);
+                var pos = new Vector3(b.center.x, b.center.y, b.min.z - 0.004f); // over the face, under the needle
+                var q = Quad("Dial_" + (tacho ? "RPM" : "Speed"), root, pos, Quaternion.identity, radius * 2f, tex, Color.white, dialMaterial != null ? dialMaterial : TransparentUnlit());
+                q.enabled = true; dials++;
             }
-            var gd = VehicleRigUtil.Find(model, "Gear_Display");
-            Vector3 gearPos = gd != null ? CarBounds(gd).center + toEye * 0.004f : centre + face * Vector3.up * (iconSizeM * 1.6f);
-            gearGlyph = Quad("Telltale_Gear", root, gearPos, face, iconSizeM * 1.3f, TelltaleIcons.Glyph('N'), Color.white);
-            gearMat = gearGlyph.sharedMaterial;
+            DialCount = dials;
+        }
+
+        static Material transparentUnlit;
+        static Material TransparentUnlit()
+        {
+            if (transparentUnlit != null) return transparentUnlit;
+            var m = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
+            m.SetFloat("_Surface", 1f); m.SetFloat("_Blend", 0f);
+            m.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.SrcAlpha); m.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            m.SetFloat("_ZWrite", 0f); m.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            m.SetOverrideTag("RenderType", "Transparent"); m.renderQueue = 3000;
+            return transparentUnlit = m;
         }
 
         Bounds CarBounds(Transform t)
@@ -97,19 +196,37 @@ namespace DrivingSchool.Presentation
             }
         }
 
-        Renderer Quad(string name, Transform parent, Vector3 carPos, Quaternion carRot, float size, Texture2D tex, Color color)
+        static Mesh quadMesh;
+        static Mesh QuadMesh()
         {
-            var q = GameObject.CreatePrimitive(PrimitiveType.Quad); q.name = name;
-            Destroy(q.GetComponent<Collider>());
+            if (quadMesh != null) return quadMesh;
+            // Faces −Z like the built-in Quad, but without a collider (a MeshCollider under the dynamic car body is an error).
+            quadMesh = new Mesh { name = "TelltaleQuad" };
+            quadMesh.vertices = new[] { new Vector3(-0.5f, -0.5f, 0f), new Vector3(0.5f, -0.5f, 0f), new Vector3(-0.5f, 0.5f, 0f), new Vector3(0.5f, 0.5f, 0f) };
+            quadMesh.uv = new[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(1, 1) };
+            quadMesh.triangles = new[] { 0, 2, 1, 2, 3, 1 };
+            quadMesh.normals = new[] { Vector3.back, Vector3.back, Vector3.back, Vector3.back };
+            quadMesh.RecalculateBounds();
+            return quadMesh;
+        }
+
+        Renderer Quad(string name, Transform parent, Vector3 carPos, Quaternion carRot, float size, Texture2D tex, Color color, Material baseMaterial = null)
+        {
+            var q = new GameObject(name);
             q.transform.SetParent(parent, false); q.transform.localPosition = carPos; q.transform.localRotation = carRot; q.transform.localScale = Vector3.one * size;
-            var r = q.GetComponent<Renderer>();
+            q.AddComponent<MeshFilter>().sharedMesh = QuadMesh();
+            var r = q.AddComponent<MeshRenderer>();
             Material m;
-            if (templateMaterial != null) m = new Material(templateMaterial);
+            if (baseMaterial != null) m = new Material(baseMaterial);
+            else if (templateMaterial != null) m = new Material(templateMaterial);
             else { var sh = Shader.Find("Universal Render Pipeline/Unlit") ?? Shader.Find("Unlit/Transparent Cutout"); m = new Material(sh); }
             m.mainTexture = tex; if (m.HasProperty("_BaseMap")) m.SetTexture("_BaseMap", tex);
             if (m.HasProperty("_BaseColor")) m.SetColor("_BaseColor", color); else m.color = color;
-            if (m.HasProperty("_AlphaClip")) { m.SetFloat("_AlphaClip", 1f); m.SetFloat("_Cutoff", 0.5f); m.EnableKeyword("_ALPHATEST_ON"); }
-            m.renderQueue = 2450;
+            if (baseMaterial == null)
+            {
+                if (m.HasProperty("_AlphaClip")) { m.SetFloat("_AlphaClip", 1f); m.SetFloat("_Cutoff", 0.5f); m.EnableKeyword("_ALPHATEST_ON"); }
+                m.renderQueue = 2450;
+            }
             r.sharedMaterial = m; r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; r.receiveShadows = false; r.enabled = false;
             return r;
         }
@@ -267,6 +384,121 @@ namespace DrivingSchool.Presentation
         {
             float dx = x1 - x0, dy = y1 - y0, t = Mathf.Clamp01(((x - x0) * dx + (y - y0) * dy) / (dx * dx + dy * dy));
             float px = x0 + t * dx - x, py = y0 + t * dy - y; return px * px + py * py < w * w;
+        }
+    }
+
+    /// <summary>
+    /// Procedural printed dial: ticks, stroke-font numbers and an optional red zone on a transparent texture.
+    /// Angles are measured from 12 o'clock, clockwise as seen by the driver; zero sits at −sweep/2.
+    /// </summary>
+    public static class GaugeDial
+    {
+        const int N = 1024;
+        static readonly Color32 Ink = new Color32(214, 236, 240, 255), RedInk = new Color32(255, 70, 50, 255);
+
+        // Seven-segment strokes on a 1 × 1.6 box: a top, b upper right, c lower right, d bottom, e lower left, f upper left, g middle.
+        static readonly string[] Segments = { "abcdef", "bc", "abged", "abgcd", "fgbc", "afgcd", "afgedc", "abc", "abcdefg", "abcdfg" };
+
+        /// <param name="radius">face radius, metres (the texture spans 2 × radius)</param>
+        /// <param name="max">scale value at the end of the sweep</param>
+        /// <param name="major">major tick step</param> <param name="minor">minor tick step</param>
+        /// <param name="labelEvery">numbers at multiples of this value</param> <param name="redFrom">start of the red zone</param>
+        public static Texture2D Draw(float radius, float sweepDeg, float max, float major, float minor, float labelEvery, float redFrom)
+        {
+            var px = new Color32[N * N];
+            float s = N / (2f * radius); // pixels per metre
+            float start = -0.5f * sweepDeg;
+            float Angle(float value) => start + sweepDeg * Mathf.Clamp01(value / max);
+
+            // Red zone band.
+            if (redFrom < max)
+            {
+                float a0 = Angle(redFrom), a1 = Angle(max), r0 = 0.845f * radius * s, r1 = 0.905f * radius * s;
+                for (int y = 0; y < N; y++)
+                    for (int x = 0; x < N; x++)
+                    {
+                        float dx = x + 0.5f - N / 2f, dy = y + 0.5f - N / 2f, r = Mathf.Sqrt(dx * dx + dy * dy);
+                        if (r < r0 - 1 || r > r1 + 1) continue;
+                        float a = Mathf.Atan2(dx, dy) * Mathf.Rad2Deg;
+                        if (a < a0 || a > a1) continue;
+                        float cov = Mathf.Clamp01(Mathf.Min(r - r0, r1 - r) + 0.5f);
+                        Blend(px, x, y, RedInk, cov);
+                    }
+            }
+            // Ticks.
+            for (float v = 0f; v <= max + 1e-3f; v += minor)
+            {
+                bool isMajor = Mathf.Abs(v / major - Mathf.Round(v / major)) < 1e-3f;
+                float a = Angle(v) * Mathf.Deg2Rad;
+                float rIn = (isMajor ? 0.77f : 0.84f) * radius, rOut = 0.91f * radius;
+                var col = v >= redFrom - 1e-3f ? RedInk : Ink;
+                Line(px, Polar(a, rIn, s), Polar(a, rOut, s), (isMajor ? 0.0011f : 0.0007f) * s, col);
+            }
+            // Numbers.
+            int digits = Mathf.RoundToInt(max).ToString().Length;
+            float h = (digits >= 3 ? 0.10f : digits == 2 ? 0.12f : 0.15f) * radius, gap = 0.28f * h, dw = 0.58f * h, stroke = 0.085f * h;
+            for (float v = 0f; v <= max + 1e-3f; v += labelEvery)
+            {
+                string text = Mathf.RoundToInt(v).ToString();
+                float a = Angle(v) * Mathf.Deg2Rad;
+                Vector2 c = Polar(a, 0.62f * radius, s);
+                float totalW = (text.Length * dw + (text.Length - 1) * gap) * s;
+                var col = v >= redFrom - 1e-3f ? RedInk : Ink;
+                for (int i = 0; i < text.Length; i++)
+                {
+                    float x0 = c.x - totalW / 2f + i * (dw + gap) * s, y0 = c.y - h * s / 2f;
+                    Digit(px, text[i] - '0', x0, y0, dw * s, h * s, stroke * s, col);
+                }
+            }
+            var tex = new Texture2D(N, N, TextureFormat.RGBA32, true) { name = "GaugeDial", wrapMode = TextureWrapMode.Clamp, filterMode = FilterMode.Trilinear, anisoLevel = 4 };
+            tex.SetPixels32(px); tex.Apply(true, true);
+            return tex;
+        }
+
+        static Vector2 Polar(float aRad, float r, float s) => new Vector2(N / 2f + Mathf.Sin(aRad) * r * s, N / 2f + Mathf.Cos(aRad) * r * s);
+
+        static void Digit(Color32[] px, int d, float x0, float y0, float w, float h, float stroke, Color32 col)
+        {
+            if (d < 0 || d > 9) return;
+            float m = y0 + h * 0.5f, t = y0 + h, r = x0 + w;
+            foreach (char seg in Segments[d])
+            {
+                Vector2 p, q;
+                switch (seg)
+                {
+                    case 'a': p = new Vector2(x0, t); q = new Vector2(r, t); break;
+                    case 'b': p = new Vector2(r, t); q = new Vector2(r, m); break;
+                    case 'c': p = new Vector2(r, m); q = new Vector2(r, y0); break;
+                    case 'd': p = new Vector2(x0, y0); q = new Vector2(r, y0); break;
+                    case 'e': p = new Vector2(x0, m); q = new Vector2(x0, y0); break;
+                    case 'f': p = new Vector2(x0, t); q = new Vector2(x0, m); break;
+                    default: p = new Vector2(x0, m); q = new Vector2(r, m); break;
+                }
+                Line(px, p, q, stroke, col);
+            }
+        }
+
+        /// <summary>Anti-aliased thick segment with round caps.</summary>
+        static void Line(Color32[] px, Vector2 p, Vector2 q, float halfWidth, Color32 col)
+        {
+            int xmin = Mathf.Max(0, Mathf.FloorToInt(Mathf.Min(p.x, q.x) - halfWidth - 2)), xmax = Mathf.Min(N - 1, Mathf.CeilToInt(Mathf.Max(p.x, q.x) + halfWidth + 2));
+            int ymin = Mathf.Max(0, Mathf.FloorToInt(Mathf.Min(p.y, q.y) - halfWidth - 2)), ymax = Mathf.Min(N - 1, Mathf.CeilToInt(Mathf.Max(p.y, q.y) + halfWidth + 2));
+            Vector2 d = q - p; float len2 = Mathf.Max(1e-6f, d.sqrMagnitude);
+            for (int y = ymin; y <= ymax; y++)
+                for (int x = xmin; x <= xmax; x++)
+                {
+                    var c = new Vector2(x + 0.5f, y + 0.5f);
+                    float t = Mathf.Clamp01(Vector2.Dot(c - p, d) / len2);
+                    float dist = (p + d * t - c).magnitude;
+                    float cov = Mathf.Clamp01(halfWidth + 0.5f - dist);
+                    if (cov > 0f) Blend(px, x, y, col, cov);
+                }
+        }
+
+        static void Blend(Color32[] px, int x, int y, Color32 col, float cov)
+        {
+            int i = y * N + x; byte a = (byte)(cov * 255f);
+            if (a > px[i].a) px[i] = new Color32(col.r, col.g, col.b, a);
         }
     }
 }
