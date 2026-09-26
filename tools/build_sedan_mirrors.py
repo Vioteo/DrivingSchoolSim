@@ -202,11 +202,13 @@ def mirror_unit(root, side, name_glass, outline, depth, anchor, toe_deg, shell_m
     return made
 
 
-def door_mirror(root, side):
+def door_mirror(root, side, anchor_xyz=None, sail=None):
     # Housing: inner end 4 cm off the door skin, 21 cm long, taller at the outer end (teardrop in front view).
     outline = rounded_quad([(0.0, -0.046), (0.205, -0.068), (0.212, 0.060), (0.0, 0.052)],
                            [0.022, 0.05, 0.04, 0.022])
     anchor = (side * 0.94, 0.705, 0.995)    # inner end, glass plane, housing mid height
+    if anchor_xyz is not None:
+        anchor = (side * anchor_xyz[0], anchor_xyz[1], anchor_xyz[2])
     made = mirror_unit(root, side, 'MirrorSurface_' + ('R' if side > 0 else 'L'), outline, 0.115, anchor,
                        toe_deg=-9.0 * side, shell_mat='Paint_Atlantic', rim_mat='Rubber', repeater=True)
     # Sail: a wedge from the door top corner out to the inner end of the housing (the housing overlaps it).
@@ -215,6 +217,9 @@ def door_mirror(root, side):
     #          (u out, y forward, z up)
     bottom = [(0.000, 0.72, 0.900), (0.000, 0.99, 0.900), (0.060, 0.93, 0.945), (0.060, 0.735, 0.945)]
     top = [(0.004, 0.735, 0.975), (0.004, 0.90, 0.955), (0.060, 0.84, 1.000), (0.060, 0.745, 1.010)]
+    if sail is not None:
+        f = make_frame((side * sail[0], 0.0, 0.0), side, 0)
+        bottom, top = sail[1], sail[2]
     rb = [bm.verts.new(f(u, y, z)) for (u, y, z) in bottom]
     rt = [bm.verts.new(f(u, y, z)) for (u, y, z) in top]
     faces = bridge(bm, rb, rt)
@@ -270,4 +275,5 @@ def main():
     print('SEDAN_MIRRORS_COMPLETE', json.dumps(report['created']), flush=True)
 
 
-main()
+if __name__ == '__main__':
+    main()
