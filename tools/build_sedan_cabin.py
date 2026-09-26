@@ -28,9 +28,11 @@ REPORT = ROOT / 'artifacts/reports/sedan-cabin.json'
 REPLACED = ('Wiper_Pivot_', 'WiperArm', 'WiperBlade', 'WiperSpine', 'Vent', 'Screen_Title', 'Screen_Subtitle')
 
 # Wipers: pivot x, blade length. Both park pointing to the passenger side (+X) along the cowl, like a tandem system.
-WIPERS = [(-0.44, 0.60, -0.045, 0.060),   # driver: blade offset up the glass (−Y, +Z) — parks above the passenger blade
-          (0.07, 0.52, -0.022, 0.030)]
-PIVOT_Y, PIVOT_Z = 0.975, 0.927
+# The windshield is raked (tools/build_sedan_exterior.py: foot y 1.28, z 0.955, slope dz/dy ≈ -0.54): the pivots sit on
+# the cowl just below the glass and the blades' offsets follow the glass.
+WIPERS = [(-0.44, 0.60, -0.045, 0.034),   # driver: blade offset up the glass (−Y, +Z) — parks above the passenger blade
+          (0.07, 0.52, -0.022, 0.021)]
+PIVOT_Y, PIVOT_Z = 1.235, 0.972
 # Vents: x centre, width. Side vents sit outboard of the instrument hood (x −0.64…−0.12).
 VENTS = [('Vent_L', -0.695, 0.095), ('Vent_C', 0.065, 0.21), ('Vent_R', 0.695, 0.095)]
 

@@ -43,7 +43,7 @@ REPLACED = ('FrontWing', 'DoorFront_', 'DoorRear_', 'RearQuarter', 'Hood', 'Trun
             'Shell_RearUpperFacia', 'Shell_Undertray', 'Shell_Wheelhouse', 'WheelArchLiner', 'PanelGap',
             'Handle_Door', 'A_Pillar', 'B_Pillar', 'C_Pillar', 'Seal_', 'Glass_Front_', 'Glass_Rear',
             'MirrorHousing_', 'MirrorArm_', 'MirrorBase_', 'MirrorRepeater_', 'MirrorRecess_', 'MirrorSurface_L',
-            'MirrorSurface_R', 'Body_', 'Ext_', 'Headlight', 'Taillight', 'TurnSignal', 'ReverseLight',
+            'MirrorSurface_R', 'Glass_Windshield', 'Body_', 'Ext_', 'Headlight', 'Taillight', 'TurnSignal', 'ReverseLight',
             'Diffuser', 'Intake_Lower', 'FrontLamp', 'FogLamp', 'Chrome_')
 REPLACED_EXACT = ('Roof',)
 KEEP = ('RoofLamp',)
@@ -53,13 +53,13 @@ CONTRACT = ('Wheel_FL', 'Wheel_FR', 'Wheel_RL', 'Wheel_RR', 'SteeringWheel_Pivot
             'Glass_Rear_R')
 
 # ---------------------------------------------------------------------------------------------- dimensions
-W0 = 0.893            # half width of the body side
-Y_NOSE, Y_TAIL = 2.26, -2.27
-R_NOSE, R_TAIL = 0.36, 0.30          # plan-view corner radii
+W0 = 0.872            # half width of the body side between the wheel-arch flares (flares reach ~0.894)
+Y_NOSE, Y_TAIL = 2.27, -2.27
+R_NOSE, R_TAIL = 0.46, 0.34          # plan-view corner radii: a rounded nose, a softer tail
 WHEEL_Y, WHEEL_Z = (1.36, -1.36), 0.34
 ARCH_R = 0.388                       # tyre radius 0.327
-COWL_Y = 1.04
-DECK_Y = -1.53                       # rear window foot / boot lid front
+COWL_Y = 1.30                        # windshield foot: the A-pillar starts right above the front wheel
+DECK_Y = -1.62                       # rear window foot / boot lid front
 WALL = 0.03                          # greenhouse wall thickness
 
 
@@ -73,30 +73,30 @@ def lerp(p, q, t):
 
 
 def belt(y):
-    """Window line: 0.935 at the A-pillar, rising towards the C-pillar."""
-    return lerp(0.935, 0.992, smooth((0.95 - y) / 2.40))
+    """Window line: high, rising towards the C-pillar."""
+    return lerp(0.945, 1.0, smooth((1.2 - y) / 2.6))
 
 
 def z_top(y):
     """Height of the lower body's upper surface along the car (hood, belt, boot lid)."""
-    if y >= COWL_Y:                       # hood: falls to the nose, rounded leading edge above the lamps
-        z = lerp(0.933, 0.878, smooth((y - COWL_Y) / (Y_NOSE - 0.14 - COWL_Y)) ** 0.9)
-        if y > Y_NOSE - 0.20:
-            z -= 0.05 * ((y - (Y_NOSE - 0.20)) / 0.20) ** 2
+    if y >= COWL_Y:                       # hood: slopes down to a rounded nose over the lamps
+        z = lerp(0.955, 0.875, smooth((y - COWL_Y) / (Y_NOSE - 0.12 - COWL_Y)))
+        if y > Y_NOSE - 0.25:
+            z -= 0.07 * ((y - (Y_NOSE - 0.25)) / 0.25) ** 2
         return z
-    if y >= DECK_Y + 0.05:
+    if y >= DECK_Y + 0.04:
         return belt(y)
-    # boot lid: short high deck with a small lip, rounded trailing edge
-    z = lerp(belt(DECK_Y + 0.05), 1.012, smooth((DECK_Y + 0.05 - y) / 0.18))
-    if y < Y_TAIL + 0.28:
-        z -= 0.07 * ((Y_TAIL + 0.28 - y) / 0.28) ** 2
+    # boot lid: short high deck with a ducktail lip, rounded trailing edge
+    z = lerp(belt(DECK_Y + 0.04), 1.025, smooth((DECK_Y + 0.04 - y) / 0.30))
+    if y < Y_TAIL + 0.30:
+        z -= 0.10 * ((Y_TAIL + 0.30 - y) / 0.30) ** 2
     return z
 
 
 def z_bottom(y):
     if y > 0:
-        return 0.215 + 0.08 * smooth((y - 1.85) / 0.42)
-    return 0.215 + 0.09 * smooth((-y - 1.80) / 0.45)
+        return 0.215 + 0.085 * smooth((y - 1.80) / 0.45)
+    return 0.215 + 0.095 * smooth((-y - 1.78) / 0.45)
 
 
 def half_width(y):
@@ -110,8 +110,8 @@ def half_width(y):
 
 
 def shoulder_z(y):
-    """Shoulder crease: from the headlamp top it rises along the car to the tail lamps."""
-    return lerp(0.775, 0.855, smooth((1.9 - y) / 3.9))
+    """Shoulder crease: from the headlamp it rises along the car to the tail lamps."""
+    return lerp(0.79, 0.875, smooth((1.9 - y) / 3.9))
 
 
 def x_crease(y):
@@ -120,26 +120,33 @@ def x_crease(y):
         return None, 0.0
     t = (1.0 - y) / 2.2
     w = smooth((1.05 - y) / 0.22) * smooth((y + 1.25) / 0.25)
-    return lerp(0.44, 0.73, t), w
+    return lerp(0.44, 0.74, t), w
+
+
+def arch_flare(y, z):
+    """0..1: how much the wheel-arch flare pushes the skin out at (y, z)."""
+    f = 0.0
+    for wy in WHEEL_Y:
+        r = math.hypot(y - wy, z - WHEEL_Z)
+        if z > 0.26:
+            f = max(f, smooth((ARCH_R + 0.21 - r) / 0.13))
+    return f
 
 
 def side_offset(z, y):
-    """Inward offset of the side surface from the half width at height z."""
+    """Inward offset of the side surface from the half width at height z (negative = outwards)."""
     zs = shoulder_z(y)
-    o = 0.0
-    # tumblehome above the shoulder crease, a hint of it below
+    o = 0.022 * ((z - 0.58) / 0.30) ** 2 if z < 0.88 else 0.022 + (z - 0.88) * 0.1   # barrel-shaped side
     if z > zs:
-        o += 0.006 + (z - zs) * 0.20
-    elif z > zs - 0.02:
-        o += 0.006 * smooth((z - (zs - 0.02)) / 0.02)
-    # lower body tucks under towards the sill
-    if z < 0.40:
-        o += 0.012 * smooth((0.40 - z) / 0.12)
-    # concave sweep below the X crease: sharp upper edge, fades out downwards
+        o += 0.004 + (z - zs) * 0.15                                                        # tumblehome above the shoulder
+    elif z > zs - 0.015:
+        o += 0.004 * smooth((z - (zs - 0.015)) / 0.015)
+    if z < 0.34:
+        o += 0.028 * smooth((0.34 - z) / 0.10)                                              # rocker tucks under
+    o -= 0.024 * arch_flare(y, z) * (1.0 - smooth((z - zs + 0.03) / 0.06))                  # flared arches
     zc, w = x_crease(y)
-    if zc is not None and w > 0:
-        if z < zc:
-            o += 0.011 * w * smooth((zc - z) / 0.012) * smooth((z - (zc - 0.26)) / 0.14)
+    if zc is not None and w > 0 and z < zc:                                                 # concave X sweep
+        o += 0.014 * w * smooth((zc - z) / 0.012) * smooth((z - (zc - 0.26)) / 0.14)
     return o
 
 
@@ -157,7 +164,7 @@ def section(y, n_top=8):
         pts.append((w - side_offset(z, y), z))
     # rounded upper edge into the top surface
     xo, zo = pts[-1]
-    r = max(0.02, min(0.05, zt - zo))
+    r = max(0.02, min(0.06, zt - zo))
     cx, cz = xo - r * 0.9, zt - r
     for k in range(1, 7):
         t = k / 6 * math.pi / 2
@@ -372,23 +379,28 @@ def tube(bm, pts, radius, sides=6, mat=0, closed=False):
 
 # ---------------------------------------------------------------------------------------------- glass planes
 def xs(z):
-    """Outer side plane of the greenhouse (right side): tumblehome from the belt to the roof."""
-    return 0.868 - 0.36 * (z - 0.93)
+    """Outer side plane of the greenhouse (right side): strong tumblehome from the belt to the roof."""
+    return 0.80 - 0.38 * (z - 0.93)
 
 
-SIDE_N = Vector((1.0, 0.0, 0.36)).normalized()
-WS_N = Vector((0.0, 0.6936, 0.7204))                      # windshield (existing glass, wipers depend on it)
-WS_D = 1.3845
+SIDE_N = Vector((1.0, 0.0, 0.38)).normalized()
+# Windshield: raked, from the cowl above the front wheel (y 1.28, z 0.955) to the roof (y 0.40, z 1.432).
+WS_A, WS_B = Vector((0, 1.28, 0.955)), Vector((0, 0.36, 1.458))
+_ws_dir = (WS_B - WS_A).normalized()
+WS_N = Vector((0, -_ws_dir.z, _ws_dir.y))
+if WS_N.y < 0:
+    WS_N = -WS_N
+WS_D = WS_N.dot(WS_A)
 
 
 def y_ws(z):
     return (WS_D - WS_N.z * z) / WS_N.y
 
 
-# Rear window: raked, from the boot lid (y -1.53, z 0.985) to the roof (y -0.72, z 1.405).
-RW_A, RW_B = Vector((0, DECK_Y, 0.985)), Vector((0, -0.72, 1.405))
+# Rear window: raked, from the boot lid to the roof.
+RW_A, RW_B = Vector((0, DECK_Y, 0.995)), Vector((0, -0.84, 1.442))
 _rw_dir = (RW_B - RW_A).normalized()
-RW_N = Vector((0, -_rw_dir.z, _rw_dir.y)).normalized()     # outward: back and up
+RW_N = Vector((0, -_rw_dir.z, _rw_dir.y)).normalized()
 if RW_N.y > 0:
     RW_N = -RW_N
 
@@ -397,26 +409,37 @@ def y_rw(z):
     return lerp(RW_A.y, RW_B.y, (z - RW_A.z) / (RW_B.z - RW_A.z))
 
 
-ROOF_PEAK = 1.452
-ROOF_F = (Vector((0, 0.52, 1.428)), Vector((0, 0.05, ROOF_PEAK)))     # front roof facet (two points in YZ)
-ROOF_R = (Vector((0, -0.35, ROOF_PEAK)), Vector((0, -0.74, 1.424)))   # rear roof facet
+# Arched roof: z = ROOF_PEAK - ROOF_K (y - ROOF_Y0)^2, built from tangent planes.
+ROOF_PEAK, ROOF_Y0 = 1.49, -0.17
+ROOF_K = (ROOF_PEAK - (WS_B.z + 0.004)) / (WS_B.y - ROOF_Y0) ** 2
 
 
-def facet_plane(p, q, outward_up=True):
-    d = (q - p).normalized()
-    n = Vector((0, -d.z, d.y))
-    if n.z < 0:
-        n = -n
-    return n, p
+def roof_z(y):
+    return ROOF_PEAK - ROOF_K * (y - ROOF_Y0) ** 2
+
+
+def roof_planes(o):
+    out = []
+    for y in (0.42, 0.26, 0.10, -0.05, -0.17, -0.30, -0.46, -0.62, -0.82):
+        dz = -2 * ROOF_K * (y - ROOF_Y0)
+        n = Vector((0, -dz, 1.0)).normalized()
+        out.append((n, Vector((0, y, roof_z(y))) + n * o))
+    return out
+
+
+def windshield_quad():
+    zb, zt = 0.955, WS_B.z - 0.004
+    return [(-(xs(zb) - 0.075), y_ws(zb), zb), (xs(zb) - 0.075, y_ws(zb), zb),
+            (xs(zt) - 0.07, y_ws(zt), zt), (-(xs(zt) - 0.07), y_ws(zt), zt)]
 
 
 def side_glass_outlines():
     """Door glass outlines (y, z) of the right side."""
-    zt = 1.39
+    zt = 1.42
     yf = y_ws(0.95) - 0.07
     front = [(yf, belt(yf) - 0.02), (y_ws(zt) - 0.06, zt), (-0.135, zt), (-0.135, belt(-0.135) - 0.02)]
-    yr = -1.02
-    rear = [(-0.225, belt(-0.225) - 0.02), (-0.225, zt), (-0.60, zt), (yr, belt(yr) - 0.02)]
+    yr = -1.08
+    rear = [(-0.225, belt(-0.225) - 0.02), (-0.225, zt), (-0.66, zt), (yr, belt(yr) - 0.02)]
     return front, rear
 
 
@@ -440,38 +463,50 @@ def lower_body():
 
 def gh_planes(o, floor):
     return [
-        (WS_N, Vector((0, 1.025, 0.935)) + WS_N * (0.006 + o)),
+        (WS_N, WS_A + WS_N * (0.006 + o)),
         (RW_N, RW_A + RW_N * (0.006 + o)),
-        (SIDE_N, Vector((0.868, 0, 0.93)) + SIDE_N * o),
-        (Vector((-SIDE_N.x, 0, SIDE_N.z)), Vector((-0.868, 0, 0.93)) + Vector((-SIDE_N.x, 0, SIDE_N.z)) * o),
-        (Vector((0, 0, 1)), Vector((0, 0, ROOF_PEAK + o))),
-        (facet_plane(*ROOF_F)[0], ROOF_F[0] + facet_plane(*ROOF_F)[0] * o),
-        (facet_plane(*ROOF_R)[0], ROOF_R[0] + facet_plane(*ROOF_R)[0] * o),
+        (SIDE_N, Vector((xs(0.93), 0, 0.93)) + SIDE_N * o),
+        (Vector((-SIDE_N.x, 0, SIDE_N.z)), Vector((-xs(0.93), 0, 0.93)) + Vector((-SIDE_N.x, 0, SIDE_N.z)) * o),
         (Vector((0, 0, -1)), Vector((0, 0, floor))),
-    ]
+    ] + roof_planes(o)
 
 
 def greenhouse():
-    skip = lambda na, nb: na.z < -0.99 or nb.z < -0.99
-    return convex_solid(gh_planes(0.0, 0.925), bevel=0.045, bevel_skip=skip, seg=6)
+    skip = lambda na, nb: na.z < -0.99 or nb.z < -0.99 or (na.z > 0.95 and nb.z > 0.95)
+    return convex_solid(gh_planes(0.0, 0.925), bevel=0.05, bevel_skip=skip, seg=6)
 
 
 def cabin_cavity():
-    extra = [(Vector((1, 0, 0)), Vector((0.835, 0, 0))), (Vector((-1, 0, 0)), Vector((-0.835, 0, 0))),
-             (Vector((0, 1, 0)), Vector((0, 1.04, 0))), (Vector((0, -1, 0)), Vector((0, -1.36, 0)))]
-    return convex_solid(gh_planes(-WALL, 0.29) + extra)
+    """The cabin in three convex pieces: below the shoulder (to the door skins), the band up to the belt
+    (window sills), and the greenhouse."""
+    ends = [(Vector((0, 1, 0)), Vector((0, 1.04, 0))), (Vector((0, -1, 0)), Vector((0, -1.36, 0)))]
+    glass = [(WS_N, WS_A + WS_N * (0.006 - WALL)), (RW_N, RW_A + RW_N * (0.006 - WALL))]
+    def piece(half, z0, z1, more=()):
+        return [(Vector((1, 0, 0)), Vector((half, 0, 0))), (Vector((-1, 0, 0)), Vector((-half, 0, 0))),
+                (Vector((0, 0, -1)), Vector((0, 0, z0))), (Vector((0, 0, 1)), Vector((0, 0, z1)))] + ends + glass + list(more)
+    out = []
+    for planes in (piece(0.835, 0.29, 0.86), piece(0.79, 0.85, 0.95),
+                   gh_planes(-WALL, 0.90) + [(Vector((0, -1, 0)), Vector((0, -1.60, 0)))]):
+        out.append(convex_solid(planes))
+    return out
+
+
+def cowl_cavity():
+    """Space under the raked windshield, above the cowl top (the dashboard's top pad sits in it)."""
+    extra = [(Vector((1, 0, 0)), Vector((0.80, 0, 0))), (Vector((-1, 0, 0)), Vector((-0.80, 0, 0))),
+             (Vector((0, -1, 0)), Vector((0, 0.9, 0)))]
+    return convex_solid(gh_planes(-WALL, belt(1.1) + 0.004) + extra)
 
 
 def rear_glass_quad():
-    zb, zt = 0.99, 1.40
+    zb, zt = 1.003, RW_B.z - 0.006
     ya, yb = y_rw(zb), y_rw(zt)
     xa, xb = xs(zb) - 0.075, xs(zt) - 0.065
     return [(-xa, ya, zb), (xa, ya, zb), (xb, yb, zt), (-xb, yb, zt)]
 
 
 def window_cutters(bm):
-    ws = [(-0.78, 1.025, 0.935), (0.78, 1.025, 0.935), (0.636, 0.542, 1.40), (-0.636, 0.542, 1.40)]
-    prism(bm, inset_polygon(ws, WS_N, 0.022), WS_N, -0.2, 0.2)
+    prism(bm, inset_polygon(windshield_quad(), WS_N, 0.022), WS_N, -0.2, 0.2)
     prism(bm, inset_polygon(rear_glass_quad(), RW_N, 0.024), RW_N, -0.2, 0.2)
     front, rear = side_glass_outlines()
     for side in (-1, 1):
@@ -620,22 +655,22 @@ def _pw(keys):
     return f
 
 
-HEAD = Strip(0.30, 0.868, _pw([(0, 0.672), (0.4, 0.660), (0.8, 0.672), (1.0, 0.712)]),
-             _pw([(0, 0.748), (0.12, 0.782), (0.7, 0.796), (1.0, 0.786)]))
-GRILLE = Strip(-0.265, 0.265, _pw([(0, 0.712), (0.5, 0.704), (1, 0.712)]), _pw([(0, 0.758), (0.5, 0.768), (1, 0.758)]))
-INTAKE = Strip(-0.46, 0.46, _pw([(0, 0.35), (0.2, 0.33), (0.8, 0.33), (1, 0.35)]),
+HEAD = Strip(0.28, 0.86, _pw([(0, 0.622), (0.4, 0.61), (0.8, 0.622), (1.0, 0.665)]),
+             _pw([(0, 0.722), (0.12, 0.752), (0.7, 0.768), (1.0, 0.758)]))
+GRILLE = Strip(-0.265, 0.265, _pw([(0, 0.596), (0.5, 0.585), (1, 0.596)]), _pw([(0, 0.70), (0.5, 0.715), (1, 0.70)]))
+INTAKE = Strip(-0.52, 0.52, _pw([(0, 0.36), (0.2, 0.33), (0.8, 0.33), (1, 0.36)]),
                _pw([(0, 0.49), (0.28, 0.535), (0.72, 0.535), (1, 0.49)]))
-FOG = Strip(0.575, 0.705, _pw([(0, 0.40), (0.5, 0.365), (1, 0.39)]), _pw([(0, 0.425), (0.5, 0.455), (1, 0.44)]))
-TAIL = Strip(0.36, 0.886, _pw([(0, 0.768), (0.5, 0.762), (0.85, 0.782), (1.0, 0.805)]),
-             _pw([(0, 0.868), (0.25, 0.893), (0.8, 0.898), (1.0, 0.884)]), front=False)
+FOG = Strip(0.60, 0.73, _pw([(0, 0.40), (0.5, 0.37), (1, 0.39)]), _pw([(0, 0.43), (0.5, 0.46), (1, 0.44)]))
+TAIL = Strip(0.30, 0.88, _pw([(0, 0.765), (0.5, 0.755), (0.85, 0.775), (1.0, 0.80)]),
+             _pw([(0, 0.895), (0.25, 0.92), (0.8, 0.925), (1.0, 0.91)]), front=False)
 DIFFUSER = Strip(-0.62, 0.62, _pw([(0, 0.31), (1, 0.31)]), _pw([(0, 0.40), (0.5, 0.415), (1, 0.40)]), front=False)
-PLATE_REAR_Z = (0.705, 0.817)
+PLATE_REAR_Z = (0.636, 0.748)
 
 
 def lamp_cutters(surf):
     """Pocket solids projected onto the body: (name, bmesh, material)."""
     out = []
-    for name, strip, sides, mat, depth in (('head', HEAD, (-1, 1), 'Chrome', 0.05), ('grille', GRILLE, (1,), 'Rubber', 0.05),
+    for name, strip, sides, mat, depth in (('head', HEAD, (-1, 1), 'Interior_Graphite', 0.05), ('grille', GRILLE, (1,), 'Rubber', 0.05),
                                            ('intake', INTAKE, (1,), 'Rubber', 0.06), ('fog', FOG, (-1, 1), 'Rubber', 0.03),
                                            ('tail', TAIL, (-1, 1), 'Rubber', 0.03), ('diffuser', DIFFUSER, (1,), 'Interior_Graphite', 0.012)):
         bm = bmesh.new()
@@ -654,7 +689,8 @@ def build_shell(root):
     body = new_obj('Body_Shell', lower_body(), ['Paint_Atlantic'])
     gh = new_obj('Ext_Greenhouse', greenhouse(), ['Paint_Atlantic'])
     bool_apply(body, [gh], 'UNION', 'greenhouse')
-    bool_apply(body, [cutter_obj('Ext_Cavity', cabin_cavity(), 'Interior_Stone')], 'DIFFERENCE', 'cavity')
+    bool_apply(body, [cutter_obj('Ext_Cavity%d' % i, bm, 'Interior_Stone') for i, bm in enumerate(cabin_cavity())] +
+               [cutter_obj('Ext_CowlCavity', cowl_cavity(), 'Interior_Graphite')], 'DIFFERENCE', 'cavity')
     bm = bmesh.new(); wheel_tubs(bm)
     bool_apply(body, [cutter_obj('Ext_Tubs', bm, 'Rubber')], 'UNION', 'tubs')
     cut = []
@@ -721,7 +757,8 @@ def panel_gaps(root, surf):
     lines = []
     for s in (-1, 1):
         # doors
-        lines.append(side_probes(s, [(0.975, belt(0.975) - 0.03), (0.975, 0.62), (0.905, 0.44), (0.895, 0.30)]))
+        ya = y_ws(belt(1.2)) - 0.075
+        lines.append(side_probes(s, [(ya, belt(ya) - 0.028), (1.02, 0.80), (0.975, 0.62), (0.905, 0.44), (0.895, 0.30)]))
         lines.append(side_probes(s, [(-0.18, belt(-0.18) - 0.03), (-0.18, 0.30)]))
         lines.append(side_probes(s, [(0.895, 0.30), (-0.18, 0.30)]))
         rear = [(-1.085, belt(-1.085) - 0.03), (-1.095, 0.80)] + arc(-1.36, WHEEL_Z, ARCH_R + 0.055, 56, 12) + [(-0.89, 0.30)]
@@ -740,12 +777,12 @@ def panel_gaps(root, surf):
     lines.append(top_probes([(-0.70, COWL_Y + 0.035), (0.70, COWL_Y + 0.035)]))
     lines.append(top_probes([(-0.60, Y_NOSE - 0.17), (-0.3, Y_NOSE - 0.105), (0.3, Y_NOSE - 0.105), (0.60, Y_NOSE - 0.17)]))
     # front bumper upper joint under the lamps and grille
-    lines.append(end_probes(True, [(-0.86, 0.688), (-0.53, 0.643), (-0.30, 0.64), (-0.27, 0.693), (0.27, 0.693), (0.30, 0.64), (0.53, 0.643), (0.86, 0.688)]))
+    lines.append(end_probes(True, [(-0.86, 0.64), (-0.53, 0.593), (-0.30, 0.59), (-0.275, 0.575), (0.275, 0.575), (0.30, 0.59), (0.53, 0.593), (0.86, 0.64)]))
     # boot lid front edge and its lower edge (runs below the plate recess, climbs to the lamps)
     lines.append(top_probes([(-0.66, DECK_Y - 0.035), (0.66, DECK_Y - 0.035)]))
-    lines.append(end_probes(False, [(-0.35, 0.765), (-0.345, 0.69), (0.345, 0.69), (0.35, 0.765)]))
+    lines.append(end_probes(False, [(-0.29, 0.765), (-0.285, 0.62), (0.285, 0.62), (0.29, 0.765)]))
     # rear bumper upper joint
-    lines.append(end_probes(False, [(-0.86, 0.61), (-0.4, 0.60), (0.4, 0.60), (0.86, 0.61)]))
+    lines.append(end_probes(False, [(-0.86, 0.59), (-0.4, 0.575), (0.4, 0.575), (0.86, 0.59)]))
     n = 0
     for probes in lines:
         pts = project_line(surf, probes)
@@ -757,18 +794,34 @@ def panel_gaps(root, surf):
     return o, n
 
 
+def ribbon(bm, surf, front, xz, width, lift=0.002, step=0.01, mat=0):
+    """A flat band of the given width lying on the nose/tail surface along a polyline seen from the front."""
+    pts = dense([(x, z, 0.0) for x, z in xz], step)
+    rows = [[], []]
+    for i, p in enumerate(pts):
+        q0, q1 = pts[max(i - 1, 0)], pts[min(i + 1, len(pts) - 1)]
+        t = Vector((q1.x - q0.x, q1.y - q0.y)).normalized()
+        nrm = Vector((-t.y, t.x))
+        for k, sgn in enumerate((-1, 1)):
+            x, z = p.x + nrm.x * sgn * width / 2, p.y + nrm.y * sgn * width / 2
+            loc, n = surf.end(front, x, z)
+            rows[k].append(None if loc is None else (loc + n * lift, n))
+    rows = [[r0, r1] for r0, r1 in zip(rows[0], rows[1]) if r0 is not None and r1 is not None]
+    if len(rows) >= 2:
+        patch_mesh(bm, rows, thickness=0.004, mat=mat)
+
+
 def chrome_strokes(root, surf):
     """Chrome strokes that make an X with the grille: from the headlamp's inner end down and out to the fog lamp;
     a chrome bar along the grille and the boot lid."""
     bm = bmesh.new()
     for s in (-1, 1):
-        stroke = [(s * 0.305, 0.665), (s * 0.35, 0.615), (s * 0.43, 0.55), (s * 0.52, 0.49), (s * 0.585, 0.455)]
-        pts = project_line(surf, end_probes(True, stroke), lift=-0.008)
-        if len(pts) > 2:
-            tube(bm, pts, 0.018, 12, 0)
-    pts = project_line(surf, end_probes(True, [(-0.27, 0.73), (0.27, 0.73)]), lift=-0.01)
-    tube(bm, pts, 0.006, 8, 0)
-    pts = project_line(surf, end_probes(False, [(-0.34, 0.845), (0.34, 0.845)]), lift=0.003)
+        stroke = [(s * 0.272, 0.615), (s * 0.32, 0.575), (s * 0.41, 0.52), (s * 0.51, 0.48), (s * 0.585, 0.455), (s * 0.60, 0.40), (s * 0.63, 0.35)]
+        ribbon(bm, surf, True, stroke, 0.032, lift=0.0025)
+    for zz in (0.625, 0.65, 0.675):
+        pts = project_line(surf, end_probes(True, [(-0.25, zz), (0.25, zz)]), lift=-0.012)
+        tube(bm, pts, 0.005, 8, 0)
+    pts = project_line(surf, end_probes(False, [(-0.28, 0.83), (0.28, 0.83)]), lift=0.003)
     tube(bm, pts, 0.005, 8, 0)
     o = new_obj('Chrome_Strokes', bm, ['Chrome'], root, smooth_angle=50)
     recentre(o)
@@ -844,7 +897,7 @@ def door_handles(root, surf):
 def b_pillar_trim(root):
     bm = bmesh.new()
     for s in (-1, 1):
-        yz = [(-0.130, belt(-0.13) + 0.004), (-0.230, belt(-0.23) + 0.004), (-0.230, 1.405), (-0.130, 1.405)]
+        yz = [(-0.130, belt(-0.13) + 0.004), (-0.230, belt(-0.23) + 0.004), (-0.230, 1.435), (-0.130, 1.435)]
         poly = [(s * (xs(z) + 0.0015 / SIDE_N.x), y, z) for y, z in yz]
         prism(bm, poly, (s * SIDE_N.x, 0, SIDE_N.z), 0.0, 0.002)
     o = new_obj('Body_BPillarTrim', bm, ['Rubber'], root, smooth_angle=30, weighted=False)
@@ -864,6 +917,12 @@ def glass(root):
             if f.normal.x * s < 0:
                 f.normal_flip()
             made.append(new_obj(name + tag, bm, ['Glass'], root))
+    bm = bmesh.new()
+    f = bm.faces.new([bm.verts.new(p) for p in windshield_quad()])
+    f.normal_update()
+    if f.normal.dot(WS_N) < 0:
+        f.normal_flip()
+    made.append(new_obj('Glass_Windshield', bm, ['Glass'], root))
     bm = bmesh.new()
     q = [Vector(p) - RW_N * 0.0 for p in rear_glass_quad()]
     f = bm.faces.new([bm.verts.new(p) for p in q])
@@ -887,7 +946,7 @@ def lamps(root, surf):
         # lenses, clear cover following the skin
         bm = bmesh.new()
         patch_mesh(bm, HEAD.grid(surf, 28, 5, s, inset=0.046), mat=0)
-        add('FrontLampReflector_' + tag, bm, ['Chrome'])
+        add('FrontLampReflector_' + tag, bm, ['Interior_Graphite'])
         bm = bmesh.new()
         patch_mesh(bm, HEAD.grid(surf, 28, 1, s, inset=0.02, u_range=(0.08, 0.97), v_range=(0.80, 0.93)), thickness=0.006, mat=0)
         for uc in (0.30, 0.52):
@@ -977,13 +1036,28 @@ def exhaust(root):
 def mirrors(root):
     import build_sedan_mirrors as mr
     made = []
-    zb = belt(0.88)
+    ya = y_ws(belt(1.2)) - 0.085            # front edge of the door glass at the belt
+    zb = belt(ya)
     sail_x = xs(zb) - 0.006
-    bottom = [(0.000, 0.80, zb - 0.05), (0.000, 0.955, zb - 0.05), (0.030, 0.93, zb - 0.01), (0.030, 0.815, zb - 0.01)]
-    top = [(0.004, 0.815, zb + 0.02), (0.004, 0.905, zb + 0.01), (0.078, 0.87, zb + 0.05), (0.078, 0.825, zb + 0.055)]
+    y0, y1 = ya - 0.17, ya
+    bottom = [(0.000, y0, zb - 0.05), (0.000, y1, zb - 0.05), (0.030, y1 - 0.025, zb - 0.01), (0.030, y0 + 0.015, zb - 0.01)]
+    top = [(0.004, y0 + 0.015, zb + 0.02), (0.004, y1 - 0.05, zb + 0.01), (0.078, y1 - 0.085, zb + 0.05), (0.078, y0 + 0.025, zb + 0.055)]
     for s in (-1, 1):
-        made += mr.door_mirror(root, s, anchor_xyz=(sail_x + 0.07, 0.815, zb + 0.05), sail=(sail_x, bottom, top))
+        made += mr.door_mirror(root, s, anchor_xyz=(sail_x + 0.07, y0 + 0.015, zb + 0.05), sail=(sail_x, bottom, top))
     return made
+
+
+def wipers(root):
+    """The windshield moved: park the wiper pivots on the new cowl (blades are rebuilt by build_sedan_cabin.py)."""
+    moved = []
+    for o in root.children:
+        if o.name.startswith('Wiper_Pivot_'):
+            o.location.y, o.location.z = WIPER_PIVOT
+            moved.append(o.name)
+    return moved
+
+
+WIPER_PIVOT = (1.235, 0.972)
 
 
 # ---------------------------------------------------------------------------------------------- main
@@ -1035,6 +1109,7 @@ def render_preview(out, views=None):
         sc.render.filepath = str(out / f'{name}.png')
         bpy.ops.render.render(write_still=True)
     shot('front34', (4.2, 5.8, 1.9), (0, 0, 0.75))
+    shot('hero', (3.3, 5.6, 1.15), (0.1, 0.4, 0.62), 40)
     shot('rear34', (-4.2, -5.8, 2.1), (0, 0, 0.75))
     shot('side', (7.5, 0, 1.0), (0, 0, 0.7), 40)
     shot('top', (0.01, 0, 7.5), (0, 0, 0.5), 35)
@@ -1083,6 +1158,7 @@ def main():
     made += [o.name for o in lamps(root, skin)]
     made += [o.name for o in plates(root, skin)]
     made += [o.name for o in mirrors(root)]
+    report['wipersMoved'] = wipers(root)
     report['created'] = sorted(made)
     report['gapPointsProjected'] = n_gap
 

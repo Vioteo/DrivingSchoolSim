@@ -254,7 +254,7 @@ def rear_bench(rear, back, car):
 
 # ---------------------------------------------------------------------------------------------- dashboard
 # Dash profile in (y, z): windshield foot → top pad → lip over the face → face → knee roll → underside.
-DASH_UPPER = [(0.995, 0.955), (0.88, 0.986), (0.76, 1.002), (0.66, 1.004), (0.60, 0.995), (0.565, 0.975),
+DASH_UPPER = [(1.24, 0.952), (1.10, 0.968), (0.96, 0.988), (0.84, 0.998), (0.76, 1.002), (0.66, 1.004), (0.60, 0.995), (0.565, 0.975),
               (0.54, 0.950), (0.528, 0.922)]
 DASH_LOWER = [(0.528, 0.922), (0.524, 0.87), (0.526, 0.81), (0.538, 0.772), (0.57, 0.745), (0.64, 0.726),
               (0.78, 0.716), (0.995, 0.716)]
@@ -279,7 +279,8 @@ def dash_loft(profile, name, mat, car, closed_back=True):
         e = smooth((abs(x) - 0.70) / 0.10)
         ring = []
         for y, z in profile:
-            ring.append(bm.verts.new((x, y + 0.025 * e * (1 if y < 0.7 else 0), z)))
+            xc = math.copysign(min(abs(x), ex.xs(max(z, 0.93)) - 0.04), x)     # stay inside the A-pillars
+            ring.append(bm.verts.new((xc, y + 0.025 * e * (1 if y < 0.7 else 0), z)))
         rings.append(ring)
     n = len(profile)
     loop = closed_back
@@ -294,7 +295,7 @@ def dash_loft(profile, name, mat, car, closed_back=True):
 
 def dashboard(car):
     made = []
-    up = DASH_UPPER + [(0.995, 0.922)]
+    up = DASH_UPPER + [(1.00, 0.922), (1.24, 0.93)]
     made.append(dash_loft(up, 'Dashboard', 'Interior_Graphite', car))
     made.append(dash_loft(DASH_LOWER + [(0.995, 0.922)], 'Dash_Lower', 'Interior_Stone', car))
     # screen housing: the centre screen (Infotainment, kept) stands in a hood that grows out of the top pad
@@ -364,7 +365,8 @@ def console(car):
 
 
 # ---------------------------------------------------------------------------------------------- doors
-X_CARD = 0.835          # cavity wall (the door's inner skin)
+X_CARD = 0.835          # cavity wall (the door's inner skin) below the shoulder
+CARD_TOP = 0.856        # above it the window sill (body, x 0.79) takes over
 
 
 def door_card(car, side, front):
@@ -374,12 +376,10 @@ def door_card(car, side, front):
     tag = ('Front' if front else 'Rear') + ('_R' if s > 0 else '_L')
     if front:
         yf, yr = 0.535, -0.14
-        outline = [(yr, 0.33), (0.95, 0.33), (0.95, 0.72), (0.60, 0.735), (yf, 0.80), (yf, ex.belt(yf) - 0.012),
-                   (yr, ex.belt(yr) - 0.012)]
+        outline = [(yr, 0.33), (0.95, 0.33), (0.95, 0.72), (0.60, 0.735), (yf, 0.80), (yf, CARD_TOP), (yr, CARD_TOP)]
     else:
         yf, yr = -0.235, -1.07
-        outline = [(yf, 0.33), (-0.895, 0.33), (-0.93, 0.47), (-0.99, 0.585), (yr, 0.66), (yr, ex.belt(yr) - 0.012),
-                   (yf, ex.belt(yf) - 0.012)]
+        outline = [(yf, 0.33), (-0.895, 0.33), (-0.93, 0.47), (-0.99, 0.585), (yr, 0.66), (yr, CARD_TOP), (yf, CARD_TOP)]
     # the card: a 4 cm slab with softened inner edges
     bm = bmesh.new()
     poly = [(s * X_CARD, y, z) for y, z in outline]
@@ -394,10 +394,10 @@ def door_card(car, side, front):
     bm = bmesh.new()
     y0, y1 = (yr + 0.05, yf - 0.06) if front else (yf - 0.05, yr + 0.08)
     yc, hy = (y0 + y1) / 2, abs(y1 - y0) / 2
-    superbox(bm, (xi - s * 0.004, yc, 0.795), (0.008, hy, 0.062), 0.25)
+    superbox(bm, (xi - s * 0.004, yc, 0.785), (0.008, hy, 0.055), 0.25)
     made.append(obj('Door_Insert_' + tag, bm, ['Seat_Fabric'], car, local=False))
     bm = bmesh.new()
-    ex.tube(bm, [(xi - s * 0.004, yc - hy, 0.868), (xi - s * 0.004, yc + hy, 0.868)], 0.004, 6, 0)
+    ex.tube(bm, [(xi - s * 0.004, yc - hy, 0.846), (xi - s * 0.004, yc + hy, 0.846)], 0.004, 6, 0)
     made.append(obj('Door_Strip_' + tag, bm, ['Satin_Aluminium'], car, local=False))
     # armrest with a pull cup and window switches
     bm = bmesh.new()
@@ -437,20 +437,16 @@ def door_card(car, side, front):
     made.append(obj('Door_SpeakerGrille_' + tag, bm, ['Satin_Aluminium'], car, local=False))
     # rubber window ledge along the belt
     bm = bmesh.new()
-    pts = [(s * (X_CARD - 0.012), y, ex.belt(y) - 0.006) for y in [lerp(yr, yf, k / 12) for k in range(13)]]
-    ex.tube(bm, pts, 0.011, 6, 0)
+    pts = [(s * 0.792, y, ex.belt(y) - 0.004) for y in [lerp(yr, yf, k / 12) for k in range(13)]]
+    ex.tube(bm, pts, 0.009, 6, 0)
     made.append(obj('Door_Ledge_' + tag, bm, ['Rubber'], car, local=False))
     return made
 
 
 # ---------------------------------------------------------------------------------------------- headliner
 def roof_inner(y):
-    """Inner roof height at y (under the exterior's faceted arch)."""
-    zs = []
-    for p, q in (ex.ROOF_F, ex.ROOF_R):
-        t = (y - p.y) / (q.y - p.y)
-        zs.append(lerp(p.z, q.z, t))
-    return min(ex.ROOF_PEAK, *zs) - ex.WALL - 0.004
+    """Inner roof height at y (under the exterior's arched roof)."""
+    return ex.roof_z(y) - ex.WALL - 0.006
 
 
 def headliner(car):
@@ -521,7 +517,7 @@ def steering(pivot):
     superbox(bm, (0, 0.004, -0.115), (0.024, 0.011, 0.06), 0.45)
     made.append(obj('Steering_Spoke', bm, ['Satin_Aluminium'], pivot))
     bm = bmesh.new()
-    superbox(bm, (0, -0.012, -0.012), (0.072, 0.03, 0.058), 0.42,
+    superbox(bm, (0, 0.0, -0.012), (0.072, 0.029, 0.058), 0.42,
              deform=lambda p: Vector((p.x * (1 - 0.18 * smooth(-p.z / 0.058)), p.y, p.z)))
     made.append(obj('Airbag', bm, ['Interior_Graphite'], pivot))
     return made
