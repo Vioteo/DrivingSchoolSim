@@ -23,6 +23,9 @@ namespace DrivingSchool.Presentation
         [Tooltip("Head shift per 1 m/s² of acceleration, metres.")] public float headShiftPerMps2 = 0.006f;
         [Tooltip("Head tilt per 1 m/s² of acceleration, degrees.")] public float headTiltPerMps2 = 0.45f;
         public float headFrequencyHz = 2.2f, headDamping = 0.55f;
+        [Tooltip("How much of the body roll the driver's eyes cancel out (the vestibular reflex keeps the horizon level). " +
+                 "0 = camera rolls with the body, 1 = horizon stays level in turns. Pitch (hills) is always kept.")]
+        [Range(0f, 1f)] public float rollCompensation = 1f;
 
         Camera cam; Transform eye;
         float lookYaw, lookPitch, orbitYaw = 200f, orbitPitch = 18f, orbitDist = 7f;
@@ -74,8 +77,19 @@ namespace DrivingSchool.Presentation
             }
             float scale = headTiltPerMps2 / Mathf.Max(1e-4f, headShiftPerMps2);
             pitch = Mathf.Clamp(headPos.z * scale, -4f, 4f);   // accelerating: head back → looks slightly up (negative pitch = up)
-            roll = Mathf.Clamp(-headPos.x * scale, -4f, 4f);   // turning right: head swings out to the left (positive Z roll = tilt left)
+            roll = 0f;   // no head roll in turns: people keep the horizon level, only the lateral shift remains
             return headPos;
+        }
+
+        /// <summary>Car rotation with the body roll removed (by <see cref="rollCompensation"/>); heading and pitch are kept.</summary>
+        Quaternion LevelledCarRotation()
+        {
+            if (rollCompensation <= 0f) return car.rotation;
+            Vector3 f = car.forward;
+            Vector3 levelUp = Vector3.ProjectOnPlane(Vector3.up, f);
+            if (levelUp.sqrMagnitude < 1e-4f) return car.rotation;   // pointing straight up/down
+            Quaternion level = Quaternion.LookRotation(f, levelUp.normalized);
+            return Quaternion.Slerp(car.rotation, level, rollCompensation);
         }
 
         void LateUpdate()
@@ -103,7 +117,7 @@ namespace DrivingSchool.Presentation
                     p += car.TransformDirection(sway);
                     // Lean a little towards the side window when looking far sideways.
                     p += car.right * Mathf.Sin(lookYaw * Mathf.Deg2Rad) * 0.08f;
-                    transform.SetPositionAndRotation(p, car.rotation * Quaternion.Euler(swayPitch, 0f, swayRoll) * Quaternion.Euler(lookPitch + 4f, lookYaw, 0f));
+                    transform.SetPositionAndRotation(p, LevelledCarRotation() * Quaternion.Euler(swayPitch, 0f, swayRoll) * Quaternion.Euler(lookPitch + 4f, lookYaw, 0f));
                     break;
                 }
                 case Mode.Chase:
