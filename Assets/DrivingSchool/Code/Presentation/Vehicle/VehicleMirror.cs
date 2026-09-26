@@ -121,6 +121,9 @@ namespace DrivingSchool.Presentation
             bool active = viewer.isActiveAndEnabled && (renderEveryNthFrame <= 1 || (Time.frameCount + frameOffset) % renderEveryNthFrame == 0);
             cam.enabled = active;
             if (!active) return;
+            // Sky and background follow the driver camera: weather/time of day change them at run time (F5/F6),
+            // a copy made at start kept the day sky in the mirrors at night.
+            cam.clearFlags = viewer.clearFlags; cam.backgroundColor = viewer.backgroundColor;
 
             Vector3 n = car.TransformDirection(adj * normalInCar), r = car.TransformDirection(adj * rightInCar), u = car.TransformDirection(adj * upInCar);
             Vector3 centre = car.TransformPoint(centreInCar);
