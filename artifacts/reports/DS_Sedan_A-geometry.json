@@ -2,59 +2,11 @@
   "source": "Original procedural authored geometry",
   "objects": [
     {
-      "name": "A_Pillar_Panel_-1",
-      "vertices": 4,
-      "triangles": 2,
-      "materials": [
-        "Paint_Atlantic"
-      ]
-    },
-    {
-      "name": "A_Pillar_Panel_1",
-      "vertices": 4,
-      "triangles": 2,
-      "materials": [
-        "Paint_Atlantic"
-      ]
-    },
-    {
-      "name": "A_Pillar_Trim_-1",
-      "vertices": 4,
-      "triangles": 2,
-      "materials": [
-        "Interior_Stone"
-      ]
-    },
-    {
-      "name": "A_Pillar_Trim_1",
-      "vertices": 4,
-      "triangles": 2,
-      "materials": [
-        "Interior_Stone"
-      ]
-    },
-    {
       "name": "Armrest",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Leather"
-      ]
-    },
-    {
-      "name": "B_Pillar_Panel_-1",
-      "vertices": 4,
-      "triangles": 2,
-      "materials": [
-        "Interior_Graphite"
-      ]
-    },
-    {
-      "name": "B_Pillar_Panel_1",
-      "vertices": 4,
-      "triangles": 2,
-      "materials": [
-        "Interior_Graphite"
       ]
     },
     {
@@ -90,35 +42,38 @@
       ]
     },
     {
-      "name": "BumperFacia_-1",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Body_ArchLips",
+      "vertices": 940,
+      "triangles": 1472,
       "materials": [
         "Paint_Atlantic"
       ]
     },
     {
-      "name": "BumperFacia_1",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Body_BPillarTrim",
+      "vertices": 16,
+      "triangles": 24,
       "materials": [
-        "Paint_Atlantic"
+        "Rubber"
       ]
     },
     {
-      "name": "C_Pillar_Panel_-1",
-      "vertices": 4,
-      "triangles": 2,
+      "name": "Body_Shell",
+      "vertices": 16951,
+      "triangles": 33938,
       "materials": [
-        "Paint_Atlantic"
+        "Paint_Atlantic",
+        "Interior_Stone",
+        "Interior_Graphite",
+        "Rubber"
       ]
     },
     {
-      "name": "C_Pillar_Panel_1",
-      "vertices": 4,
-      "triangles": 2,
+      "name": "Body_Sills",
+      "vertices": 480,
+      "triangles": 952,
       "materials": [
-        "Paint_Atlantic"
+        "Interior_Graphite"
       ]
     },
     {
@@ -131,14 +86,6 @@
     },
     {
       "name": "Cabin_RearBulkhead",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Interior_Graphite"
-      ]
-    },
-    {
-      "name": "Centre_Tunnel",
       "vertices": 8,
       "triangles": 12,
       "materials": [
@@ -159,6 +106,14 @@
       "triangles": 640,
       "materials": [
         "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "Chrome_Strokes",
+      "vertices": 1472,
+      "triangles": 2920,
+      "materials": [
+        "Chrome"
       ]
     },
     {
@@ -218,17 +173,57 @@
       ]
     },
     {
+      "name": "Console_Body",
+      "vertices": 72,
+      "triangles": 140,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "Console_Cupholders",
+      "vertices": 96,
+      "triangles": 184,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Console_Trim",
+      "vertices": 84,
+      "triangles": 160,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "Dash_KneePanel",
+      "vertices": 366,
+      "triangles": 728,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "Dash_Lower",
+      "vertices": 369,
+      "triangles": 734,
+      "materials": [
+        "Interior_Stone"
+      ]
+    },
+    {
       "name": "Dash_Trim",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 208,
+      "triangles": 408,
       "materials": [
         "Satin_Aluminium"
       ]
     },
     {
       "name": "Dashboard",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 492,
+      "triangles": 980,
       "materials": [
         "Interior_Graphite"
       ]
@@ -242,129 +237,293 @@
       ]
     },
     {
-      "name": "Door_Armrest_Front-1",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Door_Armrest_Front_L",
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Leather"
       ]
     },
     {
-      "name": "Door_Armrest_Front1",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Door_Armrest_Front_R",
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Leather"
       ]
     },
     {
-      "name": "Door_Armrest_Rear-1",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Door_Armrest_Rear_L",
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Leather"
       ]
     },
     {
-      "name": "Door_Armrest_Rear1",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Door_Armrest_Rear_R",
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Leather"
       ]
     },
     {
-      "name": "Door_Trim_Front-1",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Door_Card_Front_L",
+      "vertices": 35,
+      "triangles": 66,
       "materials": [
         "Interior_Graphite"
       ]
     },
     {
-      "name": "Door_Trim_Front1",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Door_Card_Front_R",
+      "vertices": 35,
+      "triangles": 66,
       "materials": [
         "Interior_Graphite"
       ]
     },
     {
-      "name": "Door_Trim_Rear-1",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Door_Card_Rear_L",
+      "vertices": 35,
+      "triangles": 66,
       "materials": [
         "Interior_Graphite"
       ]
     },
     {
-      "name": "Door_Trim_Rear1",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Door_Card_Rear_R",
+      "vertices": 35,
+      "triangles": 66,
       "materials": [
         "Interior_Graphite"
       ]
     },
     {
-      "name": "DoorFront_L",
-      "vertices": 185,
-      "triangles": 288,
+      "name": "Door_Insert_Front_L",
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
-        "Paint_Atlantic"
+        "Seat_Fabric"
       ]
     },
     {
-      "name": "DoorFront_R",
-      "vertices": 185,
-      "triangles": 288,
+      "name": "Door_Insert_Front_R",
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
-        "Paint_Atlantic"
+        "Seat_Fabric"
       ]
     },
     {
-      "name": "DoorPull",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Door_Insert_Rear_L",
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
-        "Satin_Aluminium"
+        "Seat_Fabric"
       ]
     },
     {
-      "name": "DoorPull.001",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Door_Insert_Rear_R",
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
-        "Satin_Aluminium"
+        "Seat_Fabric"
       ]
     },
     {
-      "name": "DoorRear_L",
-      "vertices": 185,
-      "triangles": 288,
-      "materials": [
-        "Paint_Atlantic"
-      ]
-    },
-    {
-      "name": "DoorRear_R",
-      "vertices": 185,
-      "triangles": 288,
-      "materials": [
-        "Paint_Atlantic"
-      ]
-    },
-    {
-      "name": "DoorSpeaker",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Door_Ledge_Front_L",
+      "vertices": 78,
+      "triangles": 152,
       "materials": [
         "Rubber"
       ]
     },
     {
-      "name": "DoorSpeaker.001",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Door_Ledge_Front_R",
+      "vertices": 78,
+      "triangles": 152,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Door_Ledge_Rear_L",
+      "vertices": 78,
+      "triangles": 152,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Door_Ledge_Rear_R",
+      "vertices": 78,
+      "triangles": 152,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Door_PullCup_Front_L",
+      "vertices": 366,
+      "triangles": 728,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Door_PullCup_Front_R",
+      "vertices": 366,
+      "triangles": 728,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Door_PullCup_Rear_L",
+      "vertices": 366,
+      "triangles": 728,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Door_PullCup_Rear_R",
+      "vertices": 366,
+      "triangles": 728,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Door_SpeakerGrille_Front_L",
+      "vertices": 232,
+      "triangles": 444,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "Door_SpeakerGrille_Front_R",
+      "vertices": 232,
+      "triangles": 444,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "Door_SpeakerGrille_Rear_L",
+      "vertices": 232,
+      "triangles": 444,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "Door_SpeakerGrille_Rear_R",
+      "vertices": 232,
+      "triangles": 444,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "Door_Strip_Front_L",
+      "vertices": 12,
+      "triangles": 20,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "Door_Strip_Front_R",
+      "vertices": 12,
+      "triangles": 20,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "Door_Strip_Rear_L",
+      "vertices": 12,
+      "triangles": 20,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "Door_Strip_Rear_R",
+      "vertices": 12,
+      "triangles": 20,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "DoorPull_Front_L",
+      "vertices": 732,
+      "triangles": 1456,
+      "materials": [
+        "Satin_Aluminium",
+        "Rubber"
+      ]
+    },
+    {
+      "name": "DoorPull_Front_R",
+      "vertices": 732,
+      "triangles": 1456,
+      "materials": [
+        "Satin_Aluminium",
+        "Rubber"
+      ]
+    },
+    {
+      "name": "DoorPull_Rear_L",
+      "vertices": 732,
+      "triangles": 1456,
+      "materials": [
+        "Satin_Aluminium",
+        "Rubber"
+      ]
+    },
+    {
+      "name": "DoorPull_Rear_R",
+      "vertices": 732,
+      "triangles": 1456,
+      "materials": [
+        "Satin_Aluminium",
+        "Rubber"
+      ]
+    },
+    {
+      "name": "DoorSpeaker_Front_L",
+      "vertices": 430,
+      "triangles": 852,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "DoorSpeaker_Front_R",
+      "vertices": 430,
+      "triangles": 852,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "DoorSpeaker_Rear_L",
+      "vertices": 64,
+      "triangles": 124,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "DoorSpeaker_Rear_R",
+      "vertices": 64,
+      "triangles": 124,
       "materials": [
         "Rubber"
       ]
@@ -378,51 +537,77 @@
       ]
     },
     {
-      "name": "DRL_-1-1",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Ext_Exhaust",
+      "vertices": 36,
+      "triangles": 68,
       "materials": [
-        "Lamp_Red"
+        "Chrome"
       ]
     },
     {
-      "name": "DRL_-11",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "FogLamp_L",
+      "vertices": 56,
+      "triangles": 108,
       "materials": [
-        "Lamp_Red"
+        "Satin_Aluminium"
       ]
     },
     {
-      "name": "DRL_1-1",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "FogLamp_R",
+      "vertices": 56,
+      "triangles": 108,
       "materials": [
-        "Lamp_White"
+        "Satin_Aluminium"
       ]
     },
     {
-      "name": "DRL_11",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "FrontLamp_L",
+      "vertices": 308,
+      "triangles": 596,
       "materials": [
-        "Lamp_White"
+        "Lamp_White",
+        "Chrome"
       ]
     },
     {
-      "name": "FrontWing_L",
-      "vertices": 185,
-      "triangles": 288,
+      "name": "FrontLamp_R",
+      "vertices": 308,
+      "triangles": 596,
       "materials": [
-        "Paint_Atlantic"
+        "Lamp_White",
+        "Chrome"
       ]
     },
     {
-      "name": "FrontWing_R",
-      "vertices": 185,
-      "triangles": 288,
+      "name": "FrontLampCover_L",
+      "vertices": 174,
+      "triangles": 280,
       "materials": [
-        "Paint_Atlantic"
+        "Glass"
+      ]
+    },
+    {
+      "name": "FrontLampCover_R",
+      "vertices": 174,
+      "triangles": 280,
+      "materials": [
+        "Glass"
+      ]
+    },
+    {
+      "name": "FrontLampReflector_L",
+      "vertices": 174,
+      "triangles": 280,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "FrontLampReflector_R",
+      "vertices": 174,
+      "triangles": 280,
+      "materials": [
+        "Interior_Graphite"
       ]
     },
     {
@@ -507,114 +692,42 @@
     },
     {
       "name": "Glovebox",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 100,
+      "triangles": 200,
+      "materials": [
+        "Rubber"
+      ]
+    },
+    {
+      "name": "GloveboxHandle",
+      "vertices": 366,
+      "triangles": 728,
+      "materials": [
+        "Satin_Aluminium"
+      ]
+    },
+    {
+      "name": "GrabHandle",
+      "vertices": 264,
+      "triangles": 516,
       "materials": [
         "Interior_Graphite"
       ]
     },
     {
-      "name": "GloveboxHandle",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Grille_Badge",
+      "vertices": 64,
+      "triangles": 124,
       "materials": [
-        "Satin_Aluminium"
+        "Chrome"
       ]
     },
     {
-      "name": "Grille_Recess_-1",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Grille_Slats",
+      "vertices": 1194,
+      "triangles": 2360,
       "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "Grille_Recess_1",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "GrilleBar",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Satin_Aluminium"
-      ]
-    },
-    {
-      "name": "GrilleBar.001",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Satin_Aluminium"
-      ]
-    },
-    {
-      "name": "GrilleBar.002",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Satin_Aluminium"
-      ]
-    },
-    {
-      "name": "GrilleBar.003",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Satin_Aluminium"
-      ]
-    },
-    {
-      "name": "GrilleBar.004",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Satin_Aluminium"
-      ]
-    },
-    {
-      "name": "GrilleBar.005",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Satin_Aluminium"
-      ]
-    },
-    {
-      "name": "GrilleBar.006",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Satin_Aluminium"
-      ]
-    },
-    {
-      "name": "GrilleBar.007",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Satin_Aluminium"
-      ]
-    },
-    {
-      "name": "GrilleBar.008",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Satin_Aluminium"
-      ]
-    },
-    {
-      "name": "GrilleBar.009",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Satin_Aluminium"
+        "Interior_Graphite"
       ]
     },
     {
@@ -627,80 +740,60 @@
     },
     {
       "name": "Handle_DoorFront_L",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 80,
+      "triangles": 152,
       "materials": [
-        "Paint_Atlantic"
+        "Paint_Atlantic",
+        "Rubber"
       ]
     },
     {
       "name": "Handle_DoorFront_R",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 80,
+      "triangles": 152,
       "materials": [
-        "Paint_Atlantic"
+        "Paint_Atlantic",
+        "Rubber"
       ]
     },
     {
       "name": "Handle_DoorRear_L",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 80,
+      "triangles": 152,
       "materials": [
-        "Paint_Atlantic"
+        "Paint_Atlantic",
+        "Rubber"
       ]
     },
     {
       "name": "Handle_DoorRear_R",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 80,
+      "triangles": 152,
       "materials": [
-        "Paint_Atlantic"
+        "Paint_Atlantic",
+        "Rubber"
       ]
     },
     {
       "name": "Headliner",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 884,
+      "triangles": 1764,
       "materials": [
-        "Interior_Graphite"
+        "Interior_Stone"
       ]
     },
     {
-      "name": "Hood",
-      "vertices": 625,
-      "triangles": 1152,
-      "materials": [
-        "Paint_Atlantic"
-      ]
-    },
-    {
-      "name": "Indicator_-1-1",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Indicator_Front_L",
+      "vertices": 54,
+      "triangles": 104,
       "materials": [
         "Lamp_Amber"
       ]
     },
     {
-      "name": "Indicator_-11",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Lamp_Amber"
-      ]
-    },
-    {
-      "name": "Indicator_1-1",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Lamp_Amber"
-      ]
-    },
-    {
-      "name": "Indicator_11",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Indicator_Front_R",
+      "vertices": 54,
+      "triangles": 104,
       "materials": [
         "Lamp_Amber"
       ]
@@ -727,38 +820,6 @@
       "triangles": 12,
       "materials": [
         "Interior_Graphite"
-      ]
-    },
-    {
-      "name": "LampUnit_-1-1",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "LampUnit_-11",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "LampUnit_1-1",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "LampUnit_11",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Rubber"
       ]
     },
     {
@@ -867,18 +928,26 @@
     },
     {
       "name": "NumberPlate_-1",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 40,
+      "triangles": 76,
       "materials": [
         "Paint_White"
       ]
     },
     {
       "name": "NumberPlate_1",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 40,
+      "triangles": 76,
       "materials": [
         "Paint_White"
+      ]
+    },
+    {
+      "name": "PanelGap_Body",
+      "vertices": 6645,
+      "triangles": 13190,
+      "materials": [
+        "Rubber"
       ]
     },
     {
@@ -1002,70 +1071,6 @@
       ]
     },
     {
-      "name": "Projector",
-      "vertices": 64,
-      "triangles": 124,
-      "materials": [
-        "Lamp_White"
-      ]
-    },
-    {
-      "name": "Projector.001",
-      "vertices": 64,
-      "triangles": 124,
-      "materials": [
-        "Lamp_White"
-      ]
-    },
-    {
-      "name": "Projector.002",
-      "vertices": 64,
-      "triangles": 124,
-      "materials": [
-        "Lamp_White"
-      ]
-    },
-    {
-      "name": "Projector.003",
-      "vertices": 64,
-      "triangles": 124,
-      "materials": [
-        "Lamp_White"
-      ]
-    },
-    {
-      "name": "Projector.004",
-      "vertices": 64,
-      "triangles": 124,
-      "materials": [
-        "Lamp_Red"
-      ]
-    },
-    {
-      "name": "Projector.005",
-      "vertices": 64,
-      "triangles": 124,
-      "materials": [
-        "Lamp_Red"
-      ]
-    },
-    {
-      "name": "Projector.006",
-      "vertices": 64,
-      "triangles": 124,
-      "materials": [
-        "Lamp_Red"
-      ]
-    },
-    {
-      "name": "Projector.007",
-      "vertices": 64,
-      "triangles": 124,
-      "materials": [
-        "Lamp_Red"
-      ]
-    },
-    {
       "name": "RearBeltBuckle",
       "vertices": 8,
       "triangles": 12,
@@ -1098,22 +1103,6 @@
       ]
     },
     {
-      "name": "RearDoorPull",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Satin_Aluminium"
-      ]
-    },
-    {
-      "name": "RearDoorPull.001",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Satin_Aluminium"
-      ]
-    },
-    {
       "name": "RearFloorMat",
       "vertices": 8,
       "triangles": 12,
@@ -1131,24 +1120,8 @@
     },
     {
       "name": "RearHeadrest",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Leather"
-      ]
-    },
-    {
-      "name": "RearHeadrest.001",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Leather"
-      ]
-    },
-    {
-      "name": "RearHeadrest.002",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 1098,
+      "triangles": 2184,
       "materials": [
         "Leather"
       ]
@@ -1207,22 +1180,6 @@
       "triangles": 12,
       "materials": [
         "Interior_Graphite"
-      ]
-    },
-    {
-      "name": "RearQuarter_L",
-      "vertices": 185,
-      "triangles": 288,
-      "materials": [
-        "Paint_Atlantic"
-      ]
-    },
-    {
-      "name": "RearQuarter_R",
-      "vertices": 185,
-      "triangles": 288,
-      "materials": [
-        "Paint_Atlantic"
       ]
     },
     {
@@ -1354,27 +1311,19 @@
       ]
     },
     {
-      "name": "RearWindowSwitch",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "ReverseLight_L",
+      "vertices": 90,
+      "triangles": 176,
       "materials": [
-        "Rubber"
+        "Lamp_White"
       ]
     },
     {
-      "name": "RearWindowSwitch.001",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "ReverseLight_R",
+      "vertices": 90,
+      "triangles": 176,
       "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "Roof",
-      "vertices": 25,
-      "triangles": 32,
-      "materials": [
-        "Paint_Atlantic"
+        "Lamp_White"
       ]
     },
     {
@@ -1394,409 +1343,253 @@
       ]
     },
     {
+      "name": "Screen_Housing",
+      "vertices": 366,
+      "triangles": 728,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
       "name": "Cushion",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Leather"
       ]
     },
     {
       "name": "Cushion_Bolster",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Leather"
-      ]
-    },
-    {
-      "name": "Cushion_Bolster.001",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 732,
+      "triangles": 1456,
       "materials": [
         "Leather"
       ]
     },
     {
       "name": "Cushion_Insert",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Seat_Fabric"
       ]
     },
     {
       "name": "Backrest",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Leather"
       ]
     },
     {
       "name": "Backrest_Bolster",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Leather"
-      ]
-    },
-    {
-      "name": "Backrest_Bolster.001",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 732,
+      "triangles": 1456,
       "materials": [
         "Leather"
       ]
     },
     {
       "name": "Backrest_Insert",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Seat_Fabric"
       ]
     },
     {
       "name": "Headrest",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Leather"
       ]
     },
     {
       "name": "HeadrestRod",
-      "vertices": 64,
-      "triangles": 124,
-      "materials": [
-        "Satin_Aluminium"
-      ]
-    },
-    {
-      "name": "HeadrestRod.001",
-      "vertices": 64,
-      "triangles": 124,
+      "vertices": 40,
+      "triangles": 72,
       "materials": [
         "Satin_Aluminium"
       ]
     },
     {
       "name": "Seat_FabricRib",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 50,
+      "triangles": 80,
       "materials": [
         "Seat_Insert"
-      ]
-    },
-    {
-      "name": "Seat_FabricRib.001",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Seat_Insert"
-      ]
-    },
-    {
-      "name": "Seat_FabricRib.002",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Seat_Insert"
-      ]
-    },
-    {
-      "name": "Seat_FabricRib.003",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Seat_Insert"
-      ]
-    },
-    {
-      "name": "Seat_Mount",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "Seat_Mount.001",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "Seat_Mount.002",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "Seat_Mount.003",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Rubber"
       ]
     },
     {
       "name": "Seat_Rail",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 48,
+      "triangles": 72,
       "materials": [
+        "Satin_Aluminium",
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Seat_SideCover",
+      "vertices": 732,
+      "triangles": 1456,
+      "materials": [
+        "Interior_Graphite",
         "Satin_Aluminium"
       ]
     },
     {
-      "name": "Seat_Rail.001",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "SeatStitch.008",
+      "vertices": 40,
+      "triangles": 64,
       "materials": [
-        "Satin_Aluminium"
+        "Seat_Insert"
       ]
     },
     {
       "name": "Cushion.001",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Leather"
       ]
     },
     {
-      "name": "Cushion_Bolster.002",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Leather"
-      ]
-    },
-    {
-      "name": "Cushion_Bolster.003",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Cushion_Bolster.001",
+      "vertices": 732,
+      "triangles": 1456,
       "materials": [
         "Leather"
       ]
     },
     {
       "name": "Cushion_Insert.001",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Seat_Fabric"
       ]
     },
     {
       "name": "Backrest.001",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Leather"
       ]
     },
     {
-      "name": "Backrest_Bolster.002",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Leather"
-      ]
-    },
-    {
-      "name": "Backrest_Bolster.003",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "Backrest_Bolster.001",
+      "vertices": 732,
+      "triangles": 1456,
       "materials": [
         "Leather"
       ]
     },
     {
       "name": "Backrest_Insert.001",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Seat_Fabric"
       ]
     },
     {
       "name": "Headrest.001",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Leather"
       ]
     },
     {
-      "name": "HeadrestRod.002",
-      "vertices": 64,
-      "triangles": 124,
+      "name": "HeadrestRod.001",
+      "vertices": 40,
+      "triangles": 72,
       "materials": [
         "Satin_Aluminium"
       ]
     },
     {
-      "name": "HeadrestRod.003",
-      "vertices": 64,
-      "triangles": 124,
+      "name": "Seat_FabricRib.001",
+      "vertices": 50,
+      "triangles": 80,
       "materials": [
+        "Seat_Insert"
+      ]
+    },
+    {
+      "name": "Seat_Rail.001",
+      "vertices": 48,
+      "triangles": 72,
+      "materials": [
+        "Satin_Aluminium",
+        "Rubber"
+      ]
+    },
+    {
+      "name": "Seat_SideCover.001",
+      "vertices": 732,
+      "triangles": 1456,
+      "materials": [
+        "Interior_Graphite",
         "Satin_Aluminium"
       ]
     },
     {
-      "name": "Seat_FabricRib.004",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "SeatStitch.009",
+      "vertices": 40,
+      "triangles": 64,
       "materials": [
         "Seat_Insert"
-      ]
-    },
-    {
-      "name": "Seat_FabricRib.005",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Seat_Insert"
-      ]
-    },
-    {
-      "name": "Seat_FabricRib.006",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Seat_Insert"
-      ]
-    },
-    {
-      "name": "Seat_FabricRib.007",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Seat_Insert"
-      ]
-    },
-    {
-      "name": "Seat_Mount.004",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "Seat_Mount.005",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "Seat_Mount.006",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "Seat_Mount.007",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "Seat_Rail.002",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Satin_Aluminium"
-      ]
-    },
-    {
-      "name": "Seat_Rail.003",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Satin_Aluminium"
       ]
     },
     {
       "name": "RearBench_Backrest",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 522,
+      "triangles": 1040,
       "materials": [
         "Leather"
       ]
     },
     {
       "name": "RearBench_Insert",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 1098,
+      "triangles": 2184,
       "materials": [
         "Seat_Fabric"
       ]
     },
     {
-      "name": "RearBench_Insert.001",
-      "vertices": 8,
-      "triangles": 12,
+      "name": "RearSeatStitch.006",
+      "vertices": 90,
+      "triangles": 144,
       "materials": [
-        "Seat_Fabric"
-      ]
-    },
-    {
-      "name": "RearBench_Insert.002",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Seat_Fabric"
+        "Seat_Insert"
       ]
     },
     {
       "name": "RearBench_Base",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
-        "Leather"
+        "Interior_Graphite"
       ]
     },
     {
       "name": "RearBench_Cushion",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 522,
+      "triangles": 1040,
       "materials": [
         "Leather"
       ]
     },
     {
       "name": "RearBench_CushionInsert",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Seat_Fabric"
-      ]
-    },
-    {
-      "name": "RearBench_CushionInsert.001",
-      "vertices": 8,
-      "triangles": 12,
-      "materials": [
-        "Seat_Fabric"
-      ]
-    },
-    {
-      "name": "RearBench_CushionInsert.002",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 1098,
+      "triangles": 2184,
       "materials": [
         "Seat_Fabric"
       ]
@@ -1807,62 +1600,6 @@
       "triangles": 28,
       "materials": [
         "Interior_Graphite"
-      ]
-    },
-    {
-      "name": "Shell_FrontUpperFacia",
-      "vertices": 100,
-      "triangles": 196,
-      "materials": [
-        "Paint_Atlantic"
-      ]
-    },
-    {
-      "name": "Shell_RearUpperFacia",
-      "vertices": 100,
-      "triangles": 196,
-      "materials": [
-        "Paint_Atlantic"
-      ]
-    },
-    {
-      "name": "Shell_Undertray",
-      "vertices": 612,
-      "triangles": 1220,
-      "materials": [
-        "Interior_Graphite"
-      ]
-    },
-    {
-      "name": "Shell_Wheelhouse_L_Front",
-      "vertices": 102,
-      "triangles": 200,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "Shell_Wheelhouse_L_Rear",
-      "vertices": 102,
-      "triangles": 200,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "Shell_Wheelhouse_R_Front",
-      "vertices": 102,
-      "triangles": 200,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "Shell_Wheelhouse_R_Rear",
-      "vertices": 102,
-      "triangles": 200,
-      "materials": [
-        "Rubber"
       ]
     },
     {
@@ -1891,18 +1628,26 @@
     },
     {
       "name": "Airbag",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 366,
+      "triangles": 728,
       "materials": [
         "Interior_Graphite"
       ]
     },
     {
       "name": "Steering_Rim",
-      "vertices": 576,
-      "triangles": 1152,
+      "vertices": 720,
+      "triangles": 1440,
       "materials": [
         "Leather"
+      ]
+    },
+    {
+      "name": "Steering_Spoke",
+      "vertices": 1098,
+      "triangles": 2184,
+      "materials": [
+        "Satin_Aluminium"
       ]
     },
     {
@@ -1919,6 +1664,22 @@
       "triangles": 12,
       "materials": [
         "Interior_Graphite"
+      ]
+    },
+    {
+      "name": "Taillight_L",
+      "vertices": 324,
+      "triangles": 644,
+      "materials": [
+        "Lamp_Red"
+      ]
+    },
+    {
+      "name": "Taillight_R",
+      "vertices": 324,
+      "triangles": 644,
+      "materials": [
+        "Lamp_Red"
       ]
     },
     {
@@ -1962,11 +1723,19 @@
       ]
     },
     {
-      "name": "Trunk",
-      "vertices": 625,
-      "triangles": 1152,
+      "name": "TurnSignal_Rear_L",
+      "vertices": 90,
+      "triangles": 176,
       "materials": [
-        "Paint_Atlantic"
+        "Lamp_Amber"
+      ]
+    },
+    {
+      "name": "TurnSignal_Rear_R",
+      "vertices": 90,
+      "triangles": 176,
+      "materials": [
+        "Lamp_Amber"
       ]
     },
     {
@@ -2810,39 +2579,23 @@
       ]
     },
     {
-      "name": "WheelArchLiner",
-      "vertices": 98,
-      "triangles": 96,
+      "name": "WindowSwitch_Front_L",
+      "vertices": 16,
+      "triangles": 24,
       "materials": [
         "Rubber"
       ]
     },
     {
-      "name": "WheelArchLiner.001",
-      "vertices": 98,
-      "triangles": 96,
+      "name": "WindowSwitch_Front_R",
+      "vertices": 16,
+      "triangles": 24,
       "materials": [
         "Rubber"
       ]
     },
     {
-      "name": "WheelArchLiner.002",
-      "vertices": 98,
-      "triangles": 96,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "WheelArchLiner.003",
-      "vertices": 98,
-      "triangles": 96,
-      "materials": [
-        "Rubber"
-      ]
-    },
-    {
-      "name": "WindowSwitch",
+      "name": "WindowSwitch_Rear_L",
       "vertices": 8,
       "triangles": 12,
       "materials": [
@@ -2850,7 +2603,7 @@
       ]
     },
     {
-      "name": "WindowSwitch.001",
+      "name": "WindowSwitch_Rear_R",
       "vertices": 8,
       "triangles": 12,
       "materials": [
@@ -2858,5 +2611,5 @@
       ]
     }
   ],
-  "trianglesBase": 40808
+  "trianglesBase": 147714
 }
