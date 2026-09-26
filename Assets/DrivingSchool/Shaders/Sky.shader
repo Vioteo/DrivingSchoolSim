@@ -15,6 +15,8 @@ Shader "DrivingSchool/Sky"
         _SunColor ("Sun colour (alpha = disc visibility)", Color) = (1, 0.95, 0.85, 1)
         _MoonDir ("Moon direction", Vector) = (0.3, 0.45, -0.8, 0)
         _Moon ("Moon visibility", Range(0, 1)) = 0
+        _MoonRadiusDeg ("Moon angular radius, degrees", Float) = 0.7
+        _MoonBrightness ("Moon brightness", Float) = 2.2
     }
     SubShader
     {
@@ -29,7 +31,7 @@ Shader "DrivingSchool/Sky"
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _ZenithColor, _HorizonColor, _GroundColor, _GlowColor, _SunDir, _SunColor, _MoonDir;
-                float _Stars, _StarBrightness, _Moon;
+                float _Stars, _StarBrightness, _Moon, _MoonRadiusDeg, _MoonBrightness;
             CBUFFER_END
 
             struct Attributes { float4 positionOS : POSITION; };
@@ -80,6 +82,31 @@ Shader "DrivingSchool/Sky"
                 return tint * b;
             }
 
+            // Full moon: grey-white disc with darker maria, small craters and slight limb darkening; warmer near the
+            // horizon (longer path through the air); a soft halo around it. Size is set per preset (0.7° … 5°).
+            float3 MoonColour(float3 d, float3 md, float cm)
+            {
+                float radius = radians(_MoonRadiusDeg);
+                float ang = acos(clamp(cm, -1.0, 1.0));
+                float3 t1 = normalize(cross(md, abs(md.y) < 0.99 ? float3(0, 1, 0) : float3(1, 0, 0)));
+                float3 t2 = cross(t1, md);
+                float2 uv = float2(dot(d, t1), dot(d, t2)) / sin(radius);   // −1…1 over the disc
+                float r = length(uv);
+                float aa = max(fwidth(r), 1e-4);
+                float disc = (1.0 - smoothstep(1.0 - aa, 1.0 + aa, r)) * step(0.0, cm); // the tangent-plane uv repeats at the antipode
+                float3 p = float3(uv * 1.7, 5.3);
+                // Maria: large soft dark lowlands; highlands keep fine low-contrast texture.
+                float maria = smoothstep(0.42, 0.68, Fbm(p * 0.85 + float3(2.0, 7.0, 1.0))) * (0.7 + 0.3 * Fbm(p * 2.3));
+                float craters = Fbm(p * 9.0) * 0.6 + Fbm(p * 23.0) * 0.4;
+                float albedo = lerp(0.97, 0.66, maria) * (0.93 + 0.14 * craters);
+                float limb = pow(saturate(1.0 - r * r), 0.25);
+                float3 tint = lerp(float3(1.0, 0.7, 0.45), float3(0.96, 0.97, 1.0), saturate(md.y * 3.5));
+                float3 moon = tint * albedo * (0.55 + 0.45 * limb) * disc * _MoonBrightness;
+                float halo = exp(-max(ang - radius, 0.0) / (radius * 0.9 + 0.01)) * (1.0 - disc);
+                float wide = pow(saturate(cm), 40.0);
+                return moon + tint * (float3(0.30, 0.34, 0.42) * halo * 0.4 + float3(0.1, 0.12, 0.16) * wide * 0.08);
+            }
+
             half4 frag(Varyings i) : SV_Target
             {
                 float3 d = normalize(i.dir);
@@ -97,9 +124,7 @@ Shader "DrivingSchool/Sky"
 
                 float3 md = normalize(_MoonDir.xyz);
                 float cm = dot(d, md);
-                float disc = smoothstep(0.99993, 0.99996, cm);
-                float mottled = 0.8 + 0.2 * Noise(d * 2400.0);
-                col += _Moon * (float3(0.95, 0.96, 1.0) * disc * 2.2 * mottled + float3(0.35, 0.4, 0.5) * pow(saturate(cm), 900.0) * 0.25 + float3(0.1, 0.12, 0.16) * pow(saturate(cm), 40.0) * 0.08);
+                col += _Moon * MoonColour(d, md, cm);
 
                 // Night sky.
                 if (_Stars > 0.001 && up > -0.02)

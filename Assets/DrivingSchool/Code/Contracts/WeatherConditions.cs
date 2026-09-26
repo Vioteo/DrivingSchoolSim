@@ -2,7 +2,7 @@ using System;
 namespace DrivingSchool.Contracts
 {
     public enum SurfaceType { DryAsphalt, WetAsphalt, PackedSnow, BlackIce }
-    public enum WeatherPreset { ClearDay, Overcast, Rain, HeavyRain, Fog, Snow, ClearNight, RainNight }
+    public enum WeatherPreset { ClearDay, Overcast, Rain, HeavyRain, Fog, Snow, ClearNight, RainNight, FullMoonNight }
 
     // Game-side weather state; coefficients are gameplay calibration, not measured road data.
     [Serializable] public struct WeatherConditions
@@ -25,6 +25,7 @@ namespace DrivingSchool.Contracts
                 case WeatherPreset.Snow:       return Make(p, 0f, .7f, .35f, 12f, SurfaceType.PackedSnow);
                 case WeatherPreset.ClearNight: return Make(p, 0f, 0f, .05f, 23f, SurfaceType.DryAsphalt);
                 case WeatherPreset.RainNight:  return Make(p, .6f, 0f, .3f, 23f, SurfaceType.WetAsphalt);
+                case WeatherPreset.FullMoonNight: return Make(p, 0f, 0f, .03f, 23.5f, SurfaceType.DryAsphalt);
                 default:                       return Make(WeatherPreset.ClearDay, 0f, 0f, .02f, 13f, SurfaceType.DryAsphalt);
             }
         }

@@ -196,6 +196,10 @@ namespace DrivingSchool.Presentation
             bool low = st.lowBeam, high = st.highBeam;
             lowL.enabled = lowR.enabled = low || high;
             highL.enabled = highR.enabled = high;
+            // No eye adaptation (auto exposure) in the pipeline: by day the beams would out-shine the sun on the verge.
+            float adapt = Mathf.Lerp(1f, 0.12f, WeatherController.Daylight01);
+            lowL.intensity = lowR.intensity = lowBeamIntensity * adapt;
+            highL.intensity = highR.intensity = highBeamIntensity * adapt;
             float tail = st.brakeLight ? 2.2f : st.parkingLights ? 0.5f : 0f;
             tailL.intensity = tailR.intensity = tail;
             reverse.enabled = st.reverseLight;
@@ -225,7 +229,7 @@ namespace DrivingSchool.Presentation
             float cut = yaw < 0f ? -0.6f : Mathf.Min(-0.6f + yaw * 0.268f, 1.2f); // tan 15° kick-up, capped
             float edge = Mathf.Clamp01((cut - pitch) / 0.5f + 0.5f);               // soft 0.5° edge
             float hot = Mathf.Exp(-Sq((yaw - 2f) / 10f) - Sq((pitch + 1.6f) / 2.2f));
-            float wide = 0.35f * Mathf.Exp(-Sq(yaw / 32f) - Sq((pitch + 4f) / 5f));
+            float wide = 0.22f * Mathf.Exp(-Sq(yaw / 32f) - Sq((pitch + 4f) / 5f));
             float fore = 0.07f * Mathf.Exp(-Sq(yaw / 50f)) * Mathf.Clamp01(-pitch / 6f);
             return Mathf.Clamp01((hot + wide + fore) * edge + 0.012f * (1f - edge) * Mathf.Exp(-Sq(yaw / 30f)));
         }

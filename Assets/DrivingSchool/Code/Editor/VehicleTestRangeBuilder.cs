@@ -436,6 +436,7 @@ namespace DrivingSchool.Editor
             var lights = player.AddComponent<VehicleLightsView>(); lights.adapter = adapter; lights.model = visual.transform;
             var dash = player.AddComponent<DashboardView>(); dash.adapter = adapter; dash.model = visual.transform; dash.templateMaterial = telltale; dash.dialMaterial = water;
             var rain = player.AddComponent<WindshieldRainView>(); rain.adapter = adapter; rain.visuals = visuals; rain.model = visual.transform; rain.templateMaterial = glassWater;
+            var screen = player.AddComponent<InfotainmentView>(); screen.adapter = adapter; screen.model = visual.transform;
             var mirrors = player.AddComponent<VehicleMirrorRig>(); mirrors.model = visual.transform; mirrors.viewer = cam; mirrors.templateMaterial = mirror;
             return player;
         }

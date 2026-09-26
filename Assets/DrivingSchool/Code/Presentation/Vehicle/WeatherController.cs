@@ -112,13 +112,16 @@ namespace DrivingSchool.Presentation
             float cloud = Mathf.Clamp01(Mathf.Max(rainI * 1.2f, snowI, fog * 0.8f, b.preset == WeatherPreset.Overcast ? 0.6f : 0f));
 
             Daylight01 = day;
+            // Full-moon night: a huge low moon ahead of road A and noticeably brighter, silvery moonlight.
+            float big = Mathf.Lerp(a.preset == WeatherPreset.FullMoonNight ? 1f : 0f, b.preset == WeatherPreset.FullMoonNight ? 1f : 0f, t) * (1f - day);
             // The directional light is the sun by day and the moon by night (weak, cold, higher in the sky).
             if (sun != null)
             {
-                sun.intensity = Mathf.Lerp(0.035f, 1.35f, day) * Mathf.Lerp(1f, 0.25f, cloud);
-                sun.color = Color.Lerp(new Color(0.55f, 0.64f, 0.9f), new Color(1f, 0.97f, 0.92f), day);
+                sun.intensity = Mathf.Lerp(Mathf.Lerp(0.035f, 0.14f, big), 1.35f, day) * Mathf.Lerp(1f, 0.25f, cloud);
+                sun.color = Color.Lerp(Color.Lerp(new Color(0.55f, 0.64f, 0.9f), new Color(0.78f, 0.8f, 0.9f), big), new Color(1f, 0.97f, 0.92f), day);
                 sun.shadowStrength = Mathf.Lerp(1f, 0.3f, cloud) * Mathf.Lerp(0.6f, 1f, day);
-                float elev = Mathf.Lerp(32f, 48f, day), yaw = Mathf.Lerp(150f, -35f, day);
+                // The light shines from the moon: for the big moon it hangs low ahead of the start (world +Z), so the light points back (yaw 180).
+                float elev = Mathf.Lerp(Mathf.Lerp(32f, 4.8f, big), 48f, day), yaw = Mathf.Lerp(Mathf.Lerp(150f, 184f, big), -35f, day);
                 sun.transform.rotation = Quaternion.Euler(elev, yaw, 0f);
             }
             Color skyDay = Color.Lerp(new Color(0.58f, 0.72f, 0.88f), new Color(0.55f, 0.58f, 0.62f), cloud);
@@ -146,6 +149,9 @@ namespace DrivingSchool.Presentation
                 skyMaterial.SetColor("_SunColor", new Color(1f, 0.95f, 0.85f, Mathf.Clamp01(day * 2f - 1f) * clear));
                 skyMaterial.SetVector("_MoonDir", toLight);
                 skyMaterial.SetFloat("_Moon", Mathf.Clamp01(1f - day * 2f) * clear);
+                skyMaterial.SetFloat("_MoonRadiusDeg", Mathf.Lerp(0.7f, 5f, big));
+                skyMaterial.SetFloat("_MoonBrightness", Mathf.Lerp(2.2f, 0.95f, big));
+                skyMaterial.SetFloat("_StarBrightness", Mathf.Lerp(1.6f, 1.1f, big));
                 RenderSettings.skybox = skyMaterial;
                 if (viewCamera != null) viewCamera.clearFlags = CameraClearFlags.Skybox;
             }
