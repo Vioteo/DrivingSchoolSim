@@ -1,0 +1,46 @@
+{
+  "script": "tools/build_sedan_mirrors.py",
+  "utc": "2026-09-26T12:30:24.203404Z",
+  "before": {
+    "blend_sha256": "ab635f5cb8415d7fe3f3cfd57c0123f429f0a1b1ad524383b1a2db943fc0d085",
+    "fbx_sha256": "18740279d878fe7f0164ceb61409cdd6c0d2cb5dd0e35cc63cd133a503d01d75"
+  },
+  "backup": {
+    "DS_Sedan_A.blend": "ArtSource_Backup\\DS_Sedan_A_before-mirrors_20260926-153024.blend",
+    "DS_Sedan_A.fbx": "ArtSource_Backup\\DS_Sedan_A_before-mirrors_20260926-153024.fbx"
+  },
+  "removed": [
+    "CentreMirrorArm",
+    "CentreMirrorHousing",
+    "MirrorBase_-1",
+    "MirrorBase_1",
+    "MirrorHousing_-1",
+    "MirrorHousing_1",
+    "MirrorRecess_L",
+    "MirrorRecess_R",
+    "MirrorRepeater_L",
+    "MirrorRepeater_R",
+    "MirrorSurface_Centre",
+    "MirrorSurface_L",
+    "MirrorSurface_R"
+  ],
+  "created": [
+    "CentreMirrorArm",
+    "CentreMirrorHousing",
+    "MirrorBase_-1",
+    "MirrorBase_1",
+    "MirrorHousing_-1",
+    "MirrorHousing_1",
+    "MirrorRecess_L",
+    "MirrorRecess_R",
+    "MirrorRepeater_L",
+    "MirrorRepeater_R",
+    "MirrorSurface_Centre",
+    "MirrorSurface_L",
+    "MirrorSurface_R"
+  ],
+  "after": {
+    "blend_sha256": "e5152ab817b44df675b6e3845013358894fdebf6f8196dcac9aa2089aa00b4cf",
+    "fbx_sha256": "6116e3bff321210c3f5f89209af3e4d39e72d3d879ee14ffae5022c03778a381"
+  }
+}
