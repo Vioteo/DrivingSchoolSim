@@ -66,6 +66,7 @@ namespace DrivingSchool.Editor
             var pipeline=AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(Base+"/Settings/URP.asset");
             if(pipeline==null){pipeline=UniversalRenderPipelineAsset.Create(renderer);AssetDatabase.CreateAsset(pipeline,Base+"/Settings/URP.asset");}
             pipeline.msaaSampleCount=4;pipeline.shadowDistance=100;GraphicsSettings.defaultRenderPipeline=pipeline;QualitySettings.renderPipeline=pipeline;
+            ApplyLightingSettings();
             var project=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/ProjectSettings.asset")[0]);
             var input=project.FindProperty("activeInputHandler");if(input!=null){input.intValue=2;project.ApplyModifiedPropertiesWithoutUndo();}
             foreach(var name in new[]{"DS_Sedan_A","DS_District","DS_Autodrome"})Import(name);
@@ -74,6 +75,27 @@ namespace DrivingSchool.Editor
             AssetDatabase.SaveAssets();
             var doc=JsonUtility.FromJson<WorldDocument>(File.ReadAllText("Assets/StreamingAssets/Examples/world.json"));WorldValidator.Validate(doc);
             Debug.Log("DS_PREPARE_PASS");
+        }
+        /// <summary>
+        /// Night driving needs many local lights on one object (street lamps, both headlamp beams, other cars' lamps on one long
+        /// road mesh): Forward's limit of 4 lights per object silently dropped the headlamps. Forward+ has no per-object limit;
+        /// headlamp shadows need additional-light shadows.
+        /// </summary>
+        [MenuItem("Driving School/Apply lighting settings (Forward+)")]
+        public static void ApplyLightingSettings()
+        {
+            var renderer=AssetDatabase.LoadAssetAtPath<UniversalRendererData>(Base+"/Settings/Renderer.asset");
+            var pipeline=AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(Base+"/Settings/URP.asset");
+            if(renderer==null||pipeline==null)throw new FileNotFoundException("URP settings missing: run Prepare prototype");
+            renderer.renderingMode=UnityEngine.Rendering.Universal.RenderingMode.ForwardPlus;EditorUtility.SetDirty(renderer);
+            var so=new SerializedObject(pipeline);
+            so.FindProperty("m_AdditionalLightsRenderingMode").intValue=(int)UnityEngine.Rendering.Universal.LightRenderingMode.PerPixel;
+            so.FindProperty("m_AdditionalLightsPerObjectLimit").intValue=8;
+            so.FindProperty("m_AdditionalLightShadowsSupported").boolValue=true;
+            so.FindProperty("m_AdditionalLightsShadowmapResolution").intValue=2048;
+            so.ApplyModifiedPropertiesWithoutUndo();EditorUtility.SetDirty(pipeline);
+            AssetDatabase.SaveAssets();
+            Debug.Log("DS_LIGHTING_SETTINGS_PASS");
         }
         static void Import(string name)
         {

@@ -22,12 +22,16 @@ namespace DrivingSchool.Presentation
         /// </summary>
         public static float GlassRain01 { get; private set; }
         public static float GlassSnow01 { get; private set; }
+        /// <summary>0 = night, 1 = full day, blended with the visuals (street lamps, dial illumination, sky).</summary>
+        public static float Daylight01 { get; private set; } = 1f;
         public const float RainFallSeconds = 1.0f, SnowFallSeconds = 5.5f, BlendSeconds = 3f;
 
         public WeatherPreset preset = WeatherPreset.ClearDay;
         public Light sun;
         public Camera viewCamera;
         public Material precipitationMaterial;   // URP Particles/Unlit (assigned by the builder)
+        [Tooltip("DrivingSchool/Sky material (assigned by the builder so the shader ships in builds); created at run time when empty.")]
+        public Material skyMaterial;
         public List<VehiclePhysicsAdapter> vehicles = new List<VehiclePhysicsAdapter>();
         public List<Renderer> roadRenderers = new List<Renderer>();
         public bool hotkeys = true;
@@ -40,6 +44,8 @@ namespace DrivingSchool.Presentation
         void Start()
         {
             if (viewCamera == null) viewCamera = Camera.main;
+            if (skyMaterial == null) { var sh = Shader.Find("DrivingSchool/Sky"); if (sh != null) skyMaterial = new Material(sh); }
+            else skyMaterial = new Material(skyMaterial); // the asset is not modified in play mode
             if (sun == null) foreach (var l in FindObjectsByType<Light>(FindObjectsSortMode.None)) if (l.type == LightType.Directional) { sun = l; break; }
             foreach (var r in roadRenderers)
                 if (r != null) foreach (var m in r.sharedMaterials)
@@ -105,24 +111,45 @@ namespace DrivingSchool.Presentation
             float day = Mathf.Lerp(Daylight(a.timeOfDayHours), Daylight(b.timeOfDayHours), t);
             float cloud = Mathf.Clamp01(Mathf.Max(rainI * 1.2f, snowI, fog * 0.8f, b.preset == WeatherPreset.Overcast ? 0.6f : 0f));
 
+            Daylight01 = day;
+            // The directional light is the sun by day and the moon by night (weak, cold, higher in the sky).
             if (sun != null)
             {
-                sun.intensity = Mathf.Lerp(0.02f, 1.35f, day) * Mathf.Lerp(1f, 0.25f, cloud);
-                sun.color = Color.Lerp(new Color(0.55f, 0.62f, 0.85f), new Color(1f, 0.97f, 0.92f), day);
-                sun.shadowStrength = Mathf.Lerp(1f, 0.3f, cloud);
-                float elev = Mathf.Lerp(-8f, 48f, day);
-                sun.transform.rotation = Quaternion.Euler(Mathf.Max(elev, 5f), -35f, 0f);
+                sun.intensity = Mathf.Lerp(0.035f, 1.35f, day) * Mathf.Lerp(1f, 0.25f, cloud);
+                sun.color = Color.Lerp(new Color(0.55f, 0.64f, 0.9f), new Color(1f, 0.97f, 0.92f), day);
+                sun.shadowStrength = Mathf.Lerp(1f, 0.3f, cloud) * Mathf.Lerp(0.6f, 1f, day);
+                float elev = Mathf.Lerp(32f, 48f, day), yaw = Mathf.Lerp(150f, -35f, day);
+                sun.transform.rotation = Quaternion.Euler(elev, yaw, 0f);
             }
             Color skyDay = Color.Lerp(new Color(0.58f, 0.72f, 0.88f), new Color(0.55f, 0.58f, 0.62f), cloud);
-            Color sky = Color.Lerp(new Color(0.02f, 0.025f, 0.05f), skyDay, day);
+            Color sky = Color.Lerp(new Color(0.012f, 0.016f, 0.03f), skyDay, day);
             RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Trilight;
-            RenderSettings.ambientSkyColor = sky * 1.05f;
-            RenderSettings.ambientEquatorColor = Color.Lerp(new Color(0.03f, 0.03f, 0.05f), new Color(0.5f, 0.55f, 0.6f), day);
-            RenderSettings.ambientGroundColor = Color.Lerp(new Color(0.02f, 0.02f, 0.02f), new Color(0.25f, 0.28f, 0.22f), day);
+            RenderSettings.ambientSkyColor = Color.Lerp(new Color(0.03f, 0.035f, 0.06f), skyDay * 1.05f, day);
+            RenderSettings.ambientEquatorColor = Color.Lerp(new Color(0.025f, 0.025f, 0.035f), new Color(0.5f, 0.55f, 0.6f), day);
+            RenderSettings.ambientGroundColor = Color.Lerp(new Color(0.015f, 0.015f, 0.015f), new Color(0.25f, 0.28f, 0.22f), day);
+            // Car paint and glass reflect the environment: without this they mirror the bright default sky at night.
+            RenderSettings.reflectionIntensity = Mathf.Lerp(0.06f, 1f, day);
             RenderSettings.fog = true; RenderSettings.fogMode = FogMode.Exponential;
-            RenderSettings.fogColor = Color.Lerp(sky, new Color(0.7f, 0.72f, 0.74f) * Mathf.Lerp(0.08f, 1f, day), fog);
+            RenderSettings.fogColor = Color.Lerp(sky, new Color(0.7f, 0.72f, 0.74f) * Mathf.Lerp(0.05f, 1f, day), fog);
             RenderSettings.fogDensity = 0.0015f + fog * 0.05f + rainI * 0.006f + snowI * 0.012f;
-            if (viewCamera != null) { viewCamera.clearFlags = CameraClearFlags.SolidColor; viewCamera.backgroundColor = RenderSettings.fogColor; }
+            if (skyMaterial != null)
+            {
+                Color zenith = Color.Lerp(new Color(0.004f, 0.006f, 0.014f), Color.Lerp(new Color(0.22f, 0.42f, 0.78f), new Color(0.5f, 0.53f, 0.57f), cloud), day);
+                skyMaterial.SetColor("_ZenithColor", Color.Lerp(zenith, RenderSettings.fogColor, fog));
+                skyMaterial.SetColor("_HorizonColor", RenderSettings.fogColor);
+                skyMaterial.SetColor("_GroundColor", RenderSettings.fogColor * 0.6f);
+                skyMaterial.SetColor("_GlowColor", new Color(0.05f, 0.03f, 0.015f) * (1f - day) * (1f + cloud));
+                float clear = (1f - cloud) * (1f - fog);
+                skyMaterial.SetFloat("_Stars", Mathf.Clamp01(1f - day * 1.6f) * clear);
+                Vector3 toLight = sun != null ? -sun.transform.forward : new Vector3(0.3f, 0.5f, -0.8f);
+                skyMaterial.SetVector("_SunDir", toLight);
+                skyMaterial.SetColor("_SunColor", new Color(1f, 0.95f, 0.85f, Mathf.Clamp01(day * 2f - 1f) * clear));
+                skyMaterial.SetVector("_MoonDir", toLight);
+                skyMaterial.SetFloat("_Moon", Mathf.Clamp01(1f - day * 2f) * clear);
+                RenderSettings.skybox = skyMaterial;
+                if (viewCamera != null) viewCamera.clearFlags = CameraClearFlags.Skybox;
+            }
+            else if (viewCamera != null) { viewCamera.clearFlags = CameraClearFlags.SolidColor; viewCamera.backgroundColor = RenderSettings.fogColor; }
 
             SetRate(rain, rainI * 9000f); SetRate(snow, snowI * 2500f);
             float wet = Mathf.Clamp01(Mathf.Max(rainI * 1.5f, b.surface == SurfaceType.WetAsphalt ? 0.6f : 0f));

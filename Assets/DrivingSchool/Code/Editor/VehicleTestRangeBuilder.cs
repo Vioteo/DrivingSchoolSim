@@ -34,7 +34,7 @@ namespace DrivingSchool.Editor
         public static readonly Vector3 PadCentre = new Vector3(195f, 0f, 290f);
         public const float PadSize = 90f;
 
-        static Material asphalt, paint, grass, pad, ice, concrete;
+        static Material asphalt, paint, grass, pad, ice, concrete, lampLens;
         static Transform env, props;
         static readonly List<Renderer> roadRenderers = new List<Renderer>();
 
@@ -51,6 +51,9 @@ namespace DrivingSchool.Editor
             grass = Lit("Grass", new Color(0.23f, 0.40f, 0.19f), 0.05f);
             ice = Lit("Ice", new Color(0.78f, 0.86f, 0.93f), 0.9f);
             concrete = Lit("Concrete", new Color(0.62f, 0.62f, 0.60f), 0.2f);
+            lampLens = Lit("LampLens", new Color(0.75f, 0.75f, 0.72f), 0.6f);
+            var skyMat = Sky("Sky");
+            var postFx = PostFx("PostFX");
             var telltaleMat = Unlit("Telltale", cutout: true, transparent: false);
             var waterMat = Unlit("WindshieldWater", cutout: false, transparent: true);   // dial scales
             var glassWaterMat = GlassWater("GlassWater");                                   // drops and snow on the windows
@@ -68,13 +71,16 @@ namespace DrivingSchool.Editor
             sun.type = LightType.Directional; sun.intensity = 1.35f; sun.shadows = LightShadows.Soft; sun.transform.rotation = Quaternion.Euler(45, -35, 0);
 
             var cam = new GameObject("Main Camera", typeof(Camera), typeof(AudioListener)).GetComponent<Camera>();
-            cam.tag = "MainCamera"; cam.nearClipPlane = 0.05f; cam.farClipPlane = 1200f; cam.GetUniversalAdditionalCameraData();
+            cam.tag = "MainCamera"; cam.nearClipPlane = 0.05f; cam.farClipPlane = 1200f; cam.allowHDR = true;
+            cam.GetUniversalAdditionalCameraData().renderPostProcessing = true; // bloom on lamps, tone mapping for night contrast
+            var volume = new GameObject("00 / POST FX").AddComponent<Volume>(); volume.isGlobal = true; volume.sharedProfile = postFx;
 
             var player = CreatePlayer(cam, telltaleMat, waterMat, glassWaterMat, mirrorMat, out var controller, out var visual);
             var rig = cam.gameObject.AddComponent<DriverCameraRig>(); rig.car = player.transform; rig.model = visual.transform;
 
             var weather = new GameObject("03 / WEATHER").AddComponent<WeatherController>();
-            weather.sun = sun; weather.viewCamera = cam; weather.precipitationMaterial = precipMat;
+            weather.sun = sun; weather.viewCamera = cam; weather.precipitationMaterial = precipMat; weather.skyMaterial = skyMat;
+            RenderSettings.skybox = skyMat;
             weather.vehicles.Add(controller.GetComponent<VehiclePhysicsAdapter>());
             weather.roadRenderers.AddRange(roadRenderers);
 
@@ -149,6 +155,32 @@ namespace DrivingSchool.Editor
             if (m == null) { m = new Material(shader); AssetDatabase.CreateAsset(m, path); }
             else if (m.shader != shader) m.shader = shader;
             EditorUtility.SetDirty(m); return m;
+        }
+
+        static Material Sky(string name)
+        {
+            string path = MatDir + "/" + name + ".mat";
+            var shader = Shader.Find("DrivingSchool/Sky");
+            if (shader == null) throw new Exception("Shader DrivingSchool/Sky not found");
+            var m = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (m == null) { m = new Material(shader); AssetDatabase.CreateAsset(m, path); }
+            else if (m.shader != shader) m.shader = shader;
+            EditorUtility.SetDirty(m); return m;
+        }
+
+        /// <summary>Bloom (lamps, headlights, moon), neutral tone mapping and a light vignette.</summary>
+        static VolumeProfile PostFx(string name)
+        {
+            string path = MatDir + "/" + name + ".asset";
+            var old = AssetDatabase.LoadAssetAtPath<VolumeProfile>(path);
+            if (old != null) AssetDatabase.DeleteAsset(path);
+            var profile = ScriptableObject.CreateInstance<VolumeProfile>();
+            AssetDatabase.CreateAsset(profile, path);
+            var bloom = profile.Add<Bloom>(true); bloom.threshold.Override(1.0f); bloom.intensity.Override(0.7f); bloom.scatter.Override(0.72f);
+            var tone = profile.Add<Tonemapping>(true); tone.mode.Override(TonemappingMode.Neutral);
+            var vignette = profile.Add<Vignette>(true); vignette.intensity.Override(0.18f); vignette.smoothness.Override(0.5f);
+            foreach (var c in profile.components) { c.name = c.GetType().Name; AssetDatabase.AddObjectToAsset(c, profile); }
+            EditorUtility.SetDirty(profile); return profile;
         }
 
         static Material Particles(string name)
@@ -305,12 +337,24 @@ namespace DrivingSchool.Editor
             for (float x = CurveRadius + 20f; x < RoadBEndX; x += 40f) posts.Add(new Vector3(x, 0f, RoadAEndZ + CurveRadius - RoadWidth / 2 - 1.5f));
             foreach (var p in posts)
             {
-                Transform post;
-                if (lamp != null) { var o = (GameObject)PrefabUtility.InstantiatePrefab(lamp, props); o.transform.position = p; post = o.transform; }
-                else post = Box("Lamp post", p + Vector3.up * 3.5f, new Vector3(0.15f, 7f, 0.15f), concrete, props, 0, false).transform;
-                var l = new GameObject("Street light").AddComponent<Light>(); l.transform.SetParent(post, true);
-                l.transform.position = p + Vector3.up * 6.8f; l.type = LightType.Spot; l.spotAngle = 120f; l.range = 22f; l.intensity = 2.2f;
-                l.color = new Color(1f, 0.86f, 0.62f); l.transform.rotation = Quaternion.Euler(90, 0, 0); l.shadows = LightShadows.None;
+                // The arm of TK_Lamp_7m points along local +Z: turn it over the road.
+                bool onRoadA = p.z < RoadAEndZ;
+                var rot = Quaternion.Euler(0f, onRoadA ? -90f : 0f, 0f);
+                Transform post; Vector3 lightPos; Renderer lens = null;
+                if (lamp != null)
+                {
+                    var o = (GameObject)PrefabUtility.InstantiatePrefab(lamp, props); o.transform.SetPositionAndRotation(p, rot); post = o.transform;
+                    lightPos = post.TransformPoint(new Vector3(0f, 6.78f, 1.3f)); // under the lamp housing
+                    var l = Box("Lamp lens", lightPos + Vector3.up * 0.03f, new Vector3(0.34f, 0.02f, 0.56f), lampLens, post, 0, false);
+                    l.transform.rotation = rot; l.isStatic = false; lens = l.GetComponent<Renderer>();
+                    lens.shadowCastingMode = ShadowCastingMode.Off;
+                }
+                else { post = Box("Lamp post", p + Vector3.up * 3.5f, new Vector3(0.15f, 7f, 0.15f), concrete, props, 0, false).transform; lightPos = p + Vector3.up * 6.8f; }
+                var light = new GameObject("Street light").AddComponent<Light>(); light.transform.SetParent(post, true);
+                light.transform.position = lightPos; light.type = LightType.Spot; light.spotAngle = 135f; light.innerSpotAngle = 70f;
+                light.range = 32f; light.intensity = 45f; light.color = new Color(1f, 0.74f, 0.45f); // high-pressure sodium look
+                light.transform.rotation = Quaternion.Euler(90, 0, 0); light.shadows = LightShadows.None;
+                var view = post.gameObject.AddComponent<StreetLampView>(); view.lampLight = light; view.lens = lens;
             }
         }
 
