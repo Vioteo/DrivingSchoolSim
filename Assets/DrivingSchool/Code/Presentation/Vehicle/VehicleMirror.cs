@@ -22,6 +22,10 @@ namespace DrivingSchool.Presentation
         public int renderEveryNthFrame = 1, frameOffset;
         [Range(-15, 15)] public float yawDeg, pitchDeg;
         public float convexity = 0f;       // >0 widens the view (side mirrors), game setting
+        [Tooltip("At start the glass is turned (up to maxAimDeg) so the driver sees along aimDirection — the way a driver sets the mirrors before moving off.")]
+        public bool autoAim = true;
+        public Vector3 aimDirection = Vector3.back;   // car space: where the reflected view should look
+        public float maxAimDeg = 25f;
 
         Camera cam; RenderTexture rt; Material mat;
         Vector3 centreInCar, rightInCar, upInCar, normalInCar; // rest frame, car space
@@ -29,6 +33,10 @@ namespace DrivingSchool.Presentation
         bool ready;
 
         public RenderTexture Texture => rt;
+        /// <summary>How far the glass was turned at start by autoAim, degrees.</summary>
+        public float AimDeg { get; private set; }
+        /// <summary>True when the mirror camera rendered in the last frame it was due.</summary>
+        public bool Rendering => cam != null && cam.enabled;
         public Camera MirrorCamera => cam;
 
         void Start()
@@ -44,13 +52,15 @@ namespace DrivingSchool.Presentation
             var mf = surface.GetComponent<MeshFilter>(); var mr = surface.GetComponent<Renderer>();
             if (mf == null || mr == null || mf.sharedMesh == null || viewer == null) return false;
             var mesh = mf.mesh; // instance: UVs are rewritten below
-            var verts = mesh.vertices; var normals = mesh.normals;
-            // Plane normal: average of mesh normals, pointing at the viewer.
-            Vector3 n = Vector3.zero; foreach (var v in normals) n += v;
-            if (n.sqrMagnitude < 1e-6f) n = Vector3.back;
-            n = car.InverseTransformDirection(surface.TransformDirection(n)).normalized;
+            var verts = mesh.vertices;
+            // Plane normal: the thinnest axis of the glass (it is a thin slab; averaged normals of a bevelled box
+            // point anywhere), turned towards the driver's eye.
+            var lb = mesh.bounds; Vector3 axis = lb.size.x <= lb.size.y && lb.size.x <= lb.size.z ? Vector3.right : lb.size.y <= lb.size.z ? Vector3.up : Vector3.forward;
+            Vector3 n = car.InverseTransformDirection(surface.TransformDirection(axis)).normalized;
             Vector3 c = Vector3.zero; foreach (var v in verts) c += car.InverseTransformPoint(surface.TransformPoint(v)); c /= Mathf.Max(1, verts.Length);
-            Vector3 eye = car.InverseTransformPoint(viewer.transform.position);
+            // The eye socket, not the camera: at Start the camera may still sit where the scene left it.
+            var socket = VehicleRigUtil.Find(car, "Socket_DriverEye");
+            Vector3 eye = car.InverseTransformPoint(socket != null ? socket.position : viewer.transform.position);
             if (Vector3.Dot(n, eye - c) < 0) n = -n;
             Vector3 up = Vector3.ProjectOnPlane(Vector3.up, n).normalized;
             Vector3 right = Vector3.Cross(n, up); // viewer's right: viewer looks along −n, Unity right = up × forward
@@ -68,9 +78,18 @@ namespace DrivingSchool.Presentation
             mesh.uv = uvs;
             centreInCar = c + right * (0.5f * (minU + maxU)) + up * (0.5f * (minV + maxV));
             halfW = 0.5f * (maxU - minU); halfH = 0.5f * (maxV - minV);
-            rightInCar = right; upInCar = up; normalInCar = n;
-            surfaceRestInCar = Quaternion.Inverse(car.rotation) * surface.rotation;
-            surfacePosRestInCar = car.InverseTransformPoint(surface.position);
+            // Aim: the normal that reflects the eye→glass ray into aimDirection is (reflected − incoming).
+            Quaternion aim = Quaternion.identity;
+            if (autoAim && aimDirection.sqrMagnitude > 1e-6f)
+            {
+                Vector3 d = (centreInCar - eye).normalized;
+                Vector3 want = (aimDirection.normalized - d).normalized;
+                aim = Quaternion.RotateTowards(Quaternion.identity, Quaternion.FromToRotation(n, want), maxAimDeg);
+            }
+            rightInCar = aim * right; upInCar = aim * up; normalInCar = aim * n;
+            surfaceRestInCar = aim * (Quaternion.Inverse(car.rotation) * surface.rotation);
+            surfacePosRestInCar = centreInCar + aim * (car.InverseTransformPoint(surface.position) - centreInCar);
+            AimDeg = Quaternion.Angle(Quaternion.identity, aim);
 
             rt = new RenderTexture(resolution.x, resolution.y, 24) { name = "Mirror_" + surface.name, antiAliasing = 2 };
             rt.Create();

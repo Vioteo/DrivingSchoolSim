@@ -40,6 +40,10 @@ namespace DrivingSchool.Presentation
                 m.surface = t; m.viewer = viewer; m.car = transform; m.templateMaterial = templateMaterial;
                 m.resolution = i == 1 ? new Vector2Int(textureResolution.x * 3 / 2, textureResolution.y) : textureResolution;
                 m.convexity = i == 1 ? 0f : 0.35f;
+                // Set up like a driver would: side mirrors show the lane behind with a sliver of the own car,
+                // the centre mirror looks straight back through the rear window.
+                m.aimDirection = i == 1 ? Quaternion.Euler(-2f, 0f, 0f) * Vector3.back
+                                        : Quaternion.Euler(-1f, i == 0 ? 3f : -3f, 0f) * Vector3.back;
                 m.renderEveryNthFrame = enableTimeSlicing && i != 1 ? 2 : 1;
                 m.frameOffset = i == 2 ? 1 : 0;
                 mirrors[i] = m;
