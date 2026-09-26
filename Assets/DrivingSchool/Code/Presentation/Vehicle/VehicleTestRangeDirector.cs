@@ -21,7 +21,8 @@ namespace DrivingSchool.Presentation
     /// <summary>
     /// Vehicle test range: technical HUD (IMGUI stand), hotkeys and an automated self-check of the car's
     /// systems. Launch with "--selfcheck" (player) to run the check at start and quit with exit code 0/1.
-    /// F4 help, F7 МКПП/АКПП, F8 self-check, F9/Backspace respawn, F10 crash-test spawn, F5/F6 weather.
+    /// F4 help, F7 МКПП/АКПП, F8 self-check, F9/Backspace respawn, F10 crash-test spawn, F11 railway crossing,
+    /// F12 hill, G calls a train through the crossing, F5/F6 weather.
     /// </summary>
     public sealed class VehicleTestRangeDirector : MonoBehaviour
     {
@@ -35,6 +36,8 @@ namespace DrivingSchool.Presentation
         public WindshieldRainView windshield;
         public Transform spawn, crashSpawn;
         public Rigidbody obstacleCar;
+        public Transform railwaySpawn, hillSpawn;
+        public RailwayCrossingView crossing;
 
         bool showHelp = true, running;
         readonly List<string> report = new List<string>();
@@ -61,7 +64,22 @@ namespace DrivingSchool.Presentation
             if (kb.f7Key.wasPressedThisFrame) ToggleTransmission();
             if (kb.f9Key.wasPressedThisFrame || kb.backspaceKey.wasPressedThisFrame) Respawn(spawn);
             if (kb.f10Key.wasPressedThisFrame) Respawn(crashSpawn);
+            if (kb.f11Key.wasPressedThisFrame) Respawn(railwaySpawn);
+            if (kb.f12Key.wasPressedThisFrame) Respawn(hillSpawn);
+            if (kb.gKey.wasPressedThisFrame && crossing != null) crossing.CallTrain();
             if (kb.f8Key.wasPressedThisFrame) StartCoroutine(SelfCheck(false));
+        }
+
+        static string CrossingText(RailwayCrossingView c)
+        {
+            switch (c.Current)
+            {
+                case RailwayCrossingView.Phase.Open: return "открыт";
+                case RailwayCrossingView.Phase.Warning: return "<color=red>красный сигнал</color>";
+                case RailwayCrossingView.Phase.Lowering: return "<color=red>шлагбаум опускается</color>";
+                case RailwayCrossingView.Phase.Closed: return "<color=red>закрыт, идёт поезд</color>";
+                default: return "шлагбаум поднимается";
+            }
         }
 
         public void ToggleTransmission()
@@ -264,6 +282,7 @@ namespace DrivingSchool.Presentation
             GUILayout.Label($"Погода: {WeatherController.Current.preset}  Покрытие: {a.surface}  μ={Simulation.SurfaceFrictionModel.GetFrictionCoefficient(a.surface):F2}", small);
             GUILayout.Label($"Столкновений: {player.CollisionCount}" + (Time.time - player.LastImpactTime < 4f ? $"  <color=orange>удар {player.LastImpactSpeedMps * 3.6f:F0} км/ч</color>" : ""), small);
             if (mirrors != null) GUILayout.Label($"Зеркало: {mirrors.Selected}  (F1/F2/F3, NumPad 8/2/4/6)", small);
+            if (crossing != null) GUILayout.Label("Переезд: " + CrossingText(crossing) + "  (G — поезд)", small);
             if (!string.IsNullOrEmpty(reportSummary)) GUILayout.Label("Самопроверка: " + reportSummary, small);
             GUILayout.EndArea();
 
@@ -283,7 +302,8 @@ namespace DrivingSchool.Presentation
                     "C — камера (салон/сзади/облёт), ПКМ или Z , . — осмотреться\n" +
                     "F1/F2/F3 + NumPad 8/2/4/6 (Home/End/Del/PgDn) — регулировка зеркал\n" +
                     "F5/F6 — погода (в т.ч. «полнолуние»), F7 — МКПП/АКПП, F8 — самопроверка\n" +
-                    "F9/Backspace — на старт, F10 — к машине для столкновения", small);
+                    "F9/Backspace — на старт, F10 — к машине для столкновения\n" +
+                    "F11 — к ж/д переезду, F12 — к горке, G — вызвать поезд", small);
                 if (report.Count > 0)
                 {
                     var sb = new StringBuilder();

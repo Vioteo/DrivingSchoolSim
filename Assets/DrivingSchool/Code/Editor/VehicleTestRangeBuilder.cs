@@ -16,7 +16,8 @@ namespace DrivingSchool.Editor
     /// <summary>
     /// Reproducible vehicle test range (T41): straight road with speed bumps and a cone slalom, a 90° curve,
     /// a second straight, a manoeuvring pad with an ice patch and a parked car for collision tests, lamp posts
-    /// for night driving. The player sedan gets the full vehicle stack (physics, visuals, lights, dashboard,
+    /// for night driving; road C south of the pad with a railway crossing (barriers, signals, a train) and a hill
+    /// for hill starts. The player sedan gets the full vehicle stack (physics, visuals, lights, dashboard,
     /// mirrors, windshield rain) and the scene gets weather and the test director.
     /// Overwrites only Scenes/VehicleTestRange.unity and Materials/VehicleTestRange/*.
     /// </summary>
@@ -66,6 +67,7 @@ namespace DrivingSchool.Editor
 
             BuildRoads();
             BuildProps(out var obstacle);
+            BuildRoadC(out var crossing);
 
             var sun = new GameObject("Sun").AddComponent<Light>();
             sun.type = LightType.Directional; sun.intensity = 1.35f; sun.shadows = LightShadows.Soft; sun.transform.rotation = Quaternion.Euler(45, -35, 0);
@@ -89,6 +91,10 @@ namespace DrivingSchool.Editor
             var crash = new GameObject("SPAWN / crash test").transform; crash.SetParent(env);
             crash.SetPositionAndRotation(new Vector3(obstacle.position.x - 28f, 0.02f, obstacle.position.z), Quaternion.Euler(0, 90, 0));
             player.transform.SetPositionAndRotation(spawn.position, spawn.rotation);
+            var railSpawn = new GameObject("SPAWN / railway crossing").transform; railSpawn.SetParent(env);
+            railSpawn.SetPositionAndRotation(new Vector3(RoadCX + 2f, 0.02f, RailZ - 45f), Quaternion.identity);
+            var hillSpawn = new GameObject("SPAWN / hill").transform; hillSpawn.SetParent(env);
+            hillSpawn.SetPositionAndRotation(new Vector3(RoadCX + 2f, 0.02f, HillStartZ - 25f), Quaternion.identity);
 
             var director = new GameObject("04 / TEST DIRECTOR").AddComponent<VehicleTestRangeDirector>();
             director.player = controller; director.weather = weather; director.cameraRig = rig; director.spawn = spawn; director.crashSpawn = crash;
@@ -96,10 +102,12 @@ namespace DrivingSchool.Editor
             director.mirrors = player.GetComponent<VehicleMirrorRig>(); director.dashboard = player.GetComponent<DashboardView>();
             director.lights = player.GetComponent<VehicleLightsView>(); director.visuals = player.GetComponent<VehicleVisuals>();
             director.windshield = player.GetComponent<WindshieldRainView>();
+            director.railwaySpawn = railSpawn; director.hillSpawn = hillSpawn; director.crossing = crossing;
 
             RenderSettings.fog = true; RenderSettings.fogMode = FogMode.Exponential; RenderSettings.fogDensity = 0.0015f;
             Physics.SyncTransforms();
             Validate(player, obstacle, spawn, crash);
+            ValidateRoadC(railSpawn, hillSpawn);
 
             EditorSceneManager.SaveScene(scene, ScenePath);
             var scenes = EditorBuildSettings.scenes.ToList();
@@ -411,6 +419,305 @@ namespace DrivingSchool.Editor
         }
 
         static void SetLayer(GameObject o, int layer) { foreach (var t in o.GetComponentsInChildren<Transform>(true)) t.gameObject.layer = layer; }
+
+        // ------------------------------------------------------------------ road C: railway crossing and hill
+
+        // Road C leaves the south edge of the pad and runs south along X = RoadCX. Driving north (+Z) keeps to x > RoadCX.
+        public const float RoadCX = 195f, RoadCEndZ = 10f, RailZ = 185f, HillStartZ = 75f, HillEndZ = 123f;
+        public const float HillGrade = 0.14f, HillRamp = 14f, HillBlend = 3f;
+        const float CrossingHalfLength = 4.8f;                // TK_RailwayCrossing_Tracks: ramps + deck along the road
+        const float TrackWestX = 40f, TrackEastX = 440f;       // the track ends (the ground is 700 m wide)
+        static float RoadCStartZ => PadCentre.z - PadSize / 2f;
+
+        static void BuildRoadC(out RailwayCrossingView crossing)
+        {
+            RoadCSegment(RoadCEndZ, HillStartZ);
+            RoadCSegment(HillEndZ, RailZ - CrossingHalfLength);
+            RoadCSegment(RailZ + CrossingHalfLength, RoadCStartZ);
+            Road(Box("Road C turning area", new Vector3(RoadCX, 0f, RoadCEndZ - 12f), new Vector3(30f, 0.04f, 24f), pad, env, LayerGround, true));
+            BuildHill();
+            crossing = BuildRailway();
+            Label("Ж/Д ПЕРЕЕЗД", new Vector3(RoadCX - RoadWidth / 2 - 2f, 1.5f, RailZ - 28f), 90f);
+            Label($"ГОРКА {HillGrade * 100f:F0}%", new Vector3(RoadCX - RoadWidth / 2 - 2f, 1.5f, HillStartZ - 8f), 90f);
+            for (float z = RoadCEndZ + 15f; z < RoadCStartZ - 5f; z += 40f)
+                if (Mathf.Abs(z - RailZ) > 14f) LampPost(new Vector3(RoadCX + RoadWidth / 2 + 1.5f, 0f, z), Quaternion.Euler(0f, -90f, 0f));
+        }
+
+        static void RoadCSegment(float z0, float z1)
+        {
+            float len = z1 - z0;
+            Road(Box("Road C", new Vector3(RoadCX, 0f, z0 + len / 2f), new Vector3(RoadWidth, 0.04f, len), asphalt, env, LayerGround, true));
+            EdgeLines(new Vector3(RoadCX, 0f, z0), new Vector3(RoadCX, 0f, z1));
+        }
+
+        // ---- hill: up at HillGrade, a flat top, down again; the grade blends in over HillBlend metres
+
+        static float Ramp(float z, float a, float b)
+        {
+            if (z <= a || z >= b) return 0f;
+            return Mathf.Min(1f, Mathf.Min((z - a) / HillBlend, (b - z) / HillBlend));
+        }
+
+        /// <summary>Grade (dy/dz) of road C at z.</summary>
+        public static float HillSlope(float z) => HillGrade * (Ramp(z, HillStartZ, HillStartZ + HillRamp) - Ramp(z, HillEndZ - HillRamp, HillEndZ));
+
+        /// <summary>Height of the hill's road surface above the flat road at z.</summary>
+        public static float HillHeight(float z)
+        {
+            if (z <= HillStartZ) return 0f;
+            float h = 0f, step = 0.05f;
+            for (float s = HillStartZ; s < Mathf.Min(z, HillEndZ); s += step) h += HillSlope(s + step * 0.5f) * Mathf.Min(step, z - s);
+            return Mathf.Max(0f, h);
+        }
+
+        static void BuildHill()
+        {
+            const float step = 0.5f, kerbW = 0.3f, kerbH = 0.15f, y0 = 0.02f;
+            float hw = RoadWidth / 2f;
+            var road = new MeshData(); var kerb = new MeshData(); var marks = new MeshData();
+            int n = Mathf.CeilToInt((HillEndZ - HillStartZ) / step);
+            for (int i = 0; i < n; i++)
+            {
+                float za = HillStartZ + i * step, zb = Mathf.Min(HillEndZ, za + step);
+                float ha = HillHeight(za) + y0, hb = HillHeight(zb) + y0;
+                // asphalt
+                road.Quad(new Vector3(RoadCX - hw, ha, za), new Vector3(RoadCX + hw, ha, za), new Vector3(RoadCX + hw, hb, zb), new Vector3(RoadCX - hw, hb, zb),
+                          new Vector2(0, za / 9.67f), new Vector2(1, za / 9.67f), new Vector2(1, zb / 9.67f), new Vector2(0, zb / 9.67f));
+                // kerbs (top and inner face) and the retaining walls down to the ground
+                foreach (float s in new[] { -1f, 1f })
+                {
+                    float xi = RoadCX + s * hw, xo = RoadCX + s * (hw + kerbW);
+                    kerb.QuadAuto(new Vector3(xi, ha, za), new Vector3(xi, hb, zb), new Vector3(xi, hb + kerbH, zb), new Vector3(xi, ha + kerbH, za), -s);
+                    kerb.QuadAuto(new Vector3(xi, ha + kerbH, za), new Vector3(xi, hb + kerbH, zb), new Vector3(xo, hb + kerbH, zb), new Vector3(xo, ha + kerbH, za), 0f);
+                    kerb.QuadAuto(new Vector3(xo, 0f, za), new Vector3(xo, 0f, zb), new Vector3(xo, hb + kerbH, zb), new Vector3(xo, ha + kerbH, za), s);
+                }
+                // edge lines and centre dashes (1.5 m on / 4.5 m off), 5 mm above the asphalt
+                foreach (float x in new[] { -hw + 0.25f, hw - 0.25f }) marks.Strip(RoadCX + x, 0.12f, za, zb, ha + 0.005f, hb + 0.005f);
+                float phase = Mathf.Repeat(za - HillStartZ, 6f);
+                if (phase < 1.5f) marks.Strip(RoadCX, 0.12f, za, zb, ha + 0.005f, hb + 0.005f);
+            }
+            // stop lines half way up each climb, across the lane that climbs there
+            StopLineOnHill(marks, RoadCX + hw / 2f, HillStartZ + HillRamp * 0.55f);   // northbound lane
+            StopLineOnHill(marks, RoadCX - hw / 2f, HillEndZ - HillRamp * 0.55f);     // southbound lane
+            var roadGo = MeshObject("Hill " + (HillGrade * 100f).ToString("F0") + "% (road)", road, asphalt, true);
+            Road(roadGo);
+            MeshObject("Hill kerbs and walls", kerb, concrete, true);
+            MeshObject("Hill markings", marks, paint, false);
+        }
+
+        static void StopLineOnHill(MeshData m, float xc, float z)
+        {
+            float w = RoadWidth / 2f - 0.3f, d = 0.4f;
+            float ha = HillHeight(z - d / 2) + 0.027f, hb = HillHeight(z + d / 2) + 0.027f;
+            m.Quad(new Vector3(xc - w / 2, ha, z - d / 2), new Vector3(xc + w / 2, ha, z - d / 2), new Vector3(xc + w / 2, hb, z + d / 2), new Vector3(xc - w / 2, hb, z + d / 2));
+        }
+
+        static GameObject MeshObject(string name, MeshData data, Material mat, bool collider)
+        {
+            var mesh = data.ToMesh(name);
+            AssetDatabase.CreateAsset(mesh, MatDir + "/" + name.Replace(' ', '_').Replace('%', 'p').Replace('/', '_') + ".asset");
+            var go = new GameObject(name); go.transform.SetParent(env); go.layer = LayerGround; go.isStatic = true;
+            go.AddComponent<MeshFilter>().sharedMesh = mesh; go.AddComponent<MeshRenderer>().sharedMaterial = mat;
+            if (collider) go.AddComponent<MeshCollider>().sharedMesh = mesh;
+            return go;
+        }
+
+        /// <summary>Small mesh accumulator: flat-shaded quads with optional UVs.</summary>
+        sealed class MeshData
+        {
+            public readonly List<Vector3> v = new List<Vector3>(); public readonly List<Vector2> uv = new List<Vector2>(); public readonly List<int> t = new List<int>();
+            public void Quad(Vector3 a, Vector3 b, Vector3 c, Vector3 d, Vector2? ua = null, Vector2? ub = null, Vector2? uc = null, Vector2? ud = null)
+            {
+                int k = v.Count; v.Add(a); v.Add(b); v.Add(c); v.Add(d);
+                uv.Add(ua ?? new Vector2(0, 0)); uv.Add(ub ?? new Vector2(1, 0)); uv.Add(uc ?? new Vector2(1, 1)); uv.Add(ud ?? new Vector2(0, 1));
+                // a, b, c, d counter-clockwise seen from above/outside -> Unity wants clockwise
+                t.AddRange(new[] { k, k + 2, k + 1, k, k + 3, k + 2 });
+            }
+            /// <summary>Quad whose normal is turned towards +X (s &gt; 0), −X (s &lt; 0) or up (s = 0).</summary>
+            public void QuadAuto(Vector3 a, Vector3 b, Vector3 c, Vector3 d, float s)
+            {
+                Vector3 n = Vector3.Cross(c - a, b - a);
+                Vector3 want = s > 0 ? Vector3.right : s < 0 ? Vector3.left : Vector3.up;
+                if (Vector3.Dot(n, want) >= 0f) Quad(a, b, c, d); else Quad(a, d, c, b);
+            }
+            public void Strip(float xc, float w, float za, float zb, float ha, float hb)
+                => Quad(new Vector3(xc - w / 2, ha, za), new Vector3(xc + w / 2, ha, za), new Vector3(xc + w / 2, hb, zb), new Vector3(xc - w / 2, hb, zb));
+            public void Box(Vector3 c, Vector3 s)
+            {
+                Vector3 h = s / 2f;
+                Vector3 p(float x, float y, float z) => c + Vector3.Scale(h, new Vector3(x, y, z));
+                QuadAuto(p(-1, 1, -1), p(1, 1, -1), p(1, 1, 1), p(-1, 1, 1), 0f);                       // top
+                QuadAuto(p(-1, -1, -1), p(-1, 1, -1), p(-1, 1, 1), p(-1, -1, 1), -1f);                  // -X
+                QuadAuto(p(1, -1, -1), p(1, 1, -1), p(1, 1, 1), p(1, -1, 1), 1f);                       // +X
+                int k = v.Count;
+                Quad(p(-1, -1, -1), p(1, -1, -1), p(1, 1, -1), p(-1, 1, -1)); FixFacing(k, Vector3.back);  // -Z
+                k = v.Count;
+                Quad(p(-1, -1, 1), p(1, -1, 1), p(1, 1, 1), p(-1, 1, 1)); FixFacing(k, Vector3.forward); // +Z
+            }
+            void FixFacing(int k, Vector3 want)
+            {
+                int ti = t.Count - 6;
+                Vector3 n = Vector3.Cross(v[t[ti + 1]] - v[t[ti]], v[t[ti + 2]] - v[t[ti]]);
+                if (Vector3.Dot(n, want) < 0f) { for (int i = 0; i < 6; i += 3) { int tmp = t[ti + i + 1]; t[ti + i + 1] = t[ti + i + 2]; t[ti + i + 2] = tmp; } }
+            }
+            public Mesh ToMesh(string name)
+            {
+                var m = new Mesh { name = name, indexFormat = v.Count > 65000 ? IndexFormat.UInt32 : IndexFormat.UInt16 };
+                m.SetVertices(v); m.SetUVs(0, uv); m.SetTriangles(t, 0);
+                m.RecalculateNormals(); m.RecalculateBounds(); m.RecalculateTangents();
+                return m;
+            }
+        }
+
+        // ---- railway crossing
+
+        static Transform PlaceKit(string path, Vector3 pos, float yaw, Transform parent, bool dynamic = false)
+        {
+            var src = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (src == null) throw new FileNotFoundException(path);
+            var o = (GameObject)PrefabUtility.InstantiatePrefab(src, parent);
+            o.transform.SetPositionAndRotation(pos, Quaternion.Euler(0f, yaw, 0f));
+            // Kit prefabs are marked static for batching; moving parts (barrier booms) must not be batched.
+            if (dynamic) foreach (var t in o.GetComponentsInChildren<Transform>(true)) t.gameObject.isStatic = false;
+            return o.transform;
+        }
+
+        static Material KitMat(string name, Color fallback, float smoothness)
+        {
+            var m = AssetDatabase.LoadAssetAtPath<Material>(Base + "/Materials/TrainingKit/" + name + ".mat");
+            return m != null ? m : Lit(name, fallback, smoothness);
+        }
+
+        static RailwayCrossingView BuildRailway()
+        {
+            const string Kit = Base + "/Prefabs/TrainingKit/";
+            var root = new GameObject("06 / RAILWAY CROSSING").transform;
+            // The module's rails run along its local Z; turned 90° they cross road C (which runs along Z).
+            PlaceKit(Kit + "TK_RailwayCrossing_Tracks.prefab", new Vector3(RoadCX, 0f, RailZ), 90f, root);
+            // Barriers and signals stand on the right of each approach; the booms cover the right-hand lane.
+            var bN = PlaceKit(Kit + "TK_RailwayBarrier.prefab", new Vector3(RoadCX + RoadWidth / 2 + 0.6f, 0f, RailZ - 10f), 0f, root, true);
+            var bS = PlaceKit(Kit + "TK_RailwayBarrier.prefab", new Vector3(RoadCX - RoadWidth / 2 - 0.6f, 0f, RailZ + 10f), 180f, root, true);
+            var sN = PlaceKit(Kit + "TK_RailwaySignal.prefab", new Vector3(RoadCX + RoadWidth / 2 + 1.4f, 0f, RailZ - 11.8f), 0f, root, true);
+            var sS = PlaceKit(Kit + "TK_RailwaySignal.prefab", new Vector3(RoadCX - RoadWidth / 2 - 1.4f, 0f, RailZ + 11.8f), 180f, root, true);
+            // Stop lines before the barriers, right-hand lane of each approach.
+            Box("Stop line (railway, north)", new Vector3(RoadCX + RoadWidth / 4, 0.021f, RailZ - 13.5f), new Vector3(RoadWidth / 2 - 0.3f, 0.005f, 0.4f), paint, root, 0, false);
+            Box("Stop line (railway, south)", new Vector3(RoadCX - RoadWidth / 4, 0.021f, RailZ + 13.5f), new Vector3(RoadWidth / 2 - 0.3f, 0.005f, 0.4f), paint, root, 0, false);
+            // Warning sign "level crossing with barrier", facing each approach.
+            var sign = AssetDatabase.LoadAssetAtPath<GameObject>(Base + "/Prefabs/Traffic/DS_Sign_RailwayBarrier.prefab");
+            if (sign != null)
+            {
+                var a = (GameObject)PrefabUtility.InstantiatePrefab(sign, root);
+                a.transform.SetPositionAndRotation(new Vector3(RoadCX + RoadWidth / 2 + 1.2f, 0f, RailZ - 60f), Quaternion.Euler(0f, 180f, 0f));
+                var b = (GameObject)PrefabUtility.InstantiatePrefab(sign, root);
+                b.transform.SetPositionAndRotation(new Vector3(RoadCX - RoadWidth / 2 - 1.2f, 0f, RailZ + 45f), Quaternion.identity);
+            }
+            BuildTrack(root);
+            var train = BuildTrain(root, out float trainLength);
+            var view = root.gameObject.AddComponent<RailwayCrossingView>();
+            view.barriers = new[] { bN, bS }; view.signals = new[] { sN, sS }; view.train = train;
+            view.crossingCentre = new Vector3(RoadCX, 0f, RailZ); view.trainDirection = Vector3.left;
+            view.trainLength = trainLength; view.trackHalfLength = RoadCX - TrackWestX - 5f;
+            view.trainArrivesAfter = Mathf.Min(14f, (TrackEastX - RoadCX - 5f) / (view.trainSpeedKmh / 3.6f));
+            view.warningBeforeLowering = 4f; view.lowerSeconds = 6f;
+            return view;
+        }
+
+        static void BuildTrack(Transform root)
+        {
+            var ballastMat = KitMat("RW_Ballast", new Color(0.42f, 0.40f, 0.38f), 0.05f);
+            var sleeperMat = KitMat("RW_Sleeper", new Color(0.45f, 0.44f, 0.42f), 0.1f);
+            var railMat = KitMat("RW_RailSteel", new Color(0.35f, 0.33f, 0.31f), 0.5f);
+            const float moduleHalf = 5.5f, gauge = 1.6f;   // rail centres of the module are 0.8 m off the axis
+            foreach (var (x0, x1, tag) in new[] { (TrackWestX, RoadCX - moduleHalf, "west"), (RoadCX + moduleHalf, TrackEastX, "east") })
+            {
+                float len = x1 - x0, xc = (x0 + x1) / 2f;
+                // ballast bed (trapezoid) and sleepers every 0.55 m, as two meshes
+                var bed = new MeshData();
+                float top = 0.03f, bot = -0.05f, wt = 1.45f, wb = 2.1f;
+                bed.QuadAuto(new Vector3(x0, top, RailZ - wt), new Vector3(x1, top, RailZ - wt), new Vector3(x1, top, RailZ + wt), new Vector3(x0, top, RailZ + wt), 0f);
+                foreach (float s in new[] { -1f, 1f })
+                {
+                    var q = new[] { new Vector3(x0, top, RailZ + s * wt), new Vector3(x1, top, RailZ + s * wt), new Vector3(x1, bot, RailZ + s * wb), new Vector3(x0, bot, RailZ + s * wb) };
+                    Vector3 nrm = Vector3.Cross(q[2] - q[0], q[1] - q[0]);
+                    if (nrm.z * s < 0f) bed.Quad(q[0], q[3], q[2], q[1]); else bed.Quad(q[0], q[1], q[2], q[3]);
+                }
+                var bedGo = MeshObject($"Track ballast ({tag})", bed, ballastMat, false); bedGo.transform.SetParent(root, true);
+                var bc = bedGo.AddComponent<BoxCollider>(); bc.center = new Vector3(xc, -0.01f, RailZ); bc.size = new Vector3(len, 0.08f, wt * 2f);
+                var sl = new MeshData();
+                for (float x = x0 + 0.3f; x < x1 - 0.2f; x += 0.55f) sl.Box(new Vector3(x, -0.015f, RailZ), new Vector3(0.25f, 0.12f, 2.6f));
+                MeshObject($"Track sleepers ({tag})", sl, sleeperMat, false).transform.SetParent(root, true);
+                foreach (float s in new[] { -1f, 1f })
+                {
+                    var rail = Box($"Rail ({tag})", new Vector3(xc, 0.1425f, RailZ + s * gauge / 2f), new Vector3(len, 0.195f, 0.07f), railMat, root, 0, false);
+                    rail.isStatic = true;
+                }
+            }
+        }
+
+        static Rigidbody BuildTrain(Transform root, out float length)
+        {
+            var red = Lit("TrainRed", new Color(0.62f, 0.09f, 0.07f), 0.45f);
+            var grey = Lit("TrainGrey", new Color(0.36f, 0.38f, 0.39f), 0.35f);
+            var wagon = Lit("TrainWagon", new Color(0.20f, 0.27f, 0.21f), 0.25f);
+            var dark = Lit("TrainBlack", new Color(0.05f, 0.05f, 0.05f), 0.2f);
+            var glass = Lit("TrainGlass", new Color(0.06f, 0.08f, 0.10f), 0.92f);
+            var go = new GameObject("Train (kinematic)"); go.transform.SetParent(root);
+            // Local +Z is the direction of travel, the front of the train is at z = 0; rail top is y = 0.
+            var t = go.transform;
+            void Part(string n, Vector3 c, Vector3 s, Material m, bool col = true)
+            {
+                var p = Box(n, c, s, m, t, col ? LayerProps : 0, col); p.isStatic = false; p.layer = LayerProps;
+            }
+            // locomotive
+            Part("Loco body", new Vector3(0f, 2.55f, -8.5f), new Vector3(3.1f, 3.1f, 16.6f), red);
+            Part("Loco roof", new Vector3(0f, 4.2f, -8.5f), new Vector3(2.8f, 0.25f, 15.8f), grey, false);
+            Part("Loco stripe", new Vector3(0f, 1.75f, -8.5f), new Vector3(3.14f, 0.28f, 16.62f), grey, false);
+            Part("Loco windscreen", new Vector3(0f, 3.35f, -0.19f), new Vector3(2.5f, 0.85f, 0.04f), glass, false);
+            Part("Loco headlight", new Vector3(0f, 3.95f, -0.19f), new Vector3(0.35f, 0.2f, 0.04f), lampLens, false);
+            Part("Loco frame", new Vector3(0f, 0.95f, -8.5f), new Vector3(2.9f, 0.4f, 16.8f), dark, false);
+            foreach (float z in new[] { -3.5f, -13.5f }) Part("Bogie", new Vector3(0f, 0.4f, z), new Vector3(2.4f, 0.8f, 3.2f), dark, false);
+            float z0 = -17.4f;
+            for (int i = 0; i < 4; i++)
+            {
+                float zc = z0 - 7.2f;
+                Part("Wagon " + (i + 1), new Vector3(0f, 2.45f, zc), new Vector3(3.0f, 2.9f, 14f), wagon);
+                Part("Wagon roof", new Vector3(0f, 3.98f, zc), new Vector3(2.7f, 0.18f, 13.6f), grey, false);
+                Part("Wagon frame", new Vector3(0f, 0.9f, zc), new Vector3(2.8f, 0.35f, 14.2f), dark, false);
+                foreach (float dz in new[] { -5f, 5f }) Part("Bogie", new Vector3(0f, 0.4f, zc + dz), new Vector3(2.4f, 0.8f, 2.6f), dark, false);
+                z0 -= 14.8f;
+            }
+            length = -z0 - 0.4f;
+            t.SetPositionAndRotation(new Vector3(TrackEastX - 2f, 0.24f, RailZ), Quaternion.LookRotation(Vector3.left));
+            var rb = go.AddComponent<Rigidbody>(); rb.isKinematic = true; rb.mass = 80000f;
+            return rb;
+        }
+
+        static void LampPost(Vector3 p, Quaternion rot)
+        {
+            var lamp = AssetDatabase.LoadAssetAtPath<GameObject>(Base + "/Prefabs/TrainingKit/TK_Lamp_7m.prefab");
+            if (lamp == null) return;
+            var o = (GameObject)PrefabUtility.InstantiatePrefab(lamp, props); o.transform.SetPositionAndRotation(p, rot);
+            var post = o.transform;
+            Vector3 lightPos = post.TransformPoint(new Vector3(0f, 6.78f, 1.3f));
+            var l = Box("Lamp lens", lightPos + Vector3.up * 0.03f, new Vector3(0.34f, 0.02f, 0.56f), lampLens, post, 0, false);
+            l.transform.rotation = rot; l.isStatic = false; var lens = l.GetComponent<Renderer>(); lens.shadowCastingMode = ShadowCastingMode.Off;
+            var light = new GameObject("Street light").AddComponent<Light>(); light.transform.SetParent(post, true);
+            light.transform.position = lightPos; light.type = LightType.Spot; light.spotAngle = 135f; light.innerSpotAngle = 70f;
+            light.range = 32f; light.intensity = 45f; light.color = new Color(1f, 0.74f, 0.45f);
+            light.transform.rotation = Quaternion.Euler(90, 0, 0); light.shadows = LightShadows.None;
+            var view = post.gameObject.AddComponent<StreetLampView>(); view.lampLight = light; view.lens = lens;
+        }
+
+        static void ValidateRoadC(Transform railSpawn, Transform hillSpawn)
+        {
+            foreach (var p in new[] { railSpawn.position, hillSpawn.position })
+                if (!Physics.Raycast(p + Vector3.up * 3f, Vector3.down, out _, 6f, 1 << LayerGround)) throw new Exception("No road under " + p);
+            float top = HillHeight((HillStartZ + HillEndZ) / 2f);
+            if (!Physics.Raycast(new Vector3(RoadCX + 2f, 5f, (HillStartZ + HillEndZ) / 2f), Vector3.down, out var h, 8f, 1 << LayerGround) || Mathf.Abs(h.point.y - top - 0.02f) > 0.05f)
+                throw new Exception("Hill surface missing or at the wrong height (expected " + top.ToString("F2") + " m)");
+            if (!Physics.Raycast(new Vector3(RoadCX + 2f, 3f, RailZ), Vector3.down, out var d, 6f, 1 << LayerGround) || d.point.y < 0.2f)
+                throw new Exception("Railway crossing deck has no collider");
+        }
 
         // ------------------------------------------------------------------ player
 
