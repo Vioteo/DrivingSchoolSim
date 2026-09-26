@@ -1,8 +1,8 @@
 {
-    "utc": "2026-09-26T12:33:24.7601422Z",
+    "utc": "2026-09-26T19:34:53.5748480Z",
     "unity": "6000.3.10f1",
     "scene": "Assets/DrivingSchool/Scenes/VehicleTestRange.unity",
-    "renderers": 1029,
+    "renderers": 1039,
     "colliders": 66,
     "staticChecksPassed": true
 }
