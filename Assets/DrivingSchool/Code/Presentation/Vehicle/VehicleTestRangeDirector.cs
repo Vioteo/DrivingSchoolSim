@@ -247,8 +247,8 @@ namespace DrivingSchool.Presentation
                 box = new GUIStyle(GUI.skin.box);
             }
             var a = player.Adapter; var st = a.CurrentState; var cmd = a.LastCommand; var s = a.Solver;
-            GUI.Box(new Rect(12, 12, 340, 400), GUIContent.none, box);
-            GUILayout.BeginArea(new Rect(22, 18, 322, 390));
+            GUI.Box(new Rect(12, 12, 340, 425), GUIContent.none, box);
+            GUILayout.BeginArea(new Rect(22, 18, 322, 415));
             GUILayout.Label($"<b>{Mathf.Abs(st.signedSpeedMps) * 3.6f:F0} км/ч</b>   {st.engineRpm:F0} об/мин   <b>{(dashboard != null ? dashboard.GearText : st.gear.ToString())}</b>", label);
             GUILayout.Label($"КПП: {(st.transmission == TransmissionType.Manual ? "механика (F7 → автомат)" : "автомат (F7 → механика)")}", small);
             GUILayout.Label($"Двигатель: {Phase(st.engine)}   {(s.StarterInhibited && cmd.starter ? "<color=orange>стартер заблокирован: выжмите сцепление / N / P</color>" : "")}", small);
@@ -259,6 +259,8 @@ namespace DrivingSchool.Presentation
             GUILayout.Label($"Поворотники {ind}  {(st.hazard ? "<color=red>аварийка</color>" : "")}", small);
             GUILayout.Label($"Свет: {(st.highBeam ? "<color=#5af>дальний</color>" : st.lowBeam ? "<color=lime>ближний</color>" : st.parkingLights ? "габариты" : "выкл")}   Стоп {(st.brakeLight ? "<color=red>●</color>" : "○")}  ЗХ {(st.reverseLight ? "●" : "○")}", small);
             GUILayout.Label($"Дворники: {Wipers(st.wipers)}  Ремень: {(cmd.seatbelt ? "пристёгнут" : "<color=red>не пристёгнут</color>")}", small);
+            float per100 = Simulation.FuelModel.PerHundredKm(st.fuelFlowLitresPerHour, st.signedSpeedMps);
+            GUILayout.Label($"Топливо: {st.fuelLitres:F1} из {s.Spec.fuelTankLitres:F0} л   расход {st.fuelFlowLitresPerHour:F1} л/ч" + (float.IsInfinity(per100) || per100 <= 0f ? "" : $" ({per100:F1} л/100 км)") + (st.fuelLitres < 7f ? "  <color=orange>резерв</color>" : ""), small);
             GUILayout.Label($"Погода: {WeatherController.Current.preset}  Покрытие: {a.surface}  μ={Simulation.SurfaceFrictionModel.GetFrictionCoefficient(a.surface):F2}", small);
             GUILayout.Label($"Столкновений: {player.CollisionCount}" + (Time.time - player.LastImpactTime < 4f ? $"  <color=orange>удар {player.LastImpactSpeedMps * 3.6f:F0} км/ч</color>" : ""), small);
             if (mirrors != null) GUILayout.Label($"Зеркало: {mirrors.Selected}  (F1/F2/F3, NumPad 8/2/4/6)", small);
@@ -280,7 +282,7 @@ namespace DrivingSchool.Presentation
                     "V — дворники (выкл/прерывистый/1/2), B — омыватель, T — ремень\n" +
                     "C — камера (салон/сзади/облёт), ПКМ или Z , . — осмотреться\n" +
                     "F1/F2/F3 + NumPad 8/2/4/6 (Home/End/Del/PgDn) — регулировка зеркал\n" +
-                    "F5/F6 — погода, F7 — МКПП/АКПП, F8 — самопроверка\n" +
+                    "F5/F6 — погода (в т.ч. «полнолуние»), F7 — МКПП/АКПП, F8 — самопроверка\n" +
                     "F9/Backspace — на старт, F10 — к машине для столкновения", small);
                 if (report.Count > 0)
                 {

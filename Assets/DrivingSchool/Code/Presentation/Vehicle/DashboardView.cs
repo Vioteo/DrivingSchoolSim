@@ -8,14 +8,15 @@ namespace DrivingSchool.Presentation
 {
     /// <summary>
     /// Instrument-cluster telltales on the car model: turn arrows, low/high beam, parking lights, handbrake,
-    /// battery, oil pressure, check engine, seat belt and the gear/selector display. Icons are drawn
-    /// procedurally (no texture assets). Also plays the indicator relay click and the horn.
+    /// battery, oil pressure, check engine, seat belt, low fuel, the gear/selector display and the fuel level bar.
+    /// Icons are drawn procedurally (no texture assets). With the side lights on the dial scales and displays switch
+    /// to the amber night illumination. Also plays the indicator relay click and the horn.
     /// Needles are animated by VehicleVisuals.
     /// </summary>
     [DefaultExecutionOrder(120)]
     public sealed class DashboardView : MonoBehaviour
     {
-        public enum Telltale { TurnLeft, TurnRight, LowBeam, HighBeam, Parking, Handbrake, Battery, Oil, CheckEngine, Seatbelt }
+        public enum Telltale { TurnLeft, TurnRight, LowBeam, HighBeam, Parking, Handbrake, Battery, Oil, CheckEngine, Seatbelt, LowFuel }
 
         public VehiclePhysicsAdapter adapter;
         public Transform model;
@@ -26,6 +27,13 @@ namespace DrivingSchool.Presentation
         public Vector3 rowOffset = Vector3.zero;
         public float iconSizeM = 0.016f, iconGapM = 0.004f;
         public bool sounds = true;
+        [Header("Illumination and fuel")]
+        [Tooltip("Colour of the dial scales and displays with the side lights on (night illumination).")]
+        public Color nightIllumination = new Color(1f, 0.52f, 0.14f);
+        public Color dayPrint = new Color(0.86f, 0.93f, 0.95f);
+        [Tooltip("Low-fuel lamp comes on below this many litres.")]
+        public float reserveLitres = 7f;
+        public int fuelSegments = 8;
 
         static readonly Color Green = new Color(0.15f, 1f, 0.3f), Blue = new Color(0.2f, 0.45f, 1f), Red = new Color(1f, 0.12f, 0.08f), Amber = new Color(1f, 0.62f, 0.05f);
 
@@ -34,9 +42,14 @@ namespace DrivingSchool.Presentation
         AudioSource relay, horn; AudioClip tick, tock;
         bool lastLamp; float bulbCheck;
         Transform car, eye;
+        readonly List<Material> dialMats = new List<Material>();
+        Renderer fuelBar; Material fuelMat; int fuelShown = -1; bool fuelBlink;
 
         public bool IsLit(Telltale t) => icons.TryGetValue(t, out var r) && r != null && r.enabled;
         public string GearText { get; private set; } = "";
+        /// <summary>Lit segments of the fuel bar (0…fuelSegments), −1 when the bar is off.</summary>
+        public int FuelSegmentsLit => fuelBar != null && fuelBar.enabled ? fuelShown : -1;
+        public bool NightIllumination { get; private set; }
         public int DialCount { get; private set; }
         /// <summary>Car-space position of a telltale icon (for tests and the self-check).</summary>
         public bool TryGetIconPosition(Telltale t, out Vector3 carPos) { carPos = default; if (!icons.TryGetValue(t, out var r) || r == null) return false; carPos = car.InverseTransformPoint(r.transform.position); return true; }
@@ -80,11 +93,15 @@ namespace DrivingSchool.Presentation
             Add(root, Telltale.TurnLeft, P(-0.315f * w, -0.013f), face, big);
             Add(root, Telltale.TurnRight, P(0.315f * w, -0.013f), face, big);
             Add(root, Telltale.HighBeam, P(0f, -0.013f), face, small);
-            gearGlyph = Quad("Telltale_Gear", root, P(0f, -0.036f), face, iconSizeM * 1.5f, TelltaleIcons.Glyph('N'), Color.white);
+            gearGlyph = Quad("Telltale_Gear", root, P(0f, -0.034f), face, iconSizeM * 1.4f, TelltaleIcons.Glyph('N'), Color.white);
+            // Fuel level bar under the gear, above the steering-wheel rim: pump icon + segments, E on the left.
+            fuelBar = Quad("Fuel_Bar", root, P(0f, -0.0545f), face, 1f, FuelBarTexture.Draw(fuelSegments, fuelSegments, false), Color.white);
+            fuelBar.transform.localScale = new Vector3(Mathf.Min(0.058f, w * 0.9f), Mathf.Min(0.058f, w * 0.9f) / FuelBarTexture.Aspect, 1f);
+            fuelMat = fuelBar.sharedMaterial;
             // The lower half of the cluster is behind the steering-wheel rim, so the other lamps go into the upper
             // inner part of the dials (as on most real clusters): engine lamps in the tachometer, lights and
             // handbrake/seat belt in the speedometer.
-            PlaceInDial(root, "GaugeFace_RPM", new[] { Telltale.Battery, Telltale.Oil, Telltale.CheckEngine }, small, pitch);
+            PlaceInDial(root, "GaugeFace_RPM", new[] { Telltale.Battery, Telltale.Oil, Telltale.CheckEngine, Telltale.LowFuel }, small, pitch);
             PlaceInDial(root, "GaugeFace_km", new[] { Telltale.LowBeam, Telltale.Parking, Telltale.Handbrake, Telltale.Seatbelt }, small, pitch);
             // The model's static "N" and odometer sit where the live gear is drawn now.
             foreach (var t in model.GetComponentsInChildren<Transform>(true))
@@ -161,7 +178,7 @@ namespace DrivingSchool.Presentation
                     : GaugeDial.Draw(radius, sweep, speedoMax, 20f, 10f, 20f, float.MaxValue);
                 var pos = new Vector3(b.center.x, b.center.y, b.min.z - 0.004f); // over the face, under the needle
                 var q = Quad("Dial_" + (tacho ? "RPM" : "Speed"), root, pos, Quaternion.identity, radius * 2f, tex, Color.white, dialMaterial != null ? dialMaterial : TransparentUnlit());
-                q.enabled = true; dials++;
+                q.enabled = true; dials++; dialMats.Add(q.sharedMaterial);
             }
             DialCount = dials;
         }
@@ -191,7 +208,7 @@ namespace DrivingSchool.Presentation
             {
                 case Telltale.TurnLeft: case Telltale.TurnRight: case Telltale.LowBeam: case Telltale.Parking: return Green;
                 case Telltale.HighBeam: return Blue;
-                case Telltale.CheckEngine: return Amber;
+                case Telltale.CheckEngine: case Telltale.LowFuel: return Amber;
                 default: return Red;
             }
         }
@@ -272,6 +289,30 @@ namespace DrivingSchool.Presentation
             Set(Telltale.Oil, power && (!running || check));
             Set(Telltale.CheckEngine, power && (st.engine == EnginePhase.Stalled || check));
             Set(Telltale.Seatbelt, power && !cmd.seatbelt);
+            Set(Telltale.LowFuel, power && (st.fuelLitres < reserveLitres || check));
+
+            // Night illumination: printed scales go amber with the side lights; with the ignition off they are just
+            // print, lit by whatever light reaches the cabin.
+            NightIllumination = power && st.parkingLights;
+            Color print = NightIllumination ? nightIllumination : power ? dayPrint : dayPrint * Mathf.Lerp(0.12f, 1f, WeatherController.Daylight01);
+            foreach (var m in dialMats) if (m != null) m.SetColor("_BaseColor", print);
+            if (gearMat != null) gearMat.SetColor("_BaseColor", NightIllumination ? nightIllumination : Color.white);
+
+            if (fuelBar != null)
+            {
+                fuelBar.enabled = power;
+                float level = adapter.Solver.Fuel.Level01;
+                int lit = Mathf.Clamp(Mathf.CeilToInt(level * fuelSegments - 0.05f), 0, fuelSegments);
+                bool blink = st.fuelLitres < reserveLitres && (Time.time % 1f) < 0.5f; // last segment flashes on reserve
+                if (lit != fuelShown || blink != fuelBlink)
+                {
+                    fuelShown = lit; fuelBlink = blink;
+                    var tex = FuelBarTexture.Draw(lit, fuelSegments, blink);
+                    var old = fuelMat.mainTexture; fuelMat.mainTexture = tex; if (fuelMat.HasProperty("_BaseMap")) fuelMat.SetTexture("_BaseMap", tex);
+                    if (old != null && old != tex) Destroy(old);
+                }
+                fuelMat.SetColor("_BaseColor", NightIllumination ? nightIllumination : Color.white);
+            }
 
             GearText = st.transmission == TransmissionType.Automatic ? st.selector.ToString() + (st.selector == AutomaticSelector.D && st.gear > 0 ? st.gear.ToString() : "")
                                                                      : st.gear == 0 ? "N" : st.gear < 0 ? "R" : st.gear.ToString();
@@ -315,6 +356,7 @@ namespace DrivingSchool.Presentation
                 case DashboardView.Telltale.Battery: f = (x, y) => Box(x, y, 0.75f, 0.5f, 0.08f, -0.1f) || Rect(x, y, -0.5f, 0.4f, -0.3f, 0.52f) || Rect(x, y, 0.3f, 0.4f, 0.5f, 0.52f) || Rect(x, y, -0.5f, -0.14f, -0.2f, -0.06f) || Rect(x, y, 0.2f, -0.14f, 0.5f, -0.06f) || Rect(x, y, 0.31f, -0.25f, 0.39f, 0.05f); break;
                 case DashboardView.Telltale.Oil: f = (x, y) => Rect(x, y, -0.7f, -0.3f, 0.3f, 0.05f) || Rect(x, y, -0.45f, 0.05f, -0.3f, 0.25f) || Line(x, y, 0.3f, 0.0f, 0.75f, 0.2f, 0.07f) || Drop(x - 0.72f, y + 0.25f); break;
                 case DashboardView.Telltale.CheckEngine: f = (x, y) => Box(x, y, 0.8f, 0.45f, 0.09f, 0f) || Rect(x, y, -0.25f, 0.45f, 0.25f, 0.62f) || Rect(x, y, -0.95f, -0.15f, -0.8f, 0.15f) || Rect(x, y, 0.8f, -0.1f, 0.95f, 0.3f); break;
+                case DashboardView.Telltale.LowFuel: f = Pump; break;
                 default: f = (x, y) => Disk(x + 0.05f, y - 0.6f, 0.16f) || Line(x, y, -0.05f, 0.4f, -0.05f, -0.45f, 0.12f) || Line(x, y, -0.55f, 0.35f, 0.45f, -0.5f, 0.08f) || Line(x, y, -0.05f, -0.1f, 0.4f, 0.15f, 0.1f); break;
             }
             for (int j = 0; j < N; j++)
@@ -374,6 +416,11 @@ namespace DrivingSchool.Presentation
             for (int k = -2; k <= 2; k++) { float y0 = k * 0.25f; if (Line(x, y, -0.95f, y0 + slope * 0.6f, -0.4f, y0, 0.06f)) return true; }
             return false;
         }
+        /// <summary>Fuel pump symbol: body with a window, nozzle hose on the right.</summary>
+        public static bool Pump(float x, float y) =>
+            Box(x, y, 0.38f, 0.7f, 0.12f, 0f) && x < 0.38f || Rect(x, y, -0.26f, 0.15f, 0.26f, 0.45f) || Rect(x, y, -0.5f, -0.85f, 0.5f, -0.7f)
+            || Line(x, y, 0.38f, 0.35f, 0.62f, 0.2f, 0.07f) || Line(x, y, 0.62f, 0.2f, 0.62f, -0.45f, 0.07f) || Line(x, y, 0.62f, -0.45f, 0.45f, -0.55f, 0.07f);
+
         static bool Arc(float x, float y) { float r = Mathf.Sqrt(x * x + y * y); return r > 0.82f && r < 0.95f && Mathf.Abs(y) < 0.5f; }
         static bool Ring(float x, float y, float r, float w) { float d = Mathf.Sqrt(x * x + y * y); return d > r - w && d < r + w; }
         static bool Disk(float x, float y, float r) => x * x + y * y < r * r;
@@ -384,6 +431,37 @@ namespace DrivingSchool.Presentation
         {
             float dx = x1 - x0, dy = y1 - y0, t = Mathf.Clamp01(((x - x0) * dx + (y - y0) * dy) / (dx * dx + dy * dy));
             float px = x0 + t * dx - x, py = y0 + t * dy - y; return px * px + py * py < w * w;
+        }
+    }
+
+    /// <summary>Segmented fuel-level bar for the cluster display: pump icon, "E", segments, "F" (alpha = shape).</summary>
+    public static class FuelBarTexture
+    {
+        public const int W = 256, H = 40;
+        public const float Aspect = (float)W / H;
+
+        public static Texture2D Draw(int lit, int segments, bool blinkOff)
+        {
+            var px = new Color32[W * H];
+            void Fill(int x0, int y0, int x1, int y1, byte a)
+            {
+                for (int y = Math.Max(0, y0); y < Math.Min(H, y1); y++) for (int x = Math.Max(0, x0); x < Math.Min(W, x1); x++) px[y * W + x] = new Color32(a, a, a, 255); // cut-out material: brightness in RGB
+            }
+            // Pump icon in the left 40 px.
+            for (int y = 0; y < H; y++) for (int x = 0; x < 40; x++)
+                    if (TelltaleIcons.Pump((x + 0.5f) / 20f - 1f, (y + 0.5f) / 20f - 1f)) px[y * W + x] = new Color32(255, 255, 255, 255);
+            // Segments between x = 50 and 246; unlit ones are drawn as dim frames so the scale is readable.
+            float step = 196f / segments;
+            for (int i = 0; i < segments; i++)
+            {
+                int x0 = 50 + Mathf.RoundToInt(i * step), x1 = 50 + Mathf.RoundToInt((i + 1) * step) - 5;
+                bool on = i < lit && !(blinkOff && i == lit - 1 && lit <= 1);
+                if (on) Fill(x0, 8, x1, 32, 255);
+                else { Fill(x0, 8, x1, 11, 70); Fill(x0, 29, x1, 32, 70); Fill(x0, 8, x0 + 3, 32, 70); Fill(x1 - 3, 8, x1, 32, 70); }
+            }
+            var tex = new Texture2D(W, H, TextureFormat.RGBA32, false) { name = "FuelBar", wrapMode = TextureWrapMode.Clamp, filterMode = FilterMode.Bilinear };
+            tex.SetPixels32(px); tex.Apply(false, true);
+            return tex;
         }
     }
 
