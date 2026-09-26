@@ -1,0 +1,60 @@
+{
+  "script": "tools/build_sedan_cabin.py",
+  "utc": "2026-09-26T19:28:54.539154Z",
+  "before": {
+    "blend_sha256": "e5152ab817b44df675b6e3845013358894fdebf6f8196dcac9aa2089aa00b4cf",
+    "fbx_sha256": "6116e3bff321210c3f5f89209af3e4d39e72d3d879ee14ffae5022c03778a381"
+  },
+  "backup": {
+    "DS_Sedan_A.blend": "ArtSource_Backup\\DS_Sedan_A_before-cabin_20260926-222854.blend",
+    "DS_Sedan_A.fbx": "ArtSource_Backup\\DS_Sedan_A_before-cabin_20260926-222854.fbx"
+  },
+  "removed": [
+    "Screen_Subtitle",
+    "Screen_Title",
+    "Vent",
+    "Vent.001",
+    "Vent.002",
+    "VentSlat",
+    "VentSlat.001",
+    "VentSlat.002",
+    "VentSlat.003",
+    "VentSlat.004",
+    "VentSlat.005",
+    "VentSlat.006",
+    "VentSlat.007",
+    "VentSlat.008",
+    "VentSlat.009",
+    "VentSlat.010",
+    "VentSlat.011",
+    "WiperArm",
+    "WiperArm.001",
+    "WiperBlade",
+    "WiperBlade.001",
+    "Wiper_Pivot_-0.44",
+    "Wiper_Pivot_0.31"
+  ],
+  "created": [
+    "VentSlat",
+    "VentSlat.001",
+    "VentSlat.002",
+    "VentSlat.003",
+    "VentSlat.004",
+    "VentSlat.005",
+    "VentSlat.006",
+    "VentSlat.007",
+    "VentSlat.008",
+    "VentSlat.009",
+    "VentSlat.010",
+    "VentSlat.011",
+    "Vent_C",
+    "Vent_L",
+    "Vent_R",
+    "Wiper_Pivot_-0.44",
+    "Wiper_Pivot_0.07"
+  ],
+  "after": {
+    "blend_sha256": "567c8acd58eb1640bfa42cba53128babd72d0d5c4bf9832c4fdc0a0bf81a794b",
+    "fbx_sha256": "973414feb0ca6327d15f934ec6e4bd494c718894d6a4e3ef344370694397bdc6"
+  }
+}
