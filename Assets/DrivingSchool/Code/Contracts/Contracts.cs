@@ -39,6 +39,7 @@ namespace DrivingSchool.Contracts
         public TransmissionType transmission; public AutomaticSelector selector;
         public WiperMode wipers; public float wiperAngle01; // 0 = parked, 1 = full sweep
         public float engineTorqueNm, wheelSpeedFrontRadS, wheelSpeedRearRadS;
+        public float fuelLitres, fuelFlowLitresPerHour; // fuel in the tank; instantaneous consumption (0 on overrun cut-off)
     }
     public interface IInputSource { DriverCommand Read(long tick); bool IsConnected { get; } }
     public interface IForceFeedbackOutput : IDisposable

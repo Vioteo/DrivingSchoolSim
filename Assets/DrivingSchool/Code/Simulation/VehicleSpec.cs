@@ -35,6 +35,8 @@ namespace DrivingSchool.Simulation
         public float dragCoefficient = 0.32f;
         public float frontalAreaM2 = 2.2f;
         public float throttleProgression = 2f;  // plate = 1 − (1 − pedal)^k; 1 = linear
+        public float fuelTankLitres = 50f;
+        public float initialFuelLitres = 40f;
         public bool abs = true;
         public DriveLayout drive = DriveLayout.RearWheelDrive;
         public TransmissionType transmission = TransmissionType.Manual;
@@ -47,7 +49,8 @@ namespace DrivingSchool.Simulation
             if (!(massKg > 0) || !(wheelbaseM > 0) || !(trackM > 0) || !(wheelRadiusM > 0) || !(engineInertiaKgm2 > 0) ||
                 !(wheelInertiaKgm2 > 0) || !(finalDrive > 0) || throttleProgression < 1f || drivetrainEfficiency <= 0 || drivetrainEfficiency > 1 ||
                 gearRatios == null || gearRatios.Length == 0 || reverseRatio >= 0 || maxClutchTorqueNm < 0 || maxBrakeTorqueNm < 0 ||
-                frontBrakeShare < 0 || frontBrakeShare > 1 || maxSteerDeg <= 0 || maxSteerDeg >= 60)
+                frontBrakeShare < 0 || frontBrakeShare > 1 || maxSteerDeg <= 0 || maxSteerDeg >= 60 ||
+                !(fuelTankLitres > 0) || initialFuelLitres < 0 || initialFuelLitres > fuelTankLitres)
                 throw new ArgumentException("Invalid vehicle spec.");
             foreach (var r in gearRatios) if (!(r > 0)) throw new ArgumentException("Gear ratios must be positive.");
         }

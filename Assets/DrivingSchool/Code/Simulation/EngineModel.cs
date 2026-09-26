@@ -25,6 +25,11 @@ namespace DrivingSchool.Simulation
         public float Rpm { get; private set; } = 0f;
         public float OutputTorqueNm { get; private set; } = 0f;
 
+        /// <summary>False when the tank is empty: no combustion torque (the engine runs down and stalls) and the starter cannot start it.</summary>
+        public bool FuelAvailable { get; set; } = true;
+        /// <summary>Full-load (wide-open throttle) torque at the current speed, Nm — the load reference for fuel consumption.</summary>
+        public float FullLoadTorqueNm => CalculateMaxTorque(Rpm);
+
         public float IdleRpm => idleRpm;
         public float RedlineRpm => redlineRpm;
         public float StallRpm => stallRpm;
@@ -118,7 +123,7 @@ namespace DrivingSchool.Simulation
             Rpm = Math.Min(450f, Rpm + 800f * dtSeconds);
             OutputTorqueNm = 20f;
 
-            if (crankingTimer >= 0.4f && Rpm >= 400f)
+            if (crankingTimer >= 0.4f && Rpm >= 400f && FuelAvailable)
             {
                 Phase = EnginePhase.Running;
                 crankingTimer = 0f;
@@ -154,6 +159,7 @@ namespace DrivingSchool.Simulation
 
         float GrossTorque(float throttle)
         {
+            if (!FuelAvailable) return 0f;
             float iacTorque = 0f;
             if (Rpm < idleRpm + 150f)
             {

@@ -23,7 +23,7 @@ namespace DrivingSchool.Simulation
 
     /// <summary>
     /// Pure vehicle solver: engine + clutch/torque converter + gearbox + open differential + 4 wheels with tyres,
-    /// brakes, handbrake, park pawl, ABS, lights and wipers. It turns a DriverCommand and wheel contacts into
+    /// brakes, handbrake, park pawl, ABS, lights, wipers and the fuel tank. It turns a DriverCommand and wheel contacts into
     /// contact forces; chassis integration is done by the caller (Unity Rigidbody or PlanarChassis).
     /// Wheel order: 0 FL, 1 FR, 2 RL, 3 RR.
     /// </summary>
@@ -41,6 +41,7 @@ namespace DrivingSchool.Simulation
         public readonly GearboxModel Gearbox;
         public readonly VehicleLightsModel Lights = new VehicleLightsModel();
         public readonly WiperModel Wipers = new WiperModel();
+        public readonly FuelModel Fuel;
         public readonly WheelOutput[] Wheels = new WheelOutput[4];
 
         public VehicleState State { get; private set; }
@@ -63,6 +64,7 @@ namespace DrivingSchool.Simulation
             Spec.Validate();
             Engine = new EngineModel(Spec.idleRpm, Spec.redlineRpm, Math.Max(Spec.redlineRpm, Spec.redlineRpm + 100f), EngineModel.DefaultStallRpm, Spec.engineInertiaKgm2);
             Gearbox = GearboxModel.FromSpec(Spec);
+            Fuel = new FuelModel(Spec.fuelTankLitres, Spec.initialFuelLitres);
             if (Spec.drive == DriveLayout.FrontWheelDrive) { d0 = 0; d1 = 1; } else { d0 = 2; d1 = 3; }
         }
 
@@ -94,6 +96,7 @@ namespace DrivingSchool.Simulation
                 ? !(Gearbox.CurrentGear == 0 || cmd.clutch >= StarterClutchThreshold)
                 : !(Gearbox.Selector == AutomaticSelector.P || Gearbox.Selector == AutomaticSelector.N);
             bool starter = cmd.starter && !StarterInhibited;
+            Engine.FuelAvailable = !Fuel.IsEmpty;
 
             // Steering (Ackermann on the front axle).
             var (dl, dr) = SteeringGeometry.Ackermann(cmd.steering, s.wheelbaseM, s.trackM, s.maxSteerDeg);
@@ -184,6 +187,8 @@ namespace DrivingSchool.Simulation
             float carrier = 0.5f * (omega[d0] + omega[d1]);
             Gearbox.PublishShaft(ClutchTorqueNm * Gearbox.TotalRatio * s.drivetrainEfficiency, carrier * Gearbox.TotalRatio * 60f / (2f * (float)Math.PI));
 
+            Fuel.Update(Engine.Phase == EnginePhase.Running, Engine.OutputTorqueNm, Engine.Rpm, Engine.FullLoadTorqueNm, dtSeconds);
+
             bool reverse = Gearbox.CurrentGear == -1;
             Lights.Update(cmd, reverse, dtSeconds);
             Wipers.Update(cmd.wipers, cmd.washer, cmd.ignition, dtSeconds);
@@ -201,7 +206,8 @@ namespace DrivingSchool.Simulation
                 transmission = Gearbox.Type, selector = Gearbox.Selector,
                 wipers = cmd.wipers, wiperAngle01 = Wipers.Angle01,
                 engineTorqueNm = Engine.OutputTorqueNm,
-                wheelSpeedFrontRadS = 0.5f * (omega[0] + omega[1]), wheelSpeedRearRadS = 0.5f * (omega[2] + omega[3])
+                wheelSpeedFrontRadS = 0.5f * (omega[0] + omega[1]), wheelSpeedRearRadS = 0.5f * (omega[2] + omega[3]),
+                fuelLitres = Fuel.Litres, fuelFlowLitresPerHour = Fuel.FlowLitresPerHour
             };
             return State;
         }
