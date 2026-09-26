@@ -86,9 +86,11 @@ namespace DrivingSchool.Presentation
                 Vector3 want = (aimDirection.normalized - d).normalized;
                 aim = Quaternion.RotateTowards(Quaternion.identity, Quaternion.FromToRotation(n, want), maxAimDeg);
             }
+            // Only the optical plane is aimed; the visible glass stays in its housing (a few degrees are invisible
+            // from the seat, a glass sticking out of the housing is not).
             rightInCar = aim * right; upInCar = aim * up; normalInCar = aim * n;
-            surfaceRestInCar = aim * (Quaternion.Inverse(car.rotation) * surface.rotation);
-            surfacePosRestInCar = centreInCar + aim * (car.InverseTransformPoint(surface.position) - centreInCar);
+            surfaceRestInCar = Quaternion.Inverse(car.rotation) * surface.rotation;
+            surfacePosRestInCar = car.InverseTransformPoint(surface.position);
             AimDeg = Quaternion.Angle(Quaternion.identity, aim);
 
             rt = new RenderTexture(resolution.x, resolution.y, 24) { name = "Mirror_" + surface.name, antiAliasing = 2 };

@@ -48,6 +48,15 @@ namespace DrivingSchool.Presentation
                 m.frameOffset = i == 2 ? 1 : 0;
                 mirrors[i] = m;
             }
+            // Mirror cameras skip the mirror layer; the housings go there too, otherwise the optical plane (aimed a few
+            // degrees off the visible glass) cuts through its own rim and the rim shows up in the picture.
+            int mirrorLayer = -1;
+            foreach (var m in mirrors) if (m != null) { mirrorLayer = m.surface.gameObject.layer; break; }
+            if (mirrorLayer >= 0)
+                foreach (var t in model.GetComponentsInChildren<Transform>(true))
+                    if (t.name.StartsWith("MirrorHousing", System.StringComparison.Ordinal) || t.name.StartsWith("MirrorRecess", System.StringComparison.Ordinal) ||
+                        t.name.StartsWith("CentreMirror", System.StringComparison.Ordinal))
+                        t.gameObject.layer = mirrorLayer;
         }
 
         public void SetActiveMirrors(bool left, bool centre, bool right)
