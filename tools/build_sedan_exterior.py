@@ -61,6 +61,7 @@ ARCH_R = 0.388                       # tyre radius 0.327
 COWL_Y = 1.30                        # windshield foot: the A-pillar starts right above the front wheel
 DECK_Y = -1.62                       # rear window foot / boot lid front
 WALL = 0.03                          # greenhouse wall thickness
+B_Y = -0.31                          # B-pillar centre (the driver's head is ~12 cm ahead of it)
 
 
 def smooth(t):
@@ -437,9 +438,9 @@ def side_glass_outlines():
     """Door glass outlines (y, z) of the right side."""
     zt = 1.42
     yf = y_ws(0.95) - 0.07
-    front = [(yf, belt(yf) - 0.02), (y_ws(zt) - 0.06, zt), (-0.135, zt), (-0.135, belt(-0.135) - 0.02)]
+    front = [(yf, belt(yf) - 0.02), (y_ws(zt) - 0.06, zt), (B_Y + 0.045, zt), (B_Y + 0.045, belt(B_Y + 0.045) - 0.02)]
     yr = -1.08
-    rear = [(-0.225, belt(-0.225) - 0.02), (-0.225, zt), (-0.66, zt), (yr, belt(yr) - 0.02)]
+    rear = [(B_Y - 0.045, belt(B_Y - 0.045) - 0.02), (B_Y - 0.045, zt), (-0.72, zt), (yr, belt(yr) - 0.02)]
     return front, rear
 
 
@@ -759,11 +760,11 @@ def panel_gaps(root, surf):
         # doors
         ya = y_ws(belt(1.2)) - 0.075
         lines.append(side_probes(s, [(ya, belt(ya) - 0.028), (1.02, 0.80), (0.975, 0.62), (0.905, 0.44), (0.895, 0.30)]))
-        lines.append(side_probes(s, [(-0.18, belt(-0.18) - 0.03), (-0.18, 0.30)]))
-        lines.append(side_probes(s, [(0.895, 0.30), (-0.18, 0.30)]))
+        lines.append(side_probes(s, [(B_Y, belt(B_Y) - 0.03), (B_Y, 0.30)]))
+        lines.append(side_probes(s, [(0.895, 0.30), (B_Y, 0.30)]))
         rear = [(-1.085, belt(-1.085) - 0.03), (-1.095, 0.80)] + arc(-1.36, WHEEL_Z, ARCH_R + 0.055, 56, 12) + [(-0.89, 0.30)]
         lines.append(side_probes(s, rear))
-        lines.append(side_probes(s, [(-0.89, 0.30), (-0.18, 0.30)]))
+        lines.append(side_probes(s, [(-0.89, 0.30), (B_Y, 0.30)]))
         # front bumper / wing joint behind the headlamp, down to the arch
         lines.append(side_probes(s, [(1.93, 0.735), (1.86, 0.64), (1.80, 0.56)] + [(1.36 + (ARCH_R + 0.04) * math.cos(math.radians(a_)), WHEEL_Z + (ARCH_R + 0.04) * math.sin(math.radians(a_))) for a_ in (38, 30)]))
         # rear bumper / wing joint under the tail lamp
@@ -879,7 +880,7 @@ def sills(root, surf):
 def door_handles(root, surf):
     made = []
     for s in (-1, 1):
-        for tag, yc in (('Front', -0.09), ('Rear', -1.00)):
+        for tag, yc in (('Front', B_Y + 0.10), ('Rear', -1.00)):
             zc = shoulder_z(yc) - 0.035
             loc, nor = surf.side(s, yc, zc)
             if loc is None:
@@ -897,7 +898,7 @@ def door_handles(root, surf):
 def b_pillar_trim(root):
     bm = bmesh.new()
     for s in (-1, 1):
-        yz = [(-0.130, belt(-0.13) + 0.004), (-0.230, belt(-0.23) + 0.004), (-0.230, 1.435), (-0.130, 1.435)]
+        yz = [(B_Y + 0.05, belt(B_Y + 0.05) + 0.004), (B_Y - 0.05, belt(B_Y - 0.05) + 0.004), (B_Y - 0.05, 1.46), (B_Y + 0.05, 1.46)]
         poly = [(s * (xs(z) + 0.0015 / SIDE_N.x), y, z) for y, z in yz]
         prism(bm, poly, (s * SIDE_N.x, 0, SIDE_N.z), 0.0, 0.002)
     o = new_obj('Body_BPillarTrim', bm, ['Rubber'], root, smooth_angle=30, weighted=False)

@@ -375,10 +375,10 @@ def door_card(car, side, front):
     made = []
     tag = ('Front' if front else 'Rear') + ('_R' if s > 0 else '_L')
     if front:
-        yf, yr = 0.535, -0.14
+        yf, yr = 0.535, ex.B_Y + 0.04
         outline = [(yr, 0.33), (0.95, 0.33), (0.95, 0.72), (0.60, 0.735), (yf, 0.80), (yf, CARD_TOP), (yr, CARD_TOP)]
     else:
-        yf, yr = -0.235, -1.07
+        yf, yr = ex.B_Y - 0.055, -1.07
         outline = [(yf, 0.33), (-0.895, 0.33), (-0.93, 0.47), (-0.99, 0.585), (yr, 0.66), (yr, CARD_TOP), (yf, CARD_TOP)]
     # the card: a 4 cm slab with softened inner edges
     bm = bmesh.new()
@@ -579,6 +579,13 @@ def main():
         for front in (True, False):
             made += door_card(car, s, front)
     made += headliner(car)
+    # parked belts hang on the B-pillars
+    for o in car.children:
+        if o.name.startswith('SeatBelt_Parked'):
+            o['b_pillar_shift'] = o.get('b_pillar_shift', 0.0)
+            dy = (ex.B_Y + 0.18) - o["b_pillar_shift"]
+            o.location.y += dy
+            o["b_pillar_shift"] = ex.B_Y + 0.18
     made += steering(bpy.data.objects['SteeringWheel_Pivot'])
     report['created'] = sorted(o.name for o in made)
     if PREVIEW:
