@@ -45,7 +45,7 @@ namespace DrivingSchool.Learning
         public float headingTolerance;
         /// <summary>Условие шага должно держаться до шага с этим id ("end" — до конца урока); нарушено — урок возвращается сюда.</summary>
         public string keepUntil;
-        /// <summary>После возврата и повторного выполнения продолжить с этого шага (иначе — с того, где были).</summary>
+        /// <summary>После возврата к шагу и его исправления выполнить ещё этот шаг (например, снова включить передачу), затем вернуться туда, где были.</summary>
         public string resumeAt;
         /// <summary>Шаг пропускается, если за столько секунд не выполнен (0 — ждать сколько угодно).</summary>
         public float skipAfter;
@@ -174,7 +174,8 @@ namespace DrivingSchool.Learning
     /// <summary>
     /// Пошаговый урок (как первые уроки City Car Driving): одна задача за раз, шаг засчитывается по состоянию машины.
     /// Шаги с keepUntil должны держаться дальше (ремень, работающий двигатель): нарушено — урок возвращается
-    /// к шагу, показывает lostText, а после исправления продолжает с resumeAt или с того места, где был.
+    /// к шагу, показывает lostText, после исправления просит ещё шаг resumeAt (если он раньше места возврата) и
+    /// продолжает с того места, где был.
     /// Чистый C#: ни Unity, ни времени кадра — только Tick(dt, снимок).
     /// </summary>
     public sealed class GuidedLessonSession
@@ -183,7 +184,8 @@ namespace DrivingSchool.Learning
         readonly GuidedStep[] steps;
         readonly StepCheck[] checks;
         readonly int[] keepEnd, resumeIndex;
-        int resumeTo = -1;
+        int resumeTo = -1, detour = -1;
+        bool inDetour;
         double stepTime, stepDistance, held;
         LessonSignal signal;
 
@@ -269,15 +271,16 @@ namespace DrivingSchool.Learning
         void Rewind(int i)
         {
             if (resumeTo < 0) resumeTo = StepIndex;
-            if (resumeIndex[i] >= 0) resumeTo = Math.Min(resumeTo, Math.Max(resumeIndex[i], i + 1));
-            StepIndex = i; Rewound = true; Rewinds++; ResetStep();
+            detour = resumeIndex[i] > i && resumeIndex[i] < resumeTo ? resumeIndex[i] : -1;
+            StepIndex = i; Rewound = true; inDetour = false; Rewinds++; ResetStep();
         }
 
         void Advance()
         {
-            if (Rewound && resumeTo > StepIndex) StepIndex = resumeTo;
+            if (Rewound && detour >= 0) { StepIndex = detour; detour = -1; inDetour = true; }
+            else if (Rewound || inDetour) { StepIndex = Math.Max(resumeTo, StepIndex + 1); resumeTo = -1; inDetour = false; }
             else StepIndex++;
-            resumeTo = -1; Rewound = false; ResetStep();
+            Rewound = false; ResetStep();
             if (StepIndex >= steps.Length) { StepIndex = steps.Length - 1; Phase = GuidedPhase.Done; }
         }
 

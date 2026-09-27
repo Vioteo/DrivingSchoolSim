@@ -46,7 +46,8 @@
           "check": "EngineRunning",
           "only": "manual",
           "keepUntil": "pull-over-m",
-          "lostText": "Двигатель заглох. Выжмите сцепление ({clutch}), включите нейтраль ({neutral}), запустите двигатель ({starter}) и снова включите первую передачу ({gear1})."
+          "lostText": "Двигатель заглох. Выжмите сцепление ({clutch}), включите нейтраль ({neutral}) и запустите двигатель снова — {starter}.",
+          "resumeAt": "gear-m"
         },
         {
           "id": "engine-a",
@@ -54,7 +55,8 @@
           "check": "EngineRunning",
           "only": "auto",
           "keepUntil": "pull-over-m",
-          "lostText": "Двигатель заглох. Переведите селектор в P ({park}), запустите двигатель ({starter}) и снова включите D ({drive}) с нажатым тормозом."
+          "lostText": "Двигатель заглох. Переведите селектор в P ({park}) и запустите двигатель снова — {starter}.",
+          "resumeAt": "gear-a"
         },
         {
           "id": "lights",
