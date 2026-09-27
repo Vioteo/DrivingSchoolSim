@@ -16,7 +16,8 @@
     "Unity.TextMeshPro",
     "DS.Presentation.UI",
     "UnityEngine.UI",
-    "DS.Settings"
+    "DS.Settings",
+    "UnityEditor.TestRunner"
   ],
   "includePlatforms": [
     "Editor"
