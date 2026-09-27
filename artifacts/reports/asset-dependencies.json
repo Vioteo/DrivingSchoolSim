@@ -20,13 +20,6 @@
       "bytes": 2359676
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Arc South to Bottom.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 6636
-    },
-    {
       "path": "Assets/DrivingSchool/Prefabs/Traffic/DS_Sign_SingleTrack.prefab",
       "usedBy": [
         "Assets/DrivingSchool/Scenes/TrafficShowroom.unity"
@@ -253,13 +246,6 @@
       "bytes": 3849
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Parallel parking approach.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3818
-    },
-    {
       "path": "Assets/DrivingSchool/Prefabs/RoadKit/RK_Marking_DoubleSolid_20m.prefab",
       "usedBy": [],
       "inBuild": false,
@@ -274,13 +260,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 3834
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Inner W.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3800
     },
     {
       "path": "Assets/DrivingSchool/Materials/Traffic/Traffic_LensAmber.mat",
@@ -328,13 +307,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 1517708
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Crossroad East.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3813
     },
     {
       "path": "Assets/DrivingSchool/Materials/Pedestrians/DS_Pedestrian_Police_Ped_Badge.mat",
@@ -675,20 +647,6 @@
       "bytes": 1378946
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road Left.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3802
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Crossroad North.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3816
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/TrainingKit/RW_Gasket.mat",
       "usedBy": [
         "Assets/DrivingSchool/Art/TrainingKit/TK_RailwaySignal.fbx"
@@ -717,13 +675,6 @@
       "bytes": 3029
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Acceleration and braking straight.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3828
-    },
-    {
       "path": "Assets/DrivingSchool/Data/UI/Themes/UITheme_Graphite.asset",
       "usedBy": [
         "Assets/DrivingSchool/Data/UI/Resources/UIThemeCatalog.asset"
@@ -741,13 +692,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 5007
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Arc TR.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 6615
     },
     {
       "path": "Assets/DrivingSchool/Art/Traffic/DS_Sign_TownEntry.fbx",
@@ -890,34 +834,6 @@
       "bytes": 77068
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road S.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3799
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/North landscaped core.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 4090
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Branch to Parking.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3986
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Inner S.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3800
-    },
-    {
       "path": "Assets/DrivingSchool/Art/Pedestrians/Textures/MH_shoes01_diffuse_d.jpg",
       "usedBy": [
         "Assets/DrivingSchool/Materials/Pedestrians/DS_Pedestrian_A_Ped_Shoes.mat"
@@ -978,13 +894,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 3944
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road Top Outer.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3809
     },
     {
       "path": "Assets/DrivingSchool/Materials/Pedestrians/DS_Pedestrian_Child_A_Ped_Eyebrows.mat",
@@ -1332,13 +1241,6 @@
       "bytes": 50140
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Reverse approach curve.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 6631
-    },
-    {
       "path": "Assets/DrivingSchool/Art/Props/DS_TrafficCone.fbx",
       "usedBy": [
         "Assets/DrivingSchool/Prefabs/Props/DS_TrafficCone.prefab"
@@ -1499,20 +1401,6 @@
       "bytes": 77116
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/South landscaped core.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3944
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road West.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3810
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/LessonStreet/Grass.mat",
       "usedBy": [
         "Assets/DrivingSchool/Scenes/Lesson_Street.unity"
@@ -1583,13 +1471,6 @@
       "inBuild": false,
       "resources": false,
       "bytes": 1532798
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Reverse corridor into garage.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3835
     },
     {
       "path": "Assets/DrivingSchool/Materials/Pedestrians/DS_Pedestrian_B_Ped_Suit.mat",
@@ -1800,13 +1681,6 @@
       "bytes": 3938
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Inner N.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3798
-    },
-    {
       "path": "Assets/DrivingSchool/Prefabs/RoadKit/RK_Shoulder_1p5x5m.prefab",
       "usedBy": [],
       "inBuild": false,
@@ -1821,13 +1695,6 @@
       "inBuild": false,
       "resources": true,
       "bytes": 14100
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/90 Turn.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 4052
     },
     {
       "path": "Assets/DrivingSchool/Materials/Vehicles/TrafficLamp_Turn.mat",
@@ -2053,13 +1920,6 @@
       "bytes": 3943
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road South Approach.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3812
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/VehicleTestRange/Track_sleepers_(east).asset",
       "usedBy": [
         "Assets/DrivingSchool/Scenes/VehicleTestRange.unity"
@@ -2233,20 +2093,6 @@
       "bytes": 48524
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Parking access lane.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3820
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road West Approach.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3809
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/RoadKit/RK_Grass.mat",
       "usedBy": [
         "Assets/DrivingSchool/Art/RoadKitV2/RK2_Roundabout_52m.fbx"
@@ -2283,13 +2129,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 3808
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/NW Loop Top.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3810
     },
     {
       "path": "Assets/DrivingSchool/Art/Fonts/GolosText/GolosText-Bold SDF.asset",
@@ -2349,13 +2188,6 @@
       "bytes": 3939
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road E.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3805
-    },
-    {
       "path": "Assets/DrivingSchool/Art/RoadKitV2/RK2_Roundabout_52m.fbx",
       "usedBy": [
         "Assets/DrivingSchool/Prefabs/RoadKitV2/RK2_Roundabout_52m.prefab"
@@ -2363,13 +2195,6 @@
       "inBuild": false,
       "resources": false,
       "bytes": 278316
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road Right Bottom.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3820
     },
     {
       "path": "Assets/DrivingSchool/Materials/Pedestrians/DS_Pedestrian_Child_B_Ped_Eyebrows.mat",
@@ -2399,13 +2224,6 @@
       "bytes": 3912
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road North.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3809
-    },
-    {
       "path": "Assets/DrivingSchool/Art/Vehicles/DS_Sedan_A_Traffic.fbx",
       "usedBy": [
         "Assets/DrivingSchool/Prefabs/Vehicles/DS_Sedan_A_Traffic.prefab"
@@ -2413,13 +2231,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 791164
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road Top.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3799
     },
     {
       "path": "Assets/DrivingSchool/Materials/TrainingKit/Sign_Speed20.mat",
@@ -2447,13 +2258,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 93196
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Crossroad South.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3818
     },
     {
       "path": "Assets/DrivingSchool/Art/Fonts/GolosText/GolosText-Medium SDF.asset",
@@ -2567,13 +2371,6 @@
       "inBuild": false,
       "resources": false,
       "bytes": 2193004
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Snake corridor.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 15465
     },
     {
       "path": "Assets/DrivingSchool/Materials/Transit/PT_Rubber.mat",
@@ -2716,13 +2513,6 @@
       "bytes": 3937
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Turnaround entry.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3807
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/Traffic/Traffic_Housing.mat",
       "usedBy": [
         "Assets/DrivingSchool/Art/Traffic/DS_Signal_VehicleArrow.fbx",
@@ -2854,20 +2644,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 3927
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Arc BR.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 6621
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/90 degree turns.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 7898
     },
     {
       "path": "Assets/DrivingSchool/Prefabs/TrainingKit/TK_Gate_8m.prefab",
@@ -3168,20 +2944,6 @@
       "bytes": 3940
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road West Acceleration.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3815
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Ring T.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3797
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/Houses/House_Graphite.mat",
       "usedBy": [
         "Assets/DrivingSchool/Art/Houses/DS_House_Cottage.fbx",
@@ -3233,13 +2995,6 @@
       "bytes": 3835
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road Right Top.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3813
-    },
-    {
       "path": "Assets/DrivingSchool/Art/UI/Triangle.png",
       "usedBy": [
         "Assets/DrivingSchool/Prefabs/UI/Settings.prefab"
@@ -3247,13 +3002,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 426
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Chicane 90 Turns.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 4219
     },
     {
       "path": "Assets/DrivingSchool/Prefabs/Traffic/DS_Sign_RailwayDist3_L.prefab",
@@ -3302,13 +3050,6 @@
       "inBuild": false,
       "resources": false,
       "bytes": 3911
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Arc BL.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 6623
     },
     {
       "path": "Assets/DrivingSchool/Materials/Ink.mat",
@@ -3376,13 +3117,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 338596
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Parking to reverse approach.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 6642
     },
     {
       "path": "Assets/DrivingSchool/Materials/TrainingKit/RedEmissive.mat",
@@ -3479,13 +3213,6 @@
       "bytes": 3936
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Inner E.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3798
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/Pedestrians/DS_Pedestrian_Child_A_Ped_PackTrim.mat",
       "usedBy": [
         "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_A.fbx"
@@ -3577,13 +3304,6 @@
       "bytes": 4408
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/NW Loop Exit.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3809
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/VehicleTestRange/Track_ballast_(east).asset",
       "usedBy": [
         "Assets/DrivingSchool/Scenes/VehicleTestRange.unity"
@@ -3625,13 +3345,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 21660
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Ring L.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3799
     },
     {
       "path": "Assets/DrivingSchool/Art/RoadKit/RK_Marking_DoubleSolid_20m.fbx",
@@ -3830,13 +3543,6 @@
       "bytes": 3924
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Arc Top to Center.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 6630
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/Houses/House_Stone.mat",
       "usedBy": [
         "Assets/DrivingSchool/Art/Houses/DS_House_Cottage.fbx",
@@ -3885,13 +3591,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 3935
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road North Approach.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3810
     },
     {
       "path": "Assets/DrivingSchool/Art/Transit/PT_BusStop_Shelter.fbx",
@@ -3978,13 +3677,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 8500985
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road East.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3808
     },
     {
       "path": "Assets/DrivingSchool/Materials/TrainingKit/Sign_Plate813_Back.mat",
@@ -4148,13 +3840,6 @@
       "bytes": 3893
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Corridor 90 Turns.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 4460
-    },
-    {
       "path": "Assets/DrivingSchool/Art/Traffic/DS_Plaque_Distance100.fbx",
       "usedBy": [
         "Assets/DrivingSchool/Prefabs/Traffic/DS_Plaque_Distance100.prefab"
@@ -4216,13 +3901,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 196396
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Hill to slalom.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 6631
     },
     {
       "path": "Assets/DrivingSchool/Materials/TrainingKit/WhiteEmissive.mat",
@@ -4300,27 +3978,6 @@
       "bytes": 99116
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Crossroad West.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3815
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road SW Inner.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3824
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road Bottom.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3808
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/Traffic/Traffic_RedOn.mat",
       "usedBy": [
         "Assets/DrivingSchool/Art/Traffic/DS_Signal_VehicleArrow.fbx",
@@ -4396,13 +4053,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 3936
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road East Approach.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3807
     },
     {
       "path": "Assets/DrivingSchool/Materials/Interior_Graphite.mat",
@@ -4545,13 +4195,6 @@
       "inBuild": false,
       "resources": false,
       "bytes": 3838
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Finish lane.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3808
     },
     {
       "path": "Assets/DrivingSchool/Materials/Stitch.mat",
@@ -4742,13 +4385,6 @@
       "bytes": 4245
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Ring R.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3797
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/TrainingKit/RW_RedOn.mat",
       "usedBy": [
         "Assets/DrivingSchool/Art/TrainingKit/TK_RailwaySignal.fbx",
@@ -4776,13 +4412,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 3937
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Slalom S-Corridor.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 8046
     },
     {
       "path": "Assets/DrivingSchool/Materials/Leaf.mat",
@@ -4849,13 +4478,6 @@
       "bytes": 75089
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Start approach.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3819
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/Transit/PT_Lamp_Amber.mat",
       "usedBy": [
         "Assets/DrivingSchool/Art/Transit/PT_Minibus_Route.fbx",
@@ -4874,13 +4496,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 3806
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Outer Loop.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 20009
     },
     {
       "path": "Assets/DrivingSchool/Materials/Pedestrians/DS_Pedestrian_C_Ped_Shoes.mat",
@@ -4968,13 +4583,6 @@
       "bytes": 3842
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Hill departure.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3815
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/Pedestrians/DS_Pedestrian_Child_B_Ped_Skin.mat",
       "usedBy": [
         "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Child_B.fbx"
@@ -4994,13 +4602,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 1890
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Arc East to Chicane.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 6632
     },
     {
       "path": "Assets/DrivingSchool/Art/Traffic/DS_Sign_NoStopping.fbx",
@@ -5070,13 +4671,6 @@
       "inBuild": false,
       "resources": false,
       "bytes": 466
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/NW Loop Vertical.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3817
     },
     {
       "path": "Assets/DrivingSchool/Art/Houses/DS_House_Modern8.fbx",
@@ -5162,13 +4756,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 3950
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Braking to finish bend.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 6639
     },
     {
       "path": "Assets/DrivingSchool/Art/Traffic/DS_Sign_RailwayDist1_R.fbx",
@@ -5354,13 +4941,6 @@
       "bytes": 23548
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Reverse alignment.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3814
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/TrainingKit/RW_Housing.mat",
       "usedBy": [
         "Assets/DrivingSchool/Art/TrainingKit/TK_RailwaySignal.fbx",
@@ -5422,13 +5002,6 @@
       "inBuild": false,
       "resources": false,
       "bytes": 59436
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Garage exit turn.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 6631
     },
     {
       "path": "Assets/DrivingSchool/Materials/Pedestrians/DS_Pedestrian_A_Ped_Eyes.mat",
@@ -5505,13 +5078,6 @@
       "bytes": 18060
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road W.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3807
-    },
-    {
       "path": "Assets/DrivingSchool/Prefabs/Traffic/DS_Sign_RailwayDist1_R.prefab",
       "usedBy": [
         "Assets/DrivingSchool/Scenes/TrafficShowroom.unity"
@@ -5557,13 +5123,6 @@
       "bytes": 2404108
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Garage approach.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3812
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/Carpet.mat",
       "usedBy": [
         "Assets/DrivingSchool/Art/Vehicles/DS_Ambulance_A_Traffic.fbx",
@@ -5575,13 +5134,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 3800
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Ring B.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3799
     },
     {
       "path": "Assets/DrivingSchool/Materials/TrainingKit/Housing.mat",
@@ -5609,13 +5161,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 3927
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road South.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3811
     },
     {
       "path": "Assets/DrivingSchool/Materials/Transit/PT_Steel_Dark.mat",
@@ -5652,13 +5197,6 @@
       "inBuild": true,
       "resources": false,
       "bytes": 3957
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road East South.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3810
     },
     {
       "path": "Assets/DrivingSchool/Scenes/Lesson_Street.unity",
@@ -5731,20 +5269,6 @@
       "bytes": 24782
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Arc West to Slalom.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 6631
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Slalom S corridor.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 9514
-    },
-    {
       "path": "Assets/DrivingSchool/Art/RoadKit/RK_Marking_Yellow_20m.fbx",
       "usedBy": [
         "Assets/DrivingSchool/Prefabs/RoadKit/RK_Marking_Yellow_20m.prefab"
@@ -5752,13 +5276,6 @@
       "inBuild": false,
       "resources": false,
       "bytes": 17756
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Road N.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 3797
     },
     {
       "path": "Assets/DrivingSchool/Materials/Pedestrians/DS_Pedestrian_Police_Ped_Eyelashes.mat",
@@ -6061,13 +5578,6 @@
       "bytes": 3934
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Arc TL.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 6621
-    },
-    {
       "path": "Assets/DrivingSchool/Art/UI/Hud/ring_thick.png",
       "usedBy": [
         "Assets/DrivingSchool/Prefabs/UI/HUD.prefab"
@@ -6201,13 +5711,6 @@
       "bytes": 2264683
     },
     {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Turnaround to acceleration.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 6637
-    },
-    {
       "path": "Assets/DrivingSchool/Materials/Pedestrians/DS_Pedestrian_Police_Ped_CapTop.mat",
       "usedBy": [
         "Assets/DrivingSchool/Art/Pedestrians/DS_Pedestrian_Police.fbx"
@@ -6269,13 +5772,6 @@
       "inBuild": false,
       "resources": false,
       "bytes": 20470
-    },
-    {
-      "path": "Assets/DrivingSchool/Art/TrainingKit/Perimeter loop.asset",
-      "usedBy": [],
-      "inBuild": false,
-      "resources": false,
-      "bytes": 15693
     },
     {
       "path": "Assets/DrivingSchool/Materials/Pedestrians/DS_Pedestrian_Child_A_Ped_Skin.mat",

@@ -1,0 +1,72 @@
+Assets/DrivingSchool/Art/TrainingKit/Arc South to Bottom.asset
+Assets/DrivingSchool/Art/TrainingKit/Parallel parking approach.asset
+Assets/DrivingSchool/Art/TrainingKit/Inner W.asset
+Assets/DrivingSchool/Art/TrainingKit/Crossroad East.asset
+Assets/DrivingSchool/Art/TrainingKit/Road Left.asset
+Assets/DrivingSchool/Art/TrainingKit/Crossroad North.asset
+Assets/DrivingSchool/Art/TrainingKit/Acceleration and braking straight.asset
+Assets/DrivingSchool/Art/TrainingKit/Arc TR.asset
+Assets/DrivingSchool/Art/TrainingKit/Road S.asset
+Assets/DrivingSchool/Art/TrainingKit/North landscaped core.asset
+Assets/DrivingSchool/Art/TrainingKit/Branch to Parking.asset
+Assets/DrivingSchool/Art/TrainingKit/Inner S.asset
+Assets/DrivingSchool/Art/TrainingKit/Road Top Outer.asset
+Assets/DrivingSchool/Art/TrainingKit/Reverse approach curve.asset
+Assets/DrivingSchool/Art/TrainingKit/South landscaped core.asset
+Assets/DrivingSchool/Art/TrainingKit/Road West.asset
+Assets/DrivingSchool/Art/TrainingKit/Reverse corridor into garage.asset
+Assets/DrivingSchool/Art/TrainingKit/Inner N.asset
+Assets/DrivingSchool/Art/TrainingKit/90 Turn.asset
+Assets/DrivingSchool/Art/TrainingKit/Road South Approach.asset
+Assets/DrivingSchool/Art/TrainingKit/Parking access lane.asset
+Assets/DrivingSchool/Art/TrainingKit/Road West Approach.asset
+Assets/DrivingSchool/Art/TrainingKit/NW Loop Top.asset
+Assets/DrivingSchool/Art/TrainingKit/Road E.asset
+Assets/DrivingSchool/Art/TrainingKit/Road Right Bottom.asset
+Assets/DrivingSchool/Art/TrainingKit/Road North.asset
+Assets/DrivingSchool/Art/TrainingKit/Road Top.asset
+Assets/DrivingSchool/Art/TrainingKit/Crossroad South.asset
+Assets/DrivingSchool/Art/TrainingKit/Snake corridor.asset
+Assets/DrivingSchool/Art/TrainingKit/Turnaround entry.asset
+Assets/DrivingSchool/Art/TrainingKit/Arc BR.asset
+Assets/DrivingSchool/Art/TrainingKit/90 degree turns.asset
+Assets/DrivingSchool/Art/TrainingKit/Road West Acceleration.asset
+Assets/DrivingSchool/Art/TrainingKit/Ring T.asset
+Assets/DrivingSchool/Art/TrainingKit/Road Right Top.asset
+Assets/DrivingSchool/Art/TrainingKit/Chicane 90 Turns.asset
+Assets/DrivingSchool/Art/TrainingKit/Arc BL.asset
+Assets/DrivingSchool/Art/TrainingKit/Parking to reverse approach.asset
+Assets/DrivingSchool/Art/TrainingKit/Inner E.asset
+Assets/DrivingSchool/Art/TrainingKit/NW Loop Exit.asset
+Assets/DrivingSchool/Art/TrainingKit/Ring L.asset
+Assets/DrivingSchool/Art/TrainingKit/Arc Top to Center.asset
+Assets/DrivingSchool/Art/TrainingKit/Road North Approach.asset
+Assets/DrivingSchool/Art/TrainingKit/Road East.asset
+Assets/DrivingSchool/Art/TrainingKit/Corridor 90 Turns.asset
+Assets/DrivingSchool/Art/TrainingKit/Hill to slalom.asset
+Assets/DrivingSchool/Art/TrainingKit/Crossroad West.asset
+Assets/DrivingSchool/Art/TrainingKit/Road SW Inner.asset
+Assets/DrivingSchool/Art/TrainingKit/Road Bottom.asset
+Assets/DrivingSchool/Art/TrainingKit/Road East Approach.asset
+Assets/DrivingSchool/Art/TrainingKit/Finish lane.asset
+Assets/DrivingSchool/Art/TrainingKit/Ring R.asset
+Assets/DrivingSchool/Art/TrainingKit/Slalom S-Corridor.asset
+Assets/DrivingSchool/Art/TrainingKit/Start approach.asset
+Assets/DrivingSchool/Art/TrainingKit/Outer Loop.asset
+Assets/DrivingSchool/Art/TrainingKit/Hill departure.asset
+Assets/DrivingSchool/Art/TrainingKit/Arc East to Chicane.asset
+Assets/DrivingSchool/Art/TrainingKit/NW Loop Vertical.asset
+Assets/DrivingSchool/Art/TrainingKit/Braking to finish bend.asset
+Assets/DrivingSchool/Art/TrainingKit/Reverse alignment.asset
+Assets/DrivingSchool/Art/TrainingKit/Garage exit turn.asset
+Assets/DrivingSchool/Art/TrainingKit/Road W.asset
+Assets/DrivingSchool/Art/TrainingKit/Garage approach.asset
+Assets/DrivingSchool/Art/TrainingKit/Ring B.asset
+Assets/DrivingSchool/Art/TrainingKit/Road South.asset
+Assets/DrivingSchool/Art/TrainingKit/Road East South.asset
+Assets/DrivingSchool/Art/TrainingKit/Arc West to Slalom.asset
+Assets/DrivingSchool/Art/TrainingKit/Slalom S corridor.asset
+Assets/DrivingSchool/Art/TrainingKit/Road N.asset
+Assets/DrivingSchool/Art/TrainingKit/Arc TL.asset
+Assets/DrivingSchool/Art/TrainingKit/Turnaround to acceleration.asset
+Assets/DrivingSchool/Art/TrainingKit/Perimeter loop.asset
