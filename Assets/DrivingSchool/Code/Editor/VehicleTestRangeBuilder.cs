@@ -468,6 +468,9 @@ namespace DrivingSchool.Editor
             Road(Box("Road to the town district", new Vector3((x0 + x1) / 2, 0f, axisZ), new Vector3(x1 - x0 + 0.6f, 0.04f, RoadWidth), asphalt, env, LayerGround, true));
             Label("ГОРОД (U)", new Vector3(-RoadWidth / 2 - 2f, 1.5f, axisZ + 9f), 0f);
             BuildCityRailway(district);
+            // Street lights of the district (T64): the builder places the posts, the lights come from the same helper as road A's.
+            var lamps = district.root.Find("Lamps");
+            if (lamps != null) foreach (Transform post in lamps) AddStreetLight(post);
             return district;
         }
 
@@ -797,7 +800,16 @@ namespace DrivingSchool.Editor
             var lamp = AssetDatabase.LoadAssetAtPath<GameObject>(Base + "/Prefabs/TrainingKit/TK_Lamp_7m.prefab");
             if (lamp == null) return;
             var o = (GameObject)PrefabUtility.InstantiatePrefab(lamp, props); o.transform.SetPositionAndRotation(p, rot);
-            var post = o.transform;
+            AddStreetLight(o.transform);
+        }
+
+        /// <summary>
+        /// A TK_Lamp_7m post gets its lens and a sodium-coloured spot light under the housing, switched by daylight
+        /// (StreetLampView). Also used for the lamps of the town district (T64).
+        /// </summary>
+        static void AddStreetLight(Transform post)
+        {
+            var rot = post.rotation;
             Vector3 lightPos = post.TransformPoint(new Vector3(0f, 6.78f, 1.3f));
             var l = Box("Lamp lens", lightPos + Vector3.up * 0.03f, new Vector3(0.34f, 0.02f, 0.56f), lampLens, post, 0, false);
             l.transform.rotation = rot; l.isStatic = false; var lens = l.GetComponent<Renderer>(); lens.shadowCastingMode = ShadowCastingMode.Off;

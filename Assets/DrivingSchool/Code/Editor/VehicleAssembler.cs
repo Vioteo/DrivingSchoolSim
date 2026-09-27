@@ -205,41 +205,108 @@ namespace DrivingSchool.Editor
 
                 var red = LampMaterial("TrafficLamp_Brake", new Color(1f, 0.05f, 0.02f));
                 var amber = LampMaterial("TrafficLamp_Turn", new Color(1f, 0.45f, 0.02f));
+                var headMat = LampMaterial("TrafficLamp_Head", new Color(1f, 0.93f, 0.78f));
+                var tailMat = LampMaterial("TrafficLamp_Tail", new Color(0.55f, 0.02f, 0.01f));
                 var brake = new List<Renderer>(); var left = new List<Renderer>(); var right = new List<Renderer>();
+                var head = new List<Renderer>(); var tail = new List<Renderer>();
                 foreach (var r in visual.GetComponentsInChildren<MeshRenderer>(true))
                 {
                     var mats = r.sharedMaterials;
                     bool isRed = mats.Any(m => m != null && m.name.StartsWith("Lamp_Red", StringComparison.Ordinal));
                     bool isAmber = mats.Any(m => m != null && m.name.StartsWith("Lamp_Amber", StringComparison.Ordinal));
-                    if (!isRed && !isAmber) continue;
+                    bool isWhite = mats.Any(m => m != null && m.name.StartsWith("Lamp_White", StringComparison.Ordinal));
+                    if (!isRed && !isAmber && !isWhite) continue;
                     var cb = VehicleRigUtil.CarSpaceBounds(root.transform, r);
                     bool outer = cb.center.z > b.max.z - 0.8f || cb.center.z < b.min.z + 0.8f || r.name.Contains("Mirror");
                     if (!outer) continue;   // needles and cabin lamps
+                    bool front = cb.center.z > b.center.z;
+                    if (isWhite)
+                    {
+                        // Headlamps glow (T64); white lenses at the back are reversing lamps and stay dark.
+                        if (front) { var h = Overlay(r, headMat, 1.003f); if (h != null) head.Add(h); }
+                        continue;
+                    }
                     var overlay = Overlay(r, isAmber ? amber : red);
                     if (overlay == null) continue;
                     if (isAmber) (cb.center.x < 0 ? left : right).Add(overlay);
-                    else if (cb.center.z < b.center.z) brake.Add(overlay);
+                    else if (!front) { brake.Add(overlay); var t = Overlay(r, tailMat, 1.002f); if (t != null) tail.Add(t); }
                     else UnityEngine.Object.DestroyImmediate(overlay.gameObject);
                 }
+                // One headlamp beam per car (in the dark, near the camera: TrafficVehicleView), no shadows, from the lens height.
+                float beamY = head.Count > 0 ? head.Average(h => VehicleRigUtil.CarSpaceBounds(root.transform, h).center.y) : b.min.y + 0.7f;
+                var beamGo = new GameObject("Headlamp beam"); beamGo.transform.SetParent(root.transform, false);
+                beamGo.transform.localPosition = new Vector3(0f, beamY, b.max.z - 0.15f);
+                beamGo.transform.localRotation = Quaternion.Euler(4f, 0f, 0f);
+                var beam = beamGo.AddComponent<Light>();
+                beam.type = LightType.Spot; beam.spotAngle = 100f; beam.innerSpotAngle = 55f; beam.range = 55f; beam.intensity = 140f;
+                beam.color = new Color(1f, 0.95f, 0.85f); beam.shadows = LightShadows.None; beam.enabled = false;
+                AddDriver(v, root.transform, visual.transform);
                 var audit = VehicleModelContract.Audit(root.transform, visual.transform);
                 // Body width without the mirrors: the track plus the tyres and a little overhang.
                 view.Configure(visual.transform, brake.ToArray(), left.ToArray(), right.ToArray(), b.size.z, audit.TrackM + 0.35f, audit.WheelbaseM);
+                view.ConfigureLights(head.ToArray(), tail.ToArray(), beam);
                 string path = PrefabDir + "/" + v.id + "_Traffic.prefab";
                 var prefab = PrefabUtility.SaveAsPrefabAsset(root, path);
-                Debug.Log($"VEHICLE_TRAFFIC_PREFAB {v.id}: {path}, brake {brake.Count}, left {left.Count}, right {right.Count}");
+                Debug.Log($"VEHICLE_TRAFFIC_PREFAB {v.id}: {path}, brake {brake.Count}, tail {tail.Count}, head {head.Count}, left {left.Count}, right {right.Count}");
                 return prefab;
             }
             finally { UnityEngine.Object.DestroyImmediate(root); }
         }
 
+        /// <summary>
+        /// A seated driver (T64): an adult pedestrian model posed in the driver's seat — thighs forward, knees bent,
+        /// hands towards the wheel — with its head at the model's Socket_DriverEye. No animator, colliders or ragdoll.
+        /// </summary>
+        static void AddDriver(VehicleEntry v, Transform root, Transform visual)
+        {
+            var eye = visual.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name.StartsWith("Socket_DriverEye", StringComparison.Ordinal));
+            if (eye == null) { Debug.LogWarning("VEHICLE_TRAFFIC_PREFAB " + v.id + ": no Socket_DriverEye, no driver"); return; }
+            string who = v.id.Contains("Police") ? "DS_Pedestrian_Police" : new[] { "DS_Pedestrian_A", "DS_Pedestrian_B", "DS_Pedestrian_C" }[Math.Abs(v.id.GetHashCode()) % 3];
+            var src = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/DrivingSchool/Prefabs/Pedestrians/" + who + ".prefab");
+            if (src == null) { Debug.LogWarning("VEHICLE_TRAFFIC_PREFAB " + v.id + ": no pedestrian model " + who); return; }
+            var go = (GameObject)PrefabUtility.InstantiatePrefab(src, root);
+            PrefabUtility.UnpackPrefabInstance(go, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+            go.name = "Driver";
+            go.transform.localPosition = Vector3.zero; go.transform.localRotation = Quaternion.identity;
+            foreach (var j in go.GetComponentsInChildren<CharacterJoint>(true)) UnityEngine.Object.DestroyImmediate(j);
+            foreach (var rb in go.GetComponentsInChildren<Rigidbody>(true)) UnityEngine.Object.DestroyImmediate(rb);
+            foreach (var c in go.GetComponentsInChildren<Collider>(true)) UnityEngine.Object.DestroyImmediate(c);
+            foreach (var m in go.GetComponentsInChildren<MonoBehaviour>(true)) UnityEngine.Object.DestroyImmediate(m);
+            foreach (var a in go.GetComponentsInChildren<Animator>(true)) UnityEngine.Object.DestroyImmediate(a);
+            foreach (var au in go.GetComponentsInChildren<AudioSource>(true)) UnityEngine.Object.DestroyImmediate(au);
+            Transform B(string name) => go.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == name || t.name.EndsWith(":" + name));
+            var right = root.right; var up = root.up;
+            void Turn(string bone, float deg, Vector3 axis) { var t = B(bone); if (t != null) t.rotation = Quaternion.AngleAxis(deg, axis) * t.rotation; }
+            Turn("Spine", -10f, right);                                  // lean back into the seat
+            foreach (var side in new[] { "L", "R" })
+            {
+                float s = side == "L" ? -1f : 1f;
+                Turn("UpperLeg_" + side, -100f, right);                  // thighs forward, knees a little above the hips
+                Turn("UpperLeg_" + side, s * 6f, up);                    // knees a little apart
+                Turn("LowerLeg_" + side, 44f, right);                    // shins forward-down to the pedals
+                Turn("Foot_" + side, -25f, right);
+                Turn("UpperArm_" + side, -50f, right);                   // arms forward to the wheel
+                Turn("UpperArm_" + side, -s * 12f, up);
+                Turn("Forearm_" + side, -40f, right);
+            }
+            var headBone = B("Head");
+            if (headBone != null)
+            {
+                // Eye ≈ 9 cm above and 8 cm in front of the head bone.
+                var eyeNow = headBone.position + up * 0.09f + root.forward * 0.08f;
+                go.transform.position += eye.position - eyeNow;
+            }
+            foreach (var smr in go.GetComponentsInChildren<SkinnedMeshRenderer>(true)) { smr.updateWhenOffscreen = true; smr.shadowCastingMode = ShadowCastingMode.On; }
+        }
+
         public static string TrafficPrefabPath(VehicleEntry v) => PrefabDir + "/" + v.id + "_Traffic.prefab";
 
-        static Renderer Overlay(MeshRenderer lamp, Material material)
+        static Renderer Overlay(MeshRenderer lamp, Material material, float scale = 1.004f)
         {
             var mf = lamp.GetComponent<MeshFilter>(); if (mf == null || mf.sharedMesh == null) return null;
             var go = new GameObject(lamp.name + "_Glow");
             go.transform.SetParent(lamp.transform, false);
-            go.transform.localScale = Vector3.one * 1.004f;
+            go.transform.localScale = Vector3.one * scale;
             go.AddComponent<MeshFilter>().sharedMesh = mf.sharedMesh;
             var r = go.AddComponent<MeshRenderer>();
             r.sharedMaterials = Enumerable.Repeat(material, mf.sharedMesh.subMeshCount).ToArray();

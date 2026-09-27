@@ -279,6 +279,26 @@ namespace DrivingSchool.Editor
                 var go = Place(Kit + "TK_Lamp_7m.prefab", pos, m.yawDeg - 90f, parent);
                 SetLayer(go, layer); go.isStatic = true;
             }
+            // Junctions and the roundabout (T64): a lamp on every corner, its arm towards the centre.
+            foreach (var m in layout.instances)
+            {
+                IEnumerable<Vector2> corners =
+                    m.catalogId == X4 ? new[] { new Vector2(13.5f, 13.5f) } :
+                    m.catalogId == X42 ? new[] { new Vector2(10.5f, 13.5f) } :
+                    m.catalogId == Ring ? new[] { new Vector2(10.7f, 10.7f) } : new Vector2[0];
+                var rot = Quaternion.Euler(0, m.yawDeg, 0);
+                var centre = new Vector3((float)m.x, (float)m.y + SidewalkTop, (float)m.z);
+                foreach (var c in corners)
+                    foreach (var (sx, sz) in new[] { (1, 1), (-1, 1), (-1, -1), (1, -1) })
+                    {
+                        var local = new Vector3(c.x * sx, 0f, c.y * sz);
+                        var pos = centre + rot * local;
+                        float yaw = Mathf.Atan2(-local.x, -local.z) * Mathf.Rad2Deg + m.yawDeg;
+                        var go = Place(Kit + "TK_Lamp_7m.prefab", pos, yaw, parent);
+                        go.name = m.id + " corner lamp";
+                        SetLayer(go, layer); go.isStatic = true;
+                    }
+            }
         }
 
         static void Validate(Result r, int layerGround)
