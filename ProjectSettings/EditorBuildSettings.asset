@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/DrivingSchool/Scenes/MainMenu.unity
+    guid: f492474583fa50e41b0108f208aac983
+  - enabled: 1
     path: Assets/DrivingSchool/Scenes/Showroom.unity
     guid: 49fb36603716fde4e97049705a6a44f6
   - enabled: 1
