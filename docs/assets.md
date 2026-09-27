@@ -4,7 +4,7 @@
 
 - **Автомобили:** `Art/DS_Sedan_A.fbx`, `Art/Vehicles`, `Prefabs/Vehicles`; каталог `Data/Vehicles/vehicles.json`. Генераторы `tools/build_sedan_*.py`, `tools/vehicle_kit` и `VehicleAssembler.cs`. Осторожно: текущий build_vehicles.py не поддерживает описанный в T50 аргумент ID:lo и может перезаписать канонический седан.
 - **Дороги:** `Art/RoadKit`, `Art/RoadKitV2`, соответствующие Prefabs и Materials. Скрипты `build_road_kit.py`, `build_road_kit_v2.py`, `RoadKitBuilder.cs`. Оба набора действующие, V2 дополняет первый.
-- **Автодром:** `Art/TrainingKit`, `Prefabs/TrainingKit`, `Data/Training`; `TrainingGroundBuilder.cs` и `TrainingGroundLayout.cs`. Актуальные процедурные меши имеют префикс TG_. Старые именованные куски дорог без зависимостей — кандидаты на удаление после подтверждения.
+- **Автодром:** `Art/TrainingKit`, `Prefabs/TrainingKit`, `Data/Training`; `TrainingGroundBuilder.cs` и `TrainingGroundLayout.cs`. Актуальные процедурные меши имеют префикс TG_. 72 старых именованных меша без зависимостей удалены с подтверждения пользователя; список — artifacts/reports/asset-cleanup.txt.
 - **Знаки и светофоры:** `Art/Traffic`, `Prefabs/Traffic`, `Materials/Traffic`; `build_traffic_assets.py`, `TrafficAssetBuilder.cs`. Не все варианты стоят в игровых сценах; это библиотека для генераторов и TrafficShowroom.
 - **Дома:** `Art/Houses`, `Prefabs/Houses`, `ArtSource/Houses`; `HouseKitBuilder.cs`. Суффикс _v1 в старых исходниках не доказывает ненужность.
 - **Общественный транспорт:** `Art/Transit`, `Prefabs/Transit`, `Materials/Transit`; `tools/transit_kit`, `TransitKitBuilder.cs`, сцена Transit_Demo. Это действующий набор для демонстрации, хотя сцена не включена в обычную сборку.
