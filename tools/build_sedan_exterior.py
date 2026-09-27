@@ -386,7 +386,7 @@ def xs(z):
 
 SIDE_N = Vector((1.0, 0.0, 0.38)).normalized()
 # Windshield: raked, from the cowl above the front wheel (y 1.28, z 0.955) to the roof (y 0.40, z 1.432).
-WS_A, WS_B = Vector((0, 1.28, 0.955)), Vector((0, 0.36, 1.458))
+WS_A, WS_B = Vector((0, 1.28, 0.955)), Vector((0, 0.44, 1.452))
 _ws_dir = (WS_B - WS_A).normalized()
 WS_N = Vector((0, -_ws_dir.z, _ws_dir.y))
 if WS_N.y < 0:
@@ -430,15 +430,15 @@ def roof_planes(o):
 
 def windshield_quad():
     zb, zt = 0.955, WS_B.z - 0.004
-    return [(-(xs(zb) - 0.075), y_ws(zb), zb), (xs(zb) - 0.075, y_ws(zb), zb),
-            (xs(zt) - 0.07, y_ws(zt), zt), (-(xs(zt) - 0.07), y_ws(zt), zt)]
+    return [(-(xs(zb) - 0.058), y_ws(zb), zb), (xs(zb) - 0.058, y_ws(zb), zb),
+            (xs(zt) - 0.055, y_ws(zt), zt), (-(xs(zt) - 0.055), y_ws(zt), zt)]
 
 
 def side_glass_outlines():
     """Door glass outlines (y, z) of the right side."""
     zt = 1.42
-    yf = y_ws(0.95) - 0.07
-    front = [(yf, belt(yf) - 0.02), (y_ws(zt) - 0.06, zt), (B_Y + 0.045, zt), (B_Y + 0.045, belt(B_Y + 0.045) - 0.02)]
+    yf = y_ws(0.95) - 0.05
+    front = [(yf, belt(yf) - 0.02), (y_ws(zt) - 0.045, zt), (B_Y + 0.045, zt), (B_Y + 0.045, belt(B_Y + 0.045) - 0.02)]
     yr = -1.08
     rear = [(B_Y - 0.045, belt(B_Y - 0.045) - 0.02), (B_Y - 0.045, zt), (-0.72, zt), (yr, belt(yr) - 0.02)]
     return front, rear
@@ -507,14 +507,14 @@ def rear_glass_quad():
 
 
 def window_cutters(bm):
-    prism(bm, inset_polygon(windshield_quad(), WS_N, 0.022), WS_N, -0.2, 0.2)
+    prism(bm, inset_polygon(windshield_quad(), WS_N, 0.016), WS_N, -0.2, 0.2)
     prism(bm, inset_polygon(rear_glass_quad(), RW_N, 0.024), RW_N, -0.2, 0.2)
     front, rear = side_glass_outlines()
     for side in (-1, 1):
         n = Vector((side * SIDE_N.x, 0, SIDE_N.z))
         for yz in (front, rear):
             poly = [on_side(p, side, 0.0) for p in yz]
-            ins = inset_polygon(poly, n, 0.016)
+            ins = inset_polygon(poly, n, 0.012)
             ins = [(x, y, max(z, belt(y) + 0.010)) for x, y, z in ins]
             prism(bm, ins, n, -0.15, 0.15)
 
