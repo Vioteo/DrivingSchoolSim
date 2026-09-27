@@ -232,5 +232,30 @@ namespace DrivingSchool.Tests
             Assert.That(scenes.Any(s => s.enabled && s.path == UIBuilder.DriveScenePath), Is.True, "Тестовый полигон должен быть в сборке, иначе меню его не загрузит");
             Assert.That(System.IO.Path.GetFileNameWithoutExtension(UIBuilder.MenuScenePath), Is.EqualTo(AppNavigator.MainMenuScene));
         }
+
+        [Test] public void BackdropPickNeverRepeatsPreviousAndCoversTheRest()
+        {
+            var rng = new System.Random(7);
+            var seen = new HashSet<int>();
+            for (int i = 0; i < 300; i++)
+            {
+                int k = DrivingSchool.Presentation.MenuBackdropDirector.Pick(3, 1, rng);
+                Assert.That(k, Is.Not.EqualTo(1), "Тот же фон второй раз подряд");
+                Assert.That(k, Is.InRange(0, 2));
+                seen.Add(k);
+            }
+            Assert.That(seen, Is.EquivalentTo(new[] { 0, 2 }));
+            Assert.That(DrivingSchool.Presentation.MenuBackdropDirector.Pick(1, 0, rng), Is.EqualTo(0), "Единственный фон повторять можно");
+            Assert.That(DrivingSchool.Presentation.MenuBackdropDirector.Pick(0, -1, rng), Is.EqualTo(-1));
+        }
+
+        [Test] public void EveryMenuBackdropSceneIsInBuild()
+        {
+            var backdrops = UIBuilder.MenuBackdrops();
+            Assert.That(backdrops.Length, Is.GreaterThanOrEqualTo(3));
+            foreach (var b in backdrops)
+                Assert.That(EditorBuildSettings.scenes.Any(s => s.enabled && s.path == $"Assets/DrivingSchool/Scenes/{b.sceneName}.unity"), Is.True,
+                    $"Фон «{b.title}»: сцены {b.sceneName} нет в сборке — меню её не загрузит");
+        }
     }
 }

@@ -202,8 +202,11 @@ namespace DrivingSchool.Editor
             var menu = canvas.AddComponent<MainMenuController>();
             menu.defaultTheme = theme;
 
+            // Фон — не сплошная заливка, а затемнение слева (T46): справа видна живая 3D-сцена меню.
             var bg = CreateFill("Background", canvas.transform);
-            AddThemedImage(bg.gameObject, ThemeRole.BgDark, theme);
+            var scrim = AddThemedImage(bg.gameObject, ThemeRole.BgDark, theme);
+            scrim.sprite = BuildMenuScrim();
+            scrim.raycastTarget = false;
 
             var title = CreateFixed("Title", bg, new Vector2(0, 1), new Vector2(1000, 90), new Vector2(96, -110), new Vector2(0, 1));
             AddThemedText(title.gameObject, "DrivingSchoolSim", 72, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Bold);
@@ -686,6 +689,59 @@ namespace DrivingSchool.Editor
             SavePrefab(canvas, "PauseMenu");
         }
 
+        public const string MenuScrimPath = "Assets/DrivingSchool/Art/UI/MenuScrim.png";
+
+        /// <summary>Горизонтальный градиент затемнения под пунктами меню: плотный слева, прозрачный к середине экрана.</summary>
+        private static Sprite BuildMenuScrim()
+        {
+            const int w = 512, h = 4;
+            var tex = new Texture2D(w, h, TextureFormat.RGBA32, false);
+            for (int x = 0; x < w; x++)
+            {
+                float u = x / (w - 1f);
+                float a = 0.94f * (1f - Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.30f, 0.66f, u)));
+                for (int y = 0; y < h; y++) tex.SetPixel(x, y, new Color(1f, 1f, 1f, a));
+            }
+            Directory.CreateDirectory(Path.GetDirectoryName(MenuScrimPath));
+            File.WriteAllBytes(MenuScrimPath, tex.EncodeToPNG());
+            Object.DestroyImmediate(tex);
+            AssetDatabase.ImportAsset(MenuScrimPath, ImportAssetOptions.ForceSynchronousImport);
+            var imp = (TextureImporter)AssetImporter.GetAtPath(MenuScrimPath);
+            imp.textureType = TextureImporterType.Sprite;
+            imp.spriteImportMode = SpriteImportMode.Single;
+            imp.wrapMode = TextureWrapMode.Clamp;
+            imp.mipmapEnabled = false;
+            imp.alphaIsTransparency = true;
+            imp.textureCompression = TextureImporterCompression.Uncompressed;
+            imp.SaveAndReimport();
+            return AssetDatabase.LoadAssetAtPath<Sprite>(MenuScrimPath);
+        }
+
+        /// <summary>Фоны меню (T46): сцены-источники и облёт камеры. Координаты — из генераторов этих сцен.</summary>
+        public static DrivingSchool.Presentation.MenuBackdropDirector.Backdrop[] MenuBackdrops()
+        {
+            float rx = VehicleTestRangeBuilder.RoadCX, rz = VehicleTestRangeBuilder.RailZ;
+            return new[]
+            {
+                new DrivingSchool.Presentation.MenuBackdropDirector.Backdrop
+                {
+                    title = "Шоурум: седан", sceneName = "Showroom", pivot = new Vector3(0f, 0.65f, 0f),
+                    radius = 6.5f, height = 1.0f, fieldOfView = 40f, startYaw = 140f, orbitDegPerSec = 5f, subjectRightDeg = 12f,
+                },
+                new DrivingSchool.Presentation.MenuBackdropDirector.Backdrop
+                {
+                    title = "Ж/д переезд", sceneName = Path.GetFileNameWithoutExtension(DriveScenePath), pivot = new Vector3(rx, 2f, rz),
+                    radius = 24f, height = 3f, fieldOfView = 50f, startYaw = -40f, swayDeg = 10f, swayPeriod = 60f, subjectRightDeg = 16f,
+                    trainIntervalSeconds = 40f,
+                },
+                new DrivingSchool.Presentation.MenuBackdropDirector.Backdrop
+                {
+                    title = "Автодром", sceneName = "Autodrome_Training", pivot = new Vector3(-10f, 0f, -15f),
+                    radius = 70f, height = 55f, fieldOfView = 50f, startYaw = 30f, orbitDegPerSec = 1.5f, subjectRightDeg = 8f,
+                },
+            };
+        }
+
         // ==========================================
         // 6b. MAIN MENU SCENE (T46): стартовая сцена сборки и Play в редакторе
         // ==========================================
@@ -719,6 +775,19 @@ namespace DrivingSchool.Editor
 
             var menuGo = (GameObject)PrefabUtility.InstantiatePrefab(menuPrefab, scene);
 
+            // Живой фон: занавес под меню (гаснет, когда 3D-сцена загрузилась) и директор фона.
+            var curtainCanvas = CreateCanvas("BackdropCurtain");
+            curtainCanvas.GetComponent<Canvas>().sortingOrder = -10;
+            Object.DestroyImmediate(curtainCanvas.GetComponent<GraphicRaycaster>());
+            var curtainFill = CreateFill("Fill", curtainCanvas.transform);
+            AddThemedImage(curtainFill.gameObject, ThemeRole.BgDark, theme).raycastTarget = false;
+            var curtain = curtainCanvas.AddComponent<CanvasGroup>();
+            curtain.interactable = false; curtain.blocksRaycasts = false;
+            var backdrop = new GameObject("MenuBackdrop").AddComponent<DrivingSchool.Presentation.MenuBackdropDirector>();
+            backdrop.view = cam;
+            backdrop.curtain = curtain;
+            backdrop.backdrops = MenuBackdrops();
+
             // Поверх меню: уведомление «в разработке» и затемнение «Загрузка…».
             var overlayCanvas = CreateCanvas("MenuOverlay");
             overlayCanvas.GetComponent<Canvas>().sortingOrder = 50;
@@ -750,6 +819,13 @@ namespace DrivingSchool.Editor
             list.Add(new EditorBuildSettingsScene(MenuScenePath, true));
             foreach (var s in EditorBuildSettings.scenes) if (s.path != MenuScenePath) list.Add(s);
             if (!list.Exists(s => s.path == DriveScenePath)) list.Add(new EditorBuildSettingsScene(DriveScenePath, true));
+            foreach (var b in backdrop.backdrops)
+            {
+                string path = $"Assets/DrivingSchool/Scenes/{b.sceneName}.unity";
+                int i = list.FindIndex(s => s.path == path);
+                if (i < 0) list.Add(new EditorBuildSettingsScene(path, true));
+                else if (!list[i].enabled) list[i] = new EditorBuildSettingsScene(path, true);
+            }
             EditorBuildSettings.scenes = list.ToArray();
             AssetDatabase.SaveAssets();
             Debug.Log("MAIN_MENU_SCENE_BUILT");
