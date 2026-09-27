@@ -15,12 +15,14 @@ namespace DrivingSchool.Rules
         public bool RailwayClosed;
         /// <summary>Удар в этом кадре (скорость соударения, м/с); 0 — удара нет.</summary>
         public float ImpactSpeedMps;
+        /// <summary>Передний бампер пересёк стоп-линию в этом кадре при красном или красном с жёлтым.</summary>
+        public bool CrossedStopLineOnRed;
         public double X, Z;
     }
 
     /// <summary>
     /// Нарушения, которые игра умеет засечь уже сейчас: движение без ремня (ПДД 2.1.2), без ближнего света (ПДД 19.5),
-    /// выезд на закрытый переезд (ПДД 15.3), столкновение. Каждое засчитывается один раз за эпизод: ремень —
+    /// выезд на закрытый переезд (ПДД 15.3), проезд стоп-линии на запрещающий сигнал (ПДД 6.2, 6.13), столкновение. Каждое засчитывается один раз за эпизод: ремень —
     /// пока не пристегнулись, свет — пока не включили. Баллы — 0: вес задаёт таблица методики ГИБДД (T37), её ещё нет.
     /// </summary>
     public sealed class DriveRuleMonitor
@@ -29,6 +31,7 @@ namespace DrivingSchool.Rules
         public const string RuleLowBeam = "PDD_19.5_LOW_BEAM";
         public const string RuleRailwayClosed = "PDD_15.3_RAILWAY_CLOSED";
         public const string RuleCollision = "COLLISION";
+        public const string RuleRedLight = "PDD_6.2_RED_LIGHT";
 
         public const float MovingMps = 1.4f;             // ~5 км/ч: машина едет
         public const double SeatbeltGraceSeconds = 2.0;  // игровые пороги, не правовые нормы (CLAUDE.md, правило 5)
@@ -62,6 +65,7 @@ namespace DrivingSchool.Rules
             else if (!moving) movingNoLightsSince = -1;
 
             if (i.EnteredRailwayCrossing && i.RailwayClosed) result.Add(Make(RuleRailwayClosed, i));
+            if (i.CrossedStopLineOnRed) result.Add(Make(RuleRedLight, i));
 
             if (i.ImpactSpeedMps >= MinImpactMps && i.Seconds - lastCollision >= CollisionCooldownSeconds)
             {

@@ -20,6 +20,9 @@ namespace DrivingSchool.Presentation
                     Advice = "В движении днём и ночью включайте ближний свет или дневные ходовые огни.", Reference = "ПДД РФ п. 19.5 · редакция не сверена" };
                 case DriveRuleMonitor.RuleRailwayClosed: return new Entry { Title = "Выезд на закрытый переезд", Severe = true,
                     Advice = "Если шлагбаум опускается или горит красный сигнал, остановитесь у стоп-линии и дождитесь открытия.", Reference = "ПДД РФ п. 15.3 · редакция не сверена" };
+                case DriveRuleMonitor.RuleRedLight: return new Entry { Title = "Проезд на запрещающий сигнал светофора", Severe = true,
+                    Advice = "На красный остановитесь перед стоп-линией и ждите зелёного. Жёлтый тоже запрещает движение, если можно остановиться без экстренного торможения.",
+                    Reference = "ПДД РФ пп. 6.2, 6.13, 6.14 · редакция не сверена" };
                 case DriveRuleMonitor.RuleCollision: return new Entry { Title = "Столкновение", Severe = true,
                     Advice = "Держите дистанцию и боковой интервал, снижайте скорость заранее.", Reference = "ДТП" };
                 default: return new Entry { Title = ruleId, Advice = "", Reference = ruleId };
