@@ -18,7 +18,8 @@ namespace DrivingSchool.Editor
     /// a second straight, a manoeuvring pad with an ice patch and a parked car for collision tests, lamp posts
     /// for night driving; road C south of the pad with a railway crossing (barriers, signals, a train) and a hill
     /// for hill starts. The player sedan gets the full vehicle stack (physics, visuals, lights, dashboard,
-    /// mirrors, windshield rain) and the scene gets weather and the test director.
+    /// mirrors, windshield rain) and the scene gets weather and the test director. Every player car of the vehicle catalogue
+    /// (Data/Vehicles/vehicles.json) is assembled the same way by VehicleAssembler (T48); M switches between them.
     /// Overwrites only Scenes/VehicleTestRange.unity and Materials/VehicleTestRange/*.
     /// </summary>
     public static class VehicleTestRangeBuilder
@@ -68,6 +69,7 @@ namespace DrivingSchool.Editor
             BuildRoads();
             BuildProps(out var obstacle);
             BuildRoadC(out var crossing);
+            var district = BuildDistrict();
 
             var sun = new GameObject("Sun").AddComponent<Light>();
             sun.type = LightType.Directional; sun.intensity = 1.35f; sun.shadows = LightShadows.Soft; sun.transform.rotation = Quaternion.Euler(45, -35, 0);
@@ -77,7 +79,19 @@ namespace DrivingSchool.Editor
             cam.GetUniversalAdditionalCameraData().renderPostProcessing = true; // bloom on lamps, tone mapping for night contrast
             var volume = new GameObject("00 / POST FX").AddComponent<Volume>(); volume.isGlobal = true; volume.sharedProfile = postFx;
 
-            var player = CreatePlayer(cam, telltaleMat, waterMat, glassWaterMat, mirrorMat, out var controller, out var visual);
+            // Every player car of the catalogue gets the same stack (T48); the first is active, M switches (PlayerVehicleSelector).
+            var catalog = VehicleAssembler.LoadCatalog();
+            var playerEntries = catalog.Players().ToList();
+            var mats = new VehicleAssembler.PlayerMaterials { telltale = telltaleMat, dialWater = waterMat, glassWater = glassWaterMat, mirror = mirrorMat };
+            var cars = new List<VehicleController>();
+            foreach (var entry in playerEntries)
+            {
+                VehicleAssembler.ImportModel(entry.model);
+                cars.Add(VehicleAssembler.BuildPlayer(entry, null, cam, mats, LayerPlayer, LayerMirror));
+            }
+            var controller = cars[0];
+            var player = controller.gameObject;
+            var visual = controller.GetComponent<VehicleVisuals>().model.gameObject;
             var rig = cam.gameObject.AddComponent<DriverCameraRig>(); rig.car = player.transform; rig.model = visual.transform;
 
             var weather = new GameObject("03 / WEATHER").AddComponent<WeatherController>();
@@ -85,12 +99,13 @@ namespace DrivingSchool.Editor
             RenderSettings.skybox = skyMat;
             weather.vehicles.Add(controller.GetComponent<VehiclePhysicsAdapter>());
             weather.roadRenderers.AddRange(roadRenderers);
+            weather.roadRenderers.AddRange(district.roadRenderers);
 
             var spawn = new GameObject("SPAWN / start of road A").transform; spawn.SetParent(env);
             spawn.SetPositionAndRotation(new Vector3(-2f, 0.02f, RoadAStartZ + 10f), Quaternion.identity);
             var crash = new GameObject("SPAWN / crash test").transform; crash.SetParent(env);
             crash.SetPositionAndRotation(new Vector3(obstacle.position.x - 28f, 0.02f, obstacle.position.z), Quaternion.Euler(0, 90, 0));
-            player.transform.SetPositionAndRotation(spawn.position, spawn.rotation);
+            foreach (var car in cars) car.transform.SetPositionAndRotation(spawn.position, spawn.rotation);
             var railSpawn = new GameObject("SPAWN / railway crossing").transform; railSpawn.SetParent(env);
             railSpawn.SetPositionAndRotation(new Vector3(RoadCX + 2f, 0.02f, RailZ - 45f), Quaternion.identity);
             var hillSpawn = new GameObject("SPAWN / hill").transform; hillSpawn.SetParent(env);
@@ -103,10 +118,17 @@ namespace DrivingSchool.Editor
             director.lights = player.GetComponent<VehicleLightsView>(); director.visuals = player.GetComponent<VehicleVisuals>();
             director.windshield = player.GetComponent<WindshieldRainView>();
             director.railwaySpawn = railSpawn; director.hillSpawn = hillSpawn; director.crossing = crossing;
+            director.districtSpawn = district.entrySpawn;
+            var hostSo = new SerializedObject(district.traffic); hostSo.FindProperty("player").objectReferenceValue = player.transform; hostSo.ApplyModifiedPropertiesWithoutUndo();
+
+            var selector = new GameObject("05 / PLAYER SELECTOR (M)").AddComponent<PlayerVehicleSelector>();
+            selector.cars = cars.ToArray(); selector.ids = playerEntries.Select(e => e.id).ToArray(); selector.titles = playerEntries.Select(e => e.title).ToArray();
+            selector.director = director; selector.cameraRig = rig; selector.weather = weather; selector.traffic = district.traffic;
 
             RenderSettings.fog = true; RenderSettings.fogMode = FogMode.Exponential; RenderSettings.fogDensity = 0.0015f;
             Physics.SyncTransforms();
-            Validate(player, obstacle, spawn, crash);
+            foreach (var car in cars) Validate(car.gameObject, obstacle, spawn, crash);
+            for (int i = 1; i < cars.Count; i++) cars[i].gameObject.SetActive(false);
             ValidateRoadC(railSpawn, hillSpawn);
 
             EditorSceneManager.SaveScene(scene, ScenePath);
@@ -420,6 +442,35 @@ namespace DrivingSchool.Editor
 
         static void SetLayer(GameObject o, int layer) { foreach (var t in o.GetComponentsInChildren<Transform>(true)) t.gameObject.layer = layer; }
 
+        // ------------------------------------------------------------------ town district (T51)
+
+        /// <summary>
+        /// The district west of road A (DistrictBuilder) with bots, pedestrians, signals and signs, and a short road that joins
+        /// its east entrance to road A at Z = DistrictOrigin.z. Traffic cars: every traffic entry of the vehicle catalogue.
+        /// </summary>
+        static DistrictBuilder.Result BuildDistrict()
+        {
+            var catalog = VehicleAssembler.LoadCatalog();
+            var prefabs = new List<GameObject>();
+            foreach (var v in catalog.Traffic())
+            {
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(VehicleAssembler.TrafficPrefabPath(v));
+                if (prefab == null) { VehicleAssembler.ImportModel(v.TrafficModelOrFull); prefab = VehicleAssembler.BuildTrafficPrefab(v); }
+                prefabs.Add(prefab);
+            }
+            var origin = DrivingSchool.Presentation.TestRangeLayout.DistrictOrigin;
+            var district = DistrictBuilder.Build(origin, null, LayerGround, LayerProps, prefabs.ToArray());
+            // Link road: from the open end of the roundabout's east arm to the west edge of road A.
+            var end = district.world.lanes.First(l => l.id == DistrictBuilder.EntryLane).centerline[0];
+            float x0 = (float)end.x, x1 = -RoadWidth / 2;
+            float axisZ = (float)end.z - 1.825f;   // the entry lane is the right-hand (north) lane of an E–W street
+            if (Mathf.Abs(axisZ - TestRangeLayout.DistrictEntryZ) > 0.05f) throw new Exception("District entrance moved: axis z " + axisZ + ", layout says " + TestRangeLayout.DistrictEntryZ);
+            Road(Box("Road to the town district", new Vector3((x0 + x1) / 2, 0f, axisZ), new Vector3(x1 - x0 + 0.6f, 0.04f, RoadWidth), asphalt, env, LayerGround, true));
+            Label("ГОРОД (U)", new Vector3(-RoadWidth / 2 - 2f, 1.5f, axisZ + 9f), 0f);
+            BuildCityRailway(district);
+            return district;
+        }
+
         // ------------------------------------------------------------------ road C: railway crossing and hill
 
         // Road C leaves the south edge of the pad and runs south along X = RoadCX. Driving north (+Z) keeps to x > RoadCX.
@@ -515,7 +566,12 @@ namespace DrivingSchool.Editor
         static GameObject MeshObject(string name, MeshData data, Material mat, bool collider)
         {
             var mesh = data.ToMesh(name);
-            AssetDatabase.CreateAsset(mesh, MatDir + "/" + name.Replace(' ', '_').Replace('%', 'p').Replace('/', '_') + ".asset");
+            string path = MatDir + "/" + name.Replace(' ', '_').Replace('%', 'p').Replace('/', '_') + ".asset";
+            // Rebuilding in an open editor: overwriting the asset with CreateAsset left the new MeshCollider on a stale mesh
+            // (raycasts missed the hill until the next domain reload). Copy into the existing asset instead; its GUID stays.
+            var existing = AssetDatabase.LoadAssetAtPath<Mesh>(path);
+            if (existing != null) { EditorUtility.CopySerialized(mesh, existing); UnityEngine.Object.DestroyImmediate(mesh); mesh = existing; mesh.name = System.IO.Path.GetFileNameWithoutExtension(path); EditorUtility.SetDirty(mesh); }
+            else AssetDatabase.CreateAsset(mesh, path);
             var go = new GameObject(name); go.transform.SetParent(env); go.layer = LayerGround; go.isStatic = true;
             go.AddComponent<MeshFilter>().sharedMesh = mesh; go.AddComponent<MeshRenderer>().sharedMaterial = mat;
             if (collider) go.AddComponent<MeshCollider>().sharedMesh = mesh;
@@ -588,6 +644,45 @@ namespace DrivingSchool.Editor
             return m != null ? m : Lit(name, fallback, smoothness);
         }
 
+        /// <summary>
+        /// Level crossing in the town (T56): barriers, lights and a stop line at the RK2_Road_RailCrossing_20m module, a track
+        /// west–east across the district and its own train. The traffic host closes the crossing's signal groups for the bots
+        /// and the pedestrians while the crossing is not open.
+        /// </summary>
+        static void BuildCityRailway(DistrictBuilder.Result district)
+        {
+            const string Kit = Base + "/Prefabs/TrainingKit/";
+            var rail = district.rail;
+            var root = new GameObject("RAILWAY (town)").transform; root.SetParent(district.root, true);
+            Vector3 L(double x, double z) => DistrictBuilder.RailPoint(rail, x, z);
+            float yaw = rail.yawDeg;
+            var centre = L(0, 10);
+            if (Mathf.Abs(Mathf.DeltaAngle(yaw, 0f)) > 1f && Mathf.Abs(Mathf.DeltaAngle(yaw, 180f)) > 1f) throw new Exception("Town railway expects a N–S road at the crossing, yaw " + yaw);
+            // Right of each approach: barrier 5 m before the rails, the light 1 m before the barrier (local z 10 ∓ 5).
+            var bA = PlaceKit(Kit + "TK_RailwayBarrier.prefab", L(4.25, 5), yaw, root, true);
+            var bB = PlaceKit(Kit + "TK_RailwayBarrier.prefab", L(-4.25, 15), yaw + 180f, root, true);
+            var sA = PlaceKit(Kit + "TK_RailwaySignal.prefab", L(5.0, 4), yaw, root, true);
+            var sB = PlaceKit(Kit + "TK_RailwaySignal.prefab", L(-5.0, 16), yaw + 180f, root, true);
+            float west = TestRangeLayout.DistrictMinX + 3f, east = -RoadWidth / 2 - 8f;
+            BuildTrack(root, centre.z, centre.x, west, east, 6.2f);
+            var train = BuildTrain(root, out float trainLength, centre.z, east - 2f);
+            var view = root.gameObject.AddComponent<RailwayCrossingView>();
+            view.barriers = new[] { bA, bB }; view.signals = new[] { sA, sB }; view.train = train;
+            view.crossingCentre = centre; view.trainDirection = Vector3.left;
+            view.trainLength = trainLength; view.trackHalfLength = Mathf.Min(east - centre.x, centre.x - west) - 3f;
+            view.trainArrivesAfter = Mathf.Min(14f, view.trackHalfLength / (view.trainSpeedKmh / 3.6f));
+            view.warningBeforeLowering = 4f; view.lowerSeconds = 6f; view.autoIntervalSeconds = 90f;
+            SetLayer(root.gameObject, LayerProps);
+            // Bots and pedestrians: every signal group of the crossing module follows this crossing.
+            var host = new SerializedObject(district.traffic);
+            var groups = district.world.signalGroups.Where(g => g.junctionId.StartsWith(rail.id + "/", StringComparison.Ordinal)).Select(g => g.id).ToArray();
+            if (groups.Length != 3) throw new Exception("Town railway: expected 3 signal groups, found " + groups.Length);
+            host.FindProperty("railway").objectReferenceValue = view;
+            var arr = host.FindProperty("railwayGroups"); arr.arraySize = groups.Length;
+            for (int i = 0; i < groups.Length; i++) arr.GetArrayElementAtIndex(i).stringValue = groups[i];
+            host.ApplyModifiedPropertiesWithoutUndo();
+        }
+
         static RailwayCrossingView BuildRailway()
         {
             const string Kit = Base + "/Prefabs/TrainingKit/";
@@ -622,39 +717,44 @@ namespace DrivingSchool.Editor
             return view;
         }
 
-        static void BuildTrack(Transform root)
+        static void BuildTrack(Transform root) => BuildTrack(root, RailZ, RoadCX, TrackWestX, TrackEastX, 5.5f);
+
+        /// <summary>Track along X at <paramref name="railZ"/> from <paramref name="westX"/> to <paramref name="eastX"/>, leaving a gap of ±<paramref name="moduleHalf"/> around the crossing module at <paramref name="crossX"/>.</summary>
+        static void BuildTrack(Transform root, float railZ, float crossX, float westX, float eastX, float moduleHalf)
         {
             var ballastMat = KitMat("RW_Ballast", new Color(0.42f, 0.40f, 0.38f), 0.05f);
             var sleeperMat = KitMat("RW_Sleeper", new Color(0.45f, 0.44f, 0.42f), 0.1f);
             var railMat = KitMat("RW_RailSteel", new Color(0.35f, 0.33f, 0.31f), 0.5f);
-            const float moduleHalf = 5.5f, gauge = 1.6f;   // rail centres of the module are 0.8 m off the axis
-            foreach (var (x0, x1, tag) in new[] { (TrackWestX, RoadCX - moduleHalf, "west"), (RoadCX + moduleHalf, TrackEastX, "east") })
+            const float gauge = 1.6f;   // rail centres of the module are 0.8 m off the axis
+            foreach (var (x0, x1, tag) in new[] { (westX, crossX - moduleHalf, "west"), (crossX + moduleHalf, eastX, "east") })
             {
                 float len = x1 - x0, xc = (x0 + x1) / 2f;
                 // ballast bed (trapezoid) and sleepers every 0.55 m, as two meshes
                 var bed = new MeshData();
                 float top = 0.03f, bot = -0.05f, wt = 1.45f, wb = 2.1f;
-                bed.QuadAuto(new Vector3(x0, top, RailZ - wt), new Vector3(x1, top, RailZ - wt), new Vector3(x1, top, RailZ + wt), new Vector3(x0, top, RailZ + wt), 0f);
+                bed.QuadAuto(new Vector3(x0, top, railZ - wt), new Vector3(x1, top, railZ - wt), new Vector3(x1, top, railZ + wt), new Vector3(x0, top, railZ + wt), 0f);
                 foreach (float s in new[] { -1f, 1f })
                 {
-                    var q = new[] { new Vector3(x0, top, RailZ + s * wt), new Vector3(x1, top, RailZ + s * wt), new Vector3(x1, bot, RailZ + s * wb), new Vector3(x0, bot, RailZ + s * wb) };
+                    var q = new[] { new Vector3(x0, top, railZ + s * wt), new Vector3(x1, top, railZ + s * wt), new Vector3(x1, bot, railZ + s * wb), new Vector3(x0, bot, railZ + s * wb) };
                     Vector3 nrm = Vector3.Cross(q[2] - q[0], q[1] - q[0]);
                     if (nrm.z * s < 0f) bed.Quad(q[0], q[3], q[2], q[1]); else bed.Quad(q[0], q[1], q[2], q[3]);
                 }
                 var bedGo = MeshObject($"Track ballast ({tag})", bed, ballastMat, false); bedGo.transform.SetParent(root, true);
-                var bc = bedGo.AddComponent<BoxCollider>(); bc.center = new Vector3(xc, -0.01f, RailZ); bc.size = new Vector3(len, 0.08f, wt * 2f);
+                var bc = bedGo.AddComponent<BoxCollider>(); bc.center = new Vector3(xc, -0.01f, railZ); bc.size = new Vector3(len, 0.08f, wt * 2f);
                 var sl = new MeshData();
-                for (float x = x0 + 0.3f; x < x1 - 0.2f; x += 0.55f) sl.Box(new Vector3(x, -0.015f, RailZ), new Vector3(0.25f, 0.12f, 2.6f));
+                for (float x = x0 + 0.3f; x < x1 - 0.2f; x += 0.55f) sl.Box(new Vector3(x, -0.015f, railZ), new Vector3(0.25f, 0.12f, 2.6f));
                 MeshObject($"Track sleepers ({tag})", sl, sleeperMat, false).transform.SetParent(root, true);
                 foreach (float s in new[] { -1f, 1f })
                 {
-                    var rail = Box($"Rail ({tag})", new Vector3(xc, 0.1425f, RailZ + s * gauge / 2f), new Vector3(len, 0.195f, 0.07f), railMat, root, 0, false);
+                    var rail = Box($"Rail ({tag})", new Vector3(xc, 0.1425f, railZ + s * gauge / 2f), new Vector3(len, 0.195f, 0.07f), railMat, root, 0, false);
                     rail.isStatic = true;
                 }
             }
         }
 
-        static Rigidbody BuildTrain(Transform root, out float length)
+        static Rigidbody BuildTrain(Transform root, out float length) => BuildTrain(root, out length, RailZ, TrackEastX - 2f);
+
+        static Rigidbody BuildTrain(Transform root, out float length, float railZ, float startX)
         {
             var red = Lit("TrainRed", new Color(0.62f, 0.09f, 0.07f), 0.45f);
             var grey = Lit("TrainGrey", new Color(0.36f, 0.38f, 0.39f), 0.35f);
@@ -687,7 +787,7 @@ namespace DrivingSchool.Editor
                 z0 -= 14.8f;
             }
             length = -z0 - 0.4f;
-            t.SetPositionAndRotation(new Vector3(TrackEastX - 2f, 0.24f, RailZ), Quaternion.LookRotation(Vector3.left));
+            t.SetPositionAndRotation(new Vector3(startX, 0.24f, railZ), Quaternion.LookRotation(Vector3.left));
             var rb = go.AddComponent<Rigidbody>(); rb.isKinematic = true; rb.mass = 80000f;
             return rb;
         }
@@ -721,38 +821,11 @@ namespace DrivingSchool.Editor
 
         // ------------------------------------------------------------------ player
 
-        static GameObject CreatePlayer(Camera cam, Material telltale, Material water, Material glassWater, Material mirror, out VehicleController controller, out GameObject visual)
-        {
-            var player = new GameObject("05 / PLAYER / DS_Sedan_A");
-            visual = Sedan(player.transform);
-            SetLayer(player, LayerPlayer);
-            foreach (var t in visual.GetComponentsInChildren<Transform>(true)) if (t.name.StartsWith("MirrorSurface")) t.gameObject.layer = LayerMirror;
-
-            var b = LocalBounds(player.transform, visual);
-            var hull = player.AddComponent<BoxCollider>();
-            const float clearance = 0.28f; // wheels are raycasts; the hull must clear speed bumps
-            hull.center = new Vector3(0f, (clearance + b.max.y) / 2f, b.center.z);
-            hull.size = new Vector3(b.size.x * 0.88f, b.max.y - clearance, b.size.z * 0.98f);
-
-            var body = player.AddComponent<Rigidbody>(); body.mass = 1350f; body.interpolation = RigidbodyInterpolation.Interpolate;
-            var adapter = player.AddComponent<VehiclePhysicsAdapter>();
-            adapter.vehicleJson = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/StreamingAssets/Examples/vehicle.json");
-            adapter.groundMask = ~((1 << LayerPlayer) | (1 << LayerMirror) | (1 << 2));
-            controller = player.AddComponent<VehicleController>();
-            var visuals = player.AddComponent<VehicleVisuals>(); visuals.adapter = adapter; visuals.model = visual.transform;
-            var lights = player.AddComponent<VehicleLightsView>(); lights.adapter = adapter; lights.model = visual.transform;
-            var dash = player.AddComponent<DashboardView>(); dash.adapter = adapter; dash.model = visual.transform; dash.templateMaterial = telltale; dash.dialMaterial = water;
-            var rain = player.AddComponent<WindshieldRainView>(); rain.adapter = adapter; rain.visuals = visuals; rain.model = visual.transform; rain.templateMaterial = glassWater;
-            var screen = player.AddComponent<InfotainmentView>(); screen.adapter = adapter; screen.model = visual.transform;
-            var mirrors = player.AddComponent<VehicleMirrorRig>(); mirrors.model = visual.transform; mirrors.viewer = cam; mirrors.templateMaterial = mirror;
-            return player;
-        }
-
         static void Validate(GameObject player, Transform obstacle, Transform spawn, Transform crash)
         {
             string[] required = { "Wheel_FL", "Wheel_FR", "Wheel_RL", "Wheel_RR", "SteeringWheel_Pivot", "Socket_DriverEye" };
             foreach (var n in required)
-                if (VehicleRigUtil.Find(player.transform, n) == null) throw new Exception("Sedan part missing: " + n);
+                if (VehicleRigUtil.Find(player.transform, n) == null) throw new Exception(player.name + ": part missing: " + n);
             foreach (var p in new[] { spawn.position, crash.position, BumpRubberZ * Vector3.forward, new Vector3(CurveRadius * (1f - 0.7071f), 0, RoadAEndZ + CurveRadius * 0.7071f) /* curve midpoint (135°) */ })
                 if (!Physics.Raycast(p + Vector3.up * 3f, Vector3.down, out var hit, 6f, 1 << LayerGround) || hit.point.y < -0.01f)
                     throw new Exception("No road under " + p);

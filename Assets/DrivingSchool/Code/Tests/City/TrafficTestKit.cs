@@ -70,7 +70,8 @@ namespace DrivingSchool.Tests
             var list = s.Participants;
             for (int i = 0; i < list.Count; i++)
                 for (int j = i + 1; j < list.Count; j++)
-                    if (Overlap(list[i], list[j]))
+                    // People may stand shoulder to shoulder (waiting at a kerb); only a person inside a car's outline counts.
+                    if (!(list[i].Kind == ParticipantKind.Pedestrian && list[j].Kind == ParticipantKind.Pedestrian) && Overlap(list[i], list[j]))
                         throw new Exception($"Overlap at t={s.SimSeconds:F2}: {list[i].Id} ({list[i].PathId} {list[i].S:F1}) and {list[j].Id} ({list[j].PathId} {list[j].S:F1})");
         }
     }

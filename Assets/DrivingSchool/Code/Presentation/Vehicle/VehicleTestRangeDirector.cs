@@ -22,7 +22,7 @@ namespace DrivingSchool.Presentation
     /// Vehicle test range: technical HUD (IMGUI stand), hotkeys and an automated self-check of the car's
     /// systems. Launch with "--selfcheck" (player) to run the check at start and quit with exit code 0/1.
     /// F4 help, F7 МКПП/АКПП, F8 self-check, F9/Backspace respawn, F10 crash-test spawn, F11 railway crossing,
-    /// F12 hill, G calls a train through the crossing, F5/F6 weather.
+    /// F12 hill, G calls a train through the crossing, F5/F6 weather, U the town district (T51), M the next car (T50).
     /// </summary>
     public sealed class VehicleTestRangeDirector : MonoBehaviour
     {
@@ -38,6 +38,8 @@ namespace DrivingSchool.Presentation
         public Rigidbody obstacleCar;
         public Transform railwaySpawn, hillSpawn;
         public RailwayCrossingView crossing;
+        [Tooltip("Въезд в городской район полигона (T51); U — переместиться туда.")]
+        public Transform districtSpawn;
 
         bool showHelp = true, running;
         /// <summary>Панель подсказки по клавишам (F4). При запуске из меню её прячет HUD поездки (T47).</summary>
@@ -70,6 +72,7 @@ namespace DrivingSchool.Presentation
             if (kb.f10Key.wasPressedThisFrame) Respawn(crashSpawn);
             if (kb.f11Key.wasPressedThisFrame) Respawn(railwaySpawn);
             if (kb.f12Key.wasPressedThisFrame) Respawn(hillSpawn);
+            if (kb.uKey.wasPressedThisFrame) Respawn(districtSpawn);
             if (kb.gKey.wasPressedThisFrame && crossing != null) crossing.CallTrain();
             if (kb.f8Key.wasPressedThisFrame) StartCoroutine(SelfCheck(false));
         }
@@ -84,6 +87,15 @@ namespace DrivingSchool.Presentation
                 case RailwayCrossingView.Phase.Closed: return "<color=red>закрыт, идёт поезд</color>";
                 default: return "шлагбаум поднимается";
             }
+        }
+
+        /// <summary>Points the director at another assembled player car (PlayerVehicleSelector, T48).</summary>
+        public void BindPlayer(VehicleController car)
+        {
+            player = car;
+            mirrors = car.GetComponent<VehicleMirrorRig>(); dashboard = car.GetComponent<DashboardView>();
+            lights = car.GetComponent<VehicleLightsView>(); visuals = car.GetComponent<VehicleVisuals>();
+            windshield = car.GetComponent<WindshieldRainView>();
         }
 
         public void ToggleTransmission()
@@ -316,7 +328,8 @@ namespace DrivingSchool.Presentation
                     "F1/F2/F3 + NumPad 8/2/4/6 (Home/End/Del/PgDn) — регулировка зеркал\n" +
                     "F5/F6 — погода (в т.ч. «полнолуние»), F7 — МКПП/АКПП, F8 — самопроверка\n" +
                     "F9/Backspace — на старт, F10 — к машине для столкновения\n" +
-                    "F11 — к ж/д переезду, F12 — к горке, G — вызвать поезд", small);
+                    "F11 — к ж/д переезду, F12 — к горке, G — вызвать поезд\n" +
+                    "U — в городской район, M — другая машина (седан/кроссовер)", small);
                 if (report.Count > 0)
                 {
                     var sb = new StringBuilder();

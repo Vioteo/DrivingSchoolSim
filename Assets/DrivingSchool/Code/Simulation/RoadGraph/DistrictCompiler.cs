@@ -19,6 +19,8 @@ namespace DrivingSchool.Simulation.RoadGraph
         public const double SidewalkLinkToleranceM = 0.3;
         // Road Kit v1: lane centre 1.825 m from the axis, sidewalk centre 5.2 m -> signs stand 3.4 m right of the lane centre.
         public const double SignLateralOffsetM = 3.4;
+        // Road Kit v2 (2+2): outer lane centre 5.5 m, kerb 7.7 m -> heads and signs 3.3 m right of the outer lane centre.
+        public const double SignLateralOffsetV2M = 3.3;
 
         public static WorldDocumentV2 Compile(DistrictLayout layout, IModuleTemplateSource templates)
         {
@@ -124,7 +126,10 @@ namespace DrivingSchool.Simulation.RoadGraph
             float speed(float local) => inst.speedLimitKph > 0 ? inst.speedLimitKph : local;
             Vec3d[] W(Vec3d[] pts) => pts.Select(p => ToWorld(inst, p)).ToArray();
             foreach (var n in f.nodes)
-                acc.Nodes.Add(new RoadNode { id = P(inst, n.id), x = inst.x, y = inst.y, z = inst.z });
+            {
+                var at = ToWorld(inst, new Vec3d(n.x, n.y, n.z));
+                acc.Nodes.Add(new RoadNode { id = P(inst, n.id), x = at.x, y = at.y, z = at.z });
+            }
             foreach (var l in f.lanes)
                 acc.Lanes.Add(new LaneV2
                 {
@@ -139,7 +144,7 @@ namespace DrivingSchool.Simulation.RoadGraph
                 acc.Connections.Add(new LaneConnection
                 {
                     id = P(inst, c.id), junctionId = P(inst, c.junctionId), fromLaneId = P(inst, c.fromLaneId), toLaneId = P(inst, c.toLaneId),
-                    maneuver = c.maneuver, speedLimitKph = speed(c.speedLimitKph), centerline = W(c.centerline),
+                    maneuver = c.maneuver, speedLimitKph = speed(c.speedLimitKph), centerline = W(c.centerline), signalGroupId = P(inst, c.signalGroupId),
                 });
             foreach (var z in f.conflictZones)
                 acc.Zones.Add(new ConflictZone
@@ -151,11 +156,18 @@ namespace DrivingSchool.Simulation.RoadGraph
             foreach (var c in f.crossings)
                 acc.Crossings.Add(new PedestrianCrossing
                 {
-                    id = P(inst, c.id), a = ToWorld(inst, c.a), b = ToWorld(inst, c.b), widthM = c.widthM,
+                    id = P(inst, c.id), a = ToWorld(inst, c.a), b = ToWorld(inst, c.b), widthM = c.widthM, signalGroupId = P(inst, c.signalGroupId),
                     laneIds = c.laneIds.Select(x => P(inst, x)).ToArray(), sidewalkIds = c.sidewalkIds.Select(x => P(inst, x)).ToArray(),
                 });
             foreach (var b in f.boundaries)
                 acc.Boundaries.Add(new LaneBoundary { id = P(inst, b.id), laneId = P(inst, b.laneId), side = b.side, type = b.type, fromS = b.fromS, toS = b.toS });
+            // Template-owned signal groups (level crossing, T56) and approaches (roundabout, T55).
+            foreach (var g in f.signalGroups)
+                acc.Groups.Add(new SignalGroup
+                {
+                    id = P(inst, g.id), junctionId = P(inst, g.junctionId), kind = g.kind,
+                    connectionIds = g.connectionIds.Select(x => P(inst, x)).ToArray(), crossingIds = g.crossingIds.Select(x => P(inst, x)).ToArray(),
+                });
             foreach (var w in f.sidewalks)
                 acc.Sidewalks.Add(new SidewalkPath { id = P(inst, w.id), widthM = w.widthM, points = W(w.points), linkedIds = w.linkedIds.Select(x => P(inst, x)).ToArray() });
         }
@@ -248,16 +260,40 @@ namespace DrivingSchool.Simulation.RoadGraph
                 if (!tpl.IsJunction) continue;
                 var junctionId = P(inst, tpl.Fragment.junctions[0].id);
                 plans.TryGetValue(inst.id, out var plan);
+                if (tpl.Fragment.approaches.Length > 0)
+                {
+                    // The template fixes priorities itself (a roundabout: the ring goes first); the layout only adds signs.
+                    Require(plan == null, "Signal plan on a module with fixed priorities: " + inst.id);
+                    foreach (var t in tpl.Fragment.approaches)
+                    {
+                        var socket = tpl.Sockets.FirstOrDefault(s => s.InLaneIds.Contains(t.laneId));
+                        LayoutApproach a = null;
+                        if (socket != null) given.TryGetValue(inst.id + ":" + socket.Name, out a);
+                        Require(a == null || a.priority == t.priority, "Approach priority conflicts with the module: " + inst.id + ":" + socket?.Name);
+                        acc.Approaches.Add(new JunctionApproach
+                        {
+                            id = "approach/" + inst.id + "/" + t.id, junctionId = P(inst, t.junctionId), laneId = P(inst, t.laneId),
+                            stopLineId = P(inst, t.stopLineId), priority = t.priority, sourceSignIds = a?.signIds ?? Array.Empty<string>(),
+                        });
+                    }
+                    continue;
+                }
                 foreach (var s in tpl.Sockets)
                 {
                     given.TryGetValue(inst.id + ":" + s.Name, out var a);
                     var priority = plan != null ? ApproachPriority.Signalized : a?.priority ?? ApproachPriority.Equal;
                     Require(plan == null || a == null || a.priority == ApproachPriority.Signalized, "Approach priority conflicts with signal plan: " + inst.id + ":" + s.Name);
-                    acc.Approaches.Add(new JunctionApproach
+                    // One record per incoming lane: each lane has its own stop line (T55, 2+2 approaches).
+                    for (int i = 0; i < s.InLaneIds.Length; i++)
                     {
-                        id = "approach/" + inst.id + "/" + s.Name, junctionId = junctionId, laneId = P(inst, s.InLaneIds[0]),
-                        stopLineId = P(inst, s.StopLineId), priority = priority, sourceSignIds = a?.signIds ?? Array.Empty<string>(),
-                    });
+                        var laneId = P(inst, s.InLaneIds[i]);
+                        var stop = acc.StopLines.FirstOrDefault(x => x.laneId == laneId);
+                        acc.Approaches.Add(new JunctionApproach
+                        {
+                            id = "approach/" + inst.id + "/" + s.Name + (i == 0 ? "" : "." + (i + 1)), junctionId = junctionId, laneId = laneId,
+                            stopLineId = stop?.id ?? P(inst, s.StopLineId), priority = priority, sourceSignIds = a?.signIds ?? Array.Empty<string>(),
+                        });
+                    }
                 }
                 if (plan != null) AddSignalPlan(acc, inst, tpl, junctionId, plan);
             }
@@ -273,13 +309,15 @@ namespace DrivingSchool.Simulation.RoadGraph
             foreach (var s in tpl.Sockets)
             {
                 var gid = P(inst, "sg." + s.Name);
-                var inLane = P(inst, s.InLaneIds[0]);
-                var mine = connections.Where(c => c.fromLaneId == inLane).ToList();
+                var inLanes = s.InLaneIds.Select(x => P(inst, x)).ToList();
+                var mine = connections.Where(c => inLanes.Contains(c.fromLaneId)).ToList();
                 foreach (var c in mine) c.signalGroupId = gid;
                 acc.Groups.Add(new SignalGroup { id = gid, junctionId = junctionId, kind = SignalGroupKind.Vehicle, connectionIds = mine.Select(c => c.id).ToArray() });
+                // The head stands at the kerb: beside the outermost incoming lane, level with its stop line.
+                var inLane = inLanes[inLanes.Count - 1];
                 var lane = new Polyline(acc.Lanes.First(l => l.id == inLane).centerline);
-                var stop = acc.StopLines.First(x => x.id == P(inst, s.StopLineId));
-                var head = lane.OffsetPoint(stop.s, SignLateralOffsetM);
+                var stop = acc.StopLines.FirstOrDefault(x => x.laneId == inLane) ?? acc.StopLines.First(x => x.id == P(inst, s.StopLineId));
+                var head = lane.OffsetPoint(stop.s, inLanes.Count > 1 ? SignLateralOffsetV2M : SignLateralOffsetM);
                 acc.Heads.Add(new TrafficSignalAttachment
                 {
                     id = P(inst, "head." + s.Name), signalGroupId = gid, catalogId = "DS_Signal_Vehicle",

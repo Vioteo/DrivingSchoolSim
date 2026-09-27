@@ -17,6 +17,13 @@ namespace DrivingSchool.Presentation
         public const float CrossingHalfLength = 4.8f;
         public static readonly Vector3 PadCentre = new Vector3(195f, 0f, 290f);
         public const float PadSize = 90f;
+        /// <summary>
+        /// Городской район (T51, T55/T56): центр регулируемого перекрёстка X1 (2+2 × 2+2); район занимает X −245…−12, Z −70…212,
+        /// въезд с дороги A — улица 1+1 на Z = DistrictEntryZ (восточный рукав кольца), ж/д переезд на южном рукаве кольца.
+        /// </summary>
+        public static readonly Vector3 DistrictOrigin = new Vector3(-150f, 0.02f, 110f);
+        public const float DistrictEntryZ = 22f;
+        public const float DistrictMinX = -245f, DistrictMaxX = -12f, DistrictMinZ = -70f, DistrictMaxZ = 212f;
 
         public static bool OnRoadA(Vector3 p) => Mathf.Abs(p.x) < RoadWidth / 2 + 2f && p.z > RoadAStartZ - 5f && p.z < RoadAEndZ + 2f;
         public static bool OnRoadC(Vector3 p) => Mathf.Abs(p.x - RoadCX) < RoadWidth / 2 + 2f && p.z > RoadCEndZ - 25f && p.z < PadCentre.z - PadSize / 2;
@@ -24,8 +31,11 @@ namespace DrivingSchool.Presentation
         /// <summary>Машина на настиле переезда (между рельсами и пандусами).</summary>
         public static bool OnRailwayCrossing(Vector3 p) => Mathf.Abs(p.x - RoadCX) < RoadWidth / 2 + 1f && Mathf.Abs(p.z - RailZ) < CrossingHalfLength;
 
+        public static bool InDistrict(Vector3 p) => p.x > DistrictMinX && p.x < DistrictMaxX && p.z > DistrictMinZ && p.z < DistrictMaxZ;
+
         public static string ZoneName(Vector3 p)
         {
+            if (InDistrict(p)) return "городской район";
             if (OnRailwayCrossing(p)) return "ж/д переезд";
             if (OnPad(p)) return "площадка";
             if (OnRoadC(p)) return p.z > HillStartZ - 5 && p.z < HillEndZ + 5 ? "горка" : "дорога C";

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using DrivingSchool.Contracts;
 
@@ -121,7 +122,8 @@ namespace DrivingSchool.Simulation.RoadGraph
             {
                 Require(c != null, "Null crossing"); Unique(c.id, "crossing"); crossings.Add(c.id);
                 Require(c.widthM > 0 && Polyline.Distance2D(c.a, c.b) > 0.5, "Invalid crossing geometry: " + c.id);
-                Require(c.laneIds != null && c.laneIds.Length > 0, "Crossing crosses no lane: " + c.id);
+                // A walkway over the tracks crosses no lane; it must then be controlled by a signal group (T56).
+                Require(c.laneIds != null && (c.laneIds.Length > 0 || !string.IsNullOrEmpty(c.signalGroupId)), "Crossing crosses no lane: " + c.id);
                 foreach (var lid in c.laneIds)
                 {
                     Require(paths.ContainsKey(lid), "Crossing references unknown lane: " + c.id + " -> " + lid);
@@ -193,8 +195,11 @@ namespace DrivingSchool.Simulation.RoadGraph
                 Require(string.IsNullOrEmpty(a.stopLineId) || stopLines.Contains(a.stopLineId), "Approach with unknown stop line: " + a.id);
                 foreach (var sid in a.sourceSignIds) Require(signs.ContainsKey(sid), "Approach with unknown sign: " + a.id + " -> " + sid);
                 // Priority on a junction comes from signs (or signals), never from the data alone.
+                // On a roundabout the ring has priority through the signs at the entries: 4.3 with 2.4 (ПДД РФ 13.11(1) — редакцию сверить).
                 if (a.priority == ApproachPriority.Main)
-                    Require(HasSign(a, signs, c => c == "2.1" || c.StartsWith("2.3")), "Main approach without priority sign: " + a.id);
+                    Require(HasSign(a, signs, c => c == "2.1" || c.StartsWith("2.3"))
+                        || w.approaches.Any(o => o.junctionId == a.junctionId && o.priority == ApproachPriority.Secondary && HasSign(o, signs, c => c == "4.3")),
+                        "Main approach without priority sign: " + a.id);
                 if (a.priority == ApproachPriority.Secondary)
                     Require(HasSign(a, signs, c => c == "2.4" || c == "2.5"), "Secondary approach without yield sign: " + a.id);
                 if (a.priority == ApproachPriority.Signalized)

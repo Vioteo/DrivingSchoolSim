@@ -37,6 +37,9 @@ namespace DrivingSchool.Simulation.Traffic
                 if (IsTurnAcross(b.Maneuver) && !IsTurnAcross(a.Maneuver) && Opposite(a, b)) return false;
                 return Earlier(b, a);
             }
+            // Both regulated by lights, only one has green: the one standing at red (or red-amber) is no rival.
+            if (a.Priority == ApproachPriority.Signalized && b.Priority == ApproachPriority.Signalized && a.SignalGreen != b.SignalGreen)
+                return b.SignalGreen;
             int ra = Rank(a.Priority), rb = Rank(b.Priority);
             if (ra != rb) return rb < ra;
             if (IsTurnAcross(a.Maneuver) && !IsTurnAcross(b.Maneuver) && Opposite(a, b)) return true;

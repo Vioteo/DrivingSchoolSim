@@ -21,6 +21,7 @@ namespace DrivingSchool.Simulation.Traffic
         readonly TrafficProfile profile;
         readonly Dictionary<string, SignalController> controllerByGroup = new Dictionary<string, SignalController>();
         readonly List<SignalController> controllers = new List<SignalController>();
+        readonly Dictionary<string, SignalAspect> external = new Dictionary<string, SignalAspect>();
         readonly ReservationTable reservations = new ReservationTable();
         readonly List<Agent> agents = new List<Agent>();
         readonly Random rng;
@@ -37,6 +38,9 @@ namespace DrivingSchool.Simulation.Traffic
         List<ManeuverPermit> permits = new List<ManeuverPermit>();
         readonly List<TrafficEvent> events = new List<TrafficEvent>();
         readonly List<TrafficEvent> incoming = new List<TrafficEvent>(); // reported between ticks, published by the next one
+        readonly PedestrianSimulation pedestrians;
+        readonly Dictionary<(string crossing, string path), double> crossingS = new Dictionary<(string, string), double>();
+        bool pedestriansPlaced;
 
         /// <summary>Test hook: visit agents in reverse order; the outcome must not change.</summary>
         public bool ReverseProcessingOrder;
@@ -55,7 +59,40 @@ namespace DrivingSchool.Simulation.Traffic
                 controllers.Add(c);
                 foreach (var g in c.GroupIds) controllerByGroup[g] = c;
             }
+            // Groups without a plan are driven from outside (a level crossing, T56). Until told otherwise the way is
+            // open: vehicles see no signal (they drive by the rules), pedestrians may walk.
+            foreach (var g in graph.signalGroups)
+                if (!controllerByGroup.ContainsKey(g.id))
+                    external[g.id] = g.kind == SignalGroupKind.Pedestrian ? SignalAspect.Green : SignalAspect.Off;
+            pedestrians = new PedestrianSimulation(index, seed);
+            foreach (var c in graph.crossings)
+                foreach (var pathId in c.laneIds)
+                    if (index.TryPath(pathId, out var path)) crossingS[(c.id, pathId)] = CrossingPoint(path.Line, c);
             Snapshot = new TrafficSnapshot();
+        }
+
+        public PedestrianSimulation Pedestrians => pedestrians;
+
+        /// <summary>Arc length on <paramref name="line"/> where it meets the walkway centre line a–b (the nearest point if it does not).</summary>
+        public static double CrossingPoint(Polyline line, PedestrianCrossing c)
+        {
+            var pts = line.Points; double run = 0;
+            for (int i = 0; i < pts.Count - 1; i++)
+            {
+                var p = pts[i]; var q = pts[i + 1];
+                double ex = q.x - p.x, ez = q.z - p.z, fx = c.b.x - c.a.x, fz = c.b.z - c.a.z;
+                double den = ex * fz - ez * fx, seg = Math.Sqrt(ex * ex + ez * ez);
+                if (Math.Abs(den) > 1e-9)
+                {
+                    double t = ((c.a.x - p.x) * fz - (c.a.z - p.z) * fx) / den;
+                    double u = ((c.a.x - p.x) * ez - (c.a.z - p.z) * ex) / den;
+                    if (t >= 0 && t <= 1 && u >= 0 && u <= 1) return run + t * seg;
+                }
+                run += seg;
+            }
+            var mid = Polyline.Lerp(c.a, c.b, 0.5);
+            line.Project(mid.x, mid.z, out double s, out _);
+            return s;
         }
 
         public RoadGraphIndex Graph => index;
@@ -79,8 +116,19 @@ namespace DrivingSchool.Simulation.Traffic
         {
             var a = agents.FirstOrDefault(x => x.Id == agentId);
             if (a == null) return;
-            a.Hazard = true;
+            if (!a.Hazard) incoming.Add(new TrafficEvent { Kind = "hazard-on", ParticipantId = agentId, OtherId = otherId, SimSeconds = now });
+            a.Hazard = true; a.HazardSince = now;   // a contact that goes on keeps renewing it
             incoming.Add(new TrafficEvent { Kind = "contact", ParticipantId = agentId, OtherId = otherId, SimSeconds = now });
+        }
+
+        /// <summary>
+        /// A pedestrian was hit (T53): they lie down, cars nearby are warned and keep off them; the event goes to the rules.
+        /// The person is removed after <see cref="TrafficProfile.DownedPedestrianSeconds"/>.
+        /// </summary>
+        public void KnockPedestrian(string pedestrianId, string byId)
+        {
+            if (!pedestrians.Knock(pedestrianId, now)) return;
+            incoming.Add(new TrafficEvent { Kind = "pedestrian-hit", ParticipantId = pedestrianId, OtherId = byId, SimSeconds = now });
         }
 
         /// <summary>Adds a vehicle on an explicit route (scenarios and tests). Spawning normally happens by itself.</summary>
@@ -112,8 +160,14 @@ namespace DrivingSchool.Simulation.Traffic
             playerPos = player.Present ? locator.Locate(player.X, player.Z, player.HeadingRad, playerPos) : default;
             // 2. Signals.
             foreach (var c in controllers) c.Tick(now);
-            // 3. One snapshot for all decisions of this tick.
+            // 3. One snapshot for all decisions of this tick; pedestrians decide on it too (T51).
             var before = Participants();
+            if (profile.MaxPedestrians > 0 && !pedestriansPlaced)
+            {
+                pedestriansPlaced = true;
+                for (int i = 0; i < profile.MaxPedestrians * 3 && pedestrians.People.Count < profile.MaxPedestrians; i++) pedestrians.Spawn(p => Loaded(p) && !VisibleToPlayer(p));
+            }
+            pedestrians.Tick(dt, before, AspectOf, now);
             // 4. Notices issued last tick are delivered now.
             var delivered = pending; pending = new List<ManeuverNotice>();
             foreach (var a in agents) a.Notices = delivered.Where(n => n.ToId == a.Id).ToList();
@@ -133,18 +187,38 @@ namespace DrivingSchool.Simulation.Traffic
             ReleaseFinishedPermits();
             // 8. Spawn / despawn / level of detail.
             spawnClock += dt;
-            if (spawnClock >= profile.SpawnIntervalSeconds) { spawnClock = 0; TrySpawn(); }
+            if (spawnClock >= profile.SpawnIntervalSeconds)
+            {
+                spawnClock = 0; TrySpawn();
+                if (pedestrians.People.Count < profile.MaxPedestrians) pedestrians.Spawn(p => Loaded(p) && !VisibleToPlayer(p));
+            }
             Despawn();
+            foreach (var p in pedestrians.People.Where(x => x.Phase == PedestrianPhase.Down && now - x.DownSince > profile.DownedPedestrianSeconds).ToList())
+                pedestrians.Remove(p.Id);
             // 9. Publish.
             Snapshot = new TrafficSnapshot
             {
                 Tick = tick, SimSeconds = now, Participants = Participants(),
-                Signals = controllerByGroup.Keys.OrderBy(k => k, StringComparer.Ordinal).Select(g => new SignalState { GroupId = g, Aspect = controllerByGroup[g].GetAspect(g) }).ToList(),
+                Signals = controllerByGroup.Keys.Concat(external.Keys).OrderBy(k => k, StringComparer.Ordinal).Select(g => new SignalState { GroupId = g, Aspect = AspectOf(g) }).ToList(),
                 Reservations = reservations.Entries.ToList(), Permits = permits, Notices = delivered, Events = events.ToList(),
             };
         }
 
-        public SignalAspect AspectOf(string groupId) => controllerByGroup.TryGetValue(groupId ?? "", out var c) ? c.GetAspect(groupId) : SignalAspect.Off;
+        public SignalAspect AspectOf(string groupId)
+        {
+            if (external.TryGetValue(groupId ?? "", out var e)) return e;
+            return controllerByGroup.TryGetValue(groupId ?? "", out var c) ? c.GetAspect(groupId) : SignalAspect.Off;
+        }
+
+        /// <summary>Groups driven from outside (no signal plan), e.g. the lights of a level crossing.</summary>
+        public IEnumerable<string> ExternalGroups => external.Keys;
+
+        /// <summary>Sets the aspect of a group without a signal plan (level crossing: Red while it closes or is closed).</summary>
+        public void SetExternalAspect(string groupId, SignalAspect aspect)
+        {
+            if (!external.ContainsKey(groupId ?? "")) throw new ArgumentException("Not an external signal group: " + groupId);
+            external[groupId] = aspect;
+        }
 
         // ---------------------------------------------------------------- decisions and permits
 
@@ -349,6 +423,9 @@ namespace DrivingSchool.Simulation.Traffic
                 if (a.BackgroundClock < 1.0 / profile.BackgroundHz) return;
                 dt = a.BackgroundClock; a.BackgroundClock = 0;
             }
+            // After a light knock the driver waits with the hazard lights on, then carries on (T52); a contact that goes on
+            // (the player is still touching) renews the time in ReportContact.
+            if (a.Hazard && now - a.HazardSince > profile.HazardHoldSeconds) { a.Hazard = false; a.Decision = "resume after contact"; }
             if (a.Frozen || a.Hazard)
             {
                 a.Car.Update(dt, double.PositiveInfinity, 0, 0.0); // brake to a standstill where it is
@@ -367,9 +444,31 @@ namespace DrivingSchool.Simulation.Traffic
                 stop = a.Car.DistanceAlongRoute(before, stopS) - a.Car.Profile.LengthM / 2;
                 if (stop < -0.5) stop = double.PositiveInfinity; // already past the line: never brake inside the junction
             }
+            double yieldStop = PedestrianStop(a);
+            if (yieldStop < stop) { stop = yieldStop; a.Decision = "yield: pedestrian"; }
             a.Car.Update(dt, gap, leadSpeed, stop);
             if (a.PermitConnection == null && a.WaitingSince < 0 && leadId != null && gap < 15) a.Decision = "follow " + leadId;
             else if (a.PermitConnection == null && a.WaitingSince < 0 && next == null) a.Decision = "free";
+        }
+
+        /// <summary>Distance from the front bumper to the stop point before the nearest crossing ahead with a pedestrian on it.</summary>
+        double PedestrianStop(Agent a)
+        {
+            if (pedestrians.OccupiedCrossings.Count == 0) return double.PositiveInfinity;
+            double best = double.PositiveInfinity, half = a.Car.Profile.LengthM / 2;
+            var route = a.Car.Route;
+            for (int i = a.Car.RouteIndex; i < route.Count; i++)
+            {
+                if (a.Car.DistanceAlongRoute(route[i], 0) > 60 && i > a.Car.RouteIndex) break;
+                foreach (var c in index.CrossingsOn(route[i]))
+                {
+                    if (!pedestrians.IsCrossingOccupied(c.id) || !crossingS.TryGetValue((c.id, route[i]), out double sc)) continue;
+                    double at = Math.Max(0, sc - c.widthM / 2 - 1.0);
+                    double gap = a.Car.DistanceAlongRoute(route[i], at) - half;
+                    if (gap >= -0.3 && gap < best) best = Math.Max(0, gap);
+                }
+            }
+            return best;
         }
 
         (double gap, double speed, string id) Lead(Agent a, List<ParticipantState> snapshot)
@@ -379,12 +478,49 @@ namespace DrivingSchool.Simulation.Traffic
             {
                 if (p.Id == a.Id || p.PathId == null) continue;
                 double along = a.Car.DistanceAlongRoute(p.PathId, p.S);
-                if (double.IsPositiveInfinity(along) || along <= 0) continue;
-                if (Math.Abs(p.D - a.Car.LateralOffset) > (p.WidthM + a.Car.Profile.WidthM) / 2 + 0.2) continue;
+                if (double.IsPositiveInfinity(along))
+                {
+                    // Not on my route, but maybe standing across it: a car that stopped inside the junction on another
+                    // connection from my lane (e.g. turning right and waiting for pedestrians) is in my way (T51).
+                    bool obstacle = p.Kind == ParticipantKind.Vehicle || p.Kind == ParticipantKind.Player || p.Kind == ParticipantKind.Pedestrian && p.Decision == "down";
+                    if (!obstacle) continue;
+                    along = AlongMyRoute(a, p);
+                    if (double.IsPositiveInfinity(along)) continue;
+                }
+                else if (Math.Abs(p.D - a.Car.LateralOffset) > (p.WidthM + a.Car.Profile.WidthM) / 2 + 0.2) continue;
+                if (along <= 0) continue;
                 double gap = along - (p.LengthM + a.Car.Profile.LengthM) / 2;
                 if (gap < best) { best = gap; speed = p.SpeedMps; id = p.Id; }
             }
             return (best, speed, id);
+        }
+
+        /// <summary>Distance along the agent's route to the point where participant <paramref name="p"/> overlaps it, +inf if it does not (next 40 m).</summary>
+        double AlongMyRoute(Agent a, ParticipantState p)
+        {
+            var route = a.Car.Route;
+            double half = (p.WidthM + a.Car.Profile.WidthM) / 2 + 0.2;
+            // Centre, rear and front of the other body: a car turning off my path still blocks it with its rear (T55,
+            // two connections from one lane of a 2+2 approach). Result: where its centre would be, as for a car on my route.
+            double fx = Math.Sin(p.HeadingRad), fz = Math.Cos(p.HeadingRad);
+            double best = double.PositiveInfinity;
+            foreach (double o in new[] { 0.0, -p.LengthM / 2 + 0.3, p.LengthM / 2 - 0.3 })
+            {
+                double x = p.Position.x + fx * o, z = p.Position.z + fz * o;
+                for (int i = a.Car.RouteIndex; i < route.Count; i++)
+                {
+                    var path = index.Path(route[i]);
+                    double start = a.Car.DistanceAlongRoute(route[i], i == a.Car.RouteIndex ? a.Car.CurrentDistanceAlongLane : 0);
+                    if (start > 40) break;
+                    path.Line.Project(x, z, out double s, out double d);
+                    if (s <= 1e-6 || s >= path.Length - 1e-6 || Math.Abs(d) > half) continue;
+                    double along = a.Car.DistanceAlongRoute(route[i], s);
+                    if (double.IsPositiveInfinity(along)) continue;
+                    best = Math.Min(best, along - o);
+                    break;
+                }
+            }
+            return best;
         }
 
         // ---------------------------------------------------------------- spawning, level of detail
@@ -398,7 +534,7 @@ namespace DrivingSchool.Simulation.Traffic
             {
                 var p = index.Path(sp.pathId).Line.PointAt(sp.s);
                 if (!Loaded(p) || VisibleToPlayer(p)) return false;
-                return snapshot.All(o => Polyline.Distance2D(o.Position, p) > 15);
+                return snapshot.All(o => o.Kind == ParticipantKind.Pedestrian || Polyline.Distance2D(o.Position, p) > 15);
             }).ToList();
             if (free.Count == 0) return;
             var spawn = free[rng.Next(free.Count)];
@@ -412,7 +548,9 @@ namespace DrivingSchool.Simulation.Traffic
         {
             foreach (var a in agents.ToList())
             {
-                if ((a.Car.Finished && !VisibleToPlayer(a.Car.Position)) || !Loaded(a.Car.Position)) Remove(a);
+                if (a.Car.Finished && a.FinishedAt < 0) a.FinishedAt = now;
+                bool lingered = a.Car.Finished && now - a.FinishedAt > profile.FinishedLingerSeconds;
+                if ((a.Car.Finished && !VisibleToPlayer(a.Car.Position)) || lingered || !Loaded(a.Car.Position)) Remove(a);
             }
         }
 
@@ -452,7 +590,11 @@ namespace DrivingSchool.Simulation.Traffic
                 var last = index.Path(a.Car.Route[a.Car.Route.Count - 1]);
                 var options = last.Next.Select(index.Path).Where(p => !p.IsConnection || p.Connection.maneuver != LaneManeuver.UTurn).OrderBy(p => p.Id, StringComparer.Ordinal).ToList();
                 if (options.Count == 0) { a.Car.ExitAtRouteEnd = true; return; }
-                a.Car.AppendRoute(new[] { options[a.Rng.Next(options.Count)].Id });
+                // Lane changes (T55) are optional connections: take one about a third of the time, else keep the lane.
+                var changes = options.Where(IsLaneChange).ToList();
+                var keep = options.Except(changes).ToList();
+                var pool = changes.Count > 0 && (keep.Count == 0 || a.Rng.NextDouble() < profile.LaneChangeShare) ? changes : keep;
+                a.Car.AppendRoute(new[] { pool[a.Rng.Next(pool.Count)].Id });
             }
         }
 
@@ -462,7 +604,23 @@ namespace DrivingSchool.Simulation.Traffic
             var m = next != null && distance < 40 || next != null && a.Car.CurrentPathId == next.Id ? next.Connection.maneuver : LaneManeuver.Straight;
             a.Left = m == LaneManeuver.Left || m == LaneManeuver.UTurn;
             a.Right = m == LaneManeuver.Right;
+            // A lane change is signalled from 30 m before it until the car is in the new lane (ПДД РФ 8.1–8.2).
+            if (m == LaneManeuver.Straight && next != null && IsLaneChange(next) && (distance < 30 || a.Car.CurrentPathId == next.Id))
+            {
+                double shift = LaneShift(next);
+                a.Left = shift < 0; a.Right = shift > 0;
+            }
         }
+
+        readonly Dictionary<string, double> laneShift = new Dictionary<string, double>();
+
+        double LaneShift(PathInfo p)
+        {
+            if (!laneShift.TryGetValue(p.Id, out var v)) laneShift[p.Id] = v = p.IsConnection ? RoadKitTemplatesV2.LateralShift(p.Connection.centerline) : 0;
+            return v;
+        }
+
+        bool IsLaneChange(PathInfo p) => p.IsConnection && p.Connection.maneuver == LaneManeuver.Straight && Math.Abs(LaneShift(p)) > 1.5;
 
         PathInfo NextConnection(Agent a, out double distance)
         {
@@ -539,8 +697,8 @@ namespace DrivingSchool.Simulation.Traffic
                 list.Add(new ParticipantState
                 {
                     Id = a.Id, Kind = ParticipantKind.Vehicle, PathId = car.CurrentPathId, S = car.CurrentDistanceAlongLane, D = car.LateralOffset,
-                    SpeedMps = car.CurrentSpeedMps, AccelerationMps2 = car.TargetAccelerationMps2, HeadingRad = car.HeadingRad,
-                    LengthM = car.Profile.LengthM, WidthM = car.Profile.WidthM, Position = car.Position, SteeringRad = car.TargetSteeringAngleRad,
+                    SpeedMps = car.CurrentSpeedMps, AccelerationMps2 = car.TargetAccelerationMps2, HeadingRad = car.BodyHeadingRad,
+                    LengthM = car.Profile.LengthM, WidthM = car.Profile.WidthM, Position = car.BodyPosition, SteeringRad = (float)car.WheelSteerRad,
                     LeftIndicator = a.Left || a.Hazard, RightIndicator = a.Right || a.Hazard, Hazard = a.Hazard,
                     BrakeLight = car.TargetAccelerationMps2 < -0.5 || car.CurrentSpeedMps < 0.1,
                     Lod = Lod(a), DriverProfileId = car.Profile.Id, Decision = a.Decision,
@@ -553,6 +711,7 @@ namespace DrivingSchool.Simulation.Traffic
                     SpeedMps = player.SpeedMps, HeadingRad = player.HeadingRad, LengthM = player.LengthM, WidthM = player.WidthM,
                     Position = new Vec3d(player.X, player.Y, player.Z), LeftIndicator = player.LeftIndicator, RightIndicator = player.RightIndicator, Hazard = player.Hazard,
                 });
+            if (pedestrians != null) list.AddRange(pedestrians.Participants());
             return list;
         }
 
@@ -572,7 +731,7 @@ namespace DrivingSchool.Simulation.Traffic
             public LaneFollowerAgent Car;
             public Random Rng;
             public string PermitConnection, PermitClaim;
-            public double WaitingSince = -1, BackgroundClock;
+            public double WaitingSince = -1, BackgroundClock, FinishedAt = -1, HazardSince = -1;
             public bool Hazard, Frozen, Left, Right;
             public string Decision = "free";
             public List<ManeuverNotice> Notices = new List<ManeuverNotice>();

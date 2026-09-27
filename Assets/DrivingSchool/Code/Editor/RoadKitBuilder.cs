@@ -58,58 +58,8 @@ namespace DrivingSchool.Editor
                 foreach (string path in Directory.GetFiles(Art, "*.fbx").OrderBy(p => p))
                 {
                     string assetPath = path.Replace('\\', '/');
-                    string name = Path.GetFileNameWithoutExtension(path);
-                    var importer = (ModelImporter)AssetImporter.GetAtPath(assetPath);
-                    importer.globalScale = 1;
-                    importer.useFileScale = true;
-                    importer.importCameras = false;
-                    importer.importLights = false;
-                    importer.importAnimation = false;
-                    importer.importNormals = ModelImporterNormals.Import;
-                    importer.materialImportMode = ModelImporterMaterialImportMode.ImportStandard;
-                    importer.isReadable = false;
-                    importer.SaveAndReimport();
-                    foreach (var material in AssetDatabase.LoadAllAssetsAtPath(assetPath).OfType<Material>())
-                    {
-                        var target = AssetDatabase.LoadAssetAtPath<Material>(Materials + "/" + material.name + ".mat");
-                        if (target == null) throw new InvalidOperationException("Missing road material: " + material.name);
-                        importer.AddRemap(new AssetImporter.SourceAssetIdentifier(material), target);
-                    }
-                    importer.SaveAndReimport();
-                    var wrapper = new GameObject(name);
-                    var model = (GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(assetPath), wrapper.transform);
-                    model.name = "Geometry";
-                    var axes = model.GetComponentsInChildren<Transform>();
-                    Vector3 forward = axes.First(t => t.name.StartsWith("Axis_Forward", StringComparison.Ordinal)).position - model.transform.position;
-                    Vector3 up = axes.First(t => t.name.StartsWith("Axis_Up", StringComparison.Ordinal)).position - model.transform.position;
-                    if (Mathf.Abs(forward.magnitude - 1) > .001f || Mathf.Abs(up.magnitude - 1) > .001f)
-                        throw new InvalidOperationException(name + ": FBX metre scale incorrect.");
-                    model.transform.rotation = Quaternion.Inverse(Quaternion.LookRotation(forward, up)) * model.transform.rotation;
-                    foreach (var filter in model.GetComponentsInChildren<MeshFilter>())
-                    {
-                        filter.gameObject.isStatic = true;
-                        if (!filter.name.StartsWith("COL_", StringComparison.Ordinal)) continue;
-                        filter.GetComponent<MeshRenderer>().enabled = false;
-                        var collider = filter.gameObject.AddComponent<MeshCollider>();
-                        collider.sharedMesh = filter.sharedMesh;
-                        collider.convex = false; // Environment is static; paint never creates collider ridges.
-                    }
-                    var renderers = wrapper.GetComponentsInChildren<MeshRenderer>().Where(r => r.enabled).ToArray();
-                    Bounds bounds = renderers[0].bounds;
-                    foreach (var r in renderers.Skip(1)) bounds.Encapsulate(r.bounds);
-                    bool aligned = Vector3.Distance(axes.First(t => t.name.StartsWith("Axis_Forward", StringComparison.Ordinal)).position, Vector3.forward) < .001f
-                        && Vector3.Distance(axes.First(t => t.name.StartsWith("Axis_Up", StringComparison.Ordinal)).position, Vector3.up) < .001f;
-                    if (!aligned) throw new InvalidOperationException(name + ": orientation check failed.");
-                    if (name == "RK_Road_Urban_20m" && Vector3.Distance(bounds.size, new Vector3(12.4f, .37f, 20)) > .003f)
-                        throw new InvalidOperationException("Urban module dimensions incorrect: " + bounds.size);
-                    var result = new ImportResult { name = name, boundsMetres = bounds.size,
-                        renderTriangles = renderers.Sum(r => (int)r.GetComponent<MeshFilter>().sharedMesh.GetIndexCount(0) / 3),
-                        renderers = renderers.Length, colliders = wrapper.GetComponentsInChildren<Collider>().Length, axisAndScalePass = aligned };
-                    if (name.StartsWith("RK_Marking_", StringComparison.Ordinal) && result.colliders != 0)
-                        throw new InvalidOperationException("Paint must not have physics colliders.");
-                    PrefabUtility.SaveAsPrefabAsset(wrapper, Prefabs + "/" + name + ".prefab");
+                    var result = ImportModule(assetPath, Prefabs);
                     checks.Add(result);
-                    UnityEngine.Object.DestroyImmediate(wrapper);
                 }
                 if (checks.Count != 16) throw new InvalidOperationException("Expected 16 road modules, found " + checks.Count);
                 CreateDemo();
@@ -137,6 +87,95 @@ namespace DrivingSchool.Editor
                 File.WriteAllText(Report, JsonUtility.ToJson(report, true));
                 throw;
             }
+        }
+
+        /// <summary>Imports one road kit FBX (metre scale, Axis_* check, COL_* colliders, materials from Materials/RoadKit) into a prefab.</summary>
+        static ImportResult ImportModule(string assetPath, string prefabDir)
+        {
+            string name = Path.GetFileNameWithoutExtension(assetPath);
+            var importer = (ModelImporter)AssetImporter.GetAtPath(assetPath);
+            importer.globalScale = 1;
+            importer.useFileScale = true;
+            importer.importCameras = false;
+            importer.importLights = false;
+            importer.importAnimation = false;
+            importer.importNormals = ModelImporterNormals.Import;
+            importer.materialImportMode = ModelImporterMaterialImportMode.ImportStandard;
+            importer.isReadable = false;
+            importer.SaveAndReimport();
+            foreach (var material in AssetDatabase.LoadAllAssetsAtPath(assetPath).OfType<Material>())
+            {
+                var target = AssetDatabase.LoadAssetAtPath<Material>(Materials + "/" + material.name + ".mat");
+                if (target == null) throw new InvalidOperationException("Missing road material: " + material.name);
+                importer.AddRemap(new AssetImporter.SourceAssetIdentifier(material), target);
+            }
+            importer.SaveAndReimport();
+            var wrapper = new GameObject(name);
+            var model = (GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(assetPath), wrapper.transform);
+            model.name = "Geometry";
+            var axes = model.GetComponentsInChildren<Transform>();
+            Vector3 forward = axes.First(t => t.name.StartsWith("Axis_Forward", StringComparison.Ordinal)).position - model.transform.position;
+            Vector3 up = axes.First(t => t.name.StartsWith("Axis_Up", StringComparison.Ordinal)).position - model.transform.position;
+            if (Mathf.Abs(forward.magnitude - 1) > .001f || Mathf.Abs(up.magnitude - 1) > .001f)
+                throw new InvalidOperationException(name + ": FBX metre scale incorrect.");
+            model.transform.rotation = Quaternion.Inverse(Quaternion.LookRotation(forward, up)) * model.transform.rotation;
+            foreach (var filter in model.GetComponentsInChildren<MeshFilter>())
+            {
+                filter.gameObject.isStatic = true;
+                if (!filter.name.StartsWith("COL_", StringComparison.Ordinal)) continue;
+                filter.GetComponent<MeshRenderer>().enabled = false;
+                var collider = filter.gameObject.AddComponent<MeshCollider>();
+                collider.sharedMesh = filter.sharedMesh;
+                collider.convex = false; // Environment is static; paint never creates collider ridges.
+            }
+            var renderers = wrapper.GetComponentsInChildren<MeshRenderer>().Where(r => r.enabled).ToArray();
+            Bounds bounds = renderers[0].bounds;
+            foreach (var r in renderers.Skip(1)) bounds.Encapsulate(r.bounds);
+            bool aligned = Vector3.Distance(axes.First(t => t.name.StartsWith("Axis_Forward", StringComparison.Ordinal)).position, Vector3.forward) < .001f
+                && Vector3.Distance(axes.First(t => t.name.StartsWith("Axis_Up", StringComparison.Ordinal)).position, Vector3.up) < .001f;
+            if (!aligned) throw new InvalidOperationException(name + ": orientation check failed.");
+            if (name == "RK_Road_Urban_20m" && Vector3.Distance(bounds.size, new Vector3(12.4f, .37f, 20)) > .003f)
+                throw new InvalidOperationException("Urban module dimensions incorrect: " + bounds.size);
+            var result = new ImportResult { name = name, boundsMetres = bounds.size,
+                renderTriangles = renderers.Sum(r => (int)r.GetComponent<MeshFilter>().sharedMesh.GetIndexCount(0) / 3),
+                renderers = renderers.Length, colliders = wrapper.GetComponentsInChildren<Collider>().Length, axisAndScalePass = aligned };
+            if (name.StartsWith("RK_Marking_", StringComparison.Ordinal) && result.colliders != 0)
+                throw new InvalidOperationException("Paint must not have physics colliders.");
+            PrefabUtility.SaveAsPrefabAsset(wrapper, prefabDir + "/" + name + ".prefab");
+            UnityEngine.Object.DestroyImmediate(wrapper);
+            return result;
+        }
+
+        const string ArtV2 = "Assets/DrivingSchool/Art/RoadKitV2";
+        public const string PrefabsV2 = "Assets/DrivingSchool/Prefabs/RoadKitV2";
+
+        /// <summary>Road Kit v2 (T55): 2+2 road, 2+2 junctions, roundabout, level crossing. Prefabs only, no demo scene.</summary>
+        [MenuItem("Driving School/Road Kit/Import v2 (multi-lane, roundabout)")]
+        public static int BuildV2()
+        {
+            Directory.CreateDirectory(PrefabsV2);
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+            CreateMaterials();
+            var shader = Shader.Find("Universal Render Pipeline/Lit");
+            foreach (var (name, color, smooth, metal) in new[] { ("RK_Grass", new Color(.30f, .45f, .20f), .05f, 0f), ("RK_Deck", new Color(.46f, .45f, .43f), .15f, 0f), ("RK_Steel", new Color(.42f, .43f, .45f), .55f, .8f) })
+            {
+                string path = Materials + "/" + name + ".mat";
+                var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
+                if (mat == null) { mat = new Material(shader); AssetDatabase.CreateAsset(mat, path); }
+                mat.SetColor("_BaseColor", color); mat.SetFloat("_Smoothness", smooth); mat.SetFloat("_Metallic", metal);
+                EditorUtility.SetDirty(mat);
+            }
+            int n = 0;
+            foreach (string path in Directory.GetFiles(ArtV2, "*.fbx").OrderBy(p => p))
+            {
+                var r = ImportModule(path.Replace('\\', '/'), PrefabsV2);
+                if (r.renderers == 0 || r.colliders == 0) throw new InvalidOperationException(r.name + ": no renderers or colliders");
+                n++;
+            }
+            if (n != 5) throw new InvalidOperationException("Expected 5 road kit v2 modules, found " + n);
+            AssetDatabase.SaveAssets();
+            Debug.Log("ROAD_KIT_V2_UNITY_PASS: " + n + " prefabs");
+            return n;
         }
 
         static bool Contact(Vector3 origin, float expectedY)

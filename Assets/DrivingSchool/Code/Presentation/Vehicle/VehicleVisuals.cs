@@ -31,7 +31,7 @@ namespace DrivingSchool.Presentation
         float[] wiperSign = new float[0]; Vector3[] wiperAxis = new Vector3[0];
         Vector3 columnAxis, needleAxis;
         float smoothedRpm, smoothedSpeed, clutchV, brakeV, throttleV;
-        Transform car;
+        Transform car, transManual, transAuto;
 
         public int WiperCount => wipers.Length;
 
@@ -62,11 +62,16 @@ namespace DrivingSchool.Presentation
             var gl = VehicleRigUtil.Find(model, "GearLever_Pivot"); if (gl != null) gearLever = new VehicleRigUtil.Pose(car, gl);
             var hb = VehicleRigUtil.Find(model, "Handbrake_Pivot"); if (hb != null) handbrakeLever = new VehicleRigUtil.Pose(car, hb);
             SetupWipers();
+            transManual = VehicleRigUtil.Find(model, "Transmission_Manual");
+            transAuto = VehicleRigUtil.Find(model, "Transmission_Automatic");
         }
 
         void SetupWipers()
         {
+            // Only the pivots themselves: vehicle_kit models carry the blade mesh as a child "Wiper_Pivot_L_Mesh",
+            // which would otherwise be swept a second time on top of its parent (T50).
             var list = VehicleRigUtil.FindPrefix(model, "Wiper_Pivot");
+            list.RemoveAll(t => t.parent != null && t.parent.name.StartsWith("Wiper_Pivot", System.StringComparison.Ordinal));
             wipers = new VehicleRigUtil.Pose[list.Count]; wiperSign = new float[list.Count]; wiperAxis = new Vector3[list.Count];
             Vector3 normal = WindshieldNormal();
             for (int i = 0; i < list.Count; i++)
@@ -131,6 +136,10 @@ namespace DrivingSchool.Presentation
         {
             if (adapter == null || adapter.Solver == null) return;
             var s = adapter.Solver; var st = adapter.CurrentState; var cmd = adapter.LastCommand;
+            // The cabin shows the gear lever or the selector of the gearbox in use (F7 switches it; T48).
+            bool automatic = adapter.transmission == TransmissionType.Automatic;
+            if (transManual != null && transManual.gameObject.activeSelf == automatic) transManual.gameObject.SetActive(!automatic);
+            if (transAuto != null && transAuto.gameObject.activeSelf != automatic) transAuto.gameObject.SetActive(automatic);
 
             for (int k = 0; k < 4; k++)
             {

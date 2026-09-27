@@ -24,6 +24,9 @@ namespace DrivingSchool.Presentation.Physics
         [SerializeField] Vector3 centreOfMass = new Vector3(0f, 0.51f, -0.1f);
         [SerializeField] float maxSteeringAngleDeg = 32f;
         public TextAsset vehicleJson;                       // optional overwrite of the spec
+        [Tooltip("Full spec from the vehicle catalogue (Data/Vehicles/vehicles.json), set by the assembler; wins over vehicleJson.")]
+        [SerializeField] bool useCatalogSpec;
+        [SerializeField] VehicleSpec catalogSpec;
         public TransmissionType transmission = TransmissionType.Manual;
         public DriveLayout drive = DriveLayout.RearWheelDrive;
 
@@ -79,10 +82,25 @@ namespace DrivingSchool.Presentation.Physics
             transmission = type; Rebuild();
         }
 
+        /// <summary>
+        /// Takes the whole calibration of one catalogue car (T48): mass, centre of mass, steering lock, gearbox, drive,
+        /// brakes, aero. Wheel positions and radius are still measured from the model when <see cref="measureFromModel"/> is on.
+        /// </summary>
+        public void ApplySpec(VehicleSpec spec)
+        {
+            if (spec == null) throw new ArgumentNullException(nameof(spec));
+            spec.Validate();
+            catalogSpec = spec.Clone(); useCatalogSpec = true;
+            massKg = spec.massKg; wheelbaseM = spec.wheelbaseM; trackM = spec.trackM; wheelRadiusM = spec.wheelRadiusM;
+            centreOfMass = new Vector3(spec.centreOfMassM[0], spec.centreOfMassM[1], spec.centreOfMassM[2]);
+            maxSteeringAngleDeg = spec.maxSteerDeg; transmission = spec.transmission; drive = spec.drive;
+            Solver = null; configured = false;
+        }
+
         public VehicleSpec BuildSpec()
         {
-            var spec = new VehicleSpec();
-            if (vehicleJson != null) JsonUtility.FromJsonOverwrite(vehicleJson.text, spec);
+            var spec = useCatalogSpec && catalogSpec != null ? catalogSpec.Clone() : new VehicleSpec();
+            if (!useCatalogSpec && vehicleJson != null) JsonUtility.FromJsonOverwrite(vehicleJson.text, spec);
             spec.massKg = massKg; spec.wheelbaseM = wheelbaseM; spec.trackM = trackM; spec.wheelRadiusM = wheelRadiusM;
             spec.centreOfMassM = new[] { centreOfMass.x, centreOfMass.y, centreOfMass.z };
             spec.maxSteerDeg = maxSteeringAngleDeg; spec.transmission = transmission; spec.drive = drive;

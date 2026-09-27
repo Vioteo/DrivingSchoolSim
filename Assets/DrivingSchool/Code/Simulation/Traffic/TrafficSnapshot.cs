@@ -24,6 +24,11 @@ namespace DrivingSchool.Simulation.Traffic
         public double HazardNoticeRangeM = 120;
         public double ChunkSizeM = 256;
         public DriverProfile[] Drivers = { DriverProfile.Normal() };
+        public int MaxPedestrians = 0;             // pedestrians on the sidewalks (T51); 0 = none
+        public double DownedPedestrianSeconds = 90; // a knocked-down pedestrian is removed after this (T53)
+        public double HazardHoldSeconds = 5;      // after a contact the car stands with hazard lights, then drives on (T52)
+        public double LaneChangeShare = 0.35;     // chance to take an optional lane change (T55)
+        public double FinishedLingerSeconds = double.PositiveInfinity; // a car that left the graph vanishes after this even if the player sees it
     }
 
     /// <summary>What the host tells the director about the player's car each tick.</summary>

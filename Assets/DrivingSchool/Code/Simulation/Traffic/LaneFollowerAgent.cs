@@ -27,6 +27,14 @@ namespace DrivingSchool.Simulation.Traffic
         public double WidthM = 1.8;
 
         public static DriverProfile Normal() => new DriverProfile();
+
+        /// <summary>The same driver in a car of another size (the view picks the model, T51).</summary>
+        public DriverProfile WithSize(double lengthM, double widthM, double wheelbaseM)
+        {
+            var c = (DriverProfile)MemberwiseClone();
+            c.LengthM = lengthM; c.WidthM = widthM; c.WheelbaseM = wheelbaseM;
+            return c;
+        }
     }
 
     /// <summary>
@@ -41,6 +49,9 @@ namespace DrivingSchool.Simulation.Traffic
         readonly List<string> route;
         int routeIndex;
         double s, d, v, a, targetD;
+        // Body pose (T52): the front axle runs on the route, the rear axle trails it at the wheelbase (tractrix), so the body
+        // yaws like a car, cuts the inside of a turn and the front wheels steer by the angle between the body and the path.
+        double rearX, rearZ, frontX, frontY, frontZ, frontTangent; bool bodyReady;
 
         public readonly string Id;
         public DriverProfile Profile;
@@ -75,6 +86,52 @@ namespace DrivingSchool.Simulation.Traffic
 
         public Vec3d Position => CurrentPath.Line.OffsetPoint(s, d);
         public double HeadingRad => CurrentPath.Line.HeadingAt(s);
+
+        /// <summary>Centre of the body between the axles (T52). Differs from <see cref="Position"/> by the off-tracking in turns.</summary>
+        public Vec3d BodyPosition { get { EnsureBody(); return new Vec3d((frontX + rearX) / 2, frontY, (frontZ + rearZ) / 2); } }
+        /// <summary>Yaw of the body: from the rear axle to the front axle.</summary>
+        public double BodyHeadingRad { get { EnsureBody(); return Math.Atan2(frontX - rearX, frontZ - rearZ); } }
+        /// <summary>Road wheel angle of the front wheels, positive to the right (Unity yaw), limited to ±35°.</summary>
+        public double WheelSteerRad { get { EnsureBody(); return Math.Max(-0.61, Math.Min(0.61, Wrap(frontTangent - BodyHeadingRad))); } }
+
+        /// <summary>Point on the route <paramref name="offset"/> metres from the centre (negative: behind), at the current lateral offset.</summary>
+        public Vec3d PointOnRoute(double offset, out double tangentHeading)
+        {
+            int i = routeIndex; double at = s + offset;
+            while (at < 0 && i > 0) { i--; at += index.Path(route[i]).Length; }
+            while (at > index.Path(route[i]).Length && i + 1 < route.Count) { at -= index.Path(route[i]).Length; i++; }
+            var line = index.Path(route[i]).Line;
+            double clamped = Math.Max(0, Math.Min(line.Length, at));
+            var p = line.OffsetPoint(clamped, d);
+            tangentHeading = line.HeadingAt(clamped);
+            double extra = at - clamped;   // before the first or past the last path: continue straight
+            return Math.Abs(extra) < 1e-9 ? p : new Vec3d(p.x + Math.Sin(tangentHeading) * extra, p.y, p.z + Math.Cos(tangentHeading) * extra);
+        }
+
+        void EnsureBody()
+        {
+            if (!bodyReady) ResetBody();
+        }
+
+        /// <summary>Puts both axles on the route (spawn, lane switch, teleport).</summary>
+        public void ResetBody()
+        {
+            double half = Profile.WheelbaseM / 2;
+            var f = PointOnRoute(half, out frontTangent); var r = PointOnRoute(-half, out _);
+            frontX = f.x; frontY = f.y; frontZ = f.z; rearX = r.x; rearZ = r.z; bodyReady = true;
+        }
+
+        void UpdateBody()
+        {
+            if (!bodyReady) { ResetBody(); return; }
+            double wb = Profile.WheelbaseM;
+            var f = PointOnRoute(wb / 2, out frontTangent);
+            frontX = f.x; frontY = f.y; frontZ = f.z;
+            double dx = frontX - rearX, dz = frontZ - rearZ, len = Math.Sqrt(dx * dx + dz * dz);
+            if (len > 2.5 * wb || len < 1e-6) { ResetBody(); return; }
+            // The rear axle is dragged along its own heading towards the front one: it keeps the wheelbase, never slides sideways.
+            rearX = frontX - dx / len * wb; rearZ = frontZ - dz / len * wb;
+        }
 
         /// <summary>Distance left on the route from the current point.</summary>
         public double RemainingRouteM
@@ -124,6 +181,7 @@ namespace DrivingSchool.Simulation.Traffic
             Advance(ds);
             double curvature = ds > 1e-6 ? Wrap(HeadingRad - headingBefore) / ds : 0;
             TargetSteeringAngleRad = (float)Math.Atan(Profile.WheelbaseM * curvature);
+            UpdateBody();
         }
 
         public double Acceleration(double leadGapM, double leadSpeedMps, double stopGapM)
@@ -244,6 +302,7 @@ namespace DrivingSchool.Simulation.Traffic
             route.Add(target.Id);
             if (newRoute != null) route.AddRange(newRoute);
             s = ns; d = nd; targetD = 0;
+            // The body keeps its pose: the rear axle trails towards the new lane on the next update.
         }
 
         static double Wrap(double x)
