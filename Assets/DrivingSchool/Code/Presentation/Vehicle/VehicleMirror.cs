@@ -145,6 +145,20 @@ namespace DrivingSchool.Presentation
             cam.projectionMatrix = Matrix4x4.Frustum(l, rr, b, t, near, farClip);
         }
 
+        /// <summary>Новое разрешение отражения (настройка качества зеркал). До инициализации — просто запоминается.</summary>
+        public void SetResolution(Vector2Int size)
+        {
+            if (size.x < 16 || size.y < 16 || size == resolution && rt != null) { resolution = size; return; }
+            resolution = size;
+            if (rt == null || cam == null) return;
+            var old = rt;
+            rt = new RenderTexture(resolution.x, resolution.y, 24) { name = old.name, antiAliasing = 2 };
+            rt.Create();
+            cam.targetTexture = rt;
+            if (mat != null) { mat.mainTexture = rt; if (mat.HasProperty("_BaseMap")) mat.SetTexture("_BaseMap", rt); }
+            old.Release(); Destroy(old);
+        }
+
         void OnDestroy()
         {
             if (rt != null) { rt.Release(); Destroy(rt); }

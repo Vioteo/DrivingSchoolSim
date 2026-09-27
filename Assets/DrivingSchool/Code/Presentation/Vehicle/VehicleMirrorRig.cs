@@ -59,6 +59,19 @@ namespace DrivingSchool.Presentation
                         t.gameObject.layer = mirrorLayer;
         }
 
+        /// <summary>Качество зеркал из настроек (graphics.mirrorQuality). До Start меняет параметры, после — пересоздаёт текстуры.</summary>
+        public void ApplyQuality(Vector2Int sideResolution, bool timeSlicing)
+        {
+            textureResolution = sideResolution;
+            enableTimeSlicing = timeSlicing;
+            for (int i = 0; i < 3; i++)
+            {
+                var m = mirrors[i]; if (m == null) continue;
+                m.renderEveryNthFrame = timeSlicing && i != 1 ? 2 : 1;
+                m.SetResolution(i == 1 ? new Vector2Int(sideResolution.x * 3 / 2, sideResolution.y) : sideResolution);
+            }
+        }
+
         public void SetActiveMirrors(bool left, bool centre, bool right)
         {
             bool[] on = { left, centre, right };
