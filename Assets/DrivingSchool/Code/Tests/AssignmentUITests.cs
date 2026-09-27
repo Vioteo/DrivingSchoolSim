@@ -11,11 +11,17 @@ namespace DrivingSchool.Tests
     public sealed class AssignmentUITests
     {
         GameObject root, events;
+        sealed class TestEvents : EventSystem
+        {
+            public void Register() { base.OnEnable(); }
+            public void Unregister() { base.OnDisable(); }
+        }
         LessonCatalogController catalog;
 
         [SetUp] public void Setup()
         {
-            events = new GameObject("AssignmentTestEvents", typeof(EventSystem));
+            events = new GameObject("AssignmentTestEvents", typeof(TestEvents));
+            events.GetComponent<TestEvents>().Register(); // EditMode не вызывает OnEnable.
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/DrivingSchool/Prefabs/UI/LessonCatalog.prefab");
             Assert.That(prefab, Is.Not.Null);
             root = Object.Instantiate(prefab);
@@ -27,6 +33,7 @@ namespace DrivingSchool.Tests
         [TearDown] public void Cleanup()
         {
             Object.DestroyImmediate(root);
+            if (events != null) events.GetComponent<TestEvents>().Unregister();
             Object.DestroyImmediate(events);
         }
 
