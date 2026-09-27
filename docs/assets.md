@@ -11,7 +11,7 @@
 - **Пешеходы:** `Art/Pedestrians`, `Prefabs/Pedestrians`, `Materials/Pedestrians`; `build_pedestrians.py`, `PedestrianAssetBuilder.cs`. Источники и лицензии MakeHuman сохранять.
 - **Железная дорога и препятствия:** `ArtSource/DS_RailwayKit.blend`, `Art/TrainingKit/TK_Railway*`, `Art/SpeedBumps`, `Art/Props`; генераторы `build_railway_assets.py`, `build_speed_bumps.py` и `build_traffic_cone.py`. Неиспользуемый резиновый порог 3,5 м — вариант набора, не дубль 7 м.
 - **UI:** `Prefabs/UI`, `Art/Fonts`, `Data/UI`, `Code/Presentation/UI`, `UIBuilder*.cs`. LessonCatalog становится рабочим экраном заданий в T53. ConditionsSetup/G27Calibration/TheoryExam — старые макеты, не готовые функции.
-- **Схемы и референсы:** пока в корне (`schema.jpg`, `quad_*.png`); запланирован перенос в `docs/references`; GLB и рендеры — `artifacts/visual-review`; результаты тестов — `artifacts/reports`.
+- **Схемы и референсы:** `docs/references`; GLB и рендеры — `artifacts/visual-review`; результаты тестов — `artifacts/reports`.
 
 ## Аудит и очистка
 
