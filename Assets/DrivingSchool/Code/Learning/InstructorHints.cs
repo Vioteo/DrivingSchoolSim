@@ -17,6 +17,8 @@ namespace DrivingSchool.Learning
         /// <summary>Сколько секунд ещё показывать; &lt;= 0 — пока условие актуально (снимается <see cref="InstructorHintQueue.Clear"/>).</summary>
         public double RemainingSeconds;
         public bool Timed;
+        /// <summary>Показывается при любом режиме подсказок: шаги пошагового урока — это и есть урок (docs/lessons.md §3).</summary>
+        public bool Forced;
         internal long Order;
     }
 
@@ -46,14 +48,17 @@ namespace DrivingSchool.Learning
             }
         }
 
-        /// <summary>Показать или обновить подсказку. <paramref name="seconds"/> &lt;= 0 — пока не снимут.</summary>
-        public void Post(string key, HintKind kind, string text, double seconds = 0)
+        /// <summary>
+        /// Показать или обновить подсказку. <paramref name="seconds"/> &lt;= 0 — пока не снимут.
+        /// <paramref name="force"/> — не фильтровать по режиму (шаги урока).
+        /// </summary>
+        public void Post(string key, HintKind kind, string text, double seconds = 0, bool force = false)
         {
-            if (string.IsNullOrEmpty(key) || !Accepts(kind)) { Clear(key); return; }
+            if (string.IsNullOrEmpty(key) || (!force && !Accepts(kind))) { Clear(key); return; }
             var h = active.FirstOrDefault(x => x.Key == key);
             if (h == null) { h = new InstructorHint { Key = key, Order = ++order }; active.Add(h); }
             else if (h.Timed && seconds > 0) { h.Text = text; h.Kind = kind; Pick(); return; }   // повтор той же временной подсказки не продлевает её
-            h.Kind = kind; h.Text = text; h.Timed = seconds > 0; h.RemainingSeconds = seconds;
+            h.Kind = kind; h.Text = text; h.Timed = seconds > 0; h.RemainingSeconds = seconds; h.Forced = force;
             Pick();
         }
 
@@ -75,7 +80,7 @@ namespace DrivingSchool.Learning
                 if (Current.RemainingSeconds <= 0) active.Remove(Current);
             }
             // Режим могли поменять в настройках: убираем то, что теперь не показывается.
-            active.RemoveAll(x => !Accepts(x.Kind));
+            active.RemoveAll(x => !x.Forced && !Accepts(x.Kind));
             Pick();
         }
 
