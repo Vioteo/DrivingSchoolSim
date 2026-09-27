@@ -88,6 +88,7 @@ namespace DrivingSchool.Presentation.UI
         {
             var es = EventSystem.current;
             if (es == null) return;
+            if (SettingsScreenController.ClosedThisFrame) return;   // этот Esc закрыл настройки
             if (CancelPressed(es)) { HandleCancel(); return; }
 
             var kb = Keyboard.current;

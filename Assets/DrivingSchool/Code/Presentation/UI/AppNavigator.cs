@@ -12,12 +12,13 @@ namespace DrivingSchool.Presentation.UI
     {
         public const string MainMenuScene = "MainMenu";
 
-        static GameObject pausePrefab;
+        static GameObject pausePrefab, settingsPrefab;
         static bool hooked;
 
-        public static void Configure(GameObject pauseMenuPrefab)
+        public static void Configure(GameObject pauseMenuPrefab, GameObject settingsScreenPrefab = null)
         {
             pausePrefab = pauseMenuPrefab;
+            settingsPrefab = settingsScreenPrefab;
             if (hooked) return;
             SceneManager.sceneLoaded += OnSceneLoaded;
             hooked = true;
@@ -49,6 +50,13 @@ namespace DrivingSchool.Presentation.UI
             var pause = go.GetComponent<PauseMenuController>();
             pause.OnRestartRequested.AddListener(RestartDrive);
             pause.OnExitToMenuRequested.AddListener(ToMainMenu);
+            if (settingsPrefab != null)
+            {
+                var sgo = Object.Instantiate(settingsPrefab);
+                sgo.name = settingsPrefab.name;
+                SceneManager.MoveGameObjectToScene(sgo, scene);
+                pause.settings = sgo.GetComponent<SettingsScreenController>();
+            }
         }
     }
 }

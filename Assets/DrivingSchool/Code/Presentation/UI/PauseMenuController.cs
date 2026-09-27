@@ -20,11 +20,16 @@ namespace DrivingSchool.Presentation.UI
         public Button resumeButton;
         public Button restartButton;
         public Button exitToMenuButton;
+        public Button settingsButton;
         public UITheme defaultTheme;
 
         [Header("Намерения")]
         public UnityEvent OnRestartRequested = new UnityEvent();
         public UnityEvent OnExitToMenuRequested = new UnityEvent();
+        public UnityEvent OnSettingsRequested = new UnityEvent();
+
+        /// <summary>Экран настроек, который открывает пункт «Настройки» (добавляет AppNavigator).</summary>
+        public SettingsScreenController settings;
 
         readonly List<Selectable> chain = new List<Selectable>();
         readonly List<Behaviour> frozen = new List<Behaviour>();
@@ -45,9 +50,10 @@ namespace DrivingSchool.Presentation.UI
             if (resumeButton != null) resumeButton.onClick.AddListener(Resume);
             if (restartButton != null) restartButton.onClick.AddListener(() => LeaveWith(OnRestartRequested, "restart"));
             if (exitToMenuButton != null) exitToMenuButton.onClick.AddListener(() => LeaveWith(OnExitToMenuRequested, "exit-to-menu"));
+            if (settingsButton != null) settingsButton.onClick.AddListener(OpenSettings);
 
             chain.Clear();
-            foreach (var b in new[] { resumeButton, restartButton, exitToMenuButton })
+            foreach (var b in new[] { resumeButton, restartButton, settingsButton, exitToMenuButton })
                 if (b != null) chain.Add(b);
             for (int i = 0; i < chain.Count; i++)
                 chain[i].navigation = new Navigation
@@ -61,8 +67,18 @@ namespace DrivingSchool.Presentation.UI
 
         void Start() { if (Application.isPlaying) EnsureEventSystem(); }
 
+        /// <summary>Настройки поверх паузы: время стоит, пункты «только до поездки» заблокированы.</summary>
+        public void OpenSettings()
+        {
+            OnSettingsRequested.Invoke();
+            if (settings == null || !IsPaused) return;
+            if (panel != null) panel.SetActive(false);
+            settings.Open(true, () => { if (panel != null && IsPaused) { panel.SetActive(true); if (chain.Count > 0) Select(chain[0]); } });
+        }
+
         void Update()
         {
+            if (SettingsScreenController.IsAnyOpen || SettingsScreenController.ClosedThisFrame) return;   // Esc обрабатывают настройки
             if (TogglePressed()) { if (IsPaused) Resume(); else Pause(); return; }
             if (!IsPaused) return;
 

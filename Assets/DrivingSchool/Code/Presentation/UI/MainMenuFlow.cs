@@ -6,12 +6,14 @@ namespace DrivingSchool.Presentation.UI
 {
     /// <summary>
     /// Связка главного меню со сценами (T46). Живёт в сцене MainMenu, её собирает UIBuilder (Driving School/Build Main Menu scene).
-    /// Пока есть только тестовый полигон: «Продолжить занятие» и «Занятия» запускают его; «Теория ПДД» и «Настройки» — «в разработке».
+    /// Пока есть только тестовый полигон: «Продолжить занятие» и «Занятия» запускают его; «Теория ПДД» — «в разработке»; «Настройки» открывают экран настроек (T43).
     /// </summary>
     public sealed class MainMenuFlow : MonoBehaviour
     {
         public MainMenuController menu;
         public GameObject pauseMenuPrefab;
+        public GameObject settingsPrefab;
+        [Tooltip("Экран настроек в сцене меню")] public SettingsScreenController settings;
         [Tooltip("Имя сцены из Build Settings")] public string driveScene = "VehicleTestRange";
         public GameObject loadingOverlay;
         public GameObject noticePanel;
@@ -25,7 +27,7 @@ namespace DrivingSchool.Presentation.UI
         {
             Time.timeScale = 1f;
             AudioListener.pause = false;
-            AppNavigator.Configure(pauseMenuPrefab);
+            AppNavigator.Configure(pauseMenuPrefab, settingsPrefab);
             if (loadingOverlay != null) loadingOverlay.SetActive(false);
             if (noticePanel != null) noticePanel.SetActive(false);
             if (menu == null) return;
@@ -33,7 +35,7 @@ namespace DrivingSchool.Presentation.UI
             menu.OnStartLessonRequested.AddListener(StartDrive);
             menu.OnSelectLessonRequested.AddListener(StartDrive);
             menu.OnTheoryRequested.AddListener(() => ShowNotice("Теория ПДД — в разработке. Сейчас доступен тестовый полигон."));
-            menu.OnSettingsRequested.AddListener(() => ShowNotice("Настройки — в разработке. Сейчас доступен тестовый полигон."));
+            menu.OnSettingsRequested.AddListener(OpenSettings);
             menu.OnExitConfirmed.AddListener(AppNavigator.Quit);
         }
 
@@ -55,6 +57,13 @@ namespace DrivingSchool.Presentation.UI
         {
             yield return null; // дать кадр на отрисовку «Загрузка…»
             AppNavigator.StartDrive(driveScene);
+        }
+
+        public void OpenSettings()
+        {
+            if (settings == null) { ShowNotice("Экран настроек не собран — Driving School/Build UI Prefabs"); return; }
+            menu.gameObject.SetActive(false);   // меню не слушает клавиши, пока открыты настройки
+            settings.Open(false, () => menu.gameObject.SetActive(true));
         }
 
         void ShowNotice(string text)

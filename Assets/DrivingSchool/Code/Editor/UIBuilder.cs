@@ -8,7 +8,7 @@ using DrivingSchool.Presentation.UI;
 
 namespace DrivingSchool.Editor
 {
-    public static class UIBuilder
+    public static partial class UIBuilder
     {
         private static Color BgColor = new Color(0.08f, 0.10f, 0.12f, 1f);
         private static Color PanelColor = new Color(0.12f, 0.15f, 0.18f, 0.95f);
@@ -47,6 +47,7 @@ namespace DrivingSchool.Editor
             BuildG27Calibration();
             BuildPauseMenu();
             BuildTheoryExam();
+            BuildSettings();
             BuildMenuScene();
             
             Debug.Log("UI_PREFABS_BUILT");
@@ -69,6 +70,7 @@ namespace DrivingSchool.Editor
             scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
             scaler.matchWidthOrHeight = 0.5f;
             go.AddComponent<GraphicRaycaster>();
+            go.AddComponent<UIScaleFollower>();   // gameplay.uiScale (T43)
             return go;
         }
 
@@ -665,21 +667,22 @@ namespace DrivingSchool.Editor
             var overlay = CreateFill("Overlay", canvas.transform);
             var shade = AddImage(overlay.gameObject, new Color(0, 0, 0, 0.72f));
             shade.raycastTarget = true;
-            var panel = CreateFixed("Panel", overlay, new Vector2(0.5f, 0.5f), new Vector2(640, 420), Vector2.zero);
+            var panel = CreateFixed("Panel", overlay, new Vector2(0.5f, 0.5f), new Vector2(640, 500), Vector2.zero);
             AddThemedImage(panel.gameObject, ThemeRole.BgPanel, theme);
             var top = CreateFixed("AccentLine", panel, new Vector2(0.5f, 1), new Vector2(640, 6), Vector2.zero, new Vector2(0.5f, 1));
             AddThemedImage(top.gameObject, ThemeRole.Accent, theme);
             var title = CreateFixed("Title", panel, new Vector2(0, 1), new Vector2(580, 60), new Vector2(40, -36), new Vector2(0, 1));
             AddThemedText(title.gameObject, "Пауза", 44, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Bold);
 
-            var items = CreateFixed("Items", panel, new Vector2(0, 1), new Vector2(560, 3 * 80), new Vector2(40, -120), new Vector2(0, 1));
-            string[] labels = { "Продолжить", "Начать заново", "Выйти в главное меню" };
+            var items = CreateFixed("Items", panel, new Vector2(0, 1), new Vector2(560, 4 * 80), new Vector2(40, -120), new Vector2(0, 1));
+            string[] labels = { "Продолжить", "Начать заново", "Настройки", "Выйти в главное меню" };
             var buttons = new Button[labels.Length];
             for (int i = 0; i < labels.Length; i++)
                 buttons[i] = CreateMenuItem($"Item{i}_{labels[i]}", items, new Vector2(0, -i * 80), new Vector2(560, 72), labels[i], 30, theme, null);
             pause.resumeButton = buttons[0];
             pause.restartButton = buttons[1];
-            pause.exitToMenuButton = buttons[2];
+            pause.settingsButton = buttons[2];
+            pause.exitToMenuButton = buttons[3];
 
             var hint = CreateFixed("Hint", panel, new Vector2(0, 0), new Vector2(580, 32), new Vector2(40, 20), new Vector2(0, 0));
             AddThemedText(hint.gameObject, "↑↓ — выбор     Enter — выбрать     Esc — продолжить", 20, ThemeRole.Muted, theme, TextAlignmentOptions.Left);
@@ -803,7 +806,12 @@ namespace DrivingSchool.Editor
             var loadingText = CreateFixed("Text", loading, new Vector2(0.5f, 0.5f), new Vector2(900, 80), Vector2.zero);
             AddThemedText(loadingText.gameObject, "Загрузка тестового полигона…", 40, ThemeRole.Text, theme, TextAlignmentOptions.Center, FontWeight.Medium);
 
+            var settingsPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SettingsPrefabPath);
+            var settingsGo = settingsPrefab != null ? (GameObject)PrefabUtility.InstantiatePrefab(settingsPrefab, scene) : null;
+
             var flow = new GameObject("AppFlow").AddComponent<MainMenuFlow>();
+            flow.settingsPrefab = settingsPrefab;
+            flow.settings = settingsGo != null ? settingsGo.GetComponent<SettingsScreenController>() : null;
             flow.menu = menuGo.GetComponent<MainMenuController>();
             flow.pauseMenuPrefab = pausePrefab;
             flow.driveScene = Path.GetFileNameWithoutExtension(DriveScenePath);
