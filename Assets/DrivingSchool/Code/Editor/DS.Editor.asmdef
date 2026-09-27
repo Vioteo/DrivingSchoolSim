@@ -15,7 +15,8 @@
     "Unity.XR.OpenXR",
     "Unity.TextMeshPro",
     "DS.Presentation.UI",
-    "UnityEngine.UI"
+    "UnityEngine.UI",
+    "DS.Settings"
   ],
   "includePlatforms": [
     "Editor"

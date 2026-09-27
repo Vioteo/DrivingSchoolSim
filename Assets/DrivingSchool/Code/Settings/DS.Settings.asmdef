@@ -1,0 +1,6 @@
+{
+  "name": "DS.Settings",
+  "rootNamespace": "DrivingSchool.Settings",
+  "references": [],
+  "noEngineReferences": true
+}

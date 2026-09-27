@@ -12,7 +12,8 @@
     "DS.Presentation.UI",
     "DS.Editor",
     "Unity.TextMeshPro",
-    "UnityEngine.UI"
+    "UnityEngine.UI",
+    "DS.Settings"
   ],
   "optionalUnityReferences": [
     "TestAssemblies"

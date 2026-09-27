@@ -4,6 +4,9 @@
   "references": [
     "Unity.InputSystem",
     "Unity.TextMeshPro",
-    "UnityEngine.UI"
+    "UnityEngine.UI",
+    "DS.Settings",
+    "Unity.RenderPipelines.Universal.Runtime",
+    "Unity.RenderPipelines.Core.Runtime"
   ]
 }
