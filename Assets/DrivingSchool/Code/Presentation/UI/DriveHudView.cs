@@ -21,131 +21,181 @@ namespace DrivingSchool.Presentation.UI
 
     /// <summary>
     /// HUD поездки (docs/ui-drive.md §1–§3): подсказка инструктора сверху, замечания и карточки нарушений справа,
-    /// приборы снизу (скорость, схема КПП, обороты, контрольные лампы), мини-карта слева внизу.
-    /// Навигатора нет: маршрутов пока нет (roadgraph v2), и стрелку без данных не рисуем.
+    /// круглый прибор справа внизу (скорость по дуге, обороты с красной зоной, передача), полоса контрольных ламп
+    /// снизу по центру, круглая мини-карта по ходу машины слева внизу. Навигатора нет: маршрутов пока нет.
+    /// Появление подсказок и карточек — плавное (в реальном времени, пауза не мешает).
     /// </summary>
     public sealed class DriveHudView : MonoBehaviour
     {
-        [Header("Подсказка")] public GameObject hintPanel; public Image hintBar; public TMP_Text hintText, hintWaiting;
-        [Header("Замечания")] public GameObject remarksPanel; public TMP_Text remarksCount, remarksNote;
+        [Header("Подсказка")] public CanvasGroup hintGroup; public RectTransform hintPanel; public Image hintAccent, hintAvatarRing;
+        public TMP_Text hintTitle, hintText, hintWaiting;
+        [Header("Замечания")] public GameObject remarksPanel; public Image remarksIcon; public TMP_Text remarksCount, remarksNote, remarksLabel;
         [Header("Карточки")] public RectTransform cardsRoot; public GameObject cardTemplate;
-        [Header("Приборы")] public GameObject instruments, telltalesRow, rpmRow; public TMP_Text speedText, speedUnit;
-        public Image rpmFill; public Image indicatorLeft, indicatorRight;
-        public Image[] telltaleBgs = new Image[5]; public TMP_Text[] telltaleTexts = new TMP_Text[5];   // ближний, дальний, ручник, ремень, двигатель
-        [Header("КПП")] public GameObject manualBox, autoBox; public TMP_Text[] gearLabels = new TMP_Text[8];   // 1..6, R, N-точка
-        public Image neutralDot; public TMP_Text[] selectorLabels = new TMP_Text[4];
-        [Header("Мини-карта")] public GameObject minimapPanel; public RawImage minimapImage; public RectTransform minimapArrow;
+        [Header("Прибор")] public GameObject instruments, rpmGroup; public Image speedArc, rpmArc, rpmRedZone, dialTicks;
+        public TMP_Text speedText, speedUnit, gearText, selectorText; public TMP_Text[] tickLabels = new TMP_Text[0];
+        [Header("Лампы")] public GameObject telltalesRow;
+        public Image lampTurnLeft, lampTurnRight, lampLowBeam, lampHighBeam, lampHandbrake, lampSeatbelt, lampBattery;
+        [Header("Мини-карта")] public GameObject minimapPanel; public RawImage minimapImage; public RectTransform minimapNorth;
         public UITheme defaultTheme;
 
         public const float CardSeconds = 7f;
+        public const float SpeedScaleKph = 200f, ArcDegrees = 240f;
         const int MaxCards = 2;
+        const float FadeIn = 0.25f, FadeOut = 0.4f;
 
-        sealed class Card { public GameObject go; public float until; public bool severe; public Image bar; public Image bg; }
+        sealed class Card { public GameObject go; public CanvasGroup group; public RectTransform body; public float born, until; public bool severe; public Image bar, icon; }
         readonly List<Card> cards = new List<Card>();
+        string shownHint; float hintBorn = -10f; float hintBaseY = float.NaN;
 
         UITheme Theme => UIThemeState.Current != null ? UIThemeState.Current : defaultTheme;
 
         void Awake() { if (cardTemplate != null) cardTemplate.SetActive(false); }
 
-        /// <summary>Карточка нарушения: живёт 7 с, на экране не больше двух (старшая уходит).</summary>
+        /// <summary>Карточка нарушения: выезжает справа, живёт 7 с, на экране не больше двух (старшая уходит).</summary>
         public void ShowCard(string title, string reference, string advice, bool severe)
         {
             if (cardTemplate == null) return;
             while (cards.Count >= MaxCards) { Kill(cards[0].go); cards.RemoveAt(0); }
             var go = Instantiate(cardTemplate, cardsRoot);
             go.SetActive(true);
-            var texts = go.GetComponentsInChildren<TMP_Text>(true);
-            texts[0].text = title; texts[1].text = reference; texts[2].text = advice;
-            var images = go.GetComponentsInChildren<Image>(true);
-            cards.Add(new Card { go = go, until = Time.unscaledTime + CardSeconds, severe = severe, bg = images[0], bar = images[1] });
+            var v = go.GetComponent<DriveHudCard>();
+            v.title.text = title; v.reference.text = reference; v.advice.text = advice;
+            float now = Time.unscaledTime;
+            cards.Add(new Card { go = go, group = v.group, body = v.body, born = now, until = now + CardSeconds, severe = severe, bar = v.bar, icon = v.icon });
         }
 
         public int CardCount => cards.Count;
-
         static void Kill(GameObject go) { if (Application.isPlaying) Destroy(go); else DestroyImmediate(go); }
 
         public void Render(HudModel m)
         {
             var t = Theme; if (t == null || m == null) return;
-            for (int i = cards.Count - 1; i >= 0; i--)
-                if (Time.unscaledTime > cards[i].until) { Kill(cards[i].go); cards.RemoveAt(i); }
-            foreach (var c in cards) { c.bar.color = c.severe ? t.red : t.accent; c.bg.color = t.bgPanel; }
+            float now = Time.unscaledTime;
+            RenderCards(t, now);
+            RenderHint(m, t, now);
 
-            // Подсказка: показывается во всех режимах HUD (её отключают в настройках инструктора).
-            bool hint = !string.IsNullOrEmpty(m.hintText);
-            hintPanel.SetActive(hint);
-            if (hint)
-            {
-                hintText.text = m.hintText;
-                hintBar.color = m.hintKind <= 1 ? t.red : m.hintKind == 2 ? t.accent : t.info;
-                hintWaiting.text = m.hintWaiting > 0 ? $"ещё {m.hintWaiting} в очереди" : "";
-            }
-
-            // Замечания — всегда: это обратная связь обучения, а не украшение (§1).
             remarksCount.text = m.remarks.ToString();
-            remarksCount.color = m.severe > 0 ? t.red : m.remarks > 0 ? t.accent : t.text;
+            if (remarksLabel != null) remarksLabel.text = RemarksWord(m.remarks);
+            Color remarkColor = m.severe > 0 ? t.red : m.remarks > 0 ? t.accent : t.text2;
+            remarksCount.color = remarkColor; remarksIcon.color = remarkColor;
 
-            // Приборы: полный — всё; минимальный — скорость и КПП; выкл. — нет; из салона — панель машины.
+            // Прибор: полный — всё; минимальный — скорость и передача; выкл. — нет; из салона — панель машины.
             bool showInstruments = m.hudMode < 2 && !m.cockpit;
             instruments.SetActive(showInstruments);
+            telltalesRow.SetActive(showInstruments && m.hudMode == 0);
             if (showInstruments)
             {
                 bool full = m.hudMode == 0;
-                telltalesRow.SetActive(full); rpmRow.SetActive(full);
-                speedText.text = Mathf.RoundToInt(Mathf.Abs(m.speedKph)).ToString();
+                rpmGroup.SetActive(full);
+                float kph = Mathf.Abs(m.speedKph);
+                speedText.text = Mathf.RoundToInt(kph).ToString();
                 speedText.color = m.overLimit ? t.red : t.text;
-                if (full) RenderTelltales(m, t);
-                RenderGearbox(m, t);
+                speedArc.fillAmount = Mathf.Clamp01(kph / SpeedScaleKph) * ArcDegrees / 360f;
+                speedArc.color = m.overLimit ? t.red : t.accent;
+                dialTicks.color = t.text2;
+                foreach (var l in tickLabels) l.color = t.muted;
+                if (full) RenderRpm(m, t);
+                RenderGear(m, t);
+                if (full) RenderLamps(m, t);
             }
             bool map = m.hudMode == 0 && m.minimapAvailable && m.minimap != null;
             minimapPanel.SetActive(map);
             if (map)
             {
+                // Карта по ходу машины: картинку «север вверху» поворачиваем на курс, стрелка машины всегда вверх.
                 minimapImage.texture = m.minimap;
-                minimapArrow.localRotation = Quaternion.Euler(0, 0, -m.carYawDeg);   // север вверху, стрелка = курс
+                minimapImage.rectTransform.localRotation = Quaternion.Euler(0, 0, m.carYawDeg);
+                minimapNorth.localRotation = Quaternion.Euler(0, 0, m.carYawDeg);
             }
         }
 
-        void RenderTelltales(HudModel m, UITheme t)
+        /// <summary>1 замечание, 2–4 замечания, 5–20 замечаний, 21 замечание…</summary>
+        public static string RemarksWord(int n)
         {
-            float rpm01 = m.redlineRpm > 0 ? Mathf.Clamp01(m.rpm / (m.redlineRpm * 1.15f)) : 0f;
-            rpmFill.fillAmount = rpm01;
-            rpmFill.color = m.rpm >= m.redlineRpm ? t.red : t.text2;
-            indicatorLeft.color = m.leftIndicator && m.indicatorLamp ? t.green : t.bgRowHover;
-            indicatorRight.color = m.rightIndicator && m.indicatorLamp ? t.green : t.bgRowHover;
-            // Цвет лампы — по смыслу, как на реальной панели: зелёный — включено, синий — дальний, красный — внимание.
-            Lamp(0, m.lowBeam, t.green, t);
-            Lamp(1, m.highBeam, t.info, t);
-            Lamp(2, m.handbrake, t.red, t);
-            Lamp(3, !m.seatbelt, t.red, t);
-            Lamp(4, !m.engineRunning, m.stalled ? t.red : t.text2, t);
+            int a = n % 100, b = n % 10;
+            if (a >= 11 && a <= 14) return "замечаний";
+            return b == 1 ? "замечание" : b >= 2 && b <= 4 ? "замечания" : "замечаний";
         }
 
-        void Lamp(int i, bool on, Color onColor, UITheme t)
+        public static float RpmScale(float redline) => Mathf.Max(7000f, Mathf.Ceil(redline * 1.2f / 1000f) * 1000f);
+
+        void RenderRpm(HudModel m, UITheme t)
         {
-            telltaleBgs[i].color = on ? onColor : t.bgCard;
-            telltaleTexts[i].color = on ? new Color(0.06f, 0.06f, 0.07f) : t.muted;   // тёмный текст на горящей лампе
+            float scale = RpmScale(m.redlineRpm);
+            rpmArc.fillAmount = Mathf.Clamp01(m.rpm / scale) * ArcDegrees / 360f;
+            rpmArc.color = m.rpm >= m.redlineRpm ? t.red : t.text;
+            float red = Mathf.Clamp01(m.redlineRpm / scale);
+            rpmRedZone.rectTransform.localRotation = Quaternion.Euler(0, 0, ArcDegrees / 2f - ArcDegrees * red);
+            rpmRedZone.fillAmount = (1f - red) * ArcDegrees / 360f;
+            rpmRedZone.color = new Color(t.red.r, t.red.g, t.red.b, 0.55f);
         }
 
-        void RenderGearbox(HudModel m, UITheme t)
+        void RenderGear(HudModel m, UITheme t)
         {
-            manualBox.SetActive(m.manual); autoBox.SetActive(!m.manual);
             if (m.manual)
             {
-                for (int i = 0; i < 6; i++)
-                {
-                    bool exists = i < m.gearCount;
-                    gearLabels[i].gameObject.SetActive(exists);
-                    gearLabels[i].color = m.gear == i + 1 ? t.accent : t.muted;
-                    gearLabels[i].fontStyle = m.gear == i + 1 ? FontStyles.Bold : FontStyles.Normal;
-                }
-                gearLabels[6].color = m.gear < 0 ? t.red : t.muted;   // R — красной цифрой
-                neutralDot.color = m.gear == 0 ? t.accent : t.bgRowHover;
+                gearText.text = m.gear > 0 ? m.gear.ToString() : m.gear < 0 ? "R" : "N";
+                gearText.color = m.gear < 0 ? t.red : m.gear == 0 ? t.text2 : t.accent;
+                selectorText.text = "";
             }
             else
             {
-                for (int i = 0; i < 4; i++)
-                    selectorLabels[i].color = m.selector == i ? (i == 1 ? t.red : t.accent) : t.muted;
+                string[] sel = { "P", "R", "N", "D" };
+                int s = Mathf.Clamp(m.selector, 0, 3);
+                gearText.text = sel[s];
+                gearText.color = s == 1 ? t.red : s == 3 ? t.accent : t.text2;
+                string muted = ColorUtility.ToHtmlStringRGB(t.muted), on = ColorUtility.ToHtmlStringRGB(s == 1 ? t.red : t.accent);
+                var sb = new System.Text.StringBuilder();
+                for (int i = 0; i < 4; i++) sb.Append($"<color=#{(i == s ? on : muted)}>{sel[i]}</color>").Append(i < 3 ? " " : "");
+                selectorText.text = sb.ToString();
+            }
+        }
+
+        void RenderLamps(HudModel m, UITheme t)
+        {
+            // Цвета — как на реальной панели: зелёный — включено, синий — дальний, красный — внимание.
+            Color off = new Color(t.muted.r, t.muted.g, t.muted.b, 0.35f);
+            lampTurnLeft.color = m.leftIndicator && m.indicatorLamp ? t.green : off;
+            lampTurnRight.color = m.rightIndicator && m.indicatorLamp ? t.green : off;
+            lampLowBeam.color = m.lowBeam ? t.green : off;
+            lampHighBeam.color = m.highBeam ? t.info : off;
+            lampHandbrake.color = m.handbrake ? t.red : off;
+            lampSeatbelt.color = !m.seatbelt ? t.red : off;
+            lampBattery.color = !m.engineRunning ? t.red : off;
+        }
+
+        void RenderHint(HudModel m, UITheme t, float now)
+        {
+            bool hint = !string.IsNullOrEmpty(m.hintText);
+            hintPanel.gameObject.SetActive(hint);
+            if (!hint) { shownHint = null; return; }
+            if (float.IsNaN(hintBaseY)) hintBaseY = hintPanel.anchoredPosition.y;
+            if (m.hintText != shownHint) { shownHint = m.hintText; hintBorn = now; }
+            float p = Mathf.Clamp01((now - hintBorn) / FadeIn);
+            float e = 1f - (1f - p) * (1f - p);
+            hintGroup.alpha = e;
+            hintPanel.anchoredPosition = new Vector2(hintPanel.anchoredPosition.x, hintBaseY + (1f - e) * 16f);
+
+            Color kind = m.hintKind <= 1 ? t.red : m.hintKind == 2 ? t.accent : t.info;
+            string[] titles = { "ОПАСНОСТЬ", "ЗАМЕЧАНИЕ", "ИНСТРУКТОР", "НАВИГАЦИЯ", "УПРАЖНЕНИЕ" };
+            hintTitle.text = titles[Mathf.Clamp(m.hintKind, 0, titles.Length - 1)];
+            hintTitle.color = kind; hintAccent.color = kind; hintAvatarRing.color = kind;
+            hintText.text = m.hintText;
+            hintWaiting.text = m.hintWaiting > 0 ? $"+{m.hintWaiting}" : "";
+        }
+
+        void RenderCards(UITheme t, float now)
+        {
+            for (int i = cards.Count - 1; i >= 0; i--)
+                if (now > cards[i].until) { Kill(cards[i].go); cards.RemoveAt(i); }
+            foreach (var c in cards)
+            {
+                float pin = Mathf.Clamp01((now - c.born) / FadeIn), pout = Mathf.Clamp01((c.until - now) / FadeOut);
+                float e = 1f - (1f - pin) * (1f - pin);
+                c.group.alpha = Mathf.Min(e, pout);
+                c.body.anchoredPosition = new Vector2((1f - e) * 60f, 0f);
+                c.bar.color = c.severe ? t.red : t.accent;
+                c.icon.color = c.severe ? t.red : t.accent;
             }
         }
     }

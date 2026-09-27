@@ -1,3 +1,4 @@
+using System.IO;
 using DrivingSchool.Presentation.UI;
 using TMPro;
 using UnityEditor;
@@ -6,15 +7,35 @@ using UnityEngine.UI;
 
 namespace DrivingSchool.Editor
 {
-    // T47: HUD поездки и разбор поездки по docs/ui-drive.md (макет artifacts/visual-review/drive/index.html).
+    // T47: HUD поездки и разбор поездки по docs/ui-drive.md. Значки и шкалы — tools/build_ui_icons.py → Art/UI/Hud.
     public static partial class UIBuilder
     {
         public const string WhiteSpritePath = "Assets/DrivingSchool/Art/UI/White.png";
+        public const string HudArt = "Assets/DrivingSchool/Art/UI/Hud/";
         static Sprite s_White;
         static Sprite White() => s_White != null ? s_White : s_White = ShapeSprite(WhiteSpritePath, 8, (u, v) => 1f, 0);
 
         [MenuItem("Driving School/Build Drive HUD")]
         public static void BuildHudMenu() { BuildHUD(); Debug.Log("HUD_PREFAB_BUILT"); }
+
+        /// <summary>Спрайт из Art/UI/Hud с настройками импорта из кода (правило проекта: без ручного Inspector).</summary>
+        static Sprite HudSprite(string name, int border = 0)
+        {
+            string path = HudArt + name + ".png";
+            if (!File.Exists(path)) throw new FileNotFoundException("Нет " + path + " — запустите python tools/build_ui_icons.py");
+            AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
+            var imp = (TextureImporter)AssetImporter.GetAtPath(path);
+            bool dirty = imp.textureType != TextureImporterType.Sprite || imp.spriteBorder != new Vector4(border, border, border, border) || imp.mipmapEnabled;
+            if (dirty)
+            {
+                imp.textureType = TextureImporterType.Sprite; imp.spriteImportMode = SpriteImportMode.Single;
+                imp.spriteBorder = new Vector4(border, border, border, border);
+                imp.wrapMode = TextureWrapMode.Clamp; imp.mipmapEnabled = false; imp.alphaIsTransparency = true;
+                imp.textureCompression = TextureImporterCompression.Uncompressed;
+                imp.SaveAndReimport();
+            }
+            return AssetDatabase.LoadAssetAtPath<Sprite>(path);
+        }
 
         static Image Panel(RectTransform rt, UITheme theme, float alpha = 0.92f, ThemeRole role = ThemeRole.BgPanel)
         {
@@ -22,6 +43,26 @@ namespace DrivingSchool.Editor
             img.GetComponent<ThemedGraphic>().alpha = alpha;
             img.color = new Color(img.color.r, img.color.g, img.color.b, alpha);
             img.raycastTarget = false;
+            return img;
+        }
+
+        /// <summary>Скруглённая полупрозрачная панель с мягкой тенью.</summary>
+        static Image RoundPanel(RectTransform rt, UITheme theme, float alpha = 0.88f, ThemeRole role = ThemeRole.BgPanel)
+        {
+            var sh = Node("Shadow", rt); Stretch(sh, -16, -16, -12, -20);
+            sh.gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
+            var shi = AddImage(sh.gameObject, new Color(0, 0, 0, 0.45f)); shi.sprite = HudSprite("shadow", 40); shi.type = Image.Type.Sliced; shi.raycastTarget = false;
+            sh.SetAsFirstSibling();
+            var img = Panel(rt, theme, alpha, role);
+            img.sprite = HudSprite("rounded", 24); img.type = Image.Type.Sliced; img.pixelsPerUnitMultiplier = 1.6f;
+            return img;
+        }
+
+        static Image Icon(Transform parent, string name, string sprite, float size, Color c)
+        {
+            var rt = Node(name, parent);
+            rt.sizeDelta = new Vector2(size, size);
+            var img = AddImage(rt.gameObject, c); img.sprite = HudSprite(sprite); img.preserveAspect = true; img.raycastTarget = false;
             return img;
         }
 
@@ -41,6 +82,17 @@ namespace DrivingSchool.Editor
             return g;
         }
 
+        static Image Arc(Transform parent, string name, string sprite, float size, Color c, float fill, float rotationZ)
+        {
+            var rt = Node(name, parent);
+            Place(rt, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(size, size), Vector2.zero);
+            rt.localRotation = Quaternion.Euler(0, 0, rotationZ);
+            var img = AddImage(rt.gameObject, c); img.sprite = HudSprite(sprite); img.raycastTarget = false;
+            img.type = Image.Type.Filled; img.fillMethod = Image.FillMethod.Radial360; img.fillOrigin = (int)Image.Origin360.Top; img.fillClockwise = true;
+            img.fillAmount = fill;
+            return img;
+        }
+
         public static void BuildHUD()
         {
             var theme = BuildThemes();
@@ -50,155 +102,195 @@ namespace DrivingSchool.Editor
             var v = canvas.AddComponent<DriveHudView>();
             v.defaultTheme = theme;
             var root = canvas.transform;
-
-            // --- Подсказка инструктора: сверху по центру ---
-            var hint = Node("Hint", root);
-            Place(hint, new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(1000, 0), new Vector2(0, -36));
-            Panel(hint, theme);
-            Layout<HorizontalLayoutGroup>(hint, 0, 28, 0, 0, 22, forceH: true);
-            hint.gameObject.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-            var bar = Node("Bar", hint); v.hintBar = AddImage(bar.gameObject, theme.accent); v.hintBar.raycastTarget = false; LE(bar, 8);
-            var col = Node("Text", hint); Layout<VerticalLayoutGroup>(col, 0, 0, 16, 16, 4); LE(col, -1, -1, 1);
-            v.hintText = Label(col, "Hint", "Подсказка инструктора", 26, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Medium);
-            v.hintText.textWrappingMode = TextWrappingModes.Normal;
-            v.hintWaiting = Label(col, "Waiting", "", 16, ThemeRole.Muted, theme);
-            v.hintPanel = hint.gameObject;
-
-            // --- Замечания: справа вверху ---
-            var rem = Node("Remarks", root);
-            Place(rem, new Vector2(1, 1), new Vector2(1, 1), new Vector2(300, 124), new Vector2(-40, -36));
-            Panel(rem, theme);
-            var rl = Label(rem, "Label", "ЗАМЕЧАНИЯ", 16, ThemeRole.Muted, theme, TextAlignmentOptions.Left, FontWeight.Bold);
-            rl.characterSpacing = 6; Place(rl.rectTransform, new Vector2(0, 1), new Vector2(0, 1), new Vector2(260, 24), new Vector2(24, -14));
-            v.remarksCount = Label(rem, "Count", "0", 52, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Bold, themed: false, mono: true);
-            Place(v.remarksCount.rectTransform, new Vector2(0, 1), new Vector2(0, 1), new Vector2(200, 60), new Vector2(22, -36));
-            v.remarksNote = Label(rem, "Note", "тренировка · баллы — после T37", 15, ThemeRole.Muted, theme);
-            Place(v.remarksNote.rectTransform, new Vector2(0, 0), new Vector2(0, 0), new Vector2(270, 22), new Vector2(24, 12));
-            v.remarksPanel = rem.gameObject;
-
-            // --- Карточки нарушений: под замечаниями ---
-            var cards = Node("Cards", root);
-            Place(cards, new Vector2(1, 1), new Vector2(1, 1), new Vector2(440, 420), new Vector2(-40, -174));
-            var cv = Layout<VerticalLayoutGroup>(cards, 0, 0, 0, 0, 10); cv.childForceExpandWidth = true; cv.childAlignment = TextAnchor.UpperRight;
-            v.cardsRoot = cards;
-            var card = Node("CardTemplate", cards);
-            var cardBg = Panel(card, theme, 0.95f);
-            LE(card, -1, -1, -1, 0);   // высота по содержимому: карточка не растягивается на весь столбец
-            Layout<HorizontalLayoutGroup>(card, 0, 18, 0, 0, 16, forceH: true);
-            var cbar = Node("Bar", card); AddImage(cbar.gameObject, theme.red).raycastTarget = false; LE(cbar, 6);
-            var cc = Node("Content", card); Layout<VerticalLayoutGroup>(cc, 0, 0, 14, 14, 4); LE(cc, -1, -1, 1);
-            var ct = Label(cc, "Title", "Нарушение", 22, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Bold); ct.textWrappingMode = TextWrappingModes.Normal;
-            Label(cc, "Reference", "PDD", 15, ThemeRole.Muted, theme, TextAlignmentOptions.Left, FontWeight.Regular, true, mono: true).textWrappingMode = TextWrappingModes.Normal;
-            var ca = Label(cc, "Advice", "Как правильно", 18, ThemeRole.Text2, theme); ca.textWrappingMode = TextWrappingModes.Normal;
-            v.cardTemplate = card.gameObject;
-            card.gameObject.SetActive(false);
-            _ = cardBg;
-
-            BuildInstruments(v, root, theme);
+            BuildHint(v, root, theme);
+            BuildRemarks(v, root, theme);
+            BuildCards(v, root, theme);
+            BuildCluster(v, root, theme);
+            BuildLamps(v, root, theme);
             BuildMinimap(v, root, theme);
             BuildDebrief(canvas.transform, theme);
             SavePrefab(canvas, "HUD");
         }
 
-        static void BuildInstruments(DriveHudView v, Transform root, UITheme theme)
+        static void BuildHint(DriveHudView v, Transform root, UITheme theme)
         {
-            var ins = Node("Instruments", root);
-            Place(ins, new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(820, 190), new Vector2(0, 36));
-            Panel(ins, theme, 0.85f);
-            v.instruments = ins.gameObject;
+            var hint = Node("Hint", root);
+            Place(hint, new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(980, 0), new Vector2(0, -32));
+            v.hintGroup = hint.gameObject.AddComponent<CanvasGroup>(); v.hintGroup.blocksRaycasts = false;
+            RoundPanel(hint, theme);
+            var h = Layout<HorizontalLayoutGroup>(hint, 18, 30, 14, 14, 18); h.childAlignment = TextAnchor.MiddleLeft;
+            hint.gameObject.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            // Аватар инструктора: цветное кольцо по типу подсказки.
+            var av = Node("Avatar", hint); LE(av, 64, 64);
+            v.hintAvatarRing = AddImage(av.gameObject, theme.accent); v.hintAvatarRing.sprite = Circle(); v.hintAvatarRing.raycastTarget = false;
+            var inner = Node("Inner", av); Stretch(inner, 4, 4, 4, 4);
+            AddThemedImage(inner.gameObject, ThemeRole.BgCard, theme).sprite = Circle();
+            var ic = Icon(av, "Icon", "icon_instructor", 40, theme.text); Place((RectTransform)ic.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(40, 40), new Vector2(0, -2));
+            var col = Node("Text", hint); Layout<VerticalLayoutGroup>(col, 0, 0, 0, 0, 2); LE(col, -1, -1, 1);
+            v.hintTitle = Label(col, "Title", "ИНСТРУКТОР", 15, ThemeRole.Accent, theme, TextAlignmentOptions.Left, FontWeight.Bold, themed: false);
+            v.hintTitle.characterSpacing = 8;
+            v.hintText = Label(col, "Hint", "Подсказка инструктора", 25, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Medium);
+            v.hintText.textWrappingMode = TextWrappingModes.Normal;
+            v.hintWaiting = Label(hint, "Waiting", "", 16, ThemeRole.Muted, theme, TextAlignmentOptions.Right, FontWeight.Bold, true, mono: true);
+            v.hintWaiting.gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
+            Place(v.hintWaiting.rectTransform, new Vector2(1, 1), new Vector2(1, 1), new Vector2(60, 24), new Vector2(-16, -10));
+            var line = Node("Accent", hint); line.gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
+            line.anchorMin = new Vector2(0, 0); line.anchorMax = new Vector2(1, 0); line.pivot = new Vector2(0.5f, 0);
+            line.offsetMin = new Vector2(100, 0); line.offsetMax = new Vector2(-30, 3);
+            v.hintAccent = AddImage(line.gameObject, theme.accent); v.hintAccent.raycastTarget = false;
+            v.hintPanel = hint;
+        }
 
-            // Контрольные лампы
-            var row = Node("Telltales", ins);
-            Place(row, new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(780, 34), new Vector2(0, -14));
-            var h = Layout<HorizontalLayoutGroup>(row, 0, 0, 0, 0, 10); h.childAlignment = TextAnchor.MiddleCenter;
-            v.indicatorLeft = Arrow(row, "IndicatorLeft", false, theme);
-            string[] lamps = { "Ближний", "Дальний", "Ручник", "Ремень", "Двигатель" };
-            for (int i = 0; i < lamps.Length; i++)
+        static void BuildRemarks(DriveHudView v, Transform root, UITheme theme)
+        {
+            var rem = Node("Remarks", root);
+            Place(rem, new Vector2(1, 1), new Vector2(1, 1), new Vector2(236, 76), new Vector2(-36, -32));
+            RoundPanel(rem, theme);
+            v.remarksIcon = Icon(rem, "Icon", "icon_warning", 34, theme.text2);
+            Place((RectTransform)v.remarksIcon.transform, new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(34, 34), new Vector2(20, 0));
+            v.remarksCount = Label(rem, "Count", "0", 34, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Bold, themed: false, mono: true);
+            Place(v.remarksCount.rectTransform, new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(60, 40), new Vector2(66, 9));
+            var lbl = Label(rem, "Label", "замечаний", 16, ThemeRole.Text2, theme, TextAlignmentOptions.Left, FontWeight.Medium);
+            v.remarksLabel = lbl;
+            Place(lbl.rectTransform, new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(110, 22), new Vector2(112, 11));
+            v.remarksNote = Label(rem, "Note", "баллы — после T37", 13, ThemeRole.Muted, theme);
+            Place(v.remarksNote.rectTransform, new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(160, 18), new Vector2(66, -18));
+            v.remarksPanel = rem.gameObject;
+        }
+
+        static void BuildCards(DriveHudView v, Transform root, UITheme theme)
+        {
+            var cards = Node("Cards", root);
+            Place(cards, new Vector2(1, 1), new Vector2(1, 1), new Vector2(440, 260), new Vector2(-36, -124));
+            var cv = Layout<VerticalLayoutGroup>(cards, 0, 0, 0, 0, 12); cv.childForceExpandWidth = true;
+            v.cardsRoot = cards;
+            // Внешний слой держит место в столбце (layout), тело — выезжает справа (не под layout).
+            var card = Node("CardTemplate", cards); LE(card, 440, 118, -1, 0);
+            var dc = card.gameObject.AddComponent<DriveHudCard>();
+            dc.group = card.gameObject.AddComponent<CanvasGroup>(); dc.group.blocksRaycasts = false;
+            var body = Node("Body", card); Stretch(body); dc.body = body;
+            RoundPanel(body, theme, 0.92f);
+            var bar = Node("Bar", body); Place(bar, new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(4, 70), new Vector2(8, 0));
+            dc.bar = AddImage(bar.gameObject, theme.red); dc.bar.raycastTarget = false;
+            dc.icon = Icon(body, "Icon", "icon_warning", 30, theme.red);
+            Place((RectTransform)dc.icon.transform, new Vector2(0, 1), new Vector2(0, 1), new Vector2(30, 30), new Vector2(22, -16));
+            dc.title = Label(body, "Title", "Нарушение", 20, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Bold);
+            Place(dc.title.rectTransform, new Vector2(0, 1), new Vector2(0, 1), new Vector2(362, 28), new Vector2(64, -14));
+            dc.reference = Label(body, "Reference", "PDD", 13, ThemeRole.Muted, theme, TextAlignmentOptions.Left, FontWeight.Regular, true, mono: true);
+            Place(dc.reference.rectTransform, new Vector2(0, 1), new Vector2(0, 1), new Vector2(362, 18), new Vector2(64, -42));
+            dc.reference.overflowMode = TextOverflowModes.Ellipsis; dc.title.overflowMode = TextOverflowModes.Ellipsis;
+            dc.advice = Label(body, "Advice", "Как правильно", 16, ThemeRole.Text2, theme);
+            dc.advice.textWrappingMode = TextWrappingModes.Normal;
+            Place(dc.advice.rectTransform, new Vector2(0, 1), new Vector2(0, 1), new Vector2(362, 50), new Vector2(64, -62));
+            dc.advice.overflowMode = TextOverflowModes.Ellipsis;
+            v.cardTemplate = card.gameObject;
+            card.gameObject.SetActive(false);
+        }
+
+        // Круглый прибор: дуга скорости 0–200 км/ч, внешняя тонкая дуга оборотов с красной зоной, передача в нижнем зазоре.
+        static void BuildCluster(DriveHudView v, Transform root, UITheme theme)
+        {
+            const float D = 330;
+            var dial = Node("Instruments", root);
+            Place(dial, new Vector2(1, 0), new Vector2(1, 0), new Vector2(D, D), new Vector2(-40, 28));
+            v.instruments = dial.gameObject;
+            var sh = Node("Shadow", dial); Place(sh, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(D + 14, D + 14), new Vector2(0, -4));
+            var shi = AddImage(sh.gameObject, new Color(0, 0, 0, 0.35f)); shi.sprite = HudSprite("vignette"); shi.raycastTarget = false;
+            var bg = Node("Face", dial); Stretch(bg);
+            var face = AddThemedImage(bg.gameObject, ThemeRole.BgDark, theme); face.sprite = HudSprite("dial_bg"); face.raycastTarget = false;
+            face.GetComponent<ThemedGraphic>().alpha = 0.9f;
+            float half = FillOf(1f);
+            // Обороты — внешнее тонкое кольцо.
+            var rpm = Node("Rpm", dial); Stretch(rpm); v.rpmGroup = rpm.gameObject;
+            Arc(rpm, "Track", "ring_thin", D - 6, new Color(1, 1, 1, 0.08f), half, 120);
+            v.rpmRedZone = Arc(rpm, "RedZone", "ring_thin", D - 6, theme.red, 0.1f, -80);
+            v.rpmArc = Arc(rpm, "Arc", "ring_thin", D - 6, theme.text, 0.2f, 120);
+            // Скорость — толстое кольцо внутри.
+            Arc(dial, "SpeedTrack", "ring_thick", D * 0.86f, new Color(1, 1, 1, 0.07f), half, 120);
+            v.speedArc = Arc(dial, "SpeedArc", "ring_thick", D * 0.86f, theme.accent, 0.2f, 120);
+            var ticks = Node("Ticks", dial); Stretch(ticks);
+            v.dialTicks = AddImage(ticks.gameObject, theme.text2); v.dialTicks.sprite = HudSprite("dial_ticks"); v.dialTicks.raycastTarget = false;
+            int[] marks = { 0, 40, 80, 120, 160, 200 };
+            v.tickLabels = new TMP_Text[marks.Length];
+            for (int i = 0; i < marks.Length; i++)
             {
-                var chip = Node("Lamp_" + lamps[i], row); LE(chip, 116, 30);
-                v.telltaleBgs[i] = Pill(chip.gameObject, theme.bgCard); v.telltaleBgs[i].raycastTarget = false;
-                v.telltaleTexts[i] = Label(chip, "Text", lamps[i], 16, ThemeRole.Muted, theme, TextAlignmentOptions.Center, FontWeight.Bold, themed: false);
-                Stretch(v.telltaleTexts[i].rectTransform);
+                float a = Mathf.Deg2Rad * (-DriveHudView.ArcDegrees / 2f + DriveHudView.ArcDegrees * marks[i] / DriveHudView.SpeedScaleKph);
+                float r = D * 0.25f;
+                var l = Label(dial, "Tick" + marks[i], marks[i].ToString(), 15, ThemeRole.Muted, theme, TextAlignmentOptions.Center, FontWeight.Medium, themed: false, mono: true);
+                Place(l.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(44, 20), new Vector2(r * Mathf.Sin(a), r * Mathf.Cos(a)));
+                v.tickLabels[i] = l;
             }
-            v.indicatorRight = Arrow(row, "IndicatorRight", true, theme);
+            v.speedText = Label(dial, "Speed", "0", 70, ThemeRole.Text, theme, TextAlignmentOptions.Center, FontWeight.Bold, themed: false, mono: true);
+            Place(v.speedText.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(200, 80), new Vector2(0, 14));
+            v.speedUnit = Label(dial, "Unit", "км/ч", 16, ThemeRole.Muted, theme, TextAlignmentOptions.Center, FontWeight.Medium);
+            Place(v.speedUnit.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(100, 22), new Vector2(0, -30));
+            v.selectorText = Label(dial, "Selector", "", 15, ThemeRole.Muted, theme, TextAlignmentOptions.Center, FontWeight.Bold, themed: false, mono: true);
+            Place(v.selectorText.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(140, 22), new Vector2(0, -58));
+            v.selectorText.richText = true;
+            var gb = Node("Gear", dial); Place(gb, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(62, 62), new Vector2(0, -D * 0.38f));
+            var gbi = AddThemedImage(gb.gameObject, ThemeRole.BgCard, theme); gbi.sprite = Circle(); gbi.raycastTarget = false;
+            v.gearText = Label(gb, "Text", "N", 34, ThemeRole.Text, theme, TextAlignmentOptions.Center, FontWeight.Bold, themed: false, mono: true);
+            Stretch(v.gearText.rectTransform);
+        }
+
+        static float FillOf(float frac) => frac * DriveHudView.ArcDegrees / 360f;
+
+        static void BuildLamps(DriveHudView v, Transform root, UITheme theme)
+        {
+            var row = Node("Telltales", root);
+            Place(row, new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 58), new Vector2(0, 30));
+            RoundPanel(row, theme, 0.82f);
+            var h = Layout<HorizontalLayoutGroup>(row, 24, 24, 12, 12, 22); h.childAlignment = TextAnchor.MiddleCenter; h.childControlWidth = false; h.childControlHeight = false;
+            row.gameObject.AddComponent<ContentSizeFitter>().horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+            Image L(string name, string sprite, bool flip = false)
+            {
+                var img = Icon(row, name, sprite, 34, theme.muted);
+                if (flip) img.transform.localRotation = Quaternion.Euler(0, 0, 180);
+                LE(img, 34, 34);
+                return img;
+            }
+            v.lampTurnLeft = L("TurnLeft", "icon_turn", true);
+            v.lampLowBeam = L("LowBeam", "icon_lowbeam");
+            v.lampHighBeam = L("HighBeam", "icon_highbeam");
+            v.lampHandbrake = L("Handbrake", "icon_handbrake");
+            v.lampSeatbelt = L("Seatbelt", "icon_seatbelt");
+            v.lampBattery = L("Battery", "icon_battery");
+            v.lampTurnRight = L("TurnRight", "icon_turn");
             v.telltalesRow = row.gameObject;
-
-            // Скорость
-            v.speedText = Label(ins, "Speed", "0", 76, ThemeRole.Text, theme, TextAlignmentOptions.Right, FontWeight.Bold, themed: false, mono: true);
-            Place(v.speedText.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(1, 0.5f), new Vector2(240, 90), new Vector2(-60, -8));
-            v.speedUnit = Label(ins, "Unit", "км/ч", 20, ThemeRole.Muted, theme);
-            Place(v.speedUnit.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0, 0.5f), new Vector2(80, 30), new Vector2(-50, -30));
-
-            // Схема КПП: H-паттерн 6+R (R справа внизу, как у Driving Force Shifter) или строка P R N D.
-            var gb = Node("Gearbox", ins);
-            Place(gb, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(220, 110), new Vector2(210, -8));
-            var man = Node("Manual", gb); Stretch(man); v.manualBox = man.gameObject;
-            float[] xs = { -72, -24, 24, 72 };
-            Line(man, new Vector2(0, 0), new Vector2(146, 3), theme);
-            for (int c = 0; c < 3; c++) Line(man, new Vector2(xs[c], 0), new Vector2(3, 60), theme);
-            Line(man, new Vector2(xs[3], -15), new Vector2(3, 30), theme);
-            string[] names = { "1", "2", "3", "4", "5", "6", "R" };
-            for (int i = 0; i < 7; i++)
-            {
-                int c = i == 6 ? 3 : i / 2; bool top = i != 6 && i % 2 == 0;
-                v.gearLabels[i] = Label(man, "Gear_" + names[i], names[i], 22, ThemeRole.Muted, theme, TextAlignmentOptions.Center, FontWeight.Bold, themed: false, mono: true);
-                Place(v.gearLabels[i].rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(30, 26), new Vector2(xs[c], top ? 44 : -44));
-            }
-            var dot = Node("Neutral", man); Place(dot, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(14, 14), Vector2.zero);
-            v.neutralDot = AddImage(dot.gameObject, theme.accent); v.neutralDot.sprite = Circle(); v.neutralDot.raycastTarget = false;
-            v.gearLabels[7] = null;
-            var au = Node("Automatic", gb); Stretch(au); v.autoBox = au.gameObject;
-            string[] sel = { "P", "R", "N", "D" };
-            for (int i = 0; i < 4; i++)
-            {
-                v.selectorLabels[i] = Label(au, "Sel_" + sel[i], sel[i], 36, ThemeRole.Muted, theme, TextAlignmentOptions.Center, FontWeight.Bold, themed: false, mono: true);
-                Place(v.selectorLabels[i].rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(44, 50), new Vector2(-72 + i * 48, 0));
-            }
-            au.gameObject.SetActive(false);
-
-            // Обороты
-            var rpm = Node("Rpm", ins);
-            Place(rpm, new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(740, 26), new Vector2(0, 14));
-            var rl = Label(rpm, "Label", "об/мин", 14, ThemeRole.Muted, theme);
-            Place(rl.rectTransform, new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(70, 20), Vector2.zero);
-            var track = Node("Track", rpm); Place(track, new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(660, 8), new Vector2(78, 0));
-            AddThemedImage(track.gameObject, ThemeRole.BgCard, theme).raycastTarget = false;
-            var fill = Node("Fill", track); Stretch(fill);
-            v.rpmFill = AddImage(fill.gameObject, theme.text2); v.rpmFill.sprite = White();
-            v.rpmFill.type = Image.Type.Filled; v.rpmFill.fillMethod = Image.FillMethod.Horizontal; v.rpmFill.fillAmount = 0.15f; v.rpmFill.raycastTarget = false;
-            v.rpmRow = rpm.gameObject;
-        }
-
-        static Image Arrow(Transform parent, string name, bool right, UITheme theme)
-        {
-            var a = Node(name, parent); LE(a, 30, 30);
-            var ic = Node("Icon", a); Place(ic, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(26, 26), Vector2.zero);
-            if (!right) ic.localRotation = Quaternion.Euler(0, 0, 180);
-            var img = AddImage(ic.gameObject, theme.bgRowHover); img.sprite = Triangle(); img.raycastTarget = false;
-            return img;
-        }
-
-        static void Line(Transform parent, Vector2 pos, Vector2 size, UITheme theme)
-        {
-            var l = Node("Line", parent); Place(l, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), size, pos);
-            AddThemedImage(l.gameObject, ThemeRole.Muted, theme).raycastTarget = false;
         }
 
         static void BuildMinimap(DriveHudView v, Transform root, UITheme theme)
         {
+            const float D = 250, inset = 8;
             var map = Node("Minimap", root);
-            Place(map, new Vector2(0, 0), new Vector2(0, 0), new Vector2(270, 270), new Vector2(40, 36));
-            Panel(map, theme, 0.9f);
-            var img = Node("Image", map); Stretch(img, 6, 6, 6, 6);
+            Place(map, new Vector2(0, 0), new Vector2(0, 0), new Vector2(D, D), new Vector2(40, 28));
+            var sh = Node("Shadow", map); Place(sh, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(D + 12, D + 12), new Vector2(0, -4));
+            var shi = AddImage(sh.gameObject, new Color(0, 0, 0, 0.35f)); shi.sprite = HudSprite("vignette"); shi.raycastTarget = false;
+            var bezel = Node("Bezel", map); Stretch(bezel);
+            var bz = AddThemedImage(bezel.gameObject, ThemeRole.BgPanel, theme); bz.sprite = Circle(); bz.raycastTarget = false;
+            var mask = Node("Mask", map); Stretch(mask, inset, inset, inset, inset);
+            var mi = AddImage(mask.gameObject, Color.white); mi.sprite = Circle(); mi.raycastTarget = false;
+            mask.gameObject.AddComponent<Mask>().showMaskGraphic = false;
+            var img = Node("Map", mask);
+            float big = (D - 2 * inset) * 1.42f;   // запас на поворот: углы квадрата не видны в круге
+            Place(img, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(big, big), Vector2.zero);
             v.minimapImage = img.gameObject.AddComponent<RawImage>(); v.minimapImage.raycastTarget = false;
-            var arrow = Node("Arrow", map); Place(arrow, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(26, 26), Vector2.zero);
-            var ic = Node("Icon", arrow); Stretch(ic); ic.localRotation = Quaternion.Euler(0, 0, 90);   // треугольник смотрит вправо → вверх
-            var ai = AddImage(ic.gameObject, Color.white); ai.sprite = Triangle(); ai.raycastTarget = false;
-            v.minimapArrow = arrow;
-            var n = Label(map, "North", "С", 18, ThemeRole.Text, theme, TextAlignmentOptions.Center, FontWeight.Bold);
-            Place(n.rectTransform, new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(30, 24), new Vector2(0, -8));
-            var sc = Label(map, "Scale", "100 м", 14, ThemeRole.Text2, theme, TextAlignmentOptions.Right, FontWeight.Medium, true, mono: true);
-            Place(sc.rectTransform, new Vector2(1, 0), new Vector2(1, 0), new Vector2(90, 20), new Vector2(-12, 10));
+            v.minimapImage.color = new Color(0.78f, 0.82f, 0.82f);   // приглушаем яркую траву
+            var vig = Node("Vignette", mask); Stretch(vig);
+            var vi = AddImage(vig.gameObject, new Color(0, 0, 0, 0.7f)); vi.sprite = HudSprite("vignette"); vi.raycastTarget = false;
+            var car = Icon(map, "Car", "icon_turn", 26, theme.accent);
+            Place((RectTransform)car.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(26, 26), Vector2.zero);
+            car.transform.localRotation = Quaternion.Euler(0, 0, 90);   // стрелка «вперёд» = вверх
+            var north = Node("North", map); Stretch(north);
+            var nb = Node("Badge", north); Place(nb, new Vector2(0.5f, 1), new Vector2(0.5f, 0.5f), new Vector2(26, 26), new Vector2(0, -inset - 2));
+            var nbi = AddThemedImage(nb.gameObject, ThemeRole.BgDark, theme); nbi.sprite = Circle(); nbi.raycastTarget = false;
+            var n = Label(nb, "Text", "С", 15, ThemeRole.Text, theme, TextAlignmentOptions.Center, FontWeight.Bold);
+            Stretch(n.rectTransform);
+            v.minimapNorth = north;
+            var scp = Node("ScaleBadge", map); Place(scp, new Vector2(0.5f, 0), new Vector2(0.5f, 0.5f), new Vector2(64, 22), new Vector2(0, inset + 14));
+            var scpi = Panel(scp, theme, 0.9f, ThemeRole.BgDark); scpi.sprite = HudSprite("rounded", 24); scpi.type = Image.Type.Sliced; scpi.pixelsPerUnitMultiplier = 3f;
+            var sc = Label(scp, "Scale", "100 м", 13, ThemeRole.Text2, theme, TextAlignmentOptions.Center, FontWeight.Medium, true, mono: true);
+            Stretch(sc.rectTransform);
             v.minimapPanel = map.gameObject;
         }
 

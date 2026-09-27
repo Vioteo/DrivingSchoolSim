@@ -18,8 +18,9 @@ namespace DrivingSchool.Presentation
     [DefaultExecutionOrder(300)]
     public sealed class DriveSession : MonoBehaviour
     {
-        public const int MinimapSize = 256;
-        public const float MinimapHalfExtentM = 50f;   // «100 м» на мини-карте
+        public const int MinimapSize = 384;
+        // Картинка в HUD на 42 % больше видимого круга (запас на поворот по курсу): видимый круг = 100 м в диаметре.
+        public const float MinimapHalfExtentM = 50f * 1.42f;
 
         VehicleTestRangeDirector director;
         VehicleController player;
@@ -144,7 +145,7 @@ namespace DrivingSchool.Presentation
         {
             var e = DriveRuleCatalog.Get(ev.ruleId);
             log.Add(new DriveLogEvent { RuleId = ev.ruleId, Title = e.Title, Advice = e.Advice, Reference = e.Reference, Severe = e.Severe, X = pos.x, Z = pos.z });
-            hud.ShowCard(e.Title, $"{ev.ruleId} · {e.Reference}", e.Advice, e.Severe);
+            hud.ShowCard(e.Title, e.Reference, e.Advice, e.Severe);   // код правила — в разборе
             hints.Post("err-" + ev.ruleId, HintKind.Error, e.Advice, DriveHudView.CardSeconds);   // замечание инструктора после нарушения
             Debug.Log($"[Drive] нарушение {ev.ruleId} в {TestRangeLayout.ZoneName(pos)}");
         }
