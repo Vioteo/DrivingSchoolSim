@@ -59,8 +59,8 @@
     },
     {
       "name": "Body_Shell",
-      "vertices": 16951,
-      "triangles": 33938,
+      "vertices": 16943,
+      "triangles": 33911,
       "materials": [
         "Paint_Atlantic",
         "Interior_Stone",
@@ -2611,5 +2611,5 @@
       ]
     }
   ],
-  "trianglesBase": 147714
+  "trianglesBase": 147687
 }

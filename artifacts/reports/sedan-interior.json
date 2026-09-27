@@ -1,9 +1,9 @@
 {
   "script": "tools/build_sedan_interior.py",
-  "utc": "2026-09-26T21:09:45.153206Z",
+  "utc": "2026-09-27T05:57:22.801006Z",
   "backup": {
-    "DS_Sedan_A.blend": "ArtSource_Backup\\DS_Sedan_A_before-interior_20260927-000945.blend",
-    "DS_Sedan_A.fbx": "ArtSource_Backup\\DS_Sedan_A_before-interior_20260927-000945.fbx"
+    "DS_Sedan_A.blend": "ArtSource_Backup\\DS_Sedan_A_before-interior_20260927-085722.blend",
+    "DS_Sedan_A.fbx": "ArtSource_Backup\\DS_Sedan_A_before-interior_20260927-085722.fbx"
   },
   "removed": [
     "Armrest",
@@ -181,7 +181,7 @@
     "WindowSwitch_Rear_R"
   ],
   "after": {
-    "blend_sha256": "62b108482b27d9bc95755559d06e710e13160be4c0204605f773dec8dce40e00",
-    "fbx_sha256": "4c69f335cd1f129d3be23eb529bb1ebf09dd05f1baae452e8730d46a354b0016"
+    "blend_sha256": "251a8c99cff39a4cb505f3d9abd9edab4e502775eaca90e265dcd635b918f8ea",
+    "fbx_sha256": "b39a02020d50e16645a9e1f93cff0b346c6daa81774fd5ec34132c6e13fdb714"
   }
 }
