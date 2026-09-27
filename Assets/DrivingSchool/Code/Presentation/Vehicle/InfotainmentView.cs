@@ -66,7 +66,7 @@ namespace DrivingSchool.Presentation
             var root = new GameObject("Infotainment_Screen").transform; root.SetParent(car, false);
             root.localPosition = c + n * 0.0035f; root.localRotation = Quaternion.LookRotation(-n, up); // local −Z faces the driver
             var q = GameObject.CreatePrimitive(PrimitiveType.Quad); q.name = "Screen_Background";
-            Destroy(q.GetComponent<Collider>());
+            DestroyImmediate(q.GetComponent<Collider>()); // Destroy is deferred: a concave collider on the dynamic car logs an error for one frame
             q.transform.SetParent(root, false); q.transform.localScale = new Vector3(w, h, 1f);
             q.transform.localRotation = Quaternion.identity;
             screen = q.GetComponent<Renderer>(); screen.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; screen.receiveShadows = false;
