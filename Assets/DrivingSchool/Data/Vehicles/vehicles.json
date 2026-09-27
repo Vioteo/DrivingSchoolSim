@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "vehicles": [
+    {
+      "id": "DS_Sedan_A",
+      "title": "Седан",
+      "model": "Assets/DrivingSchool/Prefabs/DS_Sedan_A.prefab",
+      "trafficModel": "Assets/DrivingSchool/Art/Vehicles/DS_Sedan_A_Traffic.fbx",
+      "player": true,
+      "traffic": true,
+      "modelEulerDeg": [-90, 180, 0],
+      "hullClearanceM": 0.28,
+      "interior": "classic",
+      "spec": {
+        "massKg": 1350, "wheelbaseM": 2.72, "trackM": 1.71, "wheelRadiusM": 0.327, "centreOfMassM": [0, 0.51, -0.1],
+        "steeringWheelDegrees": 900, "maxSteerDeg": 32,
+        "gearRatios": [3.6, 2.1, 1.4, 1.05, 0.84, 0.69], "reverseRatio": -3.5, "finalDrive": 4.1, "drivetrainEfficiency": 0.9,
+        "idleRpm": 850, "redlineRpm": 6500, "engineInertiaKgm2": 0.2, "maxClutchTorqueNm": 240,
+        "maxBrakeTorqueNm": 3500, "frontBrakeShare": 0.65, "handbrakeTorqueNm": 2500, "wheelInertiaKgm2": 1.5, "yawInertiaKgm2": 2200,
+        "rollingResistance": 0.015, "dragCoefficient": 0.32, "frontalAreaM2": 2.2, "throttleProgression": 2,
+        "fuelTankLitres": 50, "initialFuelLitres": 40, "abs": true, "drive": 1, "transmission": 0
+      }
+    },
+    {
+      "id": "DS_Crossover_A",
+      "title": "Кроссовер",
+      "model": "Assets/DrivingSchool/Art/Vehicles/DS_Crossover_A.fbx",
+      "trafficModel": "Assets/DrivingSchool/Art/Vehicles/DS_Crossover_A_Traffic.fbx",
+      "player": true,
+      "traffic": true,
+      "modelEulerDeg": [-90, 180, 0],
+      "hullClearanceM": 0.34,
+      "interior": "modern",
+      "spec": {
+        "massKg": 1420, "wheelbaseM": 2.67, "trackM": 1.57, "wheelRadiusM": 0.343, "centreOfMassM": [0, 0.62, 0.15],
+        "steeringWheelDegrees": 900, "maxSteerDeg": 34,
+        "gearRatios": [3.64, 1.95, 1.37, 1.03, 0.83, 0.69], "reverseRatio": -3.4, "finalDrive": 4.3, "drivetrainEfficiency": 0.88,
+        "idleRpm": 800, "redlineRpm": 6300, "engineInertiaKgm2": 0.22, "maxClutchTorqueNm": 260,
+        "maxBrakeTorqueNm": 3900, "frontBrakeShare": 0.68, "handbrakeTorqueNm": 2600, "wheelInertiaKgm2": 1.8, "yawInertiaKgm2": 2500,
+        "rollingResistance": 0.016, "dragCoefficient": 0.36, "frontalAreaM2": 2.55, "throttleProgression": 2,
+        "fuelTankLitres": 55, "initialFuelLitres": 40, "abs": true, "drive": 0, "transmission": 1
+      }
+    },
+    {
+      "id": "DS_Police_A",
+      "title": "Полиция",
+      "model": "Assets/DrivingSchool/Art/Vehicles/DS_Police_A_Traffic.fbx",
+      "trafficModel": "Assets/DrivingSchool/Art/Vehicles/DS_Police_A_Traffic.fbx",
+      "player": false,
+      "traffic": true,
+      "modelEulerDeg": [-90, 180, 0],
+      "hullClearanceM": 0.28,
+      "interior": "simple",
+      "spec": { "massKg": 1380, "wheelbaseM": 2.6, "trackM": 1.49, "wheelRadiusM": 0.315, "centreOfMassM": [0, 0.52, 0], "drive": 0, "transmission": 0 }
+    },
+    {
+      "id": "DS_Ambulance_A",
+      "title": "Скорая помощь",
+      "model": "Assets/DrivingSchool/Art/Vehicles/DS_Ambulance_A_Traffic.fbx",
+      "trafficModel": "Assets/DrivingSchool/Art/Vehicles/DS_Ambulance_A_Traffic.fbx",
+      "player": false,
+      "traffic": true,
+      "modelEulerDeg": [-90, 180, 0],
+      "hullClearanceM": 0.3,
+      "interior": "simple",
+      "spec": { "massKg": 2600, "wheelbaseM": 3.4, "trackM": 1.72, "wheelRadiusM": 0.36, "centreOfMassM": [0, 0.8, 0.2], "maxSteerDeg": 36, "drive": 1, "transmission": 0, "yawInertiaKgm2": 5200, "frontalAreaM2": 4.2, "dragCoefficient": 0.42, "maxBrakeTorqueNm": 6500 }
+    }
+  ]
+}
