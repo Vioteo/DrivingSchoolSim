@@ -1,0 +1,358 @@
+{
+  "revision": "v2",
+  "createdUtc": "2026-09-27T17:58:09.877278+00:00",
+  "exporter": "5.0.1",
+  "source": "ArtSource\\DS_RoadKit_v2.blend",
+  "sourceSha256": "86de34ccbd10cfb8b8a4d0fa50c46f6ef72b5bac8789d1e4bba650d1523301e9",
+  "units": "metres",
+  "blenderAxes": "X right / Y forward / Z up",
+  "laneWidth": 3.5,
+  "curbHeight": 0.15,
+  "markingOffset": 0.006,
+  "moduleCount": 5,
+  "modules": [
+    {
+      "catalogId": "RK2_Road_Urban4_20m",
+      "sourceBounds": {
+        "min": [
+          -10.699999809265137,
+          0.0,
+          -0.2199999988079071
+        ],
+        "max": [
+          10.699999809265137,
+          20.0,
+          0.15000000596046448
+        ],
+        "size": [
+          21.399999618530273,
+          20.0,
+          0.3700000047683716
+        ],
+        "triangles": 660
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -10.699999809265137,
+          -3.584254670840892e-08,
+          -0.22000326216220856
+        ],
+        "max": [
+          10.699999809265137,
+          20.0,
+          0.15000000596046448
+        ],
+        "size": [
+          21.399999618530273,
+          20.000000035842547,
+          0.37000326812267303
+        ],
+        "triangles": 660
+      },
+      "reimportPass": true,
+      "fbxSha256": "3fa26dc04f4c8f4466280da318639d521436193f23259e30e218c989d50d948a",
+      "glbSha256": "082f6b7e17edbe35236b5dc4db06918a114f2269bb0197c4095c178ace6b6e66",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {
+        "Socket_End": [
+          0.0,
+          20.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "materials": [
+        "RK_Asphalt",
+        "RK_Concrete",
+        "RK_Paving",
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK2_Cross_4x4_32m",
+      "sourceBounds": {
+        "min": [
+          -16.0,
+          -16.0,
+          -0.2199999988079071
+        ],
+        "max": [
+          16.0,
+          16.0,
+          0.15000000596046448
+        ],
+        "size": [
+          32.0,
+          32.0,
+          0.3700000047683716
+        ],
+        "triangles": 1932
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -16.0,
+          -16.0,
+          -0.22000260651111603
+        ],
+        "max": [
+          16.0,
+          16.0,
+          0.1500026136636734
+        ],
+        "size": [
+          32.0,
+          32.0,
+          0.37000522017478943
+        ],
+        "triangles": 1932
+      },
+      "reimportPass": true,
+      "fbxSha256": "4d71c1422dc6c191901a9cedb2e5fe3cfaedfad64f826d7fd64f502d361a12e7",
+      "glbSha256": "53af88d3c86a172a2fc7af4bfd2b7d48f78c75fd0ba929903eea99c060cf0b6c",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {
+        "Socket_East": [
+          16.0,
+          0.0,
+          0.0
+        ],
+        "Socket_North": [
+          0.0,
+          16.0,
+          0.0
+        ],
+        "Socket_South": [
+          0.0,
+          -16.0,
+          0.0
+        ],
+        "Socket_West": [
+          -16.0,
+          0.0,
+          0.0
+        ]
+      },
+      "materials": [
+        "RK_Asphalt",
+        "RK_Concrete",
+        "RK_Paving",
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK2_Cross_4x2_24x32m",
+      "sourceBounds": {
+        "min": [
+          -12.0,
+          -16.0,
+          -0.2199999988079071
+        ],
+        "max": [
+          12.0,
+          16.0,
+          0.15000000596046448
+        ],
+        "size": [
+          24.0,
+          32.0,
+          0.3700000047683716
+        ],
+        "triangles": 1740
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -12.0,
+          -16.0,
+          -0.22000260651111603
+        ],
+        "max": [
+          12.0,
+          16.0,
+          0.1500026136636734
+        ],
+        "size": [
+          24.0,
+          32.0,
+          0.37000522017478943
+        ],
+        "triangles": 1740
+      },
+      "reimportPass": true,
+      "fbxSha256": "378a47511c80ca5dd0d762c3b61bacf78b1d6609eef1420978bd8e17d77463b6",
+      "glbSha256": "b3fa31f0110a173678902e76262173b18ab2c76463548e7f6201c42e862d6734",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {
+        "Socket_East.001": [
+          12.0,
+          0.0,
+          0.0
+        ],
+        "Socket_North.001": [
+          0.0,
+          16.0,
+          0.0
+        ],
+        "Socket_South.001": [
+          0.0,
+          -16.0,
+          0.0
+        ],
+        "Socket_West.001": [
+          -12.0,
+          0.0,
+          0.0
+        ]
+      },
+      "materials": [
+        "RK_Asphalt",
+        "RK_Concrete",
+        "RK_Paving",
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK2_Roundabout_52m",
+      "sourceBounds": {
+        "min": [
+          -26.0,
+          -26.0,
+          -0.2199999988079071
+        ],
+        "max": [
+          26.0,
+          26.0,
+          0.20000000298023224
+        ],
+        "size": [
+          52.0,
+          52.0,
+          0.42000000178813934
+        ],
+        "triangles": 7392
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -26.0,
+          -26.0,
+          -0.22000423073768616
+        ],
+        "max": [
+          26.0,
+          26.0,
+          0.2000012993812561
+        ],
+        "size": [
+          52.0,
+          52.0,
+          0.42000553011894226
+        ],
+        "triangles": 7392
+      },
+      "reimportPass": true,
+      "fbxSha256": "789b5d733c46c1a6f1530cabf6428fa878829e42fbcbe25623bdbd8dfb6c8911",
+      "glbSha256": "24b24596b623b80ff536e490e423951c426f8912addf5f9dd62a7d7aa3ae3322",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {
+        "Socket_East.002": [
+          26.0,
+          0.0,
+          0.0
+        ],
+        "Socket_North.002": [
+          0.0,
+          26.0,
+          0.0
+        ],
+        "Socket_South.002": [
+          0.0,
+          -26.0,
+          0.0
+        ],
+        "Socket_West.002": [
+          -26.0,
+          0.0,
+          0.0
+        ]
+      },
+      "materials": [
+        "RK_Asphalt",
+        "RK_Concrete",
+        "RK_Grass",
+        "RK_Paving",
+        "RK_White"
+      ]
+    },
+    {
+      "catalogId": "RK2_Road_RailCrossing_20m",
+      "sourceBounds": {
+        "min": [
+          -6.199999809265137,
+          0.0,
+          -0.2199999988079071
+        ],
+        "max": [
+          6.199999809265137,
+          20.0,
+          0.15000000596046448
+        ],
+        "size": [
+          12.399999618530273,
+          20.0,
+          0.3700000047683716
+        ],
+        "triangles": 612
+      },
+      "fbxReimportBounds": {
+        "min": [
+          -6.199999809265137,
+          -3.584254670840892e-08,
+          -0.22000326216220856
+        ],
+        "max": [
+          6.199999809265137,
+          20.0,
+          0.15000000596046448
+        ],
+        "size": [
+          12.399999618530273,
+          20.000000035842547,
+          0.37000326812267303
+        ],
+        "triangles": 612
+      },
+      "reimportPass": true,
+      "fbxSha256": "fcdb07793a877805e93683c7e25e01c2ab10a80738b75e0f0a4d9c5dc5c3f4a2",
+      "glbSha256": "e5273631fea642829473396dda4d3da63029ee8d4f375d801bac627b67a1ec9c",
+      "collision": "static MeshCollider from COL_*; markings have none",
+      "lod": "LOD0 only; no LODGroup authored",
+      "sockets": {
+        "Socket_End.001": [
+          0.0,
+          20.0,
+          0.0
+        ],
+        "Socket_Start.001": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "materials": [
+        "RK_Asphalt",
+        "RK_Concrete",
+        "RK_Deck",
+        "RK_Paving",
+        "RK_Steel",
+        "RK_White"
+      ]
+    }
+  ]
+}
