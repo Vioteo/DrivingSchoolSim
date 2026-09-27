@@ -48,32 +48,58 @@ namespace DrivingSchool.Tests
                 var m = new HudModel { hudMode = 0, hintText = "Пристегните ремень", hintKind = (int)HintKind.Maneuver, minimapAvailable = true, minimap = Texture2D.whiteTexture };
                 h.V.Render(m);
                 Assert.That(h.V.instruments.activeSelf && h.V.telltalesRow.activeSelf && h.V.minimapPanel.activeSelf, Is.True, "Полный");
-                Assert.That(h.V.hintPanel.activeSelf, Is.True);
+                Assert.That(h.V.hintPanel.gameObject.activeSelf, Is.True);
                 m.hudMode = 1; h.V.Render(m);
                 Assert.That(h.V.instruments.activeSelf, Is.True); Assert.That(h.V.telltalesRow.activeSelf, Is.False, "Минимальный — скорость и КПП");
                 Assert.That(h.V.minimapPanel.activeSelf, Is.False);
                 m.hudMode = 2; h.V.Render(m);
                 Assert.That(h.V.instruments.activeSelf, Is.False, "Выкл.");
-                Assert.That(h.V.hintPanel.activeSelf && h.V.remarksPanel.activeSelf, Is.True, "Подсказки и замечания видны всегда");
+                Assert.That(h.V.hintPanel.gameObject.activeSelf && h.V.remarksPanel.activeSelf, Is.True, "Подсказки и замечания видны всегда");
                 m.hudMode = 0; m.cockpit = true; h.V.Render(m);
                 Assert.That(h.V.instruments.activeSelf, Is.False, "Из салона приборы показывает панель машины");
                 m.hintText = null; h.V.Render(m);
-                Assert.That(h.V.hintPanel.activeSelf, Is.False);
+                Assert.That(h.V.hintPanel.gameObject.activeSelf, Is.False);
             }
         }
 
-        [Test] public void GearboxShowsManualPatternOrSelector()
+        [Test] public void GearShowsNumberNeutralReverseOrSelector()
         {
             using (var h = new Hud())
             {
-                var m = new HudModel { manual = true, gear = 3, gearCount = 5 };
-                h.V.Render(m);
-                Assert.That(h.V.manualBox.activeSelf, Is.True);
-                Assert.That(h.V.gearLabels[5].gameObject.activeSelf, Is.False, "Шестой передачи у 5-ступенчатой коробки нет");
-                Assert.That(h.V.gearLabels[2].color, Is.Not.EqualTo(h.V.gearLabels[0].color), "Включённая передача подсвечена");
+                var m = new HudModel { manual = true, gear = 3 };
+                h.V.Render(m); Assert.That(h.V.gearText.text, Is.EqualTo("3"));
+                m.gear = 0; h.V.Render(m); Assert.That(h.V.gearText.text, Is.EqualTo("N"));
+                m.gear = -1; h.V.Render(m); Assert.That(h.V.gearText.text, Is.EqualTo("R"));
+                Assert.That(h.V.gearText.color, Is.EqualTo(h.V.defaultTheme.red), "R — красным");
                 m.manual = false; m.selector = 3; h.V.Render(m);
-                Assert.That(h.V.autoBox.activeSelf, Is.True); Assert.That(h.V.manualBox.activeSelf, Is.False);
+                Assert.That(h.V.gearText.text, Is.EqualTo("D"));
+                Assert.That(h.V.selectorText.text, Does.Contain("P").And.Contain("N"));
             }
+        }
+
+        [Test] public void SpeedArcFollowsSpeedAndRedZoneStartsAtRedline()
+        {
+            using (var h = new Hud())
+            {
+                var m = new HudModel { speedKph = 100, rpm = 3000, redlineRpm = 6500 };
+                h.V.Render(m);
+                Assert.That(h.V.speedArc.fillAmount, Is.EqualTo(0.5f * DriveHudView.ArcDegrees / 360f).Within(1e-4), "100 из 200 км/ч — половина дуги");
+                float scale = DriveHudView.RpmScale(6500);
+                Assert.That(h.V.rpmRedZone.fillAmount, Is.EqualTo((1 - 6500 / scale) * DriveHudView.ArcDegrees / 360f).Within(1e-4));
+                m.speedKph = 400; h.V.Render(m);
+                Assert.That(h.V.speedArc.fillAmount, Is.EqualTo(DriveHudView.ArcDegrees / 360f).Within(1e-4), "Шкала упирается");
+                Assert.That(h.V.speedText.text, Is.EqualTo("400"), "Цифра — честная");
+            }
+        }
+
+        [Test] public void RemarksWordAgreesWithNumber()
+        {
+            Assert.That(DriveHudView.RemarksWord(1), Is.EqualTo("замечание"));
+            Assert.That(DriveHudView.RemarksWord(3), Is.EqualTo("замечания"));
+            Assert.That(DriveHudView.RemarksWord(5), Is.EqualTo("замечаний"));
+            Assert.That(DriveHudView.RemarksWord(12), Is.EqualTo("замечаний"));
+            Assert.That(DriveHudView.RemarksWord(21), Is.EqualTo("замечание"));
+            Assert.That(DriveHudView.RemarksWord(0), Is.EqualTo("замечаний"));
         }
 
         [Test] public void AtMostTwoViolationCards()
