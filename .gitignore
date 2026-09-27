@@ -117,3 +117,10 @@ ArtSource/Pedestrians/MakeHuman/cache/
 # Python bytecode (tools/, tests/)
 __pycache__/
 *.pyc
+
+# История моделей хранится в git. Старые генераторы ещё могут создавать эти папки.
+/ArtSource_Backup/
+/Assets_Art_Backup/
+/Assets/_Recovery/
+/Assets/_Recovery.meta
+/artifacts/reports/unity-command-schema.json

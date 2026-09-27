@@ -1,0 +1,5 @@
+# Архивы и результаты генерации доступны через rg --no-ignore <путь>.
+.agents/
+artifacts/
+ArtSource_Backup/
+Assets_Art_Backup/
