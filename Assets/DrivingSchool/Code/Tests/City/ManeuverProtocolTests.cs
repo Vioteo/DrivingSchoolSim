@@ -145,6 +145,26 @@ namespace DrivingSchool.Tests
             Assert.That(bEntered, Is.True, "the waiting car got the junction");
         }
 
+        /// <summary>
+        /// T60: a lease that outlived its permit (two junctions close together) used to make the player's claim loop for
+        /// ever on the main thread — Unity froze when the player drove into such a junction. The tick must return.
+        /// </summary>
+        [Test]
+        public void AStaleLeaseDoesNotHangThePlayersClaim()
+        {
+            var run = Cross(); var index = run.Director.Graph;
+            run.Director.AddVehicle(Into("east", "west"), 1, 0, id: "ai");
+            // "ai" holds zones of its own crossing movement under a claim its permit knows nothing about.
+            var stale = new ReservationClaim { Id = "stale", Keys = JunctionPolicy.ZoneKeys(index, "c/c:East.in>West.out") };
+            Assert.That(run.Director.Reservations.TryReserve("ai", stale, 1e9, out _), Is.True);
+            var p = index.Path("c/c:South.in>North.out").Line.PointAt(3);
+            run.Director.SetPlayer(new PlayerSample { Present = true, X = p.x, Z = p.z, HeadingRad = 0, SpeedMps = 5, LengthM = 4.4, WidthM = 1.8 });
+            var tick = System.Threading.Tasks.Task.Run(() => run.Step());
+            Assert.That(tick.Wait(5000), Is.True, "the director tick did not return");
+            Assert.That(run.Director.Reservations.Entries.Any(e => e.OwnerId == "ai" && e.Claim.Id == "stale"), Is.False, "the stale lease gave way to the player");
+            Assert.That(run.Director.Reservations.Entries.Any(e => e.OwnerId == TrafficDirector.PlayerId), Is.True);
+        }
+
         [Test]
         public void PlayersVisibleClaimIsRespected()
         {

@@ -187,7 +187,7 @@ namespace DrivingSchool.Editor
             // The railway corridor (T56): track across the level crossing module, west to east over the whole district.
             r.rail = layout.instances.First(m => m.id == RailInstance);
             var railCentre = RailPoint(r.rail, 0);
-            roadBounds.Add(new Bounds(new Vector3(railCentre.x, 0, railCentre.z), new Vector3(600f, 1f, 9f)));
+            roadBounds.Add(new Bounds(new Vector3(railCentre.x, 0, railCentre.z), new Vector3(600f, 1f, 24f)));   // no houses within 12 m of the track
             r.houses = PlaceHouses(layout, roadBounds, houses, layerProps);
             PlaceLamps(layout, lamps, layerProps);
 
@@ -205,8 +205,8 @@ namespace DrivingSchool.Editor
             var peds = new[] { "DS_Pedestrian_A", "DS_Pedestrian_B", "DS_Pedestrian_C", "DS_Pedestrian_Child_A", "DS_Pedestrian_Child_B" }
                 .Select(x => AssetDatabase.LoadAssetAtPath<GameObject>(Pedestrians + x + ".prefab")).Where(x => x != null).ToArray();
             SetArray(so.FindProperty("pedestrianPrefabs"), peds);
-            so.FindProperty("maxVehicles").intValue = 10;
-            so.FindProperty("maxPedestrians").intValue = 12;
+            so.FindProperty("maxVehicles").intValue = 12;
+            so.FindProperty("maxPedestrians").intValue = 16;
             so.FindProperty("seed").intValue = 7;
             so.FindProperty("groundMask").intValue = 1 << layerGround;
             so.ApplyModifiedPropertiesWithoutUndo();
@@ -271,12 +271,13 @@ namespace DrivingSchool.Editor
             int i = 0;
             foreach (var (m, dz) in StraightPieces(layout))
             {
-                if (i++ % 2 == 1) continue;
+                // A lamp on every 20 m piece, sides alternating (T64: one side every 40 m left dark stretches).
+                int side = i++ % 2 == 0 ? 1 : -1;
                 var rot = Quaternion.Euler(0, m.yawDeg, 0);
                 float kerb = m.catalogId == Straight ? 5.4f : 8.1f;
-                var pos = new Vector3((float)m.x, (float)m.y + SidewalkTop, (float)m.z) + rot * new Vector3(kerb, 0f, 10f + (float)dz);
-                // The arm of TK_Lamp_7m points along local +Z: turn it over the road (towards −X of the module).
-                var go = Place(Kit + "TK_Lamp_7m.prefab", pos, m.yawDeg - 90f, parent);
+                var pos = new Vector3((float)m.x, (float)m.y + SidewalkTop, (float)m.z) + rot * new Vector3(side * kerb, 0f, 10f + (float)dz);
+                // The arm of TK_Lamp_7m points along local +Z: turn it over the road.
+                var go = Place(Kit + "TK_Lamp_7m.prefab", pos, m.yawDeg - 90f * side, parent);
                 SetLayer(go, layer); go.isStatic = true;
             }
             // Junctions and the roundabout (T64): a lamp on every corner, its arm towards the centre.

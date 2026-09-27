@@ -31,6 +31,7 @@ namespace DrivingSchool.Editor
             if (paths.Length < 32) throw new InvalidOperationException("Expected at least 18 signs, 11 supplementary plates and 3 signals.");
             var report = new List<string> { "Traffic v1 — Unity import / prefab / signal checks", DateTime.UtcNow.ToString("O") };
             foreach (var path in paths) Import(path.Replace('\\', '/'));
+            EnsureLampEmission();
             EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             int signIndex = 0, signalIndex = 0, plaqueIndex = 0;
             foreach (var path in paths)
@@ -117,6 +118,27 @@ namespace DrivingSchool.Editor
                 importer.AddRemap(new AssetImporter.SourceAssetIdentifier(source), material);
             }
             importer.SaveAndReimport();
+        }
+
+        /// <summary>
+        /// Lit signal lamps (Traffic_*On) must glow (T64): the emission keyword was set only when a material was created and
+        /// URP dropped it again (GI flag "emissive is black"), so at night a red light was a dark disc. Run on every build.
+        /// </summary>
+        public static int EnsureLampEmission()
+        {
+            int n = 0;
+            foreach (var guid in AssetDatabase.FindAssets("t:Material", new[] { Materials }))
+            {
+                var m = AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GUIDToAssetPath(guid));
+                if (m == null || !m.name.EndsWith("On", StringComparison.Ordinal) || !m.HasProperty("_BaseColor")) continue;
+                var c = m.GetColor("_BaseColor");
+                m.SetColor("_EmissionColor", new Color(c.r, c.g, c.b) * 4f);   // HDR: bloom picks it up at night
+                m.EnableKeyword("_EMISSION");
+                m.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+                EditorUtility.SetDirty(m); n++;
+            }
+            AssetDatabase.SaveAssets();
+            return n;
         }
 
         static Bounds BoundsOf(IEnumerable<Renderer> source)

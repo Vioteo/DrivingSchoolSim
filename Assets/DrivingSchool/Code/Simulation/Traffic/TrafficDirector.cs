@@ -346,12 +346,15 @@ namespace DrivingSchool.Simulation.Traffic
             if (connection == null) return;
             var claim = new ReservationClaim { Id = "player:" + connection, Keys = JunctionPolicy.ZoneKeys(index, connection) };
             // Safety first: AI permits not yet used give way to the player.
-            string owner;
-            while ((owner = reservations.ConflictingOwner(claim, PlayerId)) != null)
+            // Every owner is handled once: a lease can outlive the permit it was made for (two junctions close together,
+            // T55), and releasing it by the permit's claim id then freed nothing — this loop spun for ever (T60).
+            string owner; var handled = new HashSet<string>();
+            while ((owner = reservations.ConflictingOwner(claim, PlayerId)) != null && handled.Add(owner))
             {
                 var a = agents.FirstOrDefault(x => x.Id == owner);
                 if (a == null || a.Car.CurrentPathId == a.PermitConnection) break; // inside the junction: cannot be undone
-                reservations.Release(a.Id, a.PermitClaim);
+                reservations.ReleaseConflicting(a.Id, claim);
+                if (a.PermitClaim != null) reservations.Release(a.Id, a.PermitClaim);
                 pending.Add(new ManeuverNotice { ToId = a.Id, FromId = PlayerId, SubjectId = a.PermitConnection, Kind = NoticeKind.Cancel, IssuedTick = tick });
                 a.PermitConnection = null; a.PermitClaim = null;
             }

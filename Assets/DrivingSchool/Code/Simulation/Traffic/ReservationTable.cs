@@ -51,6 +51,9 @@ namespace DrivingSchool.Simulation.Traffic
 
         public void ReleaseAll(string ownerId) => entries.RemoveAll(e => e.OwnerId == ownerId);
 
+        /// <summary>Releases every lease of <paramref name="ownerId"/> that conflicts with <paramref name="claim"/>, whatever its claim id.</summary>
+        public int ReleaseConflicting(string ownerId, ReservationClaim claim) => entries.RemoveAll(e => e.OwnerId == ownerId && Conflicts(e.Claim, claim));
+
         /// <summary>Removes and returns leases that ended at or before <paramref name="simSeconds"/>.</summary>
         public List<Entry> ExpireUntil(double simSeconds)
         {

@@ -370,21 +370,20 @@ namespace DrivingSchool.Editor
                 // The arm of TK_Lamp_7m points along local +Z: turn it over the road.
                 bool onRoadA = p.z < RoadAEndZ;
                 var rot = Quaternion.Euler(0f, onRoadA ? -90f : 0f, 0f);
-                Transform post; Vector3 lightPos; Renderer lens = null;
                 if (lamp != null)
                 {
-                    var o = (GameObject)PrefabUtility.InstantiatePrefab(lamp, props); o.transform.SetPositionAndRotation(p, rot); post = o.transform;
-                    lightPos = post.TransformPoint(new Vector3(0f, 6.78f, 1.3f)); // under the lamp housing
-                    var l = Box("Lamp lens", lightPos + Vector3.up * 0.03f, new Vector3(0.34f, 0.02f, 0.56f), lampLens, post, 0, false);
-                    l.transform.rotation = rot; l.isStatic = false; lens = l.GetComponent<Renderer>();
-                    lens.shadowCastingMode = ShadowCastingMode.Off;
+                    var o = (GameObject)PrefabUtility.InstantiatePrefab(lamp, props); o.transform.SetPositionAndRotation(p, rot);
+                    AddStreetLight(o.transform);
                 }
-                else { post = Box("Lamp post", p + Vector3.up * 3.5f, new Vector3(0.15f, 7f, 0.15f), concrete, props, 0, false).transform; lightPos = p + Vector3.up * 6.8f; }
-                var light = new GameObject("Street light").AddComponent<Light>(); light.transform.SetParent(post, true);
-                light.transform.position = lightPos; light.type = LightType.Spot; light.spotAngle = 135f; light.innerSpotAngle = 70f;
-                light.range = 32f; light.intensity = 45f; light.color = new Color(1f, 0.74f, 0.45f); // high-pressure sodium look
-                light.transform.rotation = Quaternion.Euler(90, 0, 0); light.shadows = LightShadows.None;
-                var view = post.gameObject.AddComponent<StreetLampView>(); view.lampLight = light; view.lens = lens;
+                else
+                {
+                    var post = Box("Lamp post", p + Vector3.up * 3.5f, new Vector3(0.15f, 7f, 0.15f), concrete, props, 0, false).transform;
+                    var light = new GameObject("Street light").AddComponent<Light>(); light.transform.SetParent(post, true);
+                    light.transform.position = p + Vector3.up * 6.8f; light.type = LightType.Spot; light.spotAngle = 120f; light.innerSpotAngle = 70f;
+                    light.range = 40f; light.intensity = 120f; light.color = new Color(1f, 0.74f, 0.45f);
+                    light.transform.rotation = Quaternion.Euler(90, 0, 0); light.shadows = LightShadows.None;
+                    var view = post.gameObject.AddComponent<StreetLampView>(); view.lampLight = light;
+                }
             }
         }
 
@@ -666,15 +665,20 @@ namespace DrivingSchool.Editor
             var bB = PlaceKit(Kit + "TK_RailwayBarrier.prefab", L(-4.25, 15), yaw + 180f, root, true);
             var sA = PlaceKit(Kit + "TK_RailwaySignal.prefab", L(5.0, 4), yaw, root, true);
             var sB = PlaceKit(Kit + "TK_RailwaySignal.prefab", L(-5.0, 16), yaw + 180f, root, true);
-            float west = TestRangeLayout.DistrictMinX + 3f, east = -RoadWidth / 2 - 8f;
+            // The track runs just south of the start of road A (z −30) and on to the east, so the train comes from far away.
+            float west = TestRangeLayout.DistrictMinX + 3f, east = 150f;
+            if (centre.z > RoadAStartZ - 3.5f) throw new Exception("Town railway would cross road A: track z " + centre.z);
             BuildTrack(root, centre.z, centre.x, west, east, 6.2f);
             var train = BuildTrain(root, out float trainLength, centre.z, east - 2f);
             var view = root.gameObject.AddComponent<RailwayCrossingView>();
             view.barriers = new[] { bA, bB }; view.signals = new[] { sA, sB }; view.train = train;
             view.crossingCentre = centre; view.trainDirection = Vector3.left;
             view.trainLength = trainLength; view.trackHalfLength = Mathf.Min(east - centre.x, centre.x - west) - 3f;
+            // A town train at 40 km/h: from the first red flash to the train ≈ 14 s, the booms are down after 4 + 6 s.
+            view.trainSpeedKmh = 40f;
             view.trainArrivesAfter = Mathf.Min(14f, view.trackHalfLength / (view.trainSpeedKmh / 3.6f));
             view.warningBeforeLowering = 4f; view.lowerSeconds = 6f; view.autoIntervalSeconds = 90f;
+            if (view.trainArrivesAfter < view.warningBeforeLowering + view.lowerSeconds + 2f) throw new Exception("Town railway: the train would arrive before the booms are down");
             SetLayer(root.gameObject, LayerProps);
             // Bots and pedestrians: every signal group of the crossing module follows this crossing.
             var host = new SerializedObject(district.traffic);
@@ -810,12 +814,14 @@ namespace DrivingSchool.Editor
         static void AddStreetLight(Transform post)
         {
             var rot = post.rotation;
-            Vector3 lightPos = post.TransformPoint(new Vector3(0f, 6.78f, 1.3f));
-            var l = Box("Lamp lens", lightPos + Vector3.up * 0.03f, new Vector3(0.34f, 0.02f, 0.56f), lampLens, post, 0, false);
+            Vector3 lensPos = post.TransformPoint(new Vector3(0f, 6.78f, 1.3f));
+            // The light sits at the end of the arm with a 120° cone, so the post itself is not lit at arm's length (T64).
+            Vector3 lightPos = post.TransformPoint(new Vector3(0f, 6.75f, 1.9f));
+            var l = Box("Lamp lens", lensPos + Vector3.up * 0.03f, new Vector3(0.34f, 0.02f, 0.56f), lampLens, post, 0, false);
             l.transform.rotation = rot; l.isStatic = false; var lens = l.GetComponent<Renderer>(); lens.shadowCastingMode = ShadowCastingMode.Off;
             var light = new GameObject("Street light").AddComponent<Light>(); light.transform.SetParent(post, true);
-            light.transform.position = lightPos; light.type = LightType.Spot; light.spotAngle = 135f; light.innerSpotAngle = 70f;
-            light.range = 32f; light.intensity = 45f; light.color = new Color(1f, 0.74f, 0.45f);
+            light.transform.position = lightPos; light.type = LightType.Spot; light.spotAngle = 120f; light.innerSpotAngle = 70f;
+            light.range = 40f; light.intensity = 120f; light.color = new Color(1f, 0.74f, 0.45f);
             light.transform.rotation = Quaternion.Euler(90, 0, 0); light.shadows = LightShadows.None;
             var view = post.gameObject.AddComponent<StreetLampView>(); view.lampLight = light; view.lens = lens;
         }

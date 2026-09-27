@@ -238,7 +238,7 @@ namespace DrivingSchool.Editor
                 beamGo.transform.localPosition = new Vector3(0f, beamY, b.max.z - 0.15f);
                 beamGo.transform.localRotation = Quaternion.Euler(4f, 0f, 0f);
                 var beam = beamGo.AddComponent<Light>();
-                beam.type = LightType.Spot; beam.spotAngle = 100f; beam.innerSpotAngle = 55f; beam.range = 55f; beam.intensity = 140f;
+                beam.type = LightType.Spot; beam.spotAngle = 100f; beam.innerSpotAngle = 55f; beam.range = 60f; beam.intensity = 320f;   // like the player's low beam (VehicleLightsView)
                 beam.color = new Color(1f, 0.95f, 0.85f); beam.shadows = LightShadows.None; beam.enabled = false;
                 AddDriver(v, root.transform, visual.transform);
                 var audit = VehicleModelContract.Audit(root.transform, visual.transform);
