@@ -23,6 +23,8 @@ namespace DrivingSchool.Input
         public float vehicleSpeedMps;
         public bool automatic;              // AT: gear keys drive the selector
         public Keyboard KeyboardDevice { get; set; }
+        /// <summary>Последняя попытка вывести селектор АКПП из P была без тормоза и не сработала (для подсказки).</summary>
+        public bool ShiftLockRefused { get; private set; }
 
         float steering;
         float throttle;
@@ -57,7 +59,7 @@ namespace DrivingSchool.Input
         public void ResetToParked()
         {
             Reset();
-            requestedGear = 0; selector = AutomaticSelector.P; ignition = false; handbrake = true;
+            requestedGear = 0; selector = AutomaticSelector.P; ignition = false; handbrake = true; ShiftLockRefused = false;
             hazard = highBeam = flash = horn = washer = false; headlights = HeadlightMode.Off; wipers = WiperMode.Off;
         }
 
@@ -103,8 +105,10 @@ namespace DrivingSchool.Input
             else if (kb.digit4Key.wasPressedThisFrame) gear = 4;
             else if (kb.digit5Key.wasPressedThisFrame) gear = 5;
             else if (kb.digit6Key.wasPressedThisFrame) gear = 6;
+            if (gear != -99 && ShiftLocked(automatic, selector, brk)) { ShiftLockRefused = true; gear = -99; }
             if (gear != -99)
             {
+                ShiftLockRefused = false;
                 requestedGear = gear;
                 selector = gear > 0 ? AutomaticSelector.D : gear < 0 ? AutomaticSelector.R : AutomaticSelector.N;
             }
@@ -125,6 +129,10 @@ namespace DrivingSchool.Input
             washer = kb.bKey.isPressed;
             if (kb.tKey.wasPressedThisFrame) seatbelt = !seatbelt;
         }
+
+        /// <summary>Блокировка селектора АКПП (как в настоящей машине): из P рычаг выходит только с нажатым тормозом.</summary>
+        public static bool ShiftLocked(bool automatic, AutomaticSelector current, bool brakeHeld) =>
+            automatic && current == AutomaticSelector.P && !brakeHeld;
 
         public DriverCommand Read(long tick)
         {
