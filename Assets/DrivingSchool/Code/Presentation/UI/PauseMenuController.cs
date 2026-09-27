@@ -21,12 +21,16 @@ namespace DrivingSchool.Presentation.UI
         public Button restartButton;
         public Button exitToMenuButton;
         public Button settingsButton;
+        public Button finishButton;
         public UITheme defaultTheme;
 
         [Header("Намерения")]
         public UnityEvent OnRestartRequested = new UnityEvent();
         public UnityEvent OnExitToMenuRequested = new UnityEvent();
         public UnityEvent OnSettingsRequested = new UnityEvent();
+
+        /// <summary>«Завершить поездку»: обработчик показывает разбор (DriveSession). Без обработчика — выход в меню.</summary>
+        public event System.Action FinishRequested;
 
         /// <summary>Экран настроек, который открывает пункт «Настройки» (добавляет AppNavigator).</summary>
         public SettingsScreenController settings;
@@ -51,9 +55,10 @@ namespace DrivingSchool.Presentation.UI
             if (restartButton != null) restartButton.onClick.AddListener(() => LeaveWith(OnRestartRequested, "restart"));
             if (exitToMenuButton != null) exitToMenuButton.onClick.AddListener(() => LeaveWith(OnExitToMenuRequested, "exit-to-menu"));
             if (settingsButton != null) settingsButton.onClick.AddListener(OpenSettings);
+            if (finishButton != null) finishButton.onClick.AddListener(Finish);
 
             chain.Clear();
-            foreach (var b in new[] { resumeButton, restartButton, settingsButton, exitToMenuButton })
+            foreach (var b in new[] { resumeButton, finishButton, restartButton, settingsButton, exitToMenuButton })
                 if (b != null) chain.Add(b);
             for (int i = 0; i < chain.Count; i++)
                 chain[i].navigation = new Navigation
@@ -76,9 +81,19 @@ namespace DrivingSchool.Presentation.UI
             settings.Open(true, () => { if (panel != null && IsPaused) { panel.SetActive(true); if (chain.Count > 0) Select(chain[0]); } });
         }
 
+        /// <summary>Завершить поездку: пауза остаётся (время стоит), панель паузы уступает место разбору.</summary>
+        public void Finish()
+        {
+            if (FinishRequested == null) { LeaveWith(OnExitToMenuRequested, "exit-to-menu"); return; }
+            if (panel != null) panel.SetActive(false);
+            Debug.Log("[PauseMenu] intent: finish");
+            FinishRequested.Invoke();
+        }
+
         void Update()
         {
             if (SettingsScreenController.IsAnyOpen || SettingsScreenController.ClosedThisFrame) return;   // Esc обрабатывают настройки
+            if (DebriefView.IsOpen) return;                                                                // и разбор поездки
             if (TogglePressed()) { if (IsPaused) Resume(); else Pause(); return; }
             if (!IsPaused) return;
 

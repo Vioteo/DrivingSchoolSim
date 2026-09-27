@@ -13,6 +13,7 @@ namespace DrivingSchool.Presentation.UI
         public MainMenuController menu;
         public GameObject pauseMenuPrefab;
         public GameObject settingsPrefab;
+        public GameObject hudPrefab;
         [Tooltip("Экран настроек в сцене меню")] public SettingsScreenController settings;
         [Tooltip("Имя сцены из Build Settings")] public string driveScene = "VehicleTestRange";
         public GameObject loadingOverlay;
@@ -27,7 +28,7 @@ namespace DrivingSchool.Presentation.UI
         {
             Time.timeScale = 1f;
             AudioListener.pause = false;
-            AppNavigator.Configure(pauseMenuPrefab, settingsPrefab);
+            AppNavigator.Configure(pauseMenuPrefab, settingsPrefab, hudPrefab);
             if (loadingOverlay != null) loadingOverlay.SetActive(false);
             if (noticePanel != null) noticePanel.SetActive(false);
             if (menu == null) return;

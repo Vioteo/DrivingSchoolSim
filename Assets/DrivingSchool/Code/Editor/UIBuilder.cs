@@ -138,61 +138,7 @@ namespace DrivingSchool.Editor
         // ==========================================
         // 1. HUD
         // ==========================================
-        private static void BuildHUD()
-        {
-            var canvas = CreateCanvas("HUD");
-            
-            // Speedometer: Bottom Left (420 x 200)
-            var speedo = CreateFixed("Speedometer", canvas.transform, new Vector2(0, 0), new Vector2(420, 200), new Vector2(50, 50));
-            AddImage(speedo.gameObject, PanelColor);
-            
-            // Speed number (Left side)
-            var speedText = CreateFixed("SpeedText", speedo, new Vector2(0, 0.5f), new Vector2(150, 80), new Vector2(30, 20), new Vector2(0, 0.5f));
-            AddText(speedText.gameObject, "48", 72, TextWhite, TextAlignmentOptions.Left, FontStyles.Bold);
-            
-            // Speed label (below speed number)
-            var speedLabel = CreateFixed("SpeedLabel", speedo, new Vector2(0, 0.5f), new Vector2(150, 30), new Vector2(30, -35), new Vector2(0, 0.5f));
-            AddText(speedLabel.gameObject, "km/h", 22, TextDim, TextAlignmentOptions.Left);
-
-            // Gear Box (Center of Speedometer)
-            var gearBox = CreateFixed("GearBox", speedo, new Vector2(0, 0.5f), new Vector2(80, 100), new Vector2(175, 0), new Vector2(0, 0.5f));
-            AddImage(gearBox.gameObject, new Color(0.08f, 0.10f, 0.13f));
-            var gearTxt = CreateFill("GearTxt", gearBox);
-            AddText(gearTxt.gameObject, "<size=65%><color=#8090A0>GEAR</color></size>\n<size=150%><b>3</b></size>", 22, TextWhite, TextAlignmentOptions.Center, FontStyles.Bold);
-
-            // Speed Limit Sign inside speedometer (Right side): Authentic Russian 3.24 round sign
-            var sign = CreateFixed("SpeedLimit", speedo, new Vector2(1, 0.5f), new Vector2(110, 110), new Vector2(-25, 0), new Vector2(1, 0.5f));
-            AddImage(sign.gameObject, RedColor); // Outer red ring
-            var signWhite = CreateFill("White", sign, 10, 10, 10, 10);
-            AddImage(signWhite.gameObject, Color.white);
-            var signText = CreateFill("LimitText", signWhite);
-            AddText(signText.gameObject, "60", 48, Color.black, TextAlignmentOptions.Center, FontStyles.Bold);
-
-            // Instructor Hint: Bottom Center
-            var hint = CreateFixed("InstructorHint", canvas.transform, new Vector2(0.5f, 0), new Vector2(750, 120), new Vector2(0, 50), new Vector2(0.5f, 0));
-            AddImage(hint.gameObject, AccentGold);
-            var innerHint = CreateFill("Inner", hint, 3, 3, 3, 3);
-            AddImage(innerHint.gameObject, PanelColor);
-
-            var hintText = CreateFill("HintText", innerHint, 25, 25, 15, 15);
-            AddText(hintText.gameObject, "<color=#FFD700><b>Instructor:</b></color> Prepare to turn right at the intersection. Check right mirror and activate turn signal.", 24, TextWhite, TextAlignmentOptions.Left);
-
-            // GPS / Navigator: Top Right
-            var gps = CreateFixed("GPS", canvas.transform, new Vector2(1, 1), new Vector2(320, 260), new Vector2(-50, -50), new Vector2(1, 1));
-            AddImage(gps.gameObject, PanelColor);
-            
-            var gpsTop = CreateFixed("TopBar", gps, new Vector2(0.5f, 1), new Vector2(320, 55), new Vector2(0, 0), new Vector2(0.5f, 1));
-            AddImage(gpsTop.gameObject, CardBgColor);
-            var gpsTopText = CreateFill("Text", gpsTop, 15, 15, 0, 0);
-            AddText(gpsTopText.gameObject, "Turn Right in 80 m", 24, AccentGold, TextAlignmentOptions.Center, FontStyles.Bold);
-
-            var gpsMap = CreateFill("MapArea", gps, 15, 15, 70, 15);
-            AddImage(gpsMap.gameObject, new Color(0.08f, 0.10f, 0.12f));
-            var gpsStreet = CreateFixed("Street", gpsMap, new Vector2(0.5f, 0), new Vector2(280, 30), new Vector2(0, 10), new Vector2(0.5f, 0));
-            AddText(gpsStreet.gameObject, "ul. Tsentralnaya", 18, TextDim, TextAlignmentOptions.Center);
-
-            SavePrefab(canvas, "HUD");
-        }
+        // BuildHUD — в UIBuilder.Hud.cs (T47).
 
         // ==========================================
         // 2. MAIN MENU
@@ -667,25 +613,26 @@ namespace DrivingSchool.Editor
             var overlay = CreateFill("Overlay", canvas.transform);
             var shade = AddImage(overlay.gameObject, new Color(0, 0, 0, 0.72f));
             shade.raycastTarget = true;
-            var panel = CreateFixed("Panel", overlay, new Vector2(0.5f, 0.5f), new Vector2(640, 500), Vector2.zero);
+            var panel = CreateFixed("Panel", overlay, new Vector2(0.5f, 0.5f), new Vector2(640, 580), Vector2.zero);
             AddThemedImage(panel.gameObject, ThemeRole.BgPanel, theme);
             var top = CreateFixed("AccentLine", panel, new Vector2(0.5f, 1), new Vector2(640, 6), Vector2.zero, new Vector2(0.5f, 1));
             AddThemedImage(top.gameObject, ThemeRole.Accent, theme);
             var title = CreateFixed("Title", panel, new Vector2(0, 1), new Vector2(580, 60), new Vector2(40, -36), new Vector2(0, 1));
             AddThemedText(title.gameObject, "Пауза", 44, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Bold);
 
-            var items = CreateFixed("Items", panel, new Vector2(0, 1), new Vector2(560, 4 * 80), new Vector2(40, -120), new Vector2(0, 1));
-            string[] labels = { "Продолжить", "Начать заново", "Настройки", "Выйти в главное меню" };
+            var items = CreateFixed("Items", panel, new Vector2(0, 1), new Vector2(560, 5 * 80), new Vector2(40, -120), new Vector2(0, 1));
+            string[] labels = { "Продолжить", "Завершить поездку", "Начать заново", "Настройки", "Выйти в главное меню" };
             var buttons = new Button[labels.Length];
             for (int i = 0; i < labels.Length; i++)
                 buttons[i] = CreateMenuItem($"Item{i}_{labels[i]}", items, new Vector2(0, -i * 80), new Vector2(560, 72), labels[i], 30, theme, null);
             pause.resumeButton = buttons[0];
-            pause.restartButton = buttons[1];
-            pause.settingsButton = buttons[2];
-            pause.exitToMenuButton = buttons[3];
+            pause.finishButton = buttons[1];
+            pause.restartButton = buttons[2];
+            pause.settingsButton = buttons[3];
+            pause.exitToMenuButton = buttons[4];
 
             var hint = CreateFixed("Hint", panel, new Vector2(0, 0), new Vector2(580, 32), new Vector2(40, 20), new Vector2(0, 0));
-            AddThemedText(hint.gameObject, "↑↓ — выбор     Enter — выбрать     Esc — продолжить", 20, ThemeRole.Muted, theme, TextAlignmentOptions.Left);
+            AddThemedText(hint.gameObject, "↑↓ выбор   Enter выбрать   Esc продолжить   F4 клавиши", 20, ThemeRole.Muted, theme, TextAlignmentOptions.Left);
 
             pause.panel = overlay.gameObject;
             overlay.gameObject.SetActive(false);
@@ -811,6 +758,7 @@ namespace DrivingSchool.Editor
 
             var flow = new GameObject("AppFlow").AddComponent<MainMenuFlow>();
             flow.settingsPrefab = settingsPrefab;
+            flow.hudPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/DrivingSchool/Prefabs/UI/HUD.prefab");
             flow.settings = settingsGo != null ? settingsGo.GetComponent<SettingsScreenController>() : null;
             flow.menu = menuGo.GetComponent<MainMenuController>();
             flow.pauseMenuPrefab = pausePrefab;
