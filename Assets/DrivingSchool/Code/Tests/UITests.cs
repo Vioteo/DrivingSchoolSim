@@ -89,8 +89,8 @@ namespace DrivingSchool.Tests
             {
                 var c = m.C;
                 Assert.That(c.examButton.interactable, Is.False, "Экзаменационный маршрут ещё не реализован");
-                Assert.That(c.continueButton.navigation.selectOnUp, Is.EqualTo(c.exitButton));
-                Assert.That(c.exitButton.navigation.selectOnDown, Is.EqualTo(c.continueButton));
+                Assert.That(c.lessonsButton.navigation.selectOnUp, Is.EqualTo(c.exitButton));
+                Assert.That(c.exitButton.navigation.selectOnDown, Is.EqualTo(c.lessonsButton));
                 Assert.That(c.theoryButton.navigation.selectOnDown, Is.EqualTo(c.settingsButton));
                 Assert.That(c.settingsButton.navigation.selectOnUp, Is.EqualTo(c.theoryButton));
             }
@@ -128,8 +128,8 @@ namespace DrivingSchool.Tests
                 Assert.DoesNotThrow(() => c.MoveFocus(-1));
                 Assert.That(c.Focused, Is.EqualTo(c.exitButton), "Без фокуса Shift+Tab встаёт на последний пункт");
                 c.MoveFocus(1);
-                Assert.That(c.Focused, Is.EqualTo(c.continueButton), "Переход по кругу");
-                for (int i = 0; i < 3; i++) c.MoveFocus(1);
+                Assert.That(c.Focused, Is.EqualTo(c.lessonsButton), "Переход по кругу");
+                for (int i = 0; i < 2; i++) c.MoveFocus(1);
                 Assert.That(c.Focused, Is.EqualTo(c.settingsButton), "Недоступный пункт пропускается");
             }
         }

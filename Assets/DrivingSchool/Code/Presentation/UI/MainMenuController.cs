@@ -16,7 +16,6 @@ namespace DrivingSchool.Presentation.UI
     public sealed class MainMenuController : MonoBehaviour
     {
         [Header("Пункты меню (сверху вниз)")]
-        public Button continueButton;
         public Button lessonsButton;
         public Button theoryButton;
         public Button examButton;
@@ -31,7 +30,6 @@ namespace DrivingSchool.Presentation.UI
         public UITheme defaultTheme;
 
         [Header("Намерения")]
-        public UnityEvent OnStartLessonRequested = new UnityEvent();
         public UnityEvent OnSelectLessonRequested = new UnityEvent();
         public UnityEvent OnTheoryRequested = new UnityEvent();
         public UnityEvent OnSettingsRequested = new UnityEvent();
@@ -60,7 +58,6 @@ namespace DrivingSchool.Presentation.UI
             initialized = true;
             if (UIThemeState.Current == null) UIThemeState.Set(defaultTheme);
 
-            Wire(continueButton, () => Raise(OnStartLessonRequested, "start-lesson"));
             Wire(lessonsButton, () => Raise(OnSelectLessonRequested, "select-lesson"));
             Wire(theoryButton, () => Raise(OnTheoryRequested, "theory"));
             Wire(settingsButton, () => Raise(OnSettingsRequested, "settings"));
@@ -72,7 +69,7 @@ namespace DrivingSchool.Presentation.UI
             if (examButton != null) { examButton.interactable = false; examButton.navigation = new Navigation { mode = Navigation.Mode.None }; }
 
             menuChain.Clear();
-            foreach (var b in new[] { continueButton, lessonsButton, theoryButton, examButton, settingsButton, exitButton })
+            foreach (var b in new[] { lessonsButton, theoryButton, examButton, settingsButton, exitButton })
                 if (b != null && b.interactable) menuChain.Add(b);
             dialogChain.Clear();
             foreach (var b in new[] { exitCancelButton, exitConfirmButton })
@@ -88,7 +85,7 @@ namespace DrivingSchool.Presentation.UI
         {
             var es = EventSystem.current;
             if (es == null) return;
-            if (SettingsScreenController.ClosedThisFrame) return;   // этот Esc закрыл настройки
+            if (SettingsScreenController.ClosedThisFrame || LessonCatalogController.ClosedThisFrame) return;   // этот Esc закрыл настройки
             if (CancelPressed(es)) { HandleCancel(); return; }
 
             var kb = Keyboard.current;

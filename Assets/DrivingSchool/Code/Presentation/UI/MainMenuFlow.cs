@@ -5,13 +5,12 @@ using UnityEngine;
 namespace DrivingSchool.Presentation.UI
 {
     /// <summary>
-    /// Связка главного меню со сценами (T46). Живёт в сцене MainMenu, её собирает UIBuilder (Driving School/Build Main Menu scene).
-    /// «Продолжить занятие» — свободная поездка по тестовому полигону, «Занятия» — пошаговый урок 1 «Начало движения»
-    /// на учебной улице (T49; экрана выбора урока пока нет); «Теория ПДД» — «в разработке»; «Настройки» — экран настроек (T43).
+    /// Главное меню и каталог заданий передают запуск сцены координатору AppNavigator.
     /// </summary>
     public sealed class MainMenuFlow : MonoBehaviour
     {
         public MainMenuController menu;
+        public LessonCatalogController catalog;
         public GameObject pauseMenuPrefab;
         public GameObject settingsPrefab;
         public GameObject hudPrefab;
@@ -35,8 +34,13 @@ namespace DrivingSchool.Presentation.UI
             if (noticePanel != null) noticePanel.SetActive(false);
             if (menu == null) return;
             menu.Initialize();
-            menu.OnStartLessonRequested.AddListener(StartDrive);
-            menu.OnSelectLessonRequested.AddListener(StartFirstLesson);
+            if (catalog != null)
+            {
+                catalog.gameObject.SetActive(false);
+                catalog.Initialize();
+                catalog.LaunchRequested += id => { if (id == LessonLaunch.FirstLesson) StartFirstLesson(); else if (id == LessonCatalogController.FreeDrive) StartDrive(); };
+            }
+            menu.OnSelectLessonRequested.AddListener(OpenAssignments);
             menu.OnTheoryRequested.AddListener(() => ShowNotice("Теория ПДД — в разработке. Сейчас доступен тестовый полигон."));
             menu.OnSettingsRequested.AddListener(OpenSettings);
             menu.OnExitConfirmed.AddListener(AppNavigator.Quit);
@@ -47,21 +51,31 @@ namespace DrivingSchool.Presentation.UI
             if (noticePanel != null && noticePanel.activeSelf && Time.unscaledTime > noticeUntil) noticePanel.SetActive(false);
         }
 
+        public void OpenAssignments()
+        {
+            if (loading) return;
+            if (catalog == null) { ShowNotice("Задания пока недоступны."); return; }
+            menu.gameObject.SetActive(false);
+            catalog.Open(() => { menu.gameObject.SetActive(true); menu.Select(menu.lessonsButton); });
+        }
+
         public void StartDrive() => Launch(null, driveScene);
 
         public void StartFirstLesson()
         {
             if (!Application.CanStreamedLevelBeLoaded(LessonLaunch.FirstLessonScene))
-            { ShowNotice("Сцена урока не собрана: Driving School → Lessons → Build lesson street scene"); return; }
+            { ShowNotice("Урок пока недоступен. Выберите другое задание."); return; }
             Launch(LessonLaunch.FirstLesson, LessonLaunch.FirstLessonScene);
         }
 
         void Launch(string lessonId, string scene)
         {
             if (loading) return;
+            if (!Application.CanStreamedLevelBeLoaded(scene)) { ShowNotice("Задание пока недоступно. Выберите другое задание."); return; }
             LessonLaunch.LessonId = lessonId;
             sceneToLoad = scene;
             loading = true;
+            if (catalog != null) catalog.gameObject.SetActive(false);
             if (loadingOverlay != null) loadingOverlay.SetActive(true);
             if (menu != null) menu.enabled = false; // клавиши меню не срабатывают во время загрузки
             StartCoroutine(LoadNextFrame());

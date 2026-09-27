@@ -162,18 +162,17 @@ namespace DrivingSchool.Editor
             AddThemedText(subtitle.gameObject, "Подготовка к практическому экзамену · категория B", 26, ThemeRole.Muted, theme, TextAlignmentOptions.Left);
 
             // Пункты сверху вниз; порядок = порядок навигации. Фон справа свободен под 3D-сцену меню.
-            var list = CreateFixed("Items", bg, new Vector2(0, 1), new Vector2(560, 6 * 80), new Vector2(96, -290), new Vector2(0, 1));
-            string[] labels = { "Продолжить занятие", "Занятия", "Теория ПДД", "Экзаменационный маршрут", "Настройки", "Выход" };
+            var list = CreateFixed("Items", bg, new Vector2(0, 1), new Vector2(560, 5 * 80), new Vector2(96, -290), new Vector2(0, 1));
+            string[] labels = { "Задания", "Теория ПДД", "Экзаменационный маршрут", "Настройки", "Выход" };
             var buttons = new Button[labels.Length];
             for (int i = 0; i < labels.Length; i++)
-                buttons[i] = CreateMenuItem($"Item{i}_{labels[i]}", list, new Vector2(0, -i * 80), new Vector2(560, 72), labels[i], 30, theme, i == 3 ? "скоро" : null);
-            menu.continueButton = buttons[0];
-            menu.lessonsButton = buttons[1];
-            menu.theoryButton = buttons[2];
-            menu.examButton = buttons[3];
-            menu.settingsButton = buttons[4];
-            menu.exitButton = buttons[5];
-            buttons[3].interactable = false;
+                buttons[i] = CreateMenuItem($"Item{i}_{labels[i]}", list, new Vector2(0, -i * 80), new Vector2(560, 72), labels[i], 30, theme, i == 2 ? "скоро" : null);
+            menu.lessonsButton = buttons[0];
+            menu.theoryButton = buttons[1];
+            menu.examButton = buttons[2];
+            menu.settingsButton = buttons[3];
+            menu.exitButton = buttons[4];
+            buttons[2].interactable = false;
 
             var hint = CreateFixed("Hint", bg, new Vector2(0, 0), new Vector2(1200, 40), new Vector2(96, 56), new Vector2(0, 0));
             AddThemedText(hint.gameObject, "↑↓ Tab — выбор     Enter — открыть     Esc — выход", 20, ThemeRole.Muted, theme, TextAlignmentOptions.Left);
@@ -358,70 +357,7 @@ namespace DrivingSchool.Editor
         // ==========================================
         // 3. LESSON CATALOG
         // ==========================================
-        private static void BuildLessonCatalog()
-        {
-            var canvas = CreateCanvas("LessonCatalog");
-            var bg = CreateFill("Background", canvas.transform);
-            AddImage(bg.gameObject, BgColor);
-
-            var title = CreateFixed("Title", bg, new Vector2(0, 1), new Vector2(1000, 60), new Vector2(80, -60), new Vector2(0, 1));
-            AddText(title.gameObject, "AUTODROME TRAINING CATALOG", 48, TextWhite, TextAlignmentOptions.Left, FontStyles.Bold);
-
-            var subtitle = CreateFixed("Subtitle", bg, new Vector2(0, 1), new Vector2(1000, 35), new Vector2(80, -125), new Vector2(0, 1));
-            AddText(subtitle.gameObject, "Official Russian Category B Qualification Exercises (Standard 120x120m Circuit)", 22, TextDim, TextAlignmentOptions.Left);
-
-            // 6 exercises in 3x2 grid
-            var grid = CreateFixed("Grid", bg, new Vector2(0.5f, 0.5f), new Vector2(1760, 700), new Vector2(0, -60), new Vector2(0.5f, 0.5f));
-            var lg = grid.gameObject.AddComponent<GridLayoutGroup>();
-            lg.cellSize = new Vector2(550, 320);
-            lg.spacing = new Vector2(55, 40);
-
-            string[] lessons = { 
-                "01. SLALOM (S-CURVE)", 
-                "02. 90° CORNER TURNS", 
-                "03. REVERSE GARAGE 90°", 
-                "04. HILL START (10% RAMP)", 
-                "05. PARALLEL PARKING", 
-                "06. RAILWAY CROSSING & STOP" 
-            };
-
-            string[] descriptions = {
-                "Continuous maneuvering through slalom cones without stopping or knocking markers.",
-                "Precise 90-degree corridor navigation within tight boundaries.",
-                "Reverse entry into a confined perpendicular garage stall and wheel stop.",
-                "Stop on incline, apply handbrake, restart uphill without rolling back > 30cm.",
-                "Reverse parallel docking into standard 3.6 x 8.5m parking pocket.",
-                "Approach railway crossing, full stop at STOP marking, check both directions."
-            };
-
-            for (int i = 0; i < lessons.Length; i++)
-            {
-                var card = new GameObject($"Card_{i}").AddComponent<RectTransform>();
-                card.SetParent(grid, false);
-                AddImage(card.gameObject, PanelColor);
-                
-                var cImg = CreateFixed("Img", card, new Vector2(0.5f, 1), new Vector2(510, 150), new Vector2(0, -20), new Vector2(0.5f, 1));
-                AddImage(cImg.gameObject, CardBgColor);
-                var cImgTxt = CreateFill("Txt", cImg);
-                AddText(cImgTxt.gameObject, $"[ DIAGRAM: EXERCISE {i+1} ]", 20, TextDim, TextAlignmentOptions.Center);
-
-                var cTitle = CreateFixed("Title", card, new Vector2(0.5f, 1), new Vector2(510, 35), new Vector2(0, -180), new Vector2(0.5f, 1));
-                AddText(cTitle.gameObject, lessons[i], 22, AccentGold, TextAlignmentOptions.Left, FontStyles.Bold);
-
-                var cDesc = CreateFixed("Desc", card, new Vector2(0.5f, 1), new Vector2(510, 45), new Vector2(0, -220), new Vector2(0.5f, 1));
-                AddText(cDesc.gameObject, descriptions[i], 16, TextDim, TextAlignmentOptions.Left);
-                
-                var cStart = CreateFixed("BtnStart", card, new Vector2(1, 0), new Vector2(160, 40), new Vector2(-20, 15), new Vector2(1, 0));
-                AddImage(cStart.gameObject, AccentCyan);
-                var cStartTxt = CreateFill("Txt", cStart);
-                AddText(cStartTxt.gameObject, "PRACTICE", 18, BgColor, TextAlignmentOptions.Center, FontStyles.Bold);
-
-                var cStatus = CreateFixed("Status", card, new Vector2(0, 0), new Vector2(300, 40), new Vector2(20, 15), new Vector2(0, 0));
-                AddText(cStatus.gameObject, "Status: <color=#4CAF50>PASSED (0 penalty)</color>", 16, TextWhite, TextAlignmentOptions.Left);
-            }
-
-            SavePrefab(canvas, "LessonCatalog");
-        }
+        // BuildLessonCatalog — UIBuilder.Lessons.cs (T53).
 
         // ==========================================
         // 4. CONDITIONS SETUP
@@ -751,7 +687,7 @@ namespace DrivingSchool.Editor
             var loading = CreateFill("Loading", overlayCanvas.transform);
             AddThemedImage(loading.gameObject, ThemeRole.BgDark, theme);
             var loadingText = CreateFixed("Text", loading, new Vector2(0.5f, 0.5f), new Vector2(900, 80), Vector2.zero);
-            AddThemedText(loadingText.gameObject, "Загрузка тестового полигона…", 40, ThemeRole.Text, theme, TextAlignmentOptions.Center, FontWeight.Medium);
+            AddThemedText(loadingText.gameObject, "Загрузка задания…", 40, ThemeRole.Text, theme, TextAlignmentOptions.Center, FontWeight.Medium);
 
             var settingsPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SettingsPrefabPath);
             var settingsGo = settingsPrefab != null ? (GameObject)PrefabUtility.InstantiatePrefab(settingsPrefab, scene) : null;
@@ -761,6 +697,10 @@ namespace DrivingSchool.Editor
             flow.hudPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/DrivingSchool/Prefabs/UI/HUD.prefab");
             flow.settings = settingsGo != null ? settingsGo.GetComponent<SettingsScreenController>() : null;
             flow.menu = menuGo.GetComponent<MainMenuController>();
+            var catalogPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/DrivingSchool/Prefabs/UI/LessonCatalog.prefab");
+            var catalogGo = (GameObject)PrefabUtility.InstantiatePrefab(catalogPrefab, scene);
+            flow.catalog = catalogGo.GetComponent<LessonCatalogController>();
+            catalogGo.SetActive(false);
             flow.pauseMenuPrefab = pausePrefab;
             flow.driveScene = Path.GetFileNameWithoutExtension(DriveScenePath);
             flow.loadingOverlay = loading.gameObject;

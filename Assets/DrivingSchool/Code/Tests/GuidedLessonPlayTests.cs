@@ -20,6 +20,33 @@ namespace DrivingSchool.Tests
     {
         bool runInBackground;
 
+        [UnityTest, Timeout(120000)] public IEnumerator TestRangeFromAssignmentsClearsPreviousLesson()
+        {
+            EditorSceneManager.OpenScene("Assets/DrivingSchool/Scenes/MainMenu.unity");
+            yield return new EnterPlayMode();
+            runInBackground = Application.runInBackground; Application.runInBackground = true;
+            yield return null;
+            var flow = Object.FindAnyObjectByType<MainMenuFlow>();
+            flow.menu.lessonsButton.onClick.Invoke();
+            flow.catalog.Back();
+            Assert.That(flow.menu.gameObject.activeSelf, Is.True);
+            Assert.That(flow.menu.Focused, Is.EqualTo(flow.menu.lessonsButton));
+            Assert.That(flow.menu.IsExitDialogOpen, Is.False);
+            flow.menu.lessonsButton.onClick.Invoke();
+            LessonLaunch.LessonId = LessonLaunch.FirstLesson;
+            flow.catalog.rangeButton.onClick.Invoke();
+            flow.catalog.startButton.onClick.Invoke();
+            float deadline = Time.realtimeSinceStartup + 60;
+            while (SceneManager.GetActiveScene().name != "VehicleTestRange" && Time.realtimeSinceStartup < deadline) yield return null;
+            yield return null;
+            Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo("VehicleTestRange"));
+            Assert.That(LessonLaunch.LessonId, Is.Null);
+            var session = Object.FindAnyObjectByType<DriveSession>();
+            Assert.That(session, Is.Not.Null);
+            Assert.That(session.Lesson, Is.Null);
+            Assert.That(Object.FindAnyObjectByType<PauseMenuController>(), Is.Not.Null);
+        }
+
         [UnityTest, Timeout(600000)] public IEnumerator FirstLessonFromMenuCanBeCompleted([Values(false, true)] bool automatic)
         {
             EditorSceneManager.OpenScene("Assets/DrivingSchool/Scenes/MainMenu.unity");
@@ -28,7 +55,12 @@ namespace DrivingSchool.Tests
             yield return null;
             var flow = Object.FindAnyObjectByType<MainMenuFlow>();
             Assert.That(flow, Is.Not.Null, "MainMenuFlow в сцене меню");
-            flow.StartFirstLesson();
+            flow.menu.lessonsButton.onClick.Invoke();
+            Assert.That(flow.catalog.gameObject.activeSelf, Is.True);
+            Assert.That(flow.menu.gameObject.activeSelf, Is.False);
+            Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(AppNavigator.MainMenuScene));
+            flow.catalog.lessonButton.onClick.Invoke();
+            flow.catalog.startButton.onClick.Invoke();
 
             DriveSession ds = null;
             float wait = Time.realtimeSinceStartup + 60;
