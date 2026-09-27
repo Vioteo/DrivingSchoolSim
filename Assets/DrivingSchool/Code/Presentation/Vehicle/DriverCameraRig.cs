@@ -14,7 +14,10 @@ namespace DrivingSchool.Presentation
         public Transform car;
         public Transform model;
         public Mode mode = Mode.Cockpit;
-        public float cockpitFov = 68f, chaseFov = 60f;
+        [Tooltip("Horizontal field of view in the cockpit, degrees (T57): converted to Unity's vertical FOV by the screen aspect, " +
+                 "so a wide monitor does not turn the road into a fisheye. 70–80° looks like the real proportions on a desk monitor.")]
+        public float cockpitFov = 75f;
+        public float chaseFov = 60f;
         public Vector3 fallbackEyeInCar = new Vector3(-0.37f, 1.12f, -0.25f);
         public float mouseSensitivity = 0.12f;
         [Header("Head inertia (cockpit)")]
@@ -103,7 +106,7 @@ namespace DrivingSchool.Presentation
             {
                 case Mode.Cockpit:
                 {
-                    cam.fieldOfView = cockpitFov; cam.nearClipPlane = 0.05f;
+                    cam.fieldOfView = Camera.HorizontalToVerticalFieldOfView(cockpitFov, Mathf.Max(0.5f, cam.aspect)); cam.nearClipPlane = 0.05f;
                     float keyYaw = 0f;
                     if (kb != null && (kb.commaKey.isPressed || kb.zKey.isPressed)) keyYaw = -1f;
                     if (kb != null && kb.periodKey.isPressed) keyYaw = 1f;

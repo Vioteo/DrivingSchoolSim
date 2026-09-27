@@ -40,7 +40,7 @@ namespace DrivingSchool.Simulation.RoadGraph
     /// </summary>
     public sealed class RoadKitTemplates : IModuleTemplateSource
     {
-        public const string SourceSha256 = "e2403f0859318136f3528cc433475d91fa51ec6e84374541a3ff32fc69fd45ec";
+        public const string SourceSha256 = "7a3b2cbbb31ef3e42a625742c0c57335b1bb2e73e4371969d47ed86c194a0e87";
 
         // straight(): axis dashes box(x=0, w=.12), edge lines box(x=±3.65, w=.12) -> lane between 0.06 and 3.59.
         public const double LaneOffsetM = 1.825;
@@ -52,7 +52,10 @@ namespace DrivingSchool.Simulation.RoadGraph
         // curve(): arc centre (14, 0), axis radius 14, sidewalks r 7.8..9.8 and 18.2..20.2.
         public const double CurveRadiusM = 14;
         // junction(): sockets at ±12, stop bars box(±1.9, ±10, 3.5, .4), crosswalks centred at ±7.5 over road ±4.
-        public const double CrossSocketM = 12, CrossStopBarM = 10, CrossStopBarDepthM = 0.4, CrossCrosswalkM = 7.5, CrossRoadHalfWidthM = 4;
+        public const double CrossSocketM = 12, CrossStopBarM = 10, CrossStopBarDepthM = 0.4, CrossCrosswalkM = 7.5;
+        // Kerb corners of the cross are round (paving radius 7 m, T57): at the crosswalk the kerb face is 5.02 m off the axis;
+        // the walkway ends 0.35 m behind it, on the lowered kerb.
+        public const double CrossCornerRadiusM = 7, CrossRoadHalfWidthM = 5.4;
         public const float DefaultSpeedKph = 60;
 
         readonly Dictionary<string, ModuleTemplate> templates;

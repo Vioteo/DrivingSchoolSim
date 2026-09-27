@@ -146,6 +146,17 @@ namespace DrivingSchool.Editor
             return result;
         }
 
+        /// <summary>Re-imports the 16 Road Kit v1 prefabs after tools/build_road_kit.py, without rebuilding the demo scene.</summary>
+        public static int ReimportV1Prefabs()
+        {
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+            int n = 0;
+            foreach (string path in Directory.GetFiles(Art, "*.fbx").OrderBy(p => p)) { ImportModule(path.Replace('\\', '/'), Prefabs); n++; }
+            if (n != 16) throw new InvalidOperationException("Expected 16 road modules, found " + n);
+            AssetDatabase.SaveAssets();
+            return n;
+        }
+
         const string ArtV2 = "Assets/DrivingSchool/Art/RoadKitV2";
         public const string PrefabsV2 = "Assets/DrivingSchool/Prefabs/RoadKitV2";
 

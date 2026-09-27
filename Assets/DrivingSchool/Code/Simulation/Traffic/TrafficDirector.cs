@@ -109,7 +109,7 @@ namespace DrivingSchool.Simulation.Traffic
         {
             allChunksLoaded = false;
             loadedChunks.Remove((cx, cz));
-            foreach (var a in agents.Where(a => !Loaded(a.Car.Position)).ToList()) Remove(a);
+            foreach (var a in agents.Where(a => !InLoadedChunks(a)).ToList()) Remove(a);
         }
 
         public void ReportContact(string agentId, string otherId)
@@ -544,13 +544,16 @@ namespace DrivingSchool.Simulation.Traffic
             ExtendRoute(agents.First(x => x.Id == id));
         }
 
+        /// <summary>Both the point on the path and the body (which cuts corners, T52) must be in loaded chunks.</summary>
+        bool InLoadedChunks(Agent a) => Loaded(a.Car.Position) && Loaded(a.Car.BodyPosition);
+
         void Despawn()
         {
             foreach (var a in agents.ToList())
             {
                 if (a.Car.Finished && a.FinishedAt < 0) a.FinishedAt = now;
                 bool lingered = a.Car.Finished && now - a.FinishedAt > profile.FinishedLingerSeconds;
-                if ((a.Car.Finished && !VisibleToPlayer(a.Car.Position)) || lingered || !Loaded(a.Car.Position)) Remove(a);
+                if ((a.Car.Finished && !VisibleToPlayer(a.Car.Position)) || lingered || !InLoadedChunks(a)) Remove(a);
             }
         }
 

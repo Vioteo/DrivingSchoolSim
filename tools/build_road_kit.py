@@ -183,36 +183,50 @@ def curve():
     return m.finish()
 
 
+CROSS_CORNER_R = 7.0   # paving corner radius of RK_Road_Cross_24m (kerb face radius 7.2)
+
+
+def rounded_corner(m, sx, sy, x0, y0, x1, y1, r, lowered, steps=12):
+    """Paving block (x0..x1, y0..y1) in quadrant (sx, sy) with a round corner of radius r towards the junction centre,
+    and a 0.2 m kerb in front of it (face at x0 - .2 / y0 - .2), lowered to 2 cm where |x| or |y| lies in a `lowered` band."""
+    cx, cy = x0 + r, y0 + r
+    arc = [(cx - r * math.cos(a), cy - r * math.sin(a)) for a in [math.pi / 2 * i / steps for i in range(steps + 1)]]
+    poly = [(x0, y1)] + arc + [(x1, y0), (x1, y1)]
+    poly = [(sx * x, sy * y) for x, y in poly]
+    if sx * sy < 0: poly.reverse()
+    for g in ('Sidewalk', 'Collision'): m.p(g, 'Paving').prism(poly, -.22, .15)
+    kr = r + .1
+    pts = [(x0 - .1, y1)] + [(cx - kr * math.cos(a), cy - kr * math.sin(a)) for a in [math.pi / 2 * i / steps for i in range(steps + 1)]] + [(x1, y0 - .1)]
+    dense = []
+    for (ax, ay), (bx, by) in zip(pts, pts[1:]):
+        n = max(1, round(math.hypot(bx - ax, by - ay)))
+        dense += [(ax + (bx - ax) * i / n, ay + (by - ay) * i / n) for i in range(n)]
+    dense.append(pts[-1])
+    for (ax, ay), (bx, by) in zip(dense, dense[1:]):
+        mx, my = (ax + bx) / 2, (ay + by) / 2
+        top = .02 if any(lo <= mx <= hi or lo <= my <= hi for lo, hi in lowered) else .15
+        L = math.hypot(bx - ax, by - ay); ux, uy = (bx - ax) / L, (by - ay) / L; nx, ny = -uy * .1, ux * .1
+        q = [(ax + nx, ay + ny), (bx + nx, by + ny), (bx - nx, by - ny), (ax - nx, ay - ny)]
+        q = [(sx * x, sy * y) for x, y in q]
+        if sx * sy < 0: q.reverse()
+        # the 2D cross product decides the winding of the kerb quad: keep it counter-clockwise
+        area = sum(q[i][0] * q[(i + 1) % 4][1] - q[(i + 1) % 4][0] * q[i][1] for i in range(4))
+        if area < 0: q.reverse()
+        for g in ('Curb', 'Collision'): m.p(g, 'Concrete').prism(q, -.22, top)
+
+
 def junction():
     m=Module('RK_Road_Cross_24m','Перекрёсток с переходами',[(f'Socket_{n}',p) for n,p in [('South',(0,-12,0)),('North',(0,12,0)),('East',(12,0,0)),('West',(-12,0,0))]])
-    # Union polygon: no coplanar overlapping rectangles in the centre.
-    cross=[(-4,-12),(4,-12),(4,-4),(12,-4),(12,4),(4,4),(4,12),(-4,12),(-4,4),(-12,4),(-12,-4),(-4,-4)]
-    for group in ('Surface','Collision'):m.p(group,'Asphalt').prism(cross,-.22,0)
+    # Asphalt under the whole module; the corner paving has a kerb radius (T57): with square corners a right turn
+    # from the lane (1.825 m off the axis) ran over the kerb corner at (4, 4).
+    for group in ('Surface','Collision'):m.p(group,'Asphalt').box(0,0,24,24,-.22,0)
     for sx in (-1,1):
         for sy in (-1,1):
-            for group in ('Sidewalk','Collision'):
-                p=m.p(group,'Paving')
-                p.box(sx*8.5,sy*8.5,7,7,-.22,.15)
-                p.box(sx*4.6,sy*4.6,.8,.8,-.22,.15)
-                for t,length in [(5.5,1),(10.5,3)]:
-                    p.box(sx*4.6,sy*t,.8,length,-.22,.15)
-                    p.box(sx*t,sy*4.6,length,.8,-.22,.15)
-                p.wedge([(sx*4.2,sy*6,.02),(sx*5,sy*6,.15),(sx*5,sy*9,.15),(sx*4.2,sy*9,.02)])
-                p.wedge([(sx*6,sy*4.2,.02),(sx*9,sy*4.2,.02),(sx*9,sy*5,.15),(sx*6,sy*5,.15)])
-            # Lowered crossing curbs (2 cm) and matching pavement approach wedges.
-            for i in range(8):
-                t=4.5+i
-                top=.02 if 6<=t<=9 else .15
-                m.p('Curb','Concrete').box(sx*4.1,sy*t,.2,.993,-.22,top)
-                m.p('Curb','Concrete').box(sx*t,sy*4.1,.993,.2,-.22,top)
-            # Collision curbs preserve crossing cutouts.
-            for t,l,h in [(5,2,.15),(7.5,3,.02),(10.5,3,.15)]:
-                m.p('Collision','Concrete').box(sx*4.1,sy*t,.2,l,-.22,h)
-                m.p('Collision','Concrete').box(sx*t,sy*4.1,l,.2,-.22,h)
+            rounded_corner(m,sx,sy,4.2,4.2,12,12,CROSS_CORNER_R,[(6,9)])
     # Four crosswalks, right-hand incoming lane stop bars and short centre lines.
     for sign in (-1,1):
-        for i in range(8):
-            t=-3.5+i
+        for i in range(10):     # the carriageway is wider at the crosswalk now that the corners are round
+            t=-4.5+i
             m.p('Markings','White').box(t,sign*7.5,.5,3,.006,.009)
             m.p('Markings','White').box(sign*7.5,t,3,.5,.006,.009)
         m.p('Markings','White').box(-sign*1.9,sign*10,3.5,.4,.006,.009)
