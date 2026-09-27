@@ -47,6 +47,7 @@ namespace DrivingSchool.Editor
             BuildG27Calibration();
             BuildPauseMenu();
             BuildTheoryExam();
+            BuildMenuScene();
             
             Debug.Log("UI_PREFABS_BUILT");
         }
@@ -651,36 +652,107 @@ namespace DrivingSchool.Editor
         // ==========================================
         private static void BuildPauseMenu()
         {
+            // T46: рабочая пауза в теме меню — настоящие Button, навигация с клавиатуры, намерения для AppNavigator.
+            var theme = BuildThemes();
             var canvas = CreateCanvas("PauseMenu");
-            var bg = CreateFill("Background", canvas.transform);
-            AddImage(bg.gameObject, DarkOverlay);
+            canvas.GetComponent<Canvas>().sortingOrder = 100; // поверх HUD и OnGUI-подсказок сцены
+            var pause = canvas.AddComponent<PauseMenuController>();
+            pause.defaultTheme = theme;
 
-            var panel = CreateFixed("MenuPanel", bg, new Vector2(0.5f, 0.5f), new Vector2(680, 720), new Vector2(0, 0), new Vector2(0.5f, 0.5f));
-            AddImage(panel.gameObject, PanelColor);
+            var overlay = CreateFill("Overlay", canvas.transform);
+            var shade = AddImage(overlay.gameObject, new Color(0, 0, 0, 0.72f));
+            shade.raycastTarget = true;
+            var panel = CreateFixed("Panel", overlay, new Vector2(0.5f, 0.5f), new Vector2(640, 420), Vector2.zero);
+            AddThemedImage(panel.gameObject, ThemeRole.BgPanel, theme);
+            var top = CreateFixed("AccentLine", panel, new Vector2(0.5f, 1), new Vector2(640, 6), Vector2.zero, new Vector2(0.5f, 1));
+            AddThemedImage(top.gameObject, ThemeRole.Accent, theme);
+            var title = CreateFixed("Title", panel, new Vector2(0, 1), new Vector2(580, 60), new Vector2(40, -36), new Vector2(0, 1));
+            AddThemedText(title.gameObject, "Пауза", 44, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Bold);
 
-            var title = CreateFixed("Title", panel, new Vector2(0.5f, 1), new Vector2(560, 60), new Vector2(0, -40), new Vector2(0.5f, 1));
-            AddText(title.gameObject, "SIMULATION PAUSED", 48, AccentGold, TextAlignmentOptions.Center, FontStyles.Bold);
-            
-            var taskCard = CreateFixed("TaskCard", panel, new Vector2(0.5f, 1), new Vector2(580, 180), new Vector2(0, -120), new Vector2(0.5f, 1));
-            AddImage(taskCard.gameObject, CardBgColor);
-            var tTxt = CreateFill("Txt", taskCard, 25, 25, 20, 20);
-            AddText(tTxt.gameObject, 
-                "<b>Current Exercise: Parallel Parking</b>\n\n" +
-                "<color=#4CAF50>[OK]</color> Approach marker cones within 0.5m\n" +
-                "<color=#4CAF50>[OK]</color> Reverse into pocket at 45° angle\n" +
-                "<color=#FFD700>[IN PROGRESS]</color> Align wheels and stop inside box", 
-                20, TextWhite, TextAlignmentOptions.Left);
+            var items = CreateFixed("Items", panel, new Vector2(0, 1), new Vector2(560, 3 * 80), new Vector2(40, -120), new Vector2(0, 1));
+            string[] labels = { "Продолжить", "Начать заново", "Выйти в главное меню" };
+            var buttons = new Button[labels.Length];
+            for (int i = 0; i < labels.Length; i++)
+                buttons[i] = CreateMenuItem($"Item{i}_{labels[i]}", items, new Vector2(0, -i * 80), new Vector2(560, 72), labels[i], 30, theme, null);
+            pause.resumeButton = buttons[0];
+            pause.restartButton = buttons[1];
+            pause.exitToMenuButton = buttons[2];
 
-            string[] btns = { "RESUME DRIVING", "RESTART EXERCISE", "CONTROLS & FFB SETTINGS", "EXIT TO MAIN MENU" };
-            for(int i = 0; i < btns.Length; i++)
-            {
-                var btn = CreateFixed($"Btn_{i}", panel, new Vector2(0.5f, 1), new Vector2(580, 65), new Vector2(0, -330 - i * 85), new Vector2(0.5f, 1));
-                AddImage(btn.gameObject, i == 0 ? AccentCyan : CardBgColor);
-                var txt = CreateFill("Txt", btn);
-                AddText(txt.gameObject, btns[i], 24, i == 0 ? BgColor : TextWhite, TextAlignmentOptions.Center, FontStyles.Bold);
-            }
+            var hint = CreateFixed("Hint", panel, new Vector2(0, 0), new Vector2(580, 32), new Vector2(40, 20), new Vector2(0, 0));
+            AddThemedText(hint.gameObject, "↑↓ — выбор     Enter — выбрать     Esc — продолжить", 20, ThemeRole.Muted, theme, TextAlignmentOptions.Left);
 
+            pause.panel = overlay.gameObject;
+            overlay.gameObject.SetActive(false);
             SavePrefab(canvas, "PauseMenu");
+        }
+
+        // ==========================================
+        // 6b. MAIN MENU SCENE (T46): стартовая сцена сборки и Play в редакторе
+        // ==========================================
+        public const string MenuScenePath = "Assets/DrivingSchool/Scenes/MainMenu.unity";
+        public const string DriveScenePath = "Assets/DrivingSchool/Scenes/VehicleTestRange.unity";
+
+        [MenuItem("Driving School/Build Main Menu scene")]
+        public static void BuildMenuSceneMenu() { BuildMenuScene(); }
+
+        /// <summary>Перезаписывает Scenes/MainMenu.unity и ставит её первой в Build Settings. Префабы MainMenu/PauseMenu должны быть собраны.</summary>
+        public static void BuildMenuScene()
+        {
+            var menuPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/DrivingSchool/Prefabs/UI/MainMenu.prefab");
+            var pausePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/DrivingSchool/Prefabs/UI/PauseMenu.prefab");
+            if (menuPrefab == null || pausePrefab == null) { Debug.LogError("MAIN_MENU_SCENE_FAIL: нет префабов MainMenu/PauseMenu — Driving School/Build UI Prefabs"); return; }
+            if (!Application.isBatchMode && !UnityEditor.SceneManagement.EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            var theme = BuildThemes();
+
+            var scene = UnityEditor.SceneManagement.EditorSceneManager.NewScene(UnityEditor.SceneManagement.NewSceneSetup.EmptyScene, UnityEditor.SceneManagement.NewSceneMode.Single);
+
+            var camGo = new GameObject("Main Camera");
+            camGo.tag = "MainCamera";
+            var cam = camGo.AddComponent<Camera>();
+            cam.clearFlags = CameraClearFlags.SolidColor;
+            cam.backgroundColor = theme.bgDark;
+            camGo.AddComponent<AudioListener>();
+
+            var es = new GameObject("EventSystem");
+            es.AddComponent<UnityEngine.EventSystems.EventSystem>();
+            es.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>().AssignDefaultActions();
+
+            var menuGo = (GameObject)PrefabUtility.InstantiatePrefab(menuPrefab, scene);
+
+            // Поверх меню: уведомление «в разработке» и затемнение «Загрузка…».
+            var overlayCanvas = CreateCanvas("MenuOverlay");
+            overlayCanvas.GetComponent<Canvas>().sortingOrder = 50;
+            var notice = CreateFixed("Notice", overlayCanvas.transform, new Vector2(0, 0), new Vector2(1100, 64), new Vector2(96, 120), new Vector2(0, 0));
+            AddThemedImage(notice.gameObject, ThemeRole.BgCard, theme);
+            var noticeText = CreateFill("Text", notice, 24, 24, 0, 0);
+            var noticeTmp = AddThemedText(noticeText.gameObject, "Раздел в разработке", 24, ThemeRole.Text, theme, TextAlignmentOptions.Left);
+            noticeTmp.raycastTarget = false;
+            notice.GetComponent<Image>().raycastTarget = false;
+
+            var loading = CreateFill("Loading", overlayCanvas.transform);
+            AddThemedImage(loading.gameObject, ThemeRole.BgDark, theme);
+            var loadingText = CreateFixed("Text", loading, new Vector2(0.5f, 0.5f), new Vector2(900, 80), Vector2.zero);
+            AddThemedText(loadingText.gameObject, "Загрузка тестового полигона…", 40, ThemeRole.Text, theme, TextAlignmentOptions.Center, FontWeight.Medium);
+
+            var flow = new GameObject("AppFlow").AddComponent<MainMenuFlow>();
+            flow.menu = menuGo.GetComponent<MainMenuController>();
+            flow.pauseMenuPrefab = pausePrefab;
+            flow.driveScene = Path.GetFileNameWithoutExtension(DriveScenePath);
+            flow.loadingOverlay = loading.gameObject;
+            flow.notice = noticeTmp;
+            flow.noticePanel = notice.gameObject;
+            loading.gameObject.SetActive(false);
+            notice.gameObject.SetActive(false);
+
+            UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene, MenuScenePath);
+
+            var list = new System.Collections.Generic.List<EditorBuildSettingsScene>();
+            list.Add(new EditorBuildSettingsScene(MenuScenePath, true));
+            foreach (var s in EditorBuildSettings.scenes) if (s.path != MenuScenePath) list.Add(s);
+            if (!list.Exists(s => s.path == DriveScenePath)) list.Add(new EditorBuildSettingsScene(DriveScenePath, true));
+            EditorBuildSettings.scenes = list.ToArray();
+            AssetDatabase.SaveAssets();
+            Debug.Log("MAIN_MENU_SCENE_BUILT");
         }
 
         // ==========================================

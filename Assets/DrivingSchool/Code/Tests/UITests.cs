@@ -133,5 +133,104 @@ namespace DrivingSchool.Tests
                 Assert.That(c.Focused, Is.EqualTo(c.settingsButton), "Недоступный пункт пропускается");
             }
         }
+
+        // ===== T46: пауза и запуск через главное меню =====
+        const string PausePrefab = "Assets/DrivingSchool/Prefabs/UI/PauseMenu.prefab";
+
+        /// <summary>Заглушка «скрипта поездки»: пространство имён DrivingSchool.*, не UI — пауза обязана её выключить.</summary>
+        sealed class FakeDriveScript : MonoBehaviour { }
+
+        sealed class Pause : System.IDisposable
+        {
+            public readonly GameObject Root;
+            public readonly PauseMenuController C;
+            readonly float timeScale;
+            public Pause()
+            {
+                timeScale = Time.timeScale;
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PausePrefab);
+                Assert.That(prefab, Is.Not.Null, $"Нет {PausePrefab}. {Rebuild}");
+                Root = Object.Instantiate(prefab);
+                C = Root.GetComponent<PauseMenuController>();
+                Assert.That(C, Is.Not.Null);
+                C.Initialize();
+            }
+            public void Dispose() { Object.DestroyImmediate(Root); Time.timeScale = timeScale; AudioListener.pause = false; }
+        }
+
+        [Test] public void PauseMenuHasWorkingButtonsAndStartsHidden()
+        {
+            using (var p = new Pause())
+            {
+                var c = p.C;
+                Assert.That(new[] { c.resumeButton, c.restartButton, c.exitToMenuButton }, Has.None.Null);
+                Assert.That(c.panel.activeSelf, Is.False);
+                Assert.That(c.resumeButton.navigation.selectOnUp, Is.EqualTo(c.exitToMenuButton), "Навигация по кругу");
+                foreach (var t in p.Root.GetComponentsInChildren<TMP_Text>(true))
+                    Assert.That(t.font.name, Does.StartWith("GolosText").Or.StartWith("RobotoMono"), t.name);
+            }
+        }
+
+        [Test] public void PauseFreezesTimeAndDriveScriptsAndResumeRestoresThem()
+        {
+            var drive = new GameObject("FakeDrive").AddComponent<FakeDriveScript>();
+            try
+            {
+                using (var p = new Pause())
+                {
+                    Time.timeScale = 0.5f;
+                    p.C.Pause();
+                    Assert.That(p.C.IsPaused, Is.True);
+                    Assert.That(Time.timeScale, Is.Zero);
+                    Assert.That(drive.enabled, Is.False, "Скрипт поездки должен быть выключен на паузе");
+                    Assert.That(p.C.enabled, Is.True, "Сама пауза не замораживается");
+                    Assert.That(p.C.panel.activeSelf, Is.True);
+
+                    p.C.Resume();
+                    Assert.That(Time.timeScale, Is.EqualTo(0.5f), "Возвращается прежний масштаб времени, а не 1");
+                    Assert.That(drive.enabled, Is.True);
+                    Assert.That(p.C.panel.activeSelf, Is.False);
+                }
+            }
+            finally { Object.DestroyImmediate(drive.gameObject); }
+        }
+
+        [Test] public void ResumeWithoutPauseChangesNothing()
+        {
+            using (var p = new Pause())
+            {
+                Time.timeScale = 0.25f;
+                p.C.Resume();
+                Assert.That(Time.timeScale, Is.EqualTo(0.25f));
+                Assert.That(p.C.IsPaused, Is.False);
+            }
+        }
+
+        [Test] public void ExitToMenuRaisesIntentAndUnfreezesTime()
+        {
+            using (var p = new Pause())
+            {
+                int exits = 0, restarts = 0;
+                p.C.OnExitToMenuRequested.AddListener(() => exits++);
+                p.C.OnRestartRequested.AddListener(() => restarts++);
+                Time.timeScale = 1f;
+                p.C.Pause();
+                p.C.exitToMenuButton.onClick.Invoke();
+                Assert.That(exits, Is.EqualTo(1));
+                Assert.That(restarts, Is.Zero);
+                Assert.That(Time.timeScale, Is.EqualTo(1f), "Следующая сцена не должна стартовать замороженной");
+                Assert.That(AudioListener.pause, Is.False);
+            }
+        }
+
+        [Test] public void BuildStartsFromMainMenuAndContainsTestRange()
+        {
+            var scenes = EditorBuildSettings.scenes;
+            Assert.That(scenes, Is.Not.Empty);
+            Assert.That(scenes[0].path, Is.EqualTo(UIBuilder.MenuScenePath), "Первая сцена сборки — главное меню. Driving School/Build Main Menu scene");
+            Assert.That(scenes[0].enabled, Is.True);
+            Assert.That(scenes.Any(s => s.enabled && s.path == UIBuilder.DriveScenePath), Is.True, "Тестовый полигон должен быть в сборке, иначе меню его не загрузит");
+            Assert.That(System.IO.Path.GetFileNameWithoutExtension(UIBuilder.MenuScenePath), Is.EqualTo(AppNavigator.MainMenuScene));
+        }
     }
 }
