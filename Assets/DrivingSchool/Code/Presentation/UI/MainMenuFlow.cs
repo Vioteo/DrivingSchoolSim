@@ -6,7 +6,8 @@ namespace DrivingSchool.Presentation.UI
 {
     /// <summary>
     /// Связка главного меню со сценами (T46). Живёт в сцене MainMenu, её собирает UIBuilder (Driving School/Build Main Menu scene).
-    /// Пока есть только тестовый полигон: «Продолжить занятие» и «Занятия» запускают его; «Теория ПДД» — «в разработке»; «Настройки» открывают экран настроек (T43).
+    /// «Продолжить занятие» — свободная поездка по тестовому полигону, «Занятия» — пошаговый урок 1 «Начало движения»
+    /// на учебной улице (T49; экрана выбора урока пока нет); «Теория ПДД» — «в разработке»; «Настройки» — экран настроек (T43).
     /// </summary>
     public sealed class MainMenuFlow : MonoBehaviour
     {
@@ -23,6 +24,7 @@ namespace DrivingSchool.Presentation.UI
 
         float noticeUntil;
         bool loading;
+        string sceneToLoad;
 
         void Awake()
         {
@@ -34,7 +36,7 @@ namespace DrivingSchool.Presentation.UI
             if (menu == null) return;
             menu.Initialize();
             menu.OnStartLessonRequested.AddListener(StartDrive);
-            menu.OnSelectLessonRequested.AddListener(StartDrive);
+            menu.OnSelectLessonRequested.AddListener(StartFirstLesson);
             menu.OnTheoryRequested.AddListener(() => ShowNotice("Теория ПДД — в разработке. Сейчас доступен тестовый полигон."));
             menu.OnSettingsRequested.AddListener(OpenSettings);
             menu.OnExitConfirmed.AddListener(AppNavigator.Quit);
@@ -45,9 +47,20 @@ namespace DrivingSchool.Presentation.UI
             if (noticePanel != null && noticePanel.activeSelf && Time.unscaledTime > noticeUntil) noticePanel.SetActive(false);
         }
 
-        public void StartDrive()
+        public void StartDrive() => Launch(null, driveScene);
+
+        public void StartFirstLesson()
+        {
+            if (!Application.CanStreamedLevelBeLoaded(LessonLaunch.FirstLessonScene))
+            { ShowNotice("Сцена урока не собрана: Driving School → Lessons → Build lesson street scene"); return; }
+            Launch(LessonLaunch.FirstLesson, LessonLaunch.FirstLessonScene);
+        }
+
+        void Launch(string lessonId, string scene)
         {
             if (loading) return;
+            LessonLaunch.LessonId = lessonId;
+            sceneToLoad = scene;
             loading = true;
             if (loadingOverlay != null) loadingOverlay.SetActive(true);
             if (menu != null) menu.enabled = false; // клавиши меню не срабатывают во время загрузки
@@ -57,7 +70,7 @@ namespace DrivingSchool.Presentation.UI
         IEnumerator LoadNextFrame()
         {
             yield return null; // дать кадр на отрисовку «Загрузка…»
-            AppNavigator.StartDrive(driveScene);
+            AppNavigator.StartDrive(sceneToLoad);
         }
 
         public void OpenSettings()

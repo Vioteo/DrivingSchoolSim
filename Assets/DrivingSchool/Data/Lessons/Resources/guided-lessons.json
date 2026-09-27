@@ -1,0 +1,682 @@
+{
+  "schemaVersion": 1,
+  "lessons": [
+    {
+      "id": "start-moving",
+      "title": "Урок 1 · Начало движения",
+      "scene": "Lesson_Street",
+      "place": "учебная улица",
+      "briefing": "Машина стоит у правого края дороги. Инструктор подскажет каждое действие: подготовиться, тронуться от края, проехать регулируемый перекрёсток прямо и остановиться у правого края.",
+      "doneText": "Урок выполнен.",
+      "hasStart": true,
+      "startX": 2.9,
+      "startZ": -90,
+      "startYaw": 0,
+      "maxSpeedKph": 40,
+      "speedHint": "Не разгоняйтесь: в уроке двигайтесь спокойно. Отпустите газ ({gas}).",
+      "steps": [
+        {
+          "id": "belt",
+          "text": "Начнём с посадки. Пристегните ремень безопасности — {belt}.",
+          "check": "Seatbelt",
+          "keepUntil": "end",
+          "lostText": "Ремень отстёгнут. Пристегнитесь — {belt}: без ремня не едем."
+        },
+        {
+          "id": "ignition",
+          "text": "Включите зажигание — {ignition}. На панели загорятся контрольные лампы.",
+          "check": "Ignition"
+        },
+        {
+          "id": "clutch",
+          "text": "Выжмите сцепление — нажмите и держите {clutch}. На механике двигатель запускают с выжатым сцеплением.",
+          "check": "ClutchDown",
+          "only": "manual"
+        },
+        {
+          "id": "park-check",
+          "text": "Проверьте, что селектор стоит в P. Если нет — {park}.",
+          "check": "Selector",
+          "selector": "P",
+          "only": "auto"
+        },
+        {
+          "id": "engine-m",
+          "text": "Не отпуская сцепление ({clutch}), запустите двигатель — удерживайте {starter}, пока он не заработает.",
+          "check": "EngineRunning",
+          "only": "manual",
+          "keepUntil": "pull-over-m",
+          "lostText": "Двигатель заглох. Выжмите сцепление ({clutch}), включите нейтраль ({neutral}), запустите двигатель ({starter}) и снова включите первую передачу ({gear1})."
+        },
+        {
+          "id": "engine-a",
+          "text": "Нажмите тормоз ({brake}) и запустите двигатель — удерживайте {starter}, пока он не заработает.",
+          "check": "EngineRunning",
+          "only": "auto",
+          "keepUntil": "pull-over-m",
+          "lostText": "Двигатель заглох. Переведите селектор в P ({park}), запустите двигатель ({starter}) и снова включите D ({drive}) с нажатым тормозом."
+        },
+        {
+          "id": "lights",
+          "text": "Включите ближний свет — {lights}. В движении фары должны гореть и днём.",
+          "check": "LowBeam"
+        },
+        {
+          "id": "gear-m",
+          "text": "Выжмите сцепление ({clutch}) и включите первую передачу — {gear1}. Сцепление пока не отпускайте.",
+          "check": "Gear",
+          "value": 1,
+          "only": "manual"
+        },
+        {
+          "id": "gear-a",
+          "text": "Нажмите и держите тормоз ({brake}), затем переведите селектор в D — {drive}. Без тормоза селектор из P не выйдет.",
+          "check": "Selector",
+          "selector": "D",
+          "only": "auto"
+        },
+        {
+          "id": "signal-left",
+          "text": "Вы у правого края. Перед началом движения включите левый указатель поворота — {left} — и посмотрите в левое зеркало: сзади никого быть не должно.",
+          "check": "IndicatorLeft"
+        },
+        {
+          "id": "handbrake-off",
+          "text": "Снимите машину со стояночного тормоза — {handbrake}.",
+          "check": "HandbrakeOff"
+        },
+        {
+          "id": "move-m",
+          "text": "Трогаемся! Плавно отпускайте сцепление ({clutch}), слегка добавляя газ ({gas}). Почувствуете, что машина тянет, — отпускайте сцепление медленнее.",
+          "check": "MovingForward",
+          "value": 0.8,
+          "only": "manual"
+        },
+        {
+          "id": "move-a",
+          "text": "Трогаемся! Отпустите тормоз и плавно нажмите газ — {gas}.",
+          "check": "MovingForward",
+          "value": 0.8,
+          "only": "auto"
+        },
+        {
+          "id": "signal-off",
+          "text": "Вы в своей полосе. Выключите указатель поворота — {left}.",
+          "check": "IndicatorsOff",
+          "skipAfter": 8
+        },
+        {
+          "id": "lane",
+          "text": "Двигайтесь прямо по правой полосе. Руль — {steer}, газ — {gas}. Не разгоняйтесь.",
+          "check": "None",
+          "x": 2,
+          "z": -55,
+          "width": 4,
+          "length": 14,
+          "yaw": 0,
+          "headingTolerance": 30
+        },
+        {
+          "id": "junction-m",
+          "text": "Впереди регулируемый перекрёсток — едем прямо. Заранее отпустите газ и смотрите на светофор.",
+          "check": "None",
+          "only": "manual",
+          "stopText": "Светофор запрещает движение. Тормозите ({brake}) и остановитесь перед стоп-линией; перед самой остановкой выжмите сцепление ({clutch}).",
+          "x": 2,
+          "z": -24,
+          "width": 4,
+          "length": 12,
+          "yaw": 0,
+          "headingTolerance": 30
+        },
+        {
+          "id": "junction-a",
+          "text": "Впереди регулируемый перекрёсток — едем прямо. Заранее отпустите газ и смотрите на светофор.",
+          "check": "None",
+          "only": "auto",
+          "stopText": "Светофор запрещает движение. Плавно тормозите ({brake}) и остановитесь перед стоп-линией.",
+          "x": 2,
+          "z": -24,
+          "width": 4,
+          "length": 12,
+          "yaw": 0,
+          "headingTolerance": 30
+        },
+        {
+          "id": "cross-m",
+          "text": "Горит зелёный — проезжайте перекрёсток прямо: отпустите сцепление, добавьте газ ({gas}), на переходах не останавливайтесь.",
+          "check": "None",
+          "only": "manual",
+          "stopText": "Красный — стойте перед стоп-линией и ждите зелёного: тормоз ({brake}) и сцепление ({clutch}) нажаты, первая передача включена.",
+          "x": 2,
+          "z": 20,
+          "width": 4,
+          "length": 8,
+          "yaw": 0,
+          "headingTolerance": 30
+        },
+        {
+          "id": "cross-a",
+          "text": "Горит зелёный — проезжайте перекрёсток прямо: отпустите тормоз и плавно нажмите газ ({gas}).",
+          "check": "None",
+          "only": "auto",
+          "stopText": "Красный — стойте перед стоп-линией с нажатым тормозом ({brake}) и ждите зелёного.",
+          "x": 2,
+          "z": 20,
+          "width": 4,
+          "length": 8,
+          "yaw": 0,
+          "headingTolerance": 30
+        },
+        {
+          "id": "signal-right",
+          "text": "Перекрёсток пройден. Сейчас остановимся у правого края: включите правый указатель — {right}.",
+          "check": "IndicatorRight"
+        },
+        {
+          "id": "pull-over-m",
+          "text": "Снизьте скорость, прижмитесь к правому краю ({steer_right}) и остановитесь у бордюра рядом с жёлтой рамкой: тормоз ({brake}), перед остановкой — сцепление ({clutch}).",
+          "check": "Stopped",
+          "value": 1,
+          "only": "manual",
+          "x": 3.0,
+          "z": 62,
+          "width": 1.8,
+          "length": 16,
+          "yaw": 0,
+          "headingTolerance": 15
+        },
+        {
+          "id": "pull-over-a",
+          "text": "Снизьте скорость, прижмитесь к правому краю ({steer_right}) и остановитесь у бордюра в жёлтой рамке — плавно тормозите ({brake}).",
+          "check": "Stopped",
+          "value": 1,
+          "only": "auto",
+          "x": 3.0,
+          "z": 62,
+          "width": 1.8,
+          "length": 16,
+          "yaw": 0,
+          "headingTolerance": 15
+        },
+        {
+          "id": "handbrake-on",
+          "text": "Поставьте машину на стояночный тормоз — {handbrake}.",
+          "check": "HandbrakeOn"
+        },
+        {
+          "id": "neutral",
+          "text": "Включите нейтраль — {neutral} — и отпустите педали.",
+          "check": "Neutral",
+          "only": "manual"
+        },
+        {
+          "id": "park",
+          "text": "Переведите селектор в P — {park}.",
+          "check": "Selector",
+          "selector": "P",
+          "only": "auto"
+        },
+        {
+          "id": "signal-off-2",
+          "text": "Выключите указатель поворота — {right}.",
+          "check": "IndicatorsOff"
+        },
+        {
+          "id": "engine-off",
+          "text": "Заглушите двигатель — выключите зажигание, {ignition}.",
+          "check": "IgnitionOff"
+        },
+        {
+          "id": "done",
+          "text": "Отлично! Вы тронулись от края, проехали перекрёсток и остановились у обочины. Урок выполнен.",
+          "check": "Wait",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "id": "ex-start",
+      "title": "Старт",
+      "scene": "Autodrome_Training",
+      "courseLesson": "start",
+      "briefing": "Троньтесь с места и остановитесь в рамке.",
+      "doneText": "Упражнение выполнено.",
+      "steps": [
+        {
+          "id": "belt",
+          "text": "Пристегните ремень — {belt}.",
+          "check": "Seatbelt",
+          "skipAtGate": 1
+        },
+        {
+          "id": "engine",
+          "text": "Запустите двигатель: на механике — выжмите сцепление ({clutch}); затем {ignition} и удерживайте {starter}.",
+          "check": "EngineRunning",
+          "skipAtGate": 1
+        },
+        {
+          "id": "gear-m",
+          "text": "Выжмите сцепление ({clutch}) и включите первую передачу — {gear1}.",
+          "check": "Gear",
+          "value": 1,
+          "only": "manual",
+          "skipAtGate": 1
+        },
+        {
+          "id": "gear-a",
+          "text": "Держите тормоз ({brake}) и переведите селектор в D — {drive}.",
+          "check": "Selector",
+          "selector": "D",
+          "only": "auto",
+          "skipAtGate": 1
+        },
+        {
+          "id": "handbrake-off",
+          "text": "Снимите машину со стояночного тормоза — {handbrake}.",
+          "check": "HandbrakeOff",
+          "skipAtGate": 1
+        },
+        {
+          "id": "signal-left",
+          "text": "Включите левый указатель — {left}.",
+          "check": "IndicatorLeft",
+          "skipAtGate": 1,
+          "skipAfter": 10
+        },
+        {
+          "id": "go",
+          "text": "Плавно троньтесь: отпускайте сцепление ({clutch}) и добавьте газ ({gas}).",
+          "check": "Gate",
+          "value": 1
+        },
+        {
+          "id": "stop",
+          "text": "Остановитесь в рамке ({brake}) и постойте 2 секунды. Перед остановкой — сцепление ({clutch}).",
+          "check": "Gate",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "ex-crossing",
+      "title": "У2 · Пешеходный переход",
+      "scene": "Autodrome_Training",
+      "courseLesson": "crossing",
+      "briefing": "Остановка перед переходом и проезд.",
+      "doneText": "Упражнение выполнено.",
+      "steps": [
+        {
+          "id": "approach",
+          "text": "Подъезжайте к переходу не спеша и остановитесь перед ним ({brake}) на 2 секунды. На механике перед остановкой выжмите сцепление ({clutch}).",
+          "check": "Gate",
+          "value": 1
+        },
+        {
+          "id": "pass",
+          "text": "Убедитесь, что пешеходов нет, и проезжайте переход.",
+          "check": "Gate",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "ex-boxpark",
+      "title": "У6 · Въезд в бокс",
+      "scene": "Autodrome_Training",
+      "courseLesson": "boxpark",
+      "briefing": "Въезд в бокс задним ходом и выезд.",
+      "doneText": "Упражнение выполнено.",
+      "steps": [
+        {
+          "id": "signal",
+          "text": "Включите правый указатель — {right} — и поворачивайте в коридор.",
+          "check": "IndicatorRight",
+          "skipAtGate": 1,
+          "skipAfter": 10
+        },
+        {
+          "id": "corridor",
+          "text": "Въезжайте в коридор на первой передаче, не спеша.",
+          "check": "Gate",
+          "value": 1
+        },
+        {
+          "id": "stopline",
+          "text": "Проедьте вперёд за стоп-линию и остановитесь ({brake}).",
+          "check": "Gate",
+          "value": 2
+        },
+        {
+          "id": "reverse-m",
+          "text": "Остановитесь и включите заднюю передачу: сцепление ({clutch}) и {reverse}.",
+          "check": "Gear",
+          "value": -1,
+          "only": "manual",
+          "skipAtGate": 3
+        },
+        {
+          "id": "reverse-a",
+          "text": "Остановитесь, держите тормоз ({brake}) и переведите селектор в R — {reverse}.",
+          "check": "Selector",
+          "selector": "R",
+          "only": "auto",
+          "skipAtGate": 3
+        },
+        {
+          "id": "box",
+          "text": "Въезжайте в бокс задним ходом: руль в сторону бокса ({steer}), скорость минимальная — работайте сцеплением ({clutch}) и тормозом ({brake}). Остановитесь в боксе на 2 секунды.",
+          "check": "Gate",
+          "value": 3
+        },
+        {
+          "id": "exit",
+          "text": "Выезжайте из бокса вперёд и направо: первая передача ({gear1}), правый указатель ({right}).",
+          "check": "Gate",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "id": "ex-hill",
+      "title": "У3 · Эстакада",
+      "scene": "Autodrome_Training",
+      "courseLesson": "hill",
+      "briefing": "Остановка и трогание на подъёме без отката.",
+      "doneText": "Упражнение выполнено.",
+      "steps": [
+        {
+          "id": "signal",
+          "text": "Включите правый указатель — {right} — и поворачивайте к эстакаде.",
+          "check": "IndicatorRight",
+          "skipAtGate": 1,
+          "skipAfter": 10
+        },
+        {
+          "id": "approach",
+          "text": "Подъезжайте к эстакаде на первой передаче ({gear1}).",
+          "check": "Gate",
+          "value": 1
+        },
+        {
+          "id": "stop1",
+          "text": "Остановитесь у линии СТОП-1 на подъёме: тормоз ({brake}) и сцепление ({clutch}). Постойте 2 секунды.",
+          "check": "Gate",
+          "value": 2
+        },
+        {
+          "id": "handbrake-on",
+          "text": "Поставьте машину на стояночный тормоз — {handbrake}: так проще тронуться без отката.",
+          "check": "HandbrakeOn",
+          "skipAtGate": 3,
+          "skipAfter": 8
+        },
+        {
+          "id": "hill-start-m",
+          "text": "Трогайтесь без отката: добавьте газ ({gas}), плавно отпускайте сцепление ({clutch}) до лёгкой вибрации и только тогда снимите ручник ({handbrake}).",
+          "check": "HandbrakeOff",
+          "only": "manual",
+          "skipAtGate": 3
+        },
+        {
+          "id": "hill-start-a",
+          "text": "Трогайтесь без отката: нажмите газ ({gas}) и одновременно снимите ручник ({handbrake}).",
+          "check": "HandbrakeOff",
+          "only": "auto",
+          "skipAtGate": 3
+        },
+        {
+          "id": "descent",
+          "text": "Проедьте вершину и спускайтесь не спеша, придерживая тормоз ({brake}).",
+          "check": "Gate",
+          "value": 3
+        },
+        {
+          "id": "stop",
+          "text": "Остановитесь у линии СТОП и постойте 2 секунды.",
+          "check": "Gate",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "id": "ex-junction",
+      "title": "У8 · Регулируемый перекрёсток",
+      "scene": "Autodrome_Training",
+      "courseLesson": "junction",
+      "briefing": "Остановка у стоп-линии и левый поворот.",
+      "doneText": "Упражнение выполнено.",
+      "steps": [
+        {
+          "id": "signal",
+          "text": "Заранее включите левый указатель — {left}.",
+          "check": "IndicatorLeft",
+          "skipAtGate": 1,
+          "skipAfter": 10
+        },
+        {
+          "id": "stopline",
+          "text": "Остановитесь перед стоп-линией ({brake}) на 2 секунды. Следите за светофором.",
+          "check": "Gate",
+          "value": 1
+        },
+        {
+          "id": "turn",
+          "text": "Поворачивайте налево ({steer_left}): уступите встречным, не срезайте угол.",
+          "check": "Gate",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "ex-parallel",
+      "title": "У7 · Параллельная парковка",
+      "scene": "Autodrome_Training",
+      "courseLesson": "parallel",
+      "briefing": "Парковка задним ходом параллельно краю.",
+      "doneText": "Упражнение выполнено.",
+      "steps": [
+        {
+          "id": "signal",
+          "text": "Включите правый указатель — {right} — и заезжайте в полосу.",
+          "check": "IndicatorRight",
+          "skipAtGate": 1,
+          "skipAfter": 10
+        },
+        {
+          "id": "lane",
+          "text": "Въезжайте в полосу не спеша.",
+          "check": "Gate",
+          "value": 1
+        },
+        {
+          "id": "pass",
+          "text": "Проедьте мимо места для стоянки и остановитесь, когда задний бампер поравняется с его дальним краем.",
+          "check": "Gate",
+          "value": 2
+        },
+        {
+          "id": "reverse-m",
+          "text": "Остановитесь и включите заднюю передачу: сцепление ({clutch}) и {reverse}.",
+          "check": "Gear",
+          "value": -1,
+          "only": "manual",
+          "skipAtGate": 3
+        },
+        {
+          "id": "reverse-a",
+          "text": "Остановитесь, держите тормоз ({brake}) и переведите селектор в R — {reverse}.",
+          "check": "Selector",
+          "selector": "R",
+          "only": "auto",
+          "skipAtGate": 3
+        },
+        {
+          "id": "park",
+          "text": "Паркуйтесь задним ходом: руль в сторону места ({steer}), когда машина встанет под углом — руль прямо, затем в обратную сторону. Остановитесь в месте на 2 секунды.",
+          "check": "Gate",
+          "value": 3
+        },
+        {
+          "id": "exit",
+          "text": "Выезжайте из места вперёд: первая передача ({gear1}), указатель поворота, затем направо.",
+          "check": "Gate",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "id": "ex-slalom",
+      "title": "У5 · Змейка",
+      "scene": "Autodrome_Training",
+      "courseLesson": "slalom",
+      "briefing": "Проезд змейки без касания конусов.",
+      "doneText": "Упражнение выполнено.",
+      "steps": [
+        {
+          "id": "signal",
+          "text": "Включите правый указатель — {right} — и въезжайте в змейку.",
+          "check": "IndicatorRight",
+          "skipAtGate": 1,
+          "skipAfter": 10
+        },
+        {
+          "id": "enter",
+          "text": "Въезжайте в змейку на первой передаче, не спеша.",
+          "check": "Gate",
+          "value": 1
+        },
+        {
+          "id": "bend",
+          "text": "Проходите изгибы плавно: руль ({steer}) поворачивайте заранее, конусы не задевайте.",
+          "check": "Gate",
+          "value": 2
+        },
+        {
+          "id": "exit",
+          "text": "На выезде — направо, указатель {right}.",
+          "check": "Gate",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "ex-shiftbrake",
+      "title": "У10 · Полоса разгона",
+      "scene": "Autodrome_Training",
+      "courseLesson": "shiftbrake",
+      "briefing": "Разгон, вторая передача, остановка в рамке.",
+      "doneText": "Упражнение выполнено.",
+      "steps": [
+        {
+          "id": "accelerate",
+          "text": "Разгоняйтесь на первой передаче — {gas}.",
+          "check": "MovingForward",
+          "value": 3,
+          "skipAtGate": 1
+        },
+        {
+          "id": "shift-m",
+          "text": "Переключитесь на вторую: отпустите газ, выжмите сцепление ({clutch}), включите {gear2}, плавно отпустите сцепление и добавьте газ.",
+          "check": "Gate",
+          "value": 1,
+          "only": "manual"
+        },
+        {
+          "id": "shift-a",
+          "text": "Разгоняйтесь дальше ({gas}) — автомат сам включит вторую передачу.",
+          "check": "Gate",
+          "value": 1,
+          "only": "auto"
+        },
+        {
+          "id": "brake-m",
+          "text": "Остановитесь в рамке: плавно тормозите ({brake}), перед остановкой выжмите сцепление ({clutch}).",
+          "check": "Gate",
+          "value": 2,
+          "only": "manual"
+        },
+        {
+          "id": "brake-a",
+          "text": "Остановитесь в рамке: плавно тормозите ({brake}).",
+          "check": "Gate",
+          "value": 2,
+          "only": "auto"
+        }
+      ]
+    },
+    {
+      "id": "ex-railway",
+      "title": "У9 · Железнодорожный переезд",
+      "scene": "Autodrome_Training",
+      "courseLesson": "railway",
+      "briefing": "Остановка перед путями и проезд переезда.",
+      "doneText": "Упражнение выполнено.",
+      "steps": [
+        {
+          "id": "stop",
+          "text": "Подъезжайте к переезду не спеша и остановитесь перед стоп-линией ({brake}). Посмотрите налево и направо.",
+          "check": "Gate",
+          "value": 1
+        },
+        {
+          "id": "cross",
+          "text": "Поезда нет — пересекайте пути без остановки. Передачу на путях лучше не переключать, чтобы не заглохнуть.",
+          "check": "Gate",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "ex-90turns",
+      "title": "У4 · Повороты на 90°",
+      "scene": "Autodrome_Training",
+      "courseLesson": "90turns",
+      "briefing": "Проезд двух поворотов в узком коридоре.",
+      "doneText": "Упражнение выполнено.",
+      "steps": [
+        {
+          "id": "signal",
+          "text": "Включите правый указатель — {right} — и поворачивайте в коридор.",
+          "check": "IndicatorRight",
+          "skipAtGate": 1,
+          "skipAfter": 10
+        },
+        {
+          "id": "enter",
+          "text": "Въезжайте в коридор на минимальной скорости.",
+          "check": "Gate",
+          "value": 1
+        },
+        {
+          "id": "turn1",
+          "text": "Первый поворот: держитесь ближе к внешнему краю и начинайте поворачивать ({steer}), когда поравняетесь с углом.",
+          "check": "Gate",
+          "value": 2
+        },
+        {
+          "id": "turn2",
+          "text": "Второй поворот — так же. Конусы не задевайте.",
+          "check": "Gate",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "ex-finish",
+      "title": "Финиш",
+      "scene": "Autodrome_Training",
+      "courseLesson": "finish",
+      "briefing": "Возврат на стартовую площадку.",
+      "doneText": "Упражнение выполнено.",
+      "steps": [
+        {
+          "id": "finish",
+          "text": "Двигайтесь на юг через кольцо к стартовой площадке и остановитесь в рамке на 3 секунды.",
+          "check": "Gate",
+          "value": 1
+        }
+      ]
+    }
+  ]
+}

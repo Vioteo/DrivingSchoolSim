@@ -15,6 +15,7 @@ namespace DrivingSchool.Presentation.UI
         public float rpm, redlineRpm = 6500f;
         public bool leftIndicator, rightIndicator, indicatorLamp, lowBeam, highBeam, handbrake, seatbelt, engineRunning, stalled;
         public string hintText; public int hintKind = -1; public int hintWaiting;   // hintKind = DrivingSchool.Learning.HintKind
+        public string hintTitle;            // заголовок вместо типа подсказки (урок: «УРОК 1 · ШАГ 3 / 19»); null — по типу
         public int remarks, severe;
         public Texture minimap; public float carYawDeg; public bool minimapAvailable;
     }
@@ -178,7 +179,7 @@ namespace DrivingSchool.Presentation.UI
 
             Color kind = m.hintKind <= 1 ? t.red : m.hintKind == 2 ? t.accent : t.info;
             string[] titles = { "ОПАСНОСТЬ", "ЗАМЕЧАНИЕ", "ИНСТРУКТОР", "НАВИГАЦИЯ", "УПРАЖНЕНИЕ" };
-            hintTitle.text = titles[Mathf.Clamp(m.hintKind, 0, titles.Length - 1)];
+            hintTitle.text = string.IsNullOrEmpty(m.hintTitle) ? titles[Mathf.Clamp(m.hintKind, 0, titles.Length - 1)] : m.hintTitle;
             hintTitle.color = kind; hintAccent.color = kind; hintAvatarRing.color = kind;
             hintText.text = m.hintText;
             hintWaiting.text = m.hintWaiting > 0 ? $"+{m.hintWaiting}" : "";

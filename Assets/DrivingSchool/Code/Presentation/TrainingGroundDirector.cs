@@ -19,7 +19,8 @@ namespace DrivingSchool.Presentation
         CourseSession session;
         int selected, cameraMode, contacts;
         bool exam, saved;
-        GUIStyle title, bodyStyle;
+        GUIStyle title, bodyStyle, hintStyle;
+        GuidedLessonRunner guide;   // пошаговые подсказки к упражнению (T49); на экзамене их нет
         string saveStatus="";
         public CourseSession Session => session;
         void Start() { course=JsonUtility.FromJson<TrainingCourse>(courseFile.text); CourseSession.Validate(course); PositionCar(0); }
@@ -31,6 +32,8 @@ namespace DrivingSchool.Presentation
         {
             session?.Cancel(); selected=fullExam?0:lesson; exam=fullExam; saved=false; saveStatus=""; contacts=0;
             PositionCar(selected);session=new CourseSession(course,selected,exam);session.Start();vehicle.inputEnabled=true;
+            var g=fullExam?null:GuidedLessonRunner.LoadPack()?.FindForCourse(course.lessons[selected].id);
+            guide=g!=null?new GuidedLessonRunner(g,vehicle,false):null;
         }
         void Update()
         {
@@ -60,6 +63,7 @@ namespace DrivingSchool.Presentation
             var p=vehicle.transform.position;
             var state = vehicle.Adapter.CurrentState;
             session.Tick(Time.fixedDeltaTime,p.x,p.z,vehicle.transform.eulerAngles.y,state.signedSpeedMps,state.gear);
+            if(guide!=null && session.Phase==CoursePhase.Running && !session.Transferring)guide.Tick(Time.fixedDeltaTime,session.GateIndex);
             if(session.Phase!=CoursePhase.Running)SaveResult();
         }
         void LateUpdate()
@@ -103,6 +107,7 @@ namespace DrivingSchool.Presentation
             {
                 title=new GUIStyle(GUI.skin.label){fontSize=22,fontStyle=FontStyle.Bold,wordWrap=true};
                 bodyStyle=new GUIStyle(GUI.skin.label){fontSize=15,wordWrap=true};
+                hintStyle=new GUIStyle(GUI.skin.box){fontSize=16,wordWrap=true,richText=true,alignment=TextAnchor.UpperLeft,padding=new RectOffset(8,8,6,6)};
             }
             GUI.Box(new Rect(18,18,340,852),GUIContent.none);
             GUILayout.BeginArea(new Rect(34,30,308,822));
@@ -124,6 +129,7 @@ namespace DrivingSchool.Presentation
                 GUILayout.Label((session.LessonIndex+1)+" / "+course.lessons.Length+"  "+course.lessons[session.LessonIndex].title,bodyStyle);
                 GUILayout.Label(session.Transferring?"Переезд к следующей зоне":session.CurrentGate.instruction,title);
                 if(session.Transferring)GUILayout.Label(session.CurrentGate.instruction,bodyStyle);
+                if(guide!=null && guide.Session.Phase==GuidedPhase.Running)GUILayout.Label("Инструктор: "+guide.Text,hintStyle);
                 GUILayout.Label("Шаг "+(session.GateIndex+1)+"  ·  "+session.Elapsed.ToString("F0")+" с\nШтраф "+session.Penalty+" / "+course.failPenalty,bodyStyle);
                 if(session.CurrentGate.holdSeconds>0)GUILayout.Label("Остановка: "+session.HoldProgress.ToString("F1")+" / "+session.CurrentGate.holdSeconds.ToString("F0")+" с",bodyStyle);
                 GUILayout.Label(session.Message,bodyStyle);
