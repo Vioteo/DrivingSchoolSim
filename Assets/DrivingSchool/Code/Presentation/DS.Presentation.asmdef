@@ -12,6 +12,7 @@
     "Unity.InputSystem",
     "Unity.RenderPipelines.Universal.Runtime",
     "Unity.RenderPipelines.Core.Runtime",
-    "DS.Settings"
+    "DS.Settings",
+    "DS.Presentation.UI"
   ]
 }

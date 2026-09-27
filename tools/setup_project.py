@@ -25,8 +25,8 @@ for m,refs in modules.items():
     obj={'name':'DS.'+m,'rootNamespace':'DrivingSchool.'+m,'references':['DS.'+x for x in refs]}
     if m in ('Contracts','Settings','Simulation','Rules','Learning'):obj['noEngineReferences']=True
     if m=='Input':obj['references']+=['Unity.InputSystem']
-    if m=='Presentation':obj['references']+=['Unity.InputSystem','Unity.RenderPipelines.Universal.Runtime','Unity.RenderPipelines.Core.Runtime']
-    if m=='Editor':obj['includePlatforms']=['Editor'];obj['references']+=['Unity.RenderPipelines.Universal.Runtime','Unity.RenderPipelines.Core.Runtime','Unity.InputSystem','Unity.XR.Management','Unity.XR.OpenXR','Unity.TextMeshPro','DS.Presentation.UI','UnityEngine.UI']
+    if m=='Presentation':obj['references']+=['DS.Presentation.UI','Unity.InputSystem','Unity.RenderPipelines.Universal.Runtime','Unity.RenderPipelines.Core.Runtime']
+    if m=='Editor':obj['includePlatforms']=['Editor'];obj['references']+=['Unity.RenderPipelines.Universal.Runtime','Unity.RenderPipelines.Core.Runtime','Unity.InputSystem','Unity.XR.Management','Unity.XR.OpenXR','Unity.TextMeshPro','DS.Presentation.UI','UnityEngine.UI','UnityEditor.TestRunner']
     write(f'Assets/DrivingSchool/Code/{m}/DS.{m}.asmdef',obj)
 write('Assets/DrivingSchool/Code/Presentation/Physics/DS.Presentation.Physics.asmdef',{'name':'DS.Presentation.Physics','rootNamespace':'DrivingSchool.Presentation.Physics','references':['DS.Contracts','DS.Simulation']})
 # UI-слой: uGUI/TMP + Input System, без ссылок на симуляцию (ADR-001, docs/ui-settings.md).

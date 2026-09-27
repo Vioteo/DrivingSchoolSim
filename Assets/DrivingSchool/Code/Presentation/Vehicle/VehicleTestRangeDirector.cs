@@ -40,6 +40,10 @@ namespace DrivingSchool.Presentation
         public RailwayCrossingView crossing;
 
         bool showHelp = true, running;
+        /// <summary>Панель подсказки по клавишам (F4). При запуске из меню её прячет HUD поездки (T47).</summary>
+        public bool ShowHelp { get => showHelp; set => showHelp = value; }
+        /// <summary>Инженерная панель телеметрии слева вверху. С HUD поездки скрыта; F4 показывает её вместе с клавишами.</summary>
+        public bool ShowTelemetry { get; set; } = true;
         readonly List<string> report = new List<string>();
         string reportSummary = "";
         GUIStyle label, small, box;
@@ -265,6 +269,12 @@ namespace DrivingSchool.Presentation
                 box = new GUIStyle(GUI.skin.box);
             }
             var a = player.Adapter; var st = a.CurrentState; var cmd = a.LastCommand; var s = a.Solver;
+            if (ShowTelemetry || showHelp) DrawTelemetry(a, st, cmd, s);
+            DrawHelp();
+        }
+
+        void DrawTelemetry(VehiclePhysicsAdapter a, VehicleState st, DriverCommand cmd, DrivingSchool.Simulation.VehicleSolver s)
+        {
             GUI.Box(new Rect(12, 12, 340, 425), GUIContent.none, box);
             GUILayout.BeginArea(new Rect(22, 18, 322, 415));
             GUILayout.Label($"<b>{Mathf.Abs(st.signedSpeedMps) * 3.6f:F0} км/ч</b>   {st.engineRpm:F0} об/мин   <b>{(dashboard != null ? dashboard.GearText : st.gear.ToString())}</b>", label);
@@ -285,7 +295,10 @@ namespace DrivingSchool.Presentation
             if (crossing != null) GUILayout.Label("Переезд: " + CrossingText(crossing) + "  (G — поезд)", small);
             if (!string.IsNullOrEmpty(reportSummary)) GUILayout.Label("Самопроверка: " + reportSummary, small);
             GUILayout.EndArea();
+        }
 
+        void DrawHelp()
+        {
             if (showHelp)
             {
                 float w = 380, x = Screen.width - w - 12;

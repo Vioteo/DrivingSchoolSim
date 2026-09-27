@@ -30,8 +30,8 @@ namespace DrivingSchool.Editor
         const int LayerMirror = 8, LayerGround = 9, LayerProps = 10, LayerPlayer = 11;
 
         // Layout (metres). Road A runs along +Z, the curve turns right, road B runs along +X to the pad.
-        public const float RoadWidth = 8f, RoadAStartZ = -30f, RoadAEndZ = 260f, CurveRadius = 30f, RoadBEndX = 150f;
-        public const float BumpRubberZ = 80f, BumpAsphaltZ = 140f;
+        public const float RoadWidth = DrivingSchool.Presentation.TestRangeLayout.RoadWidth, RoadAStartZ = DrivingSchool.Presentation.TestRangeLayout.RoadAStartZ, RoadAEndZ = DrivingSchool.Presentation.TestRangeLayout.RoadAEndZ, CurveRadius = DrivingSchool.Presentation.TestRangeLayout.CurveRadius, RoadBEndX = DrivingSchool.Presentation.TestRangeLayout.RoadBEndX;   // раскладка — одна на рантайм и генератор
+        public const float BumpRubberZ = DrivingSchool.Presentation.TestRangeLayout.BumpRubberZ, BumpAsphaltZ = DrivingSchool.Presentation.TestRangeLayout.BumpAsphaltZ;
         public static readonly Vector3 PadCentre = new Vector3(195f, 0f, 290f);
         public const float PadSize = 90f;
 
@@ -423,9 +423,9 @@ namespace DrivingSchool.Editor
         // ------------------------------------------------------------------ road C: railway crossing and hill
 
         // Road C leaves the south edge of the pad and runs south along X = RoadCX. Driving north (+Z) keeps to x > RoadCX.
-        public const float RoadCX = 195f, RoadCEndZ = 10f, RailZ = 185f, HillStartZ = 75f, HillEndZ = 123f;
-        public const float HillGrade = 0.14f, HillRamp = 14f, HillBlend = 3f;
-        const float CrossingHalfLength = 4.8f;                // TK_RailwayCrossing_Tracks: ramps + deck along the road
+        public const float RoadCX = DrivingSchool.Presentation.TestRangeLayout.RoadCX, RoadCEndZ = DrivingSchool.Presentation.TestRangeLayout.RoadCEndZ, RailZ = DrivingSchool.Presentation.TestRangeLayout.RailZ, HillStartZ = DrivingSchool.Presentation.TestRangeLayout.HillStartZ, HillEndZ = DrivingSchool.Presentation.TestRangeLayout.HillEndZ;
+        public const float HillGrade = DrivingSchool.Presentation.TestRangeLayout.HillGrade, HillRamp = DrivingSchool.Presentation.TestRangeLayout.HillRamp, HillBlend = 3f;
+        const float CrossingHalfLength = DrivingSchool.Presentation.TestRangeLayout.CrossingHalfLength;                // TK_RailwayCrossing_Tracks: ramps + deck along the road
         const float TrackWestX = 40f, TrackEastX = 440f;       // the track ends (the ground is 700 m wide)
         static float RoadCStartZ => PadCentre.z - PadSize / 2f;
 
