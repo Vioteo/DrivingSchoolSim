@@ -163,7 +163,7 @@ namespace DrivingSchool.Tests
             using (var p = new Pause())
             {
                 var c = p.C;
-                Assert.That(new[] { c.resumeButton, c.restartButton, c.exitToMenuButton }, Has.None.Null);
+                Assert.That(new[] { c.resumeButton, c.restartButton, c.settingsButton, c.exitToMenuButton }, Has.None.Null);
                 Assert.That(c.panel.activeSelf, Is.False);
                 Assert.That(c.resumeButton.navigation.selectOnUp, Is.EqualTo(c.exitToMenuButton), "Навигация по кругу");
                 foreach (var t in p.Root.GetComponentsInChildren<TMP_Text>(true))
