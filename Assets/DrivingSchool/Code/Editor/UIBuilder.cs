@@ -45,6 +45,14 @@ namespace DrivingSchool.Editor
             BuildLessonCatalog();
             BuildGarage();
             BuildConditionsSetup();
+            const string oldCalibration = "Assets/DrivingSchool/Prefabs/UI/G27Calibration.prefab";
+            const string newCalibration = "Assets/DrivingSchool/Prefabs/UI/G29Calibration.prefab";
+            if (AssetDatabase.LoadAssetAtPath<GameObject>(oldCalibration) != null &&
+                AssetDatabase.LoadAssetAtPath<GameObject>(newCalibration) == null)
+            {
+                string error = AssetDatabase.MoveAsset(oldCalibration, newCalibration); // keep GUID and scene references
+                if (!string.IsNullOrEmpty(error)) throw new IOException(error);
+            }
             BuildG29Calibration();
             BuildPauseMenu();
             BuildTheoryExam();
