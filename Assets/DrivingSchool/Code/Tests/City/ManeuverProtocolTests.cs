@@ -78,6 +78,32 @@ namespace DrivingSchool.Tests
         }
 
         [Test]
+        public void LeftTurnWaitsForAnOncomingCarStillFarAway()
+        {
+            // Found in play (T65): the left turn was given its permit while the oncoming car was beyond its own asking
+            // distance; the oncoming car then found the zone taken and braked.
+            var run = new TrafficRun(CityLayouts.Compile(CityLayouts.CrossWithArms(4)), NoSpawn);
+            string[] Route(string arm, string to) => new[]
+            {
+                arm + "3/f", arm + "2/f", arm + "1/f", arm + "0/f", "c/" + Cap(arm) + ".in", "c/c:" + Cap(arm) + ".in>" + Cap(to) + ".out", "c/" + Cap(to) + ".out", to + "0/b", to + "1/b",
+            };
+            run.Director.AddVehicle(Route("south", "west").Skip(3), 16, 0, id: "a-left");
+            run.Director.AddVehicle(Route("north", "south"), 5, 14, id: "b-oncoming");
+            double slowest = double.MaxValue; var order = new List<string>();
+            run.Run(20, r =>
+            {
+                foreach (var p in r.Director.Snapshot.Participants)
+                {
+                    if (p.PathId != null && r.Director.Graph.Path(p.PathId).IsConnection && !order.Contains(p.Id)) order.Add(p.Id);
+                    if (p.Id == "b-oncoming" && !order.Contains(p.Id)) slowest = Math.Min(slowest, p.SpeedMps);
+                }
+                TrafficRun.AssertNoOverlaps(r.Director.Snapshot);
+            });
+            Assert.That(order.Take(2), Is.EqualTo(new[] { "b-oncoming", "a-left" }));
+            Assert.That(slowest, Is.GreaterThan(11), "the oncoming car kept going");
+        }
+
+        [Test]
         public void MainRoadGoesBeforeTrafficFromTheRight()
         {
             // North-south is the main road; the east approach has "yield". East is on the right of the southern car.

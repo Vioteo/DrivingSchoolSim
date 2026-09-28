@@ -41,6 +41,8 @@ namespace DrivingSchool.Simulation.Traffic
         readonly PedestrianSimulation pedestrians;
         readonly Dictionary<(string crossing, string path), double> crossingS = new Dictionary<(string, string), double>();
         bool pedestriansPlaced;
+        // Mid-block spawn points (T66): in a town closed into loops there are few district edges to come in by.
+        readonly List<(string pathId, double s)> interiorSpawns = new List<(string, double)>();
 
         /// <summary>Test hook: visit agents in reverse order; the outcome must not change.</summary>
         public bool ReverseProcessingOrder;
@@ -68,6 +70,12 @@ namespace DrivingSchool.Simulation.Traffic
             foreach (var c in graph.crossings)
                 foreach (var pathId in c.laneIds)
                     if (index.TryPath(pathId, out var path)) crossingS[(c.id, pathId)] = CrossingPoint(path.Line, c);
+            foreach (var l in graph.lanes)
+            {
+                if (l.roundabout || !index.TryPath(l.id, out var lane) || lane.IsConnection) continue;
+                if (lane.Length >= profile.InteriorSpawnMinLaneM) interiorSpawns.Add((l.id, lane.Length / 2));
+            }
+            interiorSpawns.Sort((a, b) => string.CompareOrdinal(a.pathId, b.pathId));
             Snapshot = new TrafficSnapshot();
         }
 
@@ -197,7 +205,7 @@ namespace DrivingSchool.Simulation.Traffic
             if (spawnClock >= profile.SpawnIntervalSeconds)
             {
                 spawnClock = 0; TrySpawn();
-                if (pedestrians.People.Count < profile.MaxPedestrians) pedestrians.Spawn(p => Loaded(p) && !VisibleToPlayer(p));
+                if (pedestrians.People.Count < profile.MaxPedestrians) pedestrians.Spawn(p => Loaded(p) && !VisibleToPlayer(p) && NearPlayer(p, profile.SpawnRadiusM));
             }
             Despawn();
             foreach (var p in pedestrians.People.Where(x => x.Phase == PedestrianPhase.Down && now - x.DownSince > profile.DownedPedestrianSeconds).ToList())
@@ -252,9 +260,22 @@ namespace DrivingSchool.Simulation.Traffic
                 requests.Add((a, request, ApproachOf(a.Id, next, request.EtaSeconds)));
             }
             var playerApproach = PlayerApproach();
+            // Rivals are not only the ones asking now: a car on the main road or oncoming that is still beyond its own
+            // asking distance may be at the junction before a slow left turn is through (T65: bots turned left in
+            // front of oncoming cars, which then had to brake).
+            var rivals = new List<JunctionPolicy.Approach>();
+            foreach (var a in agents)
+            {
+                if (a.Frozen) continue;
+                var next = NextConnection(a, out double distance);
+                if (next == null) continue;
+                double v = a.Car.CurrentSpeedMps;
+                if (distance > Math.Max(profile.JunctionLookaheadM, Math.Min(profile.RivalHorizonM, v * profile.RivalSeconds))) continue;
+                rivals.Add(ApproachOf(a.Id, next, Math.Max(0, distance) / Math.Max(1, v)));
+            }
             // Deterministic processing: earlier arrival first, then id.
             foreach (var (a, request, approach) in requests.OrderBy(r => r.request.EtaSeconds).ThenBy(r => r.agent.Id, StringComparer.Ordinal))
-                permits.Add(Evaluate(a, request, approach, requests.Select(r => r.approach).Where(x => x != approach), playerApproach));
+                permits.Add(Evaluate(a, request, approach, rivals.Where(x => x.ParticipantId != a.Id), playerApproach));
         }
 
         ManeuverPermit Evaluate(Agent a, ManeuverRequest r, JunctionPolicy.Approach mine, IEnumerable<JunctionPolicy.Approach> others, JunctionPolicy.Approach playerApproach)
@@ -296,7 +317,7 @@ namespace DrivingSchool.Simulation.Traffic
             a.Decision = "go: " + r.PathId;
             // Tell the ones who have to wait, so they do not start to creep in.
             foreach (var other in others)
-                if (conflicting.Contains(other.ConnectionId))
+                if (conflicting.Contains(other.ConnectionId) && JunctionPolicy.MustYield(other, mine))
                     pending.Add(new ManeuverNotice { ToId = other.ParticipantId, FromId = a.Id, SubjectId = r.PathId, Kind = NoticeKind.Hold, Value = until, IssuedTick = tick });
             return new ManeuverPermit { AgentId = a.Id, PathId = r.PathId, Kind = r.Kind, Granted = true, UntilSeconds = until, Fallback = "stop-at-line", Reason = "granted" };
         }
@@ -368,7 +389,9 @@ namespace DrivingSchool.Simulation.Traffic
         }
 
         /// <summary>Connection the player is on or about to enter (by indicator, straight otherwise), null if none.</summary>
-        string PlayerConnection(out double eta)
+        string PlayerConnection(out double eta) => PlayerConnection(out eta, 25);
+
+        string PlayerConnection(out double eta, double horizonM)
         {
             eta = 0;
             if (!player.Present || !playerPos.IsValid) return null;
@@ -376,7 +399,7 @@ namespace DrivingSchool.Simulation.Traffic
             if (path.IsConnection) return path.Id;
             double toEnd = path.Length - playerPos.S - player.LengthM / 2;
             var exits = path.Next.Select(index.Path).Where(p => p.IsConnection).ToList();
-            if (exits.Count == 0 || toEnd > 25 || player.SpeedMps < 2 && toEnd > 3) return null;
+            if (exits.Count == 0 || toEnd > horizonM || player.SpeedMps < 2 && toEnd > 3) return null;
             var wanted = player.LeftIndicator ? LaneManeuver.Left : player.RightIndicator ? LaneManeuver.Right : LaneManeuver.Straight;
             var chosen = exits.FirstOrDefault(p => p.Connection.maneuver == wanted) ?? exits.FirstOrDefault(p => p.Connection.maneuver == LaneManeuver.Straight) ?? exits[0];
             eta = toEnd / Math.Max(1, player.SpeedMps);
@@ -385,7 +408,8 @@ namespace DrivingSchool.Simulation.Traffic
 
         JunctionPolicy.Approach PlayerApproach()
         {
-            var c = PlayerConnection(out double eta);
+            // The player is a rival as far ahead as a bot would be (the claim on the zones stays short, ClaimForPlayer).
+            var c = PlayerConnection(out double eta, Math.Max(25, Math.Min(profile.RivalHorizonM, Math.Abs(player.SpeedMps) * profile.RivalSeconds)));
             if (c == null) return null;
             var conn = index.Path(c).Connection;
             var aspect = AspectOf(conn.signalGroupId);
@@ -537,19 +561,20 @@ namespace DrivingSchool.Simulation.Traffic
         void TrySpawn()
         {
             if (agents.Count >= profile.MaxVehicles) return;
-            var candidates = index.World.spawnPoints.Where(s => s.role == SpawnRole.Vehicle).OrderBy(s => s.id, StringComparer.Ordinal).ToList();
+            var candidates = index.World.spawnPoints.Where(s => s.role == SpawnRole.Vehicle).OrderBy(s => s.id, StringComparer.Ordinal)
+                .Select(s => (s.pathId, (double)s.s)).Concat(interiorSpawns).ToList();
             var snapshot = Participants();
             var free = candidates.Where(sp =>
             {
-                var p = index.Path(sp.pathId).Line.PointAt(sp.s);
-                if (!Loaded(p) || VisibleToPlayer(p)) return false;
+                var p = index.Path(sp.pathId).Line.PointAt(sp.Item2);
+                if (!Loaded(p) || VisibleToPlayer(p) || !NearPlayer(p, profile.SpawnRadiusM)) return false;
                 return snapshot.All(o => o.Kind == ParticipantKind.Pedestrian || Polyline.Distance2D(o.Position, p) > 15);
             }).ToList();
             if (free.Count == 0) return;
             var spawn = free[rng.Next(free.Count)];
             var driver = profile.Drivers[rng.Next(profile.Drivers.Length)];
-            double speed = Math.Min(index.SpeedLimitAt(spawn.pathId, spawn.s) / 3.6 * 0.6, 8);
-            var id = AddVehicle(new[] { spawn.pathId }, spawn.s, speed, driver);
+            double speed = Math.Min(index.SpeedLimitAt(spawn.pathId, spawn.Item2) / 3.6 * 0.6, 8);
+            var id = AddVehicle(new[] { spawn.pathId }, spawn.Item2, speed, driver);
             ExtendRoute(agents.First(x => x.Id == id));
         }
 
@@ -562,8 +587,20 @@ namespace DrivingSchool.Simulation.Traffic
             {
                 if (a.Car.Finished && a.FinishedAt < 0) a.FinishedAt = now;
                 bool lingered = a.Car.Finished && now - a.FinishedAt > profile.FinishedLingerSeconds;
-                if ((a.Car.Finished && !VisibleToPlayer(a.Car.Position)) || lingered || !InLoadedChunks(a)) Remove(a);
+                // Far behind the player and out of sight (T66): the loops would keep it for ever, a new one comes in near the player.
+                bool far = !NearPlayer(a.Car.Position, profile.RecycleDistanceM) && !VisibleToPlayer(a.Car.Position);
+                if ((a.Car.Finished && !VisibleToPlayer(a.Car.Position)) || lingered || far || !InLoadedChunks(a)) Remove(a);
             }
+            foreach (var p in pedestrians.People.Where(x => x.Phase != PedestrianPhase.Down && !NearPlayer(x.Position, profile.RecycleDistanceM) && !VisibleToPlayer(x.Position)).ToList())
+                pedestrians.Remove(p.Id);
+        }
+
+        /// <summary>Within <paramref name="radiusM"/> of the player; always true without a player (tests, the menu backdrop).</summary>
+        bool NearPlayer(Vec3d p, double radiusM)
+        {
+            if (!player.Present) return true;
+            double dx = p.x - player.X, dz = p.z - player.Z;
+            return dx * dx + dz * dz <= radiusM * radiusM;
         }
 
         void Remove(Agent a)

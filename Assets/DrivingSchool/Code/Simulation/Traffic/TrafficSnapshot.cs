@@ -20,6 +20,8 @@ namespace DrivingSchool.Simulation.Traffic
         public double BackgroundHz = 2;
         public double RouteHorizonM = 200;
         public double JunctionLookaheadM = 35;
+        // Rivals at a junction (T65): anyone who can reach it within this time at the current speed, up to this far.
+        public double RivalSeconds = 7, RivalHorizonM = 110;
         public double DeadlockSeconds = 6;         // game rule: circular waiting longer than this -> lowest id goes
         public double HazardNoticeRangeM = 120;
         public double ChunkSizeM = 256;
@@ -34,6 +36,9 @@ namespace DrivingSchool.Simulation.Traffic
         public double TurnSignalSeconds = 4, TurnSignalMinM = 30, TurnSignalMaxM = 80, LaneChangeSignalM = 30;
         // Roundabout (T65): chance to go on round the ring at an exit, and at most this many ring sections per visit.
         public double RingStayShare = 0.35; public int MaxRingSections = 4;
+        // Town closed into loops (T66): cars also appear mid-block on lanes this long; new cars and pedestrians appear
+        // within SpawnRadiusM of the player, and the ones farther than RecycleDistanceM and out of sight are taken away.
+        public double InteriorSpawnMinLaneM = 15, SpawnRadiusM = 220, RecycleDistanceM = 280;
     }
 
     /// <summary>What the host tells the director about the player's car each tick.</summary>
