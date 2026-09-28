@@ -21,6 +21,8 @@ namespace DrivingSchool.Presentation
         public float LastImpactSpeedMps { get; private set; }
         public string LastImpactWith { get; private set; } = "";
         public float LastImpactTime { get; private set; } = -10f;
+        /// <summary>Слой того, во что был последний удар (9 — земля, 10 — препятствия), T68.</summary>
+        public int LastImpactLayer { get; private set; } = -1;
         long tick;
 
         void Awake()
@@ -57,7 +59,7 @@ namespace DrivingSchool.Presentation
         {
             float v = c.relativeVelocity.magnitude;
             if (v < 0.3f) return;
-            CollisionCount++; LastImpactSpeedMps = v; LastImpactWith = c.collider.name; LastImpactTime = Time.time;
+            CollisionCount++; LastImpactSpeedMps = v; LastImpactWith = c.collider.name; LastImpactTime = Time.time; LastImpactLayer = c.collider.gameObject.layer;
         }
     }
 }

@@ -49,6 +49,10 @@ namespace DrivingSchool.Presentation
         public bool ShowHelp { get => showHelp; set => showHelp = value; }
         /// <summary>Инженерная панель телеметрии слева вверху. С HUD поездки скрыта; F4 показывает её вместе с клавишами.</summary>
         public bool ShowTelemetry { get; set; } = true;
+        /// <summary>T68: упражнение или экзамен автодрома — телепорты (F9–F12, Backspace, U), поезд (G) и самопроверка (F8) выключены.</summary>
+        public bool TeleportsLocked { get; set; }
+        /// <summary>T68: экзамен — КПП (F7) не переключается.</summary>
+        public bool TransmissionLocked { get; set; }
         readonly List<string> report = new List<string>();
         string reportSummary = "";
         GUIStyle label, small, box;
@@ -72,7 +76,8 @@ namespace DrivingSchool.Presentation
         {
             var kb = Keyboard.current; if (kb == null || running) return;
             if (kb.f4Key.wasPressedThisFrame) showHelp = !showHelp;
-            if (kb.f7Key.wasPressedThisFrame) ToggleTransmission();
+            if (kb.f7Key.wasPressedThisFrame && !TransmissionLocked) ToggleTransmission();
+            if (TeleportsLocked) return;
             if (kb.f9Key.wasPressedThisFrame || kb.backspaceKey.wasPressedThisFrame) Respawn(spawn);
             if (kb.f10Key.wasPressedThisFrame) Respawn(crashSpawn);
             if (kb.f11Key.wasPressedThisFrame) Respawn(railwaySpawn);

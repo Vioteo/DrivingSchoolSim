@@ -1,151 +1,166 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using DrivingSchool.Contracts;
 using DrivingSchool.Learning;
-using DrivingSchool.Simulation;
-using DrivingSchool.Presentation.Physics;
 
 namespace DrivingSchool.Presentation
 {
+    /// <summary>
+    /// Упражнения и экзамен автодрома (T68, docs/training-ground.md). Курс — course-v2.json; <see cref="CourseSession"/>
+    /// шагает в FixedUpdate по состоянию машины игрока (позиция, скорость, передача, указатели, заглохание); касание
+    /// конуса или ограждения — ошибка «contact»; рамка текущей цели лежит на земле (на экзамене — только на переездах).
+    /// Подсказки, HUD, карточки ошибок и разбор ведёт <see cref="DriveSession"/>; сцена, открытая напрямую
+    /// (PlayMode-тесты), работает через <see cref="Begin"/> без интерфейса. Результат попытки пишется в
+    /// persistentDataPath/TrainingResults.
+    /// </summary>
     public sealed class TrainingGroundDirector : MonoBehaviour
     {
         public TextAsset courseFile;
         public VehicleController vehicle;
-        public Camera view;
         public Transform marker;
         TrainingCourse course;
         CourseSession session;
-        int selected, cameraMode, contacts;
-        bool exam, saved;
-        GUIStyle title, bodyStyle, hintStyle;
-        GuidedLessonRunner guide;   // пошаговые подсказки к упражнению (T49); на экзамене их нет
-        string saveStatus="";
+        int contacts;
+        float lastContact = -10f;
+        bool saved;
+        const float ContactCooldown = 1.5f;   // один удар о конус — одна ошибка (игровой порог)
+
         public CourseSession Session => session;
-        void Start() { course=JsonUtility.FromJson<TrainingCourse>(courseFile.text); CourseSession.Validate(course); PositionCar(0); }
+        public TrainingCourse Course { get { Load(); return course; } }
+        /// <summary>Что стало с сохранением результата: путь к файлу или причина ошибки; "" — ещё не сохраняли.</summary>
+        public string SaveStatus { get; private set; } = "";
+
+        void Start()
+        {
+            ResolveVehicle();
+            Load();
+            if (session == null && vehicle != null) PositionCar(0);
+        }
+
+        void ResolveVehicle()
+        {
+            // Машину выбирает PlayerVehicleSelector (гараж, M) и передаёт директору полигона.
+            var range = FindAnyObjectByType<VehicleTestRangeDirector>();
+            if (range != null && range.player != null) vehicle = range.player;
+        }
+
+        void Load()
+        {
+            if (course != null) return;
+            course = JsonUtility.FromJson<TrainingCourse>(courseFile.text);
+            CourseSession.Validate(course);
+        }
+
+        /// <summary>Номер упражнения по id курса; -1 — нет такого.</summary>
+        public int IndexOf(string lessonId)
+        {
+            Load();
+            for (int i = 0; i < course.lessons.Length; i++) if (course.lessons[i].id == lessonId) return i;
+            return -1;
+        }
+
         void PositionCar(int index)
         {
-            var l=course.lessons[index];vehicle.ResetAt(new Vector3(l.startX,0,l.startZ),Quaternion.Euler(0,l.startYaw,0));
+            var l = course.lessons[index];
+            vehicle.ResetAt(new Vector3(l.startX, .05f, l.startZ), Quaternion.Euler(0, l.startYaw, 0));
         }
+
+        /// <summary>Начать упражнение (<paramref name="fullExam"/> = false) или экзамен по всей площадке с первого упражнения.</summary>
         public void Begin(int lesson, bool fullExam)
         {
-            session?.Cancel(); selected=fullExam?0:lesson; exam=fullExam; saved=false; saveStatus=""; contacts=0;
-            PositionCar(selected);session=new CourseSession(course,selected,exam);session.Start();vehicle.inputEnabled=true;
-            var g=fullExam?null:GuidedLessonRunner.LoadPack()?.FindForCourse(course.lessons[selected].id);
-            guide=g!=null?new GuidedLessonRunner(g,vehicle,false):null;
+            Load();
+            if (vehicle == null) ResolveVehicle();
+            session?.Cancel();
+            saved = false; SaveStatus = "";
+            int index = fullExam ? 0 : lesson;
+            PositionCar(index);
+            session = new CourseSession(course, index, fullExam);
+            session.Start();
+            contacts = vehicle.CollisionCount;
+            vehicle.inputEnabled = true;
         }
+
+        /// <summary>Прервать попытку (пауза → «Завершить поездку»); результат сохраняется как отменённый.</summary>
+        public void Cancel()
+        {
+            if (session == null) return;
+            session.Cancel();
+            SaveResult();
+        }
+
         void Update()
         {
-            var k=Keyboard.current;
-            if(k!=null && k.cKey.wasPressedThisFrame)cameraMode=(cameraMode+1)%3;
-            if(k!=null && k.f7Key.wasPressedThisFrame && (session==null || session.Phase!=CoursePhase.Running))
-                vehicle.Adapter.SetTransmission(vehicle.Adapter.transmission==TransmissionType.Manual?TransmissionType.Automatic:TransmissionType.Manual);
-            if(k!=null && k.escapeKey.wasPressedThisFrame && session!=null) {session.Cancel();SaveResult();}
-            vehicle.inputEnabled=session!=null && session.Phase==CoursePhase.Running;
-            var gate=session?.CurrentGate;
-            if(marker)
-            {
-                marker.gameObject.SetActive(gate!=null && (!exam || session.Transferring));
-                if(gate!=null)
-                {
-                    float y=UnityEngine.Physics.Raycast(new Vector3(gate.x,5,gate.z),Vector3.down,out var hit,8,1<<9)?hit.point.y+.05f:.05f;
-                    marker.SetPositionAndRotation(new Vector3(gate.x,y,gate.z),Quaternion.Euler(0,gate.yaw,0));
-                    marker.localScale=new Vector3(gate.width,1,gate.length);
-                }
-            }
+            if (session == null || vehicle == null) return;
+            vehicle.inputEnabled = session.Phase == CoursePhase.Running;
+            var gate = session.CurrentGate;
+            if (!marker) return;
+            marker.gameObject.SetActive(gate != null && (!session.Exam || session.Transferring));
+            if (gate == null) return;
+            float y = UnityEngine.Physics.Raycast(new Vector3(gate.x, 5, gate.z), Vector3.down, out var hit, 8, 1 << 9) ? hit.point.y + .05f : .05f;
+            marker.SetPositionAndRotation(new Vector3(gate.x, y, gate.z), Quaternion.Euler(0, gate.yaw, 0));
+            marker.localScale = new Vector3(gate.width, 1, gate.length);
         }
+
         void FixedUpdate()
         {
             // Пауза при потере фокуса (безопасность руля/FFB); в пакетном режиме и с runInBackground (автотесты) не нужна.
-            if(session==null || session.Phase!=CoursePhase.Running || (!Application.isFocused && !Application.isBatchMode && !Application.runInBackground))return;
-            if(vehicle.CollisionCount>contacts) { session.Fault("Касание конуса или ограждения",2);contacts=vehicle.CollisionCount; }
-            var p=vehicle.transform.position;
-            var state = vehicle.Adapter.CurrentState;
-            session.Tick(Time.fixedDeltaTime,p.x,p.z,vehicle.transform.eulerAngles.y,state.signedSpeedMps,state.gear);
-            if(guide!=null && session.Phase==CoursePhase.Running && !session.Transferring)guide.Tick(Time.fixedDeltaTime,session.GateIndex);
-            if(session.Phase!=CoursePhase.Running)SaveResult();
-        }
-        void LateUpdate()
-        {
-            if(!vehicle || !view)return;
-            var t=vehicle.transform;
-            if(cameraMode==2) { view.orthographic=true;view.orthographicSize=course.halfLength*1.08f;view.transform.SetPositionAndRotation(new Vector3(0,course.halfLength*3,0),Quaternion.Euler(90,0,0)); }
-            else
+            if (session == null || session.Phase != CoursePhase.Running || vehicle == null ||
+                (!Application.isFocused && !Application.isBatchMode && !Application.runInBackground)) return;
+            if (vehicle.CollisionCount > contacts)
             {
-                view.orthographic=false;
-                Vector3 desired=cameraMode==0?t.position-t.forward*10+Vector3.up*5.5f:t.position+Vector3.up*27-t.forward*7;
-                view.transform.position=Vector3.Lerp(view.transform.position,desired,1-Mathf.Exp(-Time.deltaTime*7));
-                view.transform.LookAt(t.position+t.forward*2+Vector3.up*.5f);
+                contacts = vehicle.CollisionCount;
+                // Удар о землю (слой 9: край эстакады, покрытие) — не касание препятствия.
+                if (vehicle.LastImpactLayer != 9 && Time.time - lastContact > ContactCooldown)
+                {
+                    lastContact = Time.time;
+                    session.Penalize(CourseSession.Contact);
+                }
             }
+            var t = vehicle.transform;
+            var st = vehicle.Adapter.CurrentState;
+            if (session.Phase == CoursePhase.Running)
+                session.Tick(Time.fixedDeltaTime, new CourseInput
+                {
+                    x = t.position.x, z = t.position.z, yaw = t.eulerAngles.y, signedSpeed = st.signedSpeedMps, gear = st.gear,
+                    leftIndicator = st.leftIndicator && !st.hazard, rightIndicator = st.rightIndicator && !st.hazard,
+                    engineStalled = st.engine == EnginePhase.Stalled,
+                });
+            if (session.Phase != CoursePhase.Running) SaveResult();
         }
+
+        [Serializable] class ResultFault { public string code, title, lesson; public int points; public bool terminal; public float seconds; }
         [Serializable] class Result
         {
             public string courseId, utc, mode, lessonId, phase, reason;
-            public int penalty;public float elapsedSeconds;
-            public string controller="layout-prototype";
+            public int penalty, failPenalty, lessonsCompleted; public float elapsedSeconds;
+            public ResultFault[] faults;
+            public string controller = "vehicle-solver";
         }
+
         void SaveResult()
         {
-            if(saved)return;saved=true;
+            if (saved || session == null) return;
+            saved = true;
             try
             {
-                var result=new Result { courseId=course.id,utc=DateTime.UtcNow.ToString("O"),mode=exam?"exam":"lesson",
-                    lessonId=course.lessons[session.LessonIndex].id,phase=session.Phase.ToString(),reason=session.Message,
-                    penalty=session.Penalty,elapsedSeconds=session.Elapsed };
-                var directory=Path.Combine(Application.persistentDataPath,"TrainingResults");Directory.CreateDirectory(directory);
-                File.WriteAllText(Path.Combine(directory,DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fff")+".json"),JsonUtility.ToJson(result,true));
-                saveStatus="Результат сохранён";
+                var faults = new List<ResultFault>();
+                foreach (var f in session.Faults)
+                    faults.Add(new ResultFault { code = f.code, title = f.title, lesson = course.lessons[f.lessonIndex].id, points = f.points, terminal = f.terminal, seconds = f.elapsed });
+                var result = new Result
+                {
+                    courseId = course.id, utc = DateTime.UtcNow.ToString("O"), mode = session.Exam ? "exam" : "lesson",
+                    lessonId = course.lessons[session.LessonIndex].id, phase = session.Phase.ToString(), reason = session.Message,
+                    penalty = session.Penalty, failPenalty = course.failPenalty, lessonsCompleted = session.LessonsCompleted,
+                    elapsedSeconds = session.Elapsed, faults = faults.ToArray(),
+                };
+                var directory = Path.Combine(Application.persistentDataPath, "TrainingResults"); Directory.CreateDirectory(directory);
+                string file = Path.Combine(directory, DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fff") + ".json");
+                File.WriteAllText(file, JsonUtility.ToJson(result, true));
+                SaveStatus = file;
             }
-            catch(Exception e) {saveStatus="Не удалось сохранить результат: "+e.Message;Debug.LogWarning(saveStatus);}
-        }
-        void OnGUI()
-        {
-            if(course==null)return;
-            float scale=Mathf.Clamp(Screen.height/900f,.7f,1.5f);GUI.matrix=Matrix4x4.Scale(Vector3.one*scale);
-            if(title==null)
-            {
-                title=new GUIStyle(GUI.skin.label){fontSize=22,fontStyle=FontStyle.Bold,wordWrap=true};
-                bodyStyle=new GUIStyle(GUI.skin.label){fontSize=15,wordWrap=true};
-                hintStyle=new GUIStyle(GUI.skin.box){fontSize=16,wordWrap=true,richText=true,alignment=TextAnchor.UpperLeft,padding=new RectOffset(8,8,6,6)};
-            }
-            GUI.Box(new Rect(18,18,340,852),GUIContent.none);
-            GUILayout.BeginArea(new Rect(34,30,308,822));
-            GUILayout.Label("АВТОДРОМ / 01",title);
-            GUILayout.Label("Учебная площадка · категория B",bodyStyle);
-            GUILayout.Space(8);
-            if(session==null || session.Phase!=CoursePhase.Running)
-            {
-                if(session!=null) {GUILayout.Label(session.Message,title);GUILayout.Label("Штраф: "+session.Penalty+" · "+session.Elapsed.ToString("F0")+" с\n"+saveStatus,bodyStyle);}
-                for(int i=0;i<course.lessons.Length;i++)
-                    if(GUILayout.Button((i+1).ToString("00")+"  "+course.lessons[i].title,GUILayout.Height(29))) {selected=i;PositionCar(i);}
-                GUILayout.Space(8);GUILayout.Label(course.lessons[selected].briefing,bodyStyle);
-                if(GUILayout.Button("Начать выбранный урок",GUILayout.Height(34)))Begin(selected,false);
-                if(GUILayout.Button("Сдать всю площадку",GUILayout.Height(34)))Begin(0,true);
-            }
-            else
-            {
-                GUILayout.Label(exam?"ЭКЗАМЕН":"ПРАКТИКА",title);
-                GUILayout.Label((session.LessonIndex+1)+" / "+course.lessons.Length+"  "+course.lessons[session.LessonIndex].title,bodyStyle);
-                GUILayout.Label(session.Transferring?"Переезд к следующей зоне":session.CurrentGate.instruction,title);
-                if(session.Transferring)GUILayout.Label(session.CurrentGate.instruction,bodyStyle);
-                if(guide!=null && guide.Session.Phase==GuidedPhase.Running)GUILayout.Label("Инструктор: "+guide.Text,hintStyle);
-                GUILayout.Label("Шаг "+(session.GateIndex+1)+"  ·  "+session.Elapsed.ToString("F0")+" с\nШтраф "+session.Penalty+" / "+course.failPenalty,bodyStyle);
-                if(session.CurrentGate.holdSeconds>0)GUILayout.Label("Остановка: "+session.HoldProgress.ToString("F1")+" / "+session.CurrentGate.holdSeconds.ToString("F0")+" с",bodyStyle);
-                GUILayout.Label(session.Message,bodyStyle);
-                if(GUILayout.Button("Отменить заезд")){session.Cancel();SaveResult();}
-            }
-            GUILayout.Space(10);
-            var state = vehicle.Adapter.CurrentState;
-            GUILayout.Label(Mathf.Abs(state.signedSpeedMps*3.6f).ToString("F0")+" км/ч  ·  Передача "+(state.gear<0?"R":state.gear.ToString()),title);
-            bool at=vehicle.Adapter.transmission==TransmissionType.Automatic;
-            GUILayout.Label("КПП: "+(at?"автомат":"механика")+" (F7 — сменить до старта)\n"+
-                "I — зажигание    Enter — стартер\nW / ↑ — газ    S / ↓ — тормоз    A D — руль\n"+
-                (at?"1 — D    R — задний    N — нейтраль    P — паркинг\n":"Shift — сцепление    1–6 / R / N — передачи\n")+
-                "Пробел — ручник    Q / E — поворотники\nC — камера / вид всей площадки",bodyStyle);
-            GUILayout.Label("Тестовое вождение: полная физика (VehicleSolver).",bodyStyle);
-            GUILayout.EndArea();GUI.matrix=Matrix4x4.identity;
+            catch (Exception e) { SaveStatus = "Не удалось сохранить результат: " + e.Message; Debug.LogWarning(SaveStatus); }
         }
     }
 }
-

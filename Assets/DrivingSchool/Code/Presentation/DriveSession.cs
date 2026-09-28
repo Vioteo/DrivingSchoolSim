@@ -17,6 +17,8 @@ namespace DrivingSchool.Presentation
     /// (сцена, открытая напрямую, остаётся со старой панелью F4). «Завершить поездку» в паузе → разбор.
     /// Если меню выбрало пошаговый урок (<see cref="LessonLaunch"/>, T49) — вместо советов полигона ведёт урок:
     /// машина на старт урока, шаги в подсказке инструктора, рамка цели на земле, в конце — разбор урока.
+    /// На автодроме (T68, <see cref="TrainingGroundDirector"/>) ведёт упражнение с пошаговыми подсказками или экзамен по
+    /// всей площадке без подсказок и телепортов: ошибки упражнений — карточки и журнал, в конце — разбор с баллами.
     /// </summary>
     [DefaultExecutionOrder(300)]
     public sealed class DriveSession : MonoBehaviour
@@ -47,6 +49,8 @@ namespace DrivingSchool.Presentation
         TrafficDirectorHost traffic; PlayerRoadMonitor road; readonly CityRuleMonitor cityRules = new CityRuleMonitor();
         double lastRoadSeconds = -1; float speedLimitKph; float shownLimitKph = -1;
         const float LessonIntroSeconds = 5f;
+        // Автодром (T68): упражнение или экзамен.
+        TrainingGroundDirector autodrome; bool autodromeRun; int faultsShown;
 
         public DriveLog Log => log;
         public InstructorHintQueue Hints => hints;
@@ -91,6 +95,7 @@ namespace DrivingSchool.Presentation
             testRange = gameObject.scene.name == "VehicleTestRange";
             junction = FindAnyObjectByType<SignalJunction>();
             traffic = FindAnyObjectByType<TrafficDirectorHost>();
+            autodrome = FindAnyObjectByType<TrainingGroundDirector>();
             if (traffic != null && traffic.Director != null) road = new PlayerRoadMonitor(traffic.Director);
             StartLesson();
             CreateMinimap();
@@ -108,6 +113,7 @@ namespace DrivingSchool.Presentation
         void StartLesson()
         {
             string id = LessonLaunch.LessonId;
+            if (autodrome != null) { StartAutodrome(id); return; }
             if (string.IsNullOrEmpty(id)) return;
             var def = GuidedLessonRunner.LoadPack()?.Find(id);
             if (def == null) { Debug.LogWarning($"[Lesson] урок {id} не найден — свободная поездка"); return; }
@@ -134,6 +140,132 @@ namespace DrivingSchool.Presentation
                 Debug.Log($"[Lesson] выполнен: {lesson.Lesson.id}, повторов шагов {lesson.Session.Rewinds}");
                 ShowDebrief();
             }
+        }
+
+        // ------------------------------------------------------------------ автодром (T68)
+
+        void StartAutodrome(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return;   // сцена без задания — свободная езда по площадке
+            bool exam = id == LessonLaunch.AutodromeExam;
+            if (exam) autodrome.Begin(0, true);
+            else
+            {
+                var def = GuidedLessonRunner.LoadPack()?.Find(id);
+                int index = def != null ? autodrome.IndexOf(def.courseLesson) : -1;
+                if (index < 0) { Debug.LogWarning($"[Autodrome] упражнение {id} не найдено — свободная езда по площадке"); return; }
+                autodrome.Begin(index, false);
+                lesson = new GuidedLessonRunner(def, player, false);
+            }
+            autodromeRun = true;
+            director.TeleportsLocked = true;
+            director.TransmissionLocked = exam;
+            lessonIntroLeft = LessonIntroSeconds;
+            Debug.Log(exam ? "[Autodrome] экзамен на площадке" : $"[Autodrome] упражнение {autodrome.Session.Lesson.title}");
+        }
+
+        void StepAutodrome(float dt, LessonSignal signal)
+        {
+            var s = autodrome.Session;
+            if (s == null) return;
+            while (faultsShown < s.Faults.Count) ReportFault(s.Faults[faultsShown++]);
+            if (s.Phase != CoursePhase.Running)
+            {
+                if (!lessonFinished) { hints.Clear("lesson"); hints.Clear("lesson-speed"); ShowDebrief(); }
+                return;
+            }
+            if (lessonIntroLeft > 0f)
+            {
+                lessonIntroLeft -= dt;
+                hints.Post("lesson", HintKind.Exercise, LessonControls.Format(AutodromeIntro(s)), 0, true);
+                return;
+            }
+            if (lesson != null)
+            {
+                lesson.Tick(dt, s.Transferring ? -1 : s.GateIndex, signal);
+                hints.Post("lesson", HintKind.Exercise, lesson.Text, 0, true);
+            }
+            else hints.Post("lesson", HintKind.Exercise, ExamText(s), 0, true);
+        }
+
+        string AutodromeIntro(CourseSession s)
+        {
+            if (!s.Exam)
+            {
+                string b = lesson != null && !string.IsNullOrEmpty(lesson.Lesson.briefing) ? lesson.Lesson.briefing : s.Lesson.briefing;
+                return b + " Ошибки — игровые баллы площадки; с " + s.Course.failPenalty + " баллов упражнение не зачтено.";
+            }
+            return $"Экзамен на площадке: {s.Course.lessons.Length} упражнений подряд по маршруту, без подсказок. Ошибки — игровые баллы, " +
+                   $"с {s.Course.failPenalty} баллов экзамен не сдан. Подготовьте машину: ремень, двигатель, передача — и троньтесь с левым указателем.";
+        }
+
+        static string ExamText(CourseSession s)
+        {
+            var g = s.CurrentGate;
+            if (s.Transferring) return "Следующее упражнение: " + s.Course.lessons[System.Math.Min(s.LessonIndex + 1, s.Course.lessons.Length - 1)].title +
+                                       ". Маршрут: " + (g != null ? g.instruction.ToLowerInvariant() : "") + " — следуйте рамке на земле.";
+            return s.Lesson.title + ". " + s.Lesson.briefing;
+        }
+
+        string AutodromeTitle()
+        {
+            var s = autodrome.Session;
+            string points = $"БАЛЛЫ {s.Penalty} ИЗ {s.Course.failPenalty}";
+            if (s.Exam) return lessonIntroLeft > 0f ? "ЭКЗАМЕН НА ПЛОЩАДКЕ" : $"ЭКЗАМЕН · {s.LessonIndex + 1} / {s.Course.lessons.Length} · {points}";
+            string title = s.Lesson.title.ToUpperInvariant();
+            if (lessonIntroLeft > 0f || lesson == null) return title;
+            return title + " · " + lesson.Progress + " · " + points;
+        }
+
+        void ReportFault(CourseFault f)
+        {
+            var s = autodrome.Session;
+            string title = f.title, advice = f.advice ?? "", reference;
+            string where = "Упражнение: " + s.Course.lessons[f.lessonIndex].title + (f.transfer ? " (переезд)" : "");
+            if (!string.IsNullOrEmpty(f.ruleId))
+            {
+                var e = DriveRuleCatalog.Get(f.ruleId);
+                if (string.IsNullOrEmpty(advice)) advice = e.Advice;
+                reference = e.Reference + "\n" + where;
+            }
+            else reference = where;
+            reference += $"\n{f.points} б. — игровые баллы площадки, не методика ГИБДД (T37)" + (f.terminal ? "; попытка окончена" : "");
+            bool severe = f.terminal || f.points >= 3;
+            var pos = player.transform.position;
+            log.Add(new DriveLogEvent { RuleId = "AUTODROME_" + (f.code ?? "FAULT").ToUpperInvariant(), Title = title, Advice = advice, Reference = reference, Severe = severe, X = pos.x, Z = pos.z });
+            hud.ShowCard(title, f.points + " б. · " + s.Course.lessons[f.lessonIndex].title, advice, severe);
+            if (!string.IsNullOrEmpty(advice)) hints.Post("err-" + (f.code ?? "fault"), HintKind.Error, advice, DriveHudView.CardSeconds);
+            Debug.Log($"[Autodrome] ошибка {f.code}: {title}, {f.points} б., всего {s.Penalty}");
+        }
+
+        DebriefModel BuildAutodromeDebrief(CourseSession s)
+        {
+            var c = s.Course;
+            var m = new DebriefModel();
+            bool passed = s.Phase == CoursePhase.Passed, failed = s.Phase == CoursePhase.Failed;
+            m.title = s.Exam ? "Экзамен на площадке" : s.Lesson.title;
+            m.subtitle = passed ? (s.Exam ? "Сдано" : "Упражнение выполнено")
+                       : failed ? (s.Exam ? "Не сдано" : "Упражнение не выполнено") + " — " + s.Message
+                       : "Прервано";
+            m.subtitle += " · баллы игровые, не методика ГИБДД (T37)";
+            m.summary.Add(("Результат", passed ? "зачёт" : failed ? "незачёт" : "прервано"));
+            m.summary.Add(("Баллы", $"{s.Penalty} (незачёт с {c.failPenalty})"));
+            if (s.Exam) m.summary.Add(("Упражнения", $"{System.Math.Min(s.LessonsCompleted, c.lessons.Length)} из {c.lessons.Length}"));
+            else if (lesson != null && lesson.Session.Rewinds > 0) m.summary.Add(("Возвраты к шагам", lesson.Session.Rewinds.ToString()));
+            int t = (int)s.Elapsed;
+            m.summary.Add(("Время", $"{t / 60}:{t % 60:00}"));
+            m.summary.Add(("Ошибки", s.Faults.Count.ToString()));
+            m.summary.Add(("Коробка передач", player != null && player.Adapter != null && player.Adapter.transmission == TransmissionType.Automatic ? "АКПП" : "МКПП"));
+            foreach (var e in log.Events)
+            {
+                int et = (int)e.Seconds;
+                m.events.Add(new DebriefEvent
+                {
+                    time = $"{et / 60:00}:{et % 60:00}", title = e.Title, advice = e.Advice, severe = e.Severe,
+                    reference = e.Reference, place = $"автодром · x {e.X:0}, z {e.Z:0} м",
+                });
+            }
+            return m;
         }
 
         void CreateMinimap()
@@ -195,7 +327,10 @@ namespace DrivingSchool.Presentation
             shiftLockShown = player.Keyboard.ShiftLockRefused;
             foreach (var ev in rules.Update(input)) Report(ev, pos);
             StepCity(pos);
-            if (lesson != null) StepLesson(dt, signal == SignalJunction.Signal.Stop ? LessonSignal.Stop : signal == SignalJunction.Signal.Go ? LessonSignal.Go : LessonSignal.None);
+            if (autodrome != null) speedLimitKph = autodrome.Course.speedLimitKph;   // T68: ограничение площадки для прибора HUD
+            var lessonSignal = signal == SignalJunction.Signal.Stop ? LessonSignal.Stop : signal == SignalJunction.Signal.Go ? LessonSignal.Go : LessonSignal.None;
+            if (autodromeRun) StepAutodrome(dt, lessonSignal);
+            else if (lesson != null) StepLesson(dt, lessonSignal);
             else if (testRange) instructor.Update(hints, state, pos, player.transform.forward, director.crossing);
         }
 
@@ -219,6 +354,13 @@ namespace DrivingSchool.Presentation
 
         void Report(RuleEvent ev, Vector3 pos)
         {
+            if (autodromeRun && autodrome.Session != null && autodrome.Session.Phase == CoursePhase.Running)
+            {
+                // Касания считает площадка (конусы), свет на закрытой площадке не требуется;
+                // красный, ремень и др. из таблицы площадки становятся ошибкой упражнения (ReportFault).
+                if (ev.ruleId == DriveRuleMonitor.RuleCollision || ev.ruleId == DriveRuleMonitor.RuleLowBeam) return;
+                if (autodrome.Session.PenalizeRule(ev.ruleId)) return;
+            }
             var e = DriveRuleCatalog.Get(ev.ruleId);
             log.Add(new DriveLogEvent { RuleId = ev.ruleId, Title = e.Title, Advice = e.Advice, Reference = e.Reference, Severe = e.Severe, X = pos.x, Z = pos.z });
             hud.ShowCard(e.Title, e.Reference, e.Advice, e.Severe);   // код правила — в разборе
@@ -242,7 +384,8 @@ namespace DrivingSchool.Presentation
             model.engineRunning = st.engine == EnginePhase.Running; model.stalled = st.engine == EnginePhase.Stalled;
             var h = hints.Current;
             model.hintText = h?.Text; model.hintKind = h != null ? (int)h.Kind : -1; model.hintWaiting = hints.Waiting;
-            model.hintTitle = lesson != null && h != null && h.Key == "lesson"
+            model.hintTitle = autodromeRun && h != null && h.Key == "lesson" ? AutodromeTitle()
+                : lesson != null && h != null && h.Key == "lesson"
                 ? (lessonIntroLeft > 0f ? lesson.Lesson.title.ToUpperInvariant() : lesson.Lesson.title.ToUpperInvariant() + " · " + lesson.Progress) : null;
             model.remarks = log.Events.Count; model.severe = log.SevereCount;
             model.minimap = minimapRt; model.minimapAvailable = minimapRt != null;
@@ -252,6 +395,7 @@ namespace DrivingSchool.Presentation
         /// <summary>Разбор поездки из журнала (docs/ui-drive.md §5).</summary>
         public DebriefModel BuildDebrief()
         {
+            if (autodromeRun && autodrome.Session != null) return BuildAutodromeDebrief(autodrome.Session);
             var s = SettingsService.Current;
             var m = new DebriefModel
             {
@@ -289,6 +433,7 @@ namespace DrivingSchool.Presentation
 
         string PlaceName(Vector3 p)
         {
+            if (autodrome != null) return "автодром";
             if (testRange) return TestRangeLayout.ZoneName(p);
             if (junction != null && Vector3.Distance(new Vector3(p.x, 0, p.z), junction.transform.position) < LessonStreetLayout.JunctionHalf + 4f) return "перекрёсток";
             return "улица";
@@ -296,6 +441,11 @@ namespace DrivingSchool.Presentation
 
         void ShowDebrief()
         {
+            if (autodromeRun)
+            {
+                lessonFinished = true;
+                if (autodrome.Session != null && autodrome.Session.Phase == CoursePhase.Running) autodrome.Cancel();   // «Завершить поездку» в паузе
+            }
             if (debrief == null) { AppNavigator.ToMainMenu(); return; }
             debrief.Show(BuildDebrief());
         }
