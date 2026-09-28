@@ -18,13 +18,16 @@ namespace DrivingSchool.Tests
         [Test] public void DefaultProfileBindsEveryActionWithLabel()
         {
             var p = new WheelProfile();
-            foreach (WheelAction a in Enum.GetValues(typeof(WheelAction)))
+            foreach (DriveAction a in Enum.GetValues(typeof(DriveAction)))
             {
+                if (DriveActions.IsAxis(a)) continue;
                 Assert.That(p.Find(a), Is.Not.Null, a.ToString());
-                Assert.That(p.Label(a), Is.Not.Empty, a.ToString());
+                if (a != DriveAction.Neutral) Assert.That(p.Label(a), Is.Not.Empty, a.ToString());
             }
-            Assert.That(p.buttons.Select(b => b.control).Distinct().Count(), Is.EqualTo(p.buttons.Count), "Одна кнопка — одно действие");
-            Assert.That(p.Label(WheelAction.LeftSignal), Does.Contain("лепест"), "Поворотники на лепестках, как в CCD");
+            var bound = p.buttons.Where(b => !string.IsNullOrEmpty(b.control)).Select(b => b.control).ToList();
+            Assert.That(bound.Distinct().Count(), Is.EqualTo(bound.Count), "Одна кнопка — одно действие");
+            Assert.That(WheelProfile.FriendlyName("trigger"), Is.EqualTo("✕"), "Кнопка 1 в HID Input System называется trigger");
+            Assert.That(p.Label(DriveAction.LeftSignal), Does.Contain("лепест"), "Поворотники на лепестках, как в CCD");
         }
 
         [Test] public void DeviceIsMatchedByVendorAndProductNotBySimilarName()
@@ -46,14 +49,16 @@ namespace DrivingSchool.Tests
                 WheelProfile.FilePath = path;
                 var first = WheelProfile.Load();
                 Assert.That(File.Exists(path), "Раскладка по умолчанию записана в файл");
-                first.buttons.RemoveAll(b => b.action == nameof(WheelAction.Horn));
-                first.Find(WheelAction.LeftSignal).control = "button99";
+                first.buttons.RemoveAll(b => b.action == nameof(DriveAction.Horn));
+                first.throttle.calibrated = true; first.throttle.rawReleased = 1f; first.throttle.rawPressed = -1f;
+                first.Find(DriveAction.LeftSignal).control = "button99";
                 File.WriteAllText(path, JsonUtility.ToJson(first, true));
                 var edited = WheelProfile.Load();
-                Assert.That(edited.Find(WheelAction.LeftSignal).control, Is.EqualTo("button99"), "Правка игрока сохраняется");
-                Assert.That(edited.Find(WheelAction.Horn), Is.Not.Null, "Недостающее действие берётся по умолчанию");
+                Assert.That(edited.Find(DriveAction.LeftSignal).control, Is.EqualTo("button99"), "Правка игрока сохраняется");
+                Assert.That(edited.Find(DriveAction.Horn), Is.Not.Null, "Недостающее действие берётся по умолчанию");
+                Assert.That(edited.throttle.calibrated && edited.throttle.rawPressed == -1f, "Калибровка оси сохраняется в файле");
                 File.WriteAllText(path, "не json");
-                Assert.That(WheelProfile.Load().Find(WheelAction.Ignition), Is.Not.Null, "Битый файл → раскладка по умолчанию");
+                Assert.That(WheelProfile.Load().Find(DriveAction.Ignition), Is.Not.Null, "Битый файл → раскладка по умолчанию");
             }
             finally
             {
@@ -83,16 +88,48 @@ namespace DrivingSchool.Tests
         [Test] public void LessonHintsNameWheelControlsForEveryKey()
         {
             var p = new WheelProfile();
-            foreach (var k in GuidedText.Keys) Assert.That(LessonControls.WheelName(k, p), Is.Not.Null.And.Not.Empty, k);
-            Assert.That(LessonControls.KeyName("clutch", true), Is.EqualTo("педаль сцепления"));
-            Assert.That(LessonControls.KeyName("clutch", false), Is.EqualTo("Shift"));
-            Assert.That(LessonControls.Format("Включите указатель — {left}.", true), Is.EqualTo("Включите указатель — <b>[" + WheelProfile.Current.Label(WheelAction.LeftSignal) + "]</b>."));
-            Assert.That(LessonControls.Format("Включите указатель — {left}.", false), Is.EqualTo("Включите указатель — <b>[Q]</b>."));
+            var k = new KeyboardProfile();
+            foreach (var key in GuidedText.Keys)
+            {
+                Assert.That(LessonControls.WheelName(key, p), Is.Not.Null.And.Not.Empty, key);
+                Assert.That(LessonControls.KeyboardName(key, k), Is.Not.Null.And.Not.Empty, key);
+            }
+            Assert.That(LessonControls.WheelName("clutch", p), Is.EqualTo("педаль сцепления"));
+            Assert.That(LessonControls.WheelName("left", p), Is.EqualTo("левый лепесток"));
+            Assert.That(LessonControls.KeyboardName("clutch", k), Is.EqualTo("Shift"));
+            Assert.That(LessonControls.KeyboardName("left", k), Is.EqualTo("Q"));
+            Assert.That(LessonControls.KeyboardName("handbrake", k), Is.EqualTo("Пробел"));
+            p.Assign(DriveAction.LeftSignal, "button8");
+            Assert.That(LessonControls.WheelName("left", p), Is.EqualTo("L2"), "После переназначения подсказка называет новую кнопку");
+        }
+
+        [Test] public void AssigningTakenButtonOrKeyFreesPreviousAction()
+        {
+            var p = new WheelProfile();
+            var taken = p.Assign(DriveAction.Horn, "button6");
+            Assert.That(taken, Is.EqualTo(DriveAction.LeftSignal));
+            Assert.That(p.Label(DriveAction.LeftSignal), Is.Null, "Левый поворотник больше не на лепестке");
+            Assert.That(p.Label(DriveAction.Horn), Is.EqualTo("левый лепесток"));
+
+            var k = new KeyboardProfile();
+            Assert.That(k.Assign(DriveAction.Horn, UnityEngine.InputSystem.Key.Q), Is.EqualTo(DriveAction.LeftSignal));
+            Assert.That(k.Primary(DriveAction.LeftSignal), Is.EqualTo(UnityEngine.InputSystem.Key.None));
+            Assert.That(k.Label(DriveAction.Horn), Is.EqualTo("Q"));
+            Assert.That(k.Assign(DriveAction.SteerLeft, UnityEngine.InputSystem.Key.LeftArrow), Is.Null, "Своя запасная клавиша не конфликт");
+            Assert.That(k.Alternate(DriveAction.SteerLeft), Is.EqualTo(UnityEngine.InputSystem.Key.None));
+        }
+
+        [Test] public void KeyLabelsAreReadable()
+        {
+            Assert.That(KeyboardProfile.KeyLabel(UnityEngine.InputSystem.Key.Digit1), Is.EqualTo("1"));
+            Assert.That(KeyboardProfile.KeyLabel(UnityEngine.InputSystem.Key.Digit0), Is.EqualTo("0"));
+            Assert.That(KeyboardProfile.KeyLabel(UnityEngine.InputSystem.Key.Numpad5), Is.EqualTo("Num 5"));
+            Assert.That(KeyboardProfile.KeyLabel(UnityEngine.InputSystem.Key.LeftShift), Is.EqualTo("Shift"));
         }
 
         [Test] public void GearRequestKeepsShiftLock()
         {
-            var k = new KeyboardInputSource { automatic = true };
+            var k = new KeyboardInputSource { automatic = true, Keys = new KeyboardProfile() };
             Assert.That(k.RequestGear(1, brakeHeld: false), Is.False);
             Assert.That(k.ShiftLockRefused, Is.True);
             Assert.That(k.RequestGear(1, brakeHeld: true), Is.True);
@@ -113,7 +150,7 @@ namespace DrivingSchool.Tests
         [Test] public void OverlayReplacesAxesAndAddsHeldButtons()
         {
             var fake = new FakeOverlay();
-            var k = new KeyboardInputSource { Overlay = fake };
+            var k = new KeyboardInputSource { Overlay = fake, Keys = new KeyboardProfile() };
             Assert.That(k.IsConnected, Is.True);
             k.Poll(0.016f);
             var cmd = k.Read(1);

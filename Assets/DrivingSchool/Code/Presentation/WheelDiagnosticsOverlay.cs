@@ -27,14 +27,33 @@ namespace DrivingSchool.Presentation
             go.AddComponent<WheelDiagnosticsOverlay>();
         }
 
+        float nextAxisTrace;
+        string lastAxes;
+
         void Update()
         {
+            TraceWheel();
             var kb = Keyboard.current;
             if (kb != null && kb.f11Key.wasPressedThisFrame)
             {
                 visible = !visible;
                 if (visible) { WheelProfile.Reload(); Index(); Debug.Log("[Wheel] " + WheelDevice.Describe(WheelDevice.Current)); }
             }
+        }
+
+        /// <summary>Нажатия кнопок руля и заметные движения осей — в Logs/wheel-diagnostics.txt (разбор раскладки по факту).</summary>
+        void TraceWheel()
+        {
+            var dev = WheelDevice.Current;
+            if (dev == null) return;
+            foreach (var b in WheelDevice.Buttons(dev))
+                if (b.wasPressedThisFrame) WheelDevice.Trace("кнопка " + WheelDevice.RelativePath(b) + " (" + b.displayName + ")");
+            if (Time.unscaledTime < nextAxisTrace) return;
+            nextAxisTrace = Time.unscaledTime + 0.5f;
+            sb.Clear();
+            foreach (var a in WheelDevice.Axes(dev)) sb.Append(WheelDevice.RelativePath(a)).Append('=').Append(a.ReadValue().ToString("0.00")).Append(' ');
+            string line = sb.ToString();
+            if (line != lastAxes) { lastAxes = line; WheelDevice.Trace("оси " + line); }
         }
 
         void Index()
@@ -70,7 +89,7 @@ namespace DrivingSchool.Presentation
             {
                 string first = WheelDevice.Describe(dev); int nl = first.IndexOf('\n');
                 sb.AppendLine(nl > 0 ? first.Substring(0, nl) : first);
-                Axis("Руль", p.steering, true);
+                Axis("Руль", p.steering, true);   // значения — с учётом калибровки
                 Axis("Газ", p.throttle, false);
                 Axis("Тормоз", p.brake, false);
                 Axis("Сцепление", p.clutch, false);
@@ -95,7 +114,7 @@ namespace DrivingSchool.Presentation
             var c = WheelDevice.Control(bind.control);
             if (c == null) { sb.AppendLine($"{title}: <color=#ff8080>нет контрола «{bind.control}»</color>"); return; }
             float raw = c is AxisControl a ? a.ReadValue() : 0f;
-            float v = bipolar ? WheelDevice.Bipolar(c, bind.releasedEnd) : WheelDevice.PedalFraction(c, bind.releasedEnd);
+            float v = bipolar ? WheelDevice.Steering(bind) : WheelDevice.Pedal(bind);
             sb.AppendLine($"{title}: {c.name}  сырое {raw:+0.000;-0.000}  →  {(bipolar ? v.ToString("+0.00;-0.00") : (v * 100f).ToString("0") + " %")}");
         }
     }

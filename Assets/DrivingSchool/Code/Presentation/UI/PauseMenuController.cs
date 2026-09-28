@@ -182,7 +182,8 @@ namespace DrivingSchool.Presentation.UI
         {
             var kb = Keyboard.current;
             if (kb != null && kb.escapeKey.wasPressedThisFrame) return true;
-            if (DrivingSchool.Input.WheelDevice.WasPressed(DrivingSchool.Input.WheelAction.Pause)) return true;   // OPTIONS на руле
+            if (DrivingSchool.Input.KeyboardProfile.Current.Down(kb, DrivingSchool.Input.DriveAction.Pause)) return true;
+            if (DrivingSchool.Input.WheelDevice.WasPressed(DrivingSchool.Input.DriveAction.Pause)) return true;   // OPTIONS на руле
             var pad = Gamepad.current;
             return pad != null && pad.startButton.wasPressedThisFrame;
         }

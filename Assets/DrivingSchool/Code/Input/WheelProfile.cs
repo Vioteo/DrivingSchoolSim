@@ -5,13 +5,6 @@ using UnityEngine;
 
 namespace DrivingSchool.Input
 {
-    /// <summary>Действия, которые можно повесить на кнопку руля (T42).</summary>
-    public enum WheelAction
-    {
-        Ignition, Starter, Handbrake, Belt, LeftSignal, RightSignal, Hazard, Lights, HighBeam, Flash, Horn, Wipers, Washer,
-        Park, Gear1, Gear2, Gear3, Gear4, Gear5, Gear6, Reverse, Camera, LookLeft, LookRight, Pause,
-    }
-
     /// <summary>Кнопка руля: путь контрола Input System (варианты через «|») и подпись для подсказок урока.</summary>
     [Serializable]
     public sealed class WheelButtonBinding
@@ -21,12 +14,13 @@ namespace DrivingSchool.Input
         public string label;
 
         public WheelButtonBinding() { }
-        public WheelButtonBinding(WheelAction a, string control, string label) { action = a.ToString(); this.control = control; this.label = label; }
+        public WheelButtonBinding(DriveAction a, string control, string label) { action = a.ToString(); this.control = control; this.label = label; }
     }
 
     /// <summary>
-    /// Ось руля или педали. <see cref="releasedEnd"/>: 0 — определить по параметрам контрола, 1 — отпущенная педаль
-    /// у максимума, −1 — у минимума. Для руля 1 = «вправо — к максимуму», −1 — наоборот.
+    /// Ось руля или педали. Если <see cref="calibrated"/> — значения сняты калибровкой: у педали rawReleased — отпущена,
+    /// rawPressed — выжата до упора; у руля rawReleased — центр, rawPressed — упор вправо.
+    /// Без калибровки <see cref="releasedEnd"/>: 0 — по параметрам контрола, 1 — отпущенная педаль у максимума, −1 — у минимума.
     /// </summary>
     [Serializable]
     public sealed class WheelAxisBinding
@@ -34,6 +28,8 @@ namespace DrivingSchool.Input
         public string control;
         public int releasedEnd;
         public string label;
+        public bool calibrated;
+        public float rawReleased, rawPressed;
 
         public WheelAxisBinding() { }
         public WheelAxisBinding(string control, string label, int releasedEnd = 0) { this.control = control; this.label = label; this.releasedEnd = releasedEnd; }
@@ -43,7 +39,8 @@ namespace DrivingSchool.Input
     /// Раскладка руля как данные (T42, architecture.md §«Ввод»): оси, кнопки и подписи для уроков.
     /// Лежит в Application.persistentDataPath/wheel-g29.json; если файла нет — пишется раскладка по умолчанию,
     /// её можно править руками (перезапуск поездки подхватит). Раскладка по умолчанию — в духе City Car Driving:
-    /// поворотники на лепестках, передачи на H-шифтере, педали — газ/тормоз/сцепление.
+    /// поворотники на лепестках, передачи на H-шифтере, педали — газ/тормоз/сцепление. Оси педалей и шифтер уточняются
+    /// калибровкой (Настройки → Управление → Калибровка), кнопки — экраном «Переназначение кнопок».
     /// Номера кнопок G29 (HID, с единицы): 1 ✕, 2 □, 3 ○, 4 △, 5 правый лепесток, 6 левый лепесток, 7 R2, 8 L2,
     /// 9 SHARE, 10 OPTIONS, 11 R3, 12 L3, 13–18 шифтер 1–6, 19 шифтер R, 20 «+», 21 «−», 22/23 колесо-селектор,
     /// 24 красная кнопка, 25 PS. Сверить на устройстве — оверлей F11 (WheelDiagnosticsOverlay).
@@ -71,34 +68,35 @@ namespace DrivingSchool.Input
 
         public static List<WheelButtonBinding> DefaultButtons() => new List<WheelButtonBinding>
         {
-            new WheelButtonBinding(WheelAction.LeftSignal, "button6", "левый лепесток"),
-            new WheelButtonBinding(WheelAction.RightSignal, "button5", "правый лепесток"),
-            new WheelButtonBinding(WheelAction.Ignition, "button4", "△"),
-            new WheelButtonBinding(WheelAction.Starter, "button3", "○"),
-            new WheelButtonBinding(WheelAction.Belt, "button2", "□"),
-            new WheelButtonBinding(WheelAction.Handbrake, "button1|trigger", "✕"),
-            new WheelButtonBinding(WheelAction.Lights, "button7", "R2"),
-            new WheelButtonBinding(WheelAction.HighBeam, "button12", "L3"),
-            new WheelButtonBinding(WheelAction.Flash, "hat/up", "крестовина ↑"),
-            new WheelButtonBinding(WheelAction.Hazard, "button8", "L2"),
-            new WheelButtonBinding(WheelAction.Horn, "button11", "R3"),
-            new WheelButtonBinding(WheelAction.Wipers, "button21", "«−»"),
-            new WheelButtonBinding(WheelAction.Washer, "button20", "«+»"),
-            new WheelButtonBinding(WheelAction.Park, "button24", "красная кнопка"),
-            new WheelButtonBinding(WheelAction.Gear1, "button13", "рычаг КПП в 1"),
-            new WheelButtonBinding(WheelAction.Gear2, "button14", "рычаг КПП во 2"),
-            new WheelButtonBinding(WheelAction.Gear3, "button15", "рычаг КПП в 3"),
-            new WheelButtonBinding(WheelAction.Gear4, "button16", "рычаг КПП в 4"),
-            new WheelButtonBinding(WheelAction.Gear5, "button17", "рычаг КПП в 5"),
-            new WheelButtonBinding(WheelAction.Gear6, "button18", "рычаг КПП в 6"),
-            new WheelButtonBinding(WheelAction.Reverse, "button19", "рычаг КПП в R"),
-            new WheelButtonBinding(WheelAction.Camera, "button9", "SHARE"),
-            new WheelButtonBinding(WheelAction.LookLeft, "hat/left", "крестовина ←"),
-            new WheelButtonBinding(WheelAction.LookRight, "hat/right", "крестовина →"),
-            new WheelButtonBinding(WheelAction.Pause, "button10", "OPTIONS"),
+            new WheelButtonBinding(DriveAction.LeftSignal, "button6", "левый лепесток"),
+            new WheelButtonBinding(DriveAction.RightSignal, "button5", "правый лепесток"),
+            new WheelButtonBinding(DriveAction.Ignition, "button4", "△"),
+            new WheelButtonBinding(DriveAction.Starter, "button3", "○"),
+            new WheelButtonBinding(DriveAction.Belt, "button2", "□"),
+            new WheelButtonBinding(DriveAction.Handbrake, "button1|trigger", "✕"),
+            new WheelButtonBinding(DriveAction.Lights, "button7", "R2"),
+            new WheelButtonBinding(DriveAction.HighBeam, "button12", "L3"),
+            new WheelButtonBinding(DriveAction.Flash, "hat/up", "крестовина ↑"),
+            new WheelButtonBinding(DriveAction.Hazard, "button8", "L2"),
+            new WheelButtonBinding(DriveAction.Horn, "button11", "R3"),
+            new WheelButtonBinding(DriveAction.Wipers, "button21", "«−»"),
+            new WheelButtonBinding(DriveAction.Washer, "button20", "«+»"),
+            new WheelButtonBinding(DriveAction.Park, "button24", "красная кнопка"),
+            new WheelButtonBinding(DriveAction.Neutral, "", ""),
+            new WheelButtonBinding(DriveAction.Gear1, "button13", "рычаг КПП в 1"),
+            new WheelButtonBinding(DriveAction.Gear2, "button14", "рычаг КПП во 2"),
+            new WheelButtonBinding(DriveAction.Gear3, "button15", "рычаг КПП в 3"),
+            new WheelButtonBinding(DriveAction.Gear4, "button16", "рычаг КПП в 4"),
+            new WheelButtonBinding(DriveAction.Gear5, "button17", "рычаг КПП в 5"),
+            new WheelButtonBinding(DriveAction.Gear6, "button18", "рычаг КПП в 6"),
+            new WheelButtonBinding(DriveAction.Reverse, "button19", "рычаг КПП в R"),
+            new WheelButtonBinding(DriveAction.Camera, "button9", "SHARE"),
+            new WheelButtonBinding(DriveAction.LookLeft, "hat/left", "крестовина ←"),
+            new WheelButtonBinding(DriveAction.LookRight, "hat/right", "крестовина →"),
+            new WheelButtonBinding(DriveAction.Pause, "button10", "OPTIONS"),
         };
 
-        public WheelButtonBinding Find(WheelAction action)
+        public WheelButtonBinding Find(DriveAction action)
         {
             if (buttons == null) return null;
             string key = action.ToString();
@@ -107,8 +105,67 @@ namespace DrivingSchool.Input
             return null;
         }
 
+        /// <summary>Назначить кнопку действию; если она уже занята другим — у того снимается (возвращается его имя).</summary>
+        public DriveAction? Assign(DriveAction action, string control)
+        {
+            DriveAction? taken = null;
+            if (!string.IsNullOrEmpty(control))
+                foreach (var b in buttons)
+                    if (b != null && b.action != action.ToString() && b.control == control)
+                    {
+                        b.control = ""; b.label = "";
+                        if (Enum.TryParse(b.action, out DriveAction other)) taken = other;
+                    }
+            var mine = Find(action);
+            if (mine == null) buttons.Add(mine = new WheelButtonBinding(action, "", ""));
+            mine.control = control ?? "";
+            mine.label = string.IsNullOrEmpty(control) ? "" : FriendlyName(control);
+            return taken;
+        }
+
+        /// <summary>Имя кнопки G29 по пути Input System (HID: кнопка 1 — «trigger», дальше buttonN; крестовина — hat).</summary>
+        public static string FriendlyName(string control)
+        {
+            if (string.IsNullOrEmpty(control)) return "";
+            string c = control.Split('|')[0].Trim();
+            switch (c)
+            {
+                case "trigger": case "button1": return "✕";
+                case "button2": return "□";
+                case "button3": return "○";
+                case "button4": return "△";
+                case "button5": return "правый лепесток";
+                case "button6": return "левый лепесток";
+                case "button7": return "R2";
+                case "button8": return "L2";
+                case "button9": return "SHARE";
+                case "button10": return "OPTIONS";
+                case "button11": return "R3";
+                case "button12": return "L3";
+                case "button13": return "рычаг КПП в 1";
+                case "button14": return "рычаг КПП во 2";
+                case "button15": return "рычаг КПП в 3";
+                case "button16": return "рычаг КПП в 4";
+                case "button17": return "рычаг КПП в 5";
+                case "button18": return "рычаг КПП в 6";
+                case "button19": return "рычаг КПП в R";
+                case "button20": return "«+»";
+                case "button21": return "«−»";
+                case "button22": return "колесо-селектор вправо";
+                case "button23": return "колесо-селектор влево";
+                case "button24": return "красная кнопка";
+                case "button25": return "PS";
+                case "hat/up": return "крестовина ↑";
+                case "hat/down": return "крестовина ↓";
+                case "hat/left": return "крестовина ←";
+                case "hat/right": return "крестовина →";
+            }
+            if (c.StartsWith("button")) return "кнопка " + c.Substring(6);
+            return c;
+        }
+
         /// <summary>Подпись кнопки для текста урока; null — действие не назначено.</summary>
-        public string Label(WheelAction action)
+        public string Label(DriveAction action)
         {
             var b = Find(action);
             return b == null || string.IsNullOrEmpty(b.control) ? null : string.IsNullOrEmpty(b.label) ? b.control : b.label;
@@ -125,8 +182,8 @@ namespace DrivingSchool.Input
             if (productIds == null) productIds = d.productIds;
             if (productNames == null) productNames = d.productNames;
             if (buttons == null) buttons = new List<WheelButtonBinding>();
-            foreach (WheelAction a in Enum.GetValues(typeof(WheelAction)))
-                if (Find(a) == null) buttons.Add(d.Find(a));
+            foreach (DriveAction a in Enum.GetValues(typeof(DriveAction)))
+                if (!DriveActions.IsAxis(a) && Find(a) == null && d.Find(a) != null) buttons.Add(d.Find(a));
             return this;
         }
 
@@ -145,6 +202,17 @@ namespace DrivingSchool.Input
         public static WheelProfile Current => loaded ?? (loaded = Load());
 
         public static void Reload() => loaded = null;
+
+        public static void Save(WheelProfile p)
+        {
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(FilePath));
+                File.WriteAllText(FilePath, JsonUtility.ToJson(p, true));
+                loaded = p;
+            }
+            catch (Exception e) { Debug.LogError($"[Wheel] не удалось сохранить {FilePath}: {e.Message}"); }
+        }
 
         public static WheelProfile Load()
         {

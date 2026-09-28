@@ -15,7 +15,9 @@ namespace DrivingSchool.Presentation.UI
     /// Экран настроек (T43, docs/ui-settings.md). Один экран для главного меню и паузы. Правки — в черновик
     /// (<see cref="SettingsSession"/>); «Применить» сохраняет в settings.json и применяет; режим экрана — с подтверждением
     /// 15 с; тема видна сразу и без «Применить» откатывается. Клавиатура: ↑↓ пункт, ←→ значение, Q/E вкладка,
-    /// R сброс пункта, Enter — переключить/открыть, Esc — назад. Геймпад: крестовина, A, B, Y, бамперы. Мышь — всё.
+    /// R сброс пункта, Enter — переключить/открыть, Esc — назад. Геймпад: крестовина, A, B, Y, бамперы.
+    /// Руль G29 (§6): крестовина, ✕ — выбрать, ○ — назад, лепестки — вкладки, △ — сброс (<see cref="MenuInput"/>). Мышь — всё.
+    /// «Калибровка руля и педалей» и «Переназначение кнопок» открывают <see cref="ControlsSetupPanel"/>.
     /// </summary>
     public sealed class SettingsScreenController : MonoBehaviour
     {
@@ -71,8 +73,8 @@ namespace DrivingSchool.Presentation.UI
         bool wheel, pendingClose;
         float wheelCheckAt, toastUntil, countdownUntil = -1f;
         (int mode, string res) displayBeforeApply;
-        // Повтор при удержании стрелки
-        Vector2Int heldDir; float repeatAt;
+        readonly DirectionRepeater repeater = new DirectionRepeater();
+        ControlsSetupPanel setup;
 
         void Awake()
         {
@@ -115,8 +117,19 @@ namespace DrivingSchool.Presentation.UI
             Debug.Log($"[Settings] открыты из {(inDrive ? "паузы" : "главного меню")}");
         }
 
+        ControlsSetupPanel Setup()
+        {
+            if (setup == null)
+            {
+                setup = ControlsSetupPanel.Create((RectTransform)root.transform, helpTitle != null ? helpTitle.font : null, () => Theme);
+                setup.Closed += msg => { if (!string.IsNullOrEmpty(msg)) ShowToast(msg); RefreshAll(); };
+            }
+            return setup;
+        }
+
         void Close()
         {
+            if (setup != null && setup.IsOpen) setup.Close(null);
             if (Session != null) SettingsApplier.ApplyTheme(Session.Saved.gameplay.uiTheme);   // предпросмотр без «Применить» откатывается
             CloseDialog();
             root.SetActive(false);
@@ -198,7 +211,10 @@ namespace DrivingSchool.Presentation.UI
             var av = Availability(item);
             if (item.Kind == SettingKind.Action)
             {
-                ShowToast(av == SettingAvailability.NoWheel ? "Руль G29 не подключён" : "Пока не реализовано");
+                if (av == SettingAvailability.NoWheel) { ShowToast("Руль G29 не подключён"); return; }
+                if (item.Key == "controls.calibrate") { Setup().OpenCalibration(); return; }
+                if (item.Key == "controls.rebind") { Setup().OpenRebind(); return; }
+                ShowToast("Пока не реализовано");
                 return;
             }
             if (item.Kind == SettingKind.Switch || item.Kind == SettingKind.Cycle) Step(item, 1);
@@ -453,10 +469,11 @@ namespace DrivingSchool.Presentation.UI
                 if (left <= 0f) { CloseDialog(); RevertDisplay(); return; }
             }
 
-            var kb = Keyboard.current; var pad = Gamepad.current;
-            bool back = Pressed(kb?.escapeKey) || Pressed(pad?.buttonEast);
-            bool confirm = Pressed(kb?.enterKey) || Pressed(kb?.numpadEnterKey) || Pressed(kb?.spaceKey) || Pressed(pad?.buttonSouth);
-            Vector2Int dir = RepeatedDirection(kb, pad);
+            if (setup != null && setup.IsOpen) { setup.Tick(); return; }
+
+            bool back = MenuInput.Cancel;
+            bool confirm = MenuInput.Submit;
+            Vector2Int dir = repeater.Next(MenuInput.HeldDirection);
 
             if (IsDialogOpen)
             {
@@ -466,9 +483,9 @@ namespace DrivingSchool.Presentation.UI
                 return;
             }
             if (back) { Back(); return; }
-            if (Pressed(kb?.qKey) || Pressed(pad?.leftShoulder)) { SwitchTab(TabIndex - 1); return; }
-            if (Pressed(kb?.eKey) || Pressed(pad?.rightShoulder)) { SwitchTab(TabIndex + 1); return; }
-            if (Pressed(kb?.rKey) || Pressed(pad?.buttonNorth)) { ResetFocused(); return; }
+            if (MenuInput.TabPrev) { SwitchTab(TabIndex - 1); return; }
+            if (MenuInput.TabNext) { SwitchTab(TabIndex + 1); return; }
+            if (MenuInput.ResetItem) { ResetFocused(); return; }
 
             if (zone == Zone.Rows)
             {
@@ -496,23 +513,6 @@ namespace DrivingSchool.Presentation.UI
                 }
                 else if (confirm && bottomButtons[buttonFocus].interactable) bottomButtons[buttonFocus].onClick.Invoke();
             }
-        }
-
-        static bool Pressed(UnityEngine.InputSystem.Controls.ButtonControl b) => b != null && b.wasPressedThisFrame;
-        static bool Held(UnityEngine.InputSystem.Controls.ButtonControl b) => b != null && b.isPressed;
-
-        Vector2Int RepeatedDirection(Keyboard kb, Gamepad pad)
-        {
-            var d = Vector2Int.zero;
-            if (Held(kb?.upArrowKey) || Held(pad?.dpad.up)) d.y = 1;
-            else if (Held(kb?.downArrowKey) || Held(pad?.dpad.down)) d.y = -1;
-            else if (Held(kb?.leftArrowKey) || Held(pad?.dpad.left)) d.x = -1;
-            else if (Held(kb?.rightArrowKey) || Held(pad?.dpad.right)) d.x = 1;
-            if (d == Vector2Int.zero) { heldDir = d; return d; }
-            float now = Time.unscaledTime;
-            if (d != heldDir) { heldDir = d; repeatAt = now + 0.35f; return d; }
-            if (now >= repeatAt) { repeatAt = now + 0.07f; return d; }
-            return Vector2Int.zero;
         }
 
         static void EnsureEventSystem()

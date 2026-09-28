@@ -96,6 +96,8 @@ namespace DrivingSchool.Presentation.UI
             if (b == 0) RestartRequested?.Invoke(); else MenuRequested?.Invoke();
         }
 
+        readonly DirectionRepeater wheelRepeat = new DirectionRepeater();
+
         void Update()
         {
             if (!IsOpen || model == null) return;
@@ -104,8 +106,11 @@ namespace DrivingSchool.Presentation.UI
             bool down = (kb != null && kb.downArrowKey.wasPressedThisFrame) || (pad != null && pad.dpad.down.wasPressedThisFrame);
             bool left = (kb != null && kb.leftArrowKey.wasPressedThisFrame) || (pad != null && pad.dpad.left.wasPressedThisFrame);
             bool right = (kb != null && kb.rightArrowKey.wasPressedThisFrame) || (pad != null && pad.dpad.right.wasPressedThisFrame);
-            bool enter = (kb != null && (kb.enterKey.wasPressedThisFrame || kb.numpadEnterKey.wasPressedThisFrame)) || (pad != null && pad.buttonSouth.wasPressedThisFrame);
-            bool esc = (kb != null && kb.escapeKey.wasPressedThisFrame) || (pad != null && pad.buttonEast.wasPressedThisFrame);
+            bool enter = (kb != null && (kb.enterKey.wasPressedThisFrame || kb.numpadEnterKey.wasPressedThisFrame)) || (pad != null && pad.buttonSouth.wasPressedThisFrame) || MenuInput.WheelSubmitPressed;
+            bool esc = (kb != null && kb.escapeKey.wasPressedThisFrame) || (pad != null && pad.buttonEast.wasPressedThisFrame) || MenuInput.WheelCancelPressed;
+            var wheelDir = wheelRepeat.Next(MenuInput.HeldDirection);   // крестовина руля (стрелки уже учтены выше)
+            up |= wheelDir.y > 0 && !(kb != null && kb.upArrowKey.isPressed); down |= wheelDir.y < 0 && !(kb != null && kb.downArrowKey.isPressed);
+            left |= wheelDir.x < 0 && !(kb != null && kb.leftArrowKey.isPressed); right |= wheelDir.x > 0 && !(kb != null && kb.rightArrowKey.isPressed);
             if (esc) { Choose(1); return; }
             if (enter) { Choose(button); return; }
             if (up && model.events.Count > 0) { selected = (selected - 1 + model.events.Count) % model.events.Count; Refresh(); }

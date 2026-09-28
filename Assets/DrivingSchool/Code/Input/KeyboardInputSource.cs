@@ -11,6 +11,7 @@ namespace DrivingSchool.Input
     /// Map (see docs/vehicle-test-range.md): W/S/A/D pedals and steering, Shift clutch, Space handbrake,
     /// I ignition, Enter starter, 1–6/R/N gears (АКПП: 1–6 → D, P → P), Q/E indicators, X hazard,
     /// L lights, K high beam, J flash, H horn, V wipers, B washer, T seat belt.
+    /// Клавиши берутся из <see cref="KeyboardProfile"/> (keyboard.json, экран «Переназначение кнопок»), выше — раскладка по умолчанию.
     /// Руль (T42): <see cref="Overlay"/> — руль и педали заменяют W/S/A/D/Shift, кнопки руля работают вместе с клавишами.
     /// </summary>
     public sealed class KeyboardInputSource : IInputSource
@@ -29,6 +30,9 @@ namespace DrivingSchool.Input
         public float keyboardLateralMps2 = 6.5f;
         public bool automatic;              // AT: gear keys drive the selector
         public Keyboard KeyboardDevice { get; set; }
+        /// <summary>Клавиши; null — <see cref="KeyboardProfile.Current"/>.</summary>
+        public KeyboardProfile Keys { get; set; }
+        KeyboardProfile Map => Keys ?? KeyboardProfile.Current;
         /// <summary>Последняя попытка вывести селектор АКПП из P была без тормоза и не сработала (для подсказки).</summary>
         public bool ShiftLockRefused { get; private set; }
 
@@ -137,9 +141,10 @@ namespace DrivingSchool.Input
 
         void PollKeyboardAxes(Keyboard kb, float dt)
         {
+            var map = Map;
             float targetSteer = 0f;
-            if (kb.aKey.isPressed || kb.leftArrowKey.isPressed) targetSteer -= 1f;
-            if (kb.dKey.isPressed || kb.rightArrowKey.isPressed) targetSteer += 1f;
+            if (map.Held(kb, DriveAction.SteerLeft)) targetSteer -= 1f;
+            if (map.Held(kb, DriveAction.SteerRight)) targetSteer += 1f;
             // A key is on/off: at speed the virtual steering wheel turns slower and not to full lock, otherwise a tap
             // throws a 1.3-tonne car sideways and it feels weightless.
             float v = Math.Abs(vehicleSpeedMps);
@@ -147,44 +152,42 @@ namespace DrivingSchool.Input
             float speedFactor = 1f / (1f + v / 15f);
             steering = Mathf.MoveTowards(steering, targetSteer, (Math.Abs(targetSteer) > 0.01f ? steeringRate * speedFactor : returnRate) * dt);
 
-            bool gas = kb.wKey.isPressed || kb.upArrowKey.isPressed, brk = kb.sKey.isPressed || kb.downArrowKey.isPressed;
+            bool gas = map.Held(kb, DriveAction.Gas), brk = map.Held(kb, DriveAction.Brake);
             throttle = Mathf.MoveTowards(throttle, gas ? 1f : 0f, (gas ? throttleRiseRate : pedalRate) * dt);
             brake = Mathf.MoveTowards(brake, brk ? 1f : 0f, (brk ? brakeRiseRate : pedalRate) * dt);
             // The clutch is released slower than pressed, like a foot finding the bite point.
-            bool clutchDown = kb.leftShiftKey.isPressed || kb.leftCtrlKey.isPressed;
+            bool clutchDown = map.Held(kb, DriveAction.Clutch);
             clutch = Mathf.MoveTowards(clutch, clutchDown ? 1f : 0f, (clutchDown ? pedalRate : 1.6f) * dt);
         }
 
         void PollKeyboardButtons(Keyboard kb)
         {
-            bool brk = kb.sKey.isPressed || kb.downArrowKey.isPressed || brake > 0.1f;
-            if (kb.spaceKey.wasPressedThisFrame) ToggleHandbrake();
+            var map = Map;
+            bool brk = map.Held(kb, DriveAction.Brake) || brake > 0.1f;
+            if (map.Down(kb, DriveAction.Handbrake)) ToggleHandbrake();
 
             int gear = -99;
-            if (kb.digit0Key.wasPressedThisFrame || kb.nKey.wasPressedThisFrame) gear = 0;
-            else if (kb.rKey.wasPressedThisFrame) gear = -1;
-            else if (kb.digit1Key.wasPressedThisFrame) gear = 1;
-            else if (kb.digit2Key.wasPressedThisFrame) gear = 2;
-            else if (kb.digit3Key.wasPressedThisFrame) gear = 3;
-            else if (kb.digit4Key.wasPressedThisFrame) gear = 4;
-            else if (kb.digit5Key.wasPressedThisFrame) gear = 5;
-            else if (kb.digit6Key.wasPressedThisFrame) gear = 6;
+            if (map.Down(kb, DriveAction.Neutral)) gear = 0;
+            else if (map.Down(kb, DriveAction.Reverse)) gear = -1;
+            else
+                for (int g = 1; g <= 6; g++)
+                    if (map.Down(kb, DriveAction.Gear1 + (g - 1))) { gear = g; break; }
             if (gear != -99) RequestGear(gear, brk);
-            if (kb.pKey.wasPressedThisFrame) SelectPark();
+            if (map.Down(kb, DriveAction.Park)) SelectPark();
 
-            if (kb.iKey.wasPressedThisFrame) ToggleIgnition();
-            starter = kb.enterKey.isPressed || kb.numpadEnterKey.isPressed;
+            if (map.Down(kb, DriveAction.Ignition)) ToggleIgnition();
+            starter = map.Held(kb, DriveAction.Starter);
 
-            if (kb.qKey.wasPressedThisFrame) ToggleIndicator(TurnSignal.Left);
-            if (kb.eKey.wasPressedThisFrame) ToggleIndicator(TurnSignal.Right);
-            if (kb.xKey.wasPressedThisFrame) ToggleHazard();
-            if (kb.lKey.wasPressedThisFrame) CycleLights();
-            if (kb.kKey.wasPressedThisFrame) ToggleHighBeam();
-            flash = kb.jKey.isPressed;
-            horn = kb.hKey.isPressed;
-            if (kb.vKey.wasPressedThisFrame) CycleWipers();
-            washer = kb.bKey.isPressed;
-            if (kb.tKey.wasPressedThisFrame) ToggleSeatbelt();
+            if (map.Down(kb, DriveAction.LeftSignal)) ToggleIndicator(TurnSignal.Left);
+            if (map.Down(kb, DriveAction.RightSignal)) ToggleIndicator(TurnSignal.Right);
+            if (map.Down(kb, DriveAction.Hazard)) ToggleHazard();
+            if (map.Down(kb, DriveAction.Lights)) CycleLights();
+            if (map.Down(kb, DriveAction.HighBeam)) ToggleHighBeam();
+            flash = map.Held(kb, DriveAction.Flash);
+            horn = map.Held(kb, DriveAction.Horn);
+            if (map.Down(kb, DriveAction.Wipers)) CycleWipers();
+            washer = map.Held(kb, DriveAction.Washer);
+            if (map.Down(kb, DriveAction.Belt)) ToggleSeatbelt();
         }
 
         /// <summary>Блокировка селектора АКПП (как в настоящей машине): из P рычаг выходит только с нажатым тормозом.</summary>

@@ -74,26 +74,27 @@ namespace DrivingSchool.Input
         public void ApplyAxes(KeyboardInputSource k)
         {
             var p = WheelProfile.Current;
-            Steering = Tuning.ShapeSteering(WheelDevice.Bipolar(WheelDevice.Control(p.steering.control), p.steering.releasedEnd));
-            Throttle = Tuning.ShapePedal(WheelDevice.PedalFraction(WheelDevice.Control(p.throttle.control), p.throttle.releasedEnd));
-            Brake = Tuning.ShapePedal(WheelDevice.PedalFraction(WheelDevice.Control(p.brake.control), p.brake.releasedEnd));
-            Clutch = Tuning.ShapePedal(WheelDevice.PedalFraction(WheelDevice.Control(p.clutch.control), p.clutch.releasedEnd));
+            Steering = Tuning.ShapeSteering(WheelDevice.Steering(p.steering));
+            Throttle = Tuning.ShapePedal(WheelDevice.Pedal(p.throttle));
+            Brake = Tuning.ShapePedal(WheelDevice.Pedal(p.brake));
+            Clutch = Tuning.ShapePedal(WheelDevice.Pedal(p.clutch));
             k.SetAnalog(Steering, Throttle, Brake, Clutch);
         }
 
         public void ApplyButtons(KeyboardInputSource k)
         {
-            if (Down(WheelAction.Ignition)) k.ToggleIgnition();
-            if (Down(WheelAction.Handbrake)) k.ToggleHandbrake();
-            if (Down(WheelAction.Belt)) k.ToggleSeatbelt();
-            if (Down(WheelAction.LeftSignal)) k.ToggleIndicator(TurnSignal.Left);
-            if (Down(WheelAction.RightSignal)) k.ToggleIndicator(TurnSignal.Right);
-            if (Down(WheelAction.Hazard)) k.ToggleHazard();
-            if (Down(WheelAction.Lights)) k.CycleLights();
-            if (Down(WheelAction.HighBeam)) k.ToggleHighBeam();
-            if (Down(WheelAction.Wipers)) k.CycleWipers();
-            if (Down(WheelAction.Park)) k.SelectPark();
-            k.SetHeld(Held(WheelAction.Starter), Held(WheelAction.Horn), Held(WheelAction.Flash), Held(WheelAction.Washer));
+            if (Down(DriveAction.Ignition)) k.ToggleIgnition();
+            if (Down(DriveAction.Handbrake)) k.ToggleHandbrake();
+            if (Down(DriveAction.Belt)) k.ToggleSeatbelt();
+            if (Down(DriveAction.LeftSignal)) k.ToggleIndicator(TurnSignal.Left);
+            if (Down(DriveAction.RightSignal)) k.ToggleIndicator(TurnSignal.Right);
+            if (Down(DriveAction.Hazard)) k.ToggleHazard();
+            if (Down(DriveAction.Lights)) k.CycleLights();
+            if (Down(DriveAction.HighBeam)) k.ToggleHighBeam();
+            if (Down(DriveAction.Wipers)) k.CycleWipers();
+            if (Down(DriveAction.Park)) k.SelectPark();
+            if (Down(DriveAction.Neutral)) k.RequestGear(0, Brake > 0.1f);
+            k.SetHeld(Held(DriveAction.Starter), Held(DriveAction.Horn), Held(DriveAction.Flash), Held(DriveAction.Washer));
             ApplyShifter(k);
         }
 
@@ -119,13 +120,13 @@ namespace DrivingSchool.Input
 
         static int ReadShifter()
         {
-            if (Held(WheelAction.Reverse)) return -1;
+            if (Held(DriveAction.Reverse)) return -1;
             for (int g = 1; g <= 6; g++)
-                if (Held(WheelAction.Gear1 + (g - 1))) return g;
+                if (Held(DriveAction.Gear1 + (g - 1))) return g;
             return 0;
         }
 
-        static bool Down(WheelAction a) => WheelDevice.WasPressed(WheelDevice.Control(a));
-        static bool Held(WheelAction a) => WheelDevice.IsPressed(WheelDevice.Control(a));
+        static bool Down(DriveAction a) => WheelDevice.WasPressed(WheelDevice.Control(a));
+        static bool Held(DriveAction a) => WheelDevice.IsPressed(WheelDevice.Control(a));
     }
 }

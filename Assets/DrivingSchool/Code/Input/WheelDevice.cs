@@ -35,7 +35,13 @@ namespace DrivingSchool.Input
                 if (now < nextScan) return null;
                 nextScan = now + 1f;
                 cached = Find(WheelProfile.Current);
-                if (cached != null && cached.deviceId != loggedDeviceId) { loggedDeviceId = cached.deviceId; Debug.Log("[Wheel] найден руль\n" + Describe(cached)); }
+                if (cached != null && cached.deviceId != loggedDeviceId)
+                {
+                    loggedDeviceId = cached.deviceId;
+                    string d = Describe(cached);
+                    Debug.Log("[Wheel] найден руль\n" + d);
+                    Trace("найден руль: " + d);
+                }
                 return cached;
             }
         }
@@ -117,7 +123,7 @@ namespace DrivingSchool.Input
             return c;
         }
 
-        public static InputControl Control(WheelAction action)
+        public static InputControl Control(DriveAction action)
         {
             var b = WheelProfile.Current.Find(action);
             return b == null ? null : Control(b.control);
@@ -137,12 +143,34 @@ namespace DrivingSchool.Input
         }
 
         /// <summary>Кнопка действия нажата (только если руль выбран в настройках).</summary>
-        public static bool IsPressed(WheelAction a) => Active && IsPressed(Control(a));
+        public static bool IsPressed(DriveAction a) => Active && IsPressed(Control(a));
 
         /// <summary>Кнопка действия нажата в этом кадре (только если руль выбран в настройках).</summary>
-        public static bool WasPressed(WheelAction a) => Active && WasPressed(Control(a));
+        public static bool WasPressed(DriveAction a) => Active && WasPressed(Control(a));
 
         // ---------- оси ----------
+
+        /// <summary>Педаль 0…1 по привязке: калиброванная — по снятым крайним значениям, иначе — по параметрам контрола.</summary>
+        public static float Pedal(WheelAxisBinding b)
+        {
+            if (b == null) return 0f;
+            var c = Control(b.control);
+            if (c == null) return 0f;
+            if (b.calibrated && c is AxisControl a && Mathf.Abs(b.rawPressed - b.rawReleased) > 1e-3f)
+                return Mathf.Clamp01((a.ReadValue() - b.rawReleased) / (b.rawPressed - b.rawReleased));
+            return PedalFraction(c, b.releasedEnd);
+        }
+
+        /// <summary>Руль −1…1 (плюс — вправо) по привязке.</summary>
+        public static float Steering(WheelAxisBinding b)
+        {
+            if (b == null) return 0f;
+            var c = Control(b.control);
+            if (c == null) return 0f;
+            if (b.calibrated && c is AxisControl a && Mathf.Abs(b.rawPressed - b.rawReleased) > 1e-3f)
+                return Mathf.Clamp((a.ReadValue() - b.rawReleased) / (b.rawPressed - b.rawReleased), -1f, 1f);
+            return Bipolar(c, b.releasedEnd);
+        }
 
         /// <summary>
         /// Доля нажатия педали 0…1. Диапазон контрола берётся из его нормализации (Input System даёт −1…1 или 0…1);
@@ -176,7 +204,70 @@ namespace DrivingSchool.Input
             else { lo = -1f; hi = 1f; }
         }
 
+        // ---------- захват (калибровка, переназначение) ----------
+
+        /// <summary>Путь контрола относительно устройства: «button5», «stick/x», «hat/up».</summary>
+        public static string RelativePath(InputControl c) => c == null ? null : c.path.Substring(c.device.path.Length + 1);
+
+        /// <summary>Оси устройства (листья, не кнопки): руль, педали, прочие.</summary>
+        public static List<AxisControl> Axes(InputDevice d)
+        {
+            var list = new List<AxisControl>();
+            if (d == null) return list;
+            foreach (var c in d.allControls)
+                if (c is AxisControl a && !(c is ButtonControl) && c.children.Count == 0) list.Add(a);
+            return list;
+        }
+
+        /// <summary>Кнопки устройства для назначения: настоящие кнопки и направления крестовины, без полу-осей стика (список кешируется на устройство).</summary>
+        static List<ButtonControl> buttonCache = new List<ButtonControl>();
+        static InputDevice buttonCacheDevice;
+
+        public static List<ButtonControl> Buttons(InputDevice d)
+        {
+            if (d == null) return new List<ButtonControl>();
+            if (ReferenceEquals(d, buttonCacheDevice)) return buttonCache;
+            var list = new List<ButtonControl>();
+            buttonCacheDevice = d; buttonCache = list;
+            foreach (var c in d.allControls)
+            {
+                if (!(c is ButtonControl b) || c.children.Count > 0) continue;
+                string rel = RelativePath(c);
+                if (rel.StartsWith("stick/")) continue;
+                list.Add(b);
+            }
+            return list;
+        }
+
+        /// <summary>Кнопка руля, нажатая в этом кадре (или null).</summary>
+        public static ButtonControl FirstPressedButton(InputDevice d)
+        {
+            foreach (var b in Buttons(d)) if (b.wasPressedThisFrame) return b;
+            return null;
+        }
+
+        /// <summary>Любая кнопка руля нажата в этом кадре.</summary>
+        public static bool AnyButtonPressed() => FirstPressedButton(Current) != null;
+
         // ---------- диагностика ----------
+
+        /// <summary>Файл диагностики руля: в редакторе — Logs/wheel-diagnostics.txt проекта, в сборке — рядом с настройками.</summary>
+        public static string DiagnosticsPath => Application.isEditor
+            ? System.IO.Path.GetFullPath(System.IO.Path.Combine(Application.dataPath, "..", "Logs", "wheel-diagnostics.txt"))
+            : System.IO.Path.Combine(Application.persistentDataPath, "wheel-diagnostics.txt");
+
+        public static void Trace(string line)
+        {
+            try
+            {
+                var path = DiagnosticsPath;
+                System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path));
+                var fi = new System.IO.FileInfo(path);
+                if (fi.Exists && fi.Length > 512 * 1024) fi.Delete();
+                System.IO.File.AppendAllText(path, DateTime.Now.ToString("HH:mm:ss.fff") + "  " + line + "\n");
+            }
+            catch { /* диагностика не должна ломать игру */ }
+        }
 
         public static string Describe(InputDevice d)
         {

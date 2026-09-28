@@ -31,7 +31,7 @@ for m,refs in modules.items():
 write('Assets/DrivingSchool/Code/Presentation/Physics/DS.Presentation.Physics.asmdef',{'name':'DS.Presentation.Physics','rootNamespace':'DrivingSchool.Presentation.Physics','references':['DS.Contracts','DS.Simulation']})
 # UI-слой: uGUI/TMP + Input System, без ссылок на симуляцию (ADR-001, docs/ui-settings.md).
 write('Assets/DrivingSchool/Code/Presentation/UI/DS.Presentation.UI.asmdef',{'name':'DS.Presentation.UI','rootNamespace':'DrivingSchool.Presentation.UI','references':['DS.Settings','Unity.InputSystem','Unity.TextMeshPro','UnityEngine.UI','Unity.RenderPipelines.Universal.Runtime','Unity.RenderPipelines.Core.Runtime','DS.Input']})
-write('Assets/DrivingSchool/Code/Tests/DS.Tests.asmdef',{'name':'DS.Tests','references':['DS.Contracts','DS.Simulation','DS.World','DS.Learning','DS.Input','DS.Rules','DS.Settings','DS.Presentation','DS.Presentation.Physics','DS.Presentation.UI','DS.Editor','Unity.TextMeshPro','UnityEngine.UI'], 'optionalUnityReferences':['TestAssemblies'],'includePlatforms':['Editor']})
+write('Assets/DrivingSchool/Code/Tests/DS.Tests.asmdef',{'name':'DS.Tests','references':['DS.Contracts','DS.Simulation','DS.World','DS.Learning','DS.Input','DS.Rules','DS.Settings','DS.Presentation','DS.Presentation.Physics','DS.Presentation.UI','DS.Editor','Unity.TextMeshPro','UnityEngine.UI','Unity.InputSystem'], 'optionalUnityReferences':['TestAssemblies'],'includePlatforms':['Editor']})
 
 nodes=[{'id':'south','x':0,'y':0,'z':-250},{'id':'centre','x':0,'y':0,'z':0},{'id':'north','x':0,'y':0,'z':250},{'id':'west','x':-250,'y':0,'z':0},{'id':'east','x':250,'y':0,'z':0}]
 segments=[{'id':n+'-centre','fromNode':n,'toNode':'centre','widthM':14,'laneCount':4,'speedLimitKph':60} for n in ('south','north','west','east')]

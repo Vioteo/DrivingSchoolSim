@@ -7,7 +7,7 @@ namespace DrivingSchool.Presentation
     /// Имена органов управления для текстов уроков ({clutch} → «Shift» или «педаль сцепления»).
     /// Если в настройках выбран руль и он подключён (<see cref="WheelDevice.Active"/>), подсказки — для руля:
     /// подписи кнопок берутся из раскладки <see cref="WheelProfile"/> (её можно поправить в wheel-g29.json).
-    /// Иначе — клавиатура (KeyboardInputSource).
+    /// Иначе — клавиатура: имена клавиш из <see cref="KeyboardProfile"/> (keyboard.json).
     /// </summary>
     public static class LessonControls
     {
@@ -18,31 +18,34 @@ namespace DrivingSchool.Presentation
 
         public static string KeyName(string key, bool wheel) => wheel ? WheelName(key, WheelProfile.Current) : KeyboardName(key);
 
-        public static string KeyboardName(string key)
+        public static string KeyboardName(string key) => KeyboardName(key, KeyboardProfile.Current);
+
+        /// <summary>Имена клавиш из раскладки клавиатуры (keyboard.json).</summary>
+        public static string KeyboardName(string key, KeyboardProfile k)
         {
             switch (key)
             {
-                case "belt": return "T";
-                case "ignition": return "I";
-                case "starter": return "Enter";
-                case "clutch": return "Shift";
-                case "gas": return "W";
-                case "brake": return "S";
-                case "handbrake": return "Пробел";
-                case "left": return "Q";
-                case "right": return "E";
-                case "lights": return "L ×2";
-                case "gear1": return "1";
-                case "gear2": return "2";
-                case "reverse": return "R";
-                case "neutral": return "N";
-                case "drive": return "1";
-                case "park": return "P";
-                case "steer": return "A / D";
-                case "steer_left": return "A";
-                case "steer_right": return "D";
-                case "horn": return "H";
-                case "hazard": return "X";
+                case "belt": return k.Label(DriveAction.Belt) ?? "—";
+                case "ignition": return k.Label(DriveAction.Ignition) ?? "—";
+                case "starter": return k.Label(DriveAction.Starter) ?? "—";
+                case "clutch": return k.Label(DriveAction.Clutch) ?? "—";
+                case "gas": return k.Label(DriveAction.Gas) ?? "—";
+                case "brake": return k.Label(DriveAction.Brake) ?? "—";
+                case "handbrake": return k.Label(DriveAction.Handbrake) ?? "—";
+                case "left": return k.Label(DriveAction.LeftSignal) ?? "—";
+                case "right": return k.Label(DriveAction.RightSignal) ?? "—";
+                case "lights": { var l = k.Label(DriveAction.Lights); return l == null ? "—" : l + " ×2"; }
+                case "gear1": return k.Label(DriveAction.Gear1) ?? "—";
+                case "gear2": return k.Label(DriveAction.Gear2) ?? "—";
+                case "reverse": return k.Label(DriveAction.Reverse) ?? "—";
+                case "neutral": return k.Label(DriveAction.Neutral) ?? "—";
+                case "drive": return k.Label(DriveAction.Gear1) ?? "—";
+                case "park": return k.Label(DriveAction.Park) ?? "—";
+                case "steer": { var l = k.Label(DriveAction.SteerLeft); var r = k.Label(DriveAction.SteerRight); return (l ?? "—") + " / " + (r ?? "—"); }
+                case "steer_left": return k.Label(DriveAction.SteerLeft) ?? "—";
+                case "steer_right": return k.Label(DriveAction.SteerRight) ?? "—";
+                case "horn": return k.Label(DriveAction.Horn) ?? "—";
+                case "hazard": return k.Label(DriveAction.Hazard) ?? "—";
                 default: return null;
             }
         }
@@ -52,24 +55,24 @@ namespace DrivingSchool.Presentation
         {
             switch (key)
             {
-                case "belt": return p.Label(WheelAction.Belt) ?? KeyboardName(key);
-                case "ignition": return p.Label(WheelAction.Ignition) ?? KeyboardName(key);
-                case "starter": return p.Label(WheelAction.Starter) ?? KeyboardName(key);
-                case "handbrake": return p.Label(WheelAction.Handbrake) ?? KeyboardName(key);
-                case "left": return p.Label(WheelAction.LeftSignal) ?? KeyboardName(key);
-                case "right": return p.Label(WheelAction.RightSignal) ?? KeyboardName(key);
-                case "lights": { var l = p.Label(WheelAction.Lights); return l == null ? KeyboardName(key) : l + " ×2"; }
-                case "horn": return p.Label(WheelAction.Horn) ?? KeyboardName(key);
-                case "hazard": return p.Label(WheelAction.Hazard) ?? KeyboardName(key);
-                case "park": return p.Label(WheelAction.Park) ?? KeyboardName(key);
+                case "belt": return p.Label(DriveAction.Belt) ?? KeyboardName(key);
+                case "ignition": return p.Label(DriveAction.Ignition) ?? KeyboardName(key);
+                case "starter": return p.Label(DriveAction.Starter) ?? KeyboardName(key);
+                case "handbrake": return p.Label(DriveAction.Handbrake) ?? KeyboardName(key);
+                case "left": return p.Label(DriveAction.LeftSignal) ?? KeyboardName(key);
+                case "right": return p.Label(DriveAction.RightSignal) ?? KeyboardName(key);
+                case "lights": { var l = p.Label(DriveAction.Lights); return l == null ? KeyboardName(key) : l + " ×2"; }
+                case "horn": return p.Label(DriveAction.Horn) ?? KeyboardName(key);
+                case "hazard": return p.Label(DriveAction.Hazard) ?? KeyboardName(key);
+                case "park": return p.Label(DriveAction.Park) ?? KeyboardName(key);
                 case "clutch": return p.clutch?.label ?? "педаль сцепления";
                 case "gas": return p.throttle?.label ?? "педаль газа";
                 case "brake": return p.brake?.label ?? "педаль тормоза";
-                case "gear1": return p.Label(WheelAction.Gear1) ?? KeyboardName(key);
-                case "gear2": return p.Label(WheelAction.Gear2) ?? KeyboardName(key);
-                case "reverse": return p.Label(WheelAction.Reverse) ?? KeyboardName(key);
-                case "neutral": return "рычаг КПП в нейтраль";
-                case "drive": { var g = p.Label(WheelAction.Gear1); return g == null ? KeyboardName(key) : g + " (D)"; }
+                case "gear1": return p.Label(DriveAction.Gear1) ?? KeyboardName(key);
+                case "gear2": return p.Label(DriveAction.Gear2) ?? KeyboardName(key);
+                case "reverse": return p.Label(DriveAction.Reverse) ?? KeyboardName(key);
+                case "neutral": return p.Label(DriveAction.Neutral) ?? "рычаг КПП в нейтраль";
+                case "drive": { var g = p.Label(DriveAction.Gear1); return g == null ? KeyboardName(key) : g + " (D)"; }
                 case "steer": return p.steering?.label ?? "руль";
                 case "steer_left": return "руль влево";
                 case "steer_right": return "руль вправо";

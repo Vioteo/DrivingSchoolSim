@@ -130,6 +130,9 @@ namespace DrivingSchool.Presentation.UI
             if (b != null && EventSystem.current != null) EventSystem.current.SetSelectedGameObject(b.gameObject);
         }
 
+        static bool MenuWheelLeft() => DrivingSchool.Input.WheelDevice.Current != null && DrivingSchool.Input.WheelDevice.WasPressed(DrivingSchool.Input.WheelDevice.Control("hat/left"));
+        static bool MenuWheelRight() => DrivingSchool.Input.WheelDevice.Current != null && DrivingSchool.Input.WheelDevice.WasPressed(DrivingSchool.Input.WheelDevice.Control("hat/right"));
+
         void Update()
         {
             var es = EventSystem.current;
@@ -142,10 +145,10 @@ namespace DrivingSchool.Presentation.UI
             if (kb != null && kb.tabKey.wasPressedThisFrame) { Focus(chain[(i < 0 ? 0 : i + (kb.shiftKey.isPressed ? chain.Length - 1 : 1)) % chain.Length]); return; }
             if (i < 0) { int k = Array.FindIndex(cars, c => c.id == SelectedId); Focus(k >= 0 && k < carButtons.Length ? carButtons[k] : backButton); return; }
             var focused = chain[i];
-            if (kb != null && (focused == transmissionButton || focused == absButton || focused == paintButton))
+            if (focused == transmissionButton || focused == absButton || focused == paintButton)
             {
-                if (kb.leftArrowKey.wasPressedThisFrame) Step(focused, -1);
-                else if (kb.rightArrowKey.wasPressedThisFrame) Step(focused, 1);
+                if ((kb != null && kb.leftArrowKey.wasPressedThisFrame) || MenuWheelLeft()) Step(focused, -1);
+                else if ((kb != null && kb.rightArrowKey.wasPressedThisFrame) || MenuWheelRight()) Step(focused, 1);
             }
         }
     }
