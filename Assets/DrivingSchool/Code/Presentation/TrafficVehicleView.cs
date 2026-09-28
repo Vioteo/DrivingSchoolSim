@@ -33,6 +33,10 @@ namespace DrivingSchool.Presentation
         // Body motion on the springs (T52): pitch under braking/acceleration, roll in turns; visual only, on the model.
         Quaternion modelRest; float pitch, roll, pitchVel, rollVel, lastYaw, lastContactReport = -10f;
         const float PitchPerMps2 = 0.55f, RollPerMps2 = 0.9f, BodyFrequencyHz = 1.6f, BodyDamping = 0.6f;
+        // The wheels follow the road surface (T65): the body stands on it (ramps) and is thrown up by a bump, then settles
+        // on its springs — heave and pitch lag the ground a little. Visual only; the graph gives the path.
+        Vector3 modelRestPos; float heave, heaveVel, groundPitch, springPitch, springPitchVel; bool groundReady;
+        const float SuspensionHz = 2.4f, SuspensionDamping = 0.35f;
 
         public string AgentId => id;
         public float LengthM => lengthM;
@@ -61,8 +65,9 @@ namespace DrivingSchool.Presentation
             body = GetComponent<Rigidbody>();
             body.isKinematic = true;
             body.interpolation = RigidbodyInterpolation.Interpolate;
-            if (wheels == null) { FindWheels(); if (model != null) modelRest = model.localRotation; }
+            if (wheels == null) { FindWheels(); if (model != null) { modelRest = model.localRotation; modelRestPos = model.localPosition; } }
             pitch = roll = pitchVel = rollVel = 0f;
+            heaveVel = springPitchVel = 0f; groundReady = false;
         }
 
         void FindWheels()
@@ -84,8 +89,17 @@ namespace DrivingSchool.Presentation
         internal void Apply(ParticipantState p)
         {
             var position = new Vector3((float)p.Position.x, (float)p.Position.y, (float)p.Position.z);
-            var rotation = Quaternion.Euler(0, (float)(p.HeadingRad * Mathf.Rad2Deg), 0);
             float yaw = (float)(p.HeadingRad * Mathf.Rad2Deg);
+            var flat = Quaternion.Euler(0, yaw, 0);
+            if (host != null && Ground(position + flat * Vector3.forward * (wheelbaseM / 2), position.y, out float yFront)
+                             && Ground(position - flat * Vector3.forward * (wheelbaseM / 2), position.y, out float yRear))
+            {
+                position.y = (yFront + yRear) / 2f;
+                groundPitch = Mathf.Atan2(yFront - yRear, wheelbaseM) * Mathf.Rad2Deg;   // nose up positive
+            }
+            else groundPitch = 0f;
+            if (!groundReady) { heave = position.y; springPitch = groundPitch; groundReady = true; }
+            var rotation = Quaternion.Euler(-groundPitch, yaw, 0);
             if (!placed) { transform.SetPositionAndRotation(position, rotation); body.position = position; body.rotation = rotation; lastPosition = position; lastYaw = yaw; placed = true; }
             else { body.MovePosition(position); body.MoveRotation(rotation); }
             float travelled = Vector3.Dot(position - lastPosition, rotation * Vector3.forward);
@@ -95,7 +109,15 @@ namespace DrivingSchool.Presentation
             float lateral = (float)p.SpeedMps * yawRate;             // centripetal acceleration, + = turning right
             Spring(ref pitch, ref pitchVel, -(float)p.AccelerationMps2 * PitchPerMps2, dt);   // nose dips under braking
             Spring(ref roll, ref rollVel, lateral * RollPerMps2, dt);                          // leans out of the turn
-            if (model != null) model.localRotation = Quaternion.Euler(Mathf.Clamp(pitch, -4f, 4f), 0f, Mathf.Clamp(roll, -5f, 5f)) * modelRest;
+            // Suspension: the body lags the ground — over a bump it is thrown up and rocks back.
+            SpringTo(ref heave, ref heaveVel, position.y, dt);
+            SpringTo(ref springPitch, ref springPitchVel, groundPitch, dt);
+            float lagPitch = Mathf.Clamp(groundPitch - springPitch, -3f, 3f), lift = Mathf.Clamp(heave - position.y, -0.08f, 0.08f);
+            if (model != null)
+            {
+                model.localRotation = Quaternion.Euler(Mathf.Clamp(pitch + lagPitch, -6f, 6f), 0f, Mathf.Clamp(roll, -5f, 5f)) * modelRest;
+                model.localPosition = modelRestPos + Vector3.up * lift;
+            }
             spinDeg = Mathf.Repeat(spinDeg + travelled / wheelRadius * Mathf.Rad2Deg, 360f);
             float steerDeg = (float)p.SteeringRad * Mathf.Rad2Deg;
             if (wheels != null)
@@ -115,6 +137,23 @@ namespace DrivingSchool.Presentation
                 bool on = WeatherController.Daylight01 < beamBelowDaylight && near;
                 if (beam.enabled != on) beam.enabled = on;
             }
+        }
+
+        /// <summary>Road height under a point (the bot's own collider is not on the ground layer); near the path height only.</summary>
+        bool Ground(Vector3 at, float pathY, out float y)
+        {
+            y = pathY;
+            if (!UnityEngine.Physics.Raycast(at + Vector3.up * 2.5f, Vector3.down, out var hit, 5f, host.GroundMask, QueryTriggerInteraction.Ignore)) return false;
+            if (Mathf.Abs(hit.point.y - pathY) > 1.5f) return false;
+            y = hit.point.y;
+            return true;
+        }
+
+        static void SpringTo(ref float x, ref float vel, float target, float dt)
+        {
+            float w = 2f * Mathf.PI * SuspensionHz;
+            vel += (w * w * (target - x) - 2f * SuspensionDamping * w * vel) * dt;
+            x += vel * dt;
         }
 
         static void Spring(ref float x, ref float vel, float target, float dt)

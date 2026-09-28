@@ -44,6 +44,8 @@ namespace DrivingSchool.Presentation
         bool playerLeft, playerRight, playerHazard;
 
         public TrafficDirector Director => director;
+        /// <summary>Road surfaces (T65): bot bodies follow them — ramps, speed bumps.</summary>
+        public LayerMask GroundMask => groundMask;
         public TrafficSnapshot Snapshot => director?.Snapshot;
 
         /// <summary>The player's car reports its lamps here (the solver owns them, not this host).</summary>
