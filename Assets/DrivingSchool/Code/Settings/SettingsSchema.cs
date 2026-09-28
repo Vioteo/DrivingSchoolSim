@@ -117,6 +117,7 @@ namespace DrivingSchool.Settings
         static SettingTab[] Build()
         {
             const SettingFlags wheelStub = SettingFlags.NeedsWheel | SettingFlags.Stub;
+            const SettingFlags wheel = SettingFlags.NeedsWheel;
             var res = Cycle(Resolution, "Разрешение", DefaultResolutions, 2,
                 "Целевое разрешение проекта — 1920 × 1080. Интерфейс проверяется на 1920 × 1080 и 1280 × 720.", SettingFlags.ConfirmDisplay);
             var fps = Cycle("graphics.fpsLimit", "Ограничение FPS", new[] { "30", "60", "120", "Без ограничения" }, 1,
@@ -152,30 +153,30 @@ namespace DrivingSchool.Settings
                     new SettingGroup { Title = "Устройство", Items = new[]
                     {
                         Cycle("controls.device", "Устройство ввода", new[] { "Клавиатура", "Logitech G29" }, 0,
-                            "Руль G29 выбирается, только когда он подключён. Управление рулём в поездке подключается в задаче T42; сейчас поездка идёт с клавиатуры.",
-                            SettingFlags.LockInDrive | wheelStub),
+                            "Руль G29 выбирается, только когда он подключён. С рулём подсказки уроков показывают кнопки руля, раскладка — как в City Car Driving: поворотники на лепестках, передачи на шифтере. Клавиши при этом тоже работают. F11 в поездке — проверка руля.",
+                            SettingFlags.LockInDrive | wheel),
                         Action("controls.calibrate", "Калибровка руля и педалей", "Отдельный экран: проверка осей, крайних положений педалей и передач H-шифтера.", wheelStub),
                     }},
                     new SettingGroup { Title = "Руль", Items = new[]
                     {
                         Slider("controls.steeringLock", "Угол поворота руля", 180, 900, 10, "°", 900,
-                            "У G29 900° — от упора до упора. Угол должен совпадать с настройкой драйвера Logitech, иначе руль и колёса разойдутся.", wheelStub),
+                            "Какой поворот руля даёт полный поворот колёс. Считается, что в G HUB стоит 900° (как у G29 от упора до упора): 900° — один к одному, меньше — руль острее.", wheel),
                         Slider("controls.steeringDeadzone", "Мёртвая зона руля", 0, 10, 1, " %", 0,
-                            "Для исправного G29 не нужна. Увеличивайте, только если машину тянет в сторону при отпущенном руле.", wheelStub),
-                        Slider("controls.steeringLinearity", "Линейность", 0, 100, 5, " %", 0, "0 % — отклик линейный. Больше — точнее в центре и резче у краёв.", wheelStub),
+                            "Для исправного G29 не нужна. Увеличивайте, только если машину тянет в сторону при отпущенном руле.", wheel),
+                        Slider("controls.steeringLinearity", "Линейность", 0, 100, 5, " %", 0, "0 % — отклик линейный. Больше — точнее в центре и резче у краёв.", wheel),
                         Slider("controls.keyboardSteerSpeed", "Скорость руления с клавиатуры", 20, 200, 10, " %", 100,
                             "С какой скоростью колёса поворачиваются и возвращаются в центр, пока клавиша нажата.", SettingFlags.KeyboardOnly),
                     }},
                     new SettingGroup { Title = "Педали", Items = new[]
                     {
-                        Switch("controls.invertPedals", "Инвертировать педали", false, "Включите, если отпущенная педаль в калибровке показывает 100 %.", wheelStub),
-                        Slider("controls.pedalDeadzone", "Мёртвая зона педалей", 0, 15, 1, " %", 3, "Защищает от самопроизвольного газа и тормоза из-за изношенных потенциометров.", wheelStub),
+                        Switch("controls.invertPedals", "Инвертировать педали", false, "Включите, если отпущенная педаль в проверке руля (F11) показывает 100 %.", wheel),
+                        Slider("controls.pedalDeadzone", "Мёртвая зона педалей", 0, 15, 1, " %", 3, "Защищает от самопроизвольного газа и тормоза из-за изношенных потенциометров.", wheel),
                     }},
                     new SettingGroup { Title = "Обратная связь", Items = new[]
                     {
                         Slider("controls.ffbStrength", "Сила обратной связи (FFB)", 0, 100, 5, " %", 60,
                             "Force feedback пока не реализован. Когда появится, первое включение будет со слабым усилием.", wheelStub),
-                        Action("controls.rebind", "Переназначение кнопок", "Пока не реализовано. Раскладка фиксированная (docs/vehicle-test-range.md).", SettingFlags.Stub),
+                        Action("controls.rebind", "Переназначение кнопок", "Экрана пока нет. Кнопки руля — в файле wheel-g29.json в папке настроек игры (путь виден по F11), клавиши — docs/vehicle-test-range.md.", SettingFlags.Stub),
                     }},
                 }},
                 new SettingTab { Id = "audio", Title = "Звук", Groups = new[]

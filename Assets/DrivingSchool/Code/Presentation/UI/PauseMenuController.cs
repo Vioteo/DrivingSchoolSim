@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace DrivingSchool.Presentation.UI
 {
     /// <summary>
-    /// Пауза в поездке (T46, docs/ui-settings.md §1). Esc / Start геймпада открывает и закрывает.
+    /// Пауза в поездке (T46, docs/ui-settings.md §1). Esc / Start геймпада / OPTIONS руля открывает и закрывает.
     /// На паузе: Time.timeScale = 0, звук на паузе, скрипты сцены DrivingSchool.* (кроме UI) выключены,
     /// чтобы клавиши поездки (Enter — стартер, F-клавиши полигона) не срабатывали за меню.
     /// Сценами не управляет — только генерирует намерения для AppNavigator.
@@ -182,6 +182,7 @@ namespace DrivingSchool.Presentation.UI
         {
             var kb = Keyboard.current;
             if (kb != null && kb.escapeKey.wasPressedThisFrame) return true;
+            if (DrivingSchool.Input.WheelDevice.WasPressed(DrivingSchool.Input.WheelAction.Pause)) return true;   // OPTIONS на руле
             var pad = Gamepad.current;
             return pad != null && pad.startButton.wasPressedThisFrame;
         }

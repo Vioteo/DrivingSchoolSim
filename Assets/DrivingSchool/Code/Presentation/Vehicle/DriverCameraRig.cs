@@ -99,7 +99,7 @@ namespace DrivingSchool.Presentation
         {
             if (car == null) return;
             var kb = Keyboard.current; var mouse = Mouse.current;
-            if (kb != null && kb.cKey.wasPressedThisFrame) mode = (Mode)(((int)mode + 1) % 3);
+            if ((kb != null && kb.cKey.wasPressedThisFrame) || DrivingSchool.Input.WheelDevice.WasPressed(DrivingSchool.Input.WheelAction.Camera)) mode = (Mode)(((int)mode + 1) % 3);
             Vector2 delta = mouse != null && mouse.rightButton.isPressed ? mouse.delta.ReadValue() * mouseSensitivity : Vector2.zero;
 
             switch (mode)
@@ -110,6 +110,8 @@ namespace DrivingSchool.Presentation
                     float keyYaw = 0f;
                     if (kb != null && (kb.commaKey.isPressed || kb.zKey.isPressed)) keyYaw = -1f;
                     if (kb != null && kb.periodKey.isPressed) keyYaw = 1f;
+                    if (DrivingSchool.Input.WheelDevice.IsPressed(DrivingSchool.Input.WheelAction.LookLeft)) keyYaw = -1f;   // крестовина руля
+                    if (DrivingSchool.Input.WheelDevice.IsPressed(DrivingSchool.Input.WheelAction.LookRight)) keyYaw = 1f;
                     if (delta != Vector2.zero) { lookYaw += delta.x; lookPitch -= delta.y; }
                     else if (keyYaw != 0f) lookYaw = Mathf.MoveTowards(lookYaw, keyYaw * 75f, 240f * Time.deltaTime);
                     else if (mouse == null || !mouse.rightButton.isPressed) { lookYaw = Mathf.MoveTowards(lookYaw, 0f, 120f * Time.deltaTime); lookPitch = Mathf.MoveTowards(lookPitch, 0f, 60f * Time.deltaTime); }

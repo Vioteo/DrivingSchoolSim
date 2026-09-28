@@ -11,6 +11,7 @@ namespace DrivingSchool.Input
     /// Map (see docs/vehicle-test-range.md): W/S/A/D pedals and steering, Shift clutch, Space handbrake,
     /// I ignition, Enter starter, 1–6/R/N gears (АКПП: 1–6 → D, P → P), Q/E indicators, X hazard,
     /// L lights, K high beam, J flash, H horn, V wipers, B washer, T seat belt.
+    /// Руль (T42): <see cref="Overlay"/> — руль и педали заменяют W/S/A/D/Shift, кнопки руля работают вместе с клавишами.
     /// </summary>
     public sealed class KeyboardInputSource : IInputSource
     {
@@ -48,7 +49,12 @@ namespace DrivingSchool.Input
         bool externallyPolled;
 
         Keyboard Kb => KeyboardDevice ?? Keyboard.current;
-        public bool IsConnected => Kb != null;
+        /// <summary>Руль поверх клавиатуры (WheelInputSource) или null.</summary>
+        public IControlOverlay Overlay { get; set; }
+        public bool OverlayActive => Overlay != null && Overlay.IsConnected;
+        public bool IsConnected => Kb != null || OverlayActive;
+        public int RequestedGear => requestedGear;
+        bool extStarter, extHorn, extFlash, extWasher;
 
         public void Reset()
         {
@@ -66,6 +72,42 @@ namespace DrivingSchool.Input
             Reset();
             requestedGear = 0; selector = AutomaticSelector.P; ignition = false; handbrake = true; ShiftLockRefused = false;
             hazard = highBeam = flash = horn = washer = false; headlights = HeadlightMode.Off; wipers = WiperMode.Off;
+            extStarter = extHorn = extFlash = extWasher = false;
+            Overlay?.Resync();
+        }
+
+        // ---------- действия (клавиши и кнопки руля) ----------
+
+        /// <summary>Руль и педали с внешнего устройства: руль −1…1, педали 0…1 (сцепление 1 = выжато).</summary>
+        public void SetAnalog(float steer, float gas, float brakePedal, float clutchPedal)
+        {
+            steering = Mathf.Clamp(steer, -1f, 1f); throttle = Mathf.Clamp01(gas); brake = Mathf.Clamp01(brakePedal); clutch = Mathf.Clamp01(clutchPedal);
+        }
+
+        /// <summary>Удерживаемые кнопки внешнего устройства (складываются с клавишами).</summary>
+        public void SetHeld(bool starterHeld, bool hornHeld, bool flashHeld, bool washerHeld)
+        {
+            extStarter = starterHeld; extHorn = hornHeld; extFlash = flashHeld; extWasher = washerHeld;
+        }
+
+        public void ToggleIgnition() => ignition = !ignition;
+        public void ToggleHandbrake() => handbrake = !handbrake;
+        public void ToggleSeatbelt() => seatbelt = !seatbelt;
+        public void ToggleHazard() => hazard = !hazard;
+        public void ToggleHighBeam() => highBeam = !highBeam;
+        public void ToggleIndicator(TurnSignal side) => stalk.Toggle(side);
+        public void CycleLights() => headlights = headlights == HeadlightMode.Off ? HeadlightMode.Parking : headlights == HeadlightMode.Parking ? HeadlightMode.LowBeam : HeadlightMode.Off;
+        public void CycleWipers() => wipers = (WiperMode)(((int)wipers + 1) % 4);
+        public void SelectPark() { selector = AutomaticSelector.P; requestedGear = 0; }
+
+        /// <summary>Передача −1/0/1…6 (на АКПП: &gt;0 → D, −1 → R, 0 → N). false — селектор АКПП заблокирован в P без тормоза.</summary>
+        public bool RequestGear(int gear, bool brakeHeld)
+        {
+            if (ShiftLocked(automatic, selector, brakeHeld)) { ShiftLockRefused = true; return false; }
+            ShiftLockRefused = false;
+            requestedGear = Math.Clamp(gear, -1, 6);
+            selector = gear > 0 ? AutomaticSelector.D : gear < 0 ? AutomaticSelector.R : AutomaticSelector.N;
+            return true;
         }
 
         public void Poll(float dt)
@@ -79,9 +121,22 @@ namespace DrivingSchool.Input
             if (Time.frameCount == lastPolledFrame) return;
             lastPolledFrame = Time.frameCount;
             var kb = Kb;
-            if (kb == null) return;
+            var overlay = OverlayActive ? Overlay : null;
+            if (kb == null && overlay == null) return;
             if (!(dt > 0f && dt < 0.2f)) dt = 0.01f;
 
+            if (overlay != null) overlay.ApplyAxes(this);
+            else PollKeyboardAxes(kb, dt);
+            if (kb != null) PollKeyboardButtons(kb);
+            else starter = horn = flash = washer = false;
+            if (overlay != null) overlay.ApplyButtons(this);
+            else extStarter = extHorn = extFlash = extWasher = false;
+            stalk.Update(steering);
+            starter |= extStarter; horn |= extHorn; flash |= extFlash; washer |= extWasher;
+        }
+
+        void PollKeyboardAxes(Keyboard kb, float dt)
+        {
             float targetSteer = 0f;
             if (kb.aKey.isPressed || kb.leftArrowKey.isPressed) targetSteer -= 1f;
             if (kb.dKey.isPressed || kb.rightArrowKey.isPressed) targetSteer += 1f;
@@ -98,8 +153,12 @@ namespace DrivingSchool.Input
             // The clutch is released slower than pressed, like a foot finding the bite point.
             bool clutchDown = kb.leftShiftKey.isPressed || kb.leftCtrlKey.isPressed;
             clutch = Mathf.MoveTowards(clutch, clutchDown ? 1f : 0f, (clutchDown ? pedalRate : 1.6f) * dt);
+        }
 
-            if (kb.spaceKey.wasPressedThisFrame) handbrake = !handbrake;
+        void PollKeyboardButtons(Keyboard kb)
+        {
+            bool brk = kb.sKey.isPressed || kb.downArrowKey.isPressed || brake > 0.1f;
+            if (kb.spaceKey.wasPressedThisFrame) ToggleHandbrake();
 
             int gear = -99;
             if (kb.digit0Key.wasPressedThisFrame || kb.nKey.wasPressedThisFrame) gear = 0;
@@ -110,29 +169,22 @@ namespace DrivingSchool.Input
             else if (kb.digit4Key.wasPressedThisFrame) gear = 4;
             else if (kb.digit5Key.wasPressedThisFrame) gear = 5;
             else if (kb.digit6Key.wasPressedThisFrame) gear = 6;
-            if (gear != -99 && ShiftLocked(automatic, selector, brk)) { ShiftLockRefused = true; gear = -99; }
-            if (gear != -99)
-            {
-                ShiftLockRefused = false;
-                requestedGear = gear;
-                selector = gear > 0 ? AutomaticSelector.D : gear < 0 ? AutomaticSelector.R : AutomaticSelector.N;
-            }
-            if (kb.pKey.wasPressedThisFrame) { selector = AutomaticSelector.P; requestedGear = 0; }
+            if (gear != -99) RequestGear(gear, brk);
+            if (kb.pKey.wasPressedThisFrame) SelectPark();
 
-            if (kb.iKey.wasPressedThisFrame) ignition = !ignition;
+            if (kb.iKey.wasPressedThisFrame) ToggleIgnition();
             starter = kb.enterKey.isPressed || kb.numpadEnterKey.isPressed;
 
-            if (kb.qKey.wasPressedThisFrame) stalk.Toggle(TurnSignal.Left);
-            if (kb.eKey.wasPressedThisFrame) stalk.Toggle(TurnSignal.Right);
-            stalk.Update(steering);
-            if (kb.xKey.wasPressedThisFrame) hazard = !hazard;
-            if (kb.lKey.wasPressedThisFrame) headlights = headlights == HeadlightMode.Off ? HeadlightMode.Parking : headlights == HeadlightMode.Parking ? HeadlightMode.LowBeam : HeadlightMode.Off;
-            if (kb.kKey.wasPressedThisFrame) highBeam = !highBeam;
+            if (kb.qKey.wasPressedThisFrame) ToggleIndicator(TurnSignal.Left);
+            if (kb.eKey.wasPressedThisFrame) ToggleIndicator(TurnSignal.Right);
+            if (kb.xKey.wasPressedThisFrame) ToggleHazard();
+            if (kb.lKey.wasPressedThisFrame) CycleLights();
+            if (kb.kKey.wasPressedThisFrame) ToggleHighBeam();
             flash = kb.jKey.isPressed;
             horn = kb.hKey.isPressed;
-            if (kb.vKey.wasPressedThisFrame) wipers = (WiperMode)(((int)wipers + 1) % 4);
+            if (kb.vKey.wasPressedThisFrame) CycleWipers();
             washer = kb.bKey.isPressed;
-            if (kb.tKey.wasPressedThisFrame) seatbelt = !seatbelt;
+            if (kb.tKey.wasPressedThisFrame) ToggleSeatbelt();
         }
 
         /// <summary>Блокировка селектора АКПП (как в настоящей машине): из P рычаг выходит только с нажатым тормозом.</summary>
