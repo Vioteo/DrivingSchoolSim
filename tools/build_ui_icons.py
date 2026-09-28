@@ -73,14 +73,28 @@ def handbrake():
 
 
 def seatbelt():
+    """Ремень (T66): человек сидит в профиль — голова, туловище, бедро, голень, спинка сиденья; ремень от плеча к бедру,
+    отделён от фигуры зазором. Те же пропорции, что у значка на приборах (DashboardView.TelltaleIcons.Seatbelt)."""
     img, d, s = canvas(128)
-    d.ellipse([s * 0.36, s * 0.06, s * 0.60, s * 0.30], fill=W)                  # голова
-    d.rounded_rectangle([s * 0.26, s * 0.34, s * 0.70, s * 0.78], radius=s * 0.12, fill=W)  # туловище
-    d.rounded_rectangle([s * 0.26, s * 0.70, s * 0.86, s * 0.90], radius=s * 0.07, fill=W)  # колени (сидит)
-    belt = [(s * 0.66, s * 0.34), (s * 0.30, s * 0.74)]
-    erase(img, lambda m: m.line(belt, fill=255, width=int(s * 0.16)))
+
+    def P(x, y):   # координаты значка −1…1 (y вверх) → пиксели
+        return (s * (0.5 + 0.45 * x), s * (0.5 - 0.45 * y))
+
+    def capsule(draw, a, b, r, fill):
+        (ax, ay), (bx, by) = P(*a), P(*b); rr = r * s * 0.45
+        draw.line([(ax, ay), (bx, by)], fill=fill, width=int(2 * rr))
+        for cx, cy in ((ax, ay), (bx, by)): draw.ellipse([cx - rr, cy - rr, cx + rr, cy + rr], fill=fill)
+
+    hx, hy = P(0.04, 0.64); hr = 0.21 * s * 0.45
+    d.ellipse([hx - hr, hy - hr, hx + hr, hy + hr], fill=W)                 # голова
+    capsule(d, (0.1, 0.24), (0.16, -0.2), 0.25, W)                      # туловище
+    capsule(d, (0.12, -0.3), (-0.42, -0.36), 0.15, W)                       # бедро
+    capsule(d, (-0.46, -0.36), (-0.5, -0.86), 0.12, W)                        # голень
+    capsule(d, (0.5, 0.52), (0.44, -0.5), 0.07, W)                        # спинка
+    belt = ((0.4, 0.3), (-0.12, -0.28))
+    erase(img, lambda m: capsule(m, belt[0], belt[1], 0.1, 255))
     d = ImageDraw.Draw(img)
-    d.line(belt, fill=W, width=int(s * 0.07))
+    capsule(d, belt[0], belt[1], 0.055, W)
     save(img, "icon_seatbelt", 128)
 
 

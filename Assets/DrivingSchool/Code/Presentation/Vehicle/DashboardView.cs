@@ -101,18 +101,24 @@ namespace DrivingSchool.Presentation
             // The lower half of the cluster is behind the steering-wheel rim, so the other lamps go into the upper
             // inner part of the dials (as on most real clusters): engine lamps in the tachometer, lights and
             // handbrake/seat belt in the speedometer.
-            PlaceInDial(root, "GaugeFace_RPM", new[] { Telltale.Battery, Telltale.Oil, Telltale.CheckEngine, Telltale.LowFuel }, small, pitch);
-            PlaceInDial(root, "GaugeFace_km", new[] { Telltale.LowBeam, Telltale.Parking, Telltale.Handbrake, Telltale.Seatbelt }, small, pitch);
+            // T66: the dials are GaugeFace_* on the sedan and only GaugeTicks_* on the crossover — without the fallback
+            // both rows landed on one spot and the lamps covered each other (the low beam looked cut off).
+            PlaceInDial(root, new[] { "GaugeFace_RPM", "GaugeTicks_RPM" }, new[] { Telltale.Battery, Telltale.Oil, Telltale.CheckEngine, Telltale.LowFuel }, small, pitch, -1);
+            PlaceInDial(root, new[] { "GaugeFace_km", "GaugeTicks_Speed" }, new[] { Telltale.LowBeam, Telltale.Parking, Telltale.Handbrake, Telltale.Seatbelt }, small, pitch, 1);
             // The model's static "N" and odometer sit where the live gear is drawn now.
             foreach (var t in model.GetComponentsInChildren<Transform>(true))
                 if (t.name.StartsWith("Gear_Display", StringComparison.Ordinal) || t.name.StartsWith("Odometer", StringComparison.Ordinal))
                     foreach (var r in t.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
         }
 
-        void PlaceInDial(Transform root, string facePrefix, Telltale[] lamps, float size, float pitch)
+        void PlaceInDial(Transform root, string[] facePrefixes, Telltale[] lamps, float size, float pitch, int side)
         {
             Transform faceT = null;
-            foreach (var t in model.GetComponentsInChildren<Transform>(true)) if (t.name.StartsWith(facePrefix, StringComparison.Ordinal)) { faceT = t; break; }
+            foreach (var prefix in facePrefixes)
+            {
+                foreach (var t in model.GetComponentsInChildren<Transform>(true)) if (t.name.StartsWith(prefix, StringComparison.Ordinal)) { faceT = t; break; }
+                if (faceT != null) break;
+            }
             Vector3 centre;
             if (faceT != null)
             {
@@ -120,7 +126,8 @@ namespace DrivingSchool.Presentation
                 float radius = 0.5f * Mathf.Min(b.size.x, b.size.y);
                 centre = new Vector3(b.center.x, b.center.y + 0.31f * radius, b.min.z - 0.006f); // between the hub and the numbers
             }
-            else centre = EyeInCar() + new Vector3(0f, -0.2f, 0.65f);
+            // No dial found: the two rows side by side under the eye, never on top of each other.
+            else centre = EyeInCar() + new Vector3(side * (lamps.Length * pitch * 0.5f + pitch), -0.2f, 0.65f);
             centre += rowOffset;
             Quaternion face = Quaternion.LookRotation(-(EyeInCar() - centre).normalized, Vector3.up);
             for (int i = 0; i < lamps.Length; i++) Add(root, lamps[i], centre + face * Vector3.right * ((i - 0.5f * (lamps.Length - 1)) * pitch), face, size);
@@ -357,7 +364,7 @@ namespace DrivingSchool.Presentation
                 case DashboardView.Telltale.Oil: f = (x, y) => Rect(x, y, -0.7f, -0.3f, 0.3f, 0.05f) || Rect(x, y, -0.45f, 0.05f, -0.3f, 0.25f) || Line(x, y, 0.3f, 0.0f, 0.75f, 0.2f, 0.07f) || Drop(x - 0.72f, y + 0.25f); break;
                 case DashboardView.Telltale.CheckEngine: f = (x, y) => Box(x, y, 0.8f, 0.45f, 0.09f, 0f) || Rect(x, y, -0.25f, 0.45f, 0.25f, 0.62f) || Rect(x, y, -0.95f, -0.15f, -0.8f, 0.15f) || Rect(x, y, 0.8f, -0.1f, 0.95f, 0.3f); break;
                 case DashboardView.Telltale.LowFuel: f = Pump; break;
-                default: f = (x, y) => Disk(x + 0.05f, y - 0.6f, 0.16f) || Line(x, y, -0.05f, 0.4f, -0.05f, -0.45f, 0.12f) || Line(x, y, -0.55f, 0.35f, 0.45f, -0.5f, 0.08f) || Line(x, y, -0.05f, -0.1f, 0.4f, 0.15f, 0.1f); break;
+                default: f = Seatbelt; break;
             }
             for (int j = 0; j < N; j++)
                 for (int i = 0; i < N; i++)
@@ -416,6 +423,23 @@ namespace DrivingSchool.Presentation
             for (int k = -2; k <= 2; k++) { float y0 = k * 0.25f; if (Line(x, y, -0.95f, y0 + slope * 0.6f, -0.4f, y0, 0.06f)) return true; }
             return false;
         }
+        /// <summary>
+        /// Seat belt (T66, the usual telltale): a person seated in profile — head, torso, thigh and shin, the seat back
+        /// behind — with the belt across the chest from the shoulder to the hip, set off from the body by a gap.
+        /// </summary>
+        public static bool Seatbelt(float x, float y)
+        {
+            x = -x;   // facing left, like the HUD icon (tools/build_ui_icons.py)
+            bool figure = Disk(x + 0.04f, y - 0.64f, 0.21f)
+                || Line(x, y, -0.1f, 0.24f, -0.16f, -0.2f, 0.25f)       // torso
+                || Line(x, y, -0.12f, -0.3f, 0.42f, -0.36f, 0.15f)      // thigh
+                || Line(x, y, 0.46f, -0.36f, 0.5f, -0.86f, 0.12f)     // shin
+                || Line(x, y, -0.5f, 0.52f, -0.44f, -0.5f, 0.07f);        // seat back
+            const float bx0 = -0.4f, by0 = 0.3f, bx1 = 0.12f, by1 = -0.28f;
+            bool gap = Line(x, y, bx0, by0, bx1, by1, 0.1f), belt = Line(x, y, bx0, by0, bx1, by1, 0.055f);
+            return figure && !gap || belt;
+        }
+
         /// <summary>Fuel pump symbol: body with a window, nozzle hose on the right.</summary>
         public static bool Pump(float x, float y) =>
             Box(x, y, 0.38f, 0.7f, 0.12f, 0f) && x < 0.38f || Rect(x, y, -0.26f, 0.15f, 0.26f, 0.45f) || Rect(x, y, -0.5f, -0.85f, 0.5f, -0.7f)
