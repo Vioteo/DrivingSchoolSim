@@ -1,0 +1,6 @@
+{
+  "name": "DS.Audio",
+  "rootNamespace": "DrivingSchool.Audio",
+  "references": [],
+  "noEngineReferences": true
+}
