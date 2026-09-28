@@ -46,7 +46,7 @@ namespace DrivingSchool.Tests
             catalog.Open(null);
             catalog.rangeButton.onClick.Invoke();
             Assert.That(launches, Is.Zero);
-            Assert.That(catalog.title.text, Is.EqualTo("Тестовая площадка"));
+            Assert.That(catalog.title.text, Is.EqualTo("Город"), "свободная поездка начинается в городе (T65)");
             catalog.startButton.onClick.Invoke();
             Assert.That(requested, Is.EqualTo(LessonCatalogController.FreeDrive));
             Assert.That(launches, Is.EqualTo(1));
