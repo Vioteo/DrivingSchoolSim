@@ -2,7 +2,7 @@
     "schemaVersion": 1,
     "id": "test-range-district",
     "name": "Городской район полигона",
-    "revision": "v2",
+    "revision": "v3",
     "instances": [
         {
             "id": "X1",
@@ -237,6 +237,276 @@
             "z": -64.0,
             "yawDeg": 0.0,
             "speedLimitKph": 0.0
+        },
+        {
+            "id": "X3",
+            "catalogId": "RK2_Cross_4x4_32m",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": 110.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "a0",
+            "catalogId": "RK2_Road_Urban4_LaneChange_40m",
+            "x": -298.0,
+            "y": 0.019999999552965165,
+            "z": 110.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "a1",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -318.0,
+            "y": 0.019999999552965165,
+            "z": 110.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "a2",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -338.0,
+            "y": 0.019999999552965165,
+            "z": 110.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "a3",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -358.0,
+            "y": 0.019999999552965165,
+            "z": 110.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "a4",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -378.0,
+            "y": 0.019999999552965165,
+            "z": 110.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "m0",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": 146.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "m1",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": 166.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "X4",
+            "catalogId": "RK2_Cross_4x2_24x32m",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "k0",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": 210.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "k1",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": 230.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "b0",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -278.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "b1",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -298.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "b2",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -318.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "b3",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -338.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "b4",
+            "catalogId": "RK_Road_Urban_Crosswalk_20m",
+            "x": -358.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "b5",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -378.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "b6",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -398.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "b7",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -418.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "b8",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -438.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "h0",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -206.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": -90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "h1",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -186.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": -90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "q0",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": 74.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "q1",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": 54.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "q2",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": 34.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "X5",
+            "catalogId": "RK2_Cross_4x2_24x32m",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": 22.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "t0",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": -10.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "v0",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -278.0,
+            "y": 0.019999999552965165,
+            "z": 22.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "v1",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -298.0,
+            "y": 0.019999999552965165,
+            "z": 22.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "v2",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -318.0,
+            "y": 0.019999999552965165,
+            "z": 22.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
         }
     ],
     "joins": [
@@ -389,6 +659,192 @@
             "socketA": "Socket_Start",
             "instanceB": "rs2",
             "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "w2",
+            "socketA": "Socket_Start",
+            "instanceB": "X3",
+            "socketB": "Socket_East"
+        },
+        {
+            "instanceA": "X3",
+            "socketA": "Socket_West",
+            "instanceB": "a0",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "a0",
+            "socketA": "Socket_Start",
+            "instanceB": "a1",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "a1",
+            "socketA": "Socket_Start",
+            "instanceB": "a2",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "a2",
+            "socketA": "Socket_Start",
+            "instanceB": "a3",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "a3",
+            "socketA": "Socket_Start",
+            "instanceB": "a4",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "X3",
+            "socketA": "Socket_North",
+            "instanceB": "m0",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "m0",
+            "socketA": "Socket_Start",
+            "instanceB": "m1",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "m1",
+            "socketA": "Socket_Start",
+            "instanceB": "X4",
+            "socketB": "Socket_East"
+        },
+        {
+            "instanceA": "X4",
+            "socketA": "Socket_West",
+            "instanceB": "k0",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "k0",
+            "socketA": "Socket_Start",
+            "instanceB": "k1",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "X4",
+            "socketA": "Socket_South",
+            "instanceB": "b0",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "b0",
+            "socketA": "Socket_Start",
+            "instanceB": "b1",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "b1",
+            "socketA": "Socket_Start",
+            "instanceB": "b2",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "b2",
+            "socketA": "Socket_Start",
+            "instanceB": "b3",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "b3",
+            "socketA": "Socket_Start",
+            "instanceB": "b4",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "b4",
+            "socketA": "Socket_Start",
+            "instanceB": "b5",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "b5",
+            "socketA": "Socket_Start",
+            "instanceB": "b6",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "b6",
+            "socketA": "Socket_Start",
+            "instanceB": "b7",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "b7",
+            "socketA": "Socket_Start",
+            "instanceB": "b8",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "X4",
+            "socketA": "Socket_North",
+            "instanceB": "h0",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "h0",
+            "socketA": "Socket_Start",
+            "instanceB": "h1",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "X3",
+            "socketA": "Socket_South",
+            "instanceB": "q0",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "q0",
+            "socketA": "Socket_Start",
+            "instanceB": "q1",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "q1",
+            "socketA": "Socket_Start",
+            "instanceB": "q2",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "q2",
+            "socketA": "Socket_Start",
+            "instanceB": "X5",
+            "socketB": "Socket_West"
+        },
+        {
+            "instanceA": "xw2",
+            "socketA": "Socket_Start",
+            "instanceB": "X5",
+            "socketB": "Socket_North"
+        },
+        {
+            "instanceA": "X5",
+            "socketA": "Socket_East",
+            "instanceB": "t0",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "X5",
+            "socketA": "Socket_South",
+            "instanceB": "v0",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "v0",
+            "socketA": "Socket_Start",
+            "instanceB": "v1",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "v1",
+            "socketA": "Socket_Start",
+            "instanceB": "v2",
+            "socketB": "Socket_End"
         }
     ],
     "openSockets": [
@@ -397,19 +853,11 @@
             "socket": "Socket_Start"
         },
         {
-            "instanceId": "w2",
-            "socket": "Socket_Start"
-        },
-        {
             "instanceId": "e2",
             "socket": "Socket_Start"
         },
         {
             "instanceId": "x0",
-            "socket": "Socket_Start"
-        },
-        {
-            "instanceId": "xw2",
             "socket": "Socket_Start"
         },
         {
@@ -422,6 +870,30 @@
         },
         {
             "instanceId": "rs2",
+            "socket": "Socket_Start"
+        },
+        {
+            "instanceId": "a4",
+            "socket": "Socket_Start"
+        },
+        {
+            "instanceId": "k1",
+            "socket": "Socket_Start"
+        },
+        {
+            "instanceId": "b8",
+            "socket": "Socket_Start"
+        },
+        {
+            "instanceId": "h1",
+            "socket": "Socket_Start"
+        },
+        {
+            "instanceId": "t0",
+            "socket": "Socket_Start"
+        },
+        {
+            "instanceId": "v2",
             "socket": "Socket_Start"
         }
     ],
@@ -675,6 +1147,236 @@
             "plaques": [],
             "atS": 10.0,
             "untilNextJunction": false
+        },
+        {
+            "id": "lanes-x3-east",
+            "code": "5.15.1",
+            "value": "L|SR",
+            "instanceId": "X3",
+            "laneId": "East.in2",
+            "plaques": [],
+            "atS": 0.5,
+            "untilNextJunction": false
+        },
+        {
+            "id": "lanes-x3-west",
+            "code": "5.15.1",
+            "value": "L|LSR",
+            "instanceId": "X3",
+            "laneId": "West.in2",
+            "plaques": [],
+            "atS": 0.5,
+            "untilNextJunction": false
+        },
+        {
+            "id": "avenue-40-west",
+            "code": "3.24",
+            "value": "40",
+            "instanceId": "a1",
+            "laneId": "b2",
+            "plaques": [],
+            "atS": 3.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "avenue-40-east",
+            "code": "3.24",
+            "value": "40",
+            "instanceId": "a4",
+            "laneId": "f2",
+            "plaques": [],
+            "atS": 3.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "north-30",
+            "code": "3.24",
+            "value": "30",
+            "instanceId": "k0",
+            "laneId": "b2",
+            "plaques": [],
+            "atS": 5.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "main-x4-south",
+            "code": "2.1",
+            "value": "",
+            "instanceId": "m1",
+            "laneId": "b2",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "main-x4-north",
+            "code": "2.1",
+            "value": "",
+            "instanceId": "k0",
+            "laneId": "f2",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "yield-x4-west",
+            "code": "2.4",
+            "value": "",
+            "instanceId": "b0",
+            "laneId": "f",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "yield-x4-east",
+            "code": "2.4",
+            "value": "",
+            "instanceId": "h0",
+            "laneId": "f",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "main-x5-north",
+            "code": "2.1",
+            "value": "",
+            "instanceId": "q2",
+            "laneId": "b2",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "main-x5-south",
+            "code": "2.1",
+            "value": "",
+            "instanceId": "t0",
+            "laneId": "f2",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "yield-x5-east",
+            "code": "2.4",
+            "value": "",
+            "instanceId": "xw2",
+            "laneId": "b",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "yield-x5-west",
+            "code": "2.4",
+            "value": "",
+            "instanceId": "v0",
+            "laneId": "f",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "bump-warn-w",
+            "code": "1.17",
+            "value": "",
+            "instanceId": "b2",
+            "laneId": "b",
+            "plaques": [],
+            "atS": 5.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "bump-20-w",
+            "code": "3.24",
+            "value": "20",
+            "instanceId": "b2",
+            "laneId": "b",
+            "plaques": [],
+            "atS": 5.400000095367432,
+            "untilNextJunction": false
+        },
+        {
+            "id": "bump-info-w",
+            "code": "5.20",
+            "value": "",
+            "instanceId": "b4",
+            "laneId": "b",
+            "plaques": [],
+            "atS": 1.5,
+            "untilNextJunction": false
+        },
+        {
+            "id": "zebra-bump-w",
+            "code": "5.19.1",
+            "value": "",
+            "instanceId": "b4",
+            "laneId": "b",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "bump-end-w",
+            "code": "3.25",
+            "value": "20",
+            "instanceId": "b5",
+            "laneId": "b",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "bump-warn-e",
+            "code": "1.17",
+            "value": "",
+            "instanceId": "b6",
+            "laneId": "f",
+            "plaques": [],
+            "atS": 5.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "bump-20-e",
+            "code": "3.24",
+            "value": "20",
+            "instanceId": "b6",
+            "laneId": "f",
+            "plaques": [],
+            "atS": 5.400000095367432,
+            "untilNextJunction": false
+        },
+        {
+            "id": "bump-info-e",
+            "code": "5.20",
+            "value": "",
+            "instanceId": "b4",
+            "laneId": "f",
+            "plaques": [],
+            "atS": 1.5,
+            "untilNextJunction": false
+        },
+        {
+            "id": "zebra-bump-e",
+            "code": "5.19.1",
+            "value": "",
+            "instanceId": "b4",
+            "laneId": "f",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "bump-end-e",
+            "code": "3.25",
+            "value": "20",
+            "instanceId": "b3",
+            "laneId": "f",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
         }
     ],
     "approaches": [
@@ -745,12 +1447,112 @@
                 "ring-yield-south",
                 "ring-south"
             ]
+        },
+        {
+            "instanceId": "X4",
+            "socket": "Socket_West",
+            "priority": 1,
+            "signIds": [
+                "main-x4-north"
+            ]
+        },
+        {
+            "instanceId": "X4",
+            "socket": "Socket_East",
+            "priority": 1,
+            "signIds": [
+                "main-x4-south"
+            ]
+        },
+        {
+            "instanceId": "X4",
+            "socket": "Socket_North",
+            "priority": 2,
+            "signIds": [
+                "yield-x4-east"
+            ]
+        },
+        {
+            "instanceId": "X4",
+            "socket": "Socket_South",
+            "priority": 2,
+            "signIds": [
+                "yield-x4-west"
+            ]
+        },
+        {
+            "instanceId": "X5",
+            "socket": "Socket_West",
+            "priority": 1,
+            "signIds": [
+                "main-x5-north"
+            ]
+        },
+        {
+            "instanceId": "X5",
+            "socket": "Socket_East",
+            "priority": 1,
+            "signIds": [
+                "main-x5-south"
+            ]
+        },
+        {
+            "instanceId": "X5",
+            "socket": "Socket_North",
+            "priority": 2,
+            "signIds": [
+                "yield-x5-east"
+            ]
+        },
+        {
+            "instanceId": "X5",
+            "socket": "Socket_South",
+            "priority": 2,
+            "signIds": [
+                "yield-x5-west"
+            ]
         }
     ],
     "signalPlans": [
         {
             "instanceId": "X1",
             "offsetSeconds": 0.0,
+            "stages": [
+                {
+                    "greenSockets": [
+                        "Socket_North",
+                        "Socket_South"
+                    ],
+                    "walkSockets": [
+                        "Socket_East",
+                        "Socket_West"
+                    ],
+                    "greenSeconds": 22.0,
+                    "greenFlashSeconds": 3.0,
+                    "amberSeconds": 3.0,
+                    "allRedSeconds": 2.0,
+                    "redAmberSeconds": 1.0
+                },
+                {
+                    "greenSockets": [
+                        "Socket_East",
+                        "Socket_West"
+                    ],
+                    "walkSockets": [
+                        "Socket_North",
+                        "Socket_South"
+                    ],
+                    "greenSeconds": 18.0,
+                    "greenFlashSeconds": 3.0,
+                    "amberSeconds": 3.0,
+                    "allRedSeconds": 2.0,
+                    "redAmberSeconds": 1.0
+                }
+            ]
+        },
+        {
+            "instanceId": "X3",
+            "offsetSeconds": 12.0,
             "stages": [
                 {
                     "greenSockets": [
