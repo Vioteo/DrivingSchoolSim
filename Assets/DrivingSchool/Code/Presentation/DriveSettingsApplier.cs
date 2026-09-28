@@ -52,6 +52,8 @@ namespace DrivingSchool.Presentation
             float k = Mathf.Clamp(s.controls.keyboardSteerSpeed, 10, 300) / 100f;
             foreach (var vc in Object.FindObjectsByType<VehicleController>(FindObjectsSortMode.None))
             {
+                vc.ApplyControls(s.controls);
+                vc.Adapter?.SetSteeringWheelDegrees(s.controls.device == 1 ? s.controls.steeringLock : 900f);
                 vc.Keyboard.steeringRate = BaseSteeringRate * k;
                 vc.Keyboard.returnRate = BaseReturnRate * k;
                 if (atDriveStart && vc.Adapter != null)

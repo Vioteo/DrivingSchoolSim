@@ -45,7 +45,7 @@ namespace DrivingSchool.Editor
             BuildLessonCatalog();
             BuildGarage();
             BuildConditionsSetup();
-            BuildG27Calibration();
+            BuildG29Calibration();
             BuildPauseMenu();
             BuildTheoryExam();
             BuildSettings();
@@ -387,7 +387,7 @@ namespace DrivingSchool.Editor
             vl.childForceExpandHeight = false;
 
             string[,] options = {
-                { "TRANSMISSION TYPE", "<  MANUAL 5-SPEED + CLUTCH (G27 H-SHIFTER)  >" },
+                { "TRANSMISSION TYPE", "<  MANUAL 6-SPEED + CLUTCH (G29 H-SHIFTER)  >" },
                 { "WEATHER CONDITIONS", "<  CLEAR SKY (DRY ASPHALT)  >" },
                 { "TIME OF DAY", "<  DAY (14:00)  >" },
                 { "AI TRAFFIC DENSITY", "<  MODERATE (30%)  >" },
@@ -423,7 +423,7 @@ namespace DrivingSchool.Editor
                 "<b>Location:</b> Official Autodrome Ground\n" +
                 "<b>Dimensions:</b> 120 x 120 meters\n" +
                 "<b>Vehicle:</b> Training Sedan Category B\n" +
-                "<b>Controls:</b> Logitech G27 (900° Steering)\n" +
+                "<b>Controls:</b> Logitech G29 (900° Steering)\n" +
                 "<b>Clutch Stall:</b> Enabled (RPM < 600)\n" +
                 "<b>Handbrake Hill Start:</b> Required on 10% ramp\n\n" +
                 "<color=#80A0C0>Make sure pedals and steering are calibrated before launching the simulation.</color>", 
@@ -438,16 +438,16 @@ namespace DrivingSchool.Editor
         }
 
         // ==========================================
-        // 5. G27 CALIBRATION
+        // 5. G29 CALIBRATION
         // ==========================================
-        private static void BuildG27Calibration()
+        private static void BuildG29Calibration()
         {
-            var canvas = CreateCanvas("G27Calibration");
+            var canvas = CreateCanvas("G29Calibration");
             var bg = CreateFill("Background", canvas.transform);
             AddImage(bg.gameObject, BgColor);
 
             var title = CreateFixed("Title", bg, new Vector2(0, 1), new Vector2(1200, 60), new Vector2(80, -60), new Vector2(0, 1));
-            AddText(title.gameObject, "LOGITECH G27 HARDWARE CALIBRATION", 48, TextWhite, TextAlignmentOptions.Left, FontStyles.Bold);
+            AddText(title.gameObject, "LOGITECH G29 HARDWARE CALIBRATION", 48, TextWhite, TextAlignmentOptions.Left, FontStyles.Bold);
 
             // Left Side: Wheel Calibration (850 x 700)
             var wheel = CreateFixed("WheelPanel", bg, new Vector2(0, 1), new Vector2(850, 700), new Vector2(80, -160), new Vector2(0, 1));
@@ -534,7 +534,7 @@ namespace DrivingSchool.Editor
             var calBtnTxt = CreateFill("Txt", calBtn);
             AddText(calBtnTxt.gameObject, "CALIBRATE DEADZONES", 22, Color.black, TextAlignmentOptions.Center, FontStyles.Bold);
 
-            SavePrefab(canvas, "G27Calibration");
+            SavePrefab(canvas, "G29Calibration");
         }
 
         // ==========================================

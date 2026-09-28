@@ -6,7 +6,7 @@ using DrivingSchool.Input;
 namespace DrivingSchool.Tests
 {
     [TestFixture]
-    public class LogitechG27Tests
+    public class LogitechWheelFeedbackMockTests
     {
         [Test]
         public void AxisCalibration_NormalizesLinearCorrectly()
@@ -59,9 +59,9 @@ namespace DrivingSchool.Tests
         }
 
         [Test]
-        public void LogitechG27_SimulatedInputProducesValidCommand()
+        public void WheelFeedbackMock_SimulatedInputProducesValidCommand()
         {
-            var adapter = new LogitechG27Adapter();
+            var adapter = new LogitechWheelFeedbackMock();
             adapter.RawSteering = 0.5f;
             adapter.RawThrottle = -0.8f; // pressed pedal
             adapter.RawBrake = 1.0f;    // unpressed pedal
@@ -83,9 +83,9 @@ namespace DrivingSchool.Tests
         }
 
         [Test]
-        public void LogitechG27_DisconnectedDeviceReturnsNeutralSafeCommand()
+        public void WheelFeedbackMock_DisconnectedDeviceReturnsNeutralSafeCommand()
         {
-            var adapter = new LogitechG27Adapter { IsConnected = false };
+            var adapter = new LogitechWheelFeedbackMock { IsConnected = false };
             var cmd = adapter.Read(42);
 
             Assert.DoesNotThrow(() => cmd.Validate());
@@ -97,74 +97,74 @@ namespace DrivingSchool.Tests
         }
 
         [Test]
-        public void LogitechG27_CenteringSpringIncreasesWithSpeed()
+        public void WheelFeedbackMock_CenteringSpringIncreasesWithSpeed()
         {
-            float springLow = LogitechG27Adapter.CalculateCenteringSpring(0.5f, 0f);
-            float springHigh = LogitechG27Adapter.CalculateCenteringSpring(0.5f, 15f);
+            float springLow = LogitechWheelFeedbackMock.CalculateCenteringSpring(0.5f, 0f);
+            float springHigh = LogitechWheelFeedbackMock.CalculateCenteringSpring(0.5f, 15f);
 
             Assert.That(springLow, Is.LessThan(0f), "Centering spring must oppose positive steering");
             Assert.That(Math.Abs(springHigh), Is.GreaterThan(Math.Abs(springLow)), "High speed centering spring must be stiffer");
         }
 
         [Test]
-        public void LogitechG27_EndStopAppliesRepulsiveTorqueBeyond450Deg()
+        public void WheelFeedbackMock_EndStopAppliesRepulsiveTorqueBeyond450Deg()
         {
-            float withinLimit = LogitechG27Adapter.CalculateEndStop(400f, 450f);
+            float withinLimit = LogitechWheelFeedbackMock.CalculateEndStop(400f, 450f);
             Assert.That(withinLimit, Is.Zero, "No end-stop torque within 450 degrees");
 
-            float beyondRight = LogitechG27Adapter.CalculateEndStop(460f, 450f);
+            float beyondRight = LogitechWheelFeedbackMock.CalculateEndStop(460f, 450f);
             Assert.That(beyondRight, Is.LessThan(0f), "End stop must push left when turned past +450 deg");
 
-            float beyondLeft = LogitechG27Adapter.CalculateEndStop(-470f, 450f);
+            float beyondLeft = LogitechWheelFeedbackMock.CalculateEndStop(-470f, 450f);
             Assert.That(beyondLeft, Is.GreaterThan(0f), "End stop must push right when turned past -450 deg");
         }
 
         [Test]
-        public void LogitechG27_DampingAndFrictionOpposeAngularVelocity()
+        public void WheelFeedbackMock_DampingAndFrictionOpposeAngularVelocity()
         {
-            float damp = LogitechG27Adapter.CalculateDamping(2.0f);
+            float damp = LogitechWheelFeedbackMock.CalculateDamping(2.0f);
             Assert.That(damp, Is.LessThan(0f), "Damping must oppose positive velocity");
 
-            float fricPos = LogitechG27Adapter.CalculateFriction(0.5f);
-            float fricNeg = LogitechG27Adapter.CalculateFriction(-0.5f);
+            float fricPos = LogitechWheelFeedbackMock.CalculateFriction(0.5f);
+            float fricNeg = LogitechWheelFeedbackMock.CalculateFriction(-0.5f);
             Assert.That(fricPos, Is.LessThan(0f));
             Assert.That(fricNeg, Is.GreaterThan(0f));
 
-            float fricZero = LogitechG27Adapter.CalculateFriction(0.001f);
+            float fricZero = LogitechWheelFeedbackMock.CalculateFriction(0.001f);
             Assert.That(fricZero, Is.Zero, "Friction deadband near zero velocity");
         }
 
         [Test]
-        public void LogitechG27_GripLossVibrationActivatesOnFrontSlip()
+        public void WheelFeedbackMock_GripLossVibrationActivatesOnFrontSlip()
         {
-            float noSlip = LogitechG27Adapter.CalculateGripLossVibration(0.02f, 10f, 0.1);
+            float noSlip = LogitechWheelFeedbackMock.CalculateGripLossVibration(0.02f, 10f, 0.1);
             Assert.That(noSlip, Is.Zero, "No vibration below slip angle threshold");
 
-            float zeroSpeed = LogitechG27Adapter.CalculateGripLossVibration(0.15f, 0f, 0.1);
+            float zeroSpeed = LogitechWheelFeedbackMock.CalculateGripLossVibration(0.15f, 0f, 0.1);
             Assert.That(zeroSpeed, Is.Zero, "No vibration when stationary");
 
-            float slipping = LogitechG27Adapter.CalculateGripLossVibration(0.15f, 10f, 0.015);
+            float slipping = LogitechWheelFeedbackMock.CalculateGripLossVibration(0.15f, 10f, 0.015);
             Assert.That(slipping, Is.Not.Zero, "Slip vibration must generate periodic signal");
         }
 
         [Test]
-        public void LogitechG27_FFBRateLimiterConstrainsTorqueDelta()
+        public void WheelFeedbackMock_FFBRateLimiterConstrainsTorqueDelta()
         {
             // With max rate 10.0/s and dt = 0.01s, max allowed delta is 0.10
-            float limited = LogitechG27Adapter.ApplyRateLimiter(1.0f, 0.0f, 0.01f, 10.0f);
+            float limited = LogitechWheelFeedbackMock.ApplyRateLimiter(1.0f, 0.0f, 0.01f, 10.0f);
             Assert.That(limited, Is.EqualTo(0.10f).Within(0.001f));
 
-            float clamped = LogitechG27Adapter.ApplyRateLimiter(5.0f, 0.95f, 0.1f, 10.0f);
+            float clamped = LogitechWheelFeedbackMock.ApplyRateLimiter(5.0f, 0.95f, 0.1f, 10.0f);
             Assert.That(clamped, Is.EqualTo(1.0f), "Total torque must remain clamped within [-1, 1]");
 
-            float nanSafe = LogitechG27Adapter.ApplyRateLimiter(float.NaN, 0.5f, 0.01f, 10.0f);
+            float nanSafe = LogitechWheelFeedbackMock.ApplyRateLimiter(float.NaN, 0.5f, 0.01f, 10.0f);
             Assert.That(nanSafe, Is.Zero, "NaN target must safely return 0");
         }
 
         [Test]
-        public void LogitechG27_StopWatchdogIsIdempotentAndZeroesTorque()
+        public void WheelFeedbackMock_StopWatchdogIsIdempotentAndZeroesTorque()
         {
-            var adapter = new LogitechG27Adapter();
+            var adapter = new LogitechWheelFeedbackMock();
             adapter.SetNormalizedTorque(0.8f);
             Assert.That(adapter.CurrentAppliedTorque, Is.EqualTo(0.8f));
 
@@ -179,9 +179,9 @@ namespace DrivingSchool.Tests
         }
 
         [Test]
-        public void LogitechG27_PauseAndResumeZeroesAndRestoresFFB()
+        public void WheelFeedbackMock_PauseAndResumeZeroesAndRestoresFFB()
         {
-            var adapter = new LogitechG27Adapter();
+            var adapter = new LogitechWheelFeedbackMock();
             adapter.SetNormalizedTorque(0.75f);
             Assert.That(adapter.CurrentAppliedTorque, Is.EqualTo(0.75f));
 
@@ -203,9 +203,9 @@ namespace DrivingSchool.Tests
         }
 
         [Test]
-        public void LogitechG27_DisposeCleansUpGracefully()
+        public void WheelFeedbackMock_DisposeCleansUpGracefully()
         {
-            var adapter = new LogitechG27Adapter();
+            var adapter = new LogitechWheelFeedbackMock();
             adapter.SetNormalizedTorque(0.9f);
             Assert.DoesNotThrow(() => adapter.Dispose());
             Assert.That(adapter.CurrentAppliedTorque, Is.Zero);
@@ -213,9 +213,9 @@ namespace DrivingSchool.Tests
         }
 
         [Test]
-        public void LogitechG27_DisconnectionImmediatelyZeroesTorque()
+        public void WheelFeedbackMock_DisconnectionImmediatelyZeroesTorque()
         {
-            var adapter = new LogitechG27Adapter();
+            var adapter = new LogitechWheelFeedbackMock();
             adapter.SetNormalizedTorque(0.8f);
             Assert.That(adapter.CurrentAppliedTorque, Is.EqualTo(0.8f));
 
@@ -227,9 +227,9 @@ namespace DrivingSchool.Tests
         }
 
         [Test]
-        public void LogitechG27_SetNormalizedTorque_RespectsSlewRateLimit()
+        public void WheelFeedbackMock_SetNormalizedTorque_RespectsSlewRateLimit()
         {
-            var adapter = new LogitechG27Adapter();
+            var adapter = new LogitechWheelFeedbackMock();
             adapter.SetNormalizedTorque(1.0f);
             Assert.That(adapter.CurrentAppliedTorque, Is.EqualTo(1.0f));
 

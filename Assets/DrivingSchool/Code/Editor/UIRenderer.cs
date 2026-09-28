@@ -23,7 +23,7 @@ namespace DrivingSchool.Editor
             cam.orthographicSize = 540; // 1080 / 2
             camGo.transform.position = new Vector3(960, 540, -100);
 
-            string[] prefabs = { "HUD", "MainMenu", "LessonCatalog", "ConditionsSetup", "G27Calibration", "PauseMenu", "TheoryExam" };
+            string[] prefabs = { "HUD", "MainMenu", "LessonCatalog", "ConditionsSetup", "G29Calibration", "PauseMenu", "TheoryExam" };
 
             foreach (var pName in prefabs)
             {

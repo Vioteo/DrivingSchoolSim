@@ -137,6 +137,32 @@ namespace DrivingSchool.Tests
             Assert.That(r.Solver.Wheels[0].steerAngleRad, Is.LessThan(r.Solver.Wheels[1].steerAngleRad), "inner (left) wheel steers more");
         }
 
+        [Test] public void FullLockMatchesAckermannTurningGeometry()
+        {
+            var spec = new VehicleSpec();
+            var (left, right) = SteeringGeometry.Ackermann(1f, spec.wheelbaseM, spec.trackM, spec.maxSteerDeg);
+            float centreRadius = spec.wheelbaseM / (float)Math.Tan(spec.maxSteerDeg * Math.PI / 180.0);
+            float innerRadius = spec.wheelbaseM / (float)Math.Tan(right * Math.PI / 180.0);
+            float outerRadius = spec.wheelbaseM / (float)Math.Tan(left * Math.PI / 180.0);
+            Assert.That(centreRadius, Is.InRange(4.2f, 4.5f));
+            Assert.That(innerRadius, Is.EqualTo(centreRadius - spec.trackM / 2f).Within(0.01f));
+            Assert.That(outerRadius, Is.EqualTo(centreRadius + spec.trackM / 2f).Within(0.01f));
+        }
+
+        [Test] public void FullRightLockProducesMoreYawThanHalfLockAtParkingSpeed()
+        {
+            float Turn(float steering)
+            {
+                var r = new Rig();
+                r.Chassis.VelocityForward = 3f;
+                r.Run(new DriverCommand { steering = steering, clutch = 1f }, 2f);
+                return r.Chassis.Yaw;
+            }
+            float half = Turn(0.5f), full = Turn(1f);
+            Assert.That(half, Is.GreaterThan(0.1f));
+            Assert.That(full, Is.GreaterThan(half * 1.2f), "full wheel lock must visibly tighten the turn");
+        }
+
         [Test] public void AutomaticCreepsInDriveAndHoldsInPark()
         {
             var r = new Rig(TransmissionType.Automatic); r.StartEngine(AutomaticSelector.P);

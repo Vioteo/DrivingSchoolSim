@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace DrivingSchool.Presentation
 {
-    /// <summary>Low-speed layout test vehicle, not the production tyre/clutch/G27 solver.</summary>
+    /// <summary>Low-speed layout test vehicle, not the production tyre/clutch/G29 solver.</summary>
     public sealed class TrainingVehicle : MonoBehaviour
     {
         public float wheelbase=2.72f, width=2.25f, length=4.5f;

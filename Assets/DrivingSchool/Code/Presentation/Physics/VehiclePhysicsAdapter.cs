@@ -23,6 +23,7 @@ namespace DrivingSchool.Presentation.Physics
         [SerializeField] float wheelRadiusM = 0.327f;
         [SerializeField] Vector3 centreOfMass = new Vector3(0f, 0.51f, -0.1f);
         [SerializeField] float maxSteeringAngleDeg = 32f;
+        [SerializeField] float steeringWheelDegrees = 900f;
         public TextAsset vehicleJson;                       // optional overwrite of the spec
         [Tooltip("Full spec from the vehicle catalogue (Data/Vehicles/vehicles.json), set by the assembler; wins over vehicleJson.")]
         [SerializeField] bool useCatalogSpec;
@@ -97,6 +98,7 @@ namespace DrivingSchool.Presentation.Physics
             massKg = spec.massKg; wheelbaseM = spec.wheelbaseM; trackM = spec.trackM; wheelRadiusM = spec.wheelRadiusM;
             centreOfMass = new Vector3(spec.centreOfMassM[0], spec.centreOfMassM[1], spec.centreOfMassM[2]);
             maxSteeringAngleDeg = spec.maxSteerDeg; transmission = spec.transmission; drive = spec.drive;
+            steeringWheelDegrees = spec.steeringWheelDegrees;
             Solver = null; configured = false;
         }
 
@@ -107,7 +109,14 @@ namespace DrivingSchool.Presentation.Physics
             spec.massKg = massKg; spec.wheelbaseM = wheelbaseM; spec.trackM = trackM; spec.wheelRadiusM = wheelRadiusM;
             spec.centreOfMassM = new[] { centreOfMass.x, centreOfMass.y, centreOfMass.z };
             spec.maxSteerDeg = maxSteeringAngleDeg; spec.transmission = transmission; spec.drive = drive;
+            spec.steeringWheelDegrees = steeringWheelDegrees;
             return spec;
+        }
+
+        public void SetSteeringWheelDegrees(float degrees)
+        {
+            steeringWheelDegrees = Mathf.Clamp(degrees, 180f, 900f);
+            if (Solver != null) Solver.Spec.steeringWheelDegrees = steeringWheelDegrees;
         }
 
         void Rebuild()

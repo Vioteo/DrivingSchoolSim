@@ -13,6 +13,18 @@ namespace DrivingSchool.Settings
             if (s == null) { fixedKeys?.Add("*"); return new GameSettings(); }
             if (s.graphics == null) { s.graphics = new GraphicsSection(); fixedKeys?.Add("graphics"); }
             if (s.controls == null) { s.controls = new ControlsSection(); fixedKeys?.Add("controls"); }
+            if (s.controls.wheel == null) { s.controls.wheel = new WheelProfile(); fixedKeys?.Add("controls.wheel"); }
+            if (s.controls.wheel.steering == null) s.controls.wheel.steering = new WheelAxisBinding();
+            if (s.controls.wheel.throttle == null) s.controls.wheel.throttle = new WheelAxisBinding();
+            if (s.controls.wheel.brake == null) s.controls.wheel.brake = new WheelAxisBinding();
+            if (s.controls.wheel.clutch == null) s.controls.wheel.clutch = new WheelAxisBinding();
+            if (s.controls.wheel.gears == null || s.controls.wheel.gears.Length != 7)
+            {
+                var old = s.controls.wheel.gears;
+                s.controls.wheel.gears = new string[7];
+                if (old != null) System.Array.Copy(old, s.controls.wheel.gears, System.Math.Min(7, old.Length));
+                fixedKeys?.Add("controls.wheel.gears");
+            }
             if (s.audio == null) { s.audio = new AudioSection(); fixedKeys?.Add("audio"); }
             if (s.gameplay == null) { s.gameplay = new GameplaySection(); fixedKeys?.Add("gameplay"); }
 

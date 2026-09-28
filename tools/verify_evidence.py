@@ -65,7 +65,8 @@ def main():
         ("Assets/DrivingSchool/Code/World/WorldRepository.cs", "World persistence and repository", "code-world"),
         ("Assets/DrivingSchool/Code/World/FloatingOrigin.cs", "Large world floating origin service", "code-world"),
         ("Assets/DrivingSchool/Code/Input/KeyboardInputSource.cs", "Keyboard input adapter", "code-input"),
-        ("Assets/DrivingSchool/Code/Input/LogitechG27Adapter.cs", "Logitech G27 adapter and axis calibration", "code-input"),
+        ("Assets/DrivingSchool/Code/Input/G29InputSource.cs", "G29 HID input and calibration", "code-input"),
+        ("Assets/DrivingSchool/Code/Input/LogitechWheelFeedbackMock.cs", "Wheel feedback test double", "code-input"),
         ("Assets/DrivingSchool/Code/Rules/SpeedLimitEvaluator.cs", "Speed limit violation evaluator", "code-rules"),
         ("Assets/DrivingSchool/Code/Rules/RuleEvaluator.cs", "General traffic rules evaluator", "code-rules"),
         ("Assets/DrivingSchool/Code/Rules/TrafficRules.cs", "Traffic rule definitions and constants", "code-rules"),
@@ -74,7 +75,7 @@ def main():
         ("Assets/DrivingSchool/Code/Editor/ProjectBuilder.cs", "Project builder (Prepare / Build)", "code-editor"),
         ("Assets/DrivingSchool/Code/Tests/ContractTests.cs", "NUnit contract test suite", "code-tests"),
         ("Assets/DrivingSchool/Code/Tests/FloatingOriginTests.cs", "Floating origin test suite", "code-tests"),
-        ("Assets/DrivingSchool/Code/Tests/LogitechG27Tests.cs", "Logitech G27 adapter test suite", "code-tests"),
+        ("Assets/DrivingSchool/Code/Tests/LogitechWheelFeedbackMockTests.cs", "Wheel feedback mock test suite", "code-tests"),
         ("Assets/DrivingSchool/Code/Tests/RuleEvaluatorTests.cs", "Traffic rules test suite", "code-tests"),
         
         # Materials
@@ -141,7 +142,7 @@ def main():
     # Status summary of requirements R01-R15
     requirements_summary = [
         {"id": "R01", "name": "Platform", "status": "PREPARED", "notes": "Unity 6000.3.10f1, URP, Input System, OpenXR manifest configured; batch compile clean (exit 0). uGUI migration pending T03."},
-        {"id": "R02", "name": "Input", "status": "PREPARED", "notes": "IInputSource interface defined. Keyboard/G27 adapters designed in T04/T05. Physical G27 verification BLOCKED (no hardware connected)."},
+        {"id": "R02", "name": "Input", "status": "PREPARED", "notes": "IInputSource interface defined. Keyboard/G29 adapters designed in T04/T05. Physical G29 verification BLOCKED (no hardware connected)."},
         {"id": "R03", "name": "Force Feedback", "status": "PREPARED", "notes": "IForceFeedbackOutput interface defined. FFB lifecycle controller designed in T06. Physical FFB BLOCKED (no hardware)."},
         {"id": "R04", "name": "Drivetrain & Dynamics", "status": "IMPLEMENTED", "notes": "DrivetrainMath implemented (12 tests pass). EngineModel/Clutch/Gearbox pure solver designed in T07-T10."},
         {"id": "R05", "name": "Vehicle Asset", "status": "VERIFIED", "notes": "Sedan A model authored in Blender, FBX & GLB exported, shell repair accepted, 24 render views generated."},

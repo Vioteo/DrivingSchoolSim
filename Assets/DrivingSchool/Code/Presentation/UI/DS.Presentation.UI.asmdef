@@ -6,6 +6,7 @@
     "Unity.TextMeshPro",
     "UnityEngine.UI",
     "DS.Settings",
+    "DS.Input",
     "Unity.RenderPipelines.Universal.Runtime",
     "Unity.RenderPipelines.Core.Runtime"
   ]

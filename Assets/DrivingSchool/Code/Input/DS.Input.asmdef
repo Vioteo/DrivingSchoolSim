@@ -3,6 +3,7 @@
   "rootNamespace": "DrivingSchool.Input",
   "references": [
     "DS.Contracts",
+    "DS.Settings",
     "Unity.InputSystem"
   ]
 }

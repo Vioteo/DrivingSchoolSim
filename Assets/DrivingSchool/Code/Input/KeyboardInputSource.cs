@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DrivingSchool.Contracts;
+using DrivingSchool.Settings;
 
 namespace DrivingSchool.Input
 {
@@ -28,6 +29,7 @@ namespace DrivingSchool.Input
         public float keyboardLateralMps2 = 6.5f;
         public bool automatic;              // AT: gear keys drive the selector
         public Keyboard KeyboardDevice { get; set; }
+        public ControlsSection Bindings { get; set; }
         /// <summary>Последняя попытка вывести селектор АКПП из P была без тормоза и не сработала (для подсказки).</summary>
         public bool ShiftLockRefused { get; private set; }
 
@@ -48,6 +50,8 @@ namespace DrivingSchool.Input
         bool externallyPolled;
 
         Keyboard Kb => KeyboardDevice ?? Keyboard.current;
+        bool Held(Keyboard kb, int action) => KeyboardBindings.Held(kb, Bindings, action);
+        bool Pressed(Keyboard kb, int action) => KeyboardBindings.Pressed(kb, Bindings, action);
         public bool IsConnected => Kb != null;
 
         public void Reset()
@@ -83,8 +87,8 @@ namespace DrivingSchool.Input
             if (!(dt > 0f && dt < 0.2f)) dt = 0.01f;
 
             float targetSteer = 0f;
-            if (kb.aKey.isPressed || kb.leftArrowKey.isPressed) targetSteer -= 1f;
-            if (kb.dKey.isPressed || kb.rightArrowKey.isPressed) targetSteer += 1f;
+            if (Held(kb, 0) || kb.leftArrowKey.isPressed) targetSteer -= 1f;
+            if (Held(kb, 1) || kb.rightArrowKey.isPressed) targetSteer += 1f;
             // A key is on/off: at speed the virtual steering wheel turns slower and not to full lock, otherwise a tap
             // throws a 1.3-tonne car sideways and it feels weightless.
             float v = Math.Abs(vehicleSpeedMps);
@@ -92,24 +96,24 @@ namespace DrivingSchool.Input
             float speedFactor = 1f / (1f + v / 15f);
             steering = Mathf.MoveTowards(steering, targetSteer, (Math.Abs(targetSteer) > 0.01f ? steeringRate * speedFactor : returnRate) * dt);
 
-            bool gas = kb.wKey.isPressed || kb.upArrowKey.isPressed, brk = kb.sKey.isPressed || kb.downArrowKey.isPressed;
+            bool gas = Held(kb, 2) || kb.upArrowKey.isPressed, brk = Held(kb, 3) || kb.downArrowKey.isPressed;
             throttle = Mathf.MoveTowards(throttle, gas ? 1f : 0f, (gas ? throttleRiseRate : pedalRate) * dt);
             brake = Mathf.MoveTowards(brake, brk ? 1f : 0f, (brk ? brakeRiseRate : pedalRate) * dt);
             // The clutch is released slower than pressed, like a foot finding the bite point.
-            bool clutchDown = kb.leftShiftKey.isPressed || kb.leftCtrlKey.isPressed;
+            bool clutchDown = Held(kb, 4) || kb.leftCtrlKey.isPressed;
             clutch = Mathf.MoveTowards(clutch, clutchDown ? 1f : 0f, (clutchDown ? pedalRate : 1.6f) * dt);
 
-            if (kb.spaceKey.wasPressedThisFrame) handbrake = !handbrake;
+            if (Pressed(kb, 5)) handbrake = !handbrake;
 
             int gear = -99;
-            if (kb.digit0Key.wasPressedThisFrame || kb.nKey.wasPressedThisFrame) gear = 0;
-            else if (kb.rKey.wasPressedThisFrame) gear = -1;
-            else if (kb.digit1Key.wasPressedThisFrame) gear = 1;
-            else if (kb.digit2Key.wasPressedThisFrame) gear = 2;
-            else if (kb.digit3Key.wasPressedThisFrame) gear = 3;
-            else if (kb.digit4Key.wasPressedThisFrame) gear = 4;
-            else if (kb.digit5Key.wasPressedThisFrame) gear = 5;
-            else if (kb.digit6Key.wasPressedThisFrame) gear = 6;
+            if (kb.digit0Key.wasPressedThisFrame || Pressed(kb, 6)) gear = 0;
+            else if (Pressed(kb, 7)) gear = -1;
+            else if (Pressed(kb, 8)) gear = 1;
+            else if (Pressed(kb, 9)) gear = 2;
+            else if (Pressed(kb, 10)) gear = 3;
+            else if (Pressed(kb, 11)) gear = 4;
+            else if (Pressed(kb, 12)) gear = 5;
+            else if (Pressed(kb, 13)) gear = 6;
             if (gear != -99 && ShiftLocked(automatic, selector, brk)) { ShiftLockRefused = true; gear = -99; }
             if (gear != -99)
             {
@@ -117,22 +121,22 @@ namespace DrivingSchool.Input
                 requestedGear = gear;
                 selector = gear > 0 ? AutomaticSelector.D : gear < 0 ? AutomaticSelector.R : AutomaticSelector.N;
             }
-            if (kb.pKey.wasPressedThisFrame) { selector = AutomaticSelector.P; requestedGear = 0; }
+            if (Pressed(kb, 14)) { selector = AutomaticSelector.P; requestedGear = 0; }
 
-            if (kb.iKey.wasPressedThisFrame) ignition = !ignition;
-            starter = kb.enterKey.isPressed || kb.numpadEnterKey.isPressed;
+            if (Pressed(kb, 15)) ignition = !ignition;
+            starter = Held(kb, 16) || kb.numpadEnterKey.isPressed;
 
-            if (kb.qKey.wasPressedThisFrame) stalk.Toggle(TurnSignal.Left);
-            if (kb.eKey.wasPressedThisFrame) stalk.Toggle(TurnSignal.Right);
+            if (Pressed(kb, 17)) stalk.Toggle(TurnSignal.Left);
+            if (Pressed(kb, 18)) stalk.Toggle(TurnSignal.Right);
             stalk.Update(steering);
-            if (kb.xKey.wasPressedThisFrame) hazard = !hazard;
-            if (kb.lKey.wasPressedThisFrame) headlights = headlights == HeadlightMode.Off ? HeadlightMode.Parking : headlights == HeadlightMode.Parking ? HeadlightMode.LowBeam : HeadlightMode.Off;
-            if (kb.kKey.wasPressedThisFrame) highBeam = !highBeam;
-            flash = kb.jKey.isPressed;
-            horn = kb.hKey.isPressed;
-            if (kb.vKey.wasPressedThisFrame) wipers = (WiperMode)(((int)wipers + 1) % 4);
-            washer = kb.bKey.isPressed;
-            if (kb.tKey.wasPressedThisFrame) seatbelt = !seatbelt;
+            if (Pressed(kb, 19)) hazard = !hazard;
+            if (Pressed(kb, 20)) headlights = headlights == HeadlightMode.Off ? HeadlightMode.Parking : headlights == HeadlightMode.Parking ? HeadlightMode.LowBeam : HeadlightMode.Off;
+            if (Pressed(kb, 21)) highBeam = !highBeam;
+            flash = Held(kb, 22);
+            horn = Held(kb, 23);
+            if (Pressed(kb, 24)) wipers = (WiperMode)(((int)wipers + 1) % 4);
+            washer = Held(kb, 25);
+            if (Pressed(kb, 26)) seatbelt = !seatbelt;
         }
 
         /// <summary>Блокировка селектора АКПП (как в настоящей машине): из P рычаг выходит только с нажатым тормозом.</summary>

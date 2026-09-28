@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DrivingSchool.Settings;
+using DrivingSchool.Input;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 
 namespace DrivingSchool.Presentation.UI
@@ -73,6 +75,14 @@ namespace DrivingSchool.Presentation.UI
         (int mode, string res) displayBeforeApply;
         // Повтор при удержании стрелки
         Vector2Int heldDir; float repeatAt;
+        bool rebindOpen;
+        int rebindWaiting = -1;
+        Vector2 rebindScroll;
+        bool calibrationOpen;
+        WheelProfile calibrationDraft;
+        int axisWaiting = -1, gearWaiting = -1;
+        readonly Dictionary<string, float> axisBaseline = new Dictionary<string, float>();
+        Vector2 calibrationScroll;
 
         void Awake()
         {
@@ -117,6 +127,8 @@ namespace DrivingSchool.Presentation.UI
 
         void Close()
         {
+            rebindOpen = calibrationOpen = false;
+            rebindWaiting = axisWaiting = gearWaiting = -1;
             if (Session != null) SettingsApplier.ApplyTheme(Session.Saved.gameplay.uiTheme);   // предпросмотр без «Применить» откатывается
             CloseDialog();
             root.SetActive(false);
@@ -198,6 +210,12 @@ namespace DrivingSchool.Presentation.UI
             var av = Availability(item);
             if (item.Kind == SettingKind.Action)
             {
+                if (item.Key == "controls.rebind") { rebindOpen = true; rebindWaiting = -1; return; }
+                if (item.Key == "controls.calibrate")
+                {
+                    calibrationDraft = Session.Saved.controls.wheel?.Clone() ?? new WheelProfile();
+                    calibrationOpen = true; axisWaiting = gearWaiting = -1; return;
+                }
                 ShowToast(av == SettingAvailability.NoWheel ? "Руль G29 не подключён" : "Пока не реализовано");
                 return;
             }
@@ -434,6 +452,33 @@ namespace DrivingSchool.Presentation.UI
         void Update()
         {
             if (!IsOpen || Session == null) return;
+            if (calibrationOpen)
+            {
+                PollCalibration();
+                if (Keyboard.current?.escapeKey.wasPressedThisFrame == true)
+                { calibrationOpen = false; axisWaiting = gearWaiting = -1; }
+                return;
+            }
+            if (rebindOpen)
+            {
+                var keys = Keyboard.current;
+                if (keys != null && rebindWaiting >= 0 && keys.anyKey.wasPressedThisFrame)
+                {
+                    foreach (var control in keys.allKeys)
+                    {
+                        if (!control.wasPressedThisFrame) continue;
+                        if (control.keyCode == Key.Escape) { rebindWaiting = -1; break; }
+                        KeyboardBindings.Set(rebindWaiting, control.keyCode, Session.Saved.controls);
+                        Session.Draft.controls.keyBindings = (string[])Session.Saved.controls.keyBindings.Clone();
+                        SettingsStore.Save(Session.Saved);
+                        SettingsService.Publish(Session.Saved);
+                        rebindWaiting = -1;
+                        break;
+                    }
+                }
+                else if (keys?.escapeKey.wasPressedThisFrame == true) rebindOpen = false;
+                return;
+            }
             if (toast != null && toast.activeSelf && Time.unscaledTime > toastUntil) toast.SetActive(false);
             if (Time.unscaledTime > wheelCheckAt)
             {
@@ -496,6 +541,117 @@ namespace DrivingSchool.Presentation.UI
                 }
                 else if (confirm && bottomButtons[buttonFocus].interactable) bottomButtons[buttonFocus].onClick.Invoke();
             }
+        }
+
+        void OnGUI()
+        {
+            if (!IsOpen || Session == null) return;
+            if (calibrationOpen) { DrawCalibration(); return; }
+            if (!rebindOpen) return;
+            var area = new Rect(Screen.width * 0.2f, Screen.height * 0.08f, Screen.width * 0.6f, Screen.height * 0.84f);
+            GUI.Box(area, "Клавиши управления — изменения сохраняются сразу");
+            GUILayout.BeginArea(new Rect(area.x + 16f, area.y + 28f, area.width - 32f, area.height - 40f));
+            GUILayout.Label(rebindWaiting >= 0 ? "Нажмите новую клавишу (Esc — отмена)" : "Выберите действие для переназначения");
+            rebindScroll = GUILayout.BeginScrollView(rebindScroll);
+            for (int i = 0; i < KeyboardBindings.Labels.Length; i++)
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(KeyboardBindings.Labels[i], GUILayout.Width(area.width * 0.55f));
+                if (GUILayout.Button(KeyboardBindings.Get(i, Session.Saved.controls).ToString())) rebindWaiting = i;
+                GUILayout.EndHorizontal();
+            }
+            GUILayout.EndScrollView();
+            if (GUILayout.Button("Закрыть")) { rebindOpen = false; rebindWaiting = -1; }
+            GUILayout.EndArea();
+        }
+
+        WheelAxisBinding Axis(int index) => index == 0 ? calibrationDraft.steering
+            : index == 1 ? calibrationDraft.throttle : index == 2 ? calibrationDraft.brake : calibrationDraft.clutch;
+
+        void BeginAxisCapture(int index, InputDevice device)
+        {
+            axisWaiting = index; gearWaiting = -1; axisBaseline.Clear();
+            foreach (var control in device.allControls)
+                if (control is AxisControl axis && !(control is ButtonControl))
+                    axisBaseline[G29InputSource.RelativePath(device, control)] = axis.ReadValue();
+        }
+
+        void PollCalibration()
+        {
+            var device = G29InputSource.FindDevice();
+            if (device == null || calibrationDraft == null) return;
+            if (axisWaiting >= 0)
+            {
+                foreach (var control in device.allControls)
+                {
+                    if (!(control is AxisControl axis) || control is ButtonControl) continue;
+                    string path = G29InputSource.RelativePath(device, control);
+                    if (!axisBaseline.TryGetValue(path, out float baseline) || Mathf.Abs(axis.ReadValue() - baseline) < 0.25f) continue;
+                    var binding = Axis(axisWaiting);
+                    binding.control = path; binding.min = binding.max = binding.center = baseline;
+                    axisWaiting = -1;
+                    break;
+                }
+            }
+            if (gearWaiting >= 0)
+                foreach (var control in device.allControls)
+                    if (control is ButtonControl button && button.wasPressedThisFrame)
+                    { calibrationDraft.gears[gearWaiting] = G29InputSource.RelativePath(device, control); gearWaiting = -1; break; }
+            for (int i = 0; i < 4; i++)
+            {
+                var b = Axis(i);
+                if (!(G29InputSource.FindControl(device, b.control) is AxisControl axis)) continue;
+                float raw = axis.ReadValue();
+                b.min = Mathf.Min(b.min, raw); b.max = Mathf.Max(b.max, raw);
+            }
+        }
+
+        void DrawCalibration()
+        {
+            var area = new Rect(Screen.width * 0.14f, Screen.height * 0.07f, Screen.width * 0.72f, Screen.height * 0.86f);
+            GUI.Box(area, "G29 — назначение осей и H-шифтера");
+            GUILayout.BeginArea(new Rect(area.x + 16f, area.y + 28f, area.width - 32f, area.height - 40f));
+            var device = G29InputSource.FindDevice();
+            if (device == null) { GUILayout.Label("G29 (USB 046D:C24F) не найден в Unity Input System."); if (GUILayout.Button("Закрыть")) calibrationOpen = false; GUILayout.EndArea(); return; }
+            GUILayout.Label(device.displayName + " — переместите каждую ось в оба упора; для передачи нажмите рычаг после выбора строки.");
+            GUILayout.Label(axisWaiting >= 0 ? "Поверните руль или нажмите выбранную педаль" : gearWaiting >= 0 ? "Включите выбранную передачу" : "Сохранение доступно после полного хода четырёх осей.");
+            calibrationScroll = GUILayout.BeginScrollView(calibrationScroll);
+            string[] names = { "Руль", "Газ", "Тормоз", "Сцепление" };
+            for (int i = 0; i < 4; i++)
+            {
+                var b = Axis(i);
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(names[i], GUILayout.Width(90));
+                if (GUILayout.Button(string.IsNullOrEmpty(b.control) ? "Назначить" : b.control, GUILayout.Width(180))) BeginAxisCapture(i, device);
+                float raw = G29InputSource.FindControl(device, b.control) is AxisControl axis ? axis.ReadValue() : 0f;
+                GUILayout.Label($"{raw:F2}  [{b.min:F2} .. {b.max:F2}]", GUILayout.Width(160));
+                if (i == 0 && GUILayout.Button("Центр", GUILayout.Width(65))) b.center = raw;
+                if (GUILayout.Button(b.inverted ? "Инв. ✓" : "Инв.", GUILayout.Width(65))) b.inverted = !b.inverted;
+                GUILayout.EndHorizontal();
+            }
+            string[] gears = { "R", "1", "2", "3", "4", "5", "6" };
+            for (int i = 0; i < 7; i++)
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Передача " + gears[i], GUILayout.Width(110));
+                if (GUILayout.Button(string.IsNullOrEmpty(calibrationDraft.gears[i]) ? "Назначить" : calibrationDraft.gears[i]))
+                { gearWaiting = i; axisWaiting = -1; }
+                GUILayout.EndHorizontal();
+            }
+            GUILayout.EndScrollView();
+            bool valid = true;
+            for (int i = 0; i < 4; i++) valid &= !string.IsNullOrEmpty(Axis(i).control) && Axis(i).max - Axis(i).min >= 0.1f;
+            GUI.enabled = valid;
+            if (GUILayout.Button("Сохранить калибровку"))
+            {
+                Session.Saved.controls.wheel = calibrationDraft.Clone();
+                Session.Draft.controls.wheel = calibrationDraft.Clone();
+                SettingsStore.Save(Session.Saved); SettingsService.Publish(Session.Saved);
+                calibrationOpen = false;
+            }
+            GUI.enabled = true;
+            if (GUILayout.Button("Закрыть без сохранения")) calibrationOpen = false;
+            GUILayout.EndArea();
         }
 
         static bool Pressed(UnityEngine.InputSystem.Controls.ButtonControl b) => b != null && b.wasPressedThisFrame;

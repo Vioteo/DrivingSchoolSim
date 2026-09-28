@@ -1,6 +1,4 @@
 using System;
-using UnityEngine;
-using UnityEngine.InputSystem;
 using DrivingSchool.Contracts;
 
 namespace DrivingSchool.Input
@@ -80,10 +78,10 @@ namespace DrivingSchool.Input
     }
 
     /// <summary>
-    /// Hardware adapter for Logitech G27 Racing Wheel (900° rotation, 3 pedals, 6+R H-shifter).
-    /// Implements IInputSource for driver commands and IForceFeedbackOutput for steering wheel forces.
+    /// Test double for wheel input and FFB mathematics. It does not read or drive a physical wheel.
+    /// Hardware input is handled by G29InputSource; native FFB needs a separately licensed backend.
     /// </summary>
-    public sealed class LogitechG27Adapter : IInputSource, IForceFeedbackOutput
+    public sealed class LogitechWheelFeedbackMock : IInputSource, IForceFeedbackOutput
     {
         // 900° lock-to-lock (±450° from center)
         public const float MaxSteeringAngleDeg = 450.0f;
@@ -99,7 +97,6 @@ namespace DrivingSchool.Input
         public AxisCalibration ClutchCalibration { get; } = new AxisCalibration(-1f, 1f, 0.02f, true);
 
         // Simulated raw inputs for testing and headless execution
-        public bool UseSimulatedInputs { get; set; } = true;
         public float RawSteering { get; set; } = 0f;
         public float RawThrottle { get; set; } = 1f; // unpressed when inverted
         public float RawBrake { get; set; } = 1f;    // unpressed when inverted
@@ -143,7 +140,7 @@ namespace DrivingSchool.Input
         }
         public bool IsAvailable => IsConnected && !Disposed && !IsStopped && !IsPaused;
 
-        public LogitechG27Adapter()
+        public LogitechWheelFeedbackMock()
         {
         }
 
@@ -179,29 +176,14 @@ namespace DrivingSchool.Input
             bool ignition;
             bool starter;
 
-            if (UseSimulatedInputs || Gamepad.current == null)
-            {
-                steerNorm = SteeringCalibration.NormalizeBipolar(RawSteering);
-                throttleNorm = ThrottleCalibration.Normalize(RawThrottle);
-                brakeNorm = BrakeCalibration.Normalize(RawBrake);
-                clutchNorm = ClutchCalibration.Normalize(RawClutch);
-                gear = Math.Clamp(SelectedGear, -1, 6);
-                handbrake = HandbrakeState;
-                ignition = IgnitionState;
-                starter = StarterState;
-            }
-            else
-            {
-                var gp = Gamepad.current;
-                steerNorm = SteeringCalibration.NormalizeBipolar(gp.leftStick.x.ReadValue());
-                throttleNorm = ThrottleCalibration.Normalize(gp.rightTrigger.ReadValue());
-                brakeNorm = BrakeCalibration.Normalize(gp.leftTrigger.ReadValue());
-                clutchNorm = ClutchCalibration.Normalize(gp.buttonWest.isPressed ? 1f : 0f);
-                gear = SelectedGear;
-                handbrake = gp.buttonSouth.isPressed || HandbrakeState;
-                ignition = IgnitionState;
-                starter = StarterState;
-            }
+            steerNorm = SteeringCalibration.NormalizeBipolar(RawSteering);
+            throttleNorm = ThrottleCalibration.Normalize(RawThrottle);
+            brakeNorm = BrakeCalibration.Normalize(RawBrake);
+            clutchNorm = ClutchCalibration.Normalize(RawClutch);
+            gear = Math.Clamp(SelectedGear, -1, 6);
+            handbrake = HandbrakeState;
+            ignition = IgnitionState;
+            starter = StarterState;
 
             var cmd = new DriverCommand
             {

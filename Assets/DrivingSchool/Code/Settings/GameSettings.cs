@@ -21,6 +21,34 @@ namespace DrivingSchool.Settings
     }
 
     [Serializable]
+    public sealed class WheelAxisBinding
+    {
+        public string control = "";
+        public float min = -1f, center = 0f, max = 1f;
+        public bool inverted;
+        public WheelAxisBinding Clone() => (WheelAxisBinding)MemberwiseClone();
+    }
+
+    [Serializable]
+    public sealed class WheelProfile
+    {
+        public WheelAxisBinding steering = new WheelAxisBinding();
+        public WheelAxisBinding throttle = new WheelAxisBinding();
+        public WheelAxisBinding brake = new WheelAxisBinding();
+        public WheelAxisBinding clutch = new WheelAxisBinding();
+        // Relative button-control paths, captured from the real HID device.
+        public string[] gears = new string[7]; // R, 1..6
+        public WheelProfile Clone() => new WheelProfile
+        {
+            steering = steering?.Clone() ?? new WheelAxisBinding(),
+            throttle = throttle?.Clone() ?? new WheelAxisBinding(),
+            brake = brake?.Clone() ?? new WheelAxisBinding(),
+            clutch = clutch?.Clone() ?? new WheelAxisBinding(),
+            gears = gears == null ? new string[7] : (string[])gears.Clone()
+        };
+    }
+
+    [Serializable]
     public sealed class ControlsSection
     {
         public int device = 0;                    // Клавиатура / Logitech G29
@@ -31,7 +59,16 @@ namespace DrivingSchool.Settings
         public bool invertPedals = false;
         public int pedalDeadzone = 3;
         public int ffbStrength = 60;
-        public ControlsSection Clone() => (ControlsSection)MemberwiseClone();
+        // Key names use Unity Input System's Key enum. Empty entries restore the corresponding default.
+        public string[] keyBindings = new string[0];
+        public WheelProfile wheel = new WheelProfile();
+        public ControlsSection Clone()
+        {
+            var copy = (ControlsSection)MemberwiseClone();
+            copy.keyBindings = keyBindings == null ? new string[0] : (string[])keyBindings.Clone();
+            copy.wheel = wheel?.Clone() ?? new WheelProfile();
+            return copy;
+        }
     }
 
     [Serializable]

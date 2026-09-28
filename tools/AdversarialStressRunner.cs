@@ -38,7 +38,7 @@ namespace DrivingSchool.AdversarialStress
             Console.WriteLine("================================================================================");
 
             RunDrivetrainAndPhysicsStress();
-            RunLogitechG27FFBStress();
+            RunLogitechWheelFeedbackMockFFBStress();
             RunFloatingOriginStress();
             RunRuleEvaluatorStress();
 
@@ -279,20 +279,20 @@ namespace DrivingSchool.AdversarialStress
 
         #endregion
 
-        #region 2. Logitech G27 FFB & Adapter Stress Testing
+        #region 2. Logitech G29 FFB & Adapter Stress Testing
 
-        static void RunLogitechG27FFBStress()
+        static void RunLogitechWheelFeedbackMockFFBStress()
         {
-            Console.WriteLine("\n[--- SUITE 2: Logitech G27 FFB & Adapter (LogitechG27Adapter) ---]");
+            Console.WriteLine("\n[--- SUITE 2: Logitech G29 FFB & Adapter (LogitechWheelFeedbackMock) ---]");
 
             // 2.1 Centering Spring at 300 km/h (83.33 m/s) and Super-Speed
             {
-                var r = new TestResult { Suite = "LogitechG27", Name = "CenteringSpring_300Kph_And_SuperSpeed" };
+                var r = new TestResult { Suite = "LogitechWheelFeedbackMock", Name = "CenteringSpring_300Kph_And_SuperSpeed" };
                 float speed300Kph = 83.333f;
-                float force300 = LogitechG27Adapter.CalculateCenteringSpring(1.0f, speed300Kph, 0.15f, 0.65f);
-                float force500 = LogitechG27Adapter.CalculateCenteringSpring(1.0f, 138.88f, 0.15f, 0.65f);
-                float forceReverse = LogitechG27Adapter.CalculateCenteringSpring(1.0f, -83.333f, 0.15f, 0.65f);
-                float forceZero = LogitechG27Adapter.CalculateCenteringSpring(1.0f, 0.0f, 0.15f, 0.65f);
+                float force300 = LogitechWheelFeedbackMock.CalculateCenteringSpring(1.0f, speed300Kph, 0.15f, 0.65f);
+                float force500 = LogitechWheelFeedbackMock.CalculateCenteringSpring(1.0f, 138.88f, 0.15f, 0.65f);
+                float forceReverse = LogitechWheelFeedbackMock.CalculateCenteringSpring(1.0f, -83.333f, 0.15f, 0.65f);
+                float forceZero = LogitechWheelFeedbackMock.CalculateCenteringSpring(1.0f, 0.0f, 0.15f, 0.65f);
 
                 bool clampedAtMax = Math.Abs(force300 - (-0.65f)) < 1e-4f;
                 bool clampedSuper = Math.Abs(force500 - (-0.65f)) < 1e-4f;
@@ -310,10 +310,10 @@ namespace DrivingSchool.AdversarialStress
 
             // 2.2 Centering Spring NaN/Infinity Vulnerability Scan
             {
-                var r = new TestResult { Suite = "LogitechG27", Name = "CenteringSpring_NaN_Inf_Vulnerability" };
-                float nanSteer = LogitechG27Adapter.CalculateCenteringSpring(float.NaN, 20f);
-                float nanSpeed = LogitechG27Adapter.CalculateCenteringSpring(0.5f, float.NaN);
-                float infSpeed = LogitechG27Adapter.CalculateCenteringSpring(0.5f, float.PositiveInfinity);
+                var r = new TestResult { Suite = "LogitechWheelFeedbackMock", Name = "CenteringSpring_NaN_Inf_Vulnerability" };
+                float nanSteer = LogitechWheelFeedbackMock.CalculateCenteringSpring(float.NaN, 20f);
+                float nanSpeed = LogitechWheelFeedbackMock.CalculateCenteringSpring(0.5f, float.NaN);
+                float infSpeed = LogitechWheelFeedbackMock.CalculateCenteringSpring(0.5f, float.PositiveInfinity);
 
                 bool steerGuarded = nanSteer == 0f;
                 bool speedGuarded = !float.IsNaN(nanSpeed);
@@ -331,13 +331,13 @@ namespace DrivingSchool.AdversarialStress
 
             // 2.3 Mechanical Stop Collisions (> 450°)
             {
-                var r = new TestResult { Suite = "LogitechG27", Name = "MechanicalEndStops_Collisions" };
-                float stop450 = LogitechG27Adapter.CalculateEndStop(450.0f);
-                float stop455 = LogitechG27Adapter.CalculateEndStop(455.0f, 450.0f, 0.10f); // 5 deg past * 0.10 = -0.50
-                float stop465 = LogitechG27Adapter.CalculateEndStop(465.0f, 450.0f, 0.10f); // 15 deg past -> clamped to -1.0
-                float stop900 = LogitechG27Adapter.CalculateEndStop(900.0f, 450.0f, 0.10f); // clamped to -1.0
-                float stopNeg500 = LogitechG27Adapter.CalculateEndStop(-500.0f, 450.0f, 0.10f); // clamped to +1.0
-                float stop10000 = LogitechG27Adapter.CalculateEndStop(10000.0f, 450.0f, 0.10f); // clamped to -1.0
+                var r = new TestResult { Suite = "LogitechWheelFeedbackMock", Name = "MechanicalEndStops_Collisions" };
+                float stop450 = LogitechWheelFeedbackMock.CalculateEndStop(450.0f);
+                float stop455 = LogitechWheelFeedbackMock.CalculateEndStop(455.0f, 450.0f, 0.10f); // 5 deg past * 0.10 = -0.50
+                float stop465 = LogitechWheelFeedbackMock.CalculateEndStop(465.0f, 450.0f, 0.10f); // 15 deg past -> clamped to -1.0
+                float stop900 = LogitechWheelFeedbackMock.CalculateEndStop(900.0f, 450.0f, 0.10f); // clamped to -1.0
+                float stopNeg500 = LogitechWheelFeedbackMock.CalculateEndStop(-500.0f, 450.0f, 0.10f); // clamped to +1.0
+                float stop10000 = LogitechWheelFeedbackMock.CalculateEndStop(10000.0f, 450.0f, 0.10f); // clamped to -1.0
 
                 bool insideZero = stop450 == 0f;
                 bool proportional = Math.Abs(stop455 - (-0.5f)) < 1e-4f;
@@ -356,8 +356,8 @@ namespace DrivingSchool.AdversarialStress
 
             // 2.4 Violent 100 Hz Steering Oscillation & Slew Rate Limiter Verification
             {
-                var r = new TestResult { Suite = "LogitechG27", Name = "Violent_100Hz_Oscillation_SlewLimiting" };
-                var adapter = new LogitechG27Adapter();
+                var r = new TestResult { Suite = "LogitechWheelFeedbackMock", Name = "Violent_100Hz_Oscillation_SlewLimiting" };
+                var adapter = new LogitechWheelFeedbackMock();
                 float maxObservedSlewDelta = 0f;
                 bool boundViolated = false;
                 float dt = 0.01f; // 100 Hz physics tick
@@ -398,9 +398,9 @@ namespace DrivingSchool.AdversarialStress
 
             // 2.5 Rate Limiter Vulnerability: NaN or Inf dt
             {
-                var r = new TestResult { Suite = "LogitechG27", Name = "RateLimiter_NaN_dt_Vulnerability" };
-                float outNanDt = LogitechG27Adapter.ApplyRateLimiter(0.8f, 0.2f, float.NaN, 10.0f);
-                float outInfDt = LogitechG27Adapter.ApplyRateLimiter(0.8f, 0.2f, float.PositiveInfinity, 10.0f);
+                var r = new TestResult { Suite = "LogitechWheelFeedbackMock", Name = "RateLimiter_NaN_dt_Vulnerability" };
+                float outNanDt = LogitechWheelFeedbackMock.ApplyRateLimiter(0.8f, 0.2f, float.NaN, 10.0f);
+                float outInfDt = LogitechWheelFeedbackMock.ApplyRateLimiter(0.8f, 0.2f, float.PositiveInfinity, 10.0f);
 
                 bool nanSafe = !float.IsNaN(outNanDt);
                 bool infSafe = !float.IsInfinity(outInfDt) && !float.IsNaN(outInfDt) && Math.Abs(outInfDt - 0.8f) < 1e-4f;
@@ -416,8 +416,8 @@ namespace DrivingSchool.AdversarialStress
 
             // 2.6 Sudden Disconnection During Active Max FFB
             {
-                var r = new TestResult { Suite = "LogitechG27", Name = "Sudden_Disconnection_Watchdog" };
-                var adapter = new LogitechG27Adapter();
+                var r = new TestResult { Suite = "LogitechWheelFeedbackMock", Name = "Sudden_Disconnection_Watchdog" };
+                var adapter = new LogitechWheelFeedbackMock();
                 adapter.SetNormalizedTorque(1.0f);
                 bool wasActive = adapter.CurrentAppliedTorque == 1.0f;
 
@@ -443,8 +443,8 @@ namespace DrivingSchool.AdversarialStress
 
             // 2.7 Rapid 10,000 Pause/Resume Cycles
             {
-                var r = new TestResult { Suite = "LogitechG27", Name = "Rapid_10k_PauseResume_Cycles" };
-                var adapter = new LogitechG27Adapter();
+                var r = new TestResult { Suite = "LogitechWheelFeedbackMock", Name = "Rapid_10k_PauseResume_Cycles" };
+                var adapter = new LogitechWheelFeedbackMock();
                 bool residualTorqueDetected = false;
 
                 for (int i = 0; i < 10000; i++)
