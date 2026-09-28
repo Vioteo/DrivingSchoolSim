@@ -299,7 +299,16 @@ namespace DrivingSchool.Editor
             }
             cycle.northSouth = ns.ToArray(); cycle.eastWest = ew.ToArray();
             cycle.walkWithNorthSouth = walkNs.ToArray(); cycle.walkWithEastWest = walkEw.ToArray();
+
+            // T68: the crossroad for the drive rules (signal for the approaching car, red-light check at the stop lines).
+            // Centre (16.3; 12) and stop lines 9.7 m from it on every arm are taken from the scheme's markings.
+            var junction = new GameObject("У8 / Signal junction").AddComponent<SignalJunction>();
+            junction.transform.SetParent(props);
+            junction.transform.position = P(CrossroadX, CrossroadZ);
+            junction.signals = cycle; junction.stopLineOffset = CrossroadStopLine * K; junction.armHalfWidth = 3 * K;
         }
+
+        const float CrossroadX = 16.3f, CrossroadZ = 12f, CrossroadStopLine = 9.7f;   // scheme metres
 
         // ---------------------------------------------------------------- words painted on lanes
         static void PaintedWords()
@@ -368,7 +377,7 @@ namespace DrivingSchool.Editor
             // TextMesh is read looking along its +Z, so the lettering sits on the board's -Z face.
             Text("ОБЯЗАННОСТИ ПЕШЕХОДА И ВОДИТЕЛЯ НА АВТОДРОМЕ", Vector3.zero, 0, .15f, white, root);
             var header = root.GetChild(root.childCount - 1); header.localPosition = new Vector3(0, 3.0f, -.07f); header.localRotation = Quaternion.identity;
-            Text("1. Скорость не более 20 км/ч\n2. Пристегните ремень безопасности\n3. Остановка у знака СТОП и стоп-линии\n4. Уступите дорогу пешеходам на переходе\n5. Выполняйте указания инструктора",
+            Text("1. Скорость не более " + SpeedLimitKph.ToString("0") + " км/ч\n2. Пристегните ремень безопасности\n3. Остановка у знака СТОП и стоп-линии\n4. Уступите дорогу пешеходам на переходе\n5. Выполняйте указания инструктора",
                 Vector3.zero, 0, .14f, asphalt, root);
             var body = root.GetChild(root.childCount - 1); body.localPosition = new Vector3(0, 2.15f, -.06f); body.localRotation = Quaternion.identity;
         }
@@ -443,6 +452,36 @@ namespace DrivingSchool.Editor
         // southbound x 14.8; central road eastbound z 10.5 / westbound z 13.5; ramp lane z 7.6.
         public static TrainingCourse CreateCourse() => ScaleCourse(SchemeCourse());
 
+        /// <summary>Speed limit of the autodrome, km/h (game setting; the information stand shows it).</summary>
+        public const float SpeedLimitKph = 30;
+
+        /// <summary>
+        /// T68: faults of the exercises and their points. These are game settings of this autodrome, not the GIBDD
+        /// method: the official table (order of the MVD No. 80, annex 5) is T37 / ADR-013. 5 points and more — not passed.
+        /// </summary>
+        static CoursePenalty[] Penalties() => new[]
+        {
+            Pen(CourseSession.Contact, 3, "Касание конуса или ограждения", "Проезжайте упражнение медленнее и чаще смотрите в зеркала: габарит машины должен оставаться внутри коридора."),
+            Pen(CourseSession.StopLine, 3, "Остановка за стоп-линией", "Тормозите заранее: передний бампер не должен заходить за стоп-линию, на пешеходный переход или к путям."),
+            Pen(CourseSession.NoSignal, 1, "Не включён указатель поворота", "Перед поворотом в коридор, началом движения и выездом с места стоянки включайте указатель заранее."),
+            Pen(CourseSession.Stall, 1, "Двигатель заглох", "Трогайтесь плавно: отпускайте сцепление до лёгкой вибрации и добавляйте газ; перед остановкой выжимайте сцепление."),
+            Pen(CourseSession.Speed, 1, "Превышение скорости на площадке", "На площадке скорость не выше " + SpeedLimitKph.ToString("0") + " км/ч. Упражнения выполняйте на минимальной скорости."),
+            Pen(CourseSession.Corrections, 1, "Больше двух корректировок", "Если машина идёт мимо места, остановитесь и поправьте положение вперёд-назад, но не больше двух раз."),
+            Pen("seatbelt", 3, "Движение без ремня безопасности", "Пристегнитесь до начала движения.", "PDD_2.1.2_SEATBELT"),
+            Pen("red-light", 5, "Проезд на запрещающий сигнал светофора", "На красный остановитесь перед стоп-линией и ждите зелёного.", "PDD_6.2_RED_LIGHT"),
+            Pen(CourseSession.Rollback, 5, "Откат на эстакаде больше 0,3 м", "Держите машину на ручнике или тормозе, пока сцепление не «схватит», и только потом отпускайте.", terminal: true),
+            Pen(CourseSession.Timeout, 5, "Время на упражнение вышло", "Не задерживайтесь: подготовьте машину и выполняйте упражнение без долгих остановок.", terminal: true),
+            Pen(CourseSession.Boundary, 5, "Выезд за границу площадки", "Держитесь дорог автодрома.", terminal: true),
+        };
+
+        static CoursePenalty Pen(string code, int points, string title, string advice, string ruleId = null, bool terminal = false)
+            => new CoursePenalty { code = code, points = points, title = title, advice = advice, ruleId = ruleId, terminal = terminal };
+
+        // Gate options added in T68: stop line ahead (scheme metres from the gate centre), turn signal, corrections.
+        static CourseGate Line(this CourseGate g, float metres) { g.stopLine = metres; return g; }
+        static CourseGate Signal(this CourseGate g, int side) { g.signal = side; return g; }
+        static CourseGate Corrections(this CourseGate g, int count) { g.maxCorrections = count; return g; }
+
         /// <summary>Lessons are authored in scheme metres; positions and lane-sized gates scale with the
         /// layout. Stop frames that must hold the whole car keep their size (they are sized to the car).</summary>
         static TrainingCourse ScaleCourse(TrainingCourse c)
@@ -455,7 +494,7 @@ namespace DrivingSchool.Editor
                     if (list != null)
                         foreach (var g in list)
                         {
-                            g.x *= K; g.z *= K;
+                            g.x *= K; g.z *= K; g.stopLine *= K;
                             if (!g.wholeVehicle) { g.width *= K; g.length *= K; }
                         }
             }
@@ -468,47 +507,48 @@ namespace DrivingSchool.Editor
             const float RampZ = 7.6f; // scheme metres inside this table
             return new TrainingCourse
             {
-                id = "schema-single-100m-v4", halfWidth = 50, halfLength = 50, examTime = 1500, speedLimitKph = 30,
+                id = "schema-single-100m-v4", halfWidth = 50, halfLength = 50, examTime = 1500, speedLimitKph = SpeedLimitKph,
+                penalties = Penalties(),
                 lessons = new[]
                 {
                     L("start", "Старт", "Троньтесь с места и остановитесь в рамке на 2 секунды.", 17.8f, -38.3f, 0,
-                        new[] { G("Начало движения", 17.8f, -37.6f, 0, 5, 4, direction: 1), G("Остановка", 17.8f, -35.6f, 0, 4.5f, 7, 2, whole: true, tolerance: 12) },
-                        new[] { G("Налево на кольцо", 10, -30.5f, 270, 6, 6, direction: 1) }),
+                        new[] { G("Начало движения", 17.8f, -37.6f, 0, 5, 4, direction: 1).Signal(-1), G("Остановка", 17.8f, -35.6f, 0, 4.5f, 7, 2, whole: true, tolerance: 12) },
+                        new[] { G("Налево на кольцо", 10, -30.5f, 270, 6, 6, direction: 1).Signal(-1) }),
                     L("crossing", "У2 · Пешеходный переход", "Остановитесь перед переходом, затем проезжайте.", 10, -30.5f, 270,
-                        new[] { G("Остановка перед переходом", 5.8f, -30.5f, 270, 4.5f, 6, 2, whole: true), G("Проезд перехода", -4, -30.5f, 270, 5, 6, direction: 1) },
+                        new[] { G("Остановка перед переходом", 5.8f, -30.5f, 270, 4.5f, 6, 2, whole: true).Line(3.7f), G("Проезд перехода", -4, -30.5f, 270, 5, 6, direction: 1) },
                         new[] { G("К боксу", -9, -30.5f, 270, 6, 5, direction: 1) }),
                     L("boxpark", "У6 · Въезд в бокс", "Поверните направо в коридор, проедьте за стоп-линию, въедьте в бокс задним ходом. Выезд направо.", -8, -30.5f, 270,
-                        new[] { G("Въезд в коридор", -15, -25.5f, 0, 7, 5, direction: 1), G("За стоп-линию", -15, -17.5f, 0, 7, 8, direction: 1),
-                                G("Бокс задним ходом", -21.9f, -17.4f, 90, 3.3f, 5.6f, 2, -1, true, tolerance: 10), G("Выезд из бокса", -15, -21, 180, 7, 6, direction: 1) },
-                        new[] { G("Направо на кольцо", -20, -30.5f, 270, 6, 6, direction: 1), G("Западное кольцо на север", -43.9f, -5, 0, 6, 8, direction: 1) }),
+                        new[] { G("Въезд в коридор", -15, -25.5f, 0, 7, 5, direction: 1).Signal(1), G("За стоп-линию", -15, -17.5f, 0, 7, 8, direction: 1),
+                                G("Бокс задним ходом", -21.9f, -17.4f, 90, 3.3f, 5.6f, 2, -1, true, tolerance: 10).Corrections(2), G("Выезд из бокса", -15, -21, 180, 7, 6, direction: 1).Signal(1) },
+                        new[] { G("Направо на кольцо", -20, -30.5f, 270, 6, 6, direction: 1).Signal(1), G("Западное кольцо на север", -43.9f, -5, 0, 6, 8, direction: 1) }),
                     L("hill", "У3 · Эстакада", "Направо на полосу эстакады. Остановитесь у линии СТОП-1 на подъёме, троньтесь без отката, остановитесь у линии СТОП.", -34, RampZ, 90,
-                        new[] { G("Подъезд к эстакаде", -30.5f, RampZ, 90, 3.6f, 4, direction: 1), G("Остановка на подъёме (СТОП-1)", -25.6f, RampZ, 90, 3.6f, 6, 2, whole: true, tolerance: 12),
+                        new[] { G("Подъезд к эстакаде", -30.5f, RampZ, 90, 3.6f, 4, direction: 1).Signal(1), G("Остановка на подъёме (СТОП-1)", -26.0f, RampZ, 90, 3.6f, 6, 2, whole: true, tolerance: 12).Line(2.4f),
                                 G("Спуск", -16, RampZ, 90, 3.6f, 4, direction: 1), G("Остановка у линии СТОП", -10.6f, RampZ, 90, 3.6f, 5.8f, 2, whole: true, tolerance: 15) },
                         new[] { G("К перекрёстку", 2, 10.5f, 90, 6, 6, direction: 1) }),
-                    L("junction", "У8 · Регулируемый перекрёсток", "Остановитесь перед стоп-линией, затем поверните налево (на север). Фазы светофора пока не оцениваются.", 0, 10.5f, 90,
-                        new[] { G("Перед стоп-линией", 3.6f, 10.5f, 90, 4.5f, 5.6f, 2, whole: true), G("Левый поворот", 17.8f, 25, 0, 5, 6, direction: 1) },
-                        new[] { G("Прямо до северной дороги", 17.8f, 37.5f, 0, 6, 6, direction: 1), G("Направо по северной дороге", 32, 44, 90, 6, 8, direction: 1),
+                    L("junction", "У8 · Регулируемый перекрёсток", "Остановитесь перед стоп-линией. На зелёный поверните налево (на север), уступив встречным; на красный — ждите.", 0, 10.5f, 90,
+                        new[] { G("Перед стоп-линией", 3.6f, 10.5f, 90, 4.5f, 5.6f, 2, whole: true).Line(2.8f), G("Левый поворот", 17.8f, 25, 0, 5, 6, direction: 1).Signal(-1) },
+                        new[] { G("Прямо до северной дороги", 17.8f, 37.5f, 0, 6, 6, direction: 1), G("Направо по северной дороге", 32, 44, 90, 6, 8, direction: 1).Signal(1),
                                 G("Восточное кольцо на юг", 44, 40, 180, 6, 5, direction: 1) }),
                     L("parallel", "У7 · Параллельная парковка", "Направо в полосу. Проедьте место, припаркуйтесь задним ходом, выезжайте направо (на север).", 44, 40, 180,
-                        new[] { G("Въезд в полосу", 39, 34.3f, 270, 4.5f, 5, direction: 1), G("Проезд мимо места", 26, 34.3f, 270, 4.5f, 5, direction: 1),
-                                G("Парковка задним ходом", 33.6f, 37.75f, 270, 3.3f, 8.6f, 2, -1, true, tolerance: 10), G("Выезд из места", 23.5f, 34.3f, 270, 4.5f, 5, direction: 1) },
-                        new[] { G("Направо на север", 17.8f, 40, 0, 6, 5, direction: 1), G("Направо по северной дороге", 32, 44, 90, 6, 8, direction: 1),
+                        new[] { G("Въезд в полосу", 39, 34.3f, 270, 4.5f, 5, direction: 1).Signal(1), G("Проезд мимо места", 26, 34.3f, 270, 4.5f, 5, direction: 1),
+                                G("Парковка задним ходом", 33.6f, 37.75f, 270, 3.3f, 8.6f, 2, -1, true, tolerance: 10).Corrections(2), G("Выезд из места", 23.5f, 34.3f, 270, 4.5f, 5, direction: 1).Signal(-1) },
+                        new[] { G("Направо на север", 17.8f, 40, 0, 6, 5, direction: 1).Signal(1), G("Направо по северной дороге", 32, 44, 90, 6, 8, direction: 1).Signal(1),
                                 G("Восточное кольцо на юг", 44, 18, 180, 6, 8, direction: 1) }),
                     L("slalom", "У5 · Змейка", "Направо в змейку, пройдите её без касаний, на выезде — направо.", 44, 14, 180,
-                        new[] { G("Въезд в змейку", 38, 1, 270, 4.5f, 5, direction: 1), G("Изгиб", 31, -3, 180, 5, 5, direction: 1), G("Выезд", 25, -9.05f, 270, 4.5f, 5, direction: 1) },
-                        new[] { G("Направо на север", 17.8f, -3, 0, 6, 6, direction: 1), G("Прямо через перекрёсток", 17.8f, 25, 0, 6, 6, direction: 1),
-                                G("Налево на полосу разгона", 9, 47, 270, 6, 6, direction: 1) }),
+                        new[] { G("Въезд в змейку", 38, 1, 270, 4.5f, 5, direction: 1).Signal(1), G("Изгиб", 31, -3, 180, 5, 5, direction: 1), G("Выезд", 25, -9.05f, 270, 4.5f, 5, direction: 1) },
+                        new[] { G("Направо на север", 17.8f, -3, 0, 6, 6, direction: 1).Signal(1), G("Прямо через перекрёсток", 17.8f, 25, 0, 6, 6, direction: 1),
+                                G("Налево на полосу разгона", 9, 47, 270, 6, 6, direction: 1).Signal(-1) }),
                     L("shiftbrake", "У10 · Полоса разгона", "Разгонитесь, включите вторую передачу, затем остановитесь в рамке.", 9, 47, 270,
                         new[] { G("Вторая передача", -10, 47, 270, 4, 14, gear: 2, speed: 5, direction: 1), G("Торможение", -31, 47, 270, 4, 7, 2, whole: true) },
                         new[] { G("Западное кольцо на юг", -47, 41, 180, 6, 4, direction: 1) }),
                     L("railway", "У9 · Железнодорожный переезд", "Остановитесь перед стоп-линией, затем пересеките пути.", -47, 41, 180,
-                        new[] { G("Остановка перед путями", -47, 38.9f, 180, 4, 5.6f, 2, whole: true), G("Переезд", -47, 25, 180, 5, 6, direction: 1) },
+                        new[] { G("Остановка перед путями", -47, 38.9f, 180, 4, 5.6f, 2, whole: true).Line(2.9f), G("Переезд", -47, 25, 180, 5, 6, direction: 1) },
                         new[] { G("Западное кольцо на юг", -47, 0, 180, 6, 8, direction: 1), G("Южная дорога на восток", -10, -33.5f, 90, 6, 8, direction: 1),
-                                G("Налево на север", 17.8f, -20, 0, 6, 6, direction: 1), G("Налево на запад", 5, 13.5f, 270, 6, 6, direction: 1) }),
+                                G("Налево на север", 17.8f, -20, 0, 6, 6, direction: 1).Signal(-1), G("Налево на запад", 5, 13.5f, 270, 6, 6, direction: 1).Signal(-1) }),
                     L("90turns", "У4 · Повороты на 90°", "Направо в коридор, пройдите два поворота, на выезде — направо.", -8, 13.5f, 270,
-                        new[] { G("Въезд в коридор", -21, 19, 0, 4.5f, 4, direction: 1), G("Первый поворот", -27, 30.7f, 270, 4.5f, 5, direction: 1),
+                        new[] { G("Въезд в коридор", -21, 19, 0, 4.5f, 4, direction: 1).Signal(1), G("Первый поворот", -27, 30.7f, 270, 4.5f, 5, direction: 1),
                                 G("Второй поворот", -32.5f, 36.5f, 0, 4.5f, 5, direction: 1) },
-                        new[] { G("Направо по северной дороге", -15, 44, 90, 6, 8, direction: 1), G("Направо на юг", 14.8f, 30, 180, 6, 6, direction: 1),
+                        new[] { G("Направо по северной дороге", -15, 44, 90, 6, 8, direction: 1).Signal(1), G("Направо на юг", 14.8f, 30, 180, 6, 6, direction: 1).Signal(1),
                                 G("Прямо через перекрёсток", 14.8f, -3, 180, 6, 6, direction: 1) }),
                     L("finish", "Финиш", "Прямо на юг через кольцо к стартовой площадке, остановитесь в рамке.", 14.8f, -25, 180,
                         new[] { G("Финиш", 14.8f, -37.3f, 180, 4.5f, 6.5f, 3, whole: true) }, none)

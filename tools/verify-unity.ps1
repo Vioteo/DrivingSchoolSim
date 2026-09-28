@@ -3,7 +3,7 @@
 #   powershell -ExecutionPolicy Bypass -File tools\verify-unity.ps1
 # Что делает:
 #   1. tools\check.ps1 — компиляция + все EditMode-тесты (если не собралось — дальше не идём);
-#   2. генераторы: UI-префабы, полигон машины, транспорт, пешеходы (каждый — отдельный запуск Unity);
+#   2. генераторы: UI-префабы, полигон машины, учебная улица и автодром (строятся из полигона), транспорт, пешеходы (каждый — отдельный запуск Unity);
 #   3. печатает сводку и что осталось проверить руками в Play Mode.
 # Итог пишется в artifacts\reports\verify-<время>.md — его можно прислать Claude целиком.
 # Генераторы меняют сцены/префабы/материалы: после прогона посмотрите `git status` и закоммитьте
@@ -62,6 +62,8 @@ if ($SkipTests) {
 $steps = @(
     @{ Name = 'UI: префабы меню/HUD';    Method = 'DrivingSchool.Editor.UIBuilder.BuildAll';                Marker = 'UI_PREFABS_BUILT' },
     @{ Name = 'Полигон машины (сцена)';  Method = 'DrivingSchool.Editor.VehicleTestRangeBuilder.Build';     Marker = 'VEHICLE_TEST_RANGE_BUILD_PASS' },
+    @{ Name = 'Учебная улица (сцена)';   Method = 'DrivingSchool.Editor.LessonStreetBuilder.Build';         Marker = 'LESSON_STREET_BUILD_PASS' },
+    @{ Name = 'Автодром (сцена, курс)';  Method = 'DrivingSchool.Editor.TrainingGroundBuilder.Build';       Marker = 'TRAINING_GROUND_BUILD_PASS' },
     @{ Name = 'Транспорт (импорт+демо)'; Method = 'DrivingSchool.Editor.TransitKitBuilder.Build';           Marker = 'TRANSIT_UNITY_PASS' },
     @{ Name = 'Пешеходы (импорт+шоурум)'; Method = 'DrivingSchool.Editor.PedestrianAssetBuilder.Build';     Marker = 'PEDESTRIAN_IMPORT_PASS' }
 )

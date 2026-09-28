@@ -14,11 +14,19 @@ using UnityEngine.SceneManagement;
 
 namespace DrivingSchool.Editor
 {
-    /// <summary>Additive, reproducible scene assembly; never invokes ProjectBuilder.Prepare.</summary>
+    /// <summary>
+    /// Reproducible scene assembly; never invokes ProjectBuilder.Prepare. Since T68 the autodrome is built on top of the
+    /// assembled vehicle test range (VehicleTestRange.unity) like the lesson street: the player cars, driver camera,
+    /// weather, post FX and the range director are kept, the range's world is removed and the autodrome is built in
+    /// its place. Build the test range first, then the autodrome.
+    /// </summary>
     public static partial class TrainingGroundBuilder
     {
         const string Base = "Assets/DrivingSchool";
         public const string ScenePath = Base + "/Scenes/Autodrome_Training.unity";
+        const string SourceScene = Base + "/Scenes/VehicleTestRange.unity";
+        static readonly string[] KeepComponents =
+            { "VehicleController", "WeatherController", "VehicleTestRangeDirector", "PlayerVehicleSelector", "DriverCameraRig" };
         const string Kit = Base + "/Prefabs/TrainingKit/";
         const string Data = Base + "/Data/Training/course-v2.json";
         static Material asphalt, zoneAsphalt, white, yellow, grass, concrete, teal, leafMat, trunkMat, gravelMat;
@@ -54,7 +62,10 @@ namespace DrivingSchool.Editor
             if (!leafMat) leafMat = Mat("Leaf", new Color(0.18f, 0.38f, 0.15f), 0.15f);
             if (!trunkMat) trunkMat = Mat("Trunk", new Color(0.35f, 0.22f, 0.14f), 0.10f);
             
-            var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            if (!File.Exists(SourceScene)) throw new InvalidOperationException("Нет " + SourceScene + " — сначала соберите тестовый полигон (Driving School/Vehicle Test Range/Build scene).");
+            var scene = EditorSceneManager.OpenScene(SourceScene, OpenSceneMode.Single);
+            foreach (var root in scene.GetRootGameObjects())
+                if (!KeepRoot(root)) UnityEngine.Object.DestroyImmediate(root);
             environment = new GameObject("01 / TERRAIN AND SURFACES").transform;
             markings = new GameObject("02 / MARKINGS AND LESSON ZONES").transform;
             props = new GameObject("03 / MODELS AND FACILITIES").transform;
@@ -90,8 +101,7 @@ namespace DrivingSchool.Editor
                 }
             }
             
-            CreatePlayer(course); 
-            Lighting();
+            SetupPlayer(course);
             
             Physics.SyncTransforms(); 
             ValidateScene(course);
@@ -254,29 +264,42 @@ namespace DrivingSchool.Editor
         static CourseLesson L(string id, string title, string briefing, float x, float z, float yaw, CourseGate[] gates, CourseGate[] transfer)
             => new CourseLesson { id = id, title = title, briefing = briefing, startX = x, startZ = z, startYaw = yaw, gates = gates, transfer = transfer };
 
-        static void CreatePlayer(TrainingCourse course)
+        static bool KeepRoot(GameObject root)
         {
-            var player = new GameObject("04 / PLAYER / layout test vehicle"); player.layer = 11;
-            var visual = (GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(Base + "/Prefabs/DS_Sedan_A.prefab"), player.transform);
-            visual.transform.localPosition = Vector3.zero;
-            visual.transform.localRotation = Quaternion.Euler(-90, 180, 0);
-            Bounds b = visual.GetComponentsInChildren<Renderer>()[0].bounds;
-            foreach (var r in visual.GetComponentsInChildren<Renderer>()) b.Encapsulate(r.bounds);
-            visual.transform.localPosition = -new Vector3(b.center.x, b.min.y, b.center.z);
-            foreach (var c in visual.GetComponentsInChildren<Collider>()) UnityEngine.Object.DestroyImmediate(c);
-            var body = player.AddComponent<Rigidbody>(); body.mass = 1350f; body.interpolation = RigidbodyInterpolation.Interpolate;
-            var hull = player.AddComponent<BoxCollider>(); hull.center = new Vector3(0, .75f, 0); hull.size = new Vector3(course.vehicleWidth, 1.5f, course.vehicleLength);
-            var vehicle = player.AddComponent<VehicleController>();
-            var adapter = player.GetComponent<VehiclePhysicsAdapter>();
-            adapter.vehicleJson = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/StreamingAssets/Examples/vehicle.json");
-            var cam = new GameObject("Main Camera", typeof(Camera), typeof(AudioListener)).GetComponent<Camera>(); cam.tag = "MainCamera";
-            cam.transform.position = new Vector3(-150, 165, -190); cam.transform.LookAt(Vector3.zero); cam.nearClipPlane = .1f; cam.farClipPlane = 800;
-            cam.backgroundColor = new Color(.58f, .72f, .88f); cam.clearFlags = CameraClearFlags.SolidColor; cam.GetUniversalAdditionalCameraData();
-            var director = new GameObject("05 / LESSONS AND EXAM").AddComponent<TrainingGroundDirector>(); director.vehicle = vehicle; director.view = cam;
+            if (root.GetComponent<Camera>() || root.GetComponent<Volume>()) return true;
+            var light = root.GetComponent<Light>(); if (light && light.type == LightType.Directional) return true;
+            return root.GetComponents<MonoBehaviour>().Any(c => c != null && KeepComponents.Contains(c.GetType().Name));
+        }
+
+        /// <summary>The kept range director and cars move to the autodrome start; teleports of the range are cleared (T68).</summary>
+        static void SetupPlayer(TrainingCourse course)
+        {
+            var range = UnityEngine.Object.FindAnyObjectByType<VehicleTestRangeDirector>();
+            if (range == null || range.player == null) throw new InvalidOperationException("В сцене полигона нет директора или машины игрока");
+            var first = course.lessons[0];
+            var spawn = new GameObject("SPAWN / autodrome start").transform; spawn.SetParent(markings);
+            spawn.SetPositionAndRotation(new Vector3(first.startX, .02f, first.startZ), Quaternion.Euler(0, first.startYaw, 0));
+            range.spawn = spawn; range.crashSpawn = null; range.railwaySpawn = null; range.hillSpawn = null; range.districtSpawn = null;
+            range.crossing = null; range.obstacleCar = null;
+            EditorUtility.SetDirty(range);
+            foreach (var car in UnityEngine.Object.FindObjectsByType<VehicleController>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+            {
+                car.transform.SetPositionAndRotation(spawn.position, spawn.rotation);
+                // Wheels stand only on the ground layer: cones, fence and posts (layer 10) are obstacles, not road.
+                var adapter = car.GetComponent<VehiclePhysicsAdapter>();
+                if (adapter != null) { adapter.groundMask = 1 << 9; EditorUtility.SetDirty(adapter); }
+            }
+            var weather = UnityEngine.Object.FindAnyObjectByType<WeatherController>();
+            if (weather != null)
+            {
+                weather.roadRenderers.Clear();
+                weather.roadRenderers.AddRange(environment.GetComponentsInChildren<Renderer>().Where(r => r.gameObject.layer == 9 || r.name.StartsWith("TG_RoadSurface", StringComparison.Ordinal)));
+                EditorUtility.SetDirty(weather);
+            }
+            var director = new GameObject("05 / LESSONS AND EXAM").AddComponent<TrainingGroundDirector>();
+            director.vehicle = range.player;
             director.courseFile = AssetDatabase.LoadAssetAtPath<TextAsset>(Data);
             var marker = Outline(0, 0, 1, 1, teal, .06f); marker.name = "Active lesson target / practice assist"; director.marker = marker; marker.gameObject.SetActive(false);
-            player.transform.position = new Vector3(course.lessons[0].startX, 0, course.lessons[0].startZ);
-            player.transform.rotation = Quaternion.Euler(0, course.lessons[0].startYaw, 0);
         }
 
         public static void ParkedVehicle(Vector3 pos, float yaw)
@@ -295,28 +318,6 @@ namespace DrivingSchool.Editor
             var box = car.AddComponent<BoxCollider>();
             box.center = new Vector3(0, 0.75f, 0);
             box.size = new Vector3(2.1f, 1.5f, 4.5f);
-        }
-
-        static void Lighting()
-        {
-            var sun = new GameObject("Sun").AddComponent<Light>();
-            sun.type = LightType.Directional;
-            sun.intensity = 1.35f;
-            sun.color = new Color(1.0f, 0.98f, 0.94f);
-            sun.shadows = LightShadows.Soft;
-            sun.shadowNormalBias = 0.1f;
-            sun.shadowBias = 0.05f;
-            sun.transform.rotation = Quaternion.Euler(42, -35, 0);
-
-            RenderSettings.ambientMode = AmbientMode.Trilight;
-            RenderSettings.ambientSkyColor = new Color(0.65f, 0.76f, 0.90f);
-            RenderSettings.ambientEquatorColor = new Color(0.52f, 0.58f, 0.62f);
-            RenderSettings.ambientGroundColor = new Color(0.26f, 0.32f, 0.22f);
-
-            RenderSettings.fog = true;
-            RenderSettings.fogMode = FogMode.Exponential;
-            RenderSettings.fogColor = new Color(0.70f, 0.80f, 0.90f);
-            RenderSettings.fogDensity = 0.0022f;
         }
 
         static void ValidateScene(TrainingCourse course)
