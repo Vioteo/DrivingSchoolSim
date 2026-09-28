@@ -28,10 +28,14 @@ namespace DrivingSchool.Tests
                 var g=s.CurrentGate;int gear=g.direction<0?-1:Mathf.Max(1,g.minimumGear);
                 // Gate telemetry replay validates content/state transitions, not vehicle manoeuvrability.
                 float speed=g.direction<0?-1:Mathf.Max(1,g.minimumSpeed);
-                s.Tick(.02f,g.x,g.z,g.yaw,speed,gear);
-                if(g.holdSeconds>0 && ReferenceEquals(s.CurrentGate,g))s.Tick(g.holdSeconds+.02f,g.x,g.z,g.yaw,0,gear);
+                // Указатель поворота, которого ждёт рамка (T68), включён при подъезде.
+                var at=new CourseInput{x=g.x,z=g.z,yaw=g.yaw,signedSpeed=speed,gear=gear,leftIndicator=g.signal<0,rightIndicator=g.signal>0};
+                s.Tick(.02f,at);
+                at.signedSpeed=0;
+                if(g.holdSeconds>0 && ReferenceEquals(s.CurrentGate,g))s.Tick(g.holdSeconds+.02f,at);
             }
             Assert.That(s.Phase,Is.EqualTo(CoursePhase.Passed),"Replay "+index+" exam="+exam+" "+s.Message);
+            Assert.That(s.Faults,Is.Empty,"Replay "+index+" exam="+exam+": a clean drive has no faults — "+(s.Faults.Count>0?s.Faults[0].title:""));
         }
         Keyboard keyboard;
         VehicleController vehicle;
