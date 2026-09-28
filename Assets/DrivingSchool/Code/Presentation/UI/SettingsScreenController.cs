@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DrivingSchool.Audio;
 using DrivingSchool.Settings;
 using TMPro;
 using UnityEngine;
@@ -194,7 +195,9 @@ namespace DrivingSchool.Presentation.UI
         public void Step(SettingItem item, int dir)
         {
             if (item == null || !item.IsValue || !SettingsSession.CanChange(Availability(item))) return;
-            SetValue(item, item.Next(Session.Get(item.Key), dir));
+            int before = Session.Get(item.Key);
+            SetValue(item, item.Next(before, dir));
+            if (Session.Get(item.Key) != before) UISound.Play(SoundClips.Ui.Tick);
         }
 
         public void SetValue(SettingItem item, int value)
@@ -211,6 +214,7 @@ namespace DrivingSchool.Presentation.UI
             var av = Availability(item);
             if (item.Kind == SettingKind.Action)
             {
+                UISound.Play(SoundClips.Ui.Confirm);
                 if (av == SettingAvailability.NoWheel) { ShowToast("Руль G29 не подключён"); return; }
                 if (item.Key == "controls.calibrate") { Setup().OpenCalibration(); return; }
                 if (item.Key == "controls.rebind") { Setup().OpenRebind(); return; }
@@ -477,15 +481,15 @@ namespace DrivingSchool.Presentation.UI
 
             if (IsDialogOpen)
             {
-                if (back) DialogChoose(dialogSafe);
-                else if (confirm) DialogChoose(dialogFocus);
-                else if (dir.x != 0) MoveDialogFocus(dir.x);
+                if (back) { UISound.Play(SoundClips.Ui.Back); DialogChoose(dialogSafe); }
+                else if (confirm) { UISound.Play(SoundClips.Ui.Confirm); DialogChoose(dialogFocus); }
+                else if (dir.x != 0) { UISound.Play(SoundClips.Ui.Move); MoveDialogFocus(dir.x); }
                 return;
             }
-            if (back) { Back(); return; }
-            if (MenuInput.TabPrev) { SwitchTab(TabIndex - 1); return; }
-            if (MenuInput.TabNext) { SwitchTab(TabIndex + 1); return; }
-            if (MenuInput.ResetItem) { ResetFocused(); return; }
+            if (back) { UISound.Play(SoundClips.Ui.Back); Back(); return; }
+            if (MenuInput.TabPrev) { UISound.Play(SoundClips.Ui.Tab); SwitchTab(TabIndex - 1); return; }
+            if (MenuInput.TabNext) { UISound.Play(SoundClips.Ui.Tab); SwitchTab(TabIndex + 1); return; }
+            if (MenuInput.ResetItem) { UISound.Play(SoundClips.Ui.Tick); ResetFocused(); return; }
 
             if (zone == Zone.Rows)
             {
@@ -494,6 +498,7 @@ namespace DrivingSchool.Presentation.UI
                     int next = focus - dir.y;   // вверх = +1 по оси, но −1 по списку
                     if (next >= rows.Count) { zone = Zone.Buttons; buttonFocus = Session.IsDirty ? 2 : 0; }
                     else focus = Mathf.Clamp(next, 0, rows.Count - 1);
+                    UISound.Play(SoundClips.Ui.Move);
                     RefreshAll(); EnsureFocusVisible();
                 }
                 else if (dir.x != 0) Step(FocusedItem, dir.x);
@@ -501,9 +506,10 @@ namespace DrivingSchool.Presentation.UI
             }
             else
             {
-                if (dir.y > 0) { zone = Zone.Rows; focus = rows.Count - 1; RefreshAll(); EnsureFocusVisible(); }
+                if (dir.y > 0) { zone = Zone.Rows; focus = rows.Count - 1; UISound.Play(SoundClips.Ui.Move); RefreshAll(); EnsureFocusVisible(); }
                 else if (dir.x != 0)
                 {
+                    UISound.Play(SoundClips.Ui.Move);
                     for (int n = 0; n < 3; n++)
                     {
                         buttonFocus = (buttonFocus + dir.x + 3) % 3;
@@ -511,7 +517,7 @@ namespace DrivingSchool.Presentation.UI
                     }
                     RefreshAll();
                 }
-                else if (confirm && bottomButtons[buttonFocus].interactable) bottomButtons[buttonFocus].onClick.Invoke();
+                else if (confirm && bottomButtons[buttonFocus].interactable) { UISound.Play(SoundClips.Ui.Confirm); bottomButtons[buttonFocus].onClick.Invoke(); }
             }
         }
 

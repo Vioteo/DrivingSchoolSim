@@ -1,4 +1,5 @@
 using System;
+using DrivingSchool.Audio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,7 +12,7 @@ namespace DrivingSchool.Presentation.UI
     /// полоса акцента слева, мягкий фон, текст цвета акцента. Transition у Selectable = None, цвета берутся из темы.
     /// </summary>
     [RequireComponent(typeof(Selectable))]
-    public sealed class MenuItemView : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler
+    public sealed class MenuItemView : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, ISubmitHandler, IPointerClickHandler
     {
         public Image background;
         public Image focusBar;
@@ -25,7 +26,7 @@ namespace DrivingSchool.Presentation.UI
         public Selectable Selectable => selectable != null ? selectable : selectable = GetComponent<Selectable>();
         public bool IsFocused => focused;
 
-        void OnEnable() { UIThemeState.Changed += OnThemeChanged; Refresh(); }
+        void OnEnable() { UIThemeState.Changed += OnThemeChanged; Refresh(); UISound.MuteMoves(0.25f); }   // первый фокус экрана ставит код — без щелчка
         void OnDisable() { UIThemeState.Changed -= OnThemeChanged; }
         void OnThemeChanged(UITheme _) { Refresh(); }
 
@@ -41,9 +42,18 @@ namespace DrivingSchool.Presentation.UI
 
         public void SetFocused(bool value)
         {
+            bool was = focused;
             focused = value;
             Refresh();
+            if (value && !was && Selectable.IsInteractable()) UISound.Play(SoundClips.Ui.Move);
             if (value) Focused?.Invoke(this);
+        }
+
+        // T67: звук выбора. Button получает те же события и выполняет действие.
+        public void OnSubmit(BaseEventData eventData) { if (Selectable.IsInteractable()) UISound.Play(SoundClips.Ui.Confirm); }
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.button == PointerEventData.InputButton.Left && Selectable.IsInteractable()) UISound.Play(SoundClips.Ui.Confirm);
         }
 
         public void Refresh()

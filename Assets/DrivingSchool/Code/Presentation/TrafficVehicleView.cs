@@ -64,6 +64,12 @@ namespace DrivingSchool.Presentation
         {
             host = owner; id = agentId; placed = false;
             body = GetComponent<Rigidbody>();
+            if (Application.isPlaying)
+            {
+                var audio = GetComponent<TrafficVehicleAudio>();                         // T67: engine note
+                if (audio == null) audio = gameObject.AddComponent<TrafficVehicleAudio>();
+                audio.ResetMotion();
+            }
             body.isKinematic = true;
             body.interpolation = RigidbodyInterpolation.Interpolate;
             if (wheels == null) { FindWheels(); if (model != null) { modelRest = model.localRotation; modelRestPos = model.localPosition; } }

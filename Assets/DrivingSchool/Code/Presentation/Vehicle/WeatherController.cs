@@ -54,6 +54,7 @@ namespace DrivingSchool.Presentation
             snow = CreatePrecipitation("Snow", true);
             ShieldVehicles(rain); ShieldVehicles(snow);
             SetPreset(preset, true);
+            if (GetComponent<AmbientAudio>() == null) gameObject.AddComponent<AmbientAudio>();   // T67: city, wind, rain, birds
         }
 
         void OnDestroy()

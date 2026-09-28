@@ -146,7 +146,7 @@ namespace DrivingSchool.Tests
             Assert.That(SettingsSession.Availability(Item("graphics.fpsLimit"), s, false, false), Is.EqualTo(SettingAvailability.Enabled));
             s.controls.device = 1;
             Assert.That(SettingsSession.Availability(Item("controls.keyboardSteerSpeed"), s, false, true), Is.EqualTo(SettingAvailability.KeyboardOnly));
-            Assert.That(SettingsSession.Availability(Item("audio.engine"), s, false, false), Is.EqualTo(SettingAvailability.Stub));
+            Assert.That(SettingsSession.Availability(Item("audio.instructor"), s, false, false), Is.EqualTo(SettingAvailability.Stub));   // звук двигателя появился в T67, голоса инструктора ещё нет
             Assert.That(SettingsSession.CanChange(SettingAvailability.Stub), Is.True, "Заглушка сохраняет значение заранее");
             Assert.That(SettingsSession.CanChange(SettingAvailability.NoWheel), Is.False);
         }

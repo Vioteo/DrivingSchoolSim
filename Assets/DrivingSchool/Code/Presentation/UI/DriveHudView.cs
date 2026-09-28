@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DrivingSchool.Audio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -59,6 +60,7 @@ namespace DrivingSchool.Presentation.UI
             while (cards.Count >= MaxCards) { Kill(cards[0].go); cards.RemoveAt(0); }
             var go = Instantiate(cardTemplate, cardsRoot);
             go.SetActive(true);
+            UISound.Play(SoundClips.Ui.Alert);   // T67: сигнал замечания
             var v = go.GetComponent<DriveHudCard>();
             v.title.text = title; v.reference.text = reference; v.advice.text = advice;
             float now = Time.unscaledTime;
@@ -171,7 +173,13 @@ namespace DrivingSchool.Presentation.UI
             hintPanel.gameObject.SetActive(hint);
             if (!hint) { shownHint = null; return; }
             if (float.IsNaN(hintBaseY)) hintBaseY = hintPanel.anchoredPosition.y;
-            if (m.hintText != shownHint) { shownHint = m.hintText; hintBorn = now; }
+            if (m.hintText != shownHint)
+            {
+                shownHint = m.hintText; hintBorn = now;
+                // T67: новая подсказка — мягкий сигнал; опасность — тревожный; замечание звучит вместе с карточкой.
+                if (m.hintKind == 0) UISound.Play(SoundClips.Ui.Alert);
+                else if (m.hintKind >= 2) UISound.Play(SoundClips.Ui.Hint);
+            }
             float p = Mathf.Clamp01((now - hintBorn) / FadeIn);
             float e = 1f - (1f - p) * (1f - p);
             hintGroup.alpha = e;

@@ -13,6 +13,7 @@
     "Unity.RenderPipelines.Universal.Runtime",
     "Unity.RenderPipelines.Core.Runtime",
     "DS.Settings",
+    "DS.Audio",
     "DS.Presentation.UI"
   ]
 }

@@ -28,6 +28,7 @@ namespace DrivingSchool.Presentation
             Adapter = GetComponent<VehiclePhysicsAdapter>();
             Source = Keyboard;
             Keyboard.automatic = Adapter.transmission == TransmissionType.Automatic;
+            if (Application.isPlaying && GetComponent<VehicleAudio>() == null) gameObject.AddComponent<VehicleAudio>();   // T67
         }
 
         void Update()

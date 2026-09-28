@@ -299,9 +299,9 @@ namespace DrivingSchool.Presentation
 
         static AudioClip HornClip()
         {
-            int rate = 44100, n = rate / 2; var d = new float[n]; // two-tone horn, 420/500 Hz, loops seamlessly (integer cycles)
-            for (int i = 0; i < n; i++) { float t = i / (float)rate; d[i] = 0.3f * Mathf.Sign(Mathf.Sin(2 * Mathf.PI * 420f * t)) + 0.3f * Mathf.Sign(Mathf.Sin(2 * Mathf.PI * 500f * t)); }
-            var c = AudioClip.Create("horn", n, 1, rate, false); c.SetData(d, 0); return c;
+            // Two-tone horn 420/500 Hz, a seamless loop (T67: filtered instead of a raw square buzz).
+            const int rate = 44100; var d = DrivingSchool.Audio.SoundClips.Horn(rate);
+            var c = AudioClip.Create("horn", d.Length, 1, rate, false); c.SetData(d, 0); return c;
         }
 
         void LateUpdate()

@@ -38,6 +38,9 @@ namespace DrivingSchool.Presentation
         public Phase Current { get; private set; } = Phase.Open;
         public bool IsClosedForTraffic => Current != Phase.Open;
         public float TrainDistanceToCrossing { get; private set; } = float.PositiveInfinity;
+        public bool TrainRunning => trainRunning;
+        /// <summary>Front of the train on the track axis (world); meaningful while <see cref="TrainRunning"/>.</summary>
+        public Vector3 TrainFront => crossingCentre + trainDirection * (float.IsInfinity(trainS) ? trackHalfLength : trainS);
 
         sealed class Boom { public Transform pivot; public Quaternion closed, open; public List<Material> lamps = new List<Material>(); }
         readonly List<Boom> booms = new List<Boom>();
@@ -60,6 +63,12 @@ namespace DrivingSchool.Presentation
                 ShowTrain(false);
             }
             trainDirection.y = 0f; trainDirection.Normalize();
+            if (train != null && Application.isPlaying)
+            {
+                var sound = new GameObject("TrainAudio").AddComponent<TrainAudio>();   // T67: rumble, clacks, horn
+                sound.transform.SetParent(transform, false);
+                sound.crossing = this;
+            }
             ApplyBooms(0f);
             SetLamps(false, false, true);
         }
@@ -117,7 +126,7 @@ namespace DrivingSchool.Presentation
             if (warning && Current != Phase.Raising)
             {
                 bellTimer -= dt;
-                if (bellTimer <= 0f) { bellTimer = 0.42f; foreach (var s in bells) s.PlayOneShot(BellClip(), 0.7f); }
+                if (bellTimer <= 0f) { bellTimer = 0.42f; float env = DrivingSchool.Settings.AudioMix.Current(DrivingSchool.Settings.AudioChannel.Environment); foreach (var s in bells) s.PlayOneShot(BellClip(), 0.7f * env); }
             }
             else bellTimer = 0f;
         }
