@@ -103,6 +103,11 @@ namespace DrivingSchool.Simulation.Traffic
 
         public void SetPlayer(PlayerSample sample) => player = sample;
 
+        /// <summary>The player on the graph after the last tick (invalid when off road or absent).</summary>
+        public LanePosition PlayerLane => playerPos;
+        public PlayerSample Player => player;
+        public double SimSeconds => now;
+
         public void OnChunkReady(int cx, int cz) { allChunksLoaded = false; loadedChunks.Add((cx, cz)); }
 
         public void OnChunkUnloaded(int cx, int cz)
@@ -184,6 +189,8 @@ namespace DrivingSchool.Simulation.Traffic
             }
             // 7. Kinematics.
             foreach (var a in Ordered()) Drive(a, before, dt);
+            // Indicators follow the car every tick (T65): off as soon as the turn is done, not up to a decision step later.
+            foreach (var a in agents) UpdateIndicators(a);
             ReleaseFinishedPermits();
             // 8. Spawn / despawn / level of detail.
             spawnClock += dt;
@@ -229,7 +236,6 @@ namespace DrivingSchool.Simulation.Traffic
             foreach (var a in Ordered())
             {
                 ExtendRoute(a);
-                UpdateIndicators(a);
                 if (a.Hazard) NotifyHazard(a);
                 RevokeIfSignalChanged(a);
                 var next = NextConnection(a, out double distance);
@@ -606,17 +612,44 @@ namespace DrivingSchool.Simulation.Traffic
 
         void UpdateIndicators(Agent a)
         {
-            var next = NextConnection(a, out double distance);
-            var m = next != null && distance < 40 || next != null && a.Car.CurrentPathId == next.Id ? next.Connection.maneuver : LaneManeuver.Straight;
-            a.Left = m == LaneManeuver.Left || m == LaneManeuver.UTurn;
-            a.Right = m == LaneManeuver.Right;
-            // A lane change is signalled from 30 m before it until the car is in the new lane (ПДД РФ 8.1–8.2).
-            if (m == LaneManeuver.Straight && next != null && IsLaneChange(next) && (distance < 30 || a.Car.CurrentPathId == next.Id))
-            {
-                double shift = LaneShift(next);
-                a.Left = shift < 0; a.Right = shift > 0;
-            }
+            int side = IndicatorSide(a.Car);
+            a.Left = side < 0; a.Right = side > 0;
         }
+
+        /// <summary>
+        /// Which indicator the car shows (−1 left, +1 right, 0 none), T65. ПДД РФ 8.1–8.2 (редакцию сверить): a turn is
+        /// signalled in advance and until it is done, a lane change from shortly before it until the car is in the new lane.
+        /// Only the next intersection counts: a car going straight through an intersection shows nothing there, even if it
+        /// turns at the one after (that would look like a turn here). Lane keeping on a lane-change stretch and level
+        /// crossings are not intersections: the look ahead passes them. Straight ring sections of a roundabout: no signal.
+        /// </summary>
+        public int IndicatorSide(LaneFollowerAgent car)
+        {
+            var current = index.Path(car.CurrentPathId);
+            if (current.IsConnection)
+            {
+                if (current.Connection.laneChange) return Math.Sign(LaneShift(current));
+                int turning = TurnSide(current.Connection.maneuver);
+                if (turning != 0) return turning;
+                if (index.IsIntersection(current.Connection.junctionId)) return 0;   // straight through: nothing until out of it
+            }
+            double turnLookahead = Math.Min(profile.TurnSignalMaxM, Math.Max(profile.TurnSignalMinM, car.CurrentSpeedMps * profile.TurnSignalSeconds));
+            var route = car.Route;
+            for (int i = car.RouteIndex + 1; i < route.Count; i++)
+            {
+                var p = index.Path(route[i]);
+                if (!p.IsConnection) continue;
+                double distance = car.DistanceAlongRoute(p.Id, 0) - car.Profile.LengthM / 2;
+                if (distance > profile.TurnSignalMaxM) return 0;
+                if (p.Connection.laneChange) return distance < profile.LaneChangeSignalM ? Math.Sign(LaneShift(p)) : 0;
+                if (!index.IsIntersection(p.Connection.junctionId)) continue;
+                int side = TurnSide(p.Connection.maneuver);
+                return side != 0 && distance < turnLookahead ? side : 0;
+            }
+            return 0;
+        }
+
+        static int TurnSide(LaneManeuver m) => m == LaneManeuver.Left || m == LaneManeuver.UTurn ? -1 : m == LaneManeuver.Right ? 1 : 0;
 
         readonly Dictionary<string, double> laneShift = new Dictionary<string, double>();
 
@@ -626,7 +659,9 @@ namespace DrivingSchool.Simulation.Traffic
             return v;
         }
 
-        bool IsLaneChange(PathInfo p) => p.IsConnection && p.Connection.maneuver == LaneManeuver.Straight && Math.Abs(LaneShift(p)) > 1.5;
+        /// <summary>A connection that moves to the neighbouring lane of the same road (marked in the graph, T65). Straight
+        /// connections through a junction can shift sideways too (1+1 into 2+2, a roundabout arc) — those are no lane change.</summary>
+        static bool IsLaneChange(PathInfo p) => p.IsConnection && p.Connection.laneChange;
 
         PathInfo NextConnection(Agent a, out double distance)
         {

@@ -29,6 +29,9 @@ namespace DrivingSchool.Simulation.Traffic
         public double HazardHoldSeconds = 5;      // after a contact the car stands with hazard lights, then drives on (T52)
         public double LaneChangeShare = 0.35;     // chance to take an optional lane change (T55)
         public double FinishedLingerSeconds = double.PositiveInfinity; // a car that left the graph vanishes after this even if the player sees it
+        // Indicators of the bots (T65): a turn is signalled this many seconds ahead at the current speed, within the bounds;
+        // a lane change from this distance before it starts.
+        public double TurnSignalSeconds = 4, TurnSignalMinM = 30, TurnSignalMaxM = 80, LaneChangeSignalM = 30;
     }
 
     /// <summary>What the host tells the director about the player's car each tick.</summary>
