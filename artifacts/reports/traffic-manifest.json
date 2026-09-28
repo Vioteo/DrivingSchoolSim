@@ -1,6 +1,6 @@
 {
   "revision": "traffic-v1",
-  "utc": "2026-09-20T05:56:42.913930+00:00",
+  "utc": "2026-09-28T07:25:50.882406+00:00",
   "exporter": "5.0.1",
   "units": "metres",
   "sourceAxes": "X right, Z up, front -Y",
@@ -990,7 +990,251 @@
       "fbxSha256": "5c67005e1b25212cd454a161be844c2a24448a611dc2fd808618ad477871f3d2",
       "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_NoParking_ZoneEnd.glb",
       "glbSha256": "94fafcccb997cc1886230c572542998e23950fe3957667d37fa8d5812d4c9101"
+    },
+    {
+      "catalogId": "DS_Sign_Speed20",
+      "label": "Ограничение 20",
+      "kind": "sign",
+      "boundsMin": [
+        -0.35499998927116394,
+        -0.09770000725984573,
+        0.0
+      ],
+      "boundsMax": [
+        0.35499998927116394,
+        0.17499999701976776,
+        2.805000066757202
+      ],
+      "dimensionsM": [
+        0.7099999785423279,
+        0.2727000042796135,
+        2.805000066757202
+      ],
+      "triangles": 1820,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_Speed20.fbx",
+      "fbxSha256": "297af88255357a0f14e3cc725e043c92781f6afdc0187b070bbda75952a7076f",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_Speed20.glb",
+      "glbSha256": "6fca75730e0e0258cae2a0b070018f2b506a9e632f97bb0309402be32a1b60f5"
+    },
+    {
+      "catalogId": "DS_Sign_SpeedEnd20",
+      "label": "Конец зоны ограничения 20",
+      "kind": "sign",
+      "boundsMin": [
+        -0.35499998927116394,
+        -0.10599999874830246,
+        0.0
+      ],
+      "boundsMax": [
+        0.35499998927116394,
+        0.17499999701976776,
+        2.805000066757202
+      ],
+      "dimensionsM": [
+        0.7099999785423279,
+        0.2809999957680702,
+        2.805000066757202
+      ],
+      "triangles": 1880,
+      "materials": [
+        "Traffic_Grey",
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_SpeedEnd20.fbx",
+      "fbxSha256": "adf3ba349eb4cb3f3aaf85fd46be94b9d8c31e3b3d807c315807ab8da3b45368",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_SpeedEnd20.glb",
+      "glbSha256": "ce3c473ea86c3b72f506eca2f14ea17e8919be942851c41c636853367e98f65e"
+    },
+    {
+      "catalogId": "DS_Sign_Bump",
+      "label": "Искусственная неровность (предупреждающий)",
+      "kind": "sign",
+      "boundsMin": [
+        -0.39837169647216797,
+        -0.10700000077486038,
+        0.0
+      ],
+      "boundsMax": [
+        0.39837169647216797,
+        0.17499999701976776,
+        2.859999895095825
+      ],
+      "dimensionsM": [
+        0.7967433929443359,
+        0.28199999779462814,
+        2.859999895095825
+      ],
+      "triangles": 952,
+      "materials": [
+        "Traffic_Ink",
+        "Traffic_Red",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_Bump.fbx",
+      "fbxSha256": "f0face16576b9c18d233e7b952e93533710e98b52a193b689d6f10f919bf23be",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_Bump.glb",
+      "glbSha256": "c107c633d43363694a69c67afdf09fd1d16cbaa6e1f8464f08889039c4a65fe4"
+    },
+    {
+      "catalogId": "DS_Sign_BumpInfo",
+      "label": "Искусственная неровность (информационный)",
+      "kind": "sign",
+      "boundsMin": [
+        -0.36000001430511475,
+        -0.10700000077486038,
+        0.0
+      ],
+      "boundsMax": [
+        0.36000001430511475,
+        0.17499999701976776,
+        2.809999942779541
+      ],
+      "dimensionsM": [
+        0.7200000286102295,
+        0.28199999779462814,
+        2.809999942779541
+      ],
+      "triangles": 976,
+      "materials": [
+        "Traffic_Blue",
+        "Traffic_Ink",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_BumpInfo.fbx",
+      "fbxSha256": "7e39b42814723c304f4e0eb260d197a2856a79137257d8c00fca98db67416f33",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_BumpInfo.glb",
+      "glbSha256": "cab9d862529625d88e76d9c2d70028624bc95990aa06503dd0f62053783c1030"
+    },
+    {
+      "catalogId": "DS_Sign_LaneDir_L_SR",
+      "label": "Направления движения по полосам: налево | прямо и направо",
+      "kind": "sign",
+      "boundsMin": [
+        -0.47999998927116394,
+        -0.10499999672174454,
+        0.0
+      ],
+      "boundsMax": [
+        0.47999998927116394,
+        0.17499999701976776,
+        2.869999885559082
+      ],
+      "dimensionsM": [
+        0.9599999785423279,
+        0.2799999937415123,
+        2.869999885559082
+      ],
+      "triangles": 1024,
+      "materials": [
+        "Traffic_Blue",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_LaneDir_L_SR.fbx",
+      "fbxSha256": "6d25b40978bdaaaddd3b5db36c1b7a40449e4ad4d473118cdf3aee7a8acb0f55",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_LaneDir_L_SR.glb",
+      "glbSha256": "98850be2f5902aa66c5e7d652274d7b494160edc56b4fee33facef46b9e47e1f"
+    },
+    {
+      "catalogId": "DS_Sign_LaneDir_L_LSR",
+      "label": "Направления движения по полосам: налево | налево, прямо и направо",
+      "kind": "sign",
+      "boundsMin": [
+        -0.47999998927116394,
+        -0.10499999672174454,
+        0.0
+      ],
+      "boundsMax": [
+        0.47999998927116394,
+        0.17499999701976776,
+        2.869999885559082
+      ],
+      "dimensionsM": [
+        0.9599999785423279,
+        0.2799999937415123,
+        2.869999885559082
+      ],
+      "triangles": 1056,
+      "materials": [
+        "Traffic_Blue",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_LaneDir_L_LSR.fbx",
+      "fbxSha256": "92c9429ee62e8f8e88eb11ebbf202f59860d49762d9ed730a8f39ab595606717",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_LaneDir_L_LSR.glb",
+      "glbSha256": "7dba996de6ce6cfc05fac78268fa42aad53e9fe8b4cd4fbedabb59ad6cf78ed1"
+    },
+    {
+      "catalogId": "DS_Sign_LaneDir1_LS",
+      "label": "Направления движения по полосе: налево и прямо",
+      "kind": "sign",
+      "boundsMin": [
+        -0.2800000011920929,
+        -0.10499999672174454,
+        0.0
+      ],
+      "boundsMax": [
+        0.2800000011920929,
+        0.17499999701976776,
+        2.869999885559082
+      ],
+      "dimensionsM": [
+        0.5600000023841858,
+        0.2799999937415123,
+        2.869999885559082
+      ],
+      "triangles": 968,
+      "materials": [
+        "Traffic_Blue",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_LaneDir1_LS.fbx",
+      "fbxSha256": "3fea559b1be3c0a8258c1c880c10bb45f3e61c5ca40c996a0ebde389ee7fe178",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_LaneDir1_LS.glb",
+      "glbSha256": "f095b4532017a1ece2cfd5da820e26eb239debdb9a407f24af9476eddb923994"
+    },
+    {
+      "catalogId": "DS_Sign_LaneDir1_SR",
+      "label": "Направления движения по полосе: прямо и направо",
+      "kind": "sign",
+      "boundsMin": [
+        -0.2800000011920929,
+        -0.10499999672174454,
+        0.0
+      ],
+      "boundsMax": [
+        0.2800000011920929,
+        0.17499999701976776,
+        2.869999885559082
+      ],
+      "dimensionsM": [
+        0.5600000023841858,
+        0.2799999937415123,
+        2.869999885559082
+      ],
+      "triangles": 968,
+      "materials": [
+        "Traffic_Blue",
+        "Traffic_Steel",
+        "Traffic_White"
+      ],
+      "fbx": "Assets\\DrivingSchool\\Art\\Traffic\\DS_Sign_LaneDir1_SR.fbx",
+      "fbxSha256": "10f1a6e3439782ca4313438b763171d08673eee12e400b726b2357a7a4e5f11b",
+      "glb": "artifacts\\visual-review\\traffic\\models\\DS_Sign_LaneDir1_SR.glb",
+      "glbSha256": "0e1254fd5e903bc0958d5a3b613f3c17befdaa0b8339c77940519d6e309b220c"
     }
   ],
-  "sourceSha256": "906ce70b6fa8ddd8e0c6c7dd8c6c0e8458fc12f6140617577d2878a608c2a945"
+  "sourceSha256": "72c9fcb21685839726f932aa49f9b1078ec0fbfa567b79f6d3f3bd2e71f2d62c"
 }
