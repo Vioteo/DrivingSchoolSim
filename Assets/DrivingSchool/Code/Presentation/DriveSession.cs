@@ -3,6 +3,7 @@ using DrivingSchool.Learning;
 using DrivingSchool.Presentation.UI;
 using DrivingSchool.Rules;
 using DrivingSchool.Settings;
+using DrivingSchool.Simulation.Traffic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
@@ -42,6 +43,9 @@ namespace DrivingSchool.Presentation
         SignalJunction junction; readonly SignalJunction.StopLineWatch stopLine = new SignalJunction.StopLineWatch();
         bool shiftLockShown;
         bool testRange;   // советы TestRangeInstructor и названия зон — только на самом полигоне
+        // Город (T65): правила по графу района — скорость по знакам, встречная, поворотники, полосы, дистанция, остановки.
+        TrafficDirectorHost traffic; PlayerRoadMonitor road; readonly CityRuleMonitor cityRules = new CityRuleMonitor();
+        double lastRoadSeconds = -1; float speedLimitKph; float shownLimitKph = -1;
         const float LessonIntroSeconds = 5f;
 
         public DriveLog Log => log;
@@ -86,6 +90,8 @@ namespace DrivingSchool.Presentation
             lastImpactTime = player.LastImpactTime;
             testRange = gameObject.scene.name == "VehicleTestRange";
             junction = FindAnyObjectByType<SignalJunction>();
+            traffic = FindAnyObjectByType<TrafficDirectorHost>();
+            if (traffic != null && traffic.Director != null) road = new PlayerRoadMonitor(traffic.Director);
             StartLesson();
             CreateMinimap();
             Debug.Log("[Drive] сессия полигона: HUD и инструктор включены");
@@ -188,8 +194,27 @@ namespace DrivingSchool.Presentation
                 hints.Post("shift-lock", HintKind.Error, "Селектор не сдвинулся: из P он выходит только с нажатым тормозом. Держите " + LessonControls.Format("{brake}") + " и переключайте.", 5, true);
             shiftLockShown = player.Keyboard.ShiftLockRefused;
             foreach (var ev in rules.Update(input)) Report(ev, pos);
+            StepCity(pos);
             if (lesson != null) StepLesson(dt, signal == SignalJunction.Signal.Stop ? LessonSignal.Stop : signal == SignalJunction.Signal.Go ? LessonSignal.Go : LessonSignal.None);
             else if (testRange) instructor.Update(hints, state, pos, player.transform.forward, director.crossing);
+        }
+
+        /// <summary>Правила города по фактам графа (T65): один раз на тик диспетчера трафика.</summary>
+        void StepCity(Vector3 pos)
+        {
+            speedLimitKph = 0f;
+            if (road == null || traffic == null || traffic.Director == null) return;
+            if (traffic.Director.SimSeconds == lastRoadSeconds) { speedLimitKph = shownLimitKph > 0 ? shownLimitKph : 0f; return; }
+            lastRoadSeconds = traffic.Director.SimSeconds;
+            var facts = road.Update();
+            speedLimitKph = facts.OnRoad ? facts.SpeedLimitKph : 0f;
+            foreach (var ev in cityRules.Update(facts)) Report(ev, pos);
+            // Новое ограничение скорости — инструктор напомнит (советы, не ошибки).
+            if (facts.OnRoad && Mathf.Abs(speedLimitKph - shownLimitKph) > 0.5f)
+            {
+                if (shownLimitKph > 0f) hints.Post("speed-limit", HintKind.Maneuver, $"Ограничение скорости {speedLimitKph:0} км/ч.", 4);
+                shownLimitKph = speedLimitKph;
+            }
         }
 
         void Report(RuleEvent ev, Vector3 pos)
@@ -206,7 +231,8 @@ namespace DrivingSchool.Presentation
             model.hudMode = Mathf.Clamp(s.gameplay.hud, 0, 2);
             model.cockpit = rig != null && rig.mode == DriverCameraRig.Mode.Cockpit;
             model.speedKph = Mathf.Abs(st.signedSpeedMps) * 3.6f;
-            model.overLimit = false;   // ограничений скорости на полигоне нет (нет знаков и данных дороги)
+            // Ограничение — из знаков района (T65); на полигоне вне района ограничений нет.
+            model.overLimit = speedLimitKph > 0f && model.speedKph > speedLimitKph + CityRuleMonitor.SpeedToleranceKph;
             model.manual = st.transmission == TransmissionType.Manual;
             model.gear = st.gear; model.gearCount = gearCount;
             model.selector = st.selector == AutomaticSelector.P ? 0 : st.selector == AutomaticSelector.R ? 1 : st.selector == AutomaticSelector.N ? 2 : 3;
