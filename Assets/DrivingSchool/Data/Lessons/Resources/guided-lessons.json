@@ -309,8 +309,42 @@
       "doneText": "Упражнение выполнено.",
       "steps": [
         {
+          "id": "prep-belt",
+          "text": "Подготовка к упражнению. Пристегните ремень — {belt}.",
+          "check": "Seatbelt",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-engine",
+          "text": "Запустите двигатель: на механике — выжмите сцепление ({clutch}); затем {ignition} и удерживайте {starter}.",
+          "check": "EngineRunning",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-m",
+          "text": "Выжмите сцепление ({clutch}) и включите первую передачу — {gear1}.",
+          "check": "Gear",
+          "value": 1,
+          "only": "manual",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-a",
+          "text": "Держите тормоз ({brake}) и переведите селектор в D — {drive}.",
+          "check": "Selector",
+          "selector": "D",
+          "only": "auto",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-handbrake-off",
+          "text": "Снимите машину со стояночного тормоза — {handbrake}.",
+          "check": "HandbrakeOff",
+          "skipAtGate": 1
+        },
+        {
           "id": "approach",
-          "text": "Подъезжайте к переходу не спеша и остановитесь перед ним ({brake}) на 2 секунды. На механике перед остановкой выжмите сцепление ({clutch}).",
+          "text": "Подъезжайте к переходу не спеша и остановитесь перед ним ({brake}) на 2 секунды — бампер не должен заходить на «зебру». На механике перед остановкой выжмите сцепление ({clutch}).",
           "check": "Gate",
           "value": 1
         },
@@ -330,6 +364,40 @@
       "briefing": "Въезд в бокс задним ходом и выезд.",
       "doneText": "Упражнение выполнено.",
       "steps": [
+        {
+          "id": "prep-belt",
+          "text": "Подготовка к упражнению. Пристегните ремень — {belt}.",
+          "check": "Seatbelt",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-engine",
+          "text": "Запустите двигатель: на механике — выжмите сцепление ({clutch}); затем {ignition} и удерживайте {starter}.",
+          "check": "EngineRunning",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-m",
+          "text": "Выжмите сцепление ({clutch}) и включите первую передачу — {gear1}.",
+          "check": "Gear",
+          "value": 1,
+          "only": "manual",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-a",
+          "text": "Держите тормоз ({brake}) и переведите селектор в D — {drive}.",
+          "check": "Selector",
+          "selector": "D",
+          "only": "auto",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-handbrake-off",
+          "text": "Снимите машину со стояночного тормоза — {handbrake}.",
+          "check": "HandbrakeOff",
+          "skipAtGate": 1
+        },
         {
           "id": "signal",
           "text": "Включите правый указатель — {right} — и поворачивайте в коридор.",
@@ -388,6 +456,40 @@
       "doneText": "Упражнение выполнено.",
       "steps": [
         {
+          "id": "prep-belt",
+          "text": "Подготовка к упражнению. Пристегните ремень — {belt}.",
+          "check": "Seatbelt",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-engine",
+          "text": "Запустите двигатель: на механике — выжмите сцепление ({clutch}); затем {ignition} и удерживайте {starter}.",
+          "check": "EngineRunning",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-m",
+          "text": "Выжмите сцепление ({clutch}) и включите первую передачу — {gear1}.",
+          "check": "Gear",
+          "value": 1,
+          "only": "manual",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-a",
+          "text": "Держите тормоз ({brake}) и переведите селектор в D — {drive}.",
+          "check": "Selector",
+          "selector": "D",
+          "only": "auto",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-handbrake-off",
+          "text": "Снимите машину со стояночного тормоза — {handbrake}.",
+          "check": "HandbrakeOff",
+          "skipAtGate": 1
+        },
+        {
           "id": "signal",
           "text": "Включите правый указатель — {right} — и поворачивайте к эстакаде.",
           "check": "IndicatorRight",
@@ -402,7 +504,7 @@
         },
         {
           "id": "stop1",
-          "text": "Остановитесь у линии СТОП-1 на подъёме: тормоз ({brake}) и сцепление ({clutch}). Постойте 2 секунды.",
+          "text": "Остановитесь на подъёме перед линией СТОП-1 (бампер — не дальше линии): тормоз ({brake}) и сцепление ({clutch}). Постойте 2 секунды.",
           "check": "Gate",
           "value": 2
         },
@@ -450,6 +552,40 @@
       "doneText": "Упражнение выполнено.",
       "steps": [
         {
+          "id": "prep-belt",
+          "text": "Подготовка к упражнению. Пристегните ремень — {belt}.",
+          "check": "Seatbelt",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-engine",
+          "text": "Запустите двигатель: на механике — выжмите сцепление ({clutch}); затем {ignition} и удерживайте {starter}.",
+          "check": "EngineRunning",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-m",
+          "text": "Выжмите сцепление ({clutch}) и включите первую передачу — {gear1}.",
+          "check": "Gear",
+          "value": 1,
+          "only": "manual",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-a",
+          "text": "Держите тормоз ({brake}) и переведите селектор в D — {drive}.",
+          "check": "Selector",
+          "selector": "D",
+          "only": "auto",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-handbrake-off",
+          "text": "Снимите машину со стояночного тормоза — {handbrake}.",
+          "check": "HandbrakeOff",
+          "skipAtGate": 1
+        },
+        {
           "id": "signal",
           "text": "Заранее включите левый указатель — {left}.",
           "check": "IndicatorLeft",
@@ -458,15 +594,16 @@
         },
         {
           "id": "stopline",
-          "text": "Остановитесь перед стоп-линией ({brake}) на 2 секунды. Следите за светофором.",
+          "text": "Остановитесь перед стоп-линией ({brake}) на 2 секунды: передний бампер — не дальше линии. Следите за светофором.",
           "check": "Gate",
           "value": 1
         },
         {
           "id": "turn",
-          "text": "Поворачивайте налево ({steer_left}): уступите встречным, не срезайте угол.",
+          "text": "Зелёный — поворачивайте налево ({steer_left}): уступите встречным, не срезайте угол.",
           "check": "Gate",
-          "value": 2
+          "value": 2,
+          "stopText": "Красный — стойте у стоп-линии и ждите зелёного. Указатель ({left}) не выключайте."
         }
       ]
     },
@@ -478,6 +615,40 @@
       "briefing": "Парковка задним ходом параллельно краю.",
       "doneText": "Упражнение выполнено.",
       "steps": [
+        {
+          "id": "prep-belt",
+          "text": "Подготовка к упражнению. Пристегните ремень — {belt}.",
+          "check": "Seatbelt",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-engine",
+          "text": "Запустите двигатель: на механике — выжмите сцепление ({clutch}); затем {ignition} и удерживайте {starter}.",
+          "check": "EngineRunning",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-m",
+          "text": "Выжмите сцепление ({clutch}) и включите первую передачу — {gear1}.",
+          "check": "Gear",
+          "value": 1,
+          "only": "manual",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-a",
+          "text": "Держите тормоз ({brake}) и переведите селектор в D — {drive}.",
+          "check": "Selector",
+          "selector": "D",
+          "only": "auto",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-handbrake-off",
+          "text": "Снимите машину со стояночного тормоза — {handbrake}.",
+          "check": "HandbrakeOff",
+          "skipAtGate": 1
+        },
         {
           "id": "signal",
           "text": "Включите правый указатель — {right} — и заезжайте в полосу.",
@@ -521,7 +692,7 @@
         },
         {
           "id": "exit",
-          "text": "Выезжайте из места вперёд: первая передача ({gear1}), указатель поворота, затем направо.",
+          "text": "Выезжайте из места вперёд: первая передача ({gear1}), левый указатель ({left}) — вы отъезжаете от края, затем прямо по полосе.",
           "check": "Gate",
           "value": 4
         }
@@ -535,6 +706,40 @@
       "briefing": "Проезд змейки без касания конусов.",
       "doneText": "Упражнение выполнено.",
       "steps": [
+        {
+          "id": "prep-belt",
+          "text": "Подготовка к упражнению. Пристегните ремень — {belt}.",
+          "check": "Seatbelt",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-engine",
+          "text": "Запустите двигатель: на механике — выжмите сцепление ({clutch}); затем {ignition} и удерживайте {starter}.",
+          "check": "EngineRunning",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-m",
+          "text": "Выжмите сцепление ({clutch}) и включите первую передачу — {gear1}.",
+          "check": "Gear",
+          "value": 1,
+          "only": "manual",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-a",
+          "text": "Держите тормоз ({brake}) и переведите селектор в D — {drive}.",
+          "check": "Selector",
+          "selector": "D",
+          "only": "auto",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-handbrake-off",
+          "text": "Снимите машину со стояночного тормоза — {handbrake}.",
+          "check": "HandbrakeOff",
+          "skipAtGate": 1
+        },
         {
           "id": "signal",
           "text": "Включите правый указатель — {right} — и въезжайте в змейку.",
@@ -570,6 +775,40 @@
       "briefing": "Разгон, вторая передача, остановка в рамке.",
       "doneText": "Упражнение выполнено.",
       "steps": [
+        {
+          "id": "prep-belt",
+          "text": "Подготовка к упражнению. Пристегните ремень — {belt}.",
+          "check": "Seatbelt",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-engine",
+          "text": "Запустите двигатель: на механике — выжмите сцепление ({clutch}); затем {ignition} и удерживайте {starter}.",
+          "check": "EngineRunning",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-m",
+          "text": "Выжмите сцепление ({clutch}) и включите первую передачу — {gear1}.",
+          "check": "Gear",
+          "value": 1,
+          "only": "manual",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-a",
+          "text": "Держите тормоз ({brake}) и переведите селектор в D — {drive}.",
+          "check": "Selector",
+          "selector": "D",
+          "only": "auto",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-handbrake-off",
+          "text": "Снимите машину со стояночного тормоза — {handbrake}.",
+          "check": "HandbrakeOff",
+          "skipAtGate": 1
+        },
         {
           "id": "accelerate",
           "text": "Разгоняйтесь на первой передаче — {gas}.",
@@ -616,8 +855,42 @@
       "doneText": "Упражнение выполнено.",
       "steps": [
         {
+          "id": "prep-belt",
+          "text": "Подготовка к упражнению. Пристегните ремень — {belt}.",
+          "check": "Seatbelt",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-engine",
+          "text": "Запустите двигатель: на механике — выжмите сцепление ({clutch}); затем {ignition} и удерживайте {starter}.",
+          "check": "EngineRunning",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-m",
+          "text": "Выжмите сцепление ({clutch}) и включите первую передачу — {gear1}.",
+          "check": "Gear",
+          "value": 1,
+          "only": "manual",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-a",
+          "text": "Держите тормоз ({brake}) и переведите селектор в D — {drive}.",
+          "check": "Selector",
+          "selector": "D",
+          "only": "auto",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-handbrake-off",
+          "text": "Снимите машину со стояночного тормоза — {handbrake}.",
+          "check": "HandbrakeOff",
+          "skipAtGate": 1
+        },
+        {
           "id": "stop",
-          "text": "Подъезжайте к переезду не спеша и остановитесь перед стоп-линией ({brake}). Посмотрите налево и направо.",
+          "text": "Подъезжайте к переезду не спеша и остановитесь перед стоп-линией ({brake}), не заезжая за неё. Посмотрите налево и направо.",
           "check": "Gate",
           "value": 1
         },
@@ -637,6 +910,40 @@
       "briefing": "Проезд двух поворотов в узком коридоре.",
       "doneText": "Упражнение выполнено.",
       "steps": [
+        {
+          "id": "prep-belt",
+          "text": "Подготовка к упражнению. Пристегните ремень — {belt}.",
+          "check": "Seatbelt",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-engine",
+          "text": "Запустите двигатель: на механике — выжмите сцепление ({clutch}); затем {ignition} и удерживайте {starter}.",
+          "check": "EngineRunning",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-m",
+          "text": "Выжмите сцепление ({clutch}) и включите первую передачу — {gear1}.",
+          "check": "Gear",
+          "value": 1,
+          "only": "manual",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-a",
+          "text": "Держите тормоз ({brake}) и переведите селектор в D — {drive}.",
+          "check": "Selector",
+          "selector": "D",
+          "only": "auto",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-handbrake-off",
+          "text": "Снимите машину со стояночного тормоза — {handbrake}.",
+          "check": "HandbrakeOff",
+          "skipAtGate": 1
+        },
         {
           "id": "signal",
           "text": "Включите правый указатель — {right} — и поворачивайте в коридор.",
@@ -672,6 +979,40 @@
       "briefing": "Возврат на стартовую площадку.",
       "doneText": "Упражнение выполнено.",
       "steps": [
+        {
+          "id": "prep-belt",
+          "text": "Подготовка к упражнению. Пристегните ремень — {belt}.",
+          "check": "Seatbelt",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-engine",
+          "text": "Запустите двигатель: на механике — выжмите сцепление ({clutch}); затем {ignition} и удерживайте {starter}.",
+          "check": "EngineRunning",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-m",
+          "text": "Выжмите сцепление ({clutch}) и включите первую передачу — {gear1}.",
+          "check": "Gear",
+          "value": 1,
+          "only": "manual",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-gear-a",
+          "text": "Держите тормоз ({brake}) и переведите селектор в D — {drive}.",
+          "check": "Selector",
+          "selector": "D",
+          "only": "auto",
+          "skipAtGate": 1
+        },
+        {
+          "id": "prep-handbrake-off",
+          "text": "Снимите машину со стояночного тормоза — {handbrake}.",
+          "check": "HandbrakeOff",
+          "skipAtGate": 1
+        },
         {
           "id": "finish",
           "text": "Двигайтесь на юг через кольцо к стартовой площадке и остановитесь в рамке на 3 секунды.",
