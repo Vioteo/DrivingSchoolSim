@@ -1,6 +1,6 @@
 # G29: аппаратная проверка 28.09.2026
 
-- **BLOCKED** — `Get-PnpDevice -PresentOnly | Where-Object { $_.FriendlyName -match 'G29|Logitech|Driving Force|Wheel|Shifter' }`, exit 0, совпадений нет. Реальное устройство не обнаружено Windows в этой сессии; оси, педали, кнопки 6+R и вращение руля в Play Mode не измерены.
+- **BLOCKED** — `Get-PnpDevice -PresentOnly | Where-Object { $_.InstanceId -match 'VID_046D&PID_C24F' }`, exit 0, совпадений нет. Реальное устройство G29 не обнаружено Windows в этой сессии; оси, педали, кнопки 6+R и вращение руля в Play Mode не измерены.
 - **NOT_RUN** — аппаратный FFB. В проекте пока только `LogitechWheelFeedbackMock`; нативный бэкенд и DLL не поставляются.
 - **PASS** — `powershell -ExecutionPolicy Bypass -File tools\check.ps1 -Filter DrivingSchool.Tests.VehicleDynamicsTests`, exit 0, 20/20. Лог: `artifacts/reports/check-20260928-131424.log`.
 - **PASS** — `powershell -ExecutionPolicy Bypass -File tools\check.ps1 -Filter DrivingSchool.Tests.KeyboardSteeringTests`, exit 0, 7/7. Лог: `artifacts/reports/check-20260928-132240.log`.
