@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using DrivingSchool.Contracts;
@@ -64,6 +65,8 @@ namespace DrivingSchool.Simulation.RoadGraph
         /// (Editor/DistrictBuilder). Markings as on the straight mesh (dashed axis).
         /// </summary>
         public const string CrosswalkId = "RK_Road_Urban_Crosswalk_20m";
+        /// <summary>The same mid-block zebra without speed bumps (T66): drawn as <see cref="StraightId"/> plus the zebra marking.</summary>
+        public const string ZebraPlainId = "RK_Road_Urban_Zebra_20m";
         public const double CrosswalkZ = 10, CrosswalkHalfWidthM = 4.3, BumpOffsetM = 8;
         /// <summary>
         /// Overpass kit (T65, tools/build_overpass.py): a 20 m ramp that rises <see cref="RampRiseM"/> (8 %) from Socket_Start
@@ -72,12 +75,33 @@ namespace DrivingSchool.Simulation.RoadGraph
         /// </summary>
         public const string RampId = "RK_Ramp_20m", BridgeId = "RK_Bridge_20m";
         public const double RampRiseM = 1.6;
+        /// <summary>
+        /// A straight of any length (T66): "&lt;straight id&gt;@&lt;metres&gt;", e.g. "RK_Road_Urban_20m@34". It closes a loop
+        /// between two modules whose sockets are not a whole number of 20 m pieces apart; drawn as whole meshes plus one
+        /// stretched along the road (<see cref="RoadKitTemplatesV2.MeshPieces"/>).
+        /// </summary>
+        public const double MinStretchM = 2, MaxStretchM = 400;
+
+        public static string Stretched(string baseId, double lengthM)
+        {
+            if (!(lengthM >= MinStretchM && lengthM <= MaxStretchM)) throw new ArgumentOutOfRangeException(nameof(lengthM), baseId + ": length " + lengthM);
+            return baseId + "@" + Math.Round(lengthM, 3).ToString("0.###", CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>True when <paramref name="catalogId"/> is <paramref name="baseId"/> stretched to a valid length.</summary>
+        public static bool TryStretch(string catalogId, string baseId, out double lengthM)
+        {
+            lengthM = 0;
+            if (catalogId == null || !catalogId.StartsWith(baseId + "@", StringComparison.Ordinal)) return false;
+            if (!double.TryParse(catalogId.Substring(baseId.Length + 1), NumberStyles.Float, CultureInfo.InvariantCulture, out lengthM)) return false;
+            return lengthM >= MinStretchM && lengthM <= MaxStretchM;
+        }
 
         readonly Dictionary<string, ModuleTemplate> templates;
 
         public RoadKitTemplates()
         {
-            templates = new[] { Straight(), Curve(), Cross(), Crosswalk(), Sloped(RampId, RampRiseM), Sloped(BridgeId, 0) }.ToDictionary(t => t.CatalogId);
+            templates = new[] { Straight(), Curve(), Cross(), Crosswalk(), Crosswalk(ZebraPlainId), Sloped(RampId, RampRiseM), Sloped(BridgeId, 0) }.ToDictionary(t => t.CatalogId);
         }
 
         public IEnumerable<ModuleTemplate> All => templates.Values;
@@ -88,11 +112,17 @@ namespace DrivingSchool.Simulation.RoadGraph
             if (!string.Equals(catalogSourceSha256, SourceSha256, StringComparison.OrdinalIgnoreCase))
                 throw new System.IO.InvalidDataException("Road kit templates are stale: measured on " + SourceSha256 + ", catalog has " + catalogSourceSha256);
         }
-        public bool TryGet(string catalogId, out ModuleTemplate template) => templates.TryGetValue(catalogId, out template);
-
-        static ModuleTemplate Straight()
+        public bool TryGet(string catalogId, out ModuleTemplate template)
         {
-            var axis = new[] { new Vec3d(0, 0, 0), new Vec3d(0, 0, StraightLengthM) };
+            if (templates.TryGetValue(catalogId, out template)) return true;
+            if (!TryStretch(catalogId, StraightId, out double length)) return false;
+            templates[catalogId] = template = Straight(length, catalogId);
+            return true;
+        }
+
+        static ModuleTemplate Straight(double length = StraightLengthM, string id = StraightId)
+        {
+            var axis = new[] { new Vec3d(0, 0, 0), new Vec3d(0, 0, length) };
             var f = new WorldDocumentV2();
             var fwd = Lane("f", 1, Polyline.OffsetRight(Resample(axis, 1.0), LaneOffsetM));
             var bwd = Lane("b", -1, Polyline.OffsetRight(Resample(Polyline.Reversed(axis), 1.0), LaneOffsetM));
@@ -106,11 +136,11 @@ namespace DrivingSchool.Simulation.RoadGraph
             };
             return new ModuleTemplate
             {
-                CatalogId = "RK_Road_Urban_20m", SourceSha256 = SourceSha256, Fragment = f,
+                CatalogId = id, SourceSha256 = SourceSha256, Fragment = f,
                 Sockets = new[]
                 {
                     Sock("Socket_Start", new Vec3d(0, 0, 0), 180, outLane: "b", inLane: "f"),
-                    Sock("Socket_End", new Vec3d(0, 0, StraightLengthM), 0, outLane: "f", inLane: "b"),
+                    Sock("Socket_End", new Vec3d(0, 0, length), 0, outLane: "f", inLane: "b"),
                 },
             };
         }
@@ -169,7 +199,7 @@ namespace DrivingSchool.Simulation.RoadGraph
             };
         }
 
-        static ModuleTemplate Crosswalk()
+        static ModuleTemplate Crosswalk(string id = CrosswalkId)
         {
             var t = Straight();
             var f = t.Fragment;
@@ -186,7 +216,7 @@ namespace DrivingSchool.Simulation.RoadGraph
             {
                 new PedestrianCrossing { id = "crossing", a = new Vec3d(-CrosswalkHalfWidthM, 0, z), b = new Vec3d(CrosswalkHalfWidthM, 0, z), widthM = 3, laneIds = new[] { "f", "b" } },
             };
-            return new ModuleTemplate { CatalogId = CrosswalkId, SourceSha256 = SourceSha256, Fragment = f, Sockets = t.Sockets };
+            return new ModuleTemplate { CatalogId = id, SourceSha256 = SourceSha256, Fragment = f, Sockets = t.Sockets };
         }
 
         static ModuleTemplate Cross()

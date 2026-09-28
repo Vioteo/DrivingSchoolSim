@@ -18,6 +18,16 @@ namespace DrivingSchool.Simulation.RoadGraph
     {
         public const string Straight4 = "RK2_Road_Urban4_20m", LaneChange4 = "RK2_Road_Urban4_LaneChange_40m", Cross4x4 = "RK2_Cross_4x4_32m", Cross4x2 = "RK2_Cross_4x2_24x32m",
             Roundabout = "RK2_Roundabout_52m", RailCrossing = "RK2_Road_RailCrossing_20m";
+        /// <summary>
+        /// Road Kit v3 (T66, tools/build_road_kit_v3.py, Art/RoadKitV3): the 2+2 × 1+1 junction without zebras, its T form
+        /// (side road to local North only), a 2+2 curve (axis R 26, right turn from Start to End) and a 2+2 straight with a
+        /// mid-block zebra. Crossings at unregulated junctions moved away from them into the streets.
+        /// </summary>
+        public const string CrossPlain = "RK3_Cross_4x2_Plain_24x32m", Tee = "RK3_Tee_4x2_24x32m", Curve4 = "RK3_Curve4_90_R26",
+            Crosswalk4 = "RK3_Road_Urban4_Crosswalk_20m";
+        public const double Curve4RadiusM = 26, Crosswalk4Z = 10, Crosswalk4HalfWidthM = 7.9;
+        /// <summary>sourceSha256 of Art/RoadKitV3/catalog-v3.json (tools/build_road_kit_v3.py).</summary>
+        public const string SourceSha256V3 = "66c0a8a9b5cc999083f800b00e166161aa6c7bedfbab46faacbe1f9a04734ff4";
         /// <summary>sourceSha256 of Art/RoadKitV2/catalog-v2.json (tools/build_road_kit_v2.py); the test fails when the kit changes.</summary>
         public const string SourceSha256 = "86de34ccbd10cfb8b8a4d0fa50c46f6ef72b5bac8789d1e4bba650d1523301e9";
         public const float Lane4WidthM = 3.5f;
@@ -31,11 +41,21 @@ namespace DrivingSchool.Simulation.RoadGraph
 
         public RoadKitTemplatesV2()
         {
-            templates = new[] { MakeStraight4(), MakeLaneChange4(), MakeCross4x4(), MakeCross4x2(), MakeRoundabout(), MakeRailCrossing() }.ToDictionary(t => t.CatalogId);
+            templates = new[]
+            {
+                MakeStraight4(), MakeLaneChange4(), MakeCross4x4(), MakeCross4x2(), MakeRoundabout(), MakeRailCrossing(),
+                MakeCross4x2(null, CrossPlain, false), MakeTee(), MakeCurve4(), MakeCrosswalk4(),
+            }.ToDictionary(t => t.CatalogId);
         }
 
         public IEnumerable<ModuleTemplate> All => templates.Values;
-        public bool TryGet(string catalogId, out ModuleTemplate template) => templates.TryGetValue(catalogId, out template);
+        public bool TryGet(string catalogId, out ModuleTemplate template)
+        {
+            if (templates.TryGetValue(catalogId, out template)) return true;
+            if (!RoadKitTemplates.TryStretch(catalogId, Straight4, out double length)) return false;
+            templates[catalogId] = template = MakeStraight4(length, catalogId);
+            return true;
+        }
 
         /// <summary>
         /// The junction with other lane directions (signs 5.15.1 / 5.15.2, T65): <paramref name="lanes"/> maps local ids of
@@ -46,14 +66,16 @@ namespace DrivingSchool.Simulation.RoadGraph
             template = null;
             if (catalogId == Cross4x4) template = MakeCross4x4(lanes);
             else if (catalogId == Cross4x2) template = MakeCross4x2(lanes);
+            else if (catalogId == CrossPlain) template = MakeCross4x2(lanes, CrossPlain, false);
+            else if (catalogId == Tee) template = MakeTee(lanes);
             return template != null;
         }
 
         // ------------------------------------------------------------------ 2+2 straight
 
-        static ModuleTemplate MakeStraight4()
+        static ModuleTemplate MakeStraight4(double length = 20, string id = Straight4)
         {
-            var axis = new[] { new Vec3d(0, 0, 0), new Vec3d(0, 0, 20) };
+            var axis = new[] { new Vec3d(0, 0, 0), new Vec3d(0, 0, length) };
             var back = Polyline.Reversed(axis);
             var f1 = Lane("f1", 1, Polyline.OffsetRight(Resample(axis), InnerLaneM), Lane4WidthM);
             var f2 = Lane("f2", 2, Polyline.OffsetRight(Resample(axis), OuterLaneM), Lane4WidthM);
@@ -69,11 +91,11 @@ namespace DrivingSchool.Simulation.RoadGraph
             };
             return new ModuleTemplate
             {
-                CatalogId = Straight4, SourceSha256 = SourceSha256, Fragment = f,
+                CatalogId = id, SourceSha256 = SourceSha256, Fragment = f,
                 Sockets = new[]
                 {
                     Sock("Socket_Start", new Vec3d(0, 0, 0), 180, new[] { "b1", "b2" }, new[] { "f1", "f2" }, Lane4WidthM),
-                    Sock("Socket_End", new Vec3d(0, 0, 20), 0, new[] { "f1", "f2" }, new[] { "b1", "b2" }, Lane4WidthM),
+                    Sock("Socket_End", new Vec3d(0, 0, length), 0, new[] { "f1", "f2" }, new[] { "b1", "b2" }, Lane4WidthM),
                 },
             };
         }
@@ -127,11 +149,88 @@ namespace DrivingSchool.Simulation.RoadGraph
             };
         }
 
+        /// <summary>2+2 curve (T66): the axis turns right on radius <see cref="Curve4RadiusM"/> around (R, 0, 0), Start heading +Z, End +X.</summary>
+        static ModuleTemplate MakeCurve4()
+        {
+            const double R = Curve4RadiusM;
+            // Exact arcs (an offset polyline would tilt the lane ends by half a segment and miss the neighbours' lane ends).
+            Vec3d[] Arc(double r, bool reverse)
+            {
+                int n = (int)Math.Ceiling(r * Math.PI / 2);
+                var pts = Enumerable.Range(0, n + 1).Select(i => i * Math.PI / 2 / n).Select(a => new Vec3d(R - r * Math.Cos(a), 0, r * Math.Sin(a))).ToArray();
+                return reverse ? Polyline.Reversed(pts) : pts;
+            }
+            // Right turn from Start: the "f" lanes are on the inside, the "b" lanes (End → Start) on the outside.
+            var f1 = Lane("f1", 1, Arc(R - InnerLaneM, false), Lane4WidthM);
+            var f2 = Lane("f2", 2, Arc(R - OuterLaneM, false), Lane4WidthM);
+            var b1 = Lane("b1", -1, Arc(R + InnerLaneM, true), Lane4WidthM);
+            var b2 = Lane("b2", -2, Arc(R + OuterLaneM, true), Lane4WidthM);
+            Pair(f1, f2); Pair(b1, b2); f1.oncomingLaneId = "b1"; b1.oncomingLaneId = "f1";
+            var f = new WorldDocumentV2
+            {
+                lanes = new[] { f1, f2, b1, b2 },
+                boundaries = Bounds(f1, MarkingType.DoubleSolid, MarkingType.Dashed).Concat(Bounds(f2, MarkingType.Dashed, MarkingType.Solid))
+                    .Concat(Bounds(b1, MarkingType.DoubleSolid, MarkingType.Dashed)).Concat(Bounds(b2, MarkingType.Dashed, MarkingType.Solid)).ToArray(),
+                sidewalks = new[] { Walk("walk.L", Arc(R + Sidewalk4M, false), 3), Walk("walk.R", Arc(R - Sidewalk4M, false), 3) },
+            };
+            return new ModuleTemplate
+            {
+                CatalogId = Curve4, SourceSha256 = SourceSha256V3, Fragment = f,
+                Sockets = new[]
+                {
+                    Sock("Socket_Start", new Vec3d(0, 0, 0), 180, new[] { "b1", "b2" }, new[] { "f1", "f2" }, Lane4WidthM),
+                    Sock("Socket_End", new Vec3d(R, 0, R), 90, new[] { "f1", "f2" }, new[] { "b1", "b2" }, Lane4WidthM),
+                },
+            };
+        }
+
+        /// <summary>2+2 straight with a zebra across it at z = 10 (T66); the sidewalks end at the zebra on both sides.</summary>
+        static ModuleTemplate MakeCrosswalk4()
+        {
+            var t = MakeStraight4(20, Crosswalk4);
+            var f = t.Fragment;
+            double z = Crosswalk4Z;
+            Vec3d[] W(double x, double z0, double z1) => new[] { new Vec3d(x, 0, z0), new Vec3d(x, 0, z1) };
+            f.sidewalks = new[]
+            {
+                Walk("walk.L1", W(-Sidewalk4M, 0, z), 3), Walk("walk.L2", W(-Sidewalk4M, z, 20), 3),
+                Walk("walk.R1", W(Sidewalk4M, 0, z), 3), Walk("walk.R2", W(Sidewalk4M, z, 20), 3),
+            };
+            f.crossings = new[]
+            {
+                new PedestrianCrossing { id = "crossing", a = new Vec3d(-Crosswalk4HalfWidthM, 0, z), b = new Vec3d(Crosswalk4HalfWidthM, 0, z), widthM = 3, laneIds = new[] { "f1", "f2", "b1", "b2" } },
+            };
+            t.SourceSha256 = SourceSha256V3;
+            return t;
+        }
+
         /// <summary>Meshes that draw a semantic module (catalog id, local z offset): the lane-change stretch is two straights.</summary>
-        public static IEnumerable<(string prefab, double z)> Meshes(string catalogId) =>
-            catalogId == LaneChange4 ? new[] { (Straight4, 0.0), (Straight4, 20.0) }
-            : catalogId == RoadKitTemplates.CrosswalkId ? new[] { (RoadKitTemplates.StraightId, 0.0) }
-            : new[] { (catalogId, 0.0) };
+        public static IEnumerable<(string prefab, double z)> Meshes(string catalogId) => MeshPieces(catalogId).Select(m => (m.prefab, m.z));
+
+        /// <summary>
+        /// Meshes of a module with their stretch along local Z (1 = as modelled). A stretched straight (T66) is whole
+        /// 20 m meshes and one stretched piece — never shorter than 5 m or squeezed below half (markings stay readable).
+        /// </summary>
+        public static IEnumerable<(string prefab, double z, double scaleZ)> MeshPieces(string catalogId)
+        {
+            if (catalogId == LaneChange4) return new[] { (Straight4, 0.0, 1.0), (Straight4, 20.0, 1.0) };
+            if (catalogId == RoadKitTemplates.CrosswalkId || catalogId == RoadKitTemplates.ZebraPlainId) return new[] { (RoadKitTemplates.StraightId, 0.0, 1.0) };
+            foreach (var baseId in new[] { Straight4, RoadKitTemplates.StraightId })
+                if (RoadKitTemplates.TryStretch(catalogId, baseId, out double length)) return Stretch(baseId, length);
+            return new[] { (catalogId, 0.0, 1.0) };
+        }
+
+        static List<(string, double, double)> Stretch(string baseId, double length)
+        {
+            const double L = 20;
+            var list = new List<(string, double, double)>();
+            int whole = (int)Math.Floor(length / L + 1e-9);
+            double rest = length - whole * L;
+            if (rest > 1e-6 && rest < 10 && whole > 0) { whole--; rest += L; }   // 20…30 m in one piece rather than a 2 m sliver
+            for (int i = 0; i < whole; i++) list.Add((baseId, i * L, 1.0));
+            if (rest > 1e-6) list.Add((baseId, whole * L, rest / L));
+            return list;
+        }
 
         /// <summary>Sideways shift of a connection (right positive): a lane change is a straight connection shifted by about a lane.</summary>
         public static double LateralShift(Vec3d[] line)
@@ -162,13 +261,21 @@ namespace DrivingSchool.Simulation.RoadGraph
             Offsets = new[] { InnerLaneM, OuterLaneM }, Width = Lane4WidthM, Crosswalk = 11.75, CrossHalf = 8.9,
         }).ToList(), lanes);
 
-        static ModuleTemplate MakeCross4x2(IReadOnlyDictionary<string, LaneManeuver> lanes = null) => Junction(Cross4x2, Compass.Select(c =>
+        static ModuleTemplate MakeCross4x2(IReadOnlyDictionary<string, LaneManeuver> lanes = null, string id = Cross4x2, bool crossings = true) => Junction(id, Compass.Select(c =>
         {
             bool main = c.ux != 0;   // main road along X
             return main
                 ? new Arm { Name = c.name, Ux = c.ux, Uz = c.uz, Heading = c.heading, Socket = 12, Inner = 10, StopS = 1.6, Offsets = new[] { InnerLaneM, OuterLaneM }, Width = Lane4WidthM, Crosswalk = 7.75, CrossHalf = 8.95 }
                 : new Arm { Name = c.name, Ux = c.ux, Uz = c.uz, Heading = c.heading, Socket = 16, Inner = 13.3, StopS = 2.3, Offsets = new[] { Lane2M }, Width = RoadKitTemplates.LaneWidthM, Crosswalk = 11, CrossHalf = 5.6 };
-        }).ToList(), lanes);
+        }).ToList(), lanes, crossings);
+
+        /// <summary>T junction (T66): the 2+2 × 1+1 junction without its southern side arm and without zebras.</summary>
+        static ModuleTemplate MakeTee(IReadOnlyDictionary<string, LaneManeuver> lanes = null)
+        {
+            return Junction(Tee, Compass.Where(c => c.name != "South").Select(c => c.ux != 0
+                ? new Arm { Name = c.name, Ux = c.ux, Uz = c.uz, Heading = c.heading, Socket = 12, Inner = 10, StopS = 1.6, Offsets = new[] { InnerLaneM, OuterLaneM }, Width = Lane4WidthM }
+                : new Arm { Name = c.name, Ux = c.ux, Uz = c.uz, Heading = c.heading, Socket = 16, Inner = 13.3, StopS = 2.3, Offsets = new[] { Lane2M }, Width = RoadKitTemplates.LaneWidthM }).ToList(), lanes, false);
+        }
 
         /// <summary>
         /// Movements allowed from lane <paramref name="i"/> of <paramref name="n"/> when no sign says otherwise (ПДД РФ 8.5 —
@@ -178,7 +285,7 @@ namespace DrivingSchool.Simulation.RoadGraph
             n < 2 ? LaneManeuver.None : i == 0 ? LaneManeuver.Straight | LaneManeuver.Left : i == n - 1 ? LaneManeuver.Straight | LaneManeuver.Right : LaneManeuver.Straight;
 
         /// <summary>A four-arm junction: in/out lanes per arm, connections by lane discipline, crossings, stop lines.</summary>
-        static ModuleTemplate Junction(string id, List<Arm> arms, IReadOnlyDictionary<string, LaneManeuver> overrides = null)
+        static ModuleTemplate Junction(string id, List<Arm> arms, IReadOnlyDictionary<string, LaneManeuver> overrides = null, bool withCrossings = true)
         {
             if (overrides != null)
                 foreach (var kv in overrides)
@@ -205,7 +312,7 @@ namespace DrivingSchool.Simulation.RoadGraph
                 if (a.In.Count == 2) { Pair(a.In[0], a.In[1]); Pair(a.Out[0], a.Out[1]); }
                 a.In[0].oncomingLaneId = a.Out[0].id; a.Out[0].oncomingLaneId = a.In[0].id;
                 var sock = Sock("Socket_" + a.Name, outer, a.Heading, a.Out.Select(l => l.id).ToArray(), a.In.Select(l => l.id).ToArray(), a.Width);
-                sock.StopLineId = "stop." + a.Name + "." + a.In.Count; sock.CrossingId = "crossing." + a.Name;
+                sock.StopLineId = "stop." + a.Name + "." + a.In.Count; sock.CrossingId = withCrossings ? "crossing." + a.Name : null;
                 sockets.Add(sock);
             }
             var connections = new List<LaneConnection>();
@@ -219,7 +326,7 @@ namespace DrivingSchool.Simulation.RoadGraph
                         if (Allows(inL, m)) connections.Add(WorldMigration.BuildConnection("j", inL, outL, Speed));
                 }
             var crossings = new List<PedestrianCrossing>();
-            foreach (var a in arms)
+            foreach (var a in withCrossings ? arms : new List<Arm>())
             {
                 double cx = a.Ux * a.Crosswalk, cz = a.Uz * a.Crosswalk, px = a.Uz, pz = -a.Ux;
                 var pa = new Vec3d(cx + px * a.CrossHalf, 0, cz + pz * a.CrossHalf);

@@ -192,6 +192,29 @@ namespace DrivingSchool.Editor
         const string ArtOverpass = "Assets/DrivingSchool/Art/Overpass";
         public const string PrefabsOverpass = "Assets/DrivingSchool/Prefabs/Overpass";
 
+        const string ArtV3 = "Assets/DrivingSchool/Art/RoadKitV3";
+        public const string PrefabsV3 = "Assets/DrivingSchool/Prefabs/RoadKitV3";
+
+        /// <summary>Road Kit v3 (T66, tools/build_road_kit_v3.py): plain and T junctions, 2+2 curve, 2+2 zebra. Prefabs only.</summary>
+        [MenuItem("Driving School/Road Kit/Import v3 (T junction, 2+2 curve, zebra)")]
+        public static int BuildV3()
+        {
+            Directory.CreateDirectory(PrefabsV3);
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+            CreateMaterials();
+            int n = 0;
+            foreach (string path in Directory.GetFiles(ArtV3, "*.fbx").OrderBy(p => p))
+            {
+                var r = ImportModule(path.Replace('\\', '/'), PrefabsV3);
+                if (r.renderers == 0 || r.colliders == 0) throw new InvalidOperationException(r.name + ": no renderers or colliders");
+                n++;
+            }
+            if (n != 4) throw new InvalidOperationException("Expected 4 road kit v3 modules, found " + n);
+            AssetDatabase.SaveAssets();
+            Debug.Log("ROAD_KIT_V3_UNITY_PASS: " + n + " prefabs");
+            return n;
+        }
+
         /// <summary>Overpass kit (T65, tools/build_overpass.py): ramp 20 m (+1.6 m) and bridge span 20 m. Prefabs only.</summary>
         [MenuItem("Driving School/Road Kit/Import overpass (ramp, bridge)")]
         public static int BuildOverpass()

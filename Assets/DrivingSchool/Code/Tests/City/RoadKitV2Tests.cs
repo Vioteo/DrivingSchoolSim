@@ -24,7 +24,7 @@ namespace DrivingSchool.Tests
             var json = File.ReadAllText(Path.Combine(ModuleTemplateTests.RepoRoot(), "Assets/DrivingSchool/Art/RoadKitV2/catalog-v2.json"));
             Assert.That(Regex.Match(json, "\"sourceSha256\"\\s*:\\s*\"([0-9a-f]+)\"").Groups[1].Value, Is.EqualTo(RoadKitTemplatesV2.SourceSha256),
                 "Road Kit v2 was rebuilt: check RoadKitTemplatesV2 against tools/build_road_kit_v2.py and update the hash");
-            foreach (var t in V2.All.Where(x => x.CatalogId != RoadKitTemplatesV2.LaneChange4))
+            foreach (var t in V2.All.Where(x => x.CatalogId != RoadKitTemplatesV2.LaneChange4 && !x.CatalogId.StartsWith("RK3_")))   // v3: RoadKitV3Tests
             {
                 var block = Regex.Match(json, "\"catalogId\"\\s*:\\s*\"" + t.CatalogId + "\".*?\"sockets\"\\s*:\\s*\\{(.*?)\\}", RegexOptions.Singleline);
                 Assert.That(block.Success, t.CatalogId + " missing from catalog-v2.json");

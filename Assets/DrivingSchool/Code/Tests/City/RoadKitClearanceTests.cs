@@ -23,6 +23,8 @@ namespace DrivingSchool.Tests
             yield return new TestCaseData("Assets/DrivingSchool/Prefabs/RoadKit/RK_Road_Cross_24m.prefab", "RK_Road_Cross_24m").SetName("v1 cross 24 m");
             foreach (var id in new[] { RoadKitTemplatesV2.Cross4x4, RoadKitTemplatesV2.Cross4x2, RoadKitTemplatesV2.Roundabout, RoadKitTemplatesV2.RailCrossing })
                 yield return new TestCaseData(RoadKitBuilder.PrefabsV2 + "/" + id + ".prefab", id).SetName("v2 " + id);
+            foreach (var id in new[] { RoadKitTemplatesV2.CrossPlain, RoadKitTemplatesV2.Tee, RoadKitTemplatesV2.Curve4 })
+                yield return new TestCaseData(RoadKitBuilder.PrefabsV3 + "/" + id + ".prefab", id).SetName("v3 " + id);
         }
 
         [TestCaseSource(nameof(Junctions))]
