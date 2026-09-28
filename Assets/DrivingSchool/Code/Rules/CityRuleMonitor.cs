@@ -56,7 +56,7 @@ namespace DrivingSchool.Rules
         bool oncomingReported; double oncomingClearSince = -1;
         double stoppedSince = -1; bool parked, startChecked = true;
         double closeSince = -1; bool distanceReported;
-        bool crosswalkReported, stopReported;
+        bool crosswalkReported, stopReported; double idleSince = -1;
         int seq;
 
         public List<RuleEvent> Update(DriverRoadFacts f)
@@ -92,7 +92,7 @@ namespace DrivingSchool.Rules
             // Стоянка у края и трогание (ПДД 8.1, 8.2).
             if (f.SpeedMps < StandstillMps)
             {
-                if (stoppedSince < 0) { stoppedSince = f.Seconds; crosswalkReported = false; stopReported = false; }
+                if (stoppedSince < 0) { stoppedSince = f.Seconds; crosswalkReported = false; stopReported = false; idleSince = -1; }
                 double stood = f.Seconds - stoppedSince;
                 bool atRoadside = !f.OnRoad || f.RightmostLane && f.LateralOffsetM >= RoadsideOffsetM && !f.InIntersection;
                 if (stood >= ParkedSeconds && atRoadside && !f.WaitingForTraffic) { parked = true; startChecked = false; }
@@ -100,8 +100,10 @@ namespace DrivingSchool.Rules
                 // Остановка на переходе (ПДД 12.4) — даже в заторе.
                 if (!crosswalkReported && f.StopPlace == RoadStopPlace.Crosswalk && stood >= CrosswalkStopSeconds)
                 { crosswalkReported = true; result.Add(Make(RuleStopOnCrosswalk, f)); }
-                // Остановка в неположенном месте — если стоять незачем.
-                if (!stopReported && stood >= StopSeconds && f.OnRoad && !f.WaitingForTraffic && !f.InIntersection)
+                // Остановка в неположенном месте — если стоять незачем всё это время (причина — сигнал, очередь, переход).
+                bool reason = f.WaitingForTraffic || f.InIntersection;
+                if (reason) idleSince = -1; else if (idleSince < 0) idleSince = f.Seconds;
+                if (!stopReported && !reason && f.Seconds - idleSince >= StopSeconds && f.OnRoad)
                 {
                     string rule = null;
                     if (f.StopPlace == RoadStopPlace.BeforeCrosswalk && !f.CrosswalkSignalled) rule = RuleStopNearCrosswalk;

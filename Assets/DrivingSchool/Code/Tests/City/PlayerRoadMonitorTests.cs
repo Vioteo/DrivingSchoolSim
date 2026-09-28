@@ -140,5 +140,36 @@ namespace DrivingSchool.Tests
             Assert.That(Rules(StandAt(w, 25)), Does.Contain(CityRuleMonitor.RuleStopNearCrosswalk));
             Assert.That(StandAt(w, 12).Last().SpeedLimitKph, Is.EqualTo(60));
         }
+
+        /// <summary>Stands still for 4 s with the car centre <paramref name="fromEnd"/> metres before the end of a lane.</summary>
+        static List<DriverRoadFacts> StandOnLane(WorldDocumentV2 w, string laneId, double fromEnd)
+        {
+            var line = new Polyline(Lane(w, laneId).ToArray());
+            var p = line.PointAt(line.Length - fromEnd);
+            var director = new TrafficDirector(w, new TrafficProfile { MaxVehicles = 0 }, 1);
+            var monitor = new PlayerRoadMonitor(director);
+            var facts = new List<DriverRoadFacts>();
+            for (int i = 0; i < 80; i++)
+            {
+                director.SetPlayer(new PlayerSample { Present = true, X = p.x, Y = p.y, Z = p.z, HeadingRad = line.HeadingAt(line.Length - fromEnd), SpeedMps = 0, LengthM = 4.4, WidthM = 1.8 });
+                director.Tick(i, i * Dt);
+                facts.Add(monitor.Update());
+            }
+            return facts;
+        }
+
+        [Test]
+        public void StandingInTheInnerLaneBeforeTheStopLineIsWaitingNotParking()
+        {
+            // Found in play: the stop line lies on the 2 m entry lane of the junction, the car stands on the lane before it.
+            var w = DistrictCompiler.Compile(LaneDisciplineTests.Cross4(), new RoadKitCatalog());
+            var queued = StandOnLane(w, "s0/f1", 6);
+            Assert.That(queued.Last().RightmostLane, Is.False);
+            Assert.That(queued.Last().WaitingForTraffic, Is.True);
+            Assert.That(Rules(queued), Is.Empty);
+            // The same lane far from the junction: nothing to wait for — not at the right edge.
+            var s1 = new Polyline(Lane(w, "s1/f1").ToArray()).Length;
+            Assert.That(Rules(StandOnLane(w, "s1/f1", s1 / 2)), Is.EqualTo(new[] { CityRuleMonitor.RuleStopNotAtRightEdge }));
+        }
     }
 }

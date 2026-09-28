@@ -16,7 +16,7 @@ namespace DrivingSchool.Simulation.Traffic
     public sealed class PlayerRoadMonitor
     {
         /// <summary>Game parameters: a stop line or an occupied crosswalk this close ahead is a reason to stand.</summary>
-        public double StopLineWaitM = 15, CrosswalkWaitM = 25, QueueGapM = 12, BeforeCrosswalkM = 5, LeadHorizonM = 80;
+        public double StopLineWaitM = 15, SignalWaitM = 60, CrosswalkWaitM = 25, QueueGapM = 12, BeforeCrosswalkM = 5, LeadHorizonM = 80;
 
         readonly TrafficDirector director;
         readonly RoadGraphIndex index;
@@ -152,17 +152,42 @@ namespace DrivingSchool.Simulation.Traffic
                 place = RoadStopPlace.NoStoppingZone;
             f.StopPlace = place; f.CrosswalkSignalled = signalled;
 
+            // The stop line lies on the short entry lane of the junction, so look along the lanes ahead:
+            // near the line — waiting to go in; a red or amber ahead — waiting for the signal (ПДД 6.13).
             bool atLine = false;
-            if (!path.IsConnection)
+            if (!path.IsConnection && Ahead(path, pos.S + half, out double toLine, out bool signalStop))
+                atLine = toLine > -2 && toLine < StopLineWaitM || signalStop && toLine > -2 && toLine < SignalWaitM;
+            f.WaitingForTraffic = atLine || occupiedAhead || f.InIntersection;
+        }
+
+        /// <summary>Distance from <paramref name="s"/> on a lane to where the lanes ahead enter an intersection (its stop
+        /// line, else the lane end), following the only way on; whether a signal there shows stop.</summary>
+        bool Ahead(PathInfo path, double s, out double distance, out bool signalStop)
+        {
+            distance = 0; signalStop = false;
+            double offset = -s;
+            for (int guard = 0; guard < 16 && offset < SignalWaitM; guard++)
             {
                 var stop = index.StopLineOf(path.Id);
-                double front = pos.S + half;
-                if (stop != null) atLine = stop.s - front > -2 && stop.s - front < StopLineWaitM;
-                // A lane that ends at an intersection without a stop line: waiting to go in.
-                else if (path.Next.Any(n => index.Path(n).IsConnection && index.IsIntersection(index.Path(n).Connection.junctionId)))
-                    atLine = path.Length - front < StopLineWaitM;
+                var into = path.Next.Select(n => index.Path(n))
+                    .Where(n => n.IsConnection && index.IsIntersection(n.Connection.junctionId)).ToList();
+                if (stop != null || into.Count > 0)
+                {
+                    distance = offset + (stop != null ? stop.s : path.Length);
+                    foreach (var c in into)
+                    {
+                        if (string.IsNullOrEmpty(c.Connection.signalGroupId)) continue;
+                        var a = director.AspectOf(c.Connection.signalGroupId);
+                        if (a == SignalAspect.Red || a == SignalAspect.RedAmber || a == SignalAspect.Amber) signalStop = true;
+                    }
+                    return true;
+                }
+                var lanes = path.Next.Select(n => index.Path(n)).Where(n => !n.IsConnection || !index.IsIntersection(n.Connection.junctionId)).ToList();
+                if (lanes.Count != 1) return false;
+                offset += path.Length;
+                path = lanes[0];
             }
-            f.WaitingForTraffic = atLine || occupiedAhead || f.InIntersection;
+            return false;
         }
 
         static bool OnCrosswalk(PedestrianCrossing c, double x, double z)
