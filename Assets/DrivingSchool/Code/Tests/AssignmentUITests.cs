@@ -82,5 +82,31 @@ namespace DrivingSchool.Tests
             catalog.Open(null);
             Assert.That(EventSystem.current.currentSelectedGameObject, Is.EqualTo(catalog.rangeButton.gameObject));
         }
+
+        [Test] public void AutodromeExercisesAndExamLaunchTheirIds()
+        {
+            Assert.That(catalog.autodromeButton, Is.Not.Null, "Пересоберите UIBuilder.BuildAssignmentsUI (T68)");
+            Assert.That(catalog.examButton, Is.Not.Null);
+            Assert.That(catalog.ExerciseCount, Is.GreaterThanOrEqualTo(9), "упражнения площадки — из guided-lessons.json");
+            string requested = null;
+            catalog.LaunchRequested += id => requested = id;
+            catalog.Open(null);
+            catalog.autodromeButton.onClick.Invoke();
+            Assert.That(catalog.SelectedId, Is.EqualTo(LessonCatalogController.AutodromePractice));
+            string first = catalog.SelectedExerciseId; int i0 = catalog.ExerciseIndex, n = catalog.ExerciseCount;
+            Assert.That(first, Does.StartWith("ex-"));
+            catalog.ShiftExercise(1);
+            Assert.That(catalog.SelectedExerciseId, Is.Not.EqualTo(first));
+            catalog.ShiftExercise(-1);
+            Assert.That(catalog.SelectedExerciseId, Is.EqualTo(first));
+            catalog.ShiftExercise(-1);
+            Assert.That(catalog.ExerciseIndex, Is.EqualTo((i0 + n - 1) % n), "выбор идёт по кругу");
+            catalog.startButton.onClick.Invoke();
+            Assert.That(requested, Is.EqualTo(catalog.SelectedExerciseId), "запускается выбранное упражнение, а не пункт меню");
+            catalog.examButton.onClick.Invoke();
+            Assert.That(catalog.title.text, Is.EqualTo(LessonCatalogController.AutodromeExamTitle));
+            catalog.startButton.onClick.Invoke();
+            Assert.That(requested, Is.EqualTo(LessonLaunch.AutodromeExam));
+        }
     }
 }

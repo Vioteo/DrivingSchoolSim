@@ -39,10 +39,15 @@ namespace DrivingSchool.Presentation.UI
             {
                 catalog.gameObject.SetActive(false);
                 catalog.Initialize();
-                catalog.LaunchRequested += id => { if (id == LessonLaunch.FirstLesson) StartFirstLesson(); else if (id == LessonCatalogController.FreeDrive) StartDrive(); };
+                catalog.LaunchRequested += id =>
+                {
+                    if (id == LessonLaunch.FirstLesson) StartFirstLesson();
+                    else if (id == LessonCatalogController.FreeDrive) StartDrive();
+                    else if (!string.IsNullOrEmpty(id)) StartAutodrome(id);   // упражнение площадки или экзамен (T68)
+                };
             }
             menu.OnSelectLessonRequested.AddListener(OpenAssignments);
-            menu.OnTheoryRequested.AddListener(() => ShowNotice("Теория ПДД — в разработке. Сейчас доступны город и тестовый полигон."));
+            menu.OnTheoryRequested.AddListener(() => ShowNotice("Теория ПДД — в разработке. Сейчас доступны урок, город, упражнения и экзамен на площадке."));
             menu.OnSettingsRequested.AddListener(OpenSettings);
             menu.OnGarageRequested.AddListener(OpenGarage);
             if (garage != null) { garage.gameObject.SetActive(false); garage.Initialize(); }
@@ -78,6 +83,9 @@ namespace DrivingSchool.Presentation.UI
             { ShowNotice("Урок пока недоступен. Выберите другое задание."); return; }
             Launch(LessonLaunch.FirstLesson, LessonLaunch.FirstLessonScene);
         }
+
+        /// <summary>Упражнение площадки (id подсказок, «ex-…») или экзамен (<see cref="LessonLaunch.AutodromeExam"/>), T68.</summary>
+        public void StartAutodrome(string id) => Launch(id, LessonLaunch.AutodromeScene);
 
         void Launch(string lessonId, string scene)
         {
