@@ -398,12 +398,15 @@ namespace DrivingSchool.Editor
             var src = AssetDatabase.LoadAssetAtPath<GameObject>(SpeedBump);
             if (src == null) throw new FileNotFoundException(SpeedBump);
             var o = (GameObject)PrefabUtility.InstantiatePrefab(src, parent);
-            o.transform.rotation = Quaternion.Euler(0, yaw, 0);
+            // Keep the model's own axis correction (the kit's FBX root is turned −90° about X), then turn it with the road.
+            var own = o.transform.rotation;
+            o.transform.rotation = Quaternion.Euler(0, yaw, 0) * own;
             // Long axis across the road; sits on the road surface.
             var b = VehicleRigUtil.WorldBounds(o.transform);
             var across = Quaternion.Euler(0, yaw, 0) * Vector3.right;
             if (Mathf.Abs(Vector3.Dot(b.size, new Vector3(Mathf.Abs(across.x), 0, Mathf.Abs(across.z)))) < Mathf.Max(b.size.x, b.size.z) * 0.9f)
-            { o.transform.rotation = Quaternion.Euler(0, yaw + 90f, 0); b = VehicleRigUtil.WorldBounds(o.transform); }
+            { o.transform.rotation = Quaternion.Euler(0, yaw + 90f, 0) * own; b = VehicleRigUtil.WorldBounds(o.transform); }
+            if (b.size.y > 0.12f) throw new InvalidOperationException("Speed bump stands up: " + b.size + " (" + SpeedBump + ")");
             o.transform.position += new Vector3(pos.x - b.center.x, pos.y - b.min.y, pos.z - b.center.z);
             foreach (var mf in o.GetComponentsInChildren<MeshFilter>()) if (mf.GetComponent<Collider>() == null) mf.gameObject.AddComponent<MeshCollider>().sharedMesh = mf.sharedMesh;
             SetLayer(o, layer); o.isStatic = true;

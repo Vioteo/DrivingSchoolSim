@@ -25,9 +25,11 @@ namespace DrivingSchool.Tests
 
         [TearDown] public void TearDown()
         {
+            // The test profile goes first: restoring the settings would otherwise save it into the player's real profile.
+            ProfileService.Reset(new PlayerProfile());
+            SettingsService.Publish(settingsBefore);
             ProfileStore.FilePath = null;
             SettingsStore.FilePath = null;
-            SettingsService.Publish(settingsBefore);
             ProfileService.Reset();
             try { Directory.Delete(dir, true); } catch (IOException) { }
         }
