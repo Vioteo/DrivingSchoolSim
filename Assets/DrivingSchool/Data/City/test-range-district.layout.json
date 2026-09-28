@@ -2,7 +2,7 @@
     "schemaVersion": 1,
     "id": "test-range-district",
     "name": "Городской район полигона",
-    "revision": "v3",
+    "revision": "v4",
     "instances": [
         {
             "id": "X1",
@@ -19,24 +19,6 @@
             "x": -150.0,
             "y": 0.019999999552965165,
             "z": 166.0,
-            "yawDeg": 180.0,
-            "speedLimitKph": 0.0
-        },
-        {
-            "id": "n1",
-            "catalogId": "RK2_Road_Urban4_20m",
-            "x": -150.0,
-            "y": 0.019999999552965165,
-            "z": 186.0,
-            "yawDeg": 180.0,
-            "speedLimitKph": 0.0
-        },
-        {
-            "id": "n2",
-            "catalogId": "RK2_Road_Urban4_20m",
-            "x": -150.0,
-            "y": 0.019999999552965165,
-            "z": 206.0,
             "yawDeg": 180.0,
             "speedLimitKph": 0.0
         },
@@ -68,33 +50,6 @@
             "speedLimitKph": 0.0
         },
         {
-            "id": "e0",
-            "catalogId": "RK2_Road_Urban4_LaneChange_40m",
-            "x": -94.0,
-            "y": 0.019999999552965165,
-            "z": 110.0,
-            "yawDeg": -90.0,
-            "speedLimitKph": 0.0
-        },
-        {
-            "id": "e1",
-            "catalogId": "RK2_Road_Urban4_20m",
-            "x": -74.0,
-            "y": 0.019999999552965165,
-            "z": 110.0,
-            "yawDeg": -90.0,
-            "speedLimitKph": 0.0
-        },
-        {
-            "id": "e2",
-            "catalogId": "RK2_Road_Urban4_20m",
-            "x": -54.0,
-            "y": 0.019999999552965165,
-            "z": 110.0,
-            "yawDeg": -90.0,
-            "speedLimitKph": 0.0
-        },
-        {
             "id": "s0",
             "catalogId": "RK2_Road_Urban4_LaneChange_40m",
             "x": -150.0,
@@ -114,20 +69,11 @@
         },
         {
             "id": "X2",
-            "catalogId": "RK2_Cross_4x2_24x32m",
+            "catalogId": "RK3_Cross_4x2_Plain_24x32m",
             "x": -150.0,
             "y": 0.019999999552965165,
             "z": 22.0,
             "yawDeg": 90.0,
-            "speedLimitKph": 0.0
-        },
-        {
-            "id": "x0",
-            "catalogId": "RK2_Road_Urban4_20m",
-            "x": -150.0,
-            "y": 0.019999999552965165,
-            "z": -10.0,
-            "yawDeg": 0.0,
             "speedLimitKph": 0.0
         },
         {
@@ -141,7 +87,7 @@
         },
         {
             "id": "xw1",
-            "catalogId": "RK_Road_Urban_20m",
+            "catalogId": "RK_Road_Urban_Zebra_20m",
             "x": -206.0,
             "y": 0.019999999552965165,
             "z": 22.0,
@@ -194,24 +140,6 @@
             "speedLimitKph": 0.0
         },
         {
-            "id": "rn0",
-            "catalogId": "RK_Road_Urban_20m",
-            "x": -88.0,
-            "y": 0.019999999552965165,
-            "z": 68.0,
-            "yawDeg": 180.0,
-            "speedLimitKph": 0.0
-        },
-        {
-            "id": "rn1",
-            "catalogId": "RK_Road_Urban_20m",
-            "x": -88.0,
-            "y": 0.019999999552965165,
-            "z": 88.0,
-            "yawDeg": 180.0,
-            "speedLimitKph": 0.0
-        },
-        {
             "id": "rs0",
             "catalogId": "RK_Road_Urban_20m",
             "x": -88.0,
@@ -248,51 +176,6 @@
             "speedLimitKph": 0.0
         },
         {
-            "id": "a0",
-            "catalogId": "RK2_Road_Urban4_LaneChange_40m",
-            "x": -298.0,
-            "y": 0.019999999552965165,
-            "z": 110.0,
-            "yawDeg": 90.0,
-            "speedLimitKph": 0.0
-        },
-        {
-            "id": "a1",
-            "catalogId": "RK2_Road_Urban4_20m",
-            "x": -318.0,
-            "y": 0.019999999552965165,
-            "z": 110.0,
-            "yawDeg": 90.0,
-            "speedLimitKph": 0.0
-        },
-        {
-            "id": "a2",
-            "catalogId": "RK2_Road_Urban4_20m",
-            "x": -338.0,
-            "y": 0.019999999552965165,
-            "z": 110.0,
-            "yawDeg": 90.0,
-            "speedLimitKph": 0.0
-        },
-        {
-            "id": "a3",
-            "catalogId": "RK2_Road_Urban4_20m",
-            "x": -358.0,
-            "y": 0.019999999552965165,
-            "z": 110.0,
-            "yawDeg": 90.0,
-            "speedLimitKph": 0.0
-        },
-        {
-            "id": "a4",
-            "catalogId": "RK2_Road_Urban4_20m",
-            "x": -378.0,
-            "y": 0.019999999552965165,
-            "z": 110.0,
-            "yawDeg": 90.0,
-            "speedLimitKph": 0.0
-        },
-        {
             "id": "m0",
             "catalogId": "RK2_Road_Urban4_20m",
             "x": -242.0,
@@ -312,7 +195,7 @@
         },
         {
             "id": "X4",
-            "catalogId": "RK2_Cross_4x2_24x32m",
+            "catalogId": "RK3_Cross_4x2_Plain_24x32m",
             "x": -242.0,
             "y": 0.019999999552965165,
             "z": 178.0,
@@ -320,20 +203,137 @@
             "speedLimitKph": 0.0
         },
         {
-            "id": "k0",
+            "id": "q0",
             "catalogId": "RK2_Road_Urban4_20m",
             "x": -242.0,
             "y": 0.019999999552965165,
-            "z": 210.0,
-            "yawDeg": 180.0,
+            "z": 74.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "q1",
+            "catalogId": "RK3_Road_Urban4_Crosswalk_20m",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": 54.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "q2",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": 34.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "X5",
+            "catalogId": "RK3_Tee_4x2_24x32m",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": 22.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "X6",
+            "catalogId": "RK3_Tee_4x2_24x32m",
+            "x": -150.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": -90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "h0",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -206.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": -90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "h1",
+            "catalogId": "RK_Road_Urban_Zebra_20m",
+            "x": -186.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": -90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "h2",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -166.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": -90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "k0",
+            "catalogId": "RK3_Curve4_90_R26",
+            "x": -242.0,
+            "y": 0.019999999552965165,
+            "z": 190.0,
+            "yawDeg": 0.0,
             "speedLimitKph": 0.0
         },
         {
             "id": "k1",
             "catalogId": "RK2_Road_Urban4_20m",
-            "x": -242.0,
+            "x": -216.0,
             "y": 0.019999999552965165,
-            "z": 230.0,
+            "z": 216.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "k2",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -196.0,
+            "y": 0.019999999552965165,
+            "z": 216.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "k3",
+            "catalogId": "RK3_Curve4_90_R26",
+            "x": -176.0,
+            "y": 0.019999999552965165,
+            "z": 216.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "e0",
+            "catalogId": "RK2_Road_Urban4_20m@34",
+            "x": -100.0,
+            "y": 0.019999999552965165,
+            "z": 110.0,
+            "yawDeg": -90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "X7",
+            "catalogId": "RK3_Tee_4x2_24x32m",
+            "x": -88.0,
+            "y": 0.019999999552965165,
+            "z": 110.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "rn0",
+            "catalogId": "RK_Road_Urban_20m@46",
+            "x": -88.0,
+            "y": 0.019999999552965165,
+            "z": 94.0,
             "yawDeg": 180.0,
             "speedLimitKph": 0.0
         },
@@ -356,9 +356,18 @@
             "speedLimitKph": 0.0
         },
         {
+            "id": "X10",
+            "catalogId": "RK3_Cross_4x2_Plain_24x32m",
+            "x": -314.0,
+            "y": 0.019999999552965165,
+            "z": 178.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
             "id": "b2",
             "catalogId": "RK_Road_Urban_20m",
-            "x": -318.0,
+            "x": -350.0,
             "y": 0.019999999552965165,
             "z": 178.0,
             "yawDeg": 90.0,
@@ -367,7 +376,7 @@
         {
             "id": "b3",
             "catalogId": "RK_Road_Urban_20m",
-            "x": -338.0,
+            "x": -370.0,
             "y": 0.019999999552965165,
             "z": 178.0,
             "yawDeg": 90.0,
@@ -376,7 +385,7 @@
         {
             "id": "b4",
             "catalogId": "RK_Road_Urban_Crosswalk_20m",
-            "x": -358.0,
+            "x": -390.0,
             "y": 0.019999999552965165,
             "z": 178.0,
             "yawDeg": 90.0,
@@ -385,7 +394,7 @@
         {
             "id": "b5",
             "catalogId": "RK_Road_Urban_20m",
-            "x": -378.0,
+            "x": -410.0,
             "y": 0.019999999552965165,
             "z": 178.0,
             "yawDeg": 90.0,
@@ -394,7 +403,7 @@
         {
             "id": "b6",
             "catalogId": "RK_Road_Urban_20m",
-            "x": -398.0,
+            "x": -430.0,
             "y": 0.019999999552965165,
             "z": 178.0,
             "yawDeg": 90.0,
@@ -403,7 +412,7 @@
         {
             "id": "b7",
             "catalogId": "RK_Road_Urban_20m",
-            "x": -418.0,
+            "x": -450.0,
             "y": 0.019999999552965165,
             "z": 178.0,
             "yawDeg": 90.0,
@@ -412,7 +421,7 @@
         {
             "id": "b8",
             "catalogId": "RK_Road_Urban_20m",
-            "x": -438.0,
+            "x": -470.0,
             "y": 0.019999999552965165,
             "z": 178.0,
             "yawDeg": 90.0,
@@ -421,7 +430,7 @@
         {
             "id": "o0",
             "catalogId": "RK_Road_Curve90_R14",
-            "x": -452.0,
+            "x": -484.0,
             "y": 0.019999999552965165,
             "z": 164.0,
             "yawDeg": 0.0,
@@ -430,7 +439,7 @@
         {
             "id": "o1",
             "catalogId": "RK_Road_Urban_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 0.019999999552965165,
             "z": 144.0,
             "yawDeg": 0.0,
@@ -439,7 +448,7 @@
         {
             "id": "o2",
             "catalogId": "RK_Road_Urban_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 0.019999999552965165,
             "z": 124.0,
             "yawDeg": 0.0,
@@ -448,7 +457,7 @@
         {
             "id": "o3",
             "catalogId": "RK_Road_Urban_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 0.019999999552965165,
             "z": 104.0,
             "yawDeg": 0.0,
@@ -457,7 +466,7 @@
         {
             "id": "o4",
             "catalogId": "RK_Road_Urban_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 0.019999999552965165,
             "z": 84.0,
             "yawDeg": 0.0,
@@ -466,7 +475,7 @@
         {
             "id": "o5",
             "catalogId": "RK_Road_Urban_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 0.019999999552965165,
             "z": 64.0,
             "yawDeg": 0.0,
@@ -475,7 +484,7 @@
         {
             "id": "up0",
             "catalogId": "RK_Ramp_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 0.019999999552965165,
             "z": 64.0,
             "yawDeg": 180.0,
@@ -484,7 +493,7 @@
         {
             "id": "up1",
             "catalogId": "RK_Ramp_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 1.6199999995529653,
             "z": 44.0,
             "yawDeg": 180.0,
@@ -493,7 +502,7 @@
         {
             "id": "up2",
             "catalogId": "RK_Ramp_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 3.2199999995529655,
             "z": 24.0,
             "yawDeg": 180.0,
@@ -502,7 +511,7 @@
         {
             "id": "up3",
             "catalogId": "RK_Ramp_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 4.819999999552966,
             "z": 4.0,
             "yawDeg": 180.0,
@@ -511,7 +520,7 @@
         {
             "id": "br0",
             "catalogId": "RK_Bridge_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 6.4199999995529659,
             "z": -16.0,
             "yawDeg": 180.0,
@@ -520,7 +529,7 @@
         {
             "id": "br1",
             "catalogId": "RK_Bridge_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 6.4199999995529659,
             "z": -36.0,
             "yawDeg": 180.0,
@@ -529,7 +538,7 @@
         {
             "id": "br2",
             "catalogId": "RK_Bridge_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 6.4199999995529659,
             "z": -56.0,
             "yawDeg": 180.0,
@@ -538,7 +547,7 @@
         {
             "id": "dn0",
             "catalogId": "RK_Ramp_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 4.819999999552966,
             "z": -96.0,
             "yawDeg": 0.0,
@@ -547,7 +556,7 @@
         {
             "id": "dn1",
             "catalogId": "RK_Ramp_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 3.219999999552966,
             "z": -116.0,
             "yawDeg": 0.0,
@@ -556,7 +565,7 @@
         {
             "id": "dn2",
             "catalogId": "RK_Ramp_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 1.6199999995529658,
             "z": -136.0,
             "yawDeg": 0.0,
@@ -565,7 +574,7 @@
         {
             "id": "dn3",
             "catalogId": "RK_Ramp_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 0.01999999955296561,
             "z": -156.0,
             "yawDeg": 0.0,
@@ -574,100 +583,199 @@
         {
             "id": "o6",
             "catalogId": "RK_Road_Urban_20m",
-            "x": -452.0,
+            "x": -484.0,
             "y": 0.01999999955296561,
             "z": -176.0,
             "yawDeg": 0.0,
             "speedLimitKph": 0.0
         },
         {
-            "id": "h0",
-            "catalogId": "RK_Road_Urban_20m",
-            "x": -206.0,
-            "y": 0.019999999552965165,
-            "z": 178.0,
+            "id": "so0",
+            "catalogId": "RK_Road_Curve90_R14",
+            "x": -470.0,
+            "y": 0.01999999955296561,
+            "z": -190.0,
             "yawDeg": -90.0,
             "speedLimitKph": 0.0
         },
         {
-            "id": "h1",
-            "catalogId": "RK_Road_Urban_20m",
-            "x": -186.0,
-            "y": 0.019999999552965165,
-            "z": 178.0,
+            "id": "so1",
+            "catalogId": "RK_Road_Urban_20m@174",
+            "x": -296.0,
+            "y": 0.01999999955296561,
+            "z": -190.0,
             "yawDeg": -90.0,
             "speedLimitKph": 0.0
         },
         {
-            "id": "q0",
-            "catalogId": "RK2_Road_Urban4_20m",
-            "x": -242.0,
-            "y": 0.019999999552965165,
-            "z": 74.0,
-            "yawDeg": 0.0,
+            "id": "so2",
+            "catalogId": "RK_Road_Urban_Zebra_20m",
+            "x": -276.0,
+            "y": 0.01999999955296561,
+            "z": -190.0,
+            "yawDeg": -90.0,
             "speedLimitKph": 0.0
         },
         {
-            "id": "q1",
-            "catalogId": "RK2_Road_Urban4_20m",
-            "x": -242.0,
-            "y": 0.019999999552965165,
-            "z": 54.0,
-            "yawDeg": 0.0,
+            "id": "so3",
+            "catalogId": "RK_Road_Urban_20m@174",
+            "x": -102.0,
+            "y": 0.01999999955296561,
+            "z": -190.0,
+            "yawDeg": -90.0,
             "speedLimitKph": 0.0
         },
         {
-            "id": "q2",
-            "catalogId": "RK2_Road_Urban4_20m",
-            "x": -242.0,
-            "y": 0.019999999552965165,
-            "z": 34.0,
-            "yawDeg": 0.0,
+            "id": "so4",
+            "catalogId": "RK_Road_Curve90_R14",
+            "x": -88.0,
+            "y": 0.01999999955296561,
+            "z": -176.0,
+            "yawDeg": 180.0,
             "speedLimitKph": 0.0
         },
         {
-            "id": "X5",
-            "catalogId": "RK2_Cross_4x2_24x32m",
-            "x": -242.0,
+            "id": "so5",
+            "catalogId": "RK_Road_Urban_20m@112",
+            "x": -88.00000000000002,
+            "y": 0.01999999955296561,
+            "z": -64.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "ol0",
+            "catalogId": "RK3_Curve4_90_R26",
+            "x": -50.0,
             "y": 0.019999999552965165,
-            "z": 22.0,
+            "z": 136.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "ol1",
+            "catalogId": "RK2_Road_Urban4_20m@88",
+            "x": -50.000000000000017,
+            "y": 0.019999999552965165,
+            "z": 224.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "ol2",
+            "catalogId": "RK3_Curve4_90_R26",
+            "x": -76.00000000000002,
+            "y": 0.019999999552965165,
+            "z": 250.0,
             "yawDeg": 90.0,
             "speedLimitKph": 0.0
         },
         {
-            "id": "t0",
-            "catalogId": "RK2_Road_Urban4_20m",
-            "x": -242.0,
+            "id": "ol3",
+            "catalogId": "RK2_Road_Urban4_20m@96",
+            "x": -172.0,
             "y": 0.019999999552965165,
-            "z": -10.0,
+            "z": 250.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "ol4",
+            "catalogId": "RK3_Road_Urban4_Crosswalk_20m",
+            "x": -192.0,
+            "y": 0.019999999552965165,
+            "z": 250.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "ol5",
+            "catalogId": "RK2_Road_Urban4_20m@96",
+            "x": -288.0,
+            "y": 0.019999999552965165,
+            "z": 250.0,
+            "yawDeg": 90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "ol6",
+            "catalogId": "RK3_Curve4_90_R26",
+            "x": -314.0,
+            "y": 0.019999999552965165,
+            "z": 224.0,
             "yawDeg": 0.0,
             "speedLimitKph": 0.0
         },
         {
-            "id": "v0",
-            "catalogId": "RK_Road_Urban_20m",
-            "x": -278.0,
+            "id": "ol7",
+            "catalogId": "RK2_Road_Urban4_20m@34",
+            "x": -314.0,
             "y": 0.019999999552965165,
-            "z": 22.0,
-            "yawDeg": 90.0,
+            "z": 190.0,
+            "yawDeg": 0.0,
             "speedLimitKph": 0.0
         },
         {
-            "id": "v1",
-            "catalogId": "RK_Road_Urban_20m",
-            "x": -298.0,
+            "id": "ol8",
+            "catalogId": "RK2_Road_Urban4_20m@30",
+            "x": -314.0,
             "y": 0.019999999552965165,
-            "z": 22.0,
-            "yawDeg": 90.0,
+            "z": 136.0,
+            "yawDeg": 0.0,
             "speedLimitKph": 0.0
         },
         {
-            "id": "v2",
-            "catalogId": "RK_Road_Urban_20m",
-            "x": -318.0,
+            "id": "ol9",
+            "catalogId": "RK3_Curve4_90_R26",
+            "x": -288.0,
             "y": 0.019999999552965165,
-            "z": 22.0,
-            "yawDeg": 90.0,
+            "z": 110.0,
+            "yawDeg": -90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "ol10",
+            "catalogId": "RK2_Road_Urban4_20m@30",
+            "x": -258.0,
+            "y": 0.019999999552965165,
+            "z": 110.0,
+            "yawDeg": -90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "u0",
+            "catalogId": "RK3_Curve4_90_R26",
+            "x": -216.0,
+            "y": 0.019999999552965165,
+            "z": -16.0,
+            "yawDeg": -90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "u1",
+            "catalogId": "RK3_Road_Urban4_Crosswalk_20m",
+            "x": -196.0,
+            "y": 0.019999999552965165,
+            "z": -16.0,
+            "yawDeg": -90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "u2",
+            "catalogId": "RK2_Road_Urban4_20m",
+            "x": -176.0,
+            "y": 0.019999999552965165,
+            "z": -16.0,
+            "yawDeg": -90.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "u3",
+            "catalogId": "RK3_Curve4_90_R26",
+            "x": -150.0,
+            "y": 0.019999999552965165,
+            "z": 10.000000000000004,
+            "yawDeg": 180.0,
             "speedLimitKph": 0.0
         }
     ],
@@ -676,18 +784,6 @@
             "instanceA": "X1",
             "socketA": "Socket_North",
             "instanceB": "n0",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "n0",
-            "socketA": "Socket_Start",
-            "instanceB": "n1",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "n1",
-            "socketA": "Socket_Start",
-            "instanceB": "n2",
             "socketB": "Socket_End"
         },
         {
@@ -710,24 +806,6 @@
         },
         {
             "instanceA": "X1",
-            "socketA": "Socket_East",
-            "instanceB": "e0",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "e0",
-            "socketA": "Socket_Start",
-            "instanceB": "e1",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "e1",
-            "socketA": "Socket_Start",
-            "instanceB": "e2",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "X1",
             "socketA": "Socket_South",
             "instanceB": "s0",
             "socketB": "Socket_End"
@@ -743,12 +821,6 @@
             "socketA": "Socket_Start",
             "instanceB": "X2",
             "socketB": "Socket_West"
-        },
-        {
-            "instanceA": "X2",
-            "socketA": "Socket_East",
-            "instanceB": "x0",
-            "socketB": "Socket_End"
         },
         {
             "instanceA": "X2",
@@ -794,18 +866,6 @@
         },
         {
             "instanceA": "R",
-            "socketA": "Socket_North",
-            "instanceB": "rn0",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "rn0",
-            "socketA": "Socket_Start",
-            "instanceB": "rn1",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "R",
             "socketA": "Socket_South",
             "instanceB": "rs0",
             "socketB": "Socket_End"
@@ -830,36 +890,6 @@
         },
         {
             "instanceA": "X3",
-            "socketA": "Socket_West",
-            "instanceB": "a0",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "a0",
-            "socketA": "Socket_Start",
-            "instanceB": "a1",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "a1",
-            "socketA": "Socket_Start",
-            "instanceB": "a2",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "a2",
-            "socketA": "Socket_Start",
-            "instanceB": "a3",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "a3",
-            "socketA": "Socket_Start",
-            "instanceB": "a4",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "X3",
             "socketA": "Socket_North",
             "instanceB": "m0",
             "socketB": "Socket_End"
@@ -877,16 +907,118 @@
             "socketB": "Socket_East"
         },
         {
-            "instanceA": "X4",
-            "socketA": "Socket_West",
-            "instanceB": "k0",
+            "instanceA": "X3",
+            "socketA": "Socket_South",
+            "instanceB": "q0",
             "socketB": "Socket_End"
         },
         {
-            "instanceA": "k0",
+            "instanceA": "q0",
             "socketA": "Socket_Start",
-            "instanceB": "k1",
+            "instanceB": "q1",
             "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "q1",
+            "socketA": "Socket_Start",
+            "instanceB": "q2",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "q2",
+            "socketA": "Socket_Start",
+            "instanceB": "X5",
+            "socketB": "Socket_West"
+        },
+        {
+            "instanceA": "xw2",
+            "socketA": "Socket_Start",
+            "instanceB": "X5",
+            "socketB": "Socket_North"
+        },
+        {
+            "instanceA": "n0",
+            "socketA": "Socket_Start",
+            "instanceB": "X6",
+            "socketB": "Socket_West"
+        },
+        {
+            "instanceA": "X4",
+            "socketA": "Socket_North",
+            "instanceB": "h0",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "h0",
+            "socketA": "Socket_Start",
+            "instanceB": "h1",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "h1",
+            "socketA": "Socket_Start",
+            "instanceB": "h2",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "h2",
+            "socketA": "Socket_Start",
+            "instanceB": "X6",
+            "socketB": "Socket_North"
+        },
+        {
+            "instanceA": "X4",
+            "socketA": "Socket_West",
+            "instanceB": "k0",
+            "socketB": "Socket_Start"
+        },
+        {
+            "instanceA": "k0",
+            "socketA": "Socket_End",
+            "instanceB": "k1",
+            "socketB": "Socket_Start"
+        },
+        {
+            "instanceA": "k1",
+            "socketA": "Socket_End",
+            "instanceB": "k2",
+            "socketB": "Socket_Start"
+        },
+        {
+            "instanceA": "k2",
+            "socketA": "Socket_End",
+            "instanceB": "k3",
+            "socketB": "Socket_Start"
+        },
+        {
+            "instanceA": "k3",
+            "socketA": "Socket_End",
+            "instanceB": "X6",
+            "socketB": "Socket_East"
+        },
+        {
+            "instanceA": "X1",
+            "socketA": "Socket_East",
+            "instanceB": "e0",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "e0",
+            "socketA": "Socket_Start",
+            "instanceB": "X7",
+            "socketB": "Socket_East"
+        },
+        {
+            "instanceA": "R",
+            "socketA": "Socket_North",
+            "instanceB": "rn0",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "rn0",
+            "socketA": "Socket_Start",
+            "instanceB": "X7",
+            "socketB": "Socket_North"
         },
         {
             "instanceA": "X4",
@@ -903,6 +1035,12 @@
         {
             "instanceA": "b1",
             "socketA": "Socket_Start",
+            "instanceB": "X10",
+            "socketB": "Socket_North"
+        },
+        {
+            "instanceA": "X10",
+            "socketA": "Socket_South",
             "instanceB": "b2",
             "socketB": "Socket_End"
         },
@@ -1051,119 +1189,159 @@
             "socketB": "Socket_End"
         },
         {
-            "instanceA": "X4",
-            "socketA": "Socket_North",
-            "instanceB": "h0",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "h0",
+            "instanceA": "o6",
             "socketA": "Socket_Start",
-            "instanceB": "h1",
+            "instanceB": "so0",
             "socketB": "Socket_End"
         },
         {
-            "instanceA": "X3",
-            "socketA": "Socket_South",
-            "instanceB": "q0",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "q0",
+            "instanceA": "so0",
             "socketA": "Socket_Start",
-            "instanceB": "q1",
+            "instanceB": "so1",
             "socketB": "Socket_End"
         },
         {
-            "instanceA": "q1",
+            "instanceA": "so1",
             "socketA": "Socket_Start",
-            "instanceB": "q2",
+            "instanceB": "so2",
             "socketB": "Socket_End"
         },
         {
-            "instanceA": "q2",
+            "instanceA": "so2",
             "socketA": "Socket_Start",
-            "instanceB": "X5",
+            "instanceB": "so3",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "so3",
+            "socketA": "Socket_Start",
+            "instanceB": "so4",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "so4",
+            "socketA": "Socket_Start",
+            "instanceB": "so5",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "so5",
+            "socketA": "Socket_Start",
+            "instanceB": "rs2",
+            "socketB": "Socket_Start"
+        },
+        {
+            "instanceA": "X7",
+            "socketA": "Socket_West",
+            "instanceB": "ol0",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "ol0",
+            "socketA": "Socket_Start",
+            "instanceB": "ol1",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "ol1",
+            "socketA": "Socket_Start",
+            "instanceB": "ol2",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "ol2",
+            "socketA": "Socket_Start",
+            "instanceB": "ol3",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "ol3",
+            "socketA": "Socket_Start",
+            "instanceB": "ol4",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "ol4",
+            "socketA": "Socket_Start",
+            "instanceB": "ol5",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "ol5",
+            "socketA": "Socket_Start",
+            "instanceB": "ol6",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "ol6",
+            "socketA": "Socket_Start",
+            "instanceB": "ol7",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "ol7",
+            "socketA": "Socket_Start",
+            "instanceB": "X10",
             "socketB": "Socket_West"
         },
         {
-            "instanceA": "xw2",
+            "instanceA": "X10",
+            "socketA": "Socket_East",
+            "instanceB": "ol8",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "ol8",
             "socketA": "Socket_Start",
-            "instanceB": "X5",
-            "socketB": "Socket_North"
+            "instanceB": "ol9",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "ol9",
+            "socketA": "Socket_Start",
+            "instanceB": "ol10",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "ol10",
+            "socketA": "Socket_Start",
+            "instanceB": "X3",
+            "socketB": "Socket_West"
         },
         {
             "instanceA": "X5",
             "socketA": "Socket_East",
-            "instanceB": "t0",
+            "instanceB": "u0",
             "socketB": "Socket_End"
         },
         {
-            "instanceA": "X5",
-            "socketA": "Socket_South",
-            "instanceB": "v0",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "v0",
+            "instanceA": "u0",
             "socketA": "Socket_Start",
-            "instanceB": "v1",
+            "instanceB": "u1",
             "socketB": "Socket_End"
         },
         {
-            "instanceA": "v1",
+            "instanceA": "u1",
             "socketA": "Socket_Start",
-            "instanceB": "v2",
+            "instanceB": "u2",
             "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "u2",
+            "socketA": "Socket_Start",
+            "instanceB": "u3",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "u3",
+            "socketA": "Socket_Start",
+            "instanceB": "X2",
+            "socketB": "Socket_East"
         }
     ],
     "openSockets": [
         {
-            "instanceId": "n2",
-            "socket": "Socket_Start"
-        },
-        {
-            "instanceId": "e2",
-            "socket": "Socket_Start"
-        },
-        {
-            "instanceId": "x0",
-            "socket": "Socket_Start"
-        },
-        {
             "instanceId": "re1",
-            "socket": "Socket_Start"
-        },
-        {
-            "instanceId": "rn1",
-            "socket": "Socket_Start"
-        },
-        {
-            "instanceId": "rs2",
-            "socket": "Socket_Start"
-        },
-        {
-            "instanceId": "a4",
-            "socket": "Socket_Start"
-        },
-        {
-            "instanceId": "k1",
-            "socket": "Socket_Start"
-        },
-        {
-            "instanceId": "o6",
-            "socket": "Socket_Start"
-        },
-        {
-            "instanceId": "h1",
-            "socket": "Socket_Start"
-        },
-        {
-            "instanceId": "t0",
-            "socket": "Socket_Start"
-        },
-        {
-            "instanceId": "v2",
             "socket": "Socket_Start"
         }
     ],
@@ -1312,10 +1490,10 @@
             "id": "main-x2-south",
             "code": "2.1",
             "value": "",
-            "instanceId": "x0",
-            "laneId": "f2",
+            "instanceId": "u3",
+            "laneId": "b2",
             "plaques": [],
-            "atS": 8.0,
+            "atS": 40.0,
             "untilNextJunction": false
         },
         {
@@ -1336,26 +1514,6 @@
             "laneId": "f",
             "plaques": [],
             "atS": 8.0,
-            "untilNextJunction": false
-        },
-        {
-            "id": "zebra-x2-east",
-            "code": "5.19.1",
-            "value": "",
-            "instanceId": "xe0",
-            "laneId": "f",
-            "plaques": [],
-            "atS": 14.0,
-            "untilNextJunction": false
-        },
-        {
-            "id": "zebra-x2-west",
-            "code": "5.19.1",
-            "value": "",
-            "instanceId": "xw0",
-            "laneId": "f",
-            "plaques": [],
-            "atS": 14.0,
             "untilNextJunction": false
         },
         {
@@ -1382,10 +1540,10 @@
             "id": "speed-60-north",
             "code": "3.24",
             "value": "60",
-            "instanceId": "n2",
-            "laneId": "f2",
+            "instanceId": "n0",
+            "laneId": "f2a",
             "plaques": [],
-            "atS": 4.0,
+            "atS": 2.0,
             "untilNextJunction": false
         },
         {
@@ -1412,10 +1570,10 @@
             "id": "parking-west",
             "code": "6.4",
             "value": "",
-            "instanceId": "xw1",
+            "instanceId": "xw0",
             "laneId": "b",
             "plaques": [],
-            "atS": 10.0,
+            "atS": 4.0,
             "untilNextJunction": false
         },
         {
@@ -1439,33 +1597,23 @@
             "untilNextJunction": false
         },
         {
-            "id": "avenue-40-west",
+            "id": "north-30",
             "code": "3.24",
-            "value": "40",
-            "instanceId": "a1",
-            "laneId": "b2",
-            "plaques": [],
-            "atS": 3.0,
-            "untilNextJunction": false
-        },
-        {
-            "id": "avenue-40-east",
-            "code": "3.24",
-            "value": "40",
-            "instanceId": "a4",
+            "value": "30",
+            "instanceId": "k1",
             "laneId": "f2",
             "plaques": [],
             "atS": 3.0,
             "untilNextJunction": false
         },
         {
-            "id": "north-30",
+            "id": "north-30-back",
             "code": "3.24",
             "value": "30",
-            "instanceId": "k0",
+            "instanceId": "k2",
             "laneId": "b2",
             "plaques": [],
-            "atS": 5.0,
+            "atS": 3.0,
             "untilNextJunction": false
         },
         {
@@ -1483,9 +1631,9 @@
             "code": "2.1",
             "value": "",
             "instanceId": "k0",
-            "laneId": "f2",
+            "laneId": "b2",
             "plaques": [],
-            "atS": 8.0,
+            "atS": 40.0,
             "untilNextJunction": false
         },
         {
@@ -1522,10 +1670,10 @@
             "id": "main-x5-south",
             "code": "2.1",
             "value": "",
-            "instanceId": "t0",
+            "instanceId": "u0",
             "laneId": "f2",
             "plaques": [],
-            "atS": 8.0,
+            "atS": 24.0,
             "untilNextJunction": false
         },
         {
@@ -1539,13 +1687,123 @@
             "untilNextJunction": false
         },
         {
-            "id": "yield-x5-west",
+            "id": "main-x6-south",
+            "code": "2.1",
+            "value": "",
+            "instanceId": "n0",
+            "laneId": "b2b",
+            "plaques": [],
+            "atS": 2.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "main-x6-north",
+            "code": "2.1",
+            "value": "",
+            "instanceId": "k3",
+            "laneId": "f2",
+            "plaques": [],
+            "atS": 24.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "yield-x6-west",
             "code": "2.4",
             "value": "",
-            "instanceId": "v0",
+            "instanceId": "h2",
+            "laneId": "b",
+            "plaques": [],
+            "atS": 12.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "main-x7-west",
+            "code": "2.1",
+            "value": "",
+            "instanceId": "e0",
+            "laneId": "b2",
+            "plaques": [],
+            "atS": 26.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "main-x7-east",
+            "code": "2.1",
+            "value": "",
+            "instanceId": "ol0",
+            "laneId": "f2",
+            "plaques": [],
+            "atS": 24.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "yield-x7-south",
+            "code": "2.4",
+            "value": "",
+            "instanceId": "rn0",
+            "laneId": "b",
+            "plaques": [],
+            "atS": 38.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "main-x10-north",
+            "code": "2.1",
+            "value": "",
+            "instanceId": "ol7",
+            "laneId": "b2",
+            "plaques": [],
+            "atS": 26.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "main-x10-south",
+            "code": "2.1",
+            "value": "",
+            "instanceId": "ol8",
+            "laneId": "f2",
+            "plaques": [],
+            "atS": 22.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "yield-x10-east",
+            "code": "2.4",
+            "value": "",
+            "instanceId": "b1",
+            "laneId": "b",
+            "plaques": [],
+            "atS": 12.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "yield-x10-west",
+            "code": "2.4",
+            "value": "",
+            "instanceId": "b2",
             "laneId": "f",
             "plaques": [],
-            "atS": 8.0,
+            "atS": 12.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "outer-40-north",
+            "code": "3.24",
+            "value": "40",
+            "instanceId": "ol1",
+            "laneId": "b2",
+            "plaques": [],
+            "atS": 4.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "outer-40-south",
+            "code": "3.24",
+            "value": "40",
+            "instanceId": "ol7",
+            "laneId": "f2",
+            "plaques": [],
+            "atS": 4.0,
             "untilNextJunction": false
         },
         {
@@ -1667,6 +1925,126 @@
             "plaques": [],
             "atS": 5.0,
             "untilNextJunction": false
+        },
+        {
+            "id": "zebra-xw1-f",
+            "code": "5.19.1",
+            "value": "",
+            "instanceId": "xw1",
+            "laneId": "f",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "zebra-xw1-b",
+            "code": "5.19.1",
+            "value": "",
+            "instanceId": "xw1",
+            "laneId": "b",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "zebra-h1-f",
+            "code": "5.19.1",
+            "value": "",
+            "instanceId": "h1",
+            "laneId": "f",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "zebra-h1-b",
+            "code": "5.19.1",
+            "value": "",
+            "instanceId": "h1",
+            "laneId": "b",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "zebra-so2-f",
+            "code": "5.19.1",
+            "value": "",
+            "instanceId": "so2",
+            "laneId": "f",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "zebra-so2-b",
+            "code": "5.19.1",
+            "value": "",
+            "instanceId": "so2",
+            "laneId": "b",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "zebra-q1-f",
+            "code": "5.19.1",
+            "value": "",
+            "instanceId": "q1",
+            "laneId": "f2",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "zebra-q1-b",
+            "code": "5.19.1",
+            "value": "",
+            "instanceId": "q1",
+            "laneId": "b2",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "zebra-ol4-f",
+            "code": "5.19.1",
+            "value": "",
+            "instanceId": "ol4",
+            "laneId": "f2",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "zebra-ol4-b",
+            "code": "5.19.1",
+            "value": "",
+            "instanceId": "ol4",
+            "laneId": "b2",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "zebra-u1-f",
+            "code": "5.19.1",
+            "value": "",
+            "instanceId": "u1",
+            "laneId": "f2",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "zebra-u1-b",
+            "code": "5.19.1",
+            "value": "",
+            "instanceId": "u1",
+            "laneId": "b2",
+            "plaques": [],
+            "atS": 8.0,
+            "untilNextJunction": false
         }
     ],
     "approaches": [
@@ -1700,42 +2078,6 @@
             "priority": 2,
             "signIds": [
                 "stop-x2-west"
-            ]
-        },
-        {
-            "instanceId": "R",
-            "socket": "Socket_East",
-            "priority": 2,
-            "signIds": [
-                "ring-yield-east",
-                "ring-east"
-            ]
-        },
-        {
-            "instanceId": "R",
-            "socket": "Socket_North",
-            "priority": 2,
-            "signIds": [
-                "ring-yield-north",
-                "ring-north"
-            ]
-        },
-        {
-            "instanceId": "R",
-            "socket": "Socket_West",
-            "priority": 2,
-            "signIds": [
-                "ring-yield-west",
-                "ring-west"
-            ]
-        },
-        {
-            "instanceId": "R",
-            "socket": "Socket_South",
-            "priority": 2,
-            "signIds": [
-                "ring-yield-south",
-                "ring-south"
             ]
         },
         {
@@ -1795,11 +2137,119 @@
             ]
         },
         {
-            "instanceId": "X5",
+            "instanceId": "X6",
+            "socket": "Socket_West",
+            "priority": 1,
+            "signIds": [
+                "main-x6-south"
+            ]
+        },
+        {
+            "instanceId": "X6",
+            "socket": "Socket_East",
+            "priority": 1,
+            "signIds": [
+                "main-x6-north"
+            ]
+        },
+        {
+            "instanceId": "X6",
+            "socket": "Socket_North",
+            "priority": 2,
+            "signIds": [
+                "yield-x6-west"
+            ]
+        },
+        {
+            "instanceId": "X7",
+            "socket": "Socket_West",
+            "priority": 1,
+            "signIds": [
+                "main-x7-east"
+            ]
+        },
+        {
+            "instanceId": "X7",
+            "socket": "Socket_East",
+            "priority": 1,
+            "signIds": [
+                "main-x7-west"
+            ]
+        },
+        {
+            "instanceId": "X7",
+            "socket": "Socket_North",
+            "priority": 2,
+            "signIds": [
+                "yield-x7-south"
+            ]
+        },
+        {
+            "instanceId": "X10",
+            "socket": "Socket_West",
+            "priority": 1,
+            "signIds": [
+                "main-x10-north"
+            ]
+        },
+        {
+            "instanceId": "X10",
+            "socket": "Socket_East",
+            "priority": 1,
+            "signIds": [
+                "main-x10-south"
+            ]
+        },
+        {
+            "instanceId": "X10",
+            "socket": "Socket_North",
+            "priority": 2,
+            "signIds": [
+                "yield-x10-east"
+            ]
+        },
+        {
+            "instanceId": "X10",
             "socket": "Socket_South",
             "priority": 2,
             "signIds": [
-                "yield-x5-west"
+                "yield-x10-west"
+            ]
+        },
+        {
+            "instanceId": "R",
+            "socket": "Socket_East",
+            "priority": 2,
+            "signIds": [
+                "ring-yield-east",
+                "ring-east"
+            ]
+        },
+        {
+            "instanceId": "R",
+            "socket": "Socket_North",
+            "priority": 2,
+            "signIds": [
+                "ring-yield-north",
+                "ring-north"
+            ]
+        },
+        {
+            "instanceId": "R",
+            "socket": "Socket_West",
+            "priority": 2,
+            "signIds": [
+                "ring-yield-west",
+                "ring-west"
+            ]
+        },
+        {
+            "instanceId": "R",
+            "socket": "Socket_South",
+            "priority": 2,
+            "signIds": [
+                "ring-yield-south",
+                "ring-south"
             ]
         }
     ],
