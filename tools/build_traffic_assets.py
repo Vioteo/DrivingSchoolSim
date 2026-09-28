@@ -1,6 +1,8 @@
 """Original traffic props. Blender 5: -b --python tools/build_traffic_assets.py.
 Metres, Z up, front -Y. Only writes the dedicated Traffic asset directories.
+Only some assets: -- --only DS_Sign_Speed20,DS_Sign_Bump (the rest is built but not exported; no review renders).
 """
+import sys
 import bpy, math, json, hashlib
 from pathlib import Path
 from datetime import datetime, timezone
@@ -25,7 +27,7 @@ for args in [('White',(.92,.95,.92)),('Red',(.72,.014,.025)),('Blue',(.012,.12,.
              ('Yellow',(1,.68,.016)),('Ink',(.008,.012,.018)),('Steel',(.39,.46,.5),.78,.32),
              ('Housing',(.025,.034,.044),.2,.32),('Gasket',(.006,.008,.01)),
              ('LensRed',(.11,.003,.004),.1,.22),('LensAmber',(.15,.057,.002),.1,.22),
-             ('LensGreen',(.002,.07,.03),.1,.22),('RedOn',(1,.015,.009),0,.22,2),
+             ('LensGreen',(.002,.07,.03),.1,.22),('RedOn',(1,.015,.009),0,.22,2),('Grey',(.3,.31,.32)),
              ('AmberOn',(1,.38,.006),0,.22,2),('GreenOn',(.015,.9,.3),0,.22,2)]: mat(*args)
 current=None
 TOWN = 'ЛЕСНОЙ'
@@ -229,6 +231,73 @@ for name,label,kind,mode in [('NoStopping_Zone100','Остановка запр�
                               ('NoParking_ZoneEnd','Конец зоны запрета стоянки','no_parking','end')]:
     sign(name,label,kind); plaque_geometry(mode,1.83)
 
+# ---- T65: 20 km/h, end of the 20 zone, speed bump (warning and information), lane directions.
+# Sign faces follow the numbering of ГОСТ Р 52290-2004 as the developer understands it; not checked against the standard.
+def head(x,z,angle,size=.11,material='White',y=-.105):
+    """Arrow head: a triangle with its tip at (x, z) pointing along angle (degrees, 0 = up, 90 = left)."""
+    a=math.radians(angle); ux,uz=-math.sin(a),math.cos(a); px,pz=uz,-ux
+    polygon('ArrowHead',[(x,z),(x-ux*size+px*size*.75,z-uz*size+pz*size*.75),(x-ux*size-px*size*.75,z-uz*size-pz*size*.75)],y,.002,material)
+def lane_arrows(cx,z0,h,letters,material='White',w=.045):
+    """One lane: a stem from the bottom, then straight on (S), left (L), right (R), U-turn (U) branches."""
+    top=z0+h; mid=z0+h*.55
+    stroke('LaneStem',[(cx,z0),(cx,mid)],w,material)
+    if 'S' in letters: stroke('LaneStraight',[(cx,mid),(cx,top-.08)],w,material); head(cx,top,0,material=material)
+    if 'L' in letters: stroke('LaneLeft',[(cx,mid),(cx,mid+.08),(cx-.11,mid+.08)],w,material); head(cx-.2,mid+.08,90,material=material)
+    if 'R' in letters: stroke('LaneRight',[(cx,mid),(cx,mid+.08),(cx+.11,mid+.08)],w,material); head(cx+.2,mid+.08,-90,material=material)
+    if 'U' in letters: stroke('LaneU',[(cx,mid),(cx,mid+.16),(cx-.12,mid+.16),(cx-.12,mid)],w,material); head(cx-.12,mid-.08,180,material=material)
+def bump_pictogram(z,scale,material='Ink',y=-.105):
+    pts=[(-.2*scale,z-.06*scale)]+[(-.12*scale+.24*scale*i/10,z-.06*scale+.12*scale*math.sin(math.pi*i/10)) for i in range(11)]+[(.2*scale,z-.06*scale)]
+    polygon('BumpShape',pts,y,.002,material)
+    box('BumpRoad',(0,y-.001,z-.075*scale),(.42*scale,.002,.03*scale),material)
+def extra_sign(name,label,kind,lanes=None):
+    root('DS_Sign_'+name,label,'sign'); post(2.75)
+    z=2.45
+    for h in [z-.16,z+.16]:
+        box('RearRail',(0,.008,h),(.4,.035,.04),'Steel',.005)
+        box('PostClamp',(0,.06,h),(.105,.11,.032),'Steel',.005)
+    if kind=='speed_end':
+        outline=shape(64,.355,z)
+        polygon('Plate_Back',outline,-.065,.026,'Steel')
+        polygon('Face_Border',[(x*.99,z+(zz-z)*.99) for x,zz in outline],-.081,.008,'Ink')
+        polygon('Face_Field',[(x*.96,z+(zz-z)*.96) for x,zz in outline],-.091,.004,'White')
+        lettering(name[-2:],z,.37,'Grey')
+        for k in range(-2,3):
+            o=k*.045
+            stroke('EndStripe',[(-.22+o,z-.22-o),(.22+o,z+.22-o)],.012,'Ink',-.106)
+    elif kind=='bump_warn':
+        outline=shape(3,.46,z-.05,math.pi/2)
+        polygon('Plate_Back',outline,-.065,.026,'Steel')
+        polygon('Face_Border',[(x*.99,(z-.05)+(zz-(z-.05))*.99) for x,zz in outline],-.081,.008,'Red')
+        polygon('Face_Field',[(x*.72,(z-.05)+(zz-(z-.05))*.72) for x,zz in outline],-.091,.004,'White')
+        bump_pictogram(z-.09,.9)
+    elif kind=='bump_info':
+        outline=[(-.36,z-.36),(.36,z-.36),(.36,z+.36),(-.36,z+.36)]
+        polygon('Plate_Back',outline,-.065,.026,'Steel')
+        polygon('Face_Border',[(x*.99,z+(zz-z)*.99) for x,zz in outline],-.081,.008,'White')
+        polygon('Face_Field',[(x*.92,z+(zz-z)*.92) for x,zz in outline],-.091,.004,'Blue')
+        polygon('InnerSquare',[(x*.7,z+(zz-z)*.7) for x,zz in outline],-.096,.002,'White')
+        bump_pictogram(z-.02,.95)
+    elif kind=='lanes':
+        n=len(lanes); half=.2*n+.08
+        outline=[(-half,z-.42),(half,z-.42),(half,z+.42),(-half,z+.42)]
+        polygon('Plate_Back',outline,-.065,.026,'Steel')
+        polygon('Face_Border',[(x*.99,z+(zz-z)*.99) for x,zz in outline],-.081,.008,'White')
+        polygon('Face_Field',[(x-.03*(1 if x>0 else -1),z+(zz-z)*.93) for x,zz in outline],-.091,.004,'Blue')
+        for i,letters in enumerate(lanes):
+            cx=-half+.08+.2+.4*i
+            lane_arrows(cx,z-.32,.62,letters)
+            if i>0: stroke('LaneDivider',[(cx-.2,z-.34),(cx-.2,z+.3)],.012,'White')
+    return current
+for args in [('Speed20','Ограничение 20','speed')]: sign(*args)
+for name,label,kind,lanes in [('SpeedEnd20','Конец зоны ограничения 20','speed_end',None),
+                              ('Bump','Искусственная неровность (предупреждающий)','bump_warn',None),
+                              ('BumpInfo','Искусственная неровность (информационный)','bump_info',None),
+                              ('LaneDir_L_SR','Направления движения по полосам: налево | прямо и направо','lanes',['L','SR']),
+                              ('LaneDir_L_LSR','Направления движения по полосам: налево | налево, прямо и направо','lanes',['L','LSR']),
+                              ('LaneDir1_LS','Направления движения по полосе: налево и прямо','lanes',['LS']),
+                              ('LaneDir1_SR','Направления движения по полосе: прямо и направо','lanes',['SR'])]:
+    extra_sign(name,label,kind,lanes)
+
 def select_tree(o):
     bpy.ops.object.select_all(action='DESELECT')
     for child in [o]+list(o.children_recursive): child.select_set(True)
@@ -242,8 +311,13 @@ def measure(o):
         mats.update(m.name for m in child.data.materials)
     lo=[min(p[i] for p in points) for i in range(3)]; hi=[max(p[i] for p in points) for i in range(3)]
     return dict(boundsMin=lo,boundsMax=hi,dimensionsM=[hi[i]-lo[i] for i in range(3)],triangles=tris,materials=sorted(mats))
+ONLY=None
+if '--' in sys.argv:
+    extra=sys.argv[sys.argv.index('--')+1:]
+    if '--only' in extra: ONLY=set(extra[extra.index('--only')+1].split(','))
 manifest={'revision':'traffic-v1','utc':datetime.now(timezone.utc).isoformat(),'exporter':bpy.app.version_string,'units':'metres','sourceAxes':'X right, Z up, front -Y','lod':'Not authored','assets':[]}
 for o,label,kind in assets:
+    if ONLY and o.name not in ONLY: continue
     select_tree(o); stats=measure(o)
     fbx=OUT/(o.name+'.fbx'); glb=REVIEW/'models'/(o.name+'.glb')
     bpy.ops.export_scene.fbx(filepath=str(fbx),use_selection=True,object_types={'MESH','EMPTY'},axis_forward='-Z',axis_up='Y',apply_unit_scale=True,add_leaf_bones=False,bake_anim=False)
@@ -273,7 +347,16 @@ def render(name,pos,target,scale,w,h):
     scene.render.filepath=str(REVIEW/(name+'.png')); bpy.ops.render.render(write_still=True)
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'ArtSource/DS_TrafficKit.blend'))
 manifest['sourceSha256']=hashlib.sha256((ROOT/'ArtSource/DS_TrafficKit.blend').read_bytes()).hexdigest()
+if ONLY:
+    # Partial export: keep the other entries of the manifest as they were.
+    path=ROOT/'artifacts/reports/traffic-manifest.json'
+    old=json.loads(path.read_text(encoding='utf8')) if path.exists() else {'assets':[]}
+    keep=[a for a in old.get('assets',[]) if a['catalogId'] not in ONLY]
+    manifest['assets']=keep+manifest['assets']
 (ROOT/'artifacts/reports/traffic-manifest.json').write_text(json.dumps(manifest,indent=2,ensure_ascii=False),encoding='utf8')
+if ONLY:
+    print('TRAFFIC_ASSETS_PASS',len(ONLY),flush=True)
+    sys.exit(0)
 def show(indices,aspect='Red'):
     for i,(o,_,_) in enumerate(assets):
         for c in o.children_recursive:
