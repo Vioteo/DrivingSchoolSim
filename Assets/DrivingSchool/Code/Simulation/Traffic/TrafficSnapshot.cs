@@ -32,6 +32,8 @@ namespace DrivingSchool.Simulation.Traffic
         // Indicators of the bots (T65): a turn is signalled this many seconds ahead at the current speed, within the bounds;
         // a lane change from this distance before it starts.
         public double TurnSignalSeconds = 4, TurnSignalMinM = 30, TurnSignalMaxM = 80, LaneChangeSignalM = 30;
+        // Roundabout (T65): chance to go on round the ring at an exit, and at most this many ring sections per visit.
+        public double RingStayShare = 0.35; public int MaxRingSections = 4;
     }
 
     /// <summary>What the host tells the director about the player's car each tick.</summary>

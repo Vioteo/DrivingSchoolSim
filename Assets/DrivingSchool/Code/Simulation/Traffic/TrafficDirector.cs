@@ -606,8 +606,31 @@ namespace DrivingSchool.Simulation.Traffic
                 var changes = options.Where(IsLaneChange).ToList();
                 var keep = options.Except(changes).ToList();
                 var pool = changes.Count > 0 && (keep.Count == 0 || a.Rng.NextDouble() < profile.LaneChangeShare) ? changes : keep;
+                // On a roundabout (T65) drivers go on round the ring now and then, but leave it within one lap: a ring full of
+                // circling cars locks up (every one waits for the exit of the next).
+                if (last.Lane != null && last.Lane.roundabout)
+                {
+                    var stay = pool.Where(p => p.IsConnection && index.Path(p.Connection.toLaneId).Lane.roundabout).ToList();
+                    var leave = pool.Except(stay).ToList();
+                    if (stay.Count > 0 && leave.Count > 0)
+                        pool = RingSections(a.Car.Route) < profile.MaxRingSections && a.Rng.NextDouble() < profile.RingStayShare ? stay : leave;
+                }
                 a.Car.AppendRoute(new[] { pool[a.Rng.Next(pool.Count)].Id });
             }
+        }
+
+        /// <summary>Ring lanes at the end of the route in a row (how far round the ring it already goes).</summary>
+        int RingSections(IReadOnlyList<string> route)
+        {
+            int n = 0;
+            for (int i = route.Count - 1; i >= 0; i--)
+            {
+                var p = index.Path(route[i]);
+                if (p.IsConnection) continue;
+                if (!p.Lane.roundabout) break;
+                n++;
+            }
+            return n;
         }
 
         void UpdateIndicators(Agent a)
