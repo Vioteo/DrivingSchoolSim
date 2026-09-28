@@ -90,6 +90,27 @@ namespace DrivingSchool.Presentation
             Vector3 P(float dx, float dy) => anchor + right * dx + up * dy + toEye * 0.003f;
             float big = iconSizeM * 1.4f, small = iconSizeM * 1.0f, pitch = small + iconGapM * 0.5f;
             float w = Mathf.Max(0.05f, b.size.x);
+            // A compact cluster (T66, the crossover: small dials, the hood comes down to their hubs and the rim hides
+            // their outer sides): the driver sees only a band ≈50 mm high between the dials. Three rows there — the turn
+            // arrows beside the gear, the eight lamps, the high beam and the fuel bar.
+            if (FindDial(new[] { "GaugeFace_km", "GaugeTicks_Speed" }, out var dial) && 0.5f * Mathf.Min(dial.size.x, dial.size.y) < 0.06f)
+            {
+                anchor = new Vector3(b.center.x, dial.center.y, b.min.z) + rowOffset;
+                float half = Mathf.Abs(dial.center.x - b.center.x) - 0.5f * Mathf.Min(dial.size.x, dial.size.y);   // free width each side
+                Add(root, Telltale.TurnLeft, P(-0.62f * half, -0.002f), face, small * 1.2f);
+                Add(root, Telltale.TurnRight, P(0.62f * half, -0.002f), face, small * 1.2f);
+                gearGlyph = Quad("Telltale_Gear", root, P(0f, -0.002f), face, iconSizeM * 1.2f, TelltaleIcons.Glyph('N'), Color.white);
+                var lamps = new[] { Telltale.Battery, Telltale.Oil, Telltale.CheckEngine, Telltale.LowFuel, Telltale.LowBeam, Telltale.Parking, Telltale.Handbrake, Telltale.Seatbelt };
+                float tiny = Mathf.Min(iconSizeM * 0.6f, 1.8f * half / (lamps.Length * 1.12f)), step = tiny * 1.12f;
+                for (int i = 0; i < lamps.Length; i++) Add(root, lamps[i], P((i - 0.5f * (lamps.Length - 1)) * step, -0.016f), face, tiny);
+                Add(root, Telltale.HighBeam, P(-0.8f * half, -0.028f), face, tiny * 1.2f);
+                fuelBar = Quad("Fuel_Bar", root, P(0.08f * half, -0.028f), face, 1f, FuelBarTexture.Draw(fuelSegments, fuelSegments, false), Color.white);
+                float fw = Mathf.Min(0.05f, half * 1.1f);
+                fuelBar.transform.localScale = new Vector3(fw, fw / FuelBarTexture.Aspect, 1f);
+                fuelMat = fuelBar.sharedMaterial;
+                HideStaticGear();
+                return;
+            }
             Add(root, Telltale.TurnLeft, P(-0.315f * w, -0.013f), face, big);
             Add(root, Telltale.TurnRight, P(0.315f * w, -0.013f), face, big);
             Add(root, Telltale.HighBeam, P(0f, -0.013f), face, small);
@@ -105,24 +126,31 @@ namespace DrivingSchool.Presentation
             // both rows landed on one spot and the lamps covered each other (the low beam looked cut off).
             PlaceInDial(root, new[] { "GaugeFace_RPM", "GaugeTicks_RPM" }, new[] { Telltale.Battery, Telltale.Oil, Telltale.CheckEngine, Telltale.LowFuel }, small, pitch, -1);
             PlaceInDial(root, new[] { "GaugeFace_km", "GaugeTicks_Speed" }, new[] { Telltale.LowBeam, Telltale.Parking, Telltale.Handbrake, Telltale.Seatbelt }, small, pitch, 1);
-            // The model's static "N" and odometer sit where the live gear is drawn now.
+            HideStaticGear();
+        }
+
+        /// <summary>The model's static "N" and odometer sit where the live gear is drawn now.</summary>
+        void HideStaticGear()
+        {
             foreach (var t in model.GetComponentsInChildren<Transform>(true))
                 if (t.name.StartsWith("Gear_Display", StringComparison.Ordinal) || t.name.StartsWith("Odometer", StringComparison.Ordinal))
                     foreach (var r in t.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
         }
 
+        bool FindDial(string[] facePrefixes, out Bounds bounds)
+        {
+            bounds = default;
+            foreach (var prefix in facePrefixes)
+                foreach (var t in model.GetComponentsInChildren<Transform>(true))
+                    if (t.name.StartsWith(prefix, StringComparison.Ordinal)) { bounds = CarBounds(t); return true; }
+            return false;
+        }
+
         void PlaceInDial(Transform root, string[] facePrefixes, Telltale[] lamps, float size, float pitch, int side)
         {
-            Transform faceT = null;
-            foreach (var prefix in facePrefixes)
-            {
-                foreach (var t in model.GetComponentsInChildren<Transform>(true)) if (t.name.StartsWith(prefix, StringComparison.Ordinal)) { faceT = t; break; }
-                if (faceT != null) break;
-            }
             Vector3 centre;
-            if (faceT != null)
+            if (FindDial(facePrefixes, out var b))
             {
-                var b = CarBounds(faceT);
                 float radius = 0.5f * Mathf.Min(b.size.x, b.size.y);
                 centre = new Vector3(b.center.x, b.center.y + 0.31f * radius, b.min.z - 0.006f); // between the hub and the numbers
             }
