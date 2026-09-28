@@ -26,8 +26,8 @@ namespace DrivingSchool.Presentation
 
         [Header("Timing (game values)")]
         public float trainSpeedKmh = 60f;
-        [Tooltip("Seconds from the first red flash until the train's front reaches the crossing.")] public float trainArrivesAfter = 20f;
-        public float warningBeforeLowering = 5f, lowerSeconds = 7f, raiseSeconds = 6f, clearDelaySeconds = 2f;
+        [Tooltip("Seconds from the first red flash until the train's front reaches the crossing.")] public float trainArrivesAfter = 25f;
+        public float warningBeforeLowering = 6f, lowerSeconds = 7f, raiseSeconds = 6f, clearDelaySeconds = 5f;
         [Tooltip("0 = only on request.")] public float autoIntervalSeconds = 120f;
         public float boomOpenAngle = 85f;
 

@@ -230,7 +230,7 @@ namespace DrivingSchool.Editor
         static void BuildRoads()
         {
             // x −470…450 (the town district reaches x −460 since T65), z −200…500.
-            Box("Ground", new Vector3(-10f, -0.1f, 150f), new Vector3(920f, 0.2f, 700f), grass, env, LayerGround, true);
+            Box("Ground", new Vector3(-35f, -0.1f, 140f), new Vector3(970f, 0.2f, 720f), grass, env, LayerGround, true);   // x −520…450, z −220…500 (T66: the town grew west and south)
 
             // Road A (two lanes, dashed centre line 1.5 m dash / 4.5 m gap for visual reference only).
             float lenA = RoadAEndZ - RoadAStartZ;
@@ -667,7 +667,7 @@ namespace DrivingSchool.Editor
             var sA = PlaceKit(Kit + "TK_RailwaySignal.prefab", L(5.0, 4), yaw, root, true);
             var sB = PlaceKit(Kit + "TK_RailwaySignal.prefab", L(-5.0, 16), yaw + 180f, root, true);
             // The track runs just south of the start of road A (z −30) and on to the east, so the train comes from far away.
-            float west = TestRangeLayout.DistrictMinX + 3f, east = 150f;
+            float west = TestRangeLayout.DistrictMinX + 3f, east = TrackEastX;
             if (centre.z > RoadAStartZ - 3.5f) throw new Exception("Town railway would cross road A: track z " + centre.z);
             BuildTrack(root, centre.z, centre.x, west, east, 6.2f);
             var train = BuildTrain(root, out float trainLength, centre.z, east - 2f);
@@ -675,11 +675,12 @@ namespace DrivingSchool.Editor
             view.barriers = new[] { bA, bB }; view.signals = new[] { sA, sB }; view.train = train;
             view.crossingCentre = centre; view.trainDirection = Vector3.left;
             view.trainLength = trainLength; view.trackHalfLength = Mathf.Min(east - centre.x, centre.x - west) - 3f;
-            // A town train at 40 km/h: from the first red flash to the train ≈ 14 s, the booms are down after 4 + 6 s.
+            // A town train at 40 km/h (T65, safety margins): the lights flash 6 s before the booms go down (7 s), the
+            // train comes ≈ 30 s after the first flash, so the booms are down well before it; they rise 5 s after it.
             view.trainSpeedKmh = 40f;
-            view.trainArrivesAfter = Mathf.Min(14f, view.trackHalfLength / (view.trainSpeedKmh / 3.6f));
-            view.warningBeforeLowering = 4f; view.lowerSeconds = 6f; view.autoIntervalSeconds = 90f;
-            if (view.trainArrivesAfter < view.warningBeforeLowering + view.lowerSeconds + 2f) throw new Exception("Town railway: the train would arrive before the booms are down");
+            view.trainArrivesAfter = Mathf.Min(30f, view.trackHalfLength / (view.trainSpeedKmh / 3.6f));
+            view.warningBeforeLowering = 6f; view.lowerSeconds = 7f; view.clearDelaySeconds = 5f; view.autoIntervalSeconds = 120f;
+            CheckMargins(view, "Town railway");
             SetLayer(root.gameObject, LayerProps);
             // Bots and pedestrians: every signal group of the crossing module follows this crossing.
             var host = new SerializedObject(district.traffic);
@@ -720,9 +721,19 @@ namespace DrivingSchool.Editor
             view.barriers = new[] { bN, bS }; view.signals = new[] { sN, sS }; view.train = train;
             view.crossingCentre = new Vector3(RoadCX, 0f, RailZ); view.trainDirection = Vector3.left;
             view.trainLength = trainLength; view.trackHalfLength = RoadCX - TrackWestX - 5f;
-            view.trainArrivesAfter = Mathf.Min(14f, (TrackEastX - RoadCX - 5f) / (view.trainSpeedKmh / 3.6f));
-            view.warningBeforeLowering = 4f; view.lowerSeconds = 6f;
+            view.trainSpeedKmh = 40f;
+            view.trainArrivesAfter = Mathf.Min(25f, (TrackEastX - RoadCX - 5f) / (view.trainSpeedKmh / 3.6f));
+            view.warningBeforeLowering = 6f; view.lowerSeconds = 7f; view.clearDelaySeconds = 5f;
+            CheckMargins(view, "Test range railway");
             return view;
+        }
+
+        /// <summary>Game safety margins of a crossing (T65): the booms are down at least 8 s before the train.</summary>
+        static void CheckMargins(RailwayCrossingView view, string what)
+        {
+            float down = view.warningBeforeLowering + view.lowerSeconds;
+            if (view.trainArrivesAfter < down + 8f) throw new Exception(what + ": the train comes " + view.trainArrivesAfter + " s after the first flash, the booms are down only at " + down + " s");
+            if (view.clearDelaySeconds < 3f) throw new Exception(what + ": the booms would rise right behind the train");
         }
 
         static void BuildTrack(Transform root) => BuildTrack(root, RailZ, RoadCX, TrackWestX, TrackEastX, 5.5f);
