@@ -163,7 +163,7 @@ namespace DrivingSchool.Editor
             if (view.name.Contains("VehicleArrow")) Require(view.HasArrow, "arrow emitters exist");
             foreach (TrafficSignalView.Aspect aspect in Enum.GetValues(typeof(TrafficSignalView.Aspect)))
             {
-                if (view.IsPedestrian && (aspect == TrafficSignalView.Aspect.Amber || aspect == TrafficSignalView.Aspect.RedAmber))
+                if (view.IsPedestrian && (aspect == TrafficSignalView.Aspect.Amber || aspect == TrafficSignalView.Aspect.RedAmber || aspect == TrafficSignalView.Aspect.AmberFlashing))
                 {
                     bool rejected = false;
                     try { view.SetAspect(aspect); } catch (ArgumentException) { rejected = true; }
@@ -171,6 +171,8 @@ namespace DrivingSchool.Editor
                     continue;
                 }
                 view.SetAspect(aspect);
+                // Flashing aspects (added in T32) depend on the blink phase: only the steady ones are checked lamp by lamp.
+                if (aspect == TrafficSignalView.Aspect.GreenFlashing || aspect == TrafficSignalView.Aspect.AmberFlashing) continue;
                 foreach (var lamp in all.Where(r => r.name.StartsWith("Lamp_")))
                 {
                     bool expected = lamp.name.StartsWith("Lamp_Red_") ? aspect == TrafficSignalView.Aspect.Red || aspect == TrafficSignalView.Aspect.RedAmber
