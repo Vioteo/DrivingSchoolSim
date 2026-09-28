@@ -11,6 +11,7 @@ namespace DrivingSchool.Presentation.UI
     {
         public MainMenuController menu;
         public LessonCatalogController catalog;
+        [Tooltip("Экран «Автомобиль» (T65)")] public GarageController garage;
         public GameObject pauseMenuPrefab;
         public GameObject settingsPrefab;
         public GameObject hudPrefab;
@@ -41,8 +42,10 @@ namespace DrivingSchool.Presentation.UI
                 catalog.LaunchRequested += id => { if (id == LessonLaunch.FirstLesson) StartFirstLesson(); else if (id == LessonCatalogController.FreeDrive) StartDrive(); };
             }
             menu.OnSelectLessonRequested.AddListener(OpenAssignments);
-            menu.OnTheoryRequested.AddListener(() => ShowNotice("Теория ПДД — в разработке. Сейчас доступен тестовый полигон."));
+            menu.OnTheoryRequested.AddListener(() => ShowNotice("Теория ПДД — в разработке. Сейчас доступны город и тестовый полигон."));
             menu.OnSettingsRequested.AddListener(OpenSettings);
+            menu.OnGarageRequested.AddListener(OpenGarage);
+            if (garage != null) { garage.gameObject.SetActive(false); garage.Initialize(); }
             menu.OnExitConfirmed.AddListener(AppNavigator.Quit);
         }
 
@@ -57,6 +60,14 @@ namespace DrivingSchool.Presentation.UI
             if (catalog == null) { ShowNotice("Задания пока недоступны."); return; }
             menu.gameObject.SetActive(false);
             catalog.Open(() => { menu.gameObject.SetActive(true); menu.Select(menu.lessonsButton); });
+        }
+
+        public void OpenGarage()
+        {
+            if (loading) return;
+            if (garage == null) { ShowNotice("Экран «Автомобиль» не собран — Driving School/Build UI Prefabs"); return; }
+            menu.gameObject.SetActive(false);
+            garage.Open(() => { menu.gameObject.SetActive(true); menu.Select(menu.garageButton); });
         }
 
         public void StartDrive() => Launch(null, driveScene);

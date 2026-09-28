@@ -43,6 +43,7 @@ namespace DrivingSchool.Editor
             BuildHUD();
             BuildMainMenu();
             BuildLessonCatalog();
+            BuildGarage();
             BuildConditionsSetup();
             BuildG27Calibration();
             BuildPauseMenu();
@@ -162,8 +163,9 @@ namespace DrivingSchool.Editor
             AddThemedText(subtitle.gameObject, "Подготовка к практическому экзамену · категория B", 26, ThemeRole.Muted, theme, TextAlignmentOptions.Left);
 
             // Пункты сверху вниз; порядок = порядок навигации. Фон справа свободен под 3D-сцену меню.
-            var list = CreateFixed("Items", bg, new Vector2(0, 1), new Vector2(560, 5 * 80), new Vector2(96, -290), new Vector2(0, 1));
-            string[] labels = { "Задания", "Теория ПДД", "Экзаменационный маршрут", "Настройки", "Выход" };
+            // «Автомобиль» (T65) — после настроек: выбор машины и её настройки в профиле.
+            var list = CreateFixed("Items", bg, new Vector2(0, 1), new Vector2(560, 6 * 80), new Vector2(96, -290), new Vector2(0, 1));
+            string[] labels = { "Задания", "Теория ПДД", "Экзаменационный маршрут", "Настройки", "Автомобиль", "Выход" };
             var buttons = new Button[labels.Length];
             for (int i = 0; i < labels.Length; i++)
                 buttons[i] = CreateMenuItem($"Item{i}_{labels[i]}", list, new Vector2(0, -i * 80), new Vector2(560, 72), labels[i], 30, theme, i == 2 ? "скоро" : null);
@@ -171,7 +173,8 @@ namespace DrivingSchool.Editor
             menu.theoryButton = buttons[1];
             menu.examButton = buttons[2];
             menu.settingsButton = buttons[3];
-            menu.exitButton = buttons[4];
+            menu.garageButton = buttons[4];
+            menu.exitButton = buttons[5];
             buttons[2].interactable = false;
 
             var hint = CreateFixed("Hint", bg, new Vector2(0, 0), new Vector2(1200, 40), new Vector2(96, 56), new Vector2(0, 0));
@@ -701,6 +704,13 @@ namespace DrivingSchool.Editor
             var catalogGo = (GameObject)PrefabUtility.InstantiatePrefab(catalogPrefab, scene);
             flow.catalog = catalogGo.GetComponent<LessonCatalogController>();
             catalogGo.SetActive(false);
+            var garagePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/DrivingSchool/Prefabs/UI/Garage.prefab");
+            if (garagePrefab != null)
+            {
+                var garageGo = (GameObject)PrefabUtility.InstantiatePrefab(garagePrefab, scene);
+                flow.garage = garageGo.GetComponent<GarageController>();
+                garageGo.SetActive(false);
+            }
             flow.pauseMenuPrefab = pausePrefab;
             flow.driveScene = Path.GetFileNameWithoutExtension(DriveScenePath);
             flow.loadingOverlay = loading.gameObject;

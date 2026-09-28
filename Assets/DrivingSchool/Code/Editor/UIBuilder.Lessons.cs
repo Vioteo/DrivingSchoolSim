@@ -30,7 +30,7 @@ namespace DrivingSchool.Editor
             var subtitle = CreateFixed("Subtitle", content, new Vector2(0, 1), new Vector2(1500, 50), new Vector2(0, -90));
             AddThemedText(subtitle.gameObject, "Выберите урок или свободную практику", 28, ThemeRole.Muted, theme, TextAlignmentOptions.Left);
             catalog.lessonButton = CreateMenuItem("FirstLesson", content, new Vector2(0, -200), new Vector2(590, 100), "Начало движения", 32, theme, null);
-            catalog.rangeButton = CreateMenuItem("TestRange", content, new Vector2(0, -316), new Vector2(590, 100), "Тестовая площадка", 32, theme, null);
+            catalog.rangeButton = CreateMenuItem("TestRange", content, new Vector2(0, -316), new Vector2(590, 100), LessonCatalogController.FreeDriveTitle, 32, theme, null);
             var panel = CreateFixed("Details", content, new Vector2(1, 1), new Vector2(950, 580), new Vector2(0, -200));
             AddThemedImage(panel.gameObject, ThemeRole.BgPanel, theme);
             var accent = CreateFixed("Accent", panel, new Vector2(0, 1), new Vector2(950, 5), Vector2.zero);

@@ -20,6 +20,7 @@ namespace DrivingSchool.Presentation.UI
         public Button theoryButton;
         public Button examButton;
         public Button settingsButton;
+        [Tooltip("«Автомобиль» (T65): выбор машины и её настройки в профиле")] public Button garageButton;
         public Button exitButton;
 
         [Header("Диалог выхода")]
@@ -33,6 +34,7 @@ namespace DrivingSchool.Presentation.UI
         public UnityEvent OnSelectLessonRequested = new UnityEvent();
         public UnityEvent OnTheoryRequested = new UnityEvent();
         public UnityEvent OnSettingsRequested = new UnityEvent();
+        public UnityEvent OnGarageRequested = new UnityEvent();
         public UnityEvent OnExitConfirmed = new UnityEvent();
 
         readonly List<Selectable> menuChain = new List<Selectable>();
@@ -61,6 +63,7 @@ namespace DrivingSchool.Presentation.UI
             Wire(lessonsButton, () => Raise(OnSelectLessonRequested, "select-lesson"));
             Wire(theoryButton, () => Raise(OnTheoryRequested, "theory"));
             Wire(settingsButton, () => Raise(OnSettingsRequested, "settings"));
+            Wire(garageButton, () => Raise(OnGarageRequested, "garage"));
             Wire(exitButton, RequestExit);
             Wire(exitCancelButton, CancelExit);
             Wire(exitConfirmButton, ConfirmExit);
@@ -69,7 +72,7 @@ namespace DrivingSchool.Presentation.UI
             if (examButton != null) { examButton.interactable = false; examButton.navigation = new Navigation { mode = Navigation.Mode.None }; }
 
             menuChain.Clear();
-            foreach (var b in new[] { lessonsButton, theoryButton, examButton, settingsButton, exitButton })
+            foreach (var b in new[] { lessonsButton, theoryButton, examButton, settingsButton, garageButton, exitButton })
                 if (b != null && b.interactable) menuChain.Add(b);
             dialogChain.Clear();
             foreach (var b in new[] { exitCancelButton, exitConfirmButton })
@@ -85,7 +88,7 @@ namespace DrivingSchool.Presentation.UI
         {
             var es = EventSystem.current;
             if (es == null) return;
-            if (SettingsScreenController.ClosedThisFrame || LessonCatalogController.ClosedThisFrame) return;   // этот Esc закрыл настройки
+            if (SettingsScreenController.ClosedThisFrame || LessonCatalogController.ClosedThisFrame || GarageController.ClosedThisFrame) return;   // этот Esc закрыл настройки
             if (CancelPressed(es)) { HandleCancel(); return; }
 
             var kb = Keyboard.current;

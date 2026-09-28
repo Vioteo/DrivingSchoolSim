@@ -12,6 +12,7 @@ namespace DrivingSchool.Presentation.UI
     public sealed class LessonCatalogController : MonoBehaviour
     {
         public const string FreeDrive = "free-drive";
+        public const string FreeDriveTitle = "Город";
         public Button lessonButton, rangeButton, startButton, backButton;
         public TMP_Text title, description, mode;
         public event Action<string> LaunchRequested;
@@ -57,11 +58,11 @@ namespace DrivingSchool.Presentation.UI
             if (id != LessonLaunch.FirstLesson && id != FreeDrive) throw new ArgumentException("Неизвестное задание", nameof(id));
             SelectedId = id;
             bool guided = id == LessonLaunch.FirstLesson;
-            title.text = guided ? "Начало движения" : "Тестовая площадка";
-            mode.text = guided ? "УРОК 01 · С ПОШАГОВЫМИ ПОДСКАЗКАМИ" : "СВОБОДНАЯ ПРАКТИКА";
+            title.text = guided ? "Начало движения" : FreeDriveTitle;
+            mode.text = guided ? "УРОК 01 · С ПОШАГОВЫМИ ПОДСКАЗКАМИ" : "СВОБОДНАЯ ПРАКТИКА В ГОРОДЕ";
             description.text = guided
                 ? "Подготовьте автомобиль, запустите двигатель и плавно троньтесь. Пройдите маршрут по учебной улице и завершите поездку остановкой.\n\nПодсказки ведут по шагам. Доступны механическая и автоматическая коробки передач."
-                : "Исследуйте тестовый район в своём темпе. Тренируйте управление, торможение и манёвры, проезжайте перекрёстки и железнодорожный переезд.\n\nБез последовательности урока. Проверка правил и журнал поездки работают во время движения.";
+                : "Поездка начинается в городе: перекрёстки со светофорами и знаками приоритета, полосы с направлениями движения, кольцо, переезд, пешеходный переход с лежачими полицейскими и разные ограничения скорости. Боты и пешеходы соблюдают ПДД.\n\nИнструктор отмечает нарушения: скорость, выезд на встречную, поворотники, полосу для поворота, дистанцию и остановки. F9 — на площадку полигона.";
         }
 
         public void Back()

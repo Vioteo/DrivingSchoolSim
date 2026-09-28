@@ -23,6 +23,7 @@ namespace DrivingSchool.Presentation
     /// systems. Launch with "--selfcheck" (player) to run the check at start and quit with exit code 0/1.
     /// F4 help, F7 МКПП/АКПП, F8 self-check, F9/Backspace respawn, F10 crash-test spawn, F11 railway crossing,
     /// F12 hill, G calls a train through the crossing, F5/F6 weather, U the town district (T51), M the next car (T50).
+    /// A free drive starts in the town district (T65); F9 goes to the start of road A.
     /// </summary>
     public sealed class VehicleTestRangeDirector : MonoBehaviour
     {
@@ -42,6 +43,8 @@ namespace DrivingSchool.Presentation
         public Transform districtSpawn;
 
         bool showHelp = true, running;
+        /// <summary>Where a free drive starts: the town district (default) or the start of road A.</summary>
+        public static bool StartInTown = true;
         /// <summary>Панель подсказки по клавишам (F4). При запуске из меню её прячет HUD поездки (T47).</summary>
         public bool ShowHelp { get => showHelp; set => showHelp = value; }
         /// <summary>Инженерная панель телеметрии слева вверху. С HUD поездки скрыта; F4 показывает её вместе с клавишами.</summary>
@@ -60,7 +63,9 @@ namespace DrivingSchool.Presentation
         void Start()
         {
             if (obstacleCar != null) { obstacleStart = obstacleCar.position; obstacleStartRot = obstacleCar.rotation; }
-            if (Array.IndexOf(Environment.GetCommandLineArgs(), "--selfcheck") >= 0) StartCoroutine(SelfCheck(true));
+            if (Array.IndexOf(Environment.GetCommandLineArgs(), "--selfcheck") >= 0) { StartCoroutine(SelfCheck(true)); return; }
+            // Free drive starts in the town (T65): no need to press U. A lesson places the car itself.
+            if (StartInTown && districtSpawn != null && string.IsNullOrEmpty(UI.LessonLaunch.LessonId)) Respawn(districtSpawn);
         }
 
         void Update()
@@ -327,7 +332,7 @@ namespace DrivingSchool.Presentation
                     "C — камера (салон/сзади/облёт), ПКМ или Z , . — осмотреться\n" +
                     "F1/F2/F3 + NumPad 8/2/4/6 (Home/End/Del/PgDn) — регулировка зеркал\n" +
                     "F5/F6 — погода (в т.ч. «полнолуние»), F7 — МКПП/АКПП, F8 — самопроверка\n" +
-                    "F9/Backspace — на старт, F10 — к машине для столкновения\n" +
+                    "F9/Backspace — на старт полигона, F10 — к машине для столкновения\n" +
                     "F11 — к ж/д переезду, F12 — к горке, G — вызвать поезд\n" +
                     "U — в городской район, M — другая машина (седан/кроссовер)", small);
                 if (report.Count > 0)
