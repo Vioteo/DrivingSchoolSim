@@ -42,7 +42,9 @@ $argsList = @('-batchmode', '-nographics', '-projectPath', "`"$project`"", '-run
 if ($Filter) { $argsList += @('-testFilter', $Filter) }
 
 Write-Host "Unity: компиляция и EditMode-тесты... (обычно 1–5 минут)"
-$p = Start-Process -FilePath $Unity -ArgumentList $argsList -WindowStyle Hidden -PassThru -Wait
+$p = Start-Process -FilePath $Unity -ArgumentList $argsList -WindowStyle Hidden -PassThru
+# Start-Process -Wait waits for Unity's child processes as well; a persistent helper can hold the check forever.
+$p.WaitForExit()
 $exit = $p.ExitCode
 
 # Ошибки компиляции C#
