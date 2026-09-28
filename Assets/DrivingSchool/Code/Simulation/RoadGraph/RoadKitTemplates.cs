@@ -65,12 +65,19 @@ namespace DrivingSchool.Simulation.RoadGraph
         /// </summary>
         public const string CrosswalkId = "RK_Road_Urban_Crosswalk_20m";
         public const double CrosswalkZ = 10, CrosswalkHalfWidthM = 4.3, BumpOffsetM = 8;
+        /// <summary>
+        /// Overpass kit (T65, tools/build_overpass.py): a 20 m ramp that rises <see cref="RampRiseM"/> (8 %) from Socket_Start
+        /// to Socket_End, and a flat 20 m bridge span on columns. Cross-section as <see cref="StraightId"/>; lanes and
+        /// sidewalks carry the height, so cars and pedestrians go up and down with the road.
+        /// </summary>
+        public const string RampId = "RK_Ramp_20m", BridgeId = "RK_Bridge_20m";
+        public const double RampRiseM = 1.6;
 
         readonly Dictionary<string, ModuleTemplate> templates;
 
         public RoadKitTemplates()
         {
-            templates = new[] { Straight(), Curve(), Cross(), Crosswalk() }.ToDictionary(t => t.CatalogId);
+            templates = new[] { Straight(), Curve(), Cross(), Crosswalk(), Sloped(RampId, RampRiseM), Sloped(BridgeId, 0) }.ToDictionary(t => t.CatalogId);
         }
 
         public IEnumerable<ModuleTemplate> All => templates.Values;
@@ -136,6 +143,28 @@ namespace DrivingSchool.Simulation.RoadGraph
                 {
                     Sock("Socket_Start", new Vec3d(0, 0, 0), 180, outLane: "b", inLane: "f"),
                     Sock("Socket_End", new Vec3d(CurveRadiusM, 0, CurveRadiusM), 90, outLane: "f", inLane: "b"),
+                },
+            };
+        }
+
+        /// <summary>A 1+1 straight whose road rises <paramref name="rise"/> over its 20 m (0: flat bridge span).</summary>
+        static ModuleTemplate Sloped(string id, double rise)
+        {
+            var axis = new[] { new Vec3d(0, 0, 0), new Vec3d(0, rise, StraightLengthM) };
+            var f = new WorldDocumentV2();
+            var fwd = Lane("f", 1, Polyline.OffsetRight(Resample(axis, 1.0), LaneOffsetM));
+            var bwd = Lane("b", -1, Polyline.OffsetRight(Resample(Polyline.Reversed(axis), 1.0), LaneOffsetM));
+            fwd.oncomingLaneId = "b"; bwd.oncomingLaneId = "f";
+            f.lanes = new[] { fwd, bwd };
+            f.boundaries = RoadBoundaries(fwd, MarkingType.Dashed).Concat(RoadBoundaries(bwd, MarkingType.Dashed)).ToArray();
+            f.sidewalks = new[] { Walk("walk.L", Polyline.OffsetRight(axis, -SidewalkOffsetM)), Walk("walk.R", Polyline.OffsetRight(axis, SidewalkOffsetM)) };
+            return new ModuleTemplate
+            {
+                CatalogId = id, SourceSha256 = SourceSha256, Fragment = f,
+                Sockets = new[]
+                {
+                    Sock("Socket_Start", new Vec3d(0, 0, 0), 180, outLane: "b", inLane: "f"),
+                    Sock("Socket_End", new Vec3d(0, rise, StraightLengthM), 0, outLane: "f", inLane: "b"),
                 },
             };
         }

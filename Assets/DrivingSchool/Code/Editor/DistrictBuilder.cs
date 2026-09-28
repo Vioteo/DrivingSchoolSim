@@ -32,6 +32,7 @@ namespace DrivingSchool.Editor
         const float SidewalkTop = 0.15f;
         const string Straight = "RK_Road_Urban_20m", Curve = "RK_Road_Curve90_R14", Cross = "RK_Road_Cross_24m", Zebra = RoadKitTemplates.CrosswalkId;
         const string SpeedBump = "Assets/DrivingSchool/Art/SpeedBumps/DS_SpeedBump_Rubber_7m.fbx";
+        const string Ramp = RoadKitTemplates.RampId, Bridge = RoadKitTemplates.BridgeId;
 
         public sealed class Result
         {
@@ -102,7 +103,18 @@ namespace DrivingSchool.Editor
             Open(Arm("a", x3, "Socket_West", LC, S4, S4, S4, S4));                   // avenue west
             var x4 = Dock("X4", X42, "Socket_East", Arm("m", x3, "Socket_North", S4, S4), "Socket_Start");
             Open(Arm("k", x4, "Socket_West", S4, S4));                                // arterial north of X4
-            Open(Arm("b", x4, "Socket_South", Straight, Straight, Straight, Straight, Zebra, Straight, Straight, Straight, Straight)); // bump street west
+            var bumpStreet = Arm("b", x4, "Socket_South", Straight, Straight, Straight, Straight, Zebra, Straight, Straight, Straight, Straight); // bump street west
+            // Overpass over the railway (T65): from the west end of the bump street south, four ramps up (8 %, 6.4 m),
+            // three spans on columns over the track, four ramps down, then a straight to the district edge.
+            ModuleInstance piece = bumpStreet; string leave = "Socket_Start";
+            void Next(string id, string catalog, string dockBy, string leaveBy) { piece = Dock(id, catalog, dockBy, piece, leave); leave = leaveBy; }
+            Next("o0", Curve, "Socket_End", "Socket_Start");                          // left turn to the south
+            for (int i = 1; i <= 5; i++) Next("o" + i, Straight, "Socket_End", "Socket_Start");
+            for (int i = 0; i < 4; i++) Next("up" + i, Ramp, "Socket_Start", "Socket_End");
+            for (int i = 0; i < 3; i++) Next("br" + i, Bridge, "Socket_Start", "Socket_End");
+            for (int i = 0; i < 4; i++) Next("dn" + i, Ramp, "Socket_End", "Socket_Start");
+            Next("o6", Straight, "Socket_End", "Socket_Start");
+            Open(piece, leave);
             Open(Arm("h", x4, "Socket_North", Straight, Straight));                   // short street east
             var x5 = Dock("X5", X42, "Socket_West", Arm("q", x3, "Socket_South", S4, S4, S4), "Socket_Start");
             joins.Add(new SocketJoin { instanceA = xw.id, socketA = "Socket_Start", instanceB = x5.id, socketB = "Socket_North" });
@@ -159,6 +171,8 @@ namespace DrivingSchool.Editor
                 Sign("bump-warn-e", "1.17", null, "b6", "f", 5), Sign("bump-20-e", "3.24", "20", "b6", "f", 5.4f),
                 Sign("bump-info-e", "5.20", null, "b4", "f", 1.5f), Sign("zebra-bump-e", "5.19.1", null, "b4", "f", 8),
                 Sign("bump-end-e", "3.25", "20", "b3", "f", 8),
+                // Overpass: 40 km/h up and down both ways.
+                Sign("overpass-40-s", "3.24", "40", "o4", "b", 5), Sign("overpass-40-n", "3.24", "40", "o6", "f", 5),
             };
             var approaches = new List<LayoutApproach>
             {
@@ -230,7 +244,8 @@ namespace DrivingSchool.Editor
                 foreach (var (mesh, dz) in RoadKitTemplatesV2.Meshes(m.catalogId))
                 {
                     var rot = Quaternion.Euler(0, m.yawDeg, 0);
-                    var dir = mesh.StartsWith("RK2_", StringComparison.Ordinal) ? RoadKitBuilder.PrefabsV2 + "/" : RK;
+                    var dir = mesh.StartsWith("RK2_", StringComparison.Ordinal) ? RoadKitBuilder.PrefabsV2 + "/"
+                        : mesh == Ramp || mesh == Bridge ? RoadKitBuilder.PrefabsOverpass + "/" : RK;
                     var go = Place(dir + mesh + ".prefab", new Vector3((float)m.x, (float)m.y, (float)m.z) + rot * new Vector3(0, 0, (float)dz), m.yawDeg, roads);
                     go.name = m.id + " / " + mesh + (dz > 0 ? " (2)" : "");
                     SetLayer(go, layerGround); go.isStatic = true;

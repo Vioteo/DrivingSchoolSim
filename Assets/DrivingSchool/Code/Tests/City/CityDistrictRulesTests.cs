@@ -115,12 +115,29 @@ namespace DrivingSchool.Tests
         }
 
         [Test]
+        public void TheOverpassLiftsTheStreetOverTheRailway()
+        {
+            var w = World();
+            var layout = DistrictBuilder.Layout(Vector3.zero);
+            var railZ = DistrictCompiler.ToWorld(layout.instances.Single(m => m.id == DistrictBuilder.RailInstance), new Vec3d(0, 0, 10)).z;
+            var spans = w.lanes.Where(l => l.id.StartsWith("br")).ToList();
+            Assert.That(spans.Count, Is.EqualTo(6), "three spans, both directions");
+            foreach (var l in spans) Assert.That(l.centerline.All(p => System.Math.Abs(p.y - 4 * RoadKitTemplates.RampRiseM) < 0.01), l.id + " at 6.4 m");
+            Assert.That(spans.Any(l => l.centerline.Min(p => p.z) < railZ && l.centerline.Max(p => p.z) > railZ), "a span is over the track");
+            // The ramps climb evenly and come back down to the ground at the far end.
+            var up = w.lanes.Single(l => l.id == "up0/f").centerline;
+            Assert.That(up.Last().y - up.First().y, Is.EqualTo(RoadKitTemplates.RampRiseM).Within(0.01));
+            Assert.That(w.lanes.Single(l => l.id == "o6/b").centerline.All(p => System.Math.Abs(p.y) < 0.01));
+            Assert.That(new RoadGraphIndex(w).SpeedLimitAt("br1/f", 10), Is.EqualTo(40), "40 km/h on the overpass");
+        }
+
+        [Test]
         public void BotsKeepTheSpeedLimits()
         {
             var w = World();
             var index = new RoadGraphIndex(w);
             var run = new TrafficRun(w, new TrafficProfile { MaxVehicles = 14 }, seed: 5);
-            double worst = 0; string where = null; int onBumpStreet = 0;
+            double worst = 0; string where = null; int onBumpStreet = 0, onOverpass = 0;
             run.Run(300, r =>
             {
                 foreach (var p in r.Director.Snapshot.Participants.Where(x => x.Kind == ParticipantKind.Vehicle && x.Lod == SimulationLod.Near))
@@ -128,10 +145,12 @@ namespace DrivingSchool.Tests
                     double over = p.SpeedMps * 3.6 - index.SpeedLimitAt(p.PathId, p.S);
                     if (over > worst) { worst = over; where = p.Id + " on " + p.PathId + " at " + p.S.ToString("F1"); }
                     if (p.PathId.StartsWith("b4/")) onBumpStreet++;
+                    if (p.PathId.StartsWith("br")) onOverpass++;
                 }
             });
             Assert.That(worst, Is.LessThan(2.0), "km/h over the limit: " + where);
             Assert.That(onBumpStreet, Is.GreaterThan(0), "bots drove over the zebra with the bumps");
+            Assert.That(onOverpass, Is.GreaterThan(0), "bots drove over the overpass");
         }
     }
 }

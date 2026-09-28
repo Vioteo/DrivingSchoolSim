@@ -18,12 +18,12 @@ namespace DrivingSchool.Presentation
         public static readonly Vector3 PadCentre = new Vector3(195f, 0f, 290f);
         public const float PadSize = 90f;
         /// <summary>
-        /// Городской район (T51, T55/T56): центр регулируемого перекрёстка X1 (2+2 × 2+2); район занимает X −460…−12, Z −70…245 (западная часть — T65),
+        /// Городской район (T51, T55/T56): центр регулируемого перекрёстка X1 (2+2 × 2+2); район занимает X −460…−12, Z −185…245 (западная часть и эстакада — T65),
         /// въезд с дороги A — улица 1+1 на Z = DistrictEntryZ (восточный рукав кольца), ж/д переезд на южном рукаве кольца.
         /// </summary>
         public static readonly Vector3 DistrictOrigin = new Vector3(-150f, 0.02f, 110f);
         public const float DistrictEntryZ = 22f;
-        public const float DistrictMinX = -460f, DistrictMaxX = -12f, DistrictMinZ = -70f, DistrictMaxZ = 245f;   // west part since T65
+        public const float DistrictMinX = -460f, DistrictMaxX = -12f, DistrictMinZ = -185f, DistrictMaxZ = 245f;   // west part and overpass since T65
 
         public static bool OnRoadA(Vector3 p) => Mathf.Abs(p.x) < RoadWidth / 2 + 2f && p.z > RoadAStartZ - 5f && p.z < RoadAEndZ + 2f;
         public static bool OnRoadC(Vector3 p) => Mathf.Abs(p.x - RoadCX) < RoadWidth / 2 + 2f && p.z > RoadCEndZ - 25f && p.z < PadCentre.z - PadSize / 2;

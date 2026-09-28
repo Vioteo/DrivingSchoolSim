@@ -189,6 +189,30 @@ namespace DrivingSchool.Editor
             return n;
         }
 
+        const string ArtOverpass = "Assets/DrivingSchool/Art/Overpass";
+        public const string PrefabsOverpass = "Assets/DrivingSchool/Prefabs/Overpass";
+
+        /// <summary>Overpass kit (T65, tools/build_overpass.py): ramp 20 m (+1.6 m) and bridge span 20 m. Prefabs only.</summary>
+        [MenuItem("Driving School/Road Kit/Import overpass (ramp, bridge)")]
+        public static int BuildOverpass()
+        {
+            Directory.CreateDirectory(PrefabsOverpass);
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+            CreateMaterials();
+            int n = 0;
+            foreach (string path in Directory.GetFiles(ArtOverpass, "*.fbx").OrderBy(p => p))
+            {
+                var r = ImportModule(path.Replace('\\', '/'), PrefabsOverpass);
+                if (r.renderers == 0 || r.colliders == 0) throw new InvalidOperationException(r.name + ": no renderers or colliders");
+                if (Mathf.Abs(r.boundsMetres.z - 20f) > .01f) throw new InvalidOperationException(r.name + ": length " + r.boundsMetres.z);
+                n++;
+            }
+            if (n != 2) throw new InvalidOperationException("Expected 2 overpass modules, found " + n);
+            AssetDatabase.SaveAssets();
+            Debug.Log("OVERPASS_UNITY_PASS: " + n + " prefabs");
+            return n;
+        }
+
         static bool Contact(Vector3 origin, float expectedY)
         {
             bool ok = Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 5) && Mathf.Abs(hit.point.y - expectedY) < .003f;
