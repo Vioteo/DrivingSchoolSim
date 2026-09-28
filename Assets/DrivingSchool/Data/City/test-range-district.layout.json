@@ -419,6 +419,168 @@
             "speedLimitKph": 0.0
         },
         {
+            "id": "o0",
+            "catalogId": "RK_Road_Curve90_R14",
+            "x": -452.0,
+            "y": 0.019999999552965165,
+            "z": 164.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "o1",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -452.0,
+            "y": 0.019999999552965165,
+            "z": 144.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "o2",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -452.0,
+            "y": 0.019999999552965165,
+            "z": 124.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "o3",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -452.0,
+            "y": 0.019999999552965165,
+            "z": 104.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "o4",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -452.0,
+            "y": 0.019999999552965165,
+            "z": 84.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "o5",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -452.0,
+            "y": 0.019999999552965165,
+            "z": 64.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "up0",
+            "catalogId": "RK_Ramp_20m",
+            "x": -452.0,
+            "y": 0.019999999552965165,
+            "z": 64.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "up1",
+            "catalogId": "RK_Ramp_20m",
+            "x": -452.0,
+            "y": 1.6199999995529653,
+            "z": 44.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "up2",
+            "catalogId": "RK_Ramp_20m",
+            "x": -452.0,
+            "y": 3.2199999995529655,
+            "z": 24.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "up3",
+            "catalogId": "RK_Ramp_20m",
+            "x": -452.0,
+            "y": 4.819999999552966,
+            "z": 4.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "br0",
+            "catalogId": "RK_Bridge_20m",
+            "x": -452.0,
+            "y": 6.4199999995529659,
+            "z": -16.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "br1",
+            "catalogId": "RK_Bridge_20m",
+            "x": -452.0,
+            "y": 6.4199999995529659,
+            "z": -36.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "br2",
+            "catalogId": "RK_Bridge_20m",
+            "x": -452.0,
+            "y": 6.4199999995529659,
+            "z": -56.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "dn0",
+            "catalogId": "RK_Ramp_20m",
+            "x": -452.0,
+            "y": 4.819999999552966,
+            "z": -96.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "dn1",
+            "catalogId": "RK_Ramp_20m",
+            "x": -452.0,
+            "y": 3.219999999552966,
+            "z": -116.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "dn2",
+            "catalogId": "RK_Ramp_20m",
+            "x": -452.0,
+            "y": 1.6199999995529658,
+            "z": -136.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "dn3",
+            "catalogId": "RK_Ramp_20m",
+            "x": -452.0,
+            "y": 0.01999999955296561,
+            "z": -156.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "o6",
+            "catalogId": "RK_Road_Urban_20m",
+            "x": -452.0,
+            "y": 0.01999999955296561,
+            "z": -176.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
             "id": "h0",
             "catalogId": "RK_Road_Urban_20m",
             "x": -206.0,
@@ -781,6 +943,114 @@
             "socketB": "Socket_End"
         },
         {
+            "instanceA": "b8",
+            "socketA": "Socket_Start",
+            "instanceB": "o0",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "o0",
+            "socketA": "Socket_Start",
+            "instanceB": "o1",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "o1",
+            "socketA": "Socket_Start",
+            "instanceB": "o2",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "o2",
+            "socketA": "Socket_Start",
+            "instanceB": "o3",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "o3",
+            "socketA": "Socket_Start",
+            "instanceB": "o4",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "o4",
+            "socketA": "Socket_Start",
+            "instanceB": "o5",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "o5",
+            "socketA": "Socket_Start",
+            "instanceB": "up0",
+            "socketB": "Socket_Start"
+        },
+        {
+            "instanceA": "up0",
+            "socketA": "Socket_End",
+            "instanceB": "up1",
+            "socketB": "Socket_Start"
+        },
+        {
+            "instanceA": "up1",
+            "socketA": "Socket_End",
+            "instanceB": "up2",
+            "socketB": "Socket_Start"
+        },
+        {
+            "instanceA": "up2",
+            "socketA": "Socket_End",
+            "instanceB": "up3",
+            "socketB": "Socket_Start"
+        },
+        {
+            "instanceA": "up3",
+            "socketA": "Socket_End",
+            "instanceB": "br0",
+            "socketB": "Socket_Start"
+        },
+        {
+            "instanceA": "br0",
+            "socketA": "Socket_End",
+            "instanceB": "br1",
+            "socketB": "Socket_Start"
+        },
+        {
+            "instanceA": "br1",
+            "socketA": "Socket_End",
+            "instanceB": "br2",
+            "socketB": "Socket_Start"
+        },
+        {
+            "instanceA": "br2",
+            "socketA": "Socket_End",
+            "instanceB": "dn0",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "dn0",
+            "socketA": "Socket_Start",
+            "instanceB": "dn1",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "dn1",
+            "socketA": "Socket_Start",
+            "instanceB": "dn2",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "dn2",
+            "socketA": "Socket_Start",
+            "instanceB": "dn3",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "dn3",
+            "socketA": "Socket_Start",
+            "instanceB": "o6",
+            "socketB": "Socket_End"
+        },
+        {
             "instanceA": "X4",
             "socketA": "Socket_North",
             "instanceB": "h0",
@@ -881,7 +1151,7 @@
             "socket": "Socket_Start"
         },
         {
-            "instanceId": "b8",
+            "instanceId": "o6",
             "socket": "Socket_Start"
         },
         {
@@ -1376,6 +1646,26 @@
             "laneId": "f",
             "plaques": [],
             "atS": 8.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "overpass-40-s",
+            "code": "3.24",
+            "value": "40",
+            "instanceId": "o4",
+            "laneId": "b",
+            "plaques": [],
+            "atS": 5.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "overpass-40-n",
+            "code": "3.24",
+            "value": "40",
+            "instanceId": "o6",
+            "laneId": "f",
+            "plaques": [],
+            "atS": 5.0,
             "untilNextJunction": false
         }
     ],
