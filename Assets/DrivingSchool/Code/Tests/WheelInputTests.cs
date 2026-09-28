@@ -119,6 +119,30 @@ namespace DrivingSchool.Tests
             Assert.That(k.Alternate(DriveAction.SteerLeft), Is.EqualTo(UnityEngine.InputSystem.Key.None));
         }
 
+        /// <summary>Всё, что окна руля и подсказки уроков пишут про кнопки, есть в статическом атласе шрифта интерфейса.</summary>
+        [Test] public void ControlNamesUseOnlyGlyphsFromUIFont()
+        {
+            string charset = DrivingSchool.Editor.UIBuilder.UICharset();
+            var texts = new System.Collections.Generic.List<string>();
+            foreach (DriveAction a in Enum.GetValues(typeof(DriveAction))) texts.Add(DriveActions.Title(a));
+            for (int i = 1; i <= 30; i++) texts.Add(WheelProfile.FriendlyName("button" + i));
+            foreach (var h in new[] { "trigger", "hat/up", "hat/down", "hat/left", "hat/right" }) texts.Add(WheelProfile.FriendlyName(h));
+            foreach (UnityEngine.InputSystem.Key k in Enum.GetValues(typeof(UnityEngine.InputSystem.Key)))
+                if (k != UnityEngine.InputSystem.Key.None) texts.Add(KeyboardProfile.KeyLabel(k));
+            var p = new WheelProfile(); var kb = new KeyboardProfile();
+            foreach (var key in GuidedText.Keys) { texts.Add(LessonControls.WheelName(key, p)); texts.Add(LessonControls.KeyboardName(key, kb)); }
+            foreach (var t in texts)
+                foreach (var c in t)
+                    Assert.That(charset.IndexOf(c) >= 0, $"«{t}»: символа U+{(int)c:X4} нет в шрифте интерфейса");
+        }
+
+        [Test] public void OldGlyphLabelsFromFileAreNotShown()
+        {
+            var p = new WheelProfile();
+            p.Find(DriveAction.Ignition).label = "△";   // так писал файл первой версии
+            Assert.That(p.Label(DriveAction.Ignition), Is.EqualTo("треугольник"));
+        }
+
         [Test] public void KeyLabelsAreReadable()
         {
             Assert.That(KeyboardProfile.KeyLabel(UnityEngine.InputSystem.Key.Digit1), Is.EqualTo("1"));

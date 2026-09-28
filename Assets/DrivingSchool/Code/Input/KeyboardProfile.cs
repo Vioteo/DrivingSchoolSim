@@ -134,7 +134,7 @@ namespace DrivingSchool.Input
                 case Key.Quote: return "'";
                 case Key.LeftBracket: return "[";
                 case Key.RightBracket: return "]";
-                case Key.Minus: return "−";
+                case Key.Minus: return "-";
                 case Key.Equals: return "=";
                 case Key.Backquote: return "`";
                 case Key.Home: return "Home";

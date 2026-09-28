@@ -131,7 +131,7 @@ namespace DrivingSchool.Presentation.UI
             if (submit != null) { submit.AddBinding("<Joystick>/trigger"); submit.AddBinding("<Joystick>/button24"); }
             cancel?.AddBinding("<Joystick>/button3");
             if (wasEnabled) asset.Enable();
-            Debug.Log("[Wheel] меню: навигация крестовиной руля, ✕ — выбрать, ○ — назад");
+            Debug.Log("[Wheel] меню: навигация крестовиной руля, крестик — выбрать, кружок — назад");
         }
     }
 }

@@ -163,7 +163,7 @@ namespace DrivingSchool.Presentation.UI
             gearText = BodyText("Gear", 24); Place(gearText.rectTransform, x, 440, w, 36);
             lastButton = BodyText("LastButton", 20); Place(lastButton.rectTransform, x, 490, w, 60);
             lastButton.textWrappingMode = TextWrappingModes.Normal;
-            footerHint.text = "Esc / ○ — выйти без сохранения\n←/→ и Enter — кнопки внизу";
+            footerHint.text = "Esc / кружок — выйти без сохранения\n← → и Enter — кнопки внизу";
             GoTo(Step.Intro);
         }
 
@@ -290,7 +290,7 @@ namespace DrivingSchool.Presentation.UI
             for (int i = 0; i < stepLabels.Count; i++)
             {
                 int s = StepIndex(step);
-                stepLabels[i].text = (i < s ? "✓  " : i == s ? "▶  " : "·  ") + StepNames[i];
+                stepLabels[i].text = (i < s ? "готово — " : i == s ? "→ " : "· ") + StepNames[i];
             }
         }
 
@@ -402,7 +402,7 @@ namespace DrivingSchool.Presentation.UI
                       ("Руль по умолчанию", ResetWheelButtons),
                       ("Готово", () => Close("Назначения сохранены")));
             footerFocus = 2;
-            footerHint.text = "↑↓ действие, ←→ клавиатура/руль, Enter / ✕ — назначить,\nDel — очистить, Esc / ○ — готово";
+            footerHint.text = "↑↓ действие, ←→ клавиатура/руль, Enter / крестик — назначить,\nDel — очистить, Esc / кружок — готово";
         }
 
         void ResetWheelButtons()

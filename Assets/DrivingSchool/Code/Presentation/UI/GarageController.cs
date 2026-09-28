@@ -107,7 +107,7 @@ namespace DrivingSchool.Presentation.UI
             Label(absButton, "ABS: " + (s.abs ? "включена" : "выключена"));
             Label(paintButton, "Цвет кузова: " + CarPaints.Names[Wrap(s.paint, CarPaints.Count)]);
             for (int i = 0; i < carButtons.Length && i < cars.Length; i++)
-                Label(carButtons[i], (cars[i].id == SelectedId ? "● " : "") + cars[i].title);
+                Label(carButtons[i], (cars[i].id == SelectedId ? "→ " : "") + cars[i].title);
         }
 
         static void Label(Button b, string text)

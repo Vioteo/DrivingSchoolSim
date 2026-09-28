@@ -70,17 +70,17 @@ namespace DrivingSchool.Input
         {
             new WheelButtonBinding(DriveAction.LeftSignal, "button6", "левый лепесток"),
             new WheelButtonBinding(DriveAction.RightSignal, "button5", "правый лепесток"),
-            new WheelButtonBinding(DriveAction.Ignition, "button4", "△"),
-            new WheelButtonBinding(DriveAction.Starter, "button3", "○"),
-            new WheelButtonBinding(DriveAction.Belt, "button2", "□"),
-            new WheelButtonBinding(DriveAction.Handbrake, "button1|trigger", "✕"),
+            new WheelButtonBinding(DriveAction.Ignition, "button4", "треугольник"),
+            new WheelButtonBinding(DriveAction.Starter, "button3", "кружок"),
+            new WheelButtonBinding(DriveAction.Belt, "button2", "квадрат"),
+            new WheelButtonBinding(DriveAction.Handbrake, "button1|trigger", "крестик"),
             new WheelButtonBinding(DriveAction.Lights, "button7", "R2"),
             new WheelButtonBinding(DriveAction.HighBeam, "button12", "L3"),
             new WheelButtonBinding(DriveAction.Flash, "hat/up", "крестовина ↑"),
             new WheelButtonBinding(DriveAction.Hazard, "button8", "L2"),
             new WheelButtonBinding(DriveAction.Horn, "button11", "R3"),
-            new WheelButtonBinding(DriveAction.Wipers, "button21", "«−»"),
-            new WheelButtonBinding(DriveAction.Washer, "button20", "«+»"),
+            new WheelButtonBinding(DriveAction.Wipers, "button21", "кнопка «-»"),
+            new WheelButtonBinding(DriveAction.Washer, "button20", "кнопка «+»"),
             new WheelButtonBinding(DriveAction.Park, "button24", "красная кнопка"),
             new WheelButtonBinding(DriveAction.Neutral, "", ""),
             new WheelButtonBinding(DriveAction.Gear1, "button13", "рычаг КПП в 1"),
@@ -130,10 +130,10 @@ namespace DrivingSchool.Input
             string c = control.Split('|')[0].Trim();
             switch (c)
             {
-                case "trigger": case "button1": return "✕";
-                case "button2": return "□";
-                case "button3": return "○";
-                case "button4": return "△";
+                case "trigger": case "button1": return "крестик";
+                case "button2": return "квадрат";
+                case "button3": return "кружок";
+                case "button4": return "треугольник";
                 case "button5": return "правый лепесток";
                 case "button6": return "левый лепесток";
                 case "button7": return "R2";
@@ -149,8 +149,8 @@ namespace DrivingSchool.Input
                 case "button17": return "рычаг КПП в 5";
                 case "button18": return "рычаг КПП в 6";
                 case "button19": return "рычаг КПП в R";
-                case "button20": return "«+»";
-                case "button21": return "«−»";
+                case "button20": return "кнопка «+»";
+                case "button21": return "кнопка «-»";
                 case "button22": return "колесо-селектор вправо";
                 case "button23": return "колесо-селектор влево";
                 case "button24": return "красная кнопка";
@@ -164,11 +164,14 @@ namespace DrivingSchool.Input
             return c;
         }
 
-        /// <summary>Подпись кнопки для текста урока; null — действие не назначено.</summary>
+        /// <summary>
+        /// Подпись кнопки для текста урока; null — действие не назначено. Всегда по имени кнопки (<see cref="FriendlyName"/>),
+        /// а не по полю label из файла: в старых файлах там значки ✕ □ ○ △, которых нет в шрифте интерфейса.
+        /// </summary>
         public string Label(DriveAction action)
         {
             var b = Find(action);
-            return b == null || string.IsNullOrEmpty(b.control) ? null : string.IsNullOrEmpty(b.label) ? b.control : b.label;
+            return b == null || string.IsNullOrEmpty(b.control) ? null : FriendlyName(b.control);
         }
 
         /// <summary>Недостающие поля и действия берутся из раскладки по умолчанию.</summary>
