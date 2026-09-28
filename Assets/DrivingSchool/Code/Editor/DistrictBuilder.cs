@@ -30,7 +30,8 @@ namespace DrivingSchool.Editor
         const string Kit = "Assets/DrivingSchool/Prefabs/TrainingKit/";
         const string Pedestrians = "Assets/DrivingSchool/Prefabs/Pedestrians/";
         const float SidewalkTop = 0.15f;
-        const string Straight = "RK_Road_Urban_20m", Curve = "RK_Road_Curve90_R14", Cross = "RK_Road_Cross_24m";
+        const string Straight = "RK_Road_Urban_20m", Curve = "RK_Road_Curve90_R14", Cross = "RK_Road_Cross_24m", Zebra = RoadKitTemplates.CrosswalkId;
+        const string SpeedBump = "Assets/DrivingSchool/Art/SpeedBumps/DS_SpeedBump_Rubber_7m.fbx";
 
         public sealed class Result
         {
@@ -55,6 +56,10 @@ namespace DrivingSchool.Editor
         /// arterial 2+2 north–south through X1 and X2 (2+2 × 1+1, main road N–S), X1's west and east arms 2+2,
         /// lane-change stretches between junctions; east of X2 a 1+1 street to a roundabout, whose east arm leads to road A
         /// and whose south arm crosses the railway (track west–east).
+        /// West part (T65): X1's west arm leads to X3 (2+2 × 2+2, traffic lights, lane directions 5.15.1 on the east and west
+        /// approaches); an avenue west of X3 with 40 km/h; north of X3 the junction X4 (main road N–S) with a 1+1 street west
+        /// that has a zebra crossing away from junctions between two speed bumps (1.17, 3.24 «20», 5.20, 3.25); south of X3 the
+        /// junction X5 closes the loop X1 – X3 – X5 – X2 through the old west street of X2.
         /// </summary>
         public static DistrictLayout Layout(Vector3 origin)
         {
@@ -79,18 +84,30 @@ namespace DrivingSchool.Editor
 
             // Arterial and X1's arms (2+2).
             Open(Arm("n", x1, "Socket_North", LC, S4, S4));
-            Open(Arm("w", x1, "Socket_West", S4, S4, S4));
+            var w = Arm("w", x1, "Socket_West", S4, S4, S4);                        // to X3
             Open(Arm("e", x1, "Socket_East", LC, S4, S4));
             var s = Arm("s", x1, "Socket_South", LC, S4);
             // X2: its main road (local E–W) continues the arterial, so it is turned: local West faces north.
             var x2 = Dock("X2", X42, "Socket_West", s, "Socket_Start");
             Open(Arm("x", x2, "Socket_East", S4));                                  // arterial south of X2
-            Open(Arm("xw", x2, "Socket_South", Straight, Straight, Straight));      // 1+1 street west
+            var xw = Arm("xw", x2, "Socket_South", Straight, Straight, Straight);   // 1+1 street west, to X5
             var xe = Arm("xe", x2, "Socket_North", Straight);                        // 1+1 street east to the roundabout
             var ring = Dock("R", Ring, "Socket_West", xe, "Socket_Start");
             Open(Arm("re", ring, "Socket_East", Straight, Straight));               // to road A
             Open(Arm("rn", ring, "Socket_North", Straight, Straight));
             Open(Arm("rs", ring, "Socket_South", Straight, Rail, Straight));         // over the railway
+
+            // West part (T65). X3 at (-92, 0) from X1; X4 68 m north of X3, X5 88 m south of it (like X2: local West faces north).
+            var x3 = Dock("X3", X4, "Socket_East", w, "Socket_Start");
+            Open(Arm("a", x3, "Socket_West", LC, S4, S4, S4, S4));                   // avenue west
+            var x4 = Dock("X4", X42, "Socket_East", Arm("m", x3, "Socket_North", S4, S4), "Socket_Start");
+            Open(Arm("k", x4, "Socket_West", S4, S4));                                // arterial north of X4
+            Open(Arm("b", x4, "Socket_South", Straight, Straight, Straight, Straight, Zebra, Straight, Straight, Straight, Straight)); // bump street west
+            Open(Arm("h", x4, "Socket_North", Straight, Straight));                   // short street east
+            var x5 = Dock("X5", X42, "Socket_West", Arm("q", x3, "Socket_South", S4, S4, S4), "Socket_Start");
+            joins.Add(new SocketJoin { instanceA = xw.id, socketA = "Socket_Start", instanceB = x5.id, socketB = "Socket_North" });
+            Open(Arm("t", x5, "Socket_East", S4));                                    // arterial south of X5
+            Open(Arm("v", x5, "Socket_South", Straight, Straight, Straight));         // 1+1 street west of X5
 
             var signs = new List<LayoutSign>
             {
@@ -120,6 +137,28 @@ namespace DrivingSchool.Editor
                 Sign("no-stopping-north", "3.27", null, "n0", "f2b", 1, untilJunction: true),
                 Sign("no-parking-west", "3.28", null, "w1", "b2", 4),
                 Sign("parking-west", "6.4", null, "xw1", "b", 10),
+
+                // West part (T65). X3: lane directions — from the east only left from the inner lane, from the west left from both.
+                Sign("lanes-x3-east", "5.15.1", "L|SR", "X3", "East.in2", 0.5f),
+                Sign("lanes-x3-west", "5.15.1", "L|LSR", "X3", "West.in2", 0.5f),
+                // Avenue west of X3: 40 km/h both ways (to the district edge / to X3).
+                Sign("avenue-40-west", "3.24", "40", "a1", "b2", 3),
+                Sign("avenue-40-east", "3.24", "40", "a4", "f2", 3),
+                // North of X4: 30 km/h out of town.
+                Sign("north-30", "3.24", "30", "k0", "b2", 5),
+                // X4 and X5: main road N–S (2.1), the 1+1 streets give way (2.4).
+                Sign("main-x4-south", "2.1", null, "m1", "b2", 8), Sign("main-x4-north", "2.1", null, "k0", "f2", 8),
+                Sign("yield-x4-west", "2.4", null, "b0", "f", 8), Sign("yield-x4-east", "2.4", null, "h0", "f", 8),
+                Sign("main-x5-north", "2.1", null, "q2", "b2", 8), Sign("main-x5-south", "2.1", null, "t0", "f2", 8),
+                Sign("yield-x5-east", "2.4", null, "xw2", "b", 8), Sign("yield-x5-west", "2.4", null, "v0", "f", 8),
+                // Bump street: a zebra away from junctions (b4) between two bumps; 45 m before it 1.17 and 20 km/h,
+                // at the bumps 5.20, at the crossing 5.19.1, 10 m after the second bump the end of the zone (3.25).
+                Sign("bump-warn-w", "1.17", null, "b2", "b", 5), Sign("bump-20-w", "3.24", "20", "b2", "b", 5.4f),
+                Sign("bump-info-w", "5.20", null, "b4", "b", 1.5f), Sign("zebra-bump-w", "5.19.1", null, "b4", "b", 8),
+                Sign("bump-end-w", "3.25", "20", "b5", "b", 8),
+                Sign("bump-warn-e", "1.17", null, "b6", "f", 5), Sign("bump-20-e", "3.24", "20", "b6", "f", 5.4f),
+                Sign("bump-info-e", "5.20", null, "b4", "f", 1.5f), Sign("zebra-bump-e", "5.19.1", null, "b4", "f", 8),
+                Sign("bump-end-e", "3.25", "20", "b3", "f", 8),
             };
             var approaches = new List<LayoutApproach>
             {
@@ -130,6 +169,14 @@ namespace DrivingSchool.Editor
             };
             foreach (var arm in new[] { "East", "North", "West", "South" })
                 approaches.Add(new LayoutApproach { instanceId = "R", socket = "Socket_" + arm, priority = ApproachPriority.Secondary, signIds = new[] { "ring-yield-" + arm.ToLowerInvariant(), "ring-" + arm.ToLowerInvariant() } });
+            // X4, X5 (T65): as X2 — local West/East is the main road N–S.
+            foreach (var (x, n, s2, e, wv) in new[] { ("X4", "main-x4-north", "main-x4-south", "yield-x4-east", "yield-x4-west"), ("X5", "main-x5-north", "main-x5-south", "yield-x5-east", "yield-x5-west") })
+            {
+                approaches.Add(new LayoutApproach { instanceId = x, socket = "Socket_West", priority = ApproachPriority.Main, signIds = new[] { n } });
+                approaches.Add(new LayoutApproach { instanceId = x, socket = "Socket_East", priority = ApproachPriority.Main, signIds = new[] { s2 } });
+                approaches.Add(new LayoutApproach { instanceId = x, socket = "Socket_North", priority = ApproachPriority.Secondary, signIds = new[] { e } });
+                approaches.Add(new LayoutApproach { instanceId = x, socket = "Socket_South", priority = ApproachPriority.Secondary, signIds = new[] { wv } });
+            }
             // X1: two phases, pedestrians cross the arms parallel to the green flow.
             var plan = new LayoutSignalPlan
             {
@@ -140,11 +187,21 @@ namespace DrivingSchool.Editor
                     new LayoutSignalStage { greenSockets = new[] { "Socket_East", "Socket_West" }, walkSockets = new[] { "Socket_North", "Socket_South" }, greenSeconds = 18, greenFlashSeconds = 3, amberSeconds = 3, allRedSeconds = 2, redAmberSeconds = 1 },
                 },
             };
+            // X3 (T65): the same two phases, shifted so the two light-controlled junctions do not switch together.
+            var planX3 = new LayoutSignalPlan
+            {
+                instanceId = "X3", offsetSeconds = 12,
+                stages = plan.stages.Select(st => new LayoutSignalStage
+                {
+                    greenSockets = st.greenSockets, walkSockets = st.walkSockets, greenSeconds = st.greenSeconds, greenFlashSeconds = st.greenFlashSeconds,
+                    amberSeconds = st.amberSeconds, allRedSeconds = st.allRedSeconds, redAmberSeconds = st.redAmberSeconds,
+                }).ToArray(),
+            };
             return new DistrictLayout
             {
-                id = "test-range-district", name = "Городской район полигона", revision = "v2",
+                id = "test-range-district", name = "Городской район полигона", revision = "v3",
                 instances = list.ToArray(), joins = joins.ToArray(), openSockets = open.ToArray(),
-                signs = signs.ToArray(), approaches = approaches.ToArray(), signalPlans = new[] { plan },
+                signs = signs.ToArray(), approaches = approaches.ToArray(), signalPlans = new[] { plan, planX3 },
             };
         }
 
@@ -181,13 +238,26 @@ namespace DrivingSchool.Editor
                     roadBounds.Add(BoundsOf(go));
                     r.modules++;
                 }
+            // Mid-block zebra modules (T65): the crossing marking and a speed bump on each side, on the road layer (wheels feel it).
+            foreach (var m in layout.instances.Where(x => x.catalogId == Zebra))
+            {
+                var rot = Quaternion.Euler(0, m.yawDeg, 0); var at = new Vector3((float)m.x, (float)m.y, (float)m.z);
+                var zebra = Place(RK + "RK_Marking_Zebra_8x3m.prefab", at + rot * new Vector3(0, 0, (float)(RoadKitTemplates.CrosswalkZ - 1.5)), m.yawDeg, roads);
+                zebra.name = m.id + " / zebra"; SetLayer(zebra, layerGround); zebra.isStatic = true;
+                foreach (var dz in new[] { -RoadKitTemplates.BumpOffsetM, RoadKitTemplates.BumpOffsetM })
+                {
+                    var bump = PlaceBump(at + rot * new Vector3(0, 0, (float)(RoadKitTemplates.CrosswalkZ + dz)), m.yawDeg, roads, layerGround);
+                    bump.name = m.id + " / speed bump " + (dz < 0 ? "1" : "2");
+                    foreach (var ren in bump.GetComponentsInChildren<Renderer>()) if (ren.enabled) r.roadRenderers.Add(ren);
+                }
+            }
             // Signals and signs on shared poles and masts (T54).
             var furniture = StreetFurniture.Place(world, signs, heads, layerProps);
             r.signs = world.signs.Length; r.heads = furniture.heads;
             // The railway corridor (T56): track across the level crossing module, west to east over the whole district.
             r.rail = layout.instances.First(m => m.id == RailInstance);
             var railCentre = RailPoint(r.rail, 0);
-            roadBounds.Add(new Bounds(new Vector3(railCentre.x, 0, railCentre.z), new Vector3(600f, 1f, 24f)));   // no houses within 12 m of the track
+            roadBounds.Add(new Bounds(new Vector3(railCentre.x, 0, railCentre.z), new Vector3(1400f, 1f, 24f)));   // no houses within 12 m of the track
             r.houses = PlaceHouses(layout, roadBounds, houses, layerProps);
             PlaceLamps(layout, lamps, layerProps);
 
@@ -229,7 +299,7 @@ namespace DrivingSchool.Editor
             int k = 0, placed = 0;
             foreach (var (m, dz) in StraightPieces(layout))
             {
-                float outer = m.catalogId == Straight ? 6.2f : 10.7f;   // outer edge of the sidewalk
+                float outer = m.catalogId == Straight || m.catalogId == Zebra ? 6.2f : 10.7f;   // outer edge of the sidewalk
                 var inst = new Vector3((float)m.x, (float)m.y, (float)m.z) + Quaternion.Euler(0, m.yawDeg, 0) * new Vector3(0, 0, (float)dz);
                 var rot = Quaternion.Euler(0, m.yawDeg, 0);
                 foreach (int side in new[] { -1, 1 })
@@ -261,7 +331,7 @@ namespace DrivingSchool.Editor
 
         /// <summary>Every 20 m straight piece (1+1 or 2+2) with its local z offset: houses and lamps stand along them.</summary>
         static IEnumerable<(ModuleInstance m, double dz)> StraightPieces(DistrictLayout layout) =>
-            layout.instances.Where(x => x.catalogId == Straight || x.catalogId == S4 || x.catalogId == LC)
+            layout.instances.Where(x => x.catalogId == Straight || x.catalogId == Zebra || x.catalogId == S4 || x.catalogId == LC)
                 .SelectMany(x => RoadKitTemplatesV2.Meshes(x.catalogId).Select(mesh => (x, mesh.z)));
 
         static Bounds Flat(Bounds b) => new Bounds(new Vector3(b.center.x, 0, b.center.z), new Vector3(b.size.x, 1, b.size.z));
@@ -321,6 +391,24 @@ namespace DrivingSchool.Editor
         }
 
         // ------------------------------------------------------------------ helpers
+
+        /// <summary>Speed bump across a 1+1 road (the art kit's 7 m rubber bump), with colliders so the car's wheels ride over it.</summary>
+        static GameObject PlaceBump(Vector3 pos, float yaw, Transform parent, int layer)
+        {
+            var src = AssetDatabase.LoadAssetAtPath<GameObject>(SpeedBump);
+            if (src == null) throw new FileNotFoundException(SpeedBump);
+            var o = (GameObject)PrefabUtility.InstantiatePrefab(src, parent);
+            o.transform.rotation = Quaternion.Euler(0, yaw, 0);
+            // Long axis across the road; sits on the road surface.
+            var b = VehicleRigUtil.WorldBounds(o.transform);
+            var across = Quaternion.Euler(0, yaw, 0) * Vector3.right;
+            if (Mathf.Abs(Vector3.Dot(b.size, new Vector3(Mathf.Abs(across.x), 0, Mathf.Abs(across.z)))) < Mathf.Max(b.size.x, b.size.z) * 0.9f)
+            { o.transform.rotation = Quaternion.Euler(0, yaw + 90f, 0); b = VehicleRigUtil.WorldBounds(o.transform); }
+            o.transform.position += new Vector3(pos.x - b.center.x, pos.y - b.min.y, pos.z - b.center.z);
+            foreach (var mf in o.GetComponentsInChildren<MeshFilter>()) if (mf.GetComponent<Collider>() == null) mf.gameObject.AddComponent<MeshCollider>().sharedMesh = mf.sharedMesh;
+            SetLayer(o, layer); o.isStatic = true;
+            return o;
+        }
 
         static Transform Child(Transform parent, string name) { var t = new GameObject(name).transform; t.SetParent(parent, false); return t; }
 

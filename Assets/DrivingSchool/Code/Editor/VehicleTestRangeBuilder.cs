@@ -229,7 +229,8 @@ namespace DrivingSchool.Editor
 
         static void BuildRoads()
         {
-            Box("Ground", new Vector3(100f, -0.1f, 150f), new Vector3(700f, 0.2f, 700f), grass, env, LayerGround, true);
+            // x −470…450 (the town district reaches x −460 since T65), z −200…500.
+            Box("Ground", new Vector3(-10f, -0.1f, 150f), new Vector3(920f, 0.2f, 700f), grass, env, LayerGround, true);
 
             // Road A (two lanes, dashed centre line 1.5 m dash / 4.5 m gap for visual reference only).
             float lenA = RoadAEndZ - RoadAStartZ;
@@ -479,7 +480,7 @@ namespace DrivingSchool.Editor
         public const float RoadCX = DrivingSchool.Presentation.TestRangeLayout.RoadCX, RoadCEndZ = DrivingSchool.Presentation.TestRangeLayout.RoadCEndZ, RailZ = DrivingSchool.Presentation.TestRangeLayout.RailZ, HillStartZ = DrivingSchool.Presentation.TestRangeLayout.HillStartZ, HillEndZ = DrivingSchool.Presentation.TestRangeLayout.HillEndZ;
         public const float HillGrade = DrivingSchool.Presentation.TestRangeLayout.HillGrade, HillRamp = DrivingSchool.Presentation.TestRangeLayout.HillRamp, HillBlend = 3f;
         const float CrossingHalfLength = DrivingSchool.Presentation.TestRangeLayout.CrossingHalfLength;                // TK_RailwayCrossing_Tracks: ramps + deck along the road
-        const float TrackWestX = 40f, TrackEastX = 440f;       // the track ends (the ground is 700 m wide)
+        const float TrackWestX = 40f, TrackEastX = 440f;       // the track ends (the ground ends at x 450)
         static float RoadCStartZ => PadCentre.z - PadSize / 2f;
 
         static void BuildRoadC(out RailwayCrossingView crossing)
