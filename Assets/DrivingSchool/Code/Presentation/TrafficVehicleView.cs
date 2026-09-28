@@ -31,8 +31,9 @@ namespace DrivingSchool.Presentation
         float wheelRadius = 0.32f, spinDeg;
         Vector3 lastPosition; bool placed;
         // Body motion on the springs (T52): pitch under braking/acceleration, roll in turns; visual only, on the model.
-        Quaternion modelRest; float pitch, roll, pitchVel, rollVel, lastYaw, lastContactReport = -10f;
-        const float PitchPerMps2 = 0.55f, RollPerMps2 = 0.9f, BodyFrequencyHz = 1.6f, BodyDamping = 0.6f;
+        Quaternion modelRest; float pitch, roll, pitchVel, rollVel, lastYaw, yawRateSmooth, lastContactReport = -10f;
+        // T65: a real sedan leans ≈ 0.4–0.5° per m/s²; the yaw rate is smoothed, the heading of a bot moves in steps.
+        const float PitchPerMps2 = 0.45f, RollPerMps2 = 0.4f, MaxRollDeg = 3f, YawRateSmoothSeconds = 0.35f, BodyFrequencyHz = 1.6f, BodyDamping = 0.7f;
         // The wheels follow the road surface (T65): the body stands on it (ramps) and is thrown up by a bump, then settles
         // on its springs — heave and pitch lag the ground a little. Visual only; the graph gives the path.
         Vector3 modelRestPos; float heave, heaveVel, groundPitch, springPitch, springPitchVel; bool groundReady;
@@ -66,7 +67,7 @@ namespace DrivingSchool.Presentation
             body.isKinematic = true;
             body.interpolation = RigidbodyInterpolation.Interpolate;
             if (wheels == null) { FindWheels(); if (model != null) { modelRest = model.localRotation; modelRestPos = model.localPosition; } }
-            pitch = roll = pitchVel = rollVel = 0f;
+            pitch = roll = pitchVel = rollVel = yawRateSmooth = 0f;
             heaveVel = springPitchVel = 0f; groundReady = false;
         }
 
@@ -106,7 +107,8 @@ namespace DrivingSchool.Presentation
             lastPosition = position;
             float dt = Mathf.Max(Time.fixedDeltaTime, 1e-4f);
             float yawRate = Mathf.DeltaAngle(lastYaw, yaw) * Mathf.Deg2Rad / dt; lastYaw = yaw;
-            float lateral = (float)p.SpeedMps * yawRate;             // centripetal acceleration, + = turning right
+            yawRateSmooth += (Mathf.Clamp(yawRate, -1.5f, 1.5f) - yawRateSmooth) * Mathf.Clamp01(dt / YawRateSmoothSeconds);
+            float lateral = (float)p.SpeedMps * yawRateSmooth;       // centripetal acceleration, + = turning right
             Spring(ref pitch, ref pitchVel, -(float)p.AccelerationMps2 * PitchPerMps2, dt);   // nose dips under braking
             Spring(ref roll, ref rollVel, lateral * RollPerMps2, dt);                          // leans out of the turn
             // Suspension: the body lags the ground — over a bump it is thrown up and rocks back.
@@ -115,7 +117,7 @@ namespace DrivingSchool.Presentation
             float lagPitch = Mathf.Clamp(groundPitch - springPitch, -3f, 3f), lift = Mathf.Clamp(heave - position.y, -0.08f, 0.08f);
             if (model != null)
             {
-                model.localRotation = Quaternion.Euler(Mathf.Clamp(pitch + lagPitch, -6f, 6f), 0f, Mathf.Clamp(roll, -5f, 5f)) * modelRest;
+                model.localRotation = Quaternion.Euler(Mathf.Clamp(pitch + lagPitch, -6f, 6f), 0f, Mathf.Clamp(roll, -MaxRollDeg, MaxRollDeg)) * modelRest;
                 model.localPosition = modelRestPos + Vector3.up * lift;
             }
             spinDeg = Mathf.Repeat(spinDeg + travelled / wheelRadius * Mathf.Rad2Deg, 360f);

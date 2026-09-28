@@ -21,6 +21,11 @@ namespace DrivingSchool.Input
         public float throttleRiseRate = 1.4f, brakeRiseRate = 2.5f;
         [Tooltip("Forward speed of the car, set by the vehicle controller: steering gets slower and shorter at speed.")]
         public float vehicleSpeedMps;
+        [Tooltip("Car geometry for the keyboard's steering limit, set by the vehicle controller.")]
+        public float wheelbaseM = 2.7f, maxSteerDeg = 32f;
+        [Tooltip("A held key steers no further than a turn with this lateral acceleration, m/s² (T66: a key used to ask " +
+                 "for 24° at 50 km/h — far past the tyres — and the car slid and leaned).")]
+        public float keyboardLateralMps2 = 6.5f;
         public bool automatic;              // AT: gear keys drive the selector
         public Keyboard KeyboardDevice { get; set; }
         /// <summary>Последняя попытка вывести селектор АКПП из P была без тормоза и не сработала (для подсказки).</summary>
@@ -83,7 +88,7 @@ namespace DrivingSchool.Input
             // A key is on/off: at speed the virtual steering wheel turns slower and not to full lock, otherwise a tap
             // throws a 1.3-tonne car sideways and it feels weightless.
             float v = Math.Abs(vehicleSpeedMps);
-            targetSteer *= Mathf.Lerp(1f, 0.3f, Mathf.Clamp01((v - 5f) / 25f));
+            targetSteer *= MaxKeyboardSteer(v, wheelbaseM, maxSteerDeg, keyboardLateralMps2);
             float speedFactor = 1f / (1f + v / 15f);
             steering = Mathf.MoveTowards(steering, targetSteer, (Math.Abs(targetSteer) > 0.01f ? steeringRate * speedFactor : returnRate) * dt);
 
@@ -131,6 +136,18 @@ namespace DrivingSchool.Input
         }
 
         /// <summary>Блокировка селектора АКПП (как в настоящей машине): из P рычаг выходит только с нажатым тормозом.</summary>
+        /// <summary>
+        /// Share of full lock a held key gives at <paramref name="speedMps"/>: the wheel angle of a turn whose lateral
+        /// acceleration is <paramref name="lateralMps2"/> (radius v²/a), never less than 3 % and full lock at parking speeds.
+        /// </summary>
+        public static float MaxKeyboardSteer(float speedMps, float wheelbaseM, float maxSteerDeg, float lateralMps2)
+        {
+            float v = Math.Abs(speedMps);
+            if (v < 1f || maxSteerDeg <= 0f || wheelbaseM <= 0f || lateralMps2 <= 0f) return 1f;
+            float deg = Mathf.Atan(wheelbaseM * lateralMps2 / (v * v)) * Mathf.Rad2Deg;
+            return Mathf.Clamp(deg / maxSteerDeg, 0.03f, 1f);
+        }
+
         public static bool ShiftLocked(bool automatic, AutomaticSelector current, bool brakeHeld) =>
             automatic && current == AutomaticSelector.P && !brakeHeld;
 

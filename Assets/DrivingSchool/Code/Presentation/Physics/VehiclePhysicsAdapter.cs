@@ -34,8 +34,10 @@ namespace DrivingSchool.Presentation.Physics
         [Tooltip("Measure wheel positions and radius from Wheel_* children; otherwise use wheelbase/track above.")]
         public bool measureFromModel = true;
         public float travelUpM = 0.12f, travelDownM = 0.10f;
-        [Range(0.1f, 1f)] public float dampingRatio = 0.35f;
-        public float antiRollNpm = 9000f;
+        // T66: stiffer anti-roll bars and more damping — the body leaned about twice too much and rocked after a turn.
+        // New field names, so scenes saved with the old values (0.35, 9000 N/m) pick up these.
+        [Range(0.1f, 1f)] public float damperRatio = 0.5f;
+        public float antiRollBarNpm = 26000f;
         public LayerMask groundMask = ~0;
 
         [Header("Surface")]
@@ -55,6 +57,7 @@ namespace DrivingSchool.Presentation.Physics
         public readonly bool[] Grounded = new bool[4];
         public float WheelRadius => wheelRadiusM;
         public float WheelbaseM => wheelbaseM;
+        public float MaxSteerDeg => maxSteeringAngleDeg;
         public float TrackM => trackM;
 
         readonly Vector3[] restLocal = new Vector3[4];
@@ -196,7 +199,7 @@ namespace DrivingSchool.Presentation.Physics
                 float load = massKg * g * 0.5f * (k < 2 ? frontShare : 1f - frontShare);
                 // The car sits in the modelled pose when the spring is compressed by travelDown.
                 springRate[k] = load / travelDownM;
-                damper[k] = 2f * dampingRatio * Mathf.Sqrt(springRate[k] * load / g);
+                damper[k] = 2f * damperRatio * Mathf.Sqrt(springRate[k] * load / g);
                 lastCompression[k] = travelDownM;
             }
             configured = true;
@@ -257,7 +260,7 @@ namespace DrivingSchool.Presentation.Physics
             {
                 int l = axle * 2, rr = l + 1;
                 if (!Grounded[l] || !Grounded[rr]) continue;
-                float d = (Compression[l] - Compression[rr]) * antiRollNpm;
+                float d = (Compression[l] - Compression[rr]) * antiRollBarNpm;
                 contacts[l].normalForceN = Mathf.Max(0f, contacts[l].normalForceN + d);
                 contacts[rr].normalForceN = Mathf.Max(0f, contacts[rr].normalForceN - d);
             }

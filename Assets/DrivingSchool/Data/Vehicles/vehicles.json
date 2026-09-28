@@ -12,13 +12,13 @@
       "hullClearanceM": 0.28,
       "interior": "classic",
       "spec": {
-        "massKg": 1350, "wheelbaseM": 2.72, "trackM": 1.71, "wheelRadiusM": 0.327, "centreOfMassM": [0, 0.51, -0.1],
+        "massKg": 1350, "wheelbaseM": 2.72, "trackM": 1.71, "wheelRadiusM": 0.327, "centreOfMassM": [0, 0.51, 0.25],
         "steeringWheelDegrees": 900, "maxSteerDeg": 32,
         "gearRatios": [3.6, 2.1, 1.4, 1.05, 0.84, 0.69], "reverseRatio": -3.5, "finalDrive": 4.1, "drivetrainEfficiency": 0.9,
         "idleRpm": 850, "redlineRpm": 6500, "engineInertiaKgm2": 0.2, "maxClutchTorqueNm": 240,
         "maxBrakeTorqueNm": 3500, "frontBrakeShare": 0.65, "handbrakeTorqueNm": 2500, "wheelInertiaKgm2": 1.5, "yawInertiaKgm2": 2200,
         "rollingResistance": 0.015, "dragCoefficient": 0.32, "frontalAreaM2": 2.2, "throttleProgression": 2,
-        "fuelTankLitres": 50, "initialFuelLitres": 40, "abs": true, "drive": 1, "transmission": 0
+        "fuelTankLitres": 50, "initialFuelLitres": 40, "abs": true, "drive": 0, "transmission": 0
       }
     },
     {

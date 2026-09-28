@@ -34,6 +34,7 @@ namespace DrivingSchool.Presentation
         {
             Keyboard.automatic = Adapter.transmission == TransmissionType.Automatic;
             Keyboard.vehicleSpeedMps = Adapter.CurrentState.signedSpeedMps;
+            Keyboard.wheelbaseM = Adapter.WheelbaseM; Keyboard.maxSteerDeg = Adapter.MaxSteerDeg;
             if (inputEnabled && ReferenceEquals(Source, Keyboard)) Keyboard.Poll(Time.deltaTime);
         }
 
