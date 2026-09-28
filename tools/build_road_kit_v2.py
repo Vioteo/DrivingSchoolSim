@@ -136,28 +136,39 @@ def cross4x4():
     return m.finish()
 
 
-def cross4x2():
+def cross4x2(name='RK2_Cross_4x2_24x32m', crosswalks=True, sides=(-1, 1)):
+    """2+2 main road along X × 1+1 side road along Y. T66: `crosswalks=False` — no zebras, kerbs not lowered;
+    `sides=(1,)` — a T junction, only the northern side arm, a straight kerb and sidewalk on the south."""
     SX, SY, HM, HS = 12, 16, HALF4, 4.0   # main along X (half width 7.5), side along Y (half width 4)
-    m = k.Module('RK2_Cross_4x2_24x32m', 'Перекрёсток 2+2 × 1+1',
-                 [(f'Socket_{n}', p) for n, p in [('South', (0, -SY, 0)), ('North', (0, SY, 0)), ('East', (SX, 0, 0)), ('West', (-SX, 0, 0))]])
-    for g in ('Surface', 'Collision'): m.p(g, 'Asphalt').box(0, 0, 2 * SX, 2 * SY, -.22, 0)
+    names = [('North', (0, SY, 0)), ('East', (SX, 0, 0)), ('West', (-SX, 0, 0))] + ([('South', (0, -SY, 0))] if -1 in sides else [])
+    m = k.Module(name, 'Перекрёсток 2+2 × 1+1' if len(sides) == 2 else 'Т-перекрёсток 2+2 × 1+1', [(f'Socket_{n}', p) for n, p in names])
+    y_min = -SY if -1 in sides else -HM - .1
+    for g in ('Surface', 'Collision'): m.p(g, 'Asphalt').box(0, (SY + y_min) / 2, 2 * SX, SY - y_min, -.22, 0)
     mx, mw = 7.75, 3.0      # crosswalk over the main road (centre x), width
     sy, sw = 11.0, 3.0      # crosswalk over the side road (centre y)
+    bands = [('x', mx - mw / 2, mx + mw / 2), ('y', sy - sw / 2, sy + sw / 2)] if crosswalks else []
     for sxn in (-1, 1):
-        for syn in (-1, 1):
+        for syn in sides:
             # Paving from the side-road kerb (x = 4.2) and the main-road kerb (y = 7.7), kerb radius CORNER_R42.
-            round_corner(m, sxn, syn, HS + .2, SIDE4_IN, SX, SY, CORNER_R42, [('x', mx - mw / 2, mx + mw / 2), ('y', sy - sw / 2, sy + sw / 2)])
+            round_corner(m, sxn, syn, HS + .2, SIDE4_IN, SX, SY, CORNER_R42, bands)
+    if -1 not in sides:
+        # T: the southern edge of the main road runs straight through, like the 2+2 straight.
+        for g in ('Sidewalk', 'Collision'): m.p(g, 'Paving').box(0, -(SIDE4_IN + SIDE4_OUT) / 2, 2 * SX, SIDE4_OUT - SIDE4_IN, -.22, .15)
+        curb_run(m, -SX, -7.6, SX, -7.6)
+        paint(m, 0, -7.2, 2 * SX, .12)
     reach_main = curb_face(CORNER_R42, HS + .2, SIDE4_IN, mx, 'x')   # y of the kerb face at the main-road crosswalk
     reach_side = curb_face(CORNER_R42, HS + .2, SIDE4_IN, sy, 'y')   # x of the kerb face at the side-road crosswalk
     print('RK2 4x2 crosswalk reach', round(reach_main, 3), round(reach_side, 3), '4x4', round(curb_face(CORNER_R4, SIDE4_IN, SIDE4_IN, 11.75, 'y'), 3))
     for sgn in (-1, 1):
-        crosswalk_x(m, sgn * mx, -reach_main + .3, reach_main - .3)          # over the main road
-        crosswalk_y(m, sgn * sy, -reach_side + .3, reach_side - .3)          # over the side road
+        if crosswalks:
+            crosswalk_x(m, sgn * mx, -reach_main + .3, reach_main - .3)          # over the main road
+            crosswalk_y(m, sgn * sy, -reach_side + .3, reach_side - .3)          # over the side road
         paint(m, sgn * 10.2, sgn * 3.85, .4, 7.1)    # main-road stop bars (east arm: incoming on y>0)
-        paint(m, -sgn * 1.9, sgn * 13.5, 3.5, .4)    # side-road stop bars (north arm: incoming on x<0)
+        if sgn in sides:
+            paint(m, -sgn * 1.9, sgn * 13.5, 3.5, .4)    # side-road stop bars (north arm: incoming on x<0)
+            paint(m, 0, sgn * 14.75, .12, 2.5)
         for s in (-1, 1):
             paint(m, sgn * 11.1, s * .12, 1.8, .12); paint(m, sgn * 11.1, s * 3.75, 1.8, .12)
-        paint(m, 0, sgn * 14.75, .12, 2.5)
     return m.finish()
 
 
@@ -269,4 +280,5 @@ def main():
     print('ROAD_KIT_V2_COMPLETE', len(k.CATALOG), flush=True)
 
 
-main()
+if __name__ == '__main__':   # tools/build_road_kit_v3.py imports the helpers
+    main()
