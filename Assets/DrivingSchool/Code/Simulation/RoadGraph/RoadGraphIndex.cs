@@ -36,6 +36,8 @@ namespace DrivingSchool.Simulation.RoadGraph
         readonly Dictionary<string, StopLine> stopLineByLane = new Dictionary<string, StopLine>();
         readonly Dictionary<string, List<ConflictZone>> zonesByConnection = new Dictionary<string, List<ConflictZone>>();
         readonly Dictionary<string, List<PedestrianCrossing>> crossingsByPath = new Dictionary<string, List<PedestrianCrossing>>();
+        readonly Dictionary<string, List<SignPlacement>> signsByPath = new Dictionary<string, List<SignPlacement>>();
+        readonly HashSet<string> intersections = new HashSet<string>();
 
         public RoadGraphIndex(WorldDocumentV2 world)
         {
@@ -69,6 +71,9 @@ namespace DrivingSchool.Simulation.RoadGraph
                 Add(zonesByConnection, z.connectionB, z);
             }
             foreach (var c in world.crossings) foreach (var id in c.laneIds) Add(crossingsByPath, id, c);
+            // An intersection has turns; a lane-change stretch or a level crossing only goes straight on (T65).
+            foreach (var c in world.connections) if (c.maneuver != LaneManeuver.Straight) intersections.Add(c.junctionId ?? "");
+            foreach (var sign in world.signs) foreach (var id in sign.laneIds) if (paths.ContainsKey(id)) Add(signsByPath, id, sign);
             foreach (var sign in world.signs) BuildCoverage(sign);
         }
 
@@ -90,17 +95,34 @@ namespace DrivingSchool.Simulation.RoadGraph
         public IReadOnlyList<SignCoverage> CoverageOn(string pathId) =>
             coverageByPath.TryGetValue(pathId ?? "", out var list) ? (IReadOnlyList<SignCoverage>)list : Array.Empty<SignCoverage>();
 
-        /// <summary>Speed limit at a point: the lowest 3.24 zone covering it, else the path limit.</summary>
+        /// <summary>
+        /// Speed limit at a point: the 3.24 zone covering it (the lowest if several), else the path limit (the town default
+        /// of the module). A zone ends at the next intersection, at 3.25 or at the next 3.24 (T65).
+        /// </summary>
         public float SpeedLimitAt(string pathId, double s)
         {
-            var limit = Path(pathId).SpeedLimitKph;
+            float zone = float.PositiveInfinity;
             foreach (var c in SignsAt(pathId, s))
             {
-                var sign = World.signs.First(x => x.id == c.SignId);
+                var sign = SignById(c.SignId);
                 if (sign.code == "3.24" && float.TryParse(sign.value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var v))
-                    limit = Math.Min(limit, v);
+                    zone = Math.Min(zone, v);
             }
-            return limit;
+            return float.IsPositiveInfinity(zone) ? Path(pathId).SpeedLimitKph : zone;
+        }
+
+        /// <summary>True for a junction with turns (a real intersection); lane-change stretches and level crossings are not.</summary>
+        public bool IsIntersection(string junctionId) => intersections.Contains(junctionId ?? "");
+
+        /// <summary>Signs standing on a path (their <see cref="SignPlacement.laneIds"/> include it).</summary>
+        public IReadOnlyList<SignPlacement> SignsOn(string pathId) =>
+            signsByPath.TryGetValue(pathId ?? "", out var list) ? (IReadOnlyList<SignPlacement>)list : Array.Empty<SignPlacement>();
+
+        readonly Dictionary<string, SignPlacement> signById = new Dictionary<string, SignPlacement>();
+        SignPlacement SignById(string id)
+        {
+            if (!signById.TryGetValue(id, out var sign)) signById[id] = sign = World.signs.First(x => x.id == id);
+            return sign;
         }
 
         /// <summary>Paths whose geometry passes within the grid cells around (x, z).</summary>
@@ -114,25 +136,72 @@ namespace DrivingSchool.Simulation.RoadGraph
                         foreach (var id in list) if (seen.Add(id)) yield return id;
         }
 
+        /// <summary>Signs whose zone runs to the next intersection whatever the layout says (ПДД РФ, Приложение 1, раздел 3 — редакцию сверить).</summary>
+        static bool IsZone(string code) => code == "3.24" || code == "3.27" || code == "3.28";
+
+        /// <summary>Signs that end a zone of <paramref name="code"/> before the intersection.</summary>
+        static bool Ends(string code, SignPlacement other) =>
+            code == "3.24" && (other.code == "3.24" || other.code == "3.25") || (code == "3.27" || code == "3.28") && other.code == code;
+
         void BuildCoverage(SignPlacement sign)
         {
+            if (sign.laneIds.Length == 0) return;
             var start = sign.laneIds[0];
-            if (!sign.untilNextJunction && string.IsNullOrEmpty(sign.zoneEndLaneId))
+            bool zone = IsZone(sign.code) || sign.untilNextJunction;
+            if (!zone && string.IsNullOrEmpty(sign.zoneEndLaneId))
             {
                 foreach (var id in sign.laneIds) AddCoverage(sign.id, id, id == start ? sign.atS : 0, Path(id).Length);
                 return;
             }
-            // Walk plain continuations from the sign to the zone end.
-            var current = start; double from = sign.atS;
-            for (int guard = 0; guard < 10000; guard++)
+            if (!zone)
             {
-                bool end = current == sign.zoneEndLaneId;
-                AddCoverage(sign.id, current, from, end ? sign.zoneEndS : Path(current).Length);
-                if (end) return;
-                var lane = Path(current).Lane;
-                if (lane == null || lane.successors.Length != 1) return;
-                current = lane.successors[0]; from = 0;
+                // Explicit end: walk plain continuations from the sign to it.
+                var current = start; double from = sign.atS;
+                for (int guard = 0; guard < 10000; guard++)
+                {
+                    bool end = current == sign.zoneEndLaneId;
+                    AddCoverage(sign.id, current, from, end ? sign.zoneEndS : Path(current).Length);
+                    if (end) return;
+                    var lane = Path(current).Lane;
+                    if (lane == null || lane.successors.Length != 1) return;
+                    current = lane.successors[0]; from = 0;
+                }
+                return;
             }
+            // Zone to the next intersection (T65): every lane of the direction, through lane-change stretches and level
+            // crossings (not intersections), cut short by a sign that ends it (3.25, another 3.24).
+            foreach (var laneId in sign.laneIds)
+            {
+                if (!paths.ContainsKey(laneId)) continue;
+                var p = Path(laneId);
+                double from = p.Lane != null ? Math.Min(sign.atS, p.Length) : 0;
+                var seen = new HashSet<string>();
+                for (int guard = 0; guard < 10000 && seen.Add(p.Id); guard++)
+                {
+                    double to = p.Length;
+                    var ender = SignsOn(p.Id).Where(o => o.id != sign.id && Ends(sign.code, o) && o.atS > from + 1e-6 && (p.Id != laneId || o.atS > sign.atS)).OrderBy(o => o.atS).FirstOrDefault();
+                    if (ender != null) to = ender.atS;
+                    AddCoverage(sign.id, p.Id, from, to);
+                    if (ender != null) break;
+                    var next = ZoneContinuation(p, sign.id);
+                    if (next == null) break;
+                    p = next; from = 0;
+                }
+            }
+        }
+
+        /// <summary>Where a zone goes on after <paramref name="p"/>: the direct successor, or through a junction that is not an
+        /// intersection on the connection that keeps the lane (it is covered too). Null at an intersection or a dead end.</summary>
+        PathInfo ZoneContinuation(PathInfo p, string signId)
+        {
+            if (p.IsConnection) return Path(p.Connection.toLaneId);
+            if (p.Lane.successors.Length == 1) return Path(p.Lane.successors[0]);
+            var through = p.Next.Select(Path).Where(n => n.IsConnection && !IsIntersection(n.Connection.junctionId)).ToList();
+            if (through.Count == 0) return null;
+            // A car changing lanes on the stretch is still in the zone.
+            foreach (var c in through.Where(n => n.Connection.laneChange)) AddCoverage(signId, c.Id, 0, c.Length);
+            var keep = through.FirstOrDefault(n => !n.Connection.laneChange) ?? through[0];
+            return keep;
         }
 
         void AddCoverage(string signId, string pathId, double from, double to) =>

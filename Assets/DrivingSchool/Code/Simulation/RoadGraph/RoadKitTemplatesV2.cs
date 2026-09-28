@@ -11,8 +11,10 @@ namespace DrivingSchool.Simulation.RoadGraph
     /// Lane ids are ordered from the axis outwards ("1" inner, "2" outer) and so are socket lane lists.
     /// Multi-lane approaches: the inner lane goes straight or left, the outer straight or right (no U-turns);
     /// a turn ends in the nearest lane of the same side (ПДД РФ 8.5/8.6 — редакцию сверить).
+    /// Signs 5.15.1 / 5.15.2 in the layout change which movements a lane of a junction approach allows
+    /// (<see cref="TryWithLaneManeuvers"/>, T65): the junction is rebuilt with the connections those lanes then have.
     /// </summary>
-    public sealed class RoadKitTemplatesV2 : IModuleTemplateSource
+    public sealed class RoadKitTemplatesV2 : IModuleTemplateSource, ILaneDirectionSource
     {
         public const string Straight4 = "RK2_Road_Urban4_20m", LaneChange4 = "RK2_Road_Urban4_LaneChange_40m", Cross4x4 = "RK2_Cross_4x4_32m", Cross4x2 = "RK2_Cross_4x2_24x32m",
             Roundabout = "RK2_Roundabout_52m", RailCrossing = "RK2_Road_RailCrossing_20m";
@@ -34,6 +36,18 @@ namespace DrivingSchool.Simulation.RoadGraph
 
         public IEnumerable<ModuleTemplate> All => templates.Values;
         public bool TryGet(string catalogId, out ModuleTemplate template) => templates.TryGetValue(catalogId, out template);
+
+        /// <summary>
+        /// The junction with other lane directions (signs 5.15.1 / 5.15.2, T65): <paramref name="lanes"/> maps local ids of
+        /// incoming lanes to the movements allowed from them. Only four-arm junctions support it.
+        /// </summary>
+        public bool TryWithLaneManeuvers(string catalogId, IReadOnlyDictionary<string, LaneManeuver> lanes, out ModuleTemplate template)
+        {
+            template = null;
+            if (catalogId == Cross4x4) template = MakeCross4x4(lanes);
+            else if (catalogId == Cross4x2) template = MakeCross4x2(lanes);
+            return template != null;
+        }
 
         // ------------------------------------------------------------------ 2+2 straight
 
@@ -89,7 +103,11 @@ namespace DrivingSchool.Simulation.RoadGraph
                 }
                 Pair(before[0], before[1]); Pair(after[0], after[1]);
                 foreach (var from in before) foreach (var to in after)
-                    connections.Add(WorldMigration.BuildConnection("lc", from, to, Speed));
+                {
+                    var c = WorldMigration.BuildConnection("lc", from, to, Speed);
+                    c.laneChange = from.index != to.index;   // the neighbouring lane: signalled as a lane change, not a turn (T65)
+                    connections.Add(c);
+                }
             }
             foreach (var x in new[] { "1a", "1b" }) { lanes.First(l => l.id == "f" + x).oncomingLaneId = "b" + (x == "1a" ? "1b" : "1a"); lanes.First(l => l.id == "b" + x).oncomingLaneId = "f" + (x == "1a" ? "1b" : "1a"); }
             var axis = new[] { new Vec3d(0, 0, 0), new Vec3d(0, 0, L) };
@@ -111,7 +129,9 @@ namespace DrivingSchool.Simulation.RoadGraph
 
         /// <summary>Meshes that draw a semantic module (catalog id, local z offset): the lane-change stretch is two straights.</summary>
         public static IEnumerable<(string prefab, double z)> Meshes(string catalogId) =>
-            catalogId == LaneChange4 ? new[] { (Straight4, 0.0), (Straight4, 20.0) } : new[] { (catalogId, 0.0) };
+            catalogId == LaneChange4 ? new[] { (Straight4, 0.0), (Straight4, 20.0) }
+            : catalogId == RoadKitTemplates.CrosswalkId ? new[] { (RoadKitTemplates.StraightId, 0.0) }
+            : new[] { (catalogId, 0.0) };
 
         /// <summary>Sideways shift of a connection (right positive): a lane change is a straight connection shifted by about a lane.</summary>
         public static double LateralShift(Vec3d[] line)
@@ -136,23 +156,37 @@ namespace DrivingSchool.Simulation.RoadGraph
         static readonly (string name, double ux, double uz, float heading)[] Compass =
             { ("South", 0, -1, 180), ("North", 0, 1, 0), ("East", 1, 0, 90), ("West", -1, 0, 270) };
 
-        static ModuleTemplate MakeCross4x4() => Junction(Cross4x4, Compass.Select(c => new Arm
+        static ModuleTemplate MakeCross4x4(IReadOnlyDictionary<string, LaneManeuver> lanes = null) => Junction(Cross4x4, Compass.Select(c => new Arm
         {
             Name = c.name, Ux = c.ux, Uz = c.uz, Heading = c.heading, Socket = 16, Inner = 14, StopS = 1.5,
             Offsets = new[] { InnerLaneM, OuterLaneM }, Width = Lane4WidthM, Crosswalk = 11.75, CrossHalf = 8.9,
-        }).ToList());
+        }).ToList(), lanes);
 
-        static ModuleTemplate MakeCross4x2() => Junction(Cross4x2, Compass.Select(c =>
+        static ModuleTemplate MakeCross4x2(IReadOnlyDictionary<string, LaneManeuver> lanes = null) => Junction(Cross4x2, Compass.Select(c =>
         {
             bool main = c.ux != 0;   // main road along X
             return main
                 ? new Arm { Name = c.name, Ux = c.ux, Uz = c.uz, Heading = c.heading, Socket = 12, Inner = 10, StopS = 1.6, Offsets = new[] { InnerLaneM, OuterLaneM }, Width = Lane4WidthM, Crosswalk = 7.75, CrossHalf = 8.95 }
                 : new Arm { Name = c.name, Ux = c.ux, Uz = c.uz, Heading = c.heading, Socket = 16, Inner = 13.3, StopS = 2.3, Offsets = new[] { Lane2M }, Width = RoadKitTemplates.LaneWidthM, Crosswalk = 11, CrossHalf = 5.6 };
-        }).ToList());
+        }).ToList(), lanes);
+
+        /// <summary>
+        /// Movements allowed from lane <paramref name="i"/> of <paramref name="n"/> when no sign says otherwise (ПДД РФ 8.5 —
+        /// редакцию сверить): turn right from the outermost lane, left from the innermost, straight from any. One lane: all.
+        /// </summary>
+        public static LaneManeuver DefaultManeuvers(int i, int n) =>
+            n < 2 ? LaneManeuver.None : i == 0 ? LaneManeuver.Straight | LaneManeuver.Left : i == n - 1 ? LaneManeuver.Straight | LaneManeuver.Right : LaneManeuver.Straight;
 
         /// <summary>A four-arm junction: in/out lanes per arm, connections by lane discipline, crossings, stop lines.</summary>
-        static ModuleTemplate Junction(string id, List<Arm> arms)
+        static ModuleTemplate Junction(string id, List<Arm> arms, IReadOnlyDictionary<string, LaneManeuver> overrides = null)
         {
+            if (overrides != null)
+                foreach (var kv in overrides)
+                {
+                    bool known = arms.Any(a => Enumerable.Range(0, a.Offsets.Length).Any(i => a.Name + ".in" + (i + 1) == kv.Key));
+                    if (!known) throw new ArgumentException(id + " has no incoming lane " + kv.Key);
+                    if (kv.Value == LaneManeuver.None) throw new ArgumentException("No movement allowed from " + id + ":" + kv.Key);
+                }
             var f = new WorldDocumentV2();
             var lanes = new List<LaneV2>(); var stops = new List<StopLine>(); var bounds = new List<LaneBoundary>(); var sockets = new List<TemplateSocket>();
             foreach (var a in arms)
@@ -162,7 +196,7 @@ namespace DrivingSchool.Simulation.RoadGraph
                 {
                     var inL = Lane(a.Name + ".in" + (i + 1), i + 1, Polyline.OffsetRight(new[] { outer, inner }, a.Offsets[i]), a.Width);
                     var outL = Lane(a.Name + ".out" + (i + 1), -(i + 1), Polyline.OffsetRight(new[] { inner, outer }, a.Offsets[i]), a.Width);
-                    if (a.Offsets.Length == 2) inL.allowedManeuvers = i == 0 ? LaneManeuver.Straight | LaneManeuver.Left : LaneManeuver.Straight | LaneManeuver.Right;
+                    inL.allowedManeuvers = overrides != null && overrides.TryGetValue(inL.id, out var given) ? given : DefaultManeuvers(i, a.Offsets.Length);
                     a.In.Add(inL); a.Out.Add(outL); lanes.Add(inL); lanes.Add(outL);
                     stops.Add(new StopLine { id = "stop." + a.Name + "." + (i + 1), laneId = inL.id, s = (float)a.StopS });
                     bounds.AddRange(Bounds(inL, i == 0 ? MarkingType.DoubleSolid : MarkingType.Solid, MarkingType.Solid));
@@ -182,7 +216,7 @@ namespace DrivingSchool.Simulation.RoadGraph
                     var m = WorldMigration.ClassifyTurn(Math.Atan2(-from.Ux, -from.Uz), Math.Atan2(to.Ux, to.Uz));
                     if (m == LaneManeuver.UTurn) continue;
                     foreach (var (inL, outL) in Pairs(from, to, m))
-                        connections.Add(WorldMigration.BuildConnection("j", inL, outL, Speed));
+                        if (Allows(inL, m)) connections.Add(WorldMigration.BuildConnection("j", inL, outL, Speed));
                 }
             var crossings = new List<PedestrianCrossing>();
             foreach (var a in arms)
@@ -213,9 +247,14 @@ namespace DrivingSchool.Simulation.RoadGraph
                 if (nIn > nOut) for (int i = nOut; i < nIn; i++) yield return (from.In[i], to.Out[nOut - 1]);
                 if (nOut > nIn) yield return (from.In[nIn - 1], to.Out[nOut - 1]);   // 1+1 into 2+2: keep right
             }
-            else if (m == LaneManeuver.Right) yield return (from.In[nIn - 1], to.Out[nOut - 1]);
-            else if (m == LaneManeuver.Left) yield return (from.In[0], to.Out[0]);
+            else if (m == LaneManeuver.Right)
+                // Counted from the kerb: the outermost lane turns into the outermost one, the next into the next (T65).
+                for (int i = 0; i < nIn; i++) yield return (from.In[i], to.Out[Math.Max(0, nOut - nIn + i)]);
+            else if (m == LaneManeuver.Left)
+                for (int i = 0; i < nIn; i++) yield return (from.In[i], to.Out[Math.Min(i, nOut - 1)]);
         }
+
+        static bool Allows(LaneV2 lane, LaneManeuver m) => lane.allowedManeuvers == LaneManeuver.None || (lane.allowedManeuvers & m) != 0;
 
         // ------------------------------------------------------------------ roundabout
 
@@ -237,6 +276,7 @@ namespace DrivingSchool.Simulation.RoadGraph
                 outL[k] = Lane(name + ".out", -1, Polyline.OffsetRight(Resample(new[] { inner, outer }), Lane2M), RoadKitTemplates.LaneWidthM, ArmSpeedKph);
                 inL[k].oncomingLaneId = outL[k].id; outL[k].oncomingLaneId = inL[k].id;
                 ring[k] = Lane("ring." + name, 1, Arc(theta + RingGapDeg, theta + 90 - RingGapDeg), 5.5f, RingSpeedKph);
+                ring[k].roundabout = true;
                 lanes.Add(inL[k]); lanes.Add(outL[k]); lanes.Add(ring[k]);
                 stops.Add(new StopLine { id = "giveway." + name, laneId = inL[k].id, s = (float)(RoundaboutSocketM - RoundaboutGiveWayM) });
                 var sock = Sock("Socket_" + name, outer, heading, new[] { outL[k].id }, new[] { inL[k].id }, RoadKitTemplates.LaneWidthM);
@@ -347,8 +387,14 @@ namespace DrivingSchool.Simulation.RoadGraph
         }
     }
 
+    /// <summary>Kits whose junctions can be rebuilt with other lane directions (signs 5.15.1 / 5.15.2, T65).</summary>
+    public interface ILaneDirectionSource
+    {
+        bool TryWithLaneManeuvers(string catalogId, IReadOnlyDictionary<string, LaneManeuver> lanes, out ModuleTemplate template);
+    }
+
     /// <summary>All road kits, v1 and v2 (T55): the compiler takes a module from whichever kit has it.</summary>
-    public sealed class RoadKitCatalog : IModuleTemplateSource
+    public sealed class RoadKitCatalog : IModuleTemplateSource, ILaneDirectionSource
     {
         readonly IModuleTemplateSource[] kits;
         public RoadKitCatalog() : this(new RoadKitTemplates(), new RoadKitTemplatesV2()) { }
@@ -356,6 +402,13 @@ namespace DrivingSchool.Simulation.RoadGraph
         public bool TryGet(string catalogId, out ModuleTemplate template)
         {
             foreach (var k in kits) if (k.TryGet(catalogId, out template)) return true;
+            template = null; return false;
+        }
+
+        public bool TryWithLaneManeuvers(string catalogId, IReadOnlyDictionary<string, LaneManeuver> lanes, out ModuleTemplate template)
+        {
+            foreach (var k in kits)
+                if (k is ILaneDirectionSource d && d.TryWithLaneManeuvers(catalogId, lanes, out template)) return true;
             template = null; return false;
         }
     }

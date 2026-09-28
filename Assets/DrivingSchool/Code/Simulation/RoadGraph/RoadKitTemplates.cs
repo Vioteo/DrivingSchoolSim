@@ -57,12 +57,20 @@ namespace DrivingSchool.Simulation.RoadGraph
         // the walkway ends 0.35 m behind it, on the lowered kerb.
         public const double CrossCornerRadiusM = 7, CrossRoadHalfWidthM = 5.4;
         public const float DefaultSpeedKph = 60;
+        public const string StraightId = "RK_Road_Urban_20m";
+        /// <summary>
+        /// Semantic-only module (T65): the 20 m straight with a zebra crossing in the middle (away from junctions) and a speed
+        /// bump on each side of it; drawn as <see cref="StraightId"/> plus RK_Marking_Zebra_8x3m and two DS_SpeedBump_Rubber_7m
+        /// (Editor/DistrictBuilder). Markings as on the straight mesh (dashed axis).
+        /// </summary>
+        public const string CrosswalkId = "RK_Road_Urban_Crosswalk_20m";
+        public const double CrosswalkZ = 10, CrosswalkHalfWidthM = 4.3, BumpOffsetM = 8;
 
         readonly Dictionary<string, ModuleTemplate> templates;
 
         public RoadKitTemplates()
         {
-            templates = new[] { Straight(), Curve(), Cross() }.ToDictionary(t => t.CatalogId);
+            templates = new[] { Straight(), Curve(), Cross(), Crosswalk() }.ToDictionary(t => t.CatalogId);
         }
 
         public IEnumerable<ModuleTemplate> All => templates.Values;
@@ -130,6 +138,26 @@ namespace DrivingSchool.Simulation.RoadGraph
                     Sock("Socket_End", new Vec3d(CurveRadiusM, 0, CurveRadiusM), 90, outLane: "f", inLane: "b"),
                 },
             };
+        }
+
+        static ModuleTemplate Crosswalk()
+        {
+            var t = Straight();
+            var f = t.Fragment;
+            // Sidewalks end at the crossing on both sides; the walkway runs from kerb to kerb (pedestrians link by the ends).
+            var z = CrosswalkZ;
+            f.sidewalks = new[]
+            {
+                Walk("walk.L1", new[] { new Vec3d(-SidewalkOffsetM, 0, 0), new Vec3d(-SidewalkOffsetM, 0, z) }),
+                Walk("walk.L2", new[] { new Vec3d(-SidewalkOffsetM, 0, z), new Vec3d(-SidewalkOffsetM, 0, StraightLengthM) }),
+                Walk("walk.R1", new[] { new Vec3d(SidewalkOffsetM, 0, 0), new Vec3d(SidewalkOffsetM, 0, z) }),
+                Walk("walk.R2", new[] { new Vec3d(SidewalkOffsetM, 0, z), new Vec3d(SidewalkOffsetM, 0, StraightLengthM) }),
+            };
+            f.crossings = new[]
+            {
+                new PedestrianCrossing { id = "crossing", a = new Vec3d(-CrosswalkHalfWidthM, 0, z), b = new Vec3d(CrosswalkHalfWidthM, 0, z), widthM = 3, laneIds = new[] { "f", "b" } },
+            };
+            return new ModuleTemplate { CatalogId = CrosswalkId, SourceSha256 = SourceSha256, Fragment = f, Sockets = t.Sockets };
         }
 
         static ModuleTemplate Cross()

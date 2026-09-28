@@ -68,6 +68,7 @@ namespace DrivingSchool.Contracts
         public string leftNeighborId, rightNeighborId;      // same-direction neighbours, empty if none
         public string oncomingLaneId;                       // lane across the axis, empty if none
         public LaneManeuver allowedManeuvers = LaneManeuver.None; // None = not restricted
+        public bool roundabout;                             // runs round a roundabout (ring lane, T65)
     }
 
     [Serializable] public sealed class Junction
@@ -82,6 +83,7 @@ namespace DrivingSchool.Contracts
         public LaneManeuver maneuver;
         public float speedLimitKph;
         public Vec3d[] centerline = Array.Empty<Vec3d>();
+        public bool laneChange;  // move to the neighbouring lane of the same road (lane-change stretch), not a turn (T65)
     }
 
     // Two connections overlap here; s ranges are measured along each connection's centerline.

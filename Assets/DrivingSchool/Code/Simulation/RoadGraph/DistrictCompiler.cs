@@ -32,10 +32,18 @@ namespace DrivingSchool.Simulation.RoadGraph
             var world = new WorldDocumentV2 { id = layout.id, name = layout.name, revision = layout.revision };
             var acc = new Accumulator();
             var instances = new Dictionary<string, (ModuleInstance inst, ModuleTemplate tpl)>();
+            var laneDirections = LaneDirections(layout);
             foreach (var inst in layout.instances)
             {
                 Require(inst != null && !string.IsNullOrWhiteSpace(inst.id) && !inst.id.Contains("/") && !instances.ContainsKey(inst.id), "Duplicate/invalid instance id: " + inst?.id);
                 Require(templates.TryGet(inst.catalogId, out var tpl), "No semantic template for " + inst.catalogId + " (instance " + inst.id + ")");
+                if (laneDirections.TryGetValue(inst.id, out var directionSigns))
+                {
+                    // Signs 5.15.1 / 5.15.2 (T65): the junction is rebuilt with the connections these lanes then have.
+                    var lanes = ResolveLaneDirections(inst.id, tpl, directionSigns);
+                    Require(templates is ILaneDirectionSource d && d.TryWithLaneManeuvers(inst.catalogId, lanes, out tpl),
+                        "Lane direction signs on a module that cannot take them: " + inst.id + " (" + inst.catalogId + ")");
+                }
                 instances.Add(inst.id, (inst, tpl));
                 AddInstance(acc, inst, tpl);
             }
@@ -136,7 +144,7 @@ namespace DrivingSchool.Simulation.RoadGraph
                     id = P(inst, l.id), segmentId = null, index = l.index, widthM = l.widthM, speedLimitKph = speed(l.speedLimitKph),
                     centerline = W(l.centerline), successors = l.successors.Select(x => P(inst, x)).ToArray(),
                     leftNeighborId = P(inst, l.leftNeighborId), rightNeighborId = P(inst, l.rightNeighborId), oncomingLaneId = P(inst, l.oncomingLaneId),
-                    allowedManeuvers = l.allowedManeuvers,
+                    allowedManeuvers = l.allowedManeuvers, roundabout = l.roundabout,
                 });
             foreach (var j in f.junctions)
                 acc.Junctions.Add(new Junction { id = P(inst, j.id), nodeId = P(inst, j.nodeId), connectionIds = j.connectionIds.Select(x => P(inst, x)).ToArray() });
@@ -145,6 +153,7 @@ namespace DrivingSchool.Simulation.RoadGraph
                 {
                     id = P(inst, c.id), junctionId = P(inst, c.junctionId), fromLaneId = P(inst, c.fromLaneId), toLaneId = P(inst, c.toLaneId),
                     maneuver = c.maneuver, speedLimitKph = speed(c.speedLimitKph), centerline = W(c.centerline), signalGroupId = P(inst, c.signalGroupId),
+                    laneChange = c.laneChange,
                 });
             foreach (var z in f.conflictZones)
                 acc.Zones.Add(new ConflictZone
@@ -219,18 +228,39 @@ namespace DrivingSchool.Simulation.RoadGraph
                 Require(lanes.ContainsKey(laneId), "Sign on unknown lane: " + s.id + " -> " + s.laneId);
                 var line = new Polyline(lanes[laneId].centerline);
                 Require(s.atS >= 0 && s.atS <= line.Length, "Sign position outside lane: " + s.id);
-                var pos = line.OffsetPoint(s.atS, SignLateralOffsetM);
+                // The sign stands at the kerb: right of the outermost lane of this direction (a sign given on an inner lane
+                // of a 2+2 road would otherwise stand on the outer lane, T65).
+                var kerbLane = lanes[laneId];
+                for (int guard = 0; !string.IsNullOrEmpty(kerbLane.rightNeighborId) && lanes.ContainsKey(kerbLane.rightNeighborId) && guard < 8; guard++) kerbLane = lanes[kerbLane.rightNeighborId];
+                var kerbLine = new Polyline(kerbLane.centerline);
+                kerbLine.Project(line.PointAt(s.atS).x, line.PointAt(s.atS).z, out double kerbS, out _);
+                var pos = kerbLine.OffsetPoint(kerbS, SignLateralOffsetM);
+                // Zone signs act on the whole carriageway of their direction: every lane of it is in the sign's lanes.
+                var direction = new List<string> { laneId };
+                if (SignCatalog.IsZoneSign(s.code))
+                {
+                    for (var l = lanes[laneId]; !string.IsNullOrEmpty(l.leftNeighborId) && lanes.TryGetValue(l.leftNeighborId, out l) && direction.Count < 8;) direction.Add(l.id);
+                    for (var l = lanes[laneId]; !string.IsNullOrEmpty(l.rightNeighborId) && lanes.TryGetValue(l.rightNeighborId, out l) && direction.Count < 8;) direction.Add(l.id);
+                }
                 var placement = new SignPlacement
                 {
                     id = s.id, code = s.code, value = s.value, catalogId = prefab, plaques = s.plaques ?? Array.Empty<string>(),
                     x = pos.x, y = pos.y, z = pos.z, yawDeg = (float)NormalizeDeg(line.HeadingAt(s.atS) * 180 / Math.PI + 180),
-                    laneIds = new[] { laneId }, atS = s.atS, untilNextJunction = s.untilNextJunction,
+                    laneIds = direction.ToArray(), atS = s.atS, untilNextJunction = s.untilNextJunction,
                 };
                 if (s.untilNextJunction)
                 {
-                    // Follow plain continuations to the lane that ends at a junction (no direct successor).
+                    // Follow plain continuations (and lane-change stretches, level crossings: not intersections) to the lane
+                    // that ends at an intersection. The runtime index walks the same way (RoadGraphIndex, T65).
                     var current = lanes[laneId];
-                    for (int guard = 0; current.successors.Length == 1 && guard < 10000; guard++) current = lanes[current.successors[0]];
+                    for (int guard = 0; guard < 10000; guard++)
+                    {
+                        if (current.successors.Length == 1) { current = lanes[current.successors[0]]; continue; }
+                        var through = acc.Connections.FirstOrDefault(c => c.fromLaneId == current.id && !c.laneChange && c.maneuver == LaneManeuver.Straight
+                            && acc.Connections.Where(o => o.junctionId == c.junctionId).All(o => o.maneuver == LaneManeuver.Straight));
+                        if (through == null) break;
+                        current = lanes[through.toLaneId];
+                    }
                     Require(current.successors.Length == 0, "Sign zone branches before a junction: " + s.id);
                     var stop = acc.StopLines.FirstOrDefault(x => x.laneId == current.id);
                     placement.zoneEndLaneId = current.id;
@@ -238,6 +268,38 @@ namespace DrivingSchool.Simulation.RoadGraph
                 }
                 acc.Signs.Add(placement);
             }
+        }
+
+        /// <summary>Lane direction signs of the layout by junction instance: local lane id → the sign's value.</summary>
+        static Dictionary<string, List<LayoutSign>> LaneDirections(DistrictLayout layout)
+        {
+            var result = new Dictionary<string, List<LayoutSign>>();
+            foreach (var s in layout.signs ?? Array.Empty<LayoutSign>())
+            {
+                if (s == null || !LaneDirectionSign.IsLaneDirection(s.code)) continue;
+                if (!result.TryGetValue(s.instanceId ?? "", out var list)) result[s.instanceId ?? ""] = list = new List<LayoutSign>();
+                list.Add(s);
+            }
+            return result;
+        }
+
+        static IReadOnlyDictionary<string, LaneManeuver> ResolveLaneDirections(string instanceId, ModuleTemplate tpl, List<LayoutSign> signs)
+        {
+            var lanes = new Dictionary<string, LaneManeuver>();
+            foreach (var s in signs)
+            {
+                var socket = tpl.Sockets.FirstOrDefault(x => x.InLaneIds.Contains(s.laneId));
+                Require(socket != null, "Lane direction sign " + s.id + " is not on an incoming lane of junction " + instanceId + ": " + s.laneId);
+                IReadOnlyDictionary<string, LaneManeuver> parsed;
+                try { parsed = LaneDirectionSign.Parse(s.code, s.value, s.laneId, socket.InLaneIds); }
+                catch (FormatException e) { throw new InvalidDataException("Sign " + s.id + ": " + e.Message); }
+                foreach (var kv in parsed)
+                {
+                    Require(!lanes.ContainsKey(kv.Key) || lanes[kv.Key] == kv.Value, "Lane direction signs disagree on " + instanceId + ":" + kv.Key);
+                    lanes[kv.Key] = kv.Value;
+                }
+            }
+            return lanes;
         }
 
         static void AddApproachesAndSignals(Accumulator acc, DistrictLayout layout, Dictionary<string, (ModuleInstance inst, ModuleTemplate tpl)> instances)
