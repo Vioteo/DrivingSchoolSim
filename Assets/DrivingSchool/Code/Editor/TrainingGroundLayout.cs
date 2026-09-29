@@ -91,7 +91,7 @@ namespace DrivingSchool.Editor
             mesh.RecalculateBounds();
             string path = Base + "/Art/TrainingKit/" + name + ".asset";
             var old = AssetDatabase.LoadAssetAtPath<Mesh>(path);
-            if (old) { EditorUtility.CopySerialized(mesh, old); UnityEngine.Object.DestroyImmediate(mesh); mesh = old; }
+            if (old) { Overwrite(old, mesh); UnityEngine.Object.DestroyImmediate(mesh); mesh = old; }
             else AssetDatabase.CreateAsset(mesh, path);
             var go = new GameObject(name, typeof(MeshFilter), typeof(MeshRenderer));
             go.transform.SetParent(parent);
@@ -99,6 +99,25 @@ namespace DrivingSchool.Editor
             var r = go.GetComponent<MeshRenderer>();
             r.sharedMaterial = mat; r.shadowCastingMode = ShadowCastingMode.Off;
             go.isStatic = true;
+        }
+
+        /// <summary>
+        /// Rewrites an existing mesh asset in place through the Mesh API (T68). EditorUtility.CopySerialized left the
+        /// editor's GPU copy stale: after a rebuild the road rendered with holes until the editor restarted.
+        /// </summary>
+        static void Overwrite(Mesh target, Mesh source)
+        {
+            target.Clear();
+            target.name = source.name;
+            target.indexFormat = source.indexFormat;
+            target.vertices = source.vertices;
+            var normals = source.normals; if (normals.Length == target.vertexCount) target.normals = normals;
+            var uv = source.uv; if (uv.Length == target.vertexCount) target.uv = uv;
+            target.subMeshCount = source.subMeshCount;
+            for (int i = 0; i < source.subMeshCount; i++) target.SetTriangles(source.GetTriangles(i), i);
+            target.RecalculateBounds();
+            target.UploadMeshData(false);
+            EditorUtility.SetDirty(target);
         }
 
         static void SetPlanarUV(GameObject box, float sx, float sz)
@@ -111,7 +130,7 @@ namespace DrivingSchool.Editor
             m.uv = uv; m.name = box.name + " UV";
             string path = Base + "/Art/TrainingKit/TG_BaseSlab.asset";
             var old = AssetDatabase.LoadAssetAtPath<Mesh>(path);
-            if (old) { EditorUtility.CopySerialized(m, old); UnityEngine.Object.DestroyImmediate(m); m = old; }
+            if (old) { Overwrite(old, m); UnityEngine.Object.DestroyImmediate(m); m = old; }
             else AssetDatabase.CreateAsset(m, path);
             mf.sharedMesh = m;
         }
@@ -151,7 +170,7 @@ namespace DrivingSchool.Editor
             mesh.RecalculateNormals(); mesh.RecalculateBounds();
             string path = Base + "/Art/TrainingKit/TG_Estakada.asset";
             var old = AssetDatabase.LoadAssetAtPath<Mesh>(path);
-            if (old) { EditorUtility.CopySerialized(mesh, old); UnityEngine.Object.DestroyImmediate(mesh); mesh = old; }
+            if (old) { Overwrite(old, mesh); UnityEngine.Object.DestroyImmediate(mesh); mesh = old; }
             else AssetDatabase.CreateAsset(mesh, path);
             var go = new GameObject("У3 / Estakada ramp", typeof(MeshFilter), typeof(MeshRenderer));
             go.transform.SetParent(environment);
