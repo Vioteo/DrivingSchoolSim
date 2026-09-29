@@ -66,7 +66,7 @@ namespace DrivingSchool.Editor
 
             BuildRamp();
             BuildRailwayCrossing();
-            foreach (var s in data.signs) PlaceSignStack(s);
+            foreach (var s in data.signs) PlaceSignStack(s, data.signals);
             BuildCrossroadSignals(data.signals);
             PaintedWords();
             ServiceFacilities();
@@ -215,22 +215,44 @@ namespace DrivingSchool.Editor
         }
 
         // ---------------------------------------------------------------- signs and signals
-        static void PlaceSignStack(SchemaSign s)
+        static void PlaceSignStack(SchemaSign s, SchemaSignal[] poles)
         {
             // The sign face (+Z of every prefab) turns towards the traffic it governs.
             float yaw = s.heading + 180;
+            // T68: a sign standing where a traffic-light pole for the same traffic stands hangs on that pole under the
+            // signal head, without a post of its own (before, sign and signal stood as two poles in one spot).
+            bool onSignalPole = poles != null && poles.Any(p => Mathf.Abs(p.x - s.x) < .5f && Mathf.Abs(p.z - s.z) < .5f &&
+                                                              Mathf.Abs(Mathf.DeltaAngle(p.heading, s.heading)) < 1);
+            float mount = onSignalPole ? SignUnderSignalDrop : 0;
             for (int i = 0; i < s.plates.Length; i++)
             {
                 string plate = s.plates[i];
-                float drop = i * .78f;
+                float drop = mount + i * .78f;
                 GameObject go;
-                if (plate.StartsWith("tex:", StringComparison.Ordinal)) go = TexturedSign(plate.Substring(4), s.x * K, s.z * K, yaw, drop, i == 0);
+                if (plate.StartsWith("tex:", StringComparison.Ordinal)) go = TexturedSign(plate.Substring(4), s.x * K, s.z * K, yaw, drop, i == 0 && !onSignalPole);
                 else
                 {
                     go = PlaceSign(plate, s.x * K, s.z * K, yaw);
-                    if (go) go.transform.position += Vector3.down * drop;
+                    if (go) { go.transform.position += Vector3.down * drop; if (onSignalPole) HidePost(go); }
                 }
-                if (go) go.name = "Sign / " + plate + " / " + s.heading.ToString("0");
+                if (go) go.name = "Sign / " + plate + " / " + s.heading.ToString("0") + (onSignalPole ? " / on signal pole" : "");
+            }
+        }
+
+        // Pole kit layout (DS_Signal_* and DS_Sign_* prefabs): post centre 0.06 m behind the origin; vehicle head 2.12…3.29 m.
+        const float PostOffset = -.06f, SignUnderSignalDrop = .55f, PedestrianHeadDrop = .95f, PedestrianHeadOut = .08f;
+
+        /// <summary>Hides the post, cap, base plate and bolts of a pole prefab (its head is mounted on another pole).</summary>
+        static void HidePost(GameObject go)
+        {
+            foreach (var t in go.GetComponentsInChildren<Transform>(true))
+            {
+                string n = t.name;
+                if (!n.StartsWith("Post", StringComparison.Ordinal) && !n.StartsWith("BasePlate", StringComparison.Ordinal) &&
+                    !n.StartsWith("AnchorBolt", StringComparison.Ordinal)) continue;
+                if (n.StartsWith("PostClamp", StringComparison.Ordinal)) continue;   // sign clamps stay on the shared pole
+                var r = t.GetComponent<Renderer>(); if (r) r.enabled = false;
+                var c = t.GetComponent<Collider>(); if (c) c.enabled = false;
             }
         }
 
@@ -307,7 +329,12 @@ namespace DrivingSchool.Editor
                 foreach (float face in p.pedestrian)
                 {
                     var dir = Quaternion.Euler(0, face, 0) * Vector3.forward;
-                    var ped = PlaceSign("DS_Signal_Pedestrian", p.x * K + dir.x * .45f, p.z * K + dir.z * .45f, face);
+                    // T68: pedestrian heads hang on the vehicle-signal pole (one pole per corner), lower than the vehicle head.
+                    var vYaw = Quaternion.Euler(0, p.heading + 180, 0);
+                    var pole = new Vector3(p.x * K, 0, p.z * K) + vYaw * new Vector3(0, 0, PostOffset);
+                    var at = pole - Quaternion.Euler(0, face, 0) * new Vector3(0, 0, PostOffset) + dir * PedestrianHeadOut;
+                    var ped = PlaceSign("DS_Signal_Pedestrian", at.x, at.z, face);
+                    if (ped) { ped.transform.position += Vector3.down * PedestrianHeadDrop; HidePost(ped); }
                     if (!ped) continue;
                     ped.name = "Signal / pedestrian / " + face.ToString("0");
                     var view = ped.GetComponentInChildren<TrafficSignalView>();
