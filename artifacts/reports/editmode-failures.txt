@@ -14,11 +14,15 @@ DrivingSchool.Tests.GuidedLessonPlayTests.FirstLessonFromMenuCanBeCompleted(Fals
       -----------^
     @ at DrivingSchool.Tests.GuidedLessonPlayTests+<FirstLessonFromMenuCanBeCompleted>d__2.MoveNext () [0x000e8] in C:\Users\AVSok\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\GuidedLessonPlayTests.cs:61
 DrivingSchool.Tests.GuidedLessonPlayTests.FirstLessonFromMenuCanBeCompleted(True)
-    Expected string length 8 but was 16. Strings differ at index 0.
+    String lengths are both 8. Strings differ at index 0.
       Expected: "MainMenu"
-      But was:  "VehicleTestRange"
+      But was:  "Showroom"
       -----------^
     @ at DrivingSchool.Tests.GuidedLessonPlayTests+<FirstLessonFromMenuCanBeCompleted>d__2.MoveNext () [0x000e8] in C:\Users\AVSok\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\GuidedLessonPlayTests.cs:61
+DrivingSchool.Tests.GuidedLessonPlayTests.TestRangeFromAssignmentsClearsPreviousLesson
+    Expected: not null
+      But was:  null
+    @ at DrivingSchool.Tests.GuidedLessonPlayTests+<TestRangeFromAssignmentsClearsPreviousLesson>d__1.MoveNext () [0x001d5] in C:\Users\AVSok\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\GuidedLessonPlayTests.cs:45
 DrivingSchool.Tests.SettingsTests.LockedItemsIgnoreEditsInDrive
     Без руля угол не меняется
       Expected: 900
@@ -31,9 +35,4 @@ DrivingSchool.Tests.WheelInputTests.DefaultProfileBindsEveryActionWithLabel
       But was:  "крестик"
       -----------^
     @ at DrivingSchool.Tests.WheelInputTests.DefaultProfileBindsEveryActionWithLabel () [0x00122] in C:\Users\AVSok\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\WheelInputTests.cs:29
-DrivingSchool.Tests.TrainingSceneTests.ActualSceneKeyboardDriveCanPassStartStop
-    Двигатель не завёлся
-      Expected: Running
-      But was:  Off
-    @ at DrivingSchool.Tests.TrainingSceneTests+<ActualSceneKeyboardDriveCanPassStartStop>d__5.MoveNext () [0x00154] in C:\Users\AVSok\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\TrainingScene\TrainingSceneTests.cs:63
 done: 422 tests, 7 failed

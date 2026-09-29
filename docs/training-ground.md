@@ -90,6 +90,8 @@ Unity: **Driving School / Training Ground / Build scene and models**.
 погоду, пост-обработку и директор полигона, удаляет остальное и строит площадку; поэтому сначала
 **Vehicle Test Range / Build scene**, потом автодром. Колёса машин стоят только на слое земли (9).
 На перекрёстке У4 ставится `SignalJunction` (сигнал для урока и проверка красного).
+На каждом углу У4 один столб: светофор для машин, над ним знак приоритета, ниже пешеходный
+светофор (`PlaceSignStack`, `HidePost` в `TrainingGroundLayout.cs`).
 Сборка заменяет генерируемую сцену; ручные изменения в ней не сохраняются.
 **Render review views** создаёт снимки в `artifacts/visual-review/training-ground`.
 
