@@ -48,25 +48,25 @@ for l in M['lines']:
     if L_<5.5 and np.min(np.hypot(*(AC[:,None,:]-p[None]).transpose(2,0,1)),axis=0).max()<3.2: continue
     strip(l,0.12)
 for r in M['rects']: add_tri(r[0],r[1],r[2]); add_tri(r[0],r[2],r[3])
-# lane arrows (road marking 1.18) re-drawn from templates at the scheme's positions
+# lane arrows (road marking 1.18): only positions go to Unity. The shape is the shared template
+# LaneArrowMarking (Code/World), the same one the city uses (T68). Each arrow is re-centred in its lane:
+# one-lane road -> road centre; two lanes -> middle of the right-hand lane (lane at most 3 m of the scheme).
 ARROWS=[(43.9,39.4,180,'SR'),(43.9,30.9,180,'S'),(43.9,5.5,180,'SR'),(43.9,-8.2,180,'S'),(-43.9,-12.0,0,'S'),
         (-15.8,13.8,270,'SR'),(2.8,13.9,270,'S'),(-32.4,38.2,0,'R'),(20.8,34.3,270,'R'),(21.9,-8.7,270,'R'),
         (-4.0,7.4,90,'L'),(-9.4,-30.4,270,'SR')]
-def arrow(cx,cz,h,kind):
-    a=np.radians(h); f=np.array([np.sin(a),np.cos(a)]); r=np.array([np.cos(a),-np.sin(a)])
-    o=np.array([cx,cz])-f*2.5
-    L=lambda u,v: o+r*u+f*v
-    def shaft(p0,p1,w=0.16):
-        p0,p1=np.array(p0),np.array(p1); d=(p1-p0)/np.linalg.norm(p1-p0); n=np.array([-d[1],d[0]])*w/2
-        add_tri(L(*(p0+n)),L(*(p0-n)),L(*(p1-n))); add_tri(L(*(p0+n)),L(*(p1-n)),L(*(p1+n)))
-    def head(tip,d,w=0.62,l=1.1):
-        tip=np.array(tip); d=np.array(d,float); d/=np.linalg.norm(d); n=np.array([-d[1],d[0]])
-        b=tip-d*l; add_tri(L(*tip),L(*(b+n*w/2)),L(*(b-n*w/2)))
-    if 'S' in kind: shaft((0,0),(0,3.95)); head((0,5.0),(0,1))
-    if kind=='R': shaft((0,0),(0,2.2)); shaft((0,2.2),(0.9,3.4)); head((1.9,3.9),(1,0.45))
-    if kind=='L': shaft((0,0),(0,2.2)); shaft((0,2.2),(-0.9,3.4)); head((-1.9,3.9),(-1,0.45))
-    if kind=='SR': shaft((0,1.1),(0.95,2.5)); head((2.0,3.0),(1,0.45))
-for ar in ARROWS: arrow(*ar)
+def lane_centre(cx,cz,h):
+    a=np.radians(h); r=np.array([np.cos(a),-np.sin(a)]); c=np.array([cx,cz])
+    def reach(sgn):
+        d=0.0
+        while inroad(*(c+r*sgn*d)) and d<15: d+=0.02
+        return d
+    right,left=reach(1),reach(-1); width=right+left
+    shift=(right-left)/2 if width<5.5 else right-min(width/4,1.5)
+    p=c+r*shift
+    return round(float(p[0]),3),round(float(p[1]),3)
+arrows=[]
+for cx,cz,h,kind in ARROWS:
+    x,z=lane_centre(cx,cz,h); arrows.append(dict(x=x,z=z,heading=h,kind=kind))
 print('paint tris',len(pt)//3)
 # ---------- road mesh with upward winding
 RT=[]
@@ -133,7 +133,8 @@ data=dict(
   paint=dict(v=np.round(pv,3).tolist(),t=pt),
   cones=np.round(np.array(M['posts']).ravel(),3).tolist(),
   signs=[dict(x=x,z=z,heading=h,plates=p) for x,z,h,p in signs],
-  signals=[dict(x=x,z=z,heading=h,pedestrian=ped) for x,z,h,ped in signals])
+  signals=[dict(x=x,z=z,heading=h,pedestrian=ped) for x,z,h,ped in signals],
+  arrows=arrows)
 os.makedirs('out',exist_ok=True)
 json.dump(data,open('out/autodrome-schema.json','w'),separators=(',',':'))
 print('json KB',os.path.getsize('out/autodrome-schema.json')//1024)

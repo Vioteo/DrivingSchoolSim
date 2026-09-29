@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DrivingSchool.Learning;
 using DrivingSchool.Presentation;
+using DrivingSchool.World;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -38,6 +39,7 @@ namespace DrivingSchool.Editor
         [Serializable] class SchemaMesh { public float[] v; public int[] t; }
         [Serializable] class SchemaSign { public float x, z, heading; public string[] plates; }
         [Serializable] class SchemaSignal { public float x, z, heading; public float[] pedestrian; }
+        [Serializable] class SchemaArrow { public float x, z, heading; public string kind; }
         [Serializable] class SchemaLayout
         {
             public string source;
@@ -45,6 +47,7 @@ namespace DrivingSchool.Editor
             public float[] cones;
             public SchemaSign[] signs;
             public SchemaSignal[] signals;
+            public SchemaArrow[] arrows;
         }
 
         static Vector3 P(float x, float z) => new Vector3(x * K, 0, z * K); // scheme metres
@@ -61,6 +64,7 @@ namespace DrivingSchool.Editor
 
             FlatMesh("TG_RoadSurface", data.road, .012f, asphalt, environment, 4f);
             FlatMesh("TG_Markings", data.paint, .022f, white, markings, 1f);
+            LaneArrows(data.arrows);
 
             for (int i = 0; i + 1 < data.cones.Length; i += 2) Cone(data.cones[i] * K, data.cones[i + 1] * K);
 
@@ -358,6 +362,28 @@ namespace DrivingSchool.Editor
         }
 
         const float CrossroadX = 16.3f, CrossroadZ = 12f, CrossroadStopLine = 9.7f;   // scheme metres
+
+        // ---------------------------------------------------------------- lane arrows (1.18)
+        /// <summary>
+        /// Стрелки 1.18 из общей заготовки LaneArrowMarking (как в городе), в натуральную величину по ГОСТ
+        /// (не растягиваются вместе со схемой). В схеме — середина стрелы на оси полосы, курс и направления.
+        /// </summary>
+        static void LaneArrows(SchemaArrow[] arrows)
+        {
+            var v = new List<Vector3>(); var t = new List<int>();
+            foreach (var a in arrows ?? new SchemaArrow[0])
+            {
+                var kind = LaneArrowMarking.Parse(a.kind);
+                const LaneArrowSize size = LaneArrowSize.Upto60;   // автодром — до 20 км/ч
+                var forward = Quaternion.Euler(0, a.heading, 0) * Vector3.forward;
+                var tail = P(a.x, a.z) - forward * (LaneArrowMarking.Length(kind, size) / 2);
+                LaneArrowMarking.Append(kind, size, tail, a.heading, v, t);
+            }
+            // FlatMesh берёт метры схемы и сам умножает на K.
+            var flat = new SchemaMesh { v = new float[v.Count * 2], t = t.ToArray() };
+            for (int i = 0; i < v.Count; i++) { flat.v[i * 2] = v[i].x / K; flat.v[i * 2 + 1] = v[i].z / K; }
+            FlatMesh("TG_LaneArrows", flat, .023f, white, markings, 1f);
+        }
 
         // ---------------------------------------------------------------- words painted on lanes
         static void PaintedWords()
