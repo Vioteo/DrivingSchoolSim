@@ -219,11 +219,11 @@ namespace DrivingSchool.Editor
         {
             // The sign face (+Z of every prefab) turns towards the traffic it governs.
             float yaw = s.heading + 180;
-            // T68: a sign standing where a traffic-light pole for the same traffic stands hangs on that pole under the
-            // signal head, without a post of its own (before, sign and signal stood as two poles in one spot).
+            // T68: a sign standing where a traffic-light pole for the same traffic stands goes on top of that pole, above the
+            // signal head: its post is coaxial with the signal post and continues it (before, two poles stood in one spot).
             bool onSignalPole = poles != null && poles.Any(p => Mathf.Abs(p.x - s.x) < .5f && Mathf.Abs(p.z - s.z) < .5f &&
                                                               Mathf.Abs(Mathf.DeltaAngle(p.heading, s.heading)) < 1);
-            float mount = onSignalPole ? SignUnderSignalDrop : 0;
+            float mount = onSignalPole ? -SignAboveSignalRise : 0;
             for (int i = 0; i < s.plates.Length; i++)
             {
                 string plate = s.plates[i];
@@ -233,17 +233,19 @@ namespace DrivingSchool.Editor
                 else
                 {
                     go = PlaceSign(plate, s.x * K, s.z * K, yaw);
-                    if (go) { go.transform.position += Vector3.down * drop; if (onSignalPole) HidePost(go); }
+                    if (go) { go.transform.position += Vector3.down * drop; if (onSignalPole) HidePost(go, keepPost: true); }
                 }
                 if (go) go.name = "Sign / " + plate + " / " + s.heading.ToString("0") + (onSignalPole ? " / on signal pole" : "");
             }
         }
 
-        // Pole kit layout (DS_Signal_* and DS_Sign_* prefabs): post centre 0.06 m behind the origin; vehicle head 2.12…3.29 m.
-        const float PostOffset = -.06f, SignUnderSignalDrop = .55f, PedestrianHeadDrop = .95f, PedestrianHeadOut = .08f;
+        // Pole kit layout (DS_Signal_* and DS_Sign_* prefabs): post centre 0.06 m behind the origin; vehicle head 2.12…3.29 m,
+        // its post ends at 3.36 m. Sign plate 2.0…2.69 m on a 2.75 m post: raised 1.35 m it sits above the signal head.
+        // Pedestrian heads (0.82 m tall, centre 2.75 m) go below the vehicle head, turned to their crosswalks.
+        const float PostOffset = -.06f, SignAboveSignalRise = 1.35f, PedestrianHeadDrop = 1.1f, PedestrianHeadOut = .08f;
 
-        /// <summary>Hides the post, cap, base plate and bolts of a pole prefab (its head is mounted on another pole).</summary>
-        static void HidePost(GameObject go)
+        /// <summary>Hides the base plate and bolts (and the post, unless <paramref name="keepPost"/>) of a pole prefab mounted on another pole.</summary>
+        static void HidePost(GameObject go, bool keepPost = false)
         {
             foreach (var t in go.GetComponentsInChildren<Transform>(true))
             {
@@ -251,6 +253,7 @@ namespace DrivingSchool.Editor
                 if (!n.StartsWith("Post", StringComparison.Ordinal) && !n.StartsWith("BasePlate", StringComparison.Ordinal) &&
                     !n.StartsWith("AnchorBolt", StringComparison.Ordinal)) continue;
                 if (n.StartsWith("PostClamp", StringComparison.Ordinal)) continue;   // sign clamps stay on the shared pole
+                if (keepPost && n.StartsWith("Post", StringComparison.Ordinal)) continue;
                 var r = t.GetComponent<Renderer>(); if (r) r.enabled = false;
                 var c = t.GetComponent<Collider>(); if (c) c.enabled = false;
             }
