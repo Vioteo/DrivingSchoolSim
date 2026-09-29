@@ -45,3 +45,9 @@ d.rounded_rectangle([4,4,N-4,336],24,fill=WHITE,outline=BLACK,width=10)
 d.line([(N/2,300),(N/2,170),(N-90,170)],fill=BLACK,width=46); d.line([(90,170),(N/2,170)],fill=BLACK,width=16); d.line([(N/2,170),(N/2,60)],fill=BLACK,width=16)
 im.save('out/SignFaces/Plate813.png')
 print(os.listdir('out/SignFaces'))
+# T68: exercise numbers for the zone boards (У1…У9 in the order of the exam route), white on a transparent field;
+# the builder puts one quad on each face of the teal board, so the number is never seen mirrored through it.
+FB=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',200)
+for n in range(1,10):
+    im=Image.new('RGBA',(512,256),(0,0,0,0)); d=ImageDraw.Draw(im)
+    d.text((256,136),'У'+str(n),font=FB,fill=WHITE,anchor='mm'); save(im,f'Board_{n}')
