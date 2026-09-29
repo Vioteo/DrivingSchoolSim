@@ -17,7 +17,15 @@ namespace DrivingSchool.Editor
         const string PrefKey = "DrivingSchool.PlayFromMainMenu";
         const string MenuPath = "Driving School/Play from Main Menu";
 
-        static bool testsRunning;
+        // Флаг в SessionState, а не в статическом поле: вход в Play посреди прогона перезагружает домен,
+        // статика сбрасывалась, delayCall снова ставил меню стартовой сценой — и следующие PlayMode-тесты
+        // (автодром, урок из меню) стартовали с главного меню. SessionState живёт до закрытия редактора.
+        const string TestsRunningKey = "DrivingSchool.PlayFromMainMenu.TestsRunning";
+        static bool testsRunning
+        {
+            get => SessionState.GetBool(TestsRunningKey, false);
+            set => SessionState.SetBool(TestsRunningKey, value);
+        }
 
         static PlayFromMainMenu()
         {
