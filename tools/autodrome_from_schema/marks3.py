@@ -2,6 +2,7 @@ import numpy as np, cv2, json
 from scipy import ndimage as ndi
 from skimage.morphology import skeletonize
 import networkx as nx
+from straighten import straighten
 S=19.17
 road=np.load('road_fixed.npy'); white=np.load('white.npy'); sat=np.load('sat.npy'); rm=np.load('rm.npy')
 H,W=road.shape
@@ -35,7 +36,7 @@ edges=[]
 for l in loops:
     L=np.array(l); P=np.array([px(x,z) for x,z in L])
     xi=np.clip(P[:,0].round().astype(int),0,W-1); yi=np.clip(P[:,1].round().astype(int),0,H-1)
-    painted=(wd[yi,xi]<=3.5)|rmb[yi,xi]|pm[yi,xi].astype(bool)
+    painted=(wd[yi,xi]<=6.0)|rmb[yi,xi]|pm[yi,xi].astype(bool)
     Lx,Lz=L[:,0],L[:,1]
     rail=(Lx<-41)&(Lz>25)&(Lz<35)
     painted|=rail&~((Lz>29.1)&(Lz<31.1))
@@ -51,9 +52,9 @@ for l in loops:
     for k in range(n):
         if pp[k]: run.append(LL[k])
         elif run:
-            if len(run)>=5: edges.append(np.array(run).round(3).tolist())
+            if len(run)>=10: edges.append(np.array(run).round(3).tolist())
             run=[]
-    if len(run)>=5: edges.append(np.array(run).round(3).tolist())
+    if len(run)>=10: edges.append(np.array(run).round(3).tolist())
 # ---- interior markings
 inner=base&(dedge>0.28*S)
 dt=ndi.distance_transform_edt(inner)
@@ -68,7 +69,11 @@ for i,sl in enumerate(ndi.find_objects(lab),1):
     rect=cv2.minAreaRect(pts); w,h=rect[1]
     if len(xs)/max((w+1)*(h+1),1)>0.72:
         if max(w,h)<1.6*S: continue
-        rects.append(tom(cv2.boxPoints(((rect[0][0],rect[0][1]),(w+1,h+1),rect[2]))).round(3).tolist())
+        ang=rect[2]
+        # T68: stop lines and zebra stripes are square to the road: snap a near-axis rectangle to the axis
+        k=round(ang/90)*90
+        if abs(ang-k)<=5: ang=k
+        rects.append(tom(cv2.boxPoints(((rect[0][0],rect[0][1]),(w+1,h+1),ang))).round(3).tolist())
     else:
         full=np.zeros((H,W),np.uint8); full[sl][comp]=1
         cs,_=cv2.findContours(full,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
@@ -96,7 +101,13 @@ for cc in nx.connected_components(G):
             if len(path)<0.25*S: continue
             p=np.array([(x,y) for y,x in path],np.float32).reshape(-1,1,2)
             p=cv2.approxPolyDP(p,0.8,False)[:,0,:]
-            lines.append(tom(p).round(3).tolist())
+            m=tom(p)
+            if np.hypot(*np.diff(m,axis=0).T).sum()<0.4: continue   # T68: specks, not markings
+            # T68: resample every 20 cm and straighten (lane lines are ruled; axis-snapped when nearly so)
+            d=np.r_[0,np.cumsum(np.hypot(*np.diff(m,axis=0).T))]; t=np.linspace(0,d[-1],max(2,int(d[-1]/0.2)+1))
+            m=np.stack([np.interp(t,d,m[:,0]),np.interp(t,d,m[:,1])],1)
+            m=straighten(m,closed=False,min_len=2.0,min_len_axis=0.6)
+            lines.append(m.round(3).tolist())
 for k in range(6): zc=-29.5-k; rects.append([[-1.88,zc-0.2],[2.08,zc-0.2],[2.08,zc+0.2],[-1.88,zc+0.2]])
 json.dump(dict(edges=edges,rects=rects,polys=polys,lines=lines,posts=posts),open('marks.json','w'))
 print('edges',len(edges),'rects',len(rects),'polys',len(polys),'lines',len(lines),'posts',len(posts))

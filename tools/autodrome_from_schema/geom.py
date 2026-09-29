@@ -1,6 +1,7 @@
 import numpy as np, cv2, json
 from scipy.spatial import Delaunay
 from scipy import ndimage as ndi
+from straighten import straighten
 S=19.17
 road=np.load('road_fixed.npy'); H,W=road.shape
 def tom(p): return np.stack([p[:,0]/S-50, 50-p[:,1]/S],1)
@@ -18,20 +19,27 @@ for c in cs:
     c=c[:,0,:]
     if len(c)<20: continue
     c=smooth_closed(c,5.0); c=resample_closed(c,0.2*S)   # 20 cm spacing in px
+    # T68: straight stretches of the traced edge become true lines (axis-snapped), curves are smoothed
+    m=straighten(tom(c),closed=True); c=np.stack([(m[:,0]+50)*S,(50-m[:,1])*S],1)
     loops.append(c)
 print('loops',len(loops),[len(l) for l in loops])
 # Delaunay with interior fill points
 pts=[np.vstack(loops)]
 gy,gx=np.mgrid[0:H:int(1.5*S),0:W:int(1.5*S)]
 g=np.stack([gx.ravel(),gy.ravel()],1)
+# T68: the surface follows the straightened loops, not the raster (else wedges stick out past the edge lines)
+SS=4
+mask=np.zeros((H*SS,W*SS),np.uint8)
+cv2.fillPoly(mask,[(l*SS).round().astype(np.int32) for l in loops],1)
+road=cv2.resize(mask,(W,H),interpolation=cv2.INTER_AREA)>0
 dist=ndi.distance_transform_edt(road)
 keep=dist[g[:,1],g[:,0]]>0.5*S
 pts.append(g[keep].astype(float))
 P=np.vstack(pts)
 tri=Delaunay(P)
 cen=P[tri.simplices].mean(1)
-ci=np.clip(cen.round().astype(int),0,[W-1,H-1])
-inside=road[ci[:,1],ci[:,0]]
+ci=np.clip((cen*SS).round().astype(int),0,[W*SS-1,H*SS-1])
+inside=mask[ci[:,1],ci[:,0]]>0
 T=tri.simplices[inside]
 # also drop triangles with any edge longer than 3m (bridging concavities)
 e=np.max(np.stack([np.hypot(*(P[T[:,a]]-P[T[:,b]]).T) for a,b in [(0,1),(1,2),(2,0)]]),0)
