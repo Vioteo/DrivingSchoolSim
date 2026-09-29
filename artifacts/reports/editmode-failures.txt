@@ -1,0 +1,39 @@
+running
+DrivingSchool.Tests.CityDistrictRulesTests.LaneChangesAreMarkedAndStraightArcsAreNot
+    four lane-change stretches (n, e, s, a), two directions, two moves each
+      Expected: 16
+      But was:  8
+    @ at DrivingSchool.Tests.CityDistrictRulesTests.LaneChangesAreMarkedAndStraightArcsAreNot () [0x00034] in C:\Users\AVSok\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\City\CityDistrictRulesTests.cs:26
+DrivingSchool.Tests.CityDistrictRulesTests.SpeedZonesRunToTheEndSignOnEveryLaneOfTheDirection
+    System.Collections.Generic.KeyNotFoundException : Unknown path a1/b1
+    @ at DrivingSchool.Simulation.RoadGraph.RoadGraphIndex.Path (System.String id) [0x00000] in C:\Users\AVSok\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Simulation\RoadGraph\RoadGraphIndex.cs:81
+DrivingSchool.Tests.GuidedLessonPlayTests.FirstLessonFromMenuCanBeCompleted(False)
+    Expected string length 8 but was 16. Strings differ at index 0.
+      Expected: "MainMenu"
+      But was:  "VehicleTestRange"
+      -----------^
+    @ at DrivingSchool.Tests.GuidedLessonPlayTests+<FirstLessonFromMenuCanBeCompleted>d__2.MoveNext () [0x000e8] in C:\Users\AVSok\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\GuidedLessonPlayTests.cs:61
+DrivingSchool.Tests.GuidedLessonPlayTests.FirstLessonFromMenuCanBeCompleted(True)
+    Expected string length 8 but was 16. Strings differ at index 0.
+      Expected: "MainMenu"
+      But was:  "VehicleTestRange"
+      -----------^
+    @ at DrivingSchool.Tests.GuidedLessonPlayTests+<FirstLessonFromMenuCanBeCompleted>d__2.MoveNext () [0x000e8] in C:\Users\AVSok\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\GuidedLessonPlayTests.cs:61
+DrivingSchool.Tests.SettingsTests.LockedItemsIgnoreEditsInDrive
+    Без руля угол не меняется
+      Expected: 900
+      But was:  890
+    @ at DrivingSchool.Tests.SettingsTests.LockedItemsIgnoreEditsInDrive () [0x00079] in C:\Users\AVSok\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\SettingsTests.cs:270
+DrivingSchool.Tests.WheelInputTests.DefaultProfileBindsEveryActionWithLabel
+    Кнопка 1 в HID Input System называется trigger
+      Expected string length 1 but was 7. Strings differ at index 0.
+      Expected: "✕"
+      But was:  "крестик"
+      -----------^
+    @ at DrivingSchool.Tests.WheelInputTests.DefaultProfileBindsEveryActionWithLabel () [0x00122] in C:\Users\AVSok\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\WheelInputTests.cs:29
+DrivingSchool.Tests.TrainingSceneTests.ActualSceneKeyboardDriveCanPassStartStop
+    Двигатель не завёлся
+      Expected: Running
+      But was:  Off
+    @ at DrivingSchool.Tests.TrainingSceneTests+<ActualSceneKeyboardDriveCanPassStartStop>d__5.MoveNext () [0x00154] in C:\Users\AVSok\Documents\unity-driing\DrivingSchoolSim\Assets\DrivingSchool\Code\Tests\TrainingScene\TrainingSceneTests.cs:63
+done: 422 tests, 7 failed
