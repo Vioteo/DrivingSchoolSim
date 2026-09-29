@@ -106,6 +106,54 @@ namespace DrivingSchool.Tests
             Assert.That(s.GateIndex,Is.EqualTo(1),"stop gate is passed, the exercise goes on");
             Assert.That(s.Penalty,Is.EqualTo(3));
         }
+        // Регулируемый перекрёсток (T68): остановка у стоп-линии без рамки, только на красный.
+        static CourseGate LightStop()=>new CourseGate{instruction="Stop line",width=3.5f,length=4,holdSeconds=2,stopLine=2,stopZone=4,trafficLight=true};
+        static CourseInput Red(CourseInput i){i.redLight=true;return i;}
+        [Test] public void OnRedTheCarStopsAtTheLineWithoutAFrame()
+        {
+            var next=new CourseGate{instruction="Next",z=30};
+            var s=Start(Course(LightStop(),next));
+            s.Tick(2.1f,Red(At(0,-6,0,0)));                    // front 5.75 m before the line: farther than 4 m
+            Assert.That(s.GateIndex,Is.Zero);
+            s.Tick(.1f,Red(At(0,-.5f,0,1)));
+            s.Tick(2.1f,Red(At(0,-.5f,0,0)));                  // front 0.25 m before the line, stopped 2 s
+            Assert.That(s.GateIndex,Is.EqualTo(1)); Assert.That(s.Faults,Is.Empty);
+        }
+        [Test] public void OnGreenTheCarDrivesOverTheLine()
+        {
+            var next=new CourseGate{instruction="Next",z=30};
+            var s=Start(Course(LightStop(),next));
+            s.Tick(.1f,At(0,-1,0,5));
+            s.Tick(.1f,At(0,.5f,0,5));                         // front 0.75 m past the line, green
+            Assert.That(s.GateIndex,Is.EqualTo(1)); Assert.That(s.Faults,Is.Empty);
+        }
+        [Test] public void OnRedCrossingTheLineIsAFault()
+        {
+            var next=new CourseGate{instruction="Next",z=30};
+            var s=Start(Course(LightStop(),next));
+            s.Tick(.1f,Red(At(0,.6f,0,3)));                    // front 0.85 m past, red
+            Assert.That(s.Faults.Count,Is.EqualTo(1)); Assert.That(s.Faults[0].code,Is.EqualTo(CourseSession.StopLine));
+            var bad=Course(LightStop()); bad.lessons[0].gates[0].stopLine=0;
+            Assert.Throws<ArgumentException>(()=>new CourseSession(bad,0,false));
+        }
+        [Test] public void LeavingTheExerciseZoneIsAFaultOncePerLeaving()
+        {
+            var far=new CourseGate{instruction="Far",z=40};
+            var c=Course(far);
+            // Полоса 4 м вдоль Z и «карман» 3 × 8 м справа от неё (T68, параллельная парковка).
+            c.lessons[0].areas=new[]{new CourseArea{x=0,z=10,yaw=0,width=4,length=40},new CourseArea{x=3.5f,z=10,yaw=0,width=3,length=8}};
+            var s=Start(c);
+            s.Tick(.1f,At(0,5,0,1));                           // в полосе
+            s.Tick(.1f,At(3.5f,10,0,-1));                      // в кармане
+            Assert.That(s.Faults,Is.Empty);
+            s.Tick(.1f,At(3.5f,15.5f,0,-1));                   // задний край кармана пересечён
+            s.Tick(.1f,At(3.5f,15.6f,0,-1));
+            Assert.That(s.Faults.Count,Is.EqualTo(1)); Assert.That(s.Faults[0].code,Is.EqualTo(CourseSession.ZoneLine));
+            s.Tick(.1f,At(0,5,0,1)); s.Tick(.1f,At(-2.5f,5,0,1)); // вернулся и снова заехал за линию полосы
+            Assert.That(s.Faults.Count,Is.EqualTo(2));
+            c.lessons[0].areas[0].width=0;
+            Assert.Throws<ArgumentException>(()=>new CourseSession(c,0,false));
+        }
         [Test] public void StopLineIgnoresCarsFacingAnotherWayOrBesideTheLane()
         {
             var stop=Stop(); stop.stopLine=3.5f;

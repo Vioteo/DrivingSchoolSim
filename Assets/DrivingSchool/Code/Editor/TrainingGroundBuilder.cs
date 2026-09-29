@@ -93,7 +93,7 @@ namespace DrivingSchool.Editor
                     go.transform.SetPositionAndRotation(new Vector3(g.x, .1f, g.z), Quaternion.Euler(0, g.yaw, 0));
                 }
                 AddLessonBoard(i, l);
-                foreach (var g in l.gates.Where(g => g.holdSeconds > 0))
+                foreach (var g in l.gates.Where(g => g.holdSeconds > 0 && g.stopZone <= 0))   // у стоп-линии рамки нет — ориентир сама линия
                 {
                     float y = Height(g.x, g.z) + .025f;
                     var r = Outline(g.x, g.z, g.width, g.length, yellow, y);

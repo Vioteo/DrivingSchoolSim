@@ -96,7 +96,8 @@ namespace DrivingSchool.Presentation
             vehicle.inputEnabled = session.Phase == CoursePhase.Running;
             var gate = session.CurrentGate;
             if (!marker) return;
-            marker.gameObject.SetActive(gate != null && (!session.Exam || session.Transferring));
+            // Остановка у стоп-линии (stopZone) — без рамки: ориентир — сама линия.
+            marker.gameObject.SetActive(gate != null && gate.stopZone <= 0 && (!session.Exam || session.Transferring));
             if (gate == null) return;
             float y = UnityEngine.Physics.Raycast(new Vector3(gate.x, 5, gate.z), Vector3.down, out var hit, 8, 1 << 9) ? hit.point.y + .05f : .05f;
             marker.SetPositionAndRotation(new Vector3(gate.x, y, gate.z), Quaternion.Euler(0, gate.yaw, 0));
@@ -126,8 +127,22 @@ namespace DrivingSchool.Presentation
                     x = t.position.x, z = t.position.z, yaw = t.eulerAngles.y, signedSpeed = st.signedSpeedMps, gear = st.gear,
                     leftIndicator = st.leftIndicator && !st.hazard, rightIndicator = st.rightIndicator && !st.hazard,
                     engineStalled = st.engine == EnginePhase.Stalled,
+                    redLight = RedLightAhead(t),
                 });
             if (session.Phase != CoursePhase.Running) SaveResult();
+        }
+
+        SignalJunction junction; bool junctionSearched;
+
+        /// <summary>Сигнал регулируемого перекрёстка впереди запрещает пересекать стоп-линию (красный, красный с жёлтым).</summary>
+        bool RedLightAhead(Transform car)
+        {
+            if (!junctionSearched) { junction = FindAnyObjectByType<SignalJunction>(); junctionSearched = true; }
+            if (junction == null || junction.signals == null) return false;
+            var forward = car.forward;
+            var front = car.position + forward * (course.vehicleLength / 2);
+            return junction.Approach(front, forward, out var dir, out float toLine) && toLine > -1f &&
+                   SignalJunction.Prohibits(junction.AspectFor(dir));
         }
 
         [Serializable] class ResultFault { public string code, title, lesson; public int points; public bool terminal; public float seconds; }

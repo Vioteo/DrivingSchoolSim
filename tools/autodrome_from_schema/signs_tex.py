@@ -51,3 +51,9 @@ FB=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',200
 for n in range(1,10):
     im=Image.new('RGBA',(512,256),(0,0,0,0)); d=ImageDraw.Draw(im)
     d.text((256,136),'У'+str(n),font=FB,fill=WHITE,anchor='mm'); save(im,f'Board_{n}')
+# T68: 6.16 "Stop line" (blue square, white rim, the word СТОП over a white bar) — on the signal poles of the crossroad У4.
+im=canvas(); d=ImageDraw.Draw(im)
+d.rounded_rectangle([6,6,N-6,N-6],30,fill=WHITE); d.rounded_rectangle([26,26,N-26,N-26],20,fill=BLUE)
+d.text((N/2,190),'СТОП',font=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',124),fill=WHITE,anchor='mm')
+d.rectangle([70,318,N-70,398],fill=WHITE)
+save(im,'StopLine')

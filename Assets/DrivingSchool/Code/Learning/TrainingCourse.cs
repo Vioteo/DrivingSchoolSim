@@ -19,6 +19,13 @@ namespace DrivingSchool.Learning
         public int signal;
         /// <summary>T68: allowed changes of travel direction against <see cref="direction"/> and back (corrections); 0 — not checked.</summary>
         public int maxCorrections;
+        /// <summary>T68: stop at the stop line without a painted frame: the front bumper must stand no farther than this many metres
+        /// before the line (<see cref="stopLine"/>) and not past it; 0 — the whole-vehicle frame (<see cref="wholeVehicle"/>) decides.
+        /// Real metres, not scaled with the layout.</summary>
+        public float stopZone;
+        /// <summary>T68: stop line of a signalled junction — the stop is needed only while the signal forbids crossing
+        /// (<see cref="CourseInput.redLight"/>); on green the car may drive over the line and the gate counts as passed.</summary>
+        public bool trafficLight;
     }
     [Serializable] public sealed class CourseLesson
     {
@@ -28,6 +35,14 @@ namespace DrivingSchool.Learning
         public bool noRollback;
         public CourseGate[] gates;
         public CourseGate[] transfer;
+        /// <summary>T68: zone of the exercise (lane, parking place…) as rectangles; while the exercise gates are driven every corner
+        /// of the car must stay inside one of them, otherwise it is the fault «zone-line» (once per leaving). Empty — not checked.</summary>
+        public CourseArea[] areas;
+    }
+    /// <summary>T68: a rectangle of an exercise zone: centre, heading (its length runs along it), width and length, m.</summary>
+    [Serializable] public sealed class CourseArea
+    {
+        public float x, z, yaw, width, length;
     }
     /// <summary>
     /// T68: a fault of the course and its points. The values are game settings of this autodrome, not the GIBDD
@@ -71,13 +86,15 @@ namespace DrivingSchool.Learning
         public float x, z, yaw, signedSpeed;
         public int gear;
         public bool leftIndicator, rightIndicator, engineStalled;
+        /// <summary>T68: the signal ahead forbids crossing the stop line (red or red+amber); used by <see cref="CourseGate.trafficLight"/>.</summary>
+        public bool redLight;
     }
 
     /// <summary>Pure course evaluator; all authored thresholds are game rules, not legal standards.</summary>
     public sealed class CourseSession
     {
         public const string Contact = "contact", StopLine = "stop-line", NoSignal = "no-signal", Stall = "stall", Speed = "speed",
-            Corrections = "corrections", Rollback = "rollback", Timeout = "timeout", Boundary = "boundary";
+            Corrections = "corrections", Rollback = "rollback", Timeout = "timeout", Boundary = "boundary", ZoneLine = "zone-line";
 
         readonly TrainingCourse course;
         readonly bool exam;
@@ -85,7 +102,7 @@ namespace DrivingSchool.Learning
         float held, lessonElapsed, overspeed, previousX, previousZ, rollback;
         bool directionSeen, havePrevious, transferring;
         // T68: per-gate state
-        bool signalSeen, stopLineReported, maneuverStarted, correctionsReported, wasStalled;
+        bool signalSeen, stopLineReported, maneuverStarted, correctionsReported, wasStalled, outsideZone;
         int corrections, lastMotion;
         public CoursePhase Phase { get; private set; } = CoursePhase.Ready;
         public int LessonIndex { get; private set; }
@@ -131,6 +148,10 @@ namespace DrivingSchool.Learning
                     throw new ArgumentException("Invalid lesson");
                 CheckGates(l.gates);
                 if(l.transfer != null) CheckGates(l.transfer);
+                if(l.areas != null)
+                    foreach(var a in l.areas)
+                        if(a == null || !Finite(a.x) || !Finite(a.z) || !Finite(a.yaw) || !Positive(a.width) || !Positive(a.length))
+                            throw new ArgumentException("Invalid lesson area");
             }
         }
         static void CheckGates(CourseGate[] gates)
@@ -140,7 +161,8 @@ namespace DrivingSchool.Learning
                    !Positive(g.length) || !Finite(g.holdSeconds) || g.holdSeconds < 0 || !Positive(g.headingTolerance) ||
                    g.headingTolerance > 180 || g.direction < -1 || g.direction > 1 ||
                    !Finite(g.minimumSpeed) || g.minimumSpeed < 0 || g.minimumGear < 0 ||
-                   !Finite(g.stopLine) || g.stopLine < 0 || g.signal < -1 || g.signal > 1 || g.maxCorrections < 0)
+                   !Finite(g.stopLine) || g.stopLine < 0 || g.signal < -1 || g.signal > 1 || g.maxCorrections < 0 ||
+                   !Finite(g.stopZone) || g.stopZone < 0 || (g.stopZone > 0 && g.stopLine <= 0) || (g.trafficLight && g.stopLine <= 0))
                     throw new ArgumentException("Invalid gate");
         }
         static bool Finite(float f) => !float.IsNaN(f) && !float.IsInfinity(f);
@@ -183,7 +205,7 @@ namespace DrivingSchool.Learning
         }
 
         static bool DefaultTerminal(string code) => code == Rollback || code == Timeout || code == Boundary;
-        static int DefaultPoints(string code) => code == Contact ? 2 : code == StopLine ? 3 : 1;
+        static int DefaultPoints(string code) => code == Contact ? 2 : code == StopLine || code == ZoneLine ? 3 : 1;
         static string DefaultTitle(string code)
         {
             switch(code)
@@ -197,6 +219,7 @@ namespace DrivingSchool.Learning
                 case Rollback: return "Откат на эстакаде более допуска";
                 case Timeout: return "Время истекло";
                 case Boundary: return "Выезд за границу площадки";
+                case ZoneLine: return "Выезд за линию зоны упражнения";
                 default: return code;
             }
         }
@@ -238,6 +261,37 @@ namespace DrivingSchool.Learning
             return deltaYaw <= 60 && Math.Abs(lx) <= g.width/2 + 1 && lz > g.stopLine + tolerance && lz < g.stopLine + length + 3;
         }
 
+        /// <summary>Front bumper stands at the gate's stop line (T68): no farther than <see cref="CourseGate.stopZone"/> before it,
+        /// not past it beyond <paramref name="tolerance"/>, inside the lane width.</summary>
+        public static bool AtStopLine(CourseGate g, float x, float z, float yaw, float length, float tolerance)
+        {
+            if(g.stopLine <= 0 || g.stopZone <= 0) return false;
+            double yr=yaw*Math.PI/180, a=g.yaw*Math.PI/180;
+            double dx=x+Math.Sin(yr)*length/2-g.x, dz=z+Math.Cos(yr)*length/2-g.z;
+            double lx=dx*Math.Cos(a)-dz*Math.Sin(a), lz=dx*Math.Sin(a)+dz*Math.Cos(a);
+            return Math.Abs(lx) <= g.width/2 && lz >= g.stopLine - g.stopZone && lz <= g.stopLine + tolerance;
+        }
+
+        /// <summary>Every corner of the car lies inside one of the zone rectangles (T68).</summary>
+        public static bool InsideZone(CourseArea[] areas, float x, float z, float yaw, float width, float length)
+        {
+            double yr=yaw*Math.PI/180; double fx=Math.Sin(yr), fz=Math.Cos(yr), rx=fz, rz=-fx;
+            for(int i=0;i<4;i++)
+            {
+                double side=(i&1)==0 ? -width/2 : width/2, along=(i&2)==0 ? -length/2 : length/2;
+                double cx=x+rx*side+fx*along, cz=z+rz*side+fz*along;
+                bool inside=false;
+                foreach(var a in areas)
+                {
+                    double ar=a.yaw*Math.PI/180, dx=cx-a.x, dz=cz-a.z;
+                    double lx=dx*Math.Cos(ar)-dz*Math.Sin(ar), lz=dx*Math.Sin(ar)+dz*Math.Cos(ar);
+                    if(Math.Abs(lx)<=a.width/2 && Math.Abs(lz)<=a.length/2) { inside=true; break; }
+                }
+                if(!inside) return false;
+            }
+            return true;
+        }
+
         public void Tick(float dt, float x, float z, float yaw, float signedSpeed, int gear) =>
             Tick(dt, new CourseInput { x = x, z = z, yaw = yaw, signedSpeed = signedSpeed, gear = gear });
 
@@ -255,6 +309,14 @@ namespace DrivingSchool.Learning
             if(overspeed >= 1) { Penalize(Speed); overspeed=0; if(Phase!=CoursePhase.Running)return; }
             if(input.engineStalled && !wasStalled) { Penalize(Stall); if(Phase!=CoursePhase.Running) { wasStalled=true; return; } }
             wasStalled = input.engineStalled;
+            var zone=course.lessons[LessonIndex].areas;
+            if(!transferring && zone != null && zone.Length > 0)
+            {
+                bool inZone=InsideZone(zone, x, z, yaw, course.vehicleWidth, course.vehicleLength);
+                if(!inZone && !outsideZone) { outsideZone=true; Penalize(ZoneLine); if(Phase!=CoursePhase.Running) return; }
+                else if(inZone) outsideZone=false;
+            }
+            else outsideZone=false;
             var gate=CurrentGate;
             if(gate.signal < 0 ? input.leftIndicator && !input.rightIndicator : gate.signal > 0 && input.rightIndicator && !input.leftIndicator) signalSeen=true;
             if(gate.maxCorrections > 0 && gate.direction != 0)
@@ -268,6 +330,9 @@ namespace DrivingSchool.Learning
                     lastMotion = motion;
                 }
             }
+            // Регулируемый перекрёсток: на разрешающий сигнал стоп-линию проезжают без остановки.
+            if(gate.trafficLight && !input.redLight && FrontPastStopLine(gate, x, z, yaw, course.vehicleLength, 0))
+            { CompleteGate(gate); return; }
             if(gate.stopLine > 0 && !stopLineReported && FrontPastStopLine(gate, x, z, yaw, course.vehicleLength, course.stopLineTolerance))
             {
                 stopLineReported = true;
@@ -275,7 +340,8 @@ namespace DrivingSchool.Learning
                 if(Phase == CoursePhase.Running) CompleteGate(gate);
                 return;
             }
-            bool inside=Contains(gate,x,z,yaw,course.vehicleWidth,course.vehicleLength);
+            bool inside=gate.stopZone > 0 ? AtStopLine(gate,x,z,yaw,course.vehicleLength,course.stopLineTolerance)
+                : Contains(gate,x,z,yaw,course.vehicleWidth,course.vehicleLength);
             float deltaYaw=(float)Math.Abs(((yaw-gate.yaw)%360+540)%360-180);
             bool aligned=deltaYaw <= gate.headingTolerance;
             if(inside && aligned && Math.Abs(signedSpeed)>.15f && Math.Sign(signedSpeed)==gate.direction) directionSeen=true;
