@@ -52,9 +52,9 @@ for l in loops:
     for k in range(n):
         if pp[k]: run.append(LL[k])
         elif run:
-            if len(run)>=10: edges.append(np.array(run).round(3).tolist())
+            if len(run)>=15: edges.append(np.array(run).round(3).tolist())
             run=[]
-    if len(run)>=10: edges.append(np.array(run).round(3).tolist())
+    if len(run)>=15: edges.append(np.array(run).round(3).tolist())
 # ---- interior markings
 inner=base&(dedge>0.28*S)
 dt=ndi.distance_transform_edt(inner)

@@ -42,7 +42,7 @@ def _smooth(q, passes):
     return q
 
 
-def straighten(p, closed, eps=0.3, min_len=4.0, min_len_axis=1.5, snap_deg=4.0, blend=1.0, curve_passes=6, max_bump=5.0, max_bump_depth=0.8):
+def straighten(p, closed, eps=0.3, min_len=4.0, min_len_axis=1.5, snap_deg=4.0, blend=1.0, curve_passes=6, max_bump=5.0, max_bump_depth=0.8, extend_tol=0.2):
     p = np.asarray(p, float)
     if len(p) < 4: return p
     if closed:
@@ -61,19 +61,46 @@ def straighten(p, closed, eps=0.3, min_len=4.0, min_len_axis=1.5, snap_deg=4.0, 
         off = q[:, 0] * d[1] - q[:, 1] * d[0]
         rms = float(np.sqrt(np.mean(off ** 2)))
         # a curve cut into chords has a systematic offset: only well-fitting stretches become lines
-        if not (rms < 0.05 or (axis and length >= min_len and rms < 0.12)): continue
+        if not (rms < 0.05 or (axis and length >= min_len and rms < 0.12)):
+            if not axis: continue
+            # a ruled edge whose chord ran into the neighbouring corner arc: fit the middle, keep the part near that line
+            n = b - a + 1; lo, hi = a + n // 5, b - n // 5
+            if hi - lo < 3: continue
+            c, d = _fit_line(p[lo:hi + 1], snap_deg)
+            q = p[a:b + 1] - c; off = np.abs(q[:, 0] * d[1] - q[:, 1] * d[0])
+            k0 = k1 = (lo + hi) // 2 - a
+            while k0 > 0 and off[k0 - 1] < 0.25: k0 -= 1
+            while k1 < n - 1 and off[k1 + 1] < 0.25: k1 += 1
+            a2, b2 = a + k0, a + k1
+            if np.hypot(*(p[b2] - p[a2])) < min_len_axis or np.sqrt(np.mean(off[k0:k1 + 1] ** 2)) > 0.12: continue
+            q = p[a2:b2 + 1] - c
+            out[a2:b2 + 1] = c + np.outer(q @ d, d); fixed[a2:b2 + 1] = True
+            segs.append((a2, b2, c, d))
+            continue
         t = q @ d
         out[a:b + 1] = c + np.outer(t, d); fixed[a:b + 1] = True
         segs.append((a, b, c, d))
+    # a ruled line continues into neighbouring free points that already lie on it (tails cut off by Douglas-Peucker)
+    for a, b, c, d in list(segs):
+        if abs(d[0]) > 1e-9 and abs(d[1]) > 1e-9: continue    # only axis lines
+        for step in (1, -1):
+            k = b + 1 if step > 0 else a - 1
+            while 0 <= k < len(p) and not fixed[k]:
+                q = p[k] - c
+                if abs(q[0] * d[1] - q[1] * d[0]) > extend_tol: break
+                out[k] = c + (q @ d) * d; fixed[k] = True; k += step
     # a short bump between two stretches of the same ruled line (a post or a sign glyph on the scheme) is flattened
     for (a0, b0, c0, d0), (a1, b1, c1, d1) in zip(segs[:-1], segs[1:]):
         gap = np.hypot(*(p[a1] - p[b0]))
         if a1 <= b0 or gap > max_bump: continue
         if abs(abs(d0 @ d1) - 1) > 1e-6: continue
-        if abs((c1 - c0) @ np.array([-d0[1], d0[0]])) > 0.15: continue
+        if abs((c1 - c0) @ np.array([-d0[1], d0[0]])) > 0.25: continue
         q = p[b0:a1 + 1] - c0
         if np.abs(q[:, 0] * d0[1] - q[:, 1] * d0[0]).max() > max_bump_depth: continue   # an opening, not a bump
-        out[b0:a1 + 1] = c0 + np.outer(q @ d0, d0); fixed[b0:a1 + 1] = True
+        # one line through both stretches (no step between them), the bump between them flattened onto it
+        c, d = _fit_line(np.vstack([p[a0:b0 + 1], p[a1:b1 + 1]]), snap_deg)
+        q = p[a0:b1 + 1] - c
+        out[a0:b1 + 1] = c + np.outer(q @ d, d); fixed[a0:b1 + 1] = True
     # curves: smoothed free points, shifted so that each curve starts and ends exactly on its neighbouring lines
     sm = _smooth(p, curve_passes)
     n = len(p); i = 0
