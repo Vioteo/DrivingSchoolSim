@@ -54,9 +54,17 @@
         },
         {
             "code": "corrections",
-            "title": "Больше двух корректировок",
+            "title": "Больше двух исправлений — упражнение не выполнено",
             "advice": "Если машина идёт мимо места, остановитесь и поправьте положение вперёд-назад, но не больше двух раз.",
-            "points": 1,
+            "points": 5,
+            "ruleId": "",
+            "terminal": true
+        },
+        {
+            "code": "zone-line",
+            "title": "Выезд за линию зоны упражнения",
+            "advice": "Держите машину в полосе и в месте парковки: колёса и габарит не должны заходить за линии.",
+            "points": 3,
             "ruleId": "",
             "terminal": false
         },
@@ -127,7 +135,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": -1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Остановка",
@@ -144,7 +154,9 @@
                     "wholeVehicle": true,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
             ],
             "transfer": [
@@ -163,9 +175,12 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": -1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
-            ]
+            ],
+            "areas": []
         },
         {
             "id": "crossing",
@@ -192,7 +207,9 @@
                     "wholeVehicle": true,
                     "stopLine": 4.625,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Проезд перехода",
@@ -209,7 +226,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
             ],
             "transfer": [
@@ -228,9 +247,12 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
-            ]
+            ],
+            "areas": []
         },
         {
             "id": "boxpark",
@@ -257,7 +279,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "За стоп-линию",
@@ -274,7 +298,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Бокс задним ходом",
@@ -291,7 +317,9 @@
                     "wholeVehicle": true,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 2
+                    "maxCorrections": 2,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Выезд из бокса",
@@ -308,7 +336,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
             ],
             "transfer": [
@@ -327,7 +357,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Западное кольцо на север",
@@ -344,9 +376,12 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
-            ]
+            ],
+            "areas": []
         },
         {
             "id": "hill",
@@ -373,7 +408,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Остановка на подъёме (СТОП-1)",
@@ -390,7 +427,9 @@
                     "wholeVehicle": true,
                     "stopLine": 3.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Спуск",
@@ -407,7 +446,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Остановка у линии СТОП",
@@ -424,7 +465,9 @@
                     "wholeVehicle": true,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
             ],
             "transfer": [
@@ -443,36 +486,41 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
-            ]
+            ],
+            "areas": []
         },
         {
             "id": "junction",
             "title": "У4 · Регулируемый перекрёсток",
-            "briefing": "Остановитесь перед стоп-линией. На зелёный поверните налево (на север), уступив встречным; на красный — ждите.",
-            "startX": 0.0,
-            "startZ": 13.125,
+            "briefing": "Подъезжайте к перекрёстку. На красный остановитесь перед стоп-линией (знак 6.16 «Стоп-линия» на светофоре), на зелёный — поворачивайте налево (на север), уступив встречным.",
+            "startX": -13.25,
+            "startZ": 9.5,
             "startYaw": 90.0,
             "timeLimit": 240.0,
             "noRollback": false,
             "gates": [
                 {
-                    "instruction": "Перед стоп-линией",
-                    "x": 4.5,
+                    "instruction": "На красный — остановитесь перед стоп-линией",
+                    "x": 5.5,
                     "z": 13.125,
                     "yaw": 90.0,
                     "width": 4.5,
-                    "length": 5.599999904632568,
+                    "length": 5.0,
                     "holdSeconds": 2.0,
                     "headingTolerance": 40.0,
                     "direction": 0,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": true,
-                    "stopLine": 3.5,
+                    "wholeVehicle": false,
+                    "stopLine": 2.5,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 4.0,
+                    "trafficLight": true
                 },
                 {
                     "instruction": "Левый поворот",
@@ -489,7 +537,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": -1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
             ],
             "transfer": [
@@ -508,7 +558,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Направо по северной дороге",
@@ -525,7 +577,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Восточное кольцо на юг",
@@ -542,26 +596,16 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
-                }
-            ]
-        },
-        {
-            "id": "parallel",
-            "title": "У5 · Параллельная парковка",
-            "briefing": "Направо в полосу. Проедьте место, припаркуйтесь задним ходом, выезжайте направо (на север).",
-            "startX": 55.0,
-            "startZ": 50.0,
-            "startYaw": 180.0,
-            "timeLimit": 240.0,
-            "noRollback": false,
-            "gates": [
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
+                },
                 {
-                    "instruction": "Въезд в полосу",
-                    "x": 48.75,
+                    "instruction": "Направо в полосу парковки",
+                    "x": 50.0,
                     "z": 42.875,
                     "yaw": 270.0,
-                    "width": 5.625,
+                    "width": 7.5,
                     "length": 6.25,
                     "holdSeconds": 0.0,
                     "headingTolerance": 40.0,
@@ -571,27 +615,44 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 1,
-                    "maxCorrections": 0
-                },
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
+                }
+            ],
+            "areas": []
+        },
+        {
+            "id": "parallel",
+            "title": "У5 · Параллельная парковка",
+            "briefing": "Проедьте мимо места и остановитесь перед линией. Включите правый указатель и поставьте машину в место задним ходом: не больше двух исправлений, за линии не заезжать. Выезжайте с левым указателем.",
+            "startX": 50.375,
+            "startZ": 42.875,
+            "startYaw": 270.0,
+            "timeLimit": 240.0,
+            "noRollback": false,
+            "gates": [
                 {
-                    "instruction": "Проезд мимо места",
-                    "x": 32.5,
+                    "instruction": "Проедьте место и остановитесь перед линией",
+                    "x": 32.75,
                     "z": 42.875,
                     "yaw": 270.0,
-                    "width": 5.625,
-                    "length": 6.25,
-                    "holdSeconds": 0.0,
+                    "width": 4.875,
+                    "length": 5.0,
+                    "holdSeconds": 1.0,
                     "headingTolerance": 40.0,
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
                     "wholeVehicle": false,
-                    "stopLine": 0.0,
+                    "stopLine": 2.5,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 2.5,
+                    "trafficLight": false
                 },
                 {
-                    "instruction": "Парковка задним ходом",
+                    "instruction": "Правый указатель — задним ходом в место",
                     "x": 42.0,
                     "z": 47.1875,
                     "yaw": 270.0,
@@ -604,8 +665,10 @@
                     "minimumSpeed": 0.0,
                     "wholeVehicle": true,
                     "stopLine": 0.0,
-                    "signal": 0,
-                    "maxCorrections": 2
+                    "signal": 1,
+                    "maxCorrections": 2,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Выезд из места",
@@ -622,7 +685,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": -1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
             ],
             "transfer": [
@@ -641,7 +706,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Направо по северной дороге",
@@ -658,7 +725,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Восточное кольцо на юг",
@@ -675,7 +744,32 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
+                }
+            ],
+            "areas": [
+                {
+                    "x": 38.9375,
+                    "z": 42.9375,
+                    "yaw": 270.0,
+                    "width": 4.875,
+                    "length": 27.875
+                },
+                {
+                    "x": 42.0,
+                    "z": 47.125,
+                    "yaw": 270.0,
+                    "width": 3.75,
+                    "length": 10.75
+                },
+                {
+                    "x": 55.0,
+                    "z": 45.875,
+                    "yaw": 270.0,
+                    "width": 10.75,
+                    "length": 5.0
                 }
             ]
         },
@@ -704,7 +798,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Изгиб",
@@ -721,7 +817,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Выезд",
@@ -738,7 +836,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
             ],
             "transfer": [
@@ -757,7 +857,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Прямо через перекрёсток",
@@ -774,7 +876,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Налево на полосу разгона",
@@ -791,9 +895,12 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": -1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
-            ]
+            ],
+            "areas": []
         },
         {
             "id": "shiftbrake",
@@ -820,7 +927,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Торможение",
@@ -837,7 +946,9 @@
                     "wholeVehicle": true,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
             ],
             "transfer": [
@@ -856,9 +967,12 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
-            ]
+            ],
+            "areas": []
         },
         {
             "id": "railway",
@@ -885,7 +999,9 @@
                     "wholeVehicle": true,
                     "stopLine": 3.625,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Переезд",
@@ -902,7 +1018,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
             ],
             "transfer": [
@@ -921,7 +1039,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Южная дорога на восток",
@@ -938,7 +1058,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Налево на север",
@@ -955,7 +1077,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": -1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Налево на запад",
@@ -972,9 +1096,12 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": -1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
-            ]
+            ],
+            "areas": []
         },
         {
             "id": "90turns",
@@ -1001,7 +1128,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Первый поворот",
@@ -1018,7 +1147,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Второй поворот",
@@ -1035,7 +1166,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
             ],
             "transfer": [
@@ -1054,7 +1187,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Направо на юг",
@@ -1071,7 +1206,9 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 1,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 },
                 {
                     "instruction": "Прямо через перекрёсток",
@@ -1088,9 +1225,12 @@
                     "wholeVehicle": false,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
-            ]
+            ],
+            "areas": []
         },
         {
             "id": "finish",
@@ -1117,10 +1257,13 @@
                     "wholeVehicle": true,
                     "stopLine": 0.0,
                     "signal": 0,
-                    "maxCorrections": 0
+                    "maxCorrections": 0,
+                    "stopZone": 0.0,
+                    "trafficLight": false
                 }
             ],
-            "transfer": []
+            "transfer": [],
+            "areas": []
         }
     ]
 }
