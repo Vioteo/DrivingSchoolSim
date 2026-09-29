@@ -10,6 +10,97 @@
     "failPenalty": 5,
     "vehicleWidth": 2.25,
     "vehicleLength": 4.5,
+    "stopLineTolerance": 0.30000001192092898,
+    "penalties": [
+        {
+            "code": "contact",
+            "title": "Касание конуса или ограждения",
+            "advice": "Проезжайте упражнение медленнее и чаще смотрите в зеркала: габарит машины должен оставаться внутри коридора.",
+            "points": 3,
+            "ruleId": "",
+            "terminal": false
+        },
+        {
+            "code": "stop-line",
+            "title": "Остановка за стоп-линией",
+            "advice": "Тормозите заранее: передний бампер не должен заходить за стоп-линию, на пешеходный переход или к путям.",
+            "points": 3,
+            "ruleId": "",
+            "terminal": false
+        },
+        {
+            "code": "no-signal",
+            "title": "Не включён указатель поворота",
+            "advice": "Перед поворотом в коридор, началом движения и выездом с места стоянки включайте указатель заранее.",
+            "points": 1,
+            "ruleId": "",
+            "terminal": false
+        },
+        {
+            "code": "stall",
+            "title": "Двигатель заглох",
+            "advice": "Трогайтесь плавно: отпускайте сцепление до лёгкой вибрации и добавляйте газ; перед остановкой выжимайте сцепление.",
+            "points": 1,
+            "ruleId": "",
+            "terminal": false
+        },
+        {
+            "code": "speed",
+            "title": "Превышение скорости на площадке",
+            "advice": "На площадке скорость не выше 30 км/ч. Упражнения выполняйте на минимальной скорости.",
+            "points": 1,
+            "ruleId": "",
+            "terminal": false
+        },
+        {
+            "code": "corrections",
+            "title": "Больше двух корректировок",
+            "advice": "Если машина идёт мимо места, остановитесь и поправьте положение вперёд-назад, но не больше двух раз.",
+            "points": 1,
+            "ruleId": "",
+            "terminal": false
+        },
+        {
+            "code": "seatbelt",
+            "title": "Движение без ремня безопасности",
+            "advice": "Пристегнитесь до начала движения.",
+            "points": 3,
+            "ruleId": "PDD_2.1.2_SEATBELT",
+            "terminal": false
+        },
+        {
+            "code": "red-light",
+            "title": "Проезд на запрещающий сигнал светофора",
+            "advice": "На красный остановитесь перед стоп-линией и ждите зелёного.",
+            "points": 5,
+            "ruleId": "PDD_6.2_RED_LIGHT",
+            "terminal": false
+        },
+        {
+            "code": "rollback",
+            "title": "Откат на эстакаде больше 0,3 м",
+            "advice": "Держите машину на ручнике или тормозе, пока сцепление не «схватит», и только потом отпускайте.",
+            "points": 5,
+            "ruleId": "",
+            "terminal": true
+        },
+        {
+            "code": "timeout",
+            "title": "Время на упражнение вышло",
+            "advice": "Не задерживайтесь: подготовьте машину и выполняйте упражнение без долгих остановок.",
+            "points": 5,
+            "ruleId": "",
+            "terminal": true
+        },
+        {
+            "code": "boundary",
+            "title": "Выезд за границу площадки",
+            "advice": "Держитесь дорог автодрома.",
+            "points": 5,
+            "ruleId": "",
+            "terminal": true
+        }
+    ],
     "lessons": [
         {
             "id": "start",
@@ -19,6 +110,7 @@
             "startZ": -47.875,
             "startYaw": 0.0,
             "timeLimit": 240.0,
+            "noRollback": false,
             "gates": [
                 {
                     "instruction": "Начало движения",
@@ -32,7 +124,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": -1,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Остановка",
@@ -46,7 +141,10 @@
                     "direction": 0,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": true
+                    "wholeVehicle": true,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ],
             "transfer": [
@@ -62,7 +160,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": -1,
+                    "maxCorrections": 0
                 }
             ]
         },
@@ -74,6 +175,7 @@
             "startZ": -38.125,
             "startYaw": 270.0,
             "timeLimit": 240.0,
+            "noRollback": false,
             "gates": [
                 {
                     "instruction": "Остановка перед переходом",
@@ -87,7 +189,10 @@
                     "direction": 0,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": true
+                    "wholeVehicle": true,
+                    "stopLine": 4.625,
+                    "signal": 0,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Проезд перехода",
@@ -101,7 +206,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ],
             "transfer": [
@@ -117,7 +225,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ]
         },
@@ -129,6 +240,7 @@
             "startZ": -38.125,
             "startYaw": 270.0,
             "timeLimit": 240.0,
+            "noRollback": false,
             "gates": [
                 {
                     "instruction": "Въезд в коридор",
@@ -142,7 +254,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 1,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "За стоп-линию",
@@ -156,7 +271,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Бокс задним ходом",
@@ -170,7 +288,10 @@
                     "direction": -1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": true
+                    "wholeVehicle": true,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 2
                 },
                 {
                     "instruction": "Выезд из бокса",
@@ -184,7 +305,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 1,
+                    "maxCorrections": 0
                 }
             ],
             "transfer": [
@@ -200,7 +324,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 1,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Западное кольцо на север",
@@ -214,7 +341,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ]
         },
@@ -226,6 +356,7 @@
             "startZ": 9.5,
             "startYaw": 90.0,
             "timeLimit": 240.0,
+            "noRollback": false,
             "gates": [
                 {
                     "instruction": "Подъезд к эстакаде",
@@ -239,11 +370,14 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 1,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Остановка на подъёме (СТОП-1)",
-                    "x": -32.0,
+                    "x": -32.5,
                     "z": 9.5,
                     "yaw": 90.0,
                     "width": 3.5999999046325685,
@@ -253,7 +387,10 @@
                     "direction": 0,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": true
+                    "wholeVehicle": true,
+                    "stopLine": 3.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Спуск",
@@ -267,7 +404,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Остановка у линии СТОП",
@@ -281,7 +421,10 @@
                     "direction": 0,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": true
+                    "wholeVehicle": true,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ],
             "transfer": [
@@ -297,18 +440,22 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ]
         },
         {
             "id": "junction",
             "title": "У8 · Регулируемый перекрёсток",
-            "briefing": "Остановитесь перед стоп-линией, затем поверните налево (на север). Фазы светофора пока не оцениваются.",
+            "briefing": "Остановитесь перед стоп-линией. На зелёный поверните налево (на север), уступив встречным; на красный — ждите.",
             "startX": 0.0,
             "startZ": 13.125,
             "startYaw": 90.0,
             "timeLimit": 240.0,
+            "noRollback": false,
             "gates": [
                 {
                     "instruction": "Перед стоп-линией",
@@ -322,7 +469,10 @@
                     "direction": 0,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": true
+                    "wholeVehicle": true,
+                    "stopLine": 3.5,
+                    "signal": 0,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Левый поворот",
@@ -336,7 +486,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": -1,
+                    "maxCorrections": 0
                 }
             ],
             "transfer": [
@@ -352,7 +505,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Направо по северной дороге",
@@ -366,7 +522,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 1,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Восточное кольцо на юг",
@@ -380,7 +539,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ]
         },
@@ -392,6 +554,7 @@
             "startZ": 50.0,
             "startYaw": 180.0,
             "timeLimit": 240.0,
+            "noRollback": false,
             "gates": [
                 {
                     "instruction": "Въезд в полосу",
@@ -405,7 +568,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 1,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Проезд мимо места",
@@ -419,7 +585,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Парковка задним ходом",
@@ -433,7 +602,10 @@
                     "direction": -1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": true
+                    "wholeVehicle": true,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 2
                 },
                 {
                     "instruction": "Выезд из места",
@@ -447,7 +619,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": -1,
+                    "maxCorrections": 0
                 }
             ],
             "transfer": [
@@ -463,7 +638,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 1,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Направо по северной дороге",
@@ -477,7 +655,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 1,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Восточное кольцо на юг",
@@ -491,7 +672,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ]
         },
@@ -503,6 +687,7 @@
             "startZ": 17.5,
             "startYaw": 180.0,
             "timeLimit": 240.0,
+            "noRollback": false,
             "gates": [
                 {
                     "instruction": "Въезд в змейку",
@@ -516,7 +701,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 1,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Изгиб",
@@ -530,7 +718,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Выезд",
@@ -544,7 +735,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ],
             "transfer": [
@@ -560,7 +754,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 1,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Прямо через перекрёсток",
@@ -574,7 +771,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Налево на полосу разгона",
@@ -588,7 +788,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": -1,
+                    "maxCorrections": 0
                 }
             ]
         },
@@ -600,6 +803,7 @@
             "startZ": 58.75,
             "startYaw": 270.0,
             "timeLimit": 240.0,
+            "noRollback": false,
             "gates": [
                 {
                     "instruction": "Вторая передача",
@@ -613,7 +817,10 @@
                     "direction": 1,
                     "minimumGear": 2,
                     "minimumSpeed": 5.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Торможение",
@@ -627,7 +834,10 @@
                     "direction": 0,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": true
+                    "wholeVehicle": true,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ],
             "transfer": [
@@ -643,7 +853,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ]
         },
@@ -655,6 +868,7 @@
             "startZ": 51.25,
             "startYaw": 180.0,
             "timeLimit": 240.0,
+            "noRollback": false,
             "gates": [
                 {
                     "instruction": "Остановка перед путями",
@@ -668,7 +882,10 @@
                     "direction": 0,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": true
+                    "wholeVehicle": true,
+                    "stopLine": 3.625,
+                    "signal": 0,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Переезд",
@@ -682,7 +899,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ],
             "transfer": [
@@ -698,7 +918,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Южная дорога на восток",
@@ -712,7 +935,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Налево на север",
@@ -726,7 +952,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": -1,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Налево на запад",
@@ -740,7 +969,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": -1,
+                    "maxCorrections": 0
                 }
             ]
         },
@@ -752,6 +984,7 @@
             "startZ": 16.875,
             "startYaw": 270.0,
             "timeLimit": 240.0,
+            "noRollback": false,
             "gates": [
                 {
                     "instruction": "Въезд в коридор",
@@ -765,7 +998,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 1,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Первый поворот",
@@ -779,7 +1015,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Второй поворот",
@@ -793,7 +1032,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ],
             "transfer": [
@@ -809,7 +1051,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 1,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Направо на юг",
@@ -823,7 +1068,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 1,
+                    "maxCorrections": 0
                 },
                 {
                     "instruction": "Прямо через перекрёсток",
@@ -837,7 +1085,10 @@
                     "direction": 1,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": false
+                    "wholeVehicle": false,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ]
         },
@@ -849,6 +1100,7 @@
             "startZ": -31.25,
             "startYaw": 180.0,
             "timeLimit": 240.0,
+            "noRollback": false,
             "gates": [
                 {
                     "instruction": "Финиш",
@@ -862,7 +1114,10 @@
                     "direction": 0,
                     "minimumGear": 0,
                     "minimumSpeed": 0.0,
-                    "wholeVehicle": true
+                    "wholeVehicle": true,
+                    "stopLine": 0.0,
+                    "signal": 0,
+                    "maxCorrections": 0
                 }
             ],
             "transfer": []
