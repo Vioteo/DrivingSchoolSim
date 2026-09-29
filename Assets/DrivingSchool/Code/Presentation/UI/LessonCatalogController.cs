@@ -141,7 +141,7 @@ namespace DrivingSchool.Presentation.UI
         {
             var e = exercises[ExerciseIndex];
             title.text = e.title;
-            mode.text = $"ПЛОЩАДКА · УПРАЖНЕНИЕ {ExerciseIndex + 1} ИЗ {exercises.Length} · Q / E — ДРУГОЕ";
+            mode.text = $"УПРАЖНЕНИЯ НА ПЛОЩАДКЕ · {ExerciseIndex + 1} / {exercises.Length} · Q / E — ДРУГОЕ";
             description.text = (string.IsNullOrEmpty(e.briefing) ? "" : e.briefing + "\n\n") +
                                "Машина стоит у упражнения с заглушённым двигателем. Подсказки ведут по шагам: подготовка, въезд, манёвр, выезд. " +
                                "Ошибки — игровые баллы: с 5 баллов упражнение не зачтено.";

@@ -211,7 +211,8 @@ namespace DrivingSchool.Presentation
         {
             var s = autodrome.Session;
             string points = $"БАЛЛЫ {s.Penalty} ИЗ {s.Course.failPenalty}";
-            if (s.Exam) return lessonIntroLeft > 0f ? "ЭКЗАМЕН НА ПЛОЩАДКЕ" : $"ЭКЗАМЕН · {s.LessonIndex + 1} / {s.Course.lessons.Length} · {points}";
+            // Номер упражнения — в его названии (У1…У9 по порядку маршрута), а не порядковый индекс со стартом и финишем.
+            if (s.Exam) return lessonIntroLeft > 0f ? "ЭКЗАМЕН НА ПЛОЩАДКЕ" : $"ЭКЗАМЕН · {s.Lesson.title.ToUpperInvariant()} · {points}";
             string title = s.Lesson.title.ToUpperInvariant();
             if (lessonIntroLeft > 0f || lesson == null) return title;
             return title + " · " + lesson.Progress + " · " + points;
