@@ -1,4 +1,4 @@
-# Железнодорожный переезд (У9), набор моделей v2
+# Железнодорожный переезд (У8 автодрома, на схеме У9), набор моделей v2
 
 Генератор: `tools/build_railway_assets.py` (Blender 5).
 Исходник: `ArtSource/DS_RailwayKit.blend`. Отчёт: `artifacts/reports/railway-manifest.json`.
