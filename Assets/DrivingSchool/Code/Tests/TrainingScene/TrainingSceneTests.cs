@@ -48,6 +48,7 @@ namespace DrivingSchool.Tests
             // Тесты часто идут в несфокусированном редакторе (MCP, фон): без этого Play Mode почти не тикает.
             // Ставим уже в Play Mode: вход перезагружает домен, а настройка проекта не должна меняться.
             runInBackground=Application.runInBackground; Application.runInBackground=true;
+            Time.timeScale=1f;   // упавший раньше тест меню мог оставить паузу (timeScale 0) — тогда стартер «не крутит»
             keyboard=InputSystem.AddDevice<Keyboard>();
             yield return null;
             var director=Object.FindFirstObjectByType<TrainingGroundDirector>();
