@@ -302,7 +302,7 @@
     },
     {
       "id": "ex-crossing",
-      "title": "У2 · Пешеходный переход",
+      "title": "У1 · Пешеходный переход",
       "scene": "Autodrome_Training",
       "courseLesson": "crossing",
       "briefing": "Остановка перед переходом и проезд.",
@@ -358,7 +358,7 @@
     },
     {
       "id": "ex-boxpark",
-      "title": "У6 · Въезд в бокс",
+      "title": "У2 · Въезд в бокс",
       "scene": "Autodrome_Training",
       "courseLesson": "boxpark",
       "briefing": "Въезд в бокс задним ходом и выезд.",
@@ -545,7 +545,7 @@
     },
     {
       "id": "ex-junction",
-      "title": "У8 · Регулируемый перекрёсток",
+      "title": "У4 · Регулируемый перекрёсток",
       "scene": "Autodrome_Training",
       "courseLesson": "junction",
       "briefing": "Остановка у стоп-линии и левый поворот.",
@@ -609,7 +609,7 @@
     },
     {
       "id": "ex-parallel",
-      "title": "У7 · Параллельная парковка",
+      "title": "У5 · Параллельная парковка",
       "scene": "Autodrome_Training",
       "courseLesson": "parallel",
       "briefing": "Парковка задним ходом параллельно краю.",
@@ -700,7 +700,7 @@
     },
     {
       "id": "ex-slalom",
-      "title": "У5 · Змейка",
+      "title": "У6 · Змейка",
       "scene": "Autodrome_Training",
       "courseLesson": "slalom",
       "briefing": "Проезд змейки без касания конусов.",
@@ -769,7 +769,7 @@
     },
     {
       "id": "ex-shiftbrake",
-      "title": "У10 · Полоса разгона",
+      "title": "У7 · Полоса разгона",
       "scene": "Autodrome_Training",
       "courseLesson": "shiftbrake",
       "briefing": "Разгон, вторая передача, остановка в рамке.",
@@ -848,7 +848,7 @@
     },
     {
       "id": "ex-railway",
-      "title": "У9 · Железнодорожный переезд",
+      "title": "У8 · Железнодорожный переезд",
       "scene": "Autodrome_Training",
       "courseLesson": "railway",
       "briefing": "Остановка перед путями и проезд переезда.",
@@ -904,7 +904,7 @@
     },
     {
       "id": "ex-90turns",
-      "title": "У4 · Повороты на 90°",
+      "title": "У9 · Повороты на 90°",
       "scene": "Autodrome_Training",
       "courseLesson": "90turns",
       "briefing": "Проезд двух поворотов в узком коридоре.",
