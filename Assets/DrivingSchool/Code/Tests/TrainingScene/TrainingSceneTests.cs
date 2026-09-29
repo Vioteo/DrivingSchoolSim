@@ -57,6 +57,8 @@ namespace DrivingSchool.Tests
             vehicle.Adapter.SetTransmission(TransmissionType.Automatic);
             director.Begin(0,false);
             vehicle.Keyboard.KeyboardDevice=keyboard;
+            // Тест клавиатурный: если в настройках выбран руль G29 (T42), его педали перекрыли бы клавиши — снимаем.
+            vehicle.Keyboard.Overlay=null;
 
             yield return Tap(Key.I);                             // зажигание
             yield return Hold(1.5f,Key.Enter,Key.S);             // стартер в P, нога на тормозе

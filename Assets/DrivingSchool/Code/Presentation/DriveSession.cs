@@ -245,7 +245,7 @@ namespace DrivingSchool.Presentation
             bool passed = s.Phase == CoursePhase.Passed, failed = s.Phase == CoursePhase.Failed;
             m.title = s.Exam ? "Экзамен на площадке" : s.Lesson.title;
             m.subtitle = passed ? (s.Exam ? "Сдано" : "Упражнение выполнено")
-                       : failed ? (s.Exam ? "Не сдано" : "Упражнение не выполнено") + " — " + s.Message
+                       : failed ? (s.Exam ? "Не сдано" : "Упражнение не выполнено") + " — " + (s.Faults.Count > 0 ? s.Faults[s.Faults.Count - 1].title : s.Message)
                        : "Прервано";
             m.subtitle += " · баллы игровые, не методика ГИБДД (T37)";
             m.summary.Add(("Результат", passed ? "зачёт" : failed ? "незачёт" : "прервано"));
