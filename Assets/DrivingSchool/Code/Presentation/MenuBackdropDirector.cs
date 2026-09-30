@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 namespace DrivingSchool.Presentation
 {
     /// <summary>
-    /// Живой фон главного меню (T46). При каждом входе в меню выбирается случайная сцена из списка
-    /// (шоурум с седаном, ж/д переезд с поездами, автодром), грузится аддитивно и «обезвреживается»
-    /// до первого Start: игрок, директоры, их камеры и горячие клавиши выключаются. Снимает её камера меню,
-    /// медленно облетая точку интереса. Сцены-источники не меняются — фон всегда совпадает с актуальной сценой.
+    /// Живой фон главного меню (T46). При каждом входе в меню выбирается случайная сцена из списка, грузится аддитивно
+    /// и «обезвреживается» до первого Start: игрок, директоры, их камеры и горячие клавиши выключаются. Снимает её камера
+    /// меню, медленно облетая точку интереса.
+    /// T70: фоны — отдельные лёгкие сцены MenuBackdrop_* (генератор Driving School/Build menu backdrops собирает их из
+    /// сцен поездки: только нужный кусок мира, без машин игрока, физики и директоров); в гараже — машина из профиля
+    /// (<see cref="MenuBackdropCars"/>). Пока фон грузится, показан экран загрузки с прогрессом.
     /// </summary>
     public sealed class MenuBackdropDirector : MonoBehaviour
     {
@@ -26,6 +28,8 @@ namespace DrivingSchool.Presentation
             public float swayPeriod = 40f;
             [Tooltip("На сколько градусов сместить объект вправо в кадре — слева меню")] public float subjectRightDeg = 10f;
             [Tooltip(">0: переезд вызывает поезд с этим интервалом, первый — почти сразу")] public float trainIntervalSeconds;
+            [Tooltip("T70: однотонный фон вместо неба (студия гаража)")] public bool solidBackground;
+            public Color backgroundColor = new Color(0.06f, 0.07f, 0.08f);
         }
 
         public Backdrop[] backdrops = new Backdrop[0];
@@ -33,6 +37,8 @@ namespace DrivingSchool.Presentation
         [Tooltip("Затемнение под меню; гаснет, когда фон готов")] public CanvasGroup curtain;
         public float fadeSeconds = 1.5f;
         [Tooltip("-1 — случайно; иначе номер фона (для отладки)")] public int forceIndex = -1;
+        [Tooltip("T70: экран загрузки, пока грузится фон")] public DrivingSchool.Presentation.UI.LoadingScreen loading;
+        [Tooltip("Фон не загрузился за это время — экран загрузки всё равно гаснет, с")] public float loadTimeoutSeconds = 15f;
 
         // Компоненты, которые в фоне не должны работать (управление, OnGUI-подсказки, горячие клавиши, выход из игры).
         static readonly string[] DisabledBehaviours = { "VehicleTestRangeDirector", "TrainingGroundDirector", "ModelDemonstrator", "DriverCameraRig" };
@@ -43,7 +49,8 @@ namespace DrivingSchool.Presentation
 
         public Backdrop Current { get; private set; }
         public bool IsReady { get; private set; }
-        float readyAt, firstTrainAt = -1f;
+        float readyAt, firstTrainAt = -1f, startedAt;
+        AsyncOperation op;
         RailwayCrossingView crossing;
 
         /// <summary>Случайный номер фона, не совпадающий с предыдущим (если фонов больше одного).</summary>
@@ -59,17 +66,20 @@ namespace DrivingSchool.Presentation
         void Start()
         {
             if (curtain != null) curtain.alpha = 1f;
+            startedAt = Time.unscaledTime;
             int index = forceIndex >= 0 && forceIndex < backdrops.Length ? forceIndex : Pick(backdrops.Length, lastIndex, new System.Random());
-            if (index < 0) return;
+            if (index < 0) { if (loading != null) loading.Hide(); return; }
             if (!Application.CanStreamedLevelBeLoaded(backdrops[index].sceneName))
             {
                 Debug.LogWarning($"[MenuBackdrop] сцены «{backdrops[index].sceneName}» нет в Build Settings — фон не загружен");
+                if (loading != null) loading.Hide();
                 return;
             }
             lastIndex = index;
             Current = backdrops[index];
+            if (loading != null) loading.Show("Загрузка…");
             SceneManager.sceneLoaded += OnSceneLoaded;
-            SceneManager.LoadSceneAsync(Current.sceneName, LoadSceneMode.Additive);
+            op = SceneManager.LoadSceneAsync(Current.sceneName, LoadSceneMode.Additive);
             Debug.Log($"[MenuBackdrop] {Current.title} ({Current.sceneName})");
         }
 
@@ -84,7 +94,8 @@ namespace DrivingSchool.Presentation
 
             if (view != null)
             {
-                view.clearFlags = CameraClearFlags.Skybox;
+                view.clearFlags = Current.solidBackground ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
+                view.backgroundColor = Current.backgroundColor;
                 view.fieldOfView = Current.fieldOfView;
                 view.nearClipPlane = 0.1f;
                 view.farClipPlane = 2000f;
@@ -98,6 +109,8 @@ namespace DrivingSchool.Presentation
             }
             IsReady = true;
             readyAt = Time.unscaledTime;
+            if (loading != null) loading.Hide();
+            Debug.Log($"[MenuBackdrop] фон готов за {readyAt - startedAt:0.00} с");
         }
 
         void Strip(Scene scene)
@@ -125,7 +138,15 @@ namespace DrivingSchool.Presentation
 
         void Update()
         {
-            if (!IsReady) return;
+            if (!IsReady)
+            {
+                if (loading != null && loading.Showing)
+                {
+                    if (op != null) loading.SetProgress(op.progress / 0.9f);
+                    if (Time.unscaledTime - startedAt > loadTimeoutSeconds) { Debug.LogWarning("[MenuBackdrop] фон грузится слишком долго — меню без фона"); loading.Hide(); }
+                }
+                return;
+            }
             float t = Time.unscaledTime - readyAt;
             if (curtain != null) curtain.alpha = fadeSeconds > 0f ? Mathf.Clamp01(1f - t / fadeSeconds) : 0f;
             if (view != null) PlaceCamera(t);

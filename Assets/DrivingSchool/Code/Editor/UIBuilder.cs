@@ -606,7 +606,10 @@ namespace DrivingSchool.Editor
             return AssetDatabase.LoadAssetAtPath<Sprite>(MenuScrimPath);
         }
 
-        /// <summary>Фоны меню (T46): сцены-источники и облёт камеры. Координаты — из генераторов этих сцен.</summary>
+        /// <summary>
+        /// Фоны меню (T46): сцены и облёт камеры. T70: сцены — лёгкие MenuBackdrop_* (<see cref="MenuBackdropBuilder"/>),
+        /// координаты — из генераторов сцен поездки, из которых они вырезаны; гараж — машина из профиля ученика.
+        /// </summary>
         public static DrivingSchool.Presentation.MenuBackdropDirector.Backdrop[] MenuBackdrops()
         {
             float rx = VehicleTestRangeBuilder.RoadCX, rz = VehicleTestRangeBuilder.RailZ;
@@ -614,21 +617,48 @@ namespace DrivingSchool.Editor
             {
                 new DrivingSchool.Presentation.MenuBackdropDirector.Backdrop
                 {
-                    title = "Шоурум: седан", sceneName = "Showroom", pivot = new Vector3(0f, 0.65f, 0f),
+                    title = "Гараж: выбранная машина", sceneName = MenuBackdropBuilder.GarageScene, pivot = new Vector3(0f, 0.65f, 0f),
                     radius = 6.5f, height = 1.0f, fieldOfView = 40f, startYaw = 140f, orbitDegPerSec = 5f, subjectRightDeg = 12f,
+                    solidBackground = true, backgroundColor = MenuBackdropBuilder.GarageBackground,
                 },
                 new DrivingSchool.Presentation.MenuBackdropDirector.Backdrop
                 {
-                    title = "Ж/д переезд", sceneName = Path.GetFileNameWithoutExtension(DriveScenePath), pivot = new Vector3(rx, 2f, rz),
+                    title = "Ж/д переезд", sceneName = MenuBackdropBuilder.RailwayScene, pivot = new Vector3(rx, 2f, rz),
                     radius = 24f, height = 3f, fieldOfView = 50f, startYaw = -40f, swayDeg = 10f, swayPeriod = 60f, subjectRightDeg = 16f,
                     trainIntervalSeconds = 40f,
                 },
                 new DrivingSchool.Presentation.MenuBackdropDirector.Backdrop
                 {
-                    title = "Автодром", sceneName = "Autodrome_Training", pivot = new Vector3(-10f, 0f, -15f),
+                    title = "Автодром", sceneName = MenuBackdropBuilder.AutodromeScene, pivot = new Vector3(-10f, 0f, -15f),
                     radius = 70f, height = 55f, fieldOfView = 50f, startYaw = 30f, orbitDegPerSec = 1.5f, subjectRightDeg = 8f,
                 },
             };
+        }
+
+        /// <summary>Экран загрузки (T70): поверх всего, пока грузится фон меню или сцена задания.</summary>
+        static DrivingSchool.Presentation.UI.LoadingScreen BuildLoadingScreen(UITheme theme)
+        {
+            var canvas = CreateCanvas("LoadingScreen");
+            canvas.GetComponent<Canvas>().sortingOrder = 100;
+            var screen = canvas.AddComponent<DrivingSchool.Presentation.UI.LoadingScreen>();
+            screen.group = canvas.AddComponent<CanvasGroup>();
+            var bg = CreateFill("Background", canvas.transform);
+            AddThemedImage(bg.gameObject, ThemeRole.BgDark, theme);
+            var title = CreateFixed("Title", bg, new Vector2(0, 1), new Vector2(1200, 90), new Vector2(96, -110), new Vector2(0, 1));
+            AddThemedText(title.gameObject, "DrivingSchoolSim", 72, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Bold);
+            var subtitle = CreateFixed("Subtitle", bg, new Vector2(0, 1), new Vector2(1200, 40), new Vector2(96, -204), new Vector2(0, 1));
+            AddThemedText(subtitle.gameObject, "Подготовка к практическому экзамену · категория B", 26, ThemeRole.Muted, theme, TextAlignmentOptions.Left);
+            var status = CreateFixed("Status", bg, new Vector2(0, 0), new Vector2(1200, 50), new Vector2(96, 196), new Vector2(0, 0));
+            screen.status = AddThemedText(status.gameObject, "Загрузка…", 32, ThemeRole.Text, theme, TextAlignmentOptions.Left, FontWeight.Medium);
+            var track = CreateFixed("Bar", bg, new Vector2(0, 0), new Vector2(1728, 8), new Vector2(96, 172), new Vector2(0, 0));
+            AddThemedImage(track.gameObject, ThemeRole.Line, theme).raycastTarget = false;
+            var fill = CreateFill("Fill", track);
+            fill.anchorMax = new Vector2(0f, 1f);
+            AddThemedImage(fill.gameObject, ThemeRole.Accent, theme).raycastTarget = false;
+            screen.bar = fill;
+            var tip = CreateFixed("Tip", bg, new Vector2(0, 0), new Vector2(1728, 80), new Vector2(96, 72), new Vector2(0, 0));
+            screen.tip = AddThemedText(tip.gameObject, "", 24, ThemeRole.Muted, theme, TextAlignmentOptions.TopLeft);
+            return screen;
         }
 
         // ==========================================
@@ -676,8 +706,10 @@ namespace DrivingSchool.Editor
             backdrop.view = cam;
             backdrop.curtain = curtain;
             backdrop.backdrops = MenuBackdrops();
+            var loadingScreen = BuildLoadingScreen(theme);   // T70: закрывает меню, пока грузится фон, и при запуске задания
+            backdrop.loading = loadingScreen;
 
-            // Поверх меню: уведомление «в разработке» и затемнение «Загрузка…».
+            // Поверх меню: уведомление «в разработке» (загрузка — экран загрузки выше).
             var overlayCanvas = CreateCanvas("MenuOverlay");
             overlayCanvas.GetComponent<Canvas>().sortingOrder = 50;
             var notice = CreateFixed("Notice", overlayCanvas.transform, new Vector2(0, 0), new Vector2(1100, 64), new Vector2(96, 120), new Vector2(0, 0));
@@ -687,10 +719,6 @@ namespace DrivingSchool.Editor
             noticeTmp.raycastTarget = false;
             notice.GetComponent<Image>().raycastTarget = false;
 
-            var loading = CreateFill("Loading", overlayCanvas.transform);
-            AddThemedImage(loading.gameObject, ThemeRole.BgDark, theme);
-            var loadingText = CreateFixed("Text", loading, new Vector2(0.5f, 0.5f), new Vector2(900, 80), Vector2.zero);
-            AddThemedText(loadingText.gameObject, "Загрузка задания…", 40, ThemeRole.Text, theme, TextAlignmentOptions.Center, FontWeight.Medium);
 
             var settingsPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(SettingsPrefabPath);
             var settingsGo = settingsPrefab != null ? (GameObject)PrefabUtility.InstantiatePrefab(settingsPrefab, scene) : null;
@@ -713,10 +741,9 @@ namespace DrivingSchool.Editor
             }
             flow.pauseMenuPrefab = pausePrefab;
             flow.driveScene = Path.GetFileNameWithoutExtension(DriveScenePath);
-            flow.loadingOverlay = loading.gameObject;
+            flow.loading = loadingScreen;
             flow.notice = noticeTmp;
             flow.noticePanel = notice.gameObject;
-            loading.gameObject.SetActive(false);
             notice.gameObject.SetActive(false);
 
             UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene, MenuScenePath);

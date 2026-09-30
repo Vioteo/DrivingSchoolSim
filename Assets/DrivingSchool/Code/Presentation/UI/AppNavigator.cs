@@ -26,6 +26,8 @@ namespace DrivingSchool.Presentation.UI
         }
 
         public static void StartDrive(string sceneName) { ResetTime(); Debug.Log($"[App] drive: {sceneName}"); SceneManager.LoadScene(sceneName); }
+        /// <summary>T70: то же, асинхронно — для экрана загрузки с прогрессом.</summary>
+        public static AsyncOperation StartDriveAsync(string sceneName) { ResetTime(); Debug.Log($"[App] drive (async): {sceneName}"); return SceneManager.LoadSceneAsync(sceneName); }
         public static void RestartDrive() { StartDrive(SceneManager.GetActiveScene().name); }
         public static void ToMainMenu() { ResetTime(); Debug.Log("[App] main menu"); SceneManager.LoadScene(MainMenuScene); }
 

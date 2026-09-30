@@ -17,13 +17,14 @@ namespace DrivingSchool.Presentation.UI
         public GameObject hudPrefab;
         [Tooltip("Экран настроек в сцене меню")] public SettingsScreenController settings;
         [Tooltip("Имя сцены из Build Settings")] public string driveScene = "VehicleTestRange";
-        public GameObject loadingOverlay;
+        [Tooltip("Старое затемнение «Загрузка…» (до T70); если есть экран загрузки — не нужно")] public GameObject loadingOverlay;
+        [Tooltip("T70: экран загрузки — фон меню при входе и сцена задания при запуске")] public LoadingScreen loading;
         public GameObject noticePanel;
         public TMP_Text notice;
         public float noticeSeconds = 3f;
 
         float noticeUntil;
-        bool loading;
+        bool launching;
         string sceneToLoad;
 
         void Awake()
@@ -56,12 +57,14 @@ namespace DrivingSchool.Presentation.UI
 
         void Update()
         {
+            // Пока экран загрузки закрывает меню (грузится фон), клавиши меню не срабатывают.
+            if (menu != null && !launching && loading != null) menu.enabled = !loading.Showing;
             if (noticePanel != null && noticePanel.activeSelf && Time.unscaledTime > noticeUntil) noticePanel.SetActive(false);
         }
 
         public void OpenAssignments()
         {
-            if (loading) return;
+            if (launching) return;
             if (catalog == null) { ShowNotice("Задания пока недоступны."); return; }
             menu.gameObject.SetActive(false);
             catalog.Open(() => { menu.gameObject.SetActive(true); menu.Select(menu.lessonsButton); });
@@ -69,7 +72,7 @@ namespace DrivingSchool.Presentation.UI
 
         public void OpenGarage()
         {
-            if (loading) return;
+            if (launching) return;
             if (garage == null) { ShowNotice("Экран «Автомобиль» не собран — Driving School/Build UI Prefabs"); return; }
             menu.gameObject.SetActive(false);
             garage.Open(() => { menu.gameObject.SetActive(true); menu.Select(menu.garageButton); });
@@ -89,13 +92,14 @@ namespace DrivingSchool.Presentation.UI
 
         void Launch(string lessonId, string scene)
         {
-            if (loading) return;
+            if (launching) return;
             if (!Application.CanStreamedLevelBeLoaded(scene)) { ShowNotice("Задание пока недоступно. Выберите другое задание."); return; }
             LessonLaunch.LessonId = lessonId;
             sceneToLoad = scene;
-            loading = true;
+            launching = true;
             if (catalog != null) catalog.gameObject.SetActive(false);
-            if (loadingOverlay != null) loadingOverlay.SetActive(true);
+            if (loading != null) loading.Show("Загрузка задания…");
+            else if (loadingOverlay != null) loadingOverlay.SetActive(true);
             if (menu != null) menu.enabled = false; // клавиши меню не срабатывают во время загрузки
             StartCoroutine(LoadNextFrame());
         }
@@ -103,7 +107,10 @@ namespace DrivingSchool.Presentation.UI
         IEnumerator LoadNextFrame()
         {
             yield return null; // дать кадр на отрисовку «Загрузка…»
-            AppNavigator.StartDrive(sceneToLoad);
+            if (loading == null) { AppNavigator.StartDrive(sceneToLoad); yield break; }
+            // T70: асинхронно, с полосой прогресса; сцена меню (и этот экран) уходит, когда задание загрузилось.
+            var op = AppNavigator.StartDriveAsync(sceneToLoad);
+            while (op != null && !op.isDone) { loading.SetProgress(op.progress / 0.9f); yield return null; }
         }
 
         public void OpenSettings()
