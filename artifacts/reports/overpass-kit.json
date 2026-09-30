@@ -1,23 +1,35 @@
 {
-  "revision": "overpass-v2",
-  "utc": "2026-09-30T08:32:25.427074+00:00",
+  "revision": "overpass-v3",
+  "utc": "2026-09-30T08:48:37.759555+00:00",
   "blender": "5.0.1",
   "riseM": 1.6,
   "lengthM": 20.0,
   "clearanceUnderSpanM": -0.8,
   "modules": [
     {
+      "name": "RK_RampFoot_20m",
+      "fbx": "Assets\\DrivingSchool\\Art\\Overpass\\RK_RampFoot_20m.fbx",
+      "triangles": 6328,
+      "sha256": "09200e119426d60da39fa8843b3f361fc42125b52c726c4ee86fae6aa6ab0f93"
+    },
+    {
       "name": "RK_Ramp_20m",
       "fbx": "Assets\\DrivingSchool\\Art\\Overpass\\RK_Ramp_20m.fbx",
       "triangles": 3520,
-      "sha256": "0e41108ddee61b039e297199399a2b27468910fcda903344c2cc1baaeb5a2289"
+      "sha256": "732c36d30f53296dac032f7e7b5a15bf5c067c69b9e9341f62cd071ecaecd844"
+    },
+    {
+      "name": "RK_RampCrest_20m",
+      "fbx": "Assets\\DrivingSchool\\Art\\Overpass\\RK_RampCrest_20m.fbx",
+      "triangles": 6328,
+      "sha256": "b9ef12ddd6eaf3897dfea96006af9ed053928bc12a721fa99c50c2556bfc022e"
     },
     {
       "name": "RK_Bridge_20m",
       "fbx": "Assets\\DrivingSchool\\Art\\Overpass\\RK_Bridge_20m.fbx",
       "triangles": 4000,
-      "sha256": "863642789c39950a971867b97fa9ce37c1e5021e61198686e401520bec849071"
+      "sha256": "a8eda9218569f37975dbeb57b7799926642ba3e15ce435375237cda0c456986e"
     }
   ],
-  "sourceSha256": "9751a5839aad90c2b6744f0c05d2fbeda45007d9ed0047c30f1c8b6114cf2a4d"
+  "sourceSha256": "e77f61d48ac0f567e87b9be95f7164eb1b6e43f08bea381fb4e298075706c802"
 }

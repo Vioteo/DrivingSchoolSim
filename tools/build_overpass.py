@@ -4,6 +4,9 @@ kerbs at ±4.1, sidewalks 2 m at ±5.2. Blender 5: -b --python tools/build_overp
 Metres, X right / Y forward / Z up, road top at the start = 0; the ramp rises RISE over its 20 m (8 %).
 
 T69 detail (the road, sockets and the clearance under the span stay as in T65):
+  climb       — foot (grade 0 -> 8 %), ramp (8 %), crest (8 % -> 0): vertical curves, so the road bends smoothly at the
+                bottom and at the top instead of kinking by 8 %. A climb is foot + 3 ramps + crest = 6.4 m over 100 m
+                (RoadKitTemplates.SlopeHeight must give the same heights);
   bridge span — deck slab on five I-girders with end diaphragms, cornice edge beams with a drip, steel railings
                 (posts, handrail, balusters), a pier of two round columns with a chamfered cap and bearings (mid-span,
                 as before: the railway under the overpass keeps its distance), drain spouts;
@@ -44,35 +47,45 @@ for n, c in [('Asphalt', (.115, .13, .145)), ('Paving', (.51, .53, .51)), ('Conc
     material(n, c)
 
 
+def height(h, y):
+    """Road height at y: h is the linear rise over LENGTH (number) or a profile function of y (vertical curves, T69)."""
+    return h(y) if callable(h) else h * y / LENGTH
+
+
+def stations(y0, y1, h):
+    """Cross-sections along Y: the two ends for a straight profile, every metre in between for a curved one."""
+    if not callable(h): return [y0, y1]
+    ys = [y0] + [float(k) for k in range(int(math.floor(y0)) + 1, int(math.ceil(y1)))] + [y1]
+    return sorted(set(ys))
+
+
 class Part:
     def __init__(self): self.v = []; self.f = []
 
-    def block(self, x0, x1, y0, y1, bottom, top, rise):
-        """Box x0..x1, y0..y1 whose bottom/top follow the ramp: z = off + rise * y / LENGTH (bottom as a 1-tuple = fixed depth)."""
-        s = len(self.v)
-        def z(off, y, fixed=False): return off if fixed else off + rise * y / LENGTH
+    def sweep(self, profile, y0, y1, h, fixed=()):
+        """Closed profile [(x, z)] swept along Y from y0 to y1 on the road height (vertices in `fixed` keep their z)."""
+        s = len(self.v); n = len(profile); ys = stations(y0, y1, h)
+        for y in ys:
+            for k, (x, z) in enumerate(profile):
+                self.v.append((x, y, z if k in fixed else z + height(h, y)))
+        self.f.append(tuple(s + i for i in range(n)))
+        last = s + n * (len(ys) - 1)
+        self.f.append(tuple(last + i for i in reversed(range(n))))
+        for a in range(len(ys) - 1):
+            o0, o1 = s + a * n, s + (a + 1) * n
+            for i in range(n):
+                j = (i + 1) % n
+                self.f.append((o0 + i, o1 + i, o1 + j, o0 + j))
+
+    def block(self, x0, x1, y0, y1, bottom, top, h):
+        """Box x0..x1, y0..y1 whose bottom/top follow the road height (bottom as a 1-tuple = fixed depth)."""
         fixed = isinstance(bottom, tuple)
         b = bottom[0] if fixed else bottom
-        for y in (y0, y1):
-            for x in (x0, x1):
-                self.v.append((x, y, z(b, y, fixed)))
-        for y in (y0, y1):
-            for x in (x0, x1):
-                self.v.append((x, y, z(top, y)))
-        for f in [(0, 2, 3, 1), (4, 5, 7, 6), (0, 1, 5, 4), (2, 6, 7, 3), (0, 4, 6, 2), (1, 3, 7, 5)]:
-            self.f.append(tuple(s + i for i in f))
+        self.sweep([(x0, b), (x1, b), (x1, top), (x0, top)], y0, y1, h, (0, 1) if fixed else ())
 
-    def prism(self, profile, y0, y1, rise):
-        """Profile [(x, z)] (closed polygon) swept along Y from y0 to y1, following the ramp."""
-        s = len(self.v); n = len(profile)
-        for y in (y0, y1):
-            for x, z in profile:
-                self.v.append((x, y, z + rise * y / LENGTH))
-        self.f.append(tuple(s + i for i in range(n)))
-        self.f.append(tuple(s + n + i for i in reversed(range(n))))
-        for i in range(n):
-            j = (i + 1) % n
-            self.f.append((s + i, s + n + i, s + n + j, s + j))
+    def prism(self, profile, y0, y1, h):
+        """Profile [(x, z)] (closed polygon) swept along Y from y0 to y1, following the road height."""
+        self.sweep(profile, y0, y1, h)
 
     def cylinder(self, cx, cy, r, z0, z1, seg=16):
         s = len(self.v)
@@ -195,30 +208,38 @@ def bridge():
     return m.finish([('Socket_Start', (0, 0, 0)), ('Socket_End', (0, LENGTH, 0))])
 
 
-def ramp():
-    m = Module('RK_Ramp_20m')
-    street(m, RISE)
+GRADE = RISE / LENGTH   # 8 %
+
+
+def foot(y): return GRADE * y * y / (2 * LENGTH)                  # grade 0 -> 8 % (vertical curve, T69)
+def crest(y): return GRADE * y - GRADE * y * y / (2 * LENGTH)     # grade 8 % -> 0
+
+
+def climb(name, h):
+    """A climbing module: RK_Ramp_20m (h = RISE, straight 8 %), RK_RampFoot_20m / RK_RampCrest_20m (vertical curves)."""
+    m = Module(name)
+    street(m, h)
     for s in (-1, 1):
         # coping on top of the retaining wall (same edge beam line as on the bridge)
         prof = [(EDGE_IN, .25), (EDGE_OUT - .05, .25), (EDGE_OUT, .2), (EDGE_OUT, -.3), (EDGE_OUT - .12, -.38), (EDGE_IN, -.38)]
-        m.p('Coping', 'Concrete').prism(mirror(prof, s), 0, LENGTH, RISE)
-        m.p('Collision', 'Concrete').block(min(s * EDGE_IN, s * EDGE_OUT), max(s * EDGE_IN, s * EDGE_OUT), 0, LENGTH, -.38, .25, RISE)
+        m.p('Coping', 'Concrete').prism(mirror(prof, s), 0, LENGTH, h)
+        m.p('Collision', 'Concrete').block(min(s * EDGE_IN, s * EDGE_OUT), max(s * EDGE_IN, s * EDGE_OUT), 0, LENGTH, -.38, .25, h)
         # retaining wall: face set back from the coping, precast panels 4 m wide with dark joints and a plinth
         w = sorted((s * EDGE_IN, s * (EDGE_OUT - .1)))
-        for g in ('Wall', 'Collision'): m.p(g, 'Concrete').block(w[0], w[1], 0, LENGTH, (-WALL_DEPTH,), -.38, RISE)
+        for g in ('Wall', 'Collision'): m.p(g, 'Concrete').block(w[0], w[1], 0, LENGTH, (-WALL_DEPTH,), -.38, h)
         xf = s * (EDGE_OUT - .1)
         for i in range(1, 5):
             y = i * 4.0
             if y >= LENGTH: break
             jx = sorted((xf, xf + s * .012))
-            m.p('Joints', 'ConcreteDark').block(jx[0], jx[1], y - .03, y + .03, (-WALL_DEPTH,), -.4, RISE)
-        railing(m, RISE, s)
-    m.p('Fill', 'Concrete').block(-EDGE_IN, EDGE_IN, 0, LENGTH, (-WALL_DEPTH,), -.22, RISE)
-    return m.finish([('Socket_Start', (0, 0, 0)), ('Socket_End', (0, LENGTH, RISE))])
+            m.p('Joints', 'ConcreteDark').block(jx[0], jx[1], y - .03, y + .03, (-WALL_DEPTH,), -.4, h)
+        railing(m, h, s)
+    m.p('Fill', 'Concrete').block(-EDGE_IN, EDGE_IN, 0, LENGTH, (-WALL_DEPTH,), -.22, h)
+    return m.finish([('Socket_Start', (0, 0, 0)), ('Socket_End', (0, LENGTH, height(h, LENGTH)))])
 
 
-roots = [ramp(), bridge()]
-report = {'revision': 'overpass-v2', 'utc': datetime.now(timezone.utc).isoformat(), 'blender': bpy.app.version_string,
+roots = [climb('RK_RampFoot_20m', foot), climb('RK_Ramp_20m', RISE), climb('RK_RampCrest_20m', crest), bridge()]
+report = {'revision': 'overpass-v3', 'utc': datetime.now(timezone.utc).isoformat(), 'blender': bpy.app.version_string,
           'riseM': RISE, 'lengthM': LENGTH, 'clearanceUnderSpanM': -DECK, 'modules': []}
 for root in roots:
     bpy.ops.object.select_all(action='DESELECT')
