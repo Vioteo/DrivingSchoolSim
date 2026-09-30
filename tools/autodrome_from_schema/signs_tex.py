@@ -51,9 +51,20 @@ FB=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',200
 for n in range(1,10):
     im=Image.new('RGBA',(512,256),(0,0,0,0)); d=ImageDraw.Draw(im)
     d.text((256,136),'У'+str(n),font=FB,fill=WHITE,anchor='mm'); save(im,f'Board_{n}')
-# T68: 6.16 "Stop line" (blue square, white rim, the word СТОП over a white bar) — on the signal poles of the crossroad У4.
-im=canvas(); d=ImageDraw.Draw(im)
-d.rounded_rectangle([6,6,N-6,N-6],30,fill=WHITE); d.rounded_rectangle([26,26,N-26,N-26],20,fill=BLUE)
-d.text((N/2,190),'СТОП',font=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',124),fill=WHITE,anchor='mm')
-d.rectangle([70,318,N-70,398],fill=WHITE)
+# T69: 6.16 "Stop line" — a horizontal blue plate 3:1 (type size II 1050 x 350 mm, ГОСТ Р 52290-2004 via the maker's
+# size table), white rim, the word СТОП over a white bar the full width of the field. Stands at the stop line
+# (the sign and the marking in one cross-section) on the signal pole.
+W,H=1536,512
+im=Image.new('RGBA',(W,H),(0,0,0,0)); d=ImageDraw.Draw(im)
+d.rounded_rectangle([4,4,W-4,H-4],26,fill=WHITE); d.rounded_rectangle([26,26,W-26,H-26],16,fill=BLUE)
+FC=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSansCondensed-Bold.ttf',236)
+d.text((W/2,196),'СТОП',font=FC,fill=WHITE,anchor='mm')
+d.rectangle([62,344,W-62,432],fill=WHITE)
 save(im,'StopLine')
+# T69: backs of the textured signs — the plate's silhouette in grey steel, no mirrored face showing through
+# (the builder puts <face>_Back.png on the rear quad).
+for n in sorted(os.listdir('out/SignFaces')):
+    if not n.endswith('.png') or n.endswith('_Back.png') or n.startswith('Board_'): continue
+    f=Image.open('out/SignFaces/'+n).convert('RGBA')
+    back=Image.new('RGBA',f.size,(150,156,162,255)); back.putalpha(f.getchannel('A'))
+    back.save('out/SignFaces/'+n[:-4]+'_Back.png')
