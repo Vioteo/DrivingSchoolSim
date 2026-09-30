@@ -19,6 +19,10 @@ namespace DrivingSchool.Presentation
         public Transform[] barriers;
         public Transform[] signals;
         public Rigidbody train;
+        [Tooltip("T69: составы, которые идут по очереди (электричка, грузовой). Пусто — только train.")]
+        public Rigidbody[] consists = new Rigidbody[0];
+        [Tooltip("Длина каждого состава из consists, м (от сцепки головы до сцепки хвоста).")]
+        public float[] consistLengths = new float[0];
         [Tooltip("Crossing centre on the track axis (world).")] public Vector3 crossingCentre;
         [Tooltip("Direction the train travels (world, horizontal).")] public Vector3 trainDirection = Vector3.left;
         [Tooltip("Train length, metres (front to rear).")] public float trainLength = 76f;
@@ -38,6 +42,8 @@ namespace DrivingSchool.Presentation
         public Phase Current { get; private set; } = Phase.Open;
         public bool IsClosedForTraffic => Current != Phase.Open;
         public float TrainDistanceToCrossing { get; private set; } = float.PositiveInfinity;
+        /// <summary>Номер состава из <see cref="consists"/>, который идёт сейчас (или шёл последним); −1 — составов нет.</summary>
+        public int ConsistIndex { get; private set; } = -1;
         public bool TrainRunning => trainRunning;
         /// <summary>Front of the train on the track axis (world); meaningful while <see cref="TrainRunning"/>.</summary>
         public Vector3 TrainFront => crossingCentre + trainDirection * (float.IsInfinity(trainS) ? trackHalfLength : trainS);
@@ -55,10 +61,14 @@ namespace DrivingSchool.Presentation
         {
             foreach (var b in barriers) if (b != null) SetupBarrier(b);
             foreach (var s in signals) if (s != null) SetupSignal(s);
+            // T69: все составы — кинематические и спрятаны до вызова; текущий — первый.
+            for (int i = 0; i < consists.Length; i++)
+                if (consists[i] != null) { Prepare(consists[i]); SetVisible(consists[i], false); }
+            // последний — «прошедший», так что первым вызовом придёт consists[0]
+            if (consists.Length > 0 && consists[consists.Length - 1] != null) Select(consists.Length - 1);
             if (train != null)
             {
-                train.isKinematic = true;
-                train.interpolation = RigidbodyInterpolation.Interpolate;
+                Prepare(train);
                 trainRenderers = train.GetComponentsInChildren<Renderer>(true);
                 ShowTrain(false);
             }
@@ -73,9 +83,34 @@ namespace DrivingSchool.Presentation
             SetLamps(false, false, true);
         }
 
+        static void Prepare(Rigidbody rb) { rb.isKinematic = true; rb.interpolation = RigidbodyInterpolation.Interpolate; }
+
+        static void SetVisible(Rigidbody rb, bool on)
+        {
+            foreach (var r in rb.GetComponentsInChildren<Renderer>(true)) r.enabled = on;
+            foreach (var c in rb.GetComponentsInChildren<Collider>(true)) c.enabled = on;
+        }
+
+        /// <summary>Сделать текущим состав <paramref name="index"/> из <see cref="consists"/> (прячет прежний).</summary>
+        void Select(int index)
+        {
+            if (train != null && train != consists[index]) SetVisible(train, false);
+            ConsistIndex = index;
+            train = consists[index];
+            if (index < consistLengths.Length && consistLengths[index] > 0f) trainLength = consistLengths[index];
+            trainRenderers = train.GetComponentsInChildren<Renderer>(true);
+        }
+
         public void CallTrain()
         {
             if (Current != Phase.Open) return;
+            // T69: составы идут по очереди — электричка, затем грузовой, и снова.
+            if (consists.Length > 1)
+            {
+                int next = ConsistIndex;
+                for (int k = 0; k < consists.Length; k++) { next = (next + 1) % consists.Length; if (consists[next] != null) break; }
+                if (consists[next] != null) Select(next);
+            }
             Enter(Phase.Warning);
             // Front of the train starts so that it reaches the crossing after trainArrivesAfter seconds.
             float v = trainSpeedKmh / 3.6f;

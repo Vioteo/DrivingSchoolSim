@@ -670,11 +670,12 @@ namespace DrivingSchool.Editor
             float west = TestRangeLayout.DistrictMinX + 3f, east = TrackEastX;
             if (centre.z > RoadAStartZ - 3.5f) throw new Exception("Town railway would cross road A: track z " + centre.z);
             BuildTrack(root, centre.z, centre.x, west, east, 6.2f);
-            var train = BuildTrain(root, out float trainLength, centre.z, east - 2f);
             var view = root.gameObject.AddComponent<RailwayCrossingView>();
-            view.barriers = new[] { bA, bB }; view.signals = new[] { sA, sB }; view.train = train;
+            view.barriers = new[] { bA, bB }; view.signals = new[] { sA, sB };
+            AddTrains(view, root, centre.z, east - 2f);
+            TrainKitBuilder.BuildCatenary(root, centre.z, RailTopY, west, east, centre.x, 12f, 50f, LayerProps);
             view.crossingCentre = centre; view.trainDirection = Vector3.left;
-            view.trainLength = trainLength; view.trackHalfLength = Mathf.Min(east - centre.x, centre.x - west) - 3f;
+            view.trackHalfLength = Mathf.Min(east - centre.x, centre.x - west) - 3f;
             // A town train at 40 km/h (T65, safety margins): the lights flash 6 s before the booms go down (7 s), the
             // train comes ≈ 30 s after the first flash, so the booms are down well before it; they rise 5 s after it.
             view.trainSpeedKmh = 40f;
@@ -716,11 +717,12 @@ namespace DrivingSchool.Editor
                 b.transform.SetPositionAndRotation(new Vector3(RoadCX - RoadWidth / 2 - 1.2f, 0f, RailZ + 45f), Quaternion.identity);
             }
             BuildTrack(root);
-            var train = BuildTrain(root, out float trainLength);
             var view = root.gameObject.AddComponent<RailwayCrossingView>();
-            view.barriers = new[] { bN, bS }; view.signals = new[] { sN, sS }; view.train = train;
+            view.barriers = new[] { bN, bS }; view.signals = new[] { sN, sS };
+            AddTrains(view, root, RailZ, TrackEastX - 2f);
+            TrainKitBuilder.BuildCatenary(root, RailZ, RailTopY, TrackWestX, TrackEastX, RoadCX, 14f, 50f, LayerProps);
             view.crossingCentre = new Vector3(RoadCX, 0f, RailZ); view.trainDirection = Vector3.left;
-            view.trainLength = trainLength; view.trackHalfLength = RoadCX - TrackWestX - 5f;
+            view.trackHalfLength = RoadCX - TrackWestX - 5f;
             view.trainSpeedKmh = 40f;
             view.trainArrivesAfter = Mathf.Min(25f, (TrackEastX - RoadCX - 5f) / (view.trainSpeedKmh / 3.6f));
             view.warningBeforeLowering = 6f; view.lowerSeconds = 7f; view.clearDelaySeconds = 5f;
@@ -771,44 +773,22 @@ namespace DrivingSchool.Editor
             }
         }
 
-        static Rigidbody BuildTrain(Transform root, out float length) => BuildTrain(root, out length, RailZ, TrackEastX - 2f);
+        /// <summary>Rail top above the ground (BuildTrack: rail centre 0.1425 m, height 0.195 m).</summary>
+        const float RailTopY = 0.24f;
 
-        static Rigidbody BuildTrain(Transform root, out float length, float railZ, float startX)
+        /// <summary>
+        /// T69: the crossing's trains — a suburban EMU and a freight train (Prefabs/Trains, tools/build_trains.py), in turn.
+        /// Both wait hidden at <paramref name="startX"/>, heading west (−X).
+        /// </summary>
+        static void AddTrains(RailwayCrossingView view, Transform root, float railZ, float startX)
         {
-            var red = Lit("TrainRed", new Color(0.62f, 0.09f, 0.07f), 0.45f);
-            var grey = Lit("TrainGrey", new Color(0.36f, 0.38f, 0.39f), 0.35f);
-            var wagon = Lit("TrainWagon", new Color(0.20f, 0.27f, 0.21f), 0.25f);
-            var dark = Lit("TrainBlack", new Color(0.05f, 0.05f, 0.05f), 0.2f);
-            var glass = Lit("TrainGlass", new Color(0.06f, 0.08f, 0.10f), 0.92f);
-            var go = new GameObject("Train (kinematic)"); go.transform.SetParent(root);
-            // Local +Z is the direction of travel, the front of the train is at z = 0; rail top is y = 0.
-            var t = go.transform;
-            void Part(string n, Vector3 c, Vector3 s, Material m, bool col = true)
-            {
-                var p = Box(n, c, s, m, t, col ? LayerProps : 0, col); p.isStatic = false; p.layer = LayerProps;
-            }
-            // locomotive
-            Part("Loco body", new Vector3(0f, 2.55f, -8.5f), new Vector3(3.1f, 3.1f, 16.6f), red);
-            Part("Loco roof", new Vector3(0f, 4.2f, -8.5f), new Vector3(2.8f, 0.25f, 15.8f), grey, false);
-            Part("Loco stripe", new Vector3(0f, 1.75f, -8.5f), new Vector3(3.14f, 0.28f, 16.62f), grey, false);
-            Part("Loco windscreen", new Vector3(0f, 3.35f, -0.19f), new Vector3(2.5f, 0.85f, 0.04f), glass, false);
-            Part("Loco headlight", new Vector3(0f, 3.95f, -0.19f), new Vector3(0.35f, 0.2f, 0.04f), lampLens, false);
-            Part("Loco frame", new Vector3(0f, 0.95f, -8.5f), new Vector3(2.9f, 0.4f, 16.8f), dark, false);
-            foreach (float z in new[] { -3.5f, -13.5f }) Part("Bogie", new Vector3(0f, 0.4f, z), new Vector3(2.4f, 0.8f, 3.2f), dark, false);
-            float z0 = -17.4f;
-            for (int i = 0; i < 4; i++)
-            {
-                float zc = z0 - 7.2f;
-                Part("Wagon " + (i + 1), new Vector3(0f, 2.45f, zc), new Vector3(3.0f, 2.9f, 14f), wagon);
-                Part("Wagon roof", new Vector3(0f, 3.98f, zc), new Vector3(2.7f, 0.18f, 13.6f), grey, false);
-                Part("Wagon frame", new Vector3(0f, 0.9f, zc), new Vector3(2.8f, 0.35f, 14.2f), dark, false);
-                foreach (float dz in new[] { -5f, 5f }) Part("Bogie", new Vector3(0f, 0.4f, zc + dz), new Vector3(2.4f, 0.8f, 2.6f), dark, false);
-                z0 -= 14.8f;
-            }
-            length = -z0 - 0.4f;
-            t.SetPositionAndRotation(new Vector3(startX, 0.24f, railZ), Quaternion.LookRotation(Vector3.left));
-            var rb = go.AddComponent<Rigidbody>(); rb.isKinematic = true; rb.mass = 80000f;
-            return rb;
+            var emu = TrainKitBuilder.BuildConsist("Train / EMU (kinematic)", TrainKitBuilder.ElectricTrain, root, LayerProps, out float emuLength);
+            var freight = TrainKitBuilder.BuildConsist("Train / freight (kinematic)", TrainKitBuilder.FreightTrain, root, LayerProps, out float freightLength);
+            foreach (var rb in new[] { emu, freight })
+                rb.transform.SetPositionAndRotation(new Vector3(startX, RailTopY, railZ), Quaternion.LookRotation(Vector3.left));
+            view.train = emu; view.trainLength = emuLength;
+            view.consists = new[] { emu, freight };
+            view.consistLengths = new[] { emuLength, freightLength };
         }
 
         static void LampPost(Vector3 p, Quaternion rot)
