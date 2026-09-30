@@ -34,7 +34,7 @@ namespace DrivingSchool.Tests
             Assert.That(flow.menu.IsExitDialogOpen, Is.False);
             flow.menu.lessonsButton.onClick.Invoke();
             LessonLaunch.LessonId = LessonLaunch.FirstLesson;
-            flow.catalog.rangeButton.onClick.Invoke();
+            flow.catalog.SelectAssignment(LessonCatalogController.FreeDrive);
             flow.catalog.startButton.onClick.Invoke();
             float deadline = Time.realtimeSinceStartup + 60;
             while (SceneManager.GetActiveScene().name != "VehicleTestRange" && Time.realtimeSinceStartup < deadline) yield return null;
@@ -59,7 +59,7 @@ namespace DrivingSchool.Tests
             Assert.That(flow.catalog.gameObject.activeSelf, Is.True);
             Assert.That(flow.menu.gameObject.activeSelf, Is.False);
             Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(AppNavigator.MainMenuScene));
-            flow.catalog.lessonButton.onClick.Invoke();
+            flow.catalog.SelectAssignment(LessonLaunch.FirstLesson);
             flow.catalog.startButton.onClick.Invoke();
 
             DriveSession ds = null;
