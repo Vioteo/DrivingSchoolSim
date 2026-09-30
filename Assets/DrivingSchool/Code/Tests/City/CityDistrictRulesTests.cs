@@ -124,9 +124,22 @@ namespace DrivingSchool.Tests
             Assert.That(spans.Count, Is.EqualTo(6), "three spans, both directions");
             foreach (var l in spans) Assert.That(l.centerline.All(p => System.Math.Abs(p.y - 4 * RoadKitTemplates.RampRiseM) < 0.01), l.id + " at 6.4 m");
             Assert.That(spans.Any(l => l.centerline.Min(p => p.z) < railZ && l.centerline.Max(p => p.z) > railZ), "a span is over the track");
-            // The ramps climb evenly and come back down to the ground at the far end.
-            var up = w.lanes.Single(l => l.id == "up0/f").centerline;
-            Assert.That(up.Last().y - up.First().y, Is.EqualTo(RoadKitTemplates.RampRiseM).Within(0.01));
+            // The climb: foot, three ramps, crest (T69) — 6.4 m, and it comes back down to the ground at the far end.
+            var up = Enumerable.Range(0, 5).SelectMany(i => w.lanes.Single(l => l.id == "up" + i + "/f").centerline).ToList();
+            Assert.That(up.Last().y - up.First().y, Is.EqualTo(4 * RoadKitTemplates.RampRiseM).Within(0.01));
+            // No kinks (T69): from the road before the climb, up the climb and onto the span the grade changes by at most
+            // 0.5 % per metre (a straight 8 % ramp after flat road changes it by 8 % at once) and never exceeds 8 %.
+            var road = w.lanes.Single(l => l.id == "o4/f").centerline.Concat(up).Concat(w.lanes.Single(l => l.id == "br0/f").centerline).ToList();
+            double? grade = null;
+            for (int i = 1; i < road.Count; i++)
+            {
+                double run = System.Math.Sqrt((road[i].x - road[i - 1].x) * (road[i].x - road[i - 1].x) + (road[i].z - road[i - 1].z) * (road[i].z - road[i - 1].z));
+                if (run < 0.2) continue;   // a module boundary repeats the point
+                double g = (road[i].y - road[i - 1].y) / run;
+                Assert.That(g, Is.LessThanOrEqualTo(RoadKitTemplates.RampGrade + 1e-6), "grade at point " + i);
+                if (grade.HasValue) Assert.That(System.Math.Abs(g - grade.Value) / run, Is.LessThan(0.005), "kink at point " + i + ": " + grade + " -> " + g);
+                grade = g;
+            }
             Assert.That(w.lanes.Single(l => l.id == "o6/b").centerline.All(p => System.Math.Abs(p.y) < 0.01));
             Assert.That(new RoadGraphIndex(w).SpeedLimitAt("br1/f", 10), Is.EqualTo(40), "40 km/h on the overpass");
         }

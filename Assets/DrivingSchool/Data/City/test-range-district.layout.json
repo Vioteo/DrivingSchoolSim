@@ -473,20 +473,11 @@
             "speedLimitKph": 0.0
         },
         {
-            "id": "o5",
-            "catalogId": "RK_Road_Urban_20m",
-            "x": -484.0,
-            "y": 0.019999999552965165,
-            "z": 64.0,
-            "yawDeg": 0.0,
-            "speedLimitKph": 0.0
-        },
-        {
             "id": "up0",
-            "catalogId": "RK_Ramp_20m",
+            "catalogId": "RK_RampFoot_20m",
             "x": -484.0,
             "y": 0.019999999552965165,
-            "z": 64.0,
+            "z": 84.0,
             "yawDeg": 180.0,
             "speedLimitKph": 0.0
         },
@@ -494,8 +485,8 @@
             "id": "up1",
             "catalogId": "RK_Ramp_20m",
             "x": -484.0,
-            "y": 1.6199999995529653,
-            "z": 44.0,
+            "y": 0.8199999995529652,
+            "z": 64.0,
             "yawDeg": 180.0,
             "speedLimitKph": 0.0
         },
@@ -503,8 +494,8 @@
             "id": "up2",
             "catalogId": "RK_Ramp_20m",
             "x": -484.0,
-            "y": 3.2199999995529655,
-            "z": 24.0,
+            "y": 2.4199999995529657,
+            "z": 44.0,
             "yawDeg": 180.0,
             "speedLimitKph": 0.0
         },
@@ -512,7 +503,16 @@
             "id": "up3",
             "catalogId": "RK_Ramp_20m",
             "x": -484.0,
-            "y": 4.819999999552966,
+            "y": 4.019999999552965,
+            "z": 24.0,
+            "yawDeg": 180.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "up4",
+            "catalogId": "RK_RampCrest_20m",
+            "x": -484.0,
+            "y": 5.619999999552965,
             "z": 4.0,
             "yawDeg": 180.0,
             "speedLimitKph": 0.0
@@ -521,7 +521,7 @@
             "id": "br0",
             "catalogId": "RK_Bridge_20m",
             "x": -484.0,
-            "y": 6.4199999995529659,
+            "y": 6.419999999552965,
             "z": -16.0,
             "yawDeg": 180.0,
             "speedLimitKph": 0.0
@@ -530,7 +530,7 @@
             "id": "br1",
             "catalogId": "RK_Bridge_20m",
             "x": -484.0,
-            "y": 6.4199999995529659,
+            "y": 6.419999999552965,
             "z": -36.0,
             "yawDeg": 180.0,
             "speedLimitKph": 0.0
@@ -539,16 +539,16 @@
             "id": "br2",
             "catalogId": "RK_Bridge_20m",
             "x": -484.0,
-            "y": 6.4199999995529659,
+            "y": 6.419999999552965,
             "z": -56.0,
             "yawDeg": 180.0,
             "speedLimitKph": 0.0
         },
         {
             "id": "dn0",
-            "catalogId": "RK_Ramp_20m",
+            "catalogId": "RK_RampCrest_20m",
             "x": -484.0,
-            "y": 4.819999999552966,
+            "y": 5.619999999552965,
             "z": -96.0,
             "yawDeg": 0.0,
             "speedLimitKph": 0.0
@@ -557,7 +557,7 @@
             "id": "dn1",
             "catalogId": "RK_Ramp_20m",
             "x": -484.0,
-            "y": 3.219999999552966,
+            "y": 4.019999999552965,
             "z": -116.0,
             "yawDeg": 0.0,
             "speedLimitKph": 0.0
@@ -566,7 +566,7 @@
             "id": "dn2",
             "catalogId": "RK_Ramp_20m",
             "x": -484.0,
-            "y": 1.6199999995529658,
+            "y": 2.419999999552965,
             "z": -136.0,
             "yawDeg": 0.0,
             "speedLimitKph": 0.0
@@ -575,8 +575,17 @@
             "id": "dn3",
             "catalogId": "RK_Ramp_20m",
             "x": -484.0,
-            "y": 0.01999999955296561,
+            "y": 0.819999999552965,
             "z": -156.0,
+            "yawDeg": 0.0,
+            "speedLimitKph": 0.0
+        },
+        {
+            "id": "dn4",
+            "catalogId": "RK_RampFoot_20m",
+            "x": -484.0,
+            "y": 0.019999999552964943,
+            "z": -176.0,
             "yawDeg": 0.0,
             "speedLimitKph": 0.0
         },
@@ -584,8 +593,8 @@
             "id": "o6",
             "catalogId": "RK_Road_Urban_20m",
             "x": -484.0,
-            "y": 0.01999999955296561,
-            "z": -176.0,
+            "y": 0.019999999552964943,
+            "z": -196.0,
             "yawDeg": 0.0,
             "speedLimitKph": 0.0
         },
@@ -593,8 +602,8 @@
             "id": "so0",
             "catalogId": "RK_Road_Curve90_R14",
             "x": -470.0,
-            "y": 0.01999999955296561,
-            "z": -190.0,
+            "y": 0.019999999552964943,
+            "z": -210.0,
             "yawDeg": -90.0,
             "speedLimitKph": 0.0
         },
@@ -602,8 +611,8 @@
             "id": "so1",
             "catalogId": "RK_Road_Urban_20m@174",
             "x": -296.0,
-            "y": 0.01999999955296561,
-            "z": -190.0,
+            "y": 0.019999999552964943,
+            "z": -210.0,
             "yawDeg": -90.0,
             "speedLimitKph": 0.0
         },
@@ -611,8 +620,8 @@
             "id": "so2",
             "catalogId": "RK_Road_Urban_Zebra_20m",
             "x": -276.0,
-            "y": 0.01999999955296561,
-            "z": -190.0,
+            "y": 0.019999999552964943,
+            "z": -210.0,
             "yawDeg": -90.0,
             "speedLimitKph": 0.0
         },
@@ -620,8 +629,8 @@
             "id": "so3",
             "catalogId": "RK_Road_Urban_20m@174",
             "x": -102.0,
-            "y": 0.01999999955296561,
-            "z": -190.0,
+            "y": 0.019999999552964943,
+            "z": -210.0,
             "yawDeg": -90.0,
             "speedLimitKph": 0.0
         },
@@ -629,16 +638,16 @@
             "id": "so4",
             "catalogId": "RK_Road_Curve90_R14",
             "x": -88.0,
-            "y": 0.01999999955296561,
-            "z": -176.0,
+            "y": 0.019999999552964943,
+            "z": -196.0,
             "yawDeg": 180.0,
             "speedLimitKph": 0.0
         },
         {
             "id": "so5",
-            "catalogId": "RK_Road_Urban_20m@112",
+            "catalogId": "RK_Road_Urban_20m@132",
             "x": -88.00000000000002,
-            "y": 0.01999999955296561,
+            "y": 0.019999999552964943,
             "z": -64.0,
             "yawDeg": 180.0,
             "speedLimitKph": 0.0
@@ -1113,12 +1122,6 @@
         {
             "instanceA": "o4",
             "socketA": "Socket_Start",
-            "instanceB": "o5",
-            "socketB": "Socket_End"
-        },
-        {
-            "instanceA": "o5",
-            "socketA": "Socket_Start",
             "instanceB": "up0",
             "socketB": "Socket_Start"
         },
@@ -1142,6 +1145,12 @@
         },
         {
             "instanceA": "up3",
+            "socketA": "Socket_End",
+            "instanceB": "up4",
+            "socketB": "Socket_Start"
+        },
+        {
+            "instanceA": "up4",
             "socketA": "Socket_End",
             "instanceB": "br0",
             "socketB": "Socket_Start"
@@ -1184,6 +1193,12 @@
         },
         {
             "instanceA": "dn3",
+            "socketA": "Socket_Start",
+            "instanceB": "dn4",
+            "socketB": "Socket_End"
+        },
+        {
+            "instanceA": "dn4",
             "socketA": "Socket_Start",
             "instanceB": "o6",
             "socketB": "Socket_End"

@@ -76,6 +76,29 @@ namespace DrivingSchool.Simulation.RoadGraph
         public const string RampId = "RK_Ramp_20m", BridgeId = "RK_Bridge_20m";
         public const double RampRiseM = 1.6;
         /// <summary>
+        /// T69: vertical curves at both ends of a climb, so the road bends smoothly instead of kinking by 8 % at the foot and at
+        /// the top. The foot turns the grade from 0 to <see cref="RampGrade"/> over its 20 m (height G·z²/40), the crest
+        /// from G back to 0 (G·z − G·z²/40); each rises <see cref="CurveRiseM"/>. A climb is foot + three ramps + crest:
+        /// 0.8 + 3 × 1.6 + 0.8 = 6.4 m over 100 m, grade never above 8 %, vertical radius 250 m.
+        /// </summary>
+        public const string RampFootId = "RK_RampFoot_20m", RampCrestId = "RK_RampCrest_20m";
+        public const double RampGrade = RampRiseM / StraightLengthM, CurveRiseM = RampGrade * StraightLengthM / 2;
+
+        /// <summary>Height of the road above Socket_Start at <paramref name="z"/> metres along a sloped module.</summary>
+        public static double SlopeHeight(string id, double z)
+        {
+            double g = RampGrade, l = StraightLengthM;
+            switch (id)
+            {
+                case RampId: return g * z;
+                case RampFootId: return g * z * z / (2 * l);
+                case RampCrestId: return g * z - g * z * z / (2 * l);
+                default: return 0;
+            }
+        }
+
+        public static bool IsSloped(string id) => id == RampId || id == RampFootId || id == RampCrestId || id == BridgeId;
+        /// <summary>
         /// A straight of any length (T66): "&lt;straight id&gt;@&lt;metres&gt;", e.g. "RK_Road_Urban_20m@34". It closes a loop
         /// between two modules whose sockets are not a whole number of 20 m pieces apart; drawn as whole meshes plus one
         /// stretched along the road (<see cref="RoadKitTemplatesV2.MeshPieces"/>).
@@ -101,7 +124,7 @@ namespace DrivingSchool.Simulation.RoadGraph
 
         public RoadKitTemplates()
         {
-            templates = new[] { Straight(), Curve(), Cross(), Crosswalk(), Crosswalk(ZebraPlainId), Sloped(RampId, RampRiseM), Sloped(BridgeId, 0) }.ToDictionary(t => t.CatalogId);
+            templates = new[] { Straight(), Curve(), Cross(), Crosswalk(), Crosswalk(ZebraPlainId), Sloped(RampId), Sloped(RampFootId), Sloped(RampCrestId), Sloped(BridgeId) }.ToDictionary(t => t.CatalogId);
         }
 
         public IEnumerable<ModuleTemplate> All => templates.Values;
@@ -178,9 +201,13 @@ namespace DrivingSchool.Simulation.RoadGraph
         }
 
         /// <summary>A 1+1 straight whose road rises <paramref name="rise"/> over its 20 m (0: flat bridge span).</summary>
-        static ModuleTemplate Sloped(string id, double rise)
+        static ModuleTemplate Sloped(string id)
         {
-            var axis = new[] { new Vec3d(0, 0, 0), new Vec3d(0, rise, StraightLengthM) };
+            // The axis every metre, following the module's height profile (straight for the ramp and the bridge).
+            int n = (int)StraightLengthM;
+            var axis = new Vec3d[n + 1];
+            for (int i = 0; i <= n; i++) axis[i] = new Vec3d(0, SlopeHeight(id, i), i);
+            double rise = SlopeHeight(id, StraightLengthM);
             var f = new WorldDocumentV2();
             var fwd = Lane("f", 1, Polyline.OffsetRight(Resample(axis, 1.0), LaneOffsetM));
             var bwd = Lane("b", -1, Polyline.OffsetRight(Resample(Polyline.Reversed(axis), 1.0), LaneOffsetM));
