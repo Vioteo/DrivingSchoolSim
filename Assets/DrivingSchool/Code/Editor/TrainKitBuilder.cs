@@ -198,7 +198,9 @@ namespace DrivingSchool.Editor
             if (mastPrefab == null) throw new InvalidOperationException("No RS_Catenary_Mast prefab — run Driving School/Trains/Import rolling stock");
             var root = new GameObject("Catenary").transform;
             root.SetParent(parent, true);
-            int obstacles = ~(1 << 9);   // everything but the ground
+            // Every layer: the overpass modules are road (ground layer 9) too. The probes start above the rail top, so the
+            // ground and the track bed are not obstacles.
+            int obstacles = Physics.AllLayers;
             Physics.SyncTransforms();
             var anchors = new List<float> { westX + 2f };
             // The mast model's pole stands at model x = −3.1 in Unity (Blender +X); yaw 90 puts it on the +Z side of an X track.
@@ -206,8 +208,9 @@ namespace DrivingSchool.Editor
             {
                 if (Mathf.Abs(x - crossX) < keepClearX) continue;
                 // pole and cantilever: from the ground to over the messenger, from the track axis to the pole
-                var probe = new Vector3(x, railY + (Messenger + 0.7f) / 2f + 0.3f, railZ + 1.7f);
-                if (Physics.CheckBox(probe, new Vector3(0.5f, (Messenger + 0.7f) / 2f, 1.9f), Quaternion.identity, obstacles, QueryTriggerInteraction.Ignore)) continue;
+                const float probeFrom = 0.6f, probeTo = Messenger + 0.7f;
+                var probe = new Vector3(x, railY + (probeFrom + probeTo) / 2f, railZ + 1.7f);
+                if (Physics.CheckBox(probe, new Vector3(0.5f, (probeTo - probeFrom) / 2f, 1.9f), Quaternion.identity, obstacles, QueryTriggerInteraction.Ignore)) continue;
                 var m = (GameObject)PrefabUtility.InstantiatePrefab(mastPrefab, root);
                 m.transform.SetPositionAndRotation(new Vector3(x, railY, railZ), Quaternion.Euler(0f, 90f, 0f));
                 foreach (var t in m.GetComponentsInChildren<Transform>(true)) { t.gameObject.layer = layer; t.gameObject.isStatic = true; }
@@ -224,7 +227,7 @@ namespace DrivingSchool.Editor
                 var a = new Vector3(x0, railY + Messenger, railZ); var c = new Vector3(x1, railY + Messenger, railZ);
                 bool blocked = Physics.Linecast(a, c, obstacles, QueryTriggerInteraction.Ignore) || Physics.Linecast(c, a, obstacles, QueryTriggerInteraction.Ignore);
                 Strip(root, "Contact wire", x0, x1, railY + Wire, railZ, 0.012f, steel, layer);
-                Strip(root, blocked ? "Messenger wire (under the overpass)" : "Messenger wire", x0, x1, railY + (blocked ? Wire + 0.15f : Messenger), railZ, 0.01f, steel, layer);
+                Strip(root, blocked ? "Messenger wire (under the overpass)" : "Messenger wire", x0, x1, railY + (blocked ? Wire + 0.05f : Messenger), railZ, 0.01f, steel, layer);
             }
         }
 
