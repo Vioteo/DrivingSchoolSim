@@ -49,7 +49,7 @@ namespace DrivingSchool.Presentation.UI
 
         public int SectionIndex { get; private set; }
         public int ItemIndex { get; private set; }
-        public Item SelectedItem => SectionItems(SectionIndex).Count > 0 ? SectionItems(SectionIndex)[ItemIndex] : null;
+        public Item SelectedItem => ItemIndex >= 0 && ItemIndex < SectionItems(SectionIndex).Count ? SectionItems(SectionIndex)[ItemIndex] : null;
         public string SelectedId => SelectedItem?.id;
         public int ExerciseCount => sections[Autodrome].Count;
         public IReadOnlyList<Item> SectionItems(int section) => section >= 0 && section < sections.Length ? sections[section] : (IReadOnlyList<Item>)Array.Empty<Item>();
@@ -193,6 +193,7 @@ namespace DrivingSchool.Presentation.UI
             bool rebuild = section != SectionIndex || rows.Count != sections[section].Count || rows.Count == 0;
             SectionIndex = section;
             rememberedSection = section;
+            ItemIndex = Mathf.Clamp(item, 0, Mathf.Max(0, sections[section].Count - 1));   // до строк: они показывают описание выбранного
             if (rebuild) BuildRows();
             SelectItem(item);
             for (int i = 0; i < sectionButtons.Length; i++)
