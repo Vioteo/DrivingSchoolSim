@@ -1,20 +1,23 @@
 {
-  "revision": "overpass-v1",
-  "utc": "2026-09-28T09:23:51.304496+00:00",
+  "revision": "overpass-v2",
+  "utc": "2026-09-30T08:32:25.427074+00:00",
   "blender": "5.0.1",
   "riseM": 1.6,
   "lengthM": 20.0,
+  "clearanceUnderSpanM": -0.8,
   "modules": [
     {
       "name": "RK_Ramp_20m",
       "fbx": "Assets\\DrivingSchool\\Art\\Overpass\\RK_Ramp_20m.fbx",
-      "sha256": "43de36fafa30b8c526397a8f410ca2594541ee1e88de519001ab48f6d8db8e80"
+      "triangles": 3520,
+      "sha256": "0e41108ddee61b039e297199399a2b27468910fcda903344c2cc1baaeb5a2289"
     },
     {
       "name": "RK_Bridge_20m",
       "fbx": "Assets\\DrivingSchool\\Art\\Overpass\\RK_Bridge_20m.fbx",
-      "sha256": "9e8fb255fbac93141c19b96229d1cc080a79d3d0027d07a91ab43c59239378a6"
+      "triangles": 4000,
+      "sha256": "863642789c39950a971867b97fa9ce37c1e5021e61198686e401520bec849071"
     }
   ],
-  "sourceSha256": "aca712dac1a9822540a591d450c44f74e1dde7cf99cc0aa4132d92ea9fb09fc7"
+  "sourceSha256": "9751a5839aad90c2b6744f0c05d2fbeda45007d9ed0047c30f1c8b6114cf2a4d"
 }
