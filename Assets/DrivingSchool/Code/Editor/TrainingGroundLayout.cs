@@ -233,6 +233,10 @@ namespace DrivingSchool.Editor
                 string plate = s.plates[i];
                 // На столбе светофора табличек может быть несколько: нижняя — сразу над секцией, остальные выше.
                 float drop = onSignalPole ? mount - (s.plates.Length - 1 - i) * .78f : mount + i * .78f;
+                // T69: a low plate (6.16 «Стоп-линия», 3:1) as the lowest one on a signal pole sits right above the signal head,
+                // so the sign above it (2.4 / 2.1) keeps a clear gap instead of touching it with its tip.
+                if (onSignalPole && i == s.plates.Length - 1 && plate.StartsWith("tex:", StringComparison.Ordinal) && FaceSize(plate.Substring(4)).y < .5f)
+                    drop = TexturedPlateCentre - (SignalHeadTop + .06f + FaceSize(plate.Substring(4)).y / 2);
                 GameObject go;
                 if (plate.StartsWith("tex:", StringComparison.Ordinal)) go = TexturedSign(plate.Substring(4), s.x * K, s.z * K, yaw, drop, i == 0 && !onSignalPole);
                 else
@@ -264,13 +268,21 @@ namespace DrivingSchool.Editor
             }
         }
 
+        const float TexturedPlateCentre = 2.62f, SignalHeadTop = 3.36f;
+
+        /// <summary>Plate size (m) of a textured sign face: 6.16 «Стоп-линия» — 1.05 × 0.35 (3:1, type size II), plates 8.x — 0.6 × 0.4, round and triangular signs — 0.7.</summary>
+        static Vector2 FaceSize(string face) =>
+            face == "StopLine" ? new Vector2(1.05f, .35f) : face.StartsWith("Plate", StringComparison.Ordinal) ? new Vector2(.6f, .4f) : new Vector2(.7f, .7f);
+
         static readonly Dictionary<string, Material> signMaterials = new Dictionary<string, Material>();
 
         static Material SignMaterial(string face, bool back)
         {
             string key = face + (back ? "/back" : "");
             if (signMaterials.TryGetValue(key, out var cached) && cached) return cached;
-            string texPath = SignFaces + face + ".png";
+            // T69: the back is the plate's grey silhouette (<face>_Back.png from signs_tex.py) — the face no longer shows mirrored through it.
+            string backPath = SignFaces + face + "_Back.png";
+            string texPath = back && AssetDatabase.LoadAssetAtPath<Texture2D>(backPath) ? backPath : SignFaces + face + ".png";
             var importer = (TextureImporter)AssetImporter.GetAtPath(texPath);
             if (importer && (!importer.alphaIsTransparency || importer.wrapMode != TextureWrapMode.Clamp))
             {
@@ -278,7 +290,7 @@ namespace DrivingSchool.Editor
                 importer.SaveAndReimport();
             }
             var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(texPath);
-            var m = Mat("Sign_" + face + (back ? "_Back" : ""), back ? new Color(.55f, .57f, .6f) : Color.white, back ? .35f : .25f, tex);
+            var m = Mat("Sign_" + face + (back ? "_Back" : ""), back && texPath != backPath ? new Color(.55f, .57f, .6f) : Color.white, back ? .35f : .25f, tex);
             m.SetFloat("_AlphaClip", 1); m.SetFloat("_Cutoff", .5f); m.EnableKeyword("_ALPHATEST_ON");
             m.renderQueue = (int)RenderQueue.AlphaTest;
             m.doubleSidedGI = false;
@@ -300,8 +312,9 @@ namespace DrivingSchool.Editor
                 post.GetComponent<Renderer>().sharedMaterial = concrete;
                 UnityEngine.Object.DestroyImmediate(post.GetComponent<Collider>());
             }
-            float w = plate ? .6f : .7f, h = plate ? .4f : .7f;
-            float cy = 2.62f - drop + (plate ? .12f : 0);
+            var size = FaceSize(face);
+            float w = size.x, h = size.y;
+            float cy = TexturedPlateCentre - drop + (plate ? .12f : 0);
             // Unity quads face -Z; turn the face 180 degrees so it looks along +Z.
             var front = GameObject.CreatePrimitive(PrimitiveType.Quad);
             front.name = "Face"; front.transform.SetParent(root, false);
