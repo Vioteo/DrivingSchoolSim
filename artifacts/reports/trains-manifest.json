@@ -1,0 +1,390 @@
+{
+  "kit": "rolling stock",
+  "prefix": "RS_",
+  "script": "tools/build_trains.py",
+  "utc": "2026-09-30T07:55:02.738440+00:00",
+  "blender": "5.0.1",
+  "frame": "Blender: X right, front -Y, Z up; origin on the track axis at rail top, front coupler face",
+  "assets": [
+    {
+      "id": "RS_EMU_Head",
+      "title": "Электропоезд: головной вагон",
+      "kind": "emu-head",
+      "pitch": 22.3,
+      "fbx": "Assets\\DrivingSchool\\Art\\Trains\\RS_EMU_Head.fbx",
+      "fbx_sha256": "de21893df46ed60bf7ce63156067a845d6b0394680db96f0078e653aa74bd2ce",
+      "triangles": 4106,
+      "min": [
+        -1.82,
+        0.0,
+        -0.03
+      ],
+      "max": [
+        1.82,
+        22.3,
+        4.44
+      ],
+      "size": [
+        3.64,
+        22.3,
+        4.47
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0,
+          0,
+          0
+        ],
+        "Socket_Rear": [
+          0,
+          22.3,
+          0
+        ]
+      },
+      "checks": {
+        "triangles <= 30000": "PASS",
+        "width <= 3.75 m (gabarit)": "PASS",
+        "height <= 5.2 m, pantograph under the wire": "PASS",
+        "wheels on the rail (flanges down to -0.04)": "PASS"
+      }
+    },
+    {
+      "id": "RS_EMU_Motor",
+      "title": "Электропоезд: моторный вагон",
+      "kind": "emu-motor",
+      "pitch": 21.5,
+      "fbx": "Assets\\DrivingSchool\\Art\\Trains\\RS_EMU_Motor.fbx",
+      "fbx_sha256": "7c1579c7139c4bdcce082613eaf08a9303f14f7b1c87c35694e52b34c54adc08",
+      "triangles": 3792,
+      "min": [
+        -1.82,
+        0.0,
+        -0.03
+      ],
+      "max": [
+        1.82,
+        21.5,
+        5.28
+      ],
+      "size": [
+        3.64,
+        21.5,
+        5.31
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0,
+          0,
+          0
+        ],
+        "Socket_Rear": [
+          0,
+          21.5,
+          0
+        ]
+      },
+      "checks": {
+        "triangles <= 30000": "PASS",
+        "width <= 3.75 m (gabarit)": "PASS",
+        "height <= 5.2 m, pantograph under the wire": "PASS",
+        "wheels on the rail (flanges down to -0.04)": "PASS"
+      }
+    },
+    {
+      "id": "RS_EMU_Trailer",
+      "title": "Электропоезд: прицепной вагон",
+      "kind": "emu-trailer",
+      "pitch": 21.5,
+      "fbx": "Assets\\DrivingSchool\\Art\\Trains\\RS_EMU_Trailer.fbx",
+      "fbx_sha256": "93a11f3c6da8b285af5cd5e7faf261b40a775318b15cc13ecf07c500732c1493",
+      "triangles": 3444,
+      "min": [
+        -1.82,
+        0.0,
+        -0.03
+      ],
+      "max": [
+        1.82,
+        21.5,
+        4.44
+      ],
+      "size": [
+        3.64,
+        21.5,
+        4.47
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0,
+          0,
+          0
+        ],
+        "Socket_Rear": [
+          0,
+          21.5,
+          0
+        ]
+      },
+      "checks": {
+        "triangles <= 30000": "PASS",
+        "width <= 3.75 m (gabarit)": "PASS",
+        "height <= 5.2 m, pantograph under the wire": "PASS",
+        "wheels on the rail (flanges down to -0.04)": "PASS"
+      }
+    },
+    {
+      "id": "RS_Loco_Diesel",
+      "title": "Тепловоз (секция)",
+      "kind": "loco",
+      "pitch": 20.8,
+      "fbx": "Assets\\DrivingSchool\\Art\\Trains\\RS_Loco_Diesel.fbx",
+      "fbx_sha256": "501975ffcc1ecb1d217ec83be7db20056391fecb6f27e7234af3f0bc6cee1cd6",
+      "triangles": 5590,
+      "min": [
+        -1.676,
+        0.0,
+        -0.03
+      ],
+      "max": [
+        1.676,
+        20.8,
+        5.17
+      ],
+      "size": [
+        3.351,
+        20.8,
+        5.2
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0,
+          0,
+          0
+        ],
+        "Socket_Rear": [
+          0,
+          20.8,
+          0
+        ]
+      },
+      "checks": {
+        "triangles <= 30000": "PASS",
+        "width <= 3.75 m (gabarit)": "PASS",
+        "height <= 5.2 m, pantograph under the wire": "PASS",
+        "wheels on the rail (flanges down to -0.04)": "PASS"
+      }
+    },
+    {
+      "id": "RS_Wagon_Box",
+      "title": "Крытый вагон",
+      "kind": "wagon-box",
+      "pitch": 17.5,
+      "fbx": "Assets\\DrivingSchool\\Art\\Trains\\RS_Wagon_Box.fbx",
+      "fbx_sha256": "c1ace806299b0b142fd792d2d1a52f23a53f0d9588aaf74f30446a947cea09ed",
+      "triangles": 3236,
+      "min": [
+        -1.73,
+        0.0,
+        -0.03
+      ],
+      "max": [
+        1.73,
+        17.5,
+        4.62
+      ],
+      "size": [
+        3.46,
+        17.5,
+        4.65
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0,
+          0,
+          0
+        ],
+        "Socket_Rear": [
+          0,
+          17.5,
+          0
+        ]
+      },
+      "checks": {
+        "triangles <= 15000": "PASS",
+        "width <= 3.75 m (gabarit)": "PASS",
+        "height <= 5.2 m, pantograph under the wire": "PASS",
+        "wheels on the rail (flanges down to -0.04)": "PASS"
+      }
+    },
+    {
+      "id": "RS_Wagon_Tank",
+      "title": "Цистерна",
+      "kind": "wagon-tank",
+      "pitch": 12.02,
+      "fbx": "Assets\\DrivingSchool\\Art\\Trains\\RS_Wagon_Tank.fbx",
+      "fbx_sha256": "4f232dc7e4beb83349eb64e53b443b208c6ae0c4870c3d411697a3de0d031c01",
+      "triangles": 3960,
+      "min": [
+        -1.536,
+        0.0,
+        -0.03
+      ],
+      "max": [
+        1.536,
+        12.02,
+        5.14
+      ],
+      "size": [
+        3.071,
+        12.02,
+        5.17
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0,
+          0,
+          0
+        ],
+        "Socket_Rear": [
+          0,
+          12.02,
+          0
+        ]
+      },
+      "checks": {
+        "triangles <= 15000": "PASS",
+        "width <= 3.75 m (gabarit)": "PASS",
+        "height <= 5.2 m, pantograph under the wire": "PASS",
+        "wheels on the rail (flanges down to -0.04)": "PASS"
+      }
+    },
+    {
+      "id": "RS_Wagon_Gondola",
+      "title": "Полувагон с углём",
+      "kind": "wagon-gondola",
+      "pitch": 13.92,
+      "fbx": "Assets\\DrivingSchool\\Art\\Trains\\RS_Wagon_Gondola.fbx",
+      "fbx_sha256": "4cb9265560b35171b9f2765188ae2584a8f4b597ee2e42085a5a5f4dace1e07a",
+      "triangles": 3190,
+      "min": [
+        -1.69,
+        0.0,
+        -0.03
+      ],
+      "max": [
+        1.69,
+        13.92,
+        3.9
+      ],
+      "size": [
+        3.38,
+        13.92,
+        3.93
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0,
+          0,
+          0
+        ],
+        "Socket_Rear": [
+          0,
+          13.92,
+          0
+        ]
+      },
+      "checks": {
+        "triangles <= 15000": "PASS",
+        "width <= 3.75 m (gabarit)": "PASS",
+        "height <= 5.2 m, pantograph under the wire": "PASS",
+        "wheels on the rail (flanges down to -0.04)": "PASS"
+      }
+    },
+    {
+      "id": "RS_Wagon_Hopper",
+      "title": "Хоппер",
+      "kind": "wagon-hopper",
+      "pitch": 14.72,
+      "fbx": "Assets\\DrivingSchool\\Art\\Trains\\RS_Wagon_Hopper.fbx",
+      "fbx_sha256": "fe972840b7494bbd16f39d7cc978519049a658dab5ca0f12a8f93687bafc2feb",
+      "triangles": 3200,
+      "min": [
+        -1.61,
+        0.0,
+        -0.03
+      ],
+      "max": [
+        1.61,
+        14.72,
+        4.39
+      ],
+      "size": [
+        3.22,
+        14.72,
+        4.42
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0,
+          0,
+          0
+        ],
+        "Socket_Rear": [
+          0,
+          14.72,
+          0
+        ]
+      },
+      "checks": {
+        "triangles <= 15000": "PASS",
+        "width <= 3.75 m (gabarit)": "PASS",
+        "height <= 5.2 m, pantograph under the wire": "PASS",
+        "wheels on the rail (flanges down to -0.04)": "PASS"
+      }
+    },
+    {
+      "id": "RS_Catenary_Mast",
+      "title": "Опора контактной сети",
+      "kind": "catenary",
+      "pitch": 0.0,
+      "fbx": "Assets\\DrivingSchool\\Art\\Trains\\RS_Catenary_Mast.fbx",
+      "fbx_sha256": "56133ebfdf283aafbd355d1664d627dab36f92cbf697c19485a2d2316fa44c0e",
+      "triangles": 380,
+      "min": [
+        -0.3,
+        -0.3,
+        0.0
+      ],
+      "max": [
+        3.4,
+        0.3,
+        7.145
+      ],
+      "size": [
+        3.7,
+        0.6,
+        7.145
+      ],
+      "sockets": {
+        "Socket_Wire": [
+          0,
+          0,
+          5.3
+        ],
+        "Socket_Messenger": [
+          0,
+          0,
+          6.5
+        ]
+      },
+      "checks": {
+        "triangles <= 15000": "PASS",
+        "width <= 3.75 m (gabarit)": "PASS",
+        "height <= 5.2 m, pantograph under the wire": "PASS",
+        "wheels on the rail (flanges down to -0.04)": "PASS"
+      }
+    }
+  ],
+  "source": "ArtSource\\DS_RollingStock.blend",
+  "failed_checks": []
+}

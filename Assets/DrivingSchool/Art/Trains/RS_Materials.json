@@ -1,0 +1,202 @@
+{
+  "materials": [
+    {
+      "name": "RS_Paint_White",
+      "color": [
+        0.74,
+        0.76,
+        0.75
+      ],
+      "metallic": 0.1,
+      "smoothness": 0.65,
+      "emission": 0
+    },
+    {
+      "name": "RS_Paint_Red",
+      "color": [
+        0.52,
+        0.018,
+        0.02
+      ],
+      "metallic": 0.15,
+      "smoothness": 0.65,
+      "emission": 0
+    },
+    {
+      "name": "RS_Paint_Grey",
+      "color": [
+        0.16,
+        0.17,
+        0.18
+      ],
+      "metallic": 0.2,
+      "smoothness": 0.6,
+      "emission": 0
+    },
+    {
+      "name": "RS_Paint_LocoRed",
+      "color": [
+        0.36,
+        0.025,
+        0.018
+      ],
+      "metallic": 0.15,
+      "smoothness": 0.6,
+      "emission": 0
+    },
+    {
+      "name": "RS_Paint_Yellow",
+      "color": [
+        0.75,
+        0.45,
+        0.01
+      ],
+      "metallic": 0.1,
+      "smoothness": 0.55,
+      "emission": 0
+    },
+    {
+      "name": "RS_Paint_Brown",
+      "color": [
+        0.15,
+        0.045,
+        0.025
+      ],
+      "metallic": 0.05,
+      "smoothness": 0.3,
+      "emission": 0
+    },
+    {
+      "name": "RS_Paint_Tank",
+      "color": [
+        0.018,
+        0.02,
+        0.022
+      ],
+      "metallic": 0.25,
+      "smoothness": 0.55,
+      "emission": 0
+    },
+    {
+      "name": "RS_Paint_Gondola",
+      "color": [
+        0.07,
+        0.09,
+        0.075
+      ],
+      "metallic": 0.1,
+      "smoothness": 0.25,
+      "emission": 0
+    },
+    {
+      "name": "RS_Paint_Hopper",
+      "color": [
+        0.36,
+        0.37,
+        0.36
+      ],
+      "metallic": 0.15,
+      "smoothness": 0.4,
+      "emission": 0
+    },
+    {
+      "name": "RS_Underframe",
+      "color": [
+        0.03,
+        0.032,
+        0.034
+      ],
+      "metallic": 0.4,
+      "smoothness": 0.3,
+      "emission": 0
+    },
+    {
+      "name": "RS_Steel",
+      "color": [
+        0.3,
+        0.31,
+        0.32
+      ],
+      "metallic": 0.85,
+      "smoothness": 0.65,
+      "emission": 0
+    },
+    {
+      "name": "RS_Wheel",
+      "color": [
+        0.16,
+        0.15,
+        0.14
+      ],
+      "metallic": 0.8,
+      "smoothness": 0.55,
+      "emission": 0
+    },
+    {
+      "name": "RS_Rubber",
+      "color": [
+        0.012,
+        0.013,
+        0.014
+      ],
+      "metallic": 0.0,
+      "smoothness": 0.15,
+      "emission": 0
+    },
+    {
+      "name": "RS_Glass",
+      "color": [
+        0.012,
+        0.02,
+        0.026
+      ],
+      "metallic": 0.4,
+      "smoothness": 0.95,
+      "emission": 0
+    },
+    {
+      "name": "RS_Lamp_White",
+      "color": [
+        0.9,
+        0.95,
+        1.0
+      ],
+      "metallic": 0.0,
+      "smoothness": 0.8,
+      "emission": 2.0
+    },
+    {
+      "name": "RS_Lamp_Red",
+      "color": [
+        0.85,
+        0.02,
+        0.015
+      ],
+      "metallic": 0.0,
+      "smoothness": 0.75,
+      "emission": 1.5
+    },
+    {
+      "name": "RS_Coal",
+      "color": [
+        0.012,
+        0.012,
+        0.013
+      ],
+      "metallic": 0.0,
+      "smoothness": 0.05,
+      "emission": 0
+    },
+    {
+      "name": "RS_Ceramic",
+      "color": [
+        0.45,
+        0.2,
+        0.08
+      ],
+      "metallic": 0.0,
+      "smoothness": 0.7,
+      "emission": 0
+    }
+  ]
+}
