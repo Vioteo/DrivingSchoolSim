@@ -230,7 +230,7 @@ namespace DrivingSchool.Editor
         static void BuildRoads()
         {
             // x −470…450 (the town district reaches x −460 since T65), z −200…500.
-            Box("Ground", new Vector3(-35f, -0.1f, 140f), new Vector3(970f, 0.2f, 720f), grass, env, LayerGround, true);   // x −520…450, z −220…500 (T66: the town grew west and south)
+            Box("Ground", new Vector3(-35f, -0.1f, 120f), new Vector3(970f, 0.2f, 760f), grass, env, LayerGround, true);   // x −520…450, z −260…500 (T66: the town grew west and south; T69: the longer overpass moved the south road to z −210)
 
             // Road A (two lanes, dashed centre line 1.5 m dash / 4.5 m gap for visual reference only).
             float lenA = RoadAEndZ - RoadAStartZ;
