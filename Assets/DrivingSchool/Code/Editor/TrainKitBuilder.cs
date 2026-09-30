@@ -186,42 +186,57 @@ namespace DrivingSchool.Editor
 
         /// <summary>
         /// Catenary along a track that runs along world X at <paramref name="railZ"/> (rail top <paramref name="railY"/>):
-        /// masts every <paramref name="spacing"/> m on the far side (+Z), none within <paramref name="keepClearX"/> m of
-        /// <paramref name="crossX"/> (the road); contact wire 5.3 m and messenger 6.5 m over the rails (tools/build_trains.py WIRE, MESSENGER), as thin strips.
+        /// masts every <paramref name="spacing"/> m on the +Z side, none within <paramref name="keepClearX"/> m of
+        /// <paramref name="crossX"/> (the road) and none where the mast would stand in another object (a pier or deck of
+        /// the overpass). Contact wire 5.3 m and messenger 6.5 m over the rails (tools/build_trains.py WIRE, MESSENGER),
+        /// as thin strips from mast to mast; under an obstacle (the overpass deck) the messenger drops to 0.15 m over the wire.
         /// </summary>
         public static void BuildCatenary(Transform parent, float railZ, float railY, float westX, float eastX, float crossX, float keepClearX, float spacing, int layer)
         {
+            const float Wire = 5.3f, Messenger = 6.5f;
             var mastPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(Prefabs + "/RS_Catenary_Mast.prefab");
             if (mastPrefab == null) throw new InvalidOperationException("No RS_Catenary_Mast prefab — run Driving School/Trains/Import rolling stock");
             var root = new GameObject("Catenary").transform;
             root.SetParent(parent, true);
+            int obstacles = ~(1 << 9);   // everything but the ground
+            Physics.SyncTransforms();
+            var anchors = new List<float> { westX + 2f };
             // The mast model's pole stands at model x = −3.1 in Unity (Blender +X); yaw 90 puts it on the +Z side of an X track.
             for (float x = westX + 5f; x <= eastX - 5f; x += spacing)
             {
                 if (Mathf.Abs(x - crossX) < keepClearX) continue;
+                // pole and cantilever: from the ground to over the messenger, from the track axis to the pole
+                var probe = new Vector3(x, railY + (Messenger + 0.7f) / 2f + 0.3f, railZ + 1.7f);
+                if (Physics.CheckBox(probe, new Vector3(0.5f, (Messenger + 0.7f) / 2f, 1.9f), Quaternion.identity, obstacles, QueryTriggerInteraction.Ignore)) continue;
                 var m = (GameObject)PrefabUtility.InstantiatePrefab(mastPrefab, root);
                 m.transform.SetPositionAndRotation(new Vector3(x, railY, railZ), Quaternion.Euler(0f, 90f, 0f));
                 foreach (var t in m.GetComponentsInChildren<Transform>(true)) { t.gameObject.layer = layer; t.gameObject.isStatic = true; }
-                // no mast inside a bridge pier, a house or a road object: test the pole's box against other colliders (not the ground)
-                var pole = m.GetComponentsInChildren<MeshRenderer>(true).Select(r => r.bounds).Aggregate((p, q) => { p.Encapsulate(q); return p; });
-                var poleCentre = new Vector3(x, railY + 3f, railZ + 3.1f);
-                Physics.SyncTransforms();
-                if (Physics.CheckBox(poleCentre, new Vector3(0.6f, 2.5f, 0.6f), Quaternion.identity, ~(1 << 9), QueryTriggerInteraction.Ignore))
-                    UnityEngine.Object.DestroyImmediate(m);
-                else if (pole.max.z < railZ + 2.5f)
-                    throw new InvalidOperationException($"Catenary mast reaches only z {pole.max.z:0.0}: its pole must stand on the +Z side of the track at z {poleCentre.z:0.0}");
+                var b = m.GetComponentsInChildren<MeshRenderer>(true).Select(r => r.bounds).Aggregate((p, q) => { p.Encapsulate(q); return p; });
+                if (b.max.z < railZ + 2.5f)
+                    throw new InvalidOperationException($"Catenary mast reaches only z {b.max.z:0.0}: its pole must stand on the +Z side of the track at z {railZ + 3.1f:0.0}");
+                anchors.Add(x);
             }
+            anchors.Add(eastX - 2f);
             var steel = AssetDatabase.LoadAssetAtPath<Material>(Materials + "/RS_Steel.mat");
-            foreach (var (h, r, n) in new[] { (5.3f, 0.012f, "Contact wire"), (6.5f, 0.01f, "Messenger wire") })
+            for (int i = 0; i + 1 < anchors.Count; i++)
             {
-                var w = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                w.name = n; w.transform.SetParent(root, true);
-                w.transform.SetPositionAndRotation(new Vector3((westX + eastX) / 2f, railY + h, railZ), Quaternion.identity);
-                w.transform.localScale = new Vector3(eastX - westX - 6f, r * 2f, r * 2f);
-                UnityEngine.Object.DestroyImmediate(w.GetComponent<Collider>());
-                var mr = w.GetComponent<MeshRenderer>(); mr.sharedMaterial = steel; mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-                w.layer = layer; w.isStatic = true;
+                float x0 = anchors[i], x1 = anchors[i + 1];
+                var a = new Vector3(x0, railY + Messenger, railZ); var c = new Vector3(x1, railY + Messenger, railZ);
+                bool blocked = Physics.Linecast(a, c, obstacles, QueryTriggerInteraction.Ignore) || Physics.Linecast(c, a, obstacles, QueryTriggerInteraction.Ignore);
+                Strip(root, "Contact wire", x0, x1, railY + Wire, railZ, 0.012f, steel, layer);
+                Strip(root, blocked ? "Messenger wire (under the overpass)" : "Messenger wire", x0, x1, railY + (blocked ? Wire + 0.15f : Messenger), railZ, 0.01f, steel, layer);
             }
+        }
+
+        static void Strip(Transform root, string name, float x0, float x1, float y, float z, float r, Material mat, int layer)
+        {
+            var w = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            w.name = name; w.transform.SetParent(root, true);
+            w.transform.SetPositionAndRotation(new Vector3((x0 + x1) / 2f, y, z), Quaternion.identity);
+            w.transform.localScale = new Vector3(Mathf.Abs(x1 - x0), r * 2f, r * 2f);
+            UnityEngine.Object.DestroyImmediate(w.GetComponent<Collider>());
+            var mr = w.GetComponent<MeshRenderer>(); mr.sharedMaterial = mat; mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            w.layer = layer; w.isStatic = true;
         }
     }
 }

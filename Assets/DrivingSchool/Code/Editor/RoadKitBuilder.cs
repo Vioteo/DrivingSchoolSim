@@ -245,8 +245,10 @@ namespace DrivingSchool.Editor
 
         static void CreateMaterials()
         {
-            var names = new[] { "Asphalt", "Gravel", "Paving", "Concrete", "White", "Yellow" };
-            var colors = new[] { Color.white, Color.white, Color.white, new Color(.63f,.65f,.62f), new Color(.87f,.88f,.83f), new Color(.95f,.61f,.035f) };
+            // T69: ConcreteDark (joints, bearings, cornice band) and Railing (steel railings of the overpass).
+            var names = new[] { "Asphalt", "Gravel", "Paving", "Concrete", "White", "Yellow", "ConcreteDark", "Railing" };
+            var colors = new[] { Color.white, Color.white, Color.white, new Color(.63f,.65f,.62f), new Color(.87f,.88f,.83f), new Color(.95f,.61f,.035f),
+                                 new Color(.42f,.43f,.42f), new Color(.2f,.27f,.26f) };
             var shader = Shader.Find("Universal Render Pipeline/Lit");
             if (shader == null) throw new InvalidOperationException("URP Lit shader unavailable.");
             for (int i = 0; i < names.Length; i++)
