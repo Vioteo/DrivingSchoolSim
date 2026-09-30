@@ -16,6 +16,26 @@ namespace DrivingSchool.Settings
         public CarSetup Clone() => (CarSetup)MemberwiseClone();
     }
 
+    /// <summary>
+    /// Прогресс по одному заданию (T70): урок, упражнение площадки, экзамен. Считаются законченные попытки — зачёт или
+    /// незачёт; прерванная из паузы попытка не считается. Лучший результат — только среди зачтённых: меньше баллов,
+    /// при равных — быстрее.
+    /// </summary>
+    [Serializable]
+    public sealed class AssignmentRecord
+    {
+        public string id = "";                    // id задания: урок («start-moving»), упражнение («ex-…»), «autodrome-exam»
+        public int attempts;                      // законченных попыток
+        public int passes;                        // из них зачтённых
+        public int bestPenalty = -1;              // лучший зачёт: баллы; −1 — зачёта ещё не было
+        public float bestSeconds = -1f;           // время лучшего зачёта, с
+        public bool lastPassed;                   // последняя попытка — зачёт
+        public string lastUtc = "";               // когда была последняя попытка (ISO 8601, UTC)
+
+        public bool Passed => passes > 0;
+        public AssignmentRecord Clone() => (AssignmentRecord)MemberwiseClone();
+    }
+
     [Serializable]
     public sealed class PlayerProfile
     {
@@ -26,6 +46,37 @@ namespace DrivingSchool.Settings
         public string name = DefaultName;
         public string carId = "";                 // id из каталога (Data/Vehicles/vehicles.json); пусто — первый автомобиль
         public CarSetup[] cars = Array.Empty<CarSetup>();
+        public AssignmentRecord[] assignments = Array.Empty<AssignmentRecord>();   // T70: прогресс по заданиям
+
+        /// <summary>Прогресс задания; null — попыток ещё не было.</summary>
+        public AssignmentRecord Progress(string id)
+        {
+            if (string.IsNullOrEmpty(id) || assignments == null) return null;
+            foreach (var a in assignments) if (a != null && a.id == id) return a;
+            return null;
+        }
+
+        /// <summary>Записать законченную попытку задания <paramref name="id"/>.</summary>
+        public AssignmentRecord Record(string id, bool passed, int penalty, float seconds, string utc)
+        {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("Пустой id задания", nameof(id));
+            var a = Progress(id);
+            if (a == null)
+            {
+                a = new AssignmentRecord { id = id };
+                var list = new List<AssignmentRecord>(assignments ?? Array.Empty<AssignmentRecord>()) { a };
+                assignments = list.ToArray();
+            }
+            a.attempts++;
+            a.lastPassed = passed;
+            a.lastUtc = utc ?? "";
+            if (!passed) return a;
+            a.passes++;
+            penalty = Math.Max(0, penalty); seconds = Math.Max(0f, seconds);
+            if (a.bestPenalty < 0 || penalty < a.bestPenalty || (penalty == a.bestPenalty && seconds < a.bestSeconds))
+            { a.bestPenalty = penalty; a.bestSeconds = seconds; }
+            return a;
+        }
 
         /// <summary>Настройки автомобиля; если их ещё нет — создаются со значениями по умолчанию.</summary>
         public CarSetup For(string id, int defaultTransmission = 0)
@@ -47,6 +98,7 @@ namespace DrivingSchool.Settings
         {
             var p = (PlayerProfile)MemberwiseClone();
             p.cars = Array.ConvertAll(cars ?? Array.Empty<CarSetup>(), c => c?.Clone());
+            p.assignments = Array.ConvertAll(assignments ?? Array.Empty<AssignmentRecord>(), a => a?.Clone());
             return p;
         }
 
@@ -66,6 +118,18 @@ namespace DrivingSchool.Settings
                 list.Add(c);
             }
             cars = list.ToArray();
+            var records = new List<AssignmentRecord>(); var ids = new HashSet<string>();
+            foreach (var a in assignments ?? Array.Empty<AssignmentRecord>())
+            {
+                if (a == null || string.IsNullOrEmpty(a.id) || !ids.Add(a.id)) { fixes++; continue; }
+                if (a.attempts < 0) { a.attempts = 0; fixes++; }
+                if (a.passes < 0 || a.passes > a.attempts) { a.passes = Math.Max(0, Math.Min(a.passes, a.attempts)); fixes++; }
+                if (a.passes == 0 && (a.bestPenalty >= 0 || a.bestSeconds >= 0)) { a.bestPenalty = -1; a.bestSeconds = -1f; fixes++; }
+                if (a.passes > 0 && (a.bestPenalty < 0 || a.bestSeconds < 0 || float.IsNaN(a.bestSeconds))) { a.bestPenalty = Math.Max(0, a.bestPenalty); a.bestSeconds = Math.Max(0f, float.IsNaN(a.bestSeconds) ? 0f : a.bestSeconds); fixes++; }
+                if (a.lastUtc == null) { a.lastUtc = ""; fixes++; }
+                records.Add(a);
+            }
+            assignments = records.ToArray();
             if (version < 1) { version = CurrentVersion; fixes++; }
             return fixes;
         }

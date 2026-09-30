@@ -447,8 +447,36 @@ namespace DrivingSchool.Presentation
                 lessonFinished = true;
                 if (autodrome.Session != null && autodrome.Session.Phase == CoursePhase.Running) autodrome.Cancel();   // «Завершить поездку» в паузе
             }
+            RecordProgress();
             if (debrief == null) { AppNavigator.ToMainMenu(); return; }
             debrief.Show(BuildDebrief());
+        }
+
+        bool progressRecorded;
+
+        /// <summary>
+        /// T70: законченная попытка задания — в профиль ученика (прогресс на экране «Задания»). Упражнение и экзамен
+        /// площадки — зачёт/незачёт с баллами площадки; урок — только выполненный (баллы — число замечаний).
+        /// Прерванная попытка («Завершить поездку» до конца) не записывается; свободная езда — тоже.
+        /// </summary>
+        void RecordProgress()
+        {
+            if (progressRecorded) return;
+            string id = LessonLaunch.LessonId;
+            if (string.IsNullOrEmpty(id)) return;
+            if (autodromeRun && autodrome != null && autodrome.Session != null)
+            {
+                var s = autodrome.Session;
+                if (s.Phase != CoursePhase.Passed && s.Phase != CoursePhase.Failed) return;
+                progressRecorded = true;
+                ProfileService.RecordAssignment(id, s.Phase == CoursePhase.Passed, s.Penalty, s.Elapsed);
+                return;
+            }
+            if (lesson != null && lesson.Session.Phase == GuidedPhase.Done)
+            {
+                progressRecorded = true;
+                ProfileService.RecordAssignment(id, true, log.Events.Count, (float)log.ElapsedSeconds);
+            }
         }
     }
 }

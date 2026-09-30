@@ -104,6 +104,17 @@ namespace DrivingSchool.Presentation.UI
             Save();
         }
 
+        /// <summary>
+        /// T70: законченная попытка задания (зачёт или незачёт) — в профиль и в файл. Прерванные попытки не записываются.
+        /// </summary>
+        public static AssignmentRecord RecordAssignment(string id, bool passed, int penalty, float seconds)
+        {
+            var record = Current.Record(id, passed, penalty, seconds, DateTime.UtcNow.ToString("O"));
+            Save();
+            Debug.Log($"[Profile] задание {id}: {(passed ? "зачёт" : "незачёт")}, попыток {record.attempts}, зачётов {record.passes}");
+            return record;
+        }
+
         static void SyncTransmissionToSettings(int transmission, bool save)
         {
             var s = SettingsService.Current;
