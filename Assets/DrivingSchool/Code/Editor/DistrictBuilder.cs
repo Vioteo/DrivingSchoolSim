@@ -33,7 +33,8 @@ namespace DrivingSchool.Editor
         const string Straight = "RK_Road_Urban_20m", Curve = "RK_Road_Curve90_R14", Cross = "RK_Road_Cross_24m", Zebra = RoadKitTemplates.CrosswalkId,
             ZebraPlain = RoadKitTemplates.ZebraPlainId;
         const string SpeedBump = "Assets/DrivingSchool/Art/SpeedBumps/DS_SpeedBump_Rubber_7m.fbx";
-        const string Ramp = RoadKitTemplates.RampId, Bridge = RoadKitTemplates.BridgeId;
+        const string Ramp = RoadKitTemplates.RampId, Bridge = RoadKitTemplates.BridgeId,
+                     RampFoot = RoadKitTemplates.RampFootId, RampCrest = RoadKitTemplates.RampCrestId;
 
         public sealed class Result
         {
@@ -142,13 +143,15 @@ namespace DrivingSchool.Editor
             var x10 = Dock("X10", Plain, "Socket_North", Arm("b", x4, "Socket_South", Straight, Straight), "Socket_Start");  // local North faces east
             From(x10, "Socket_South");
             for (int i = 2; i <= 8; i++) Next("b" + i, i == 4 ? Zebra : Straight);
-            // Overpass over the railway (T65): a left turn to the south, four ramps up (8 %, 6.4 m), three spans on columns
-            // over the track, four ramps down.
+            // Overpass over the railway (T65): a left turn to the south, the climb up (6.4 m), three spans on columns over the
+            // track, the climb down. T69: a climb is a foot, three 8 % ramps and a crest (vertical curves, no kinks), 100 m;
+            // one straight less before it keeps the spans over the track.
             Next("o0", Curve);
-            for (int i = 1; i <= 5; i++) Next("o" + i, Straight);
-            for (int i = 0; i < 4; i++) Next("up" + i, Ramp, "Socket_Start", "Socket_End");
+            for (int i = 1; i <= 4; i++) Next("o" + i, Straight);
+            string[] climb = { RampFoot, Ramp, Ramp, Ramp, RampCrest };
+            for (int i = 0; i < climb.Length; i++) Next("up" + i, climb[i], "Socket_Start", "Socket_End");
             for (int i = 0; i < 3; i++) Next("br" + i, Bridge, "Socket_Start", "Socket_End");
-            for (int i = 0; i < 4; i++) Next("dn" + i, Ramp, "Socket_End", "Socket_Start");
+            for (int i = 0; i < climb.Length; i++) Next("dn" + i, climb[climb.Length - 1 - i], "Socket_End", "Socket_Start");
             Next("o6", Straight);
             // South road (T66): from the foot of the overpass east, a zebra half way, then north to the level crossing.
             Next("so0", Curve);                                                        // left, to the east
@@ -328,7 +331,7 @@ namespace DrivingSchool.Editor
                     var rot = Quaternion.Euler(0, m.yawDeg, 0);
                     var dir = mesh.StartsWith("RK2_", StringComparison.Ordinal) ? RoadKitBuilder.PrefabsV2 + "/"
                         : mesh.StartsWith("RK3_", StringComparison.Ordinal) ? RoadKitBuilder.PrefabsV3 + "/"
-                        : mesh == Ramp || mesh == Bridge ? RoadKitBuilder.PrefabsOverpass + "/" : RK;
+                        : RoadKitTemplates.IsSloped(mesh) ? RoadKitBuilder.PrefabsOverpass + "/" : RK;
                     var go = Place(dir + mesh + ".prefab", new Vector3((float)m.x, (float)m.y, (float)m.z) + rot * new Vector3(0, 0, (float)dz), m.yawDeg, roads);
                     // A stretched straight (T66): the last piece is scaled along the road to close the loop exactly.
                     if (Math.Abs(scale - 1) > 1e-6) go.transform.localScale = new Vector3(1f, 1f, (float)scale);

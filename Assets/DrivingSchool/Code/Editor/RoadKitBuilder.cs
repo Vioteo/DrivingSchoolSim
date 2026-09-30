@@ -215,7 +215,7 @@ namespace DrivingSchool.Editor
             return n;
         }
 
-        /// <summary>Overpass kit (T65, tools/build_overpass.py): ramp 20 m (+1.6 m) and bridge span 20 m. Prefabs only.</summary>
+        /// <summary>Overpass kit (T65, tools/build_overpass.py): foot and crest 20 m (+0.8 m, vertical curves, T69), ramp 20 m (+1.6 m), bridge span 20 m. Prefabs only.</summary>
         [MenuItem("Driving School/Road Kit/Import overpass (ramp, bridge)")]
         public static int BuildOverpass()
         {
@@ -230,7 +230,7 @@ namespace DrivingSchool.Editor
                 if (Mathf.Abs(r.boundsMetres.z - 20f) > .01f) throw new InvalidOperationException(r.name + ": length " + r.boundsMetres.z);
                 n++;
             }
-            if (n != 2) throw new InvalidOperationException("Expected 2 overpass modules, found " + n);
+            if (n != 4) throw new InvalidOperationException("Expected 4 overpass modules (foot, ramp, crest, bridge — T69), found " + n);
             AssetDatabase.SaveAssets();
             Debug.Log("OVERPASS_UNITY_PASS: " + n + " prefabs");
             return n;
