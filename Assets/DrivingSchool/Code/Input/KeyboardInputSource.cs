@@ -142,15 +142,10 @@ namespace DrivingSchool.Input
         void PollKeyboardAxes(Keyboard kb, float dt)
         {
             var map = Map;
-            float targetSteer = 0f;
-            if (map.Held(kb, DriveAction.SteerLeft)) targetSteer -= 1f;
-            if (map.Held(kb, DriveAction.SteerRight)) targetSteer += 1f;
-            // A key is on/off: at speed the virtual steering wheel turns slower and not to full lock, otherwise a tap
-            // throws a 1.3-tonne car sideways and it feels weightless.
-            float v = Math.Abs(vehicleSpeedMps);
-            targetSteer *= MaxKeyboardSteer(v, wheelbaseM, maxSteerDeg, keyboardLateralMps2);
-            float speedFactor = 1f / (1f + v / 15f);
-            steering = Mathf.MoveTowards(steering, targetSteer, (Math.Abs(targetSteer) > 0.01f ? steeringRate * speedFactor : returnRate) * dt);
+            int steerKeys = 0;
+            if (map.Held(kb, DriveAction.SteerLeft)) steerKeys -= 1;
+            if (map.Held(kb, DriveAction.SteerRight)) steerKeys += 1;
+            steering = StepKeyboardSteer(steering, steerKeys, vehicleSpeedMps, dt, steeringRate, returnRate, wheelbaseM, maxSteerDeg, keyboardLateralMps2);
 
             bool gas = map.Held(kb, DriveAction.Gas), brk = map.Held(kb, DriveAction.Brake);
             throttle = Mathf.MoveTowards(throttle, gas ? 1f : 0f, (gas ? throttleRiseRate : pedalRate) * dt);
@@ -201,6 +196,32 @@ namespace DrivingSchool.Input
             if (v < 1f || maxSteerDeg <= 0f || wheelbaseM <= 0f || lateralMps2 <= 0f) return 1f;
             float deg = Mathf.Atan(wheelbaseM * lateralMps2 / (v * v)) * Mathf.Rad2Deg;
             return Mathf.Clamp(deg / maxSteerDeg, 0.03f, 1f);
+        }
+
+        /// <summary>Share of the speed's limit the key turns the wheel by per second, per unit of steeringRate (T71).</summary>
+        public const float KeyRiseShare = 0.8f;
+        /// <summary>Same for the return to centre, per unit of returnRate (T71).</summary>
+        public const float KeyReturnShare = 1f;
+
+        /// <summary>
+        /// One step of the virtual steering wheel turned by keys (T71). <paramref name="keyDirection"/>: −1 left, 0 none, 1 right.
+        /// A key is on/off, so at speed the wheel goes no further than <see cref="MaxKeyboardSteer"/> and turns at a rate
+        /// proportional to that limit: the limit is reached in ≈0.5 s and a released key centres in ≈0.3 s (at 100 %),
+        /// at 20 km/h and at 90 km/h alike. Before, the rate fell only as 1/(1 + v/15) while the limit falls as 1/v²:
+        /// at 60 km/h a 0.1 s tap already asked for 0.7 of the limit and 0.2 s for all of it — no small corrections.
+        /// Parking speeds (limit = full lock) keep nearly the old rate.
+        /// </summary>
+        public static float StepKeyboardSteer(float steering, int keyDirection, float speedMps, float dt,
+            float steeringRate, float returnRate, float wheelbaseM, float maxSteerDeg, float lateralMps2)
+        {
+            float v = Math.Abs(speedMps);
+            float limit = MaxKeyboardSteer(v, wheelbaseM, maxSteerDeg, lateralMps2);
+            float target = Math.Sign(keyDirection) * limit;
+            bool towardCentre = Math.Abs(target) < Math.Abs(steering) || target * steering < 0f;
+            float rate = towardCentre
+                ? returnRate * Math.Min(1f, Math.Max(limit, Math.Abs(steering)) * KeyReturnShare)
+                : steeringRate * Math.Min(1f / (1f + v / 15f), limit * KeyRiseShare);
+            return Mathf.MoveTowards(steering, target, rate * dt);
         }
 
         public static bool ShiftLocked(bool automatic, AutomaticSelector current, bool brakeHeld) =>
