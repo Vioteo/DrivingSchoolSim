@@ -106,7 +106,7 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.25
+    - _Smoothness: 0.05
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -116,8 +116,8 @@ Material:
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.03, g: 0.033, b: 0.035, a: 1}
-    - _Color: {r: 0.03, g: 0.033, b: 0.035, a: 1}
+    - _BaseColor: {r: 0.18974826, g: 0.1996634, b: 0.20598412, a: 1}
+    - _Color: {r: 0.18974826, g: 0.1996634, b: 0.20598412, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []

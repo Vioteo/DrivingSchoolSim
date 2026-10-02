@@ -22,6 +22,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Gauge_Face
+    second: {fileID: 2100000, guid: 578cb11789bb4074eb31fca0ab143a9b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Glass
     second: {fileID: 2100000, guid: 3aece4d788f857c44af142fd721c58a7, type: 2}
   - first:
