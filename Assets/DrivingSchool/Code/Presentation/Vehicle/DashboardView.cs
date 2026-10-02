@@ -90,10 +90,11 @@ namespace DrivingSchool.Presentation
             Vector3 P(float dx, float dy) => anchor + right * dx + up * dy + toEye * 0.003f;
             float big = iconSizeM * 1.4f, small = iconSizeM * 1.0f, pitch = small + iconGapM * 0.5f;
             float w = Mathf.Max(0.05f, b.size.x);
-            // A compact cluster (T66, the crossover: small dials, the hood comes down to their hubs and the rim hides
-            // their outer sides): the driver sees only a band ≈50 mm high between the dials. Three rows there — the turn
-            // arrows beside the gear, the eight lamps, the high beam and the fuel bar.
-            if (FindDial(new[] { "GaugeFace_km", "GaugeTicks_Speed" }, out var dial) && 0.5f * Mathf.Min(dial.size.x, dial.size.y) < 0.06f)
+            // A compact cluster (T66, the crossover before T72: one wide screen behind both dials, the hood down to their
+            // hubs): the driver sees only a band ≈50 mm high between the dials. Three rows there — the turn arrows beside
+            // the gear, the eight lamps, the high beam and the fuel bar. Since T72 both cars have a display between the
+            // dials taller than wide (≈68 × 88 mm), so this branch is kept only for such old wide screens.
+            if (FindDial(SpeedDial, out var dial) && b.size.x > 1.5f * b.size.y)
             {
                 anchor = new Vector3(b.center.x, dial.center.y, b.min.z) + rowOffset;
                 float half = Mathf.Abs(dial.center.x - b.center.x) - 0.5f * Mathf.Min(dial.size.x, dial.size.y);   // free width each side
@@ -124,10 +125,14 @@ namespace DrivingSchool.Presentation
             // handbrake/seat belt in the speedometer.
             // T66: the dials are GaugeFace_* on the sedan and only GaugeTicks_* on the crossover — without the fallback
             // both rows landed on one spot and the lamps covered each other (the low beam looked cut off).
-            PlaceInDial(root, new[] { "GaugeFace_RPM", "GaugeTicks_RPM" }, new[] { Telltale.Battery, Telltale.Oil, Telltale.CheckEngine, Telltale.LowFuel }, small, pitch, -1);
-            PlaceInDial(root, new[] { "GaugeFace_km", "GaugeTicks_Speed" }, new[] { Telltale.LowBeam, Telltale.Parking, Telltale.Handbrake, Telltale.Seatbelt }, small, pitch, 1);
+            PlaceInDial(root, RpmDial, new[] { Telltale.Battery, Telltale.Oil, Telltale.CheckEngine, Telltale.LowFuel }, small, pitch, -1);
+            PlaceInDial(root, SpeedDial, new[] { Telltale.LowBeam, Telltale.Parking, Telltale.Handbrake, Telltale.Seatbelt }, small, pitch, 1);
             HideStaticGear();
         }
+
+        // Dial faces: GaugeFace_RPM / GaugeFace_Speed (T72, both cars), the sedan's old GaugeFace_km/h, ticks as a fallback.
+        static readonly string[] RpmDial = { "GaugeFace_RPM", "GaugeTicks_RPM" };
+        static readonly string[] SpeedDial = { "GaugeFace_Speed", "GaugeFace_km", "GaugeTicks_Speed" };
 
         /// <summary>The model's static "N" and odometer sit where the live gear is drawn now.</summary>
         void HideStaticGear()
@@ -152,7 +157,11 @@ namespace DrivingSchool.Presentation
             if (FindDial(facePrefixes, out var b))
             {
                 float radius = 0.5f * Mathf.Min(b.size.x, b.size.y);
-                centre = new Vector3(b.center.x, b.center.y + 0.31f * radius, b.min.z - 0.006f); // between the hub and the numbers
+                // Between the hub and the numbers. On a real-size dial (T72: Ø 105 mm) a 16 mm lamp row would cover the
+                // numbers, so the lamps shrink with the dial: 0.16 r each, the row 0.24 r above the hub.
+                float fit = Mathf.Min(size, 0.16f * radius);
+                pitch *= fit / size; size = fit;
+                centre = new Vector3(b.center.x, b.center.y + 0.24f * radius, b.min.z - 0.006f);
             }
             // No dial found: the two rows side by side under the eye, never on top of each other.
             else centre = EyeInCar() + new Vector3(side * (lamps.Length * pitch * 0.5f + pitch), -0.2f, 0.65f);
@@ -565,13 +574,15 @@ namespace DrivingSchool.Presentation
                 Line(px, Polar(a, rIn, s), Polar(a, rOut, s), (isMajor ? 0.0011f : 0.0007f) * s, col);
             }
             // Numbers.
+            // T72: numbers as large as fit between neighbours (labels 26° apart on a 0.63 r circle: a three-digit label
+            // 2.06 h wide stays under the 0.28 r chord), narrower digits than before (0.52 h instead of 0.58 h).
             int digits = Mathf.RoundToInt(max).ToString().Length;
-            float h = (digits >= 3 ? 0.10f : digits == 2 ? 0.12f : 0.15f) * radius, gap = 0.28f * h, dw = 0.58f * h, stroke = 0.085f * h;
+            float h = (digits >= 3 ? 0.125f : digits == 2 ? 0.14f : 0.17f) * radius, gap = 0.25f * h, dw = 0.52f * h, stroke = 0.085f * h;
             for (float v = 0f; v <= max + 1e-3f; v += labelEvery)
             {
                 string text = Mathf.RoundToInt(v).ToString();
                 float a = Angle(v) * Mathf.Deg2Rad;
-                Vector2 c = Polar(a, 0.62f * radius, s);
+                Vector2 c = Polar(a, 0.63f * radius, s);
                 float totalW = (text.Length * dw + (text.Length - 1) * gap) * s;
                 var col = v >= redFrom - 1e-3f ? RedInk : Ink;
                 for (int i = 0; i < text.Length; i++)

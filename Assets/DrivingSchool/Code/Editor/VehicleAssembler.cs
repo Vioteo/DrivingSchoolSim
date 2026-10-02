@@ -42,6 +42,7 @@ namespace DrivingSchool.Editor
         public static void BuildAll()
         {
             var catalog = LoadCatalog();
+            VehicleMaterialLibrary.UpdateAll();   // T72: surface recipes of the shared car materials
             bool ok = true;
             foreach (var v in catalog.vehicles)
             {
@@ -101,6 +102,7 @@ namespace DrivingSchool.Editor
                 m.SetFloat("_ZWrite", 0); m.EnableKeyword("_SURFACE_TYPE_TRANSPARENT"); m.renderQueue = 3000;
             }
             if (name.StartsWith("Lamp_", StringComparison.Ordinal) || name == "Ink") { m.EnableKeyword("_EMISSION"); m.SetColor("_EmissionColor", m.GetColor("_BaseColor") * 1.5f); }
+            VehicleMaterialLibrary.Apply(m);      // known car materials get their recipe (T72); others keep the defaults above
             AssetDatabase.CreateAsset(m, path);
             return m;
         }
