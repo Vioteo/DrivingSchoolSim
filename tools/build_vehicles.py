@@ -5,6 +5,9 @@
 
 or double-click tools/build_vehicles.bat.
 
+The player sedan DS_Sedan_A (LOD0) is skipped: it is built by tools/build_sedan_exterior.py, build_sedan_interior.py
+and build_sedan_cluster.py on ArtSource/DS_Sedan_A.blend; pass --kit-sedan to rebuild it from the kit anyway (T72).
+
 For every vehicle it writes
   ArtSource/Vehicles/<id>.blend, <id>_Traffic.blend           (sources)
   Assets/DrivingSchool/Art/Vehicles/<id>.fbx, <id>_Traffic.fbx (Unity)
@@ -229,12 +232,20 @@ def build_one(spec, lod, stamp, report):
 
 def main():
     args = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
-    todo = [s for s in specs.ALL if not args or s['id'] in args]
+    flags = {a for a in args if a.startswith('--')}
+    ids = [a for a in args if not a.startswith('--')]
+    todo = [s for s in specs.ALL if not ids or s['id'] in ids]
     stamp = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
     report = dict(script='tools/build_vehicles.py', utc=datetime.datetime.utcnow().isoformat() + 'Z',
-                  blender=bpy.app.version_string, backup={}, vehicles=[])
+                  blender=bpy.app.version_string, backup={}, vehicles=[], skipped=[])
     for spec in todo:
         for lod in ('hi', 'lo'):
+            # T72: the player sedan (Lada Vesta look) is built by build_sedan_exterior/interior/cluster.py on its own
+            # .blend; the kit's 2000s sedan would overwrite it. Only its traffic LOD comes from here, unless asked.
+            if spec['id'] == 'DS_Sedan_A' and lod == 'hi' and '--kit-sedan' not in flags:
+                report['skipped'].append('DS_Sedan_A hi (player sedan: tools/build_sedan_*.py; pass --kit-sedan to rebuild it from the kit)')
+                print('VEHICLE_SKIPPED DS_Sedan_A hi (player sedan is built by tools/build_sedan_*.py)', flush=True)
+                continue
             build_one(spec, lod, stamp, report)
     REPORTS.mkdir(parents=True, exist_ok=True)
     (REPORTS / 'vehicles-manifest.json').write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding='utf-8')

@@ -173,14 +173,7 @@ class Cabin:
                 (yf + 0.22, top - 0.42)]
         dash = prism_x(self.under_glass(prof, xw), -xw, xw)
         parts.append(Part('Dashboard', material='Interior_Graphite').add(dash))
-        # binnacle hood over two round gauges
-        cx, cz = H[0], top - 0.04
-        hood = superellipsoid((cx, yf + 0.02, cz + 0.03), (0.2, 0.09, 0.06), 0.4, 20, 8)
-        parts.append(Part('Instrument_Hood', material='Interior_Graphite').add(hood))
-        face_y = yf - 0.045
-        self.gauges(parts, [(cx - 0.085, 'RPM', 0.07), (cx + 0.085, 'Speed', 0.07)], face_y, cz - 0.005, ring=True)
-        self.cluster_y = face_y
-        self.cluster_z = cz - 0.005
+        self.cluster_pod(parts, 'classic')
         # centre stack: two vents, radio, three knobs
         sx = 0.0
         stack = rbox((sx, yf + 0.03, top - 0.2), (0.3, 0.1, 0.34), 0.02)
@@ -210,15 +203,7 @@ class Cabin:
         parts.append(Part('Dashboard_Lower', material='Interior_Stone').add(prism_x(self.under_glass(lo, xw), -xw + 0.01, xw - 0.01)))
         strip = rbox((0, yf + 0.0, top - 0.11), (2 * xw - 0.06, 0.03, 0.022), 0.006)
         parts.append(Part('Dash_Trim', material='Satin_Aluminium').add(strip))
-        # screen cluster under a slim hood
-        cx, cz = H[0], top + 0.005
-        hood = superellipsoid((cx, yf + 0.06, cz + 0.045), (0.17, 0.075, 0.03), 0.3, 16, 6)
-        parts.append(Part('Instrument_Hood', material='Interior_Graphite').add(hood))
-        scr = slab((cx, yf + 0.02, cz), (1, 0, 0), norm((0, -0.25, 1)), 0.3, 0.11, 0.012)
-        parts.append(Part('Cluster_Display', material='Display').add(scr))
-        self.gauges(parts, [(cx - 0.085, 'RPM', 0.045), (cx + 0.085, 'Speed', 0.045)], yf + 0.012, cz, ring=False)
-        self.cluster_y = yf + 0.012
-        self.cluster_z = cz
+        self.cluster_pod(parts, 'modern')
         # floating touchscreen
         tab = slab((0.02, yf + 0.03, top + 0.07), (1, 0, 0), norm((0, -0.18, 1)), 0.26, 0.16, 0.018)
         parts.append(Part('Infotainment', material='Interior_Graphite').add(tab))
@@ -243,23 +228,15 @@ class Cabin:
             parts.append(Part('Instrument_Hood', material='Interior_Graphite').add(rbox((self.H[0], yf + 0.03, top + dz / 2 + 0.01), (0.34, 0.1, dz + 0.06), 0.02)))
         parts.append(Part('Cluster_Display', material='Display').add(slab((self.H[0], yf - 0.022, top + dz), (1, 0, 0), (0, 0, 1), 0.3, 0.07, 0.004)))
 
-    def gauges(self, parts, dials, y, z, ring=True):
-        for x, title, r in dials:
-            if ring:
-                parts.append(Part('GaugeFace_' + title, material='Rubber').add(cylinder((x, y + 0.012, z), (x, y, z), r, 32)))
-                parts.append(Part('GaugeBezel_' + title, material='Satin_Aluminium').add(torus((x, y - 0.002, z), (0, 1, 0), r, 0.004, 32, 6)))
-            ticks = []
-            for i in range(11):
-                a = math.radians(-130 + i * 26)
-                p1 = (x + math.sin(a) * r * 0.78, y - 0.003, z + math.cos(a) * r * 0.78)
-                p2 = (x + math.sin(a) * r * 0.92, y - 0.003, z + math.cos(a) * r * 0.92)
-                ticks.append(tube([p1, p2], 0.0018, 4))
-            parts.append(Part('GaugeTicks_' + title, material='Ink').add(merge(*ticks)))
-            piv = 'Needle_' + title
-            parts.append(Part(piv, kind='empty', loc=(x, y - 0.006, z)))
-            needle = tube([(0, 0, 0), (-r * 0.6, 0, -r * 0.6)], 0.0022, 4)
-            parts.append(Part('NeedleBlade_' + title, material='Lamp_Red', parent=piv).add(needle))
-            parts.append(Part('NeedleHub_' + title, material='Satin_Aluminium', parent=piv).add(cylinder((0, 0.001, 0), (0, -0.004, 0), 0.008, 12)))
+    def cluster_pod(self, parts, style):
+        """Instrument binnacle in front of the dash face (T72), see cluster_pod() below. The dials sit where the driver
+        sees them through the upper half of the steering wheel, between the hub and the rim; before T72 the
+        crossover's dials were centred on the dash top line and the dash lip hid their lower half."""
+        C, H = self.C, self.H
+        yf, top = C['dash_face_y'], C['dash_top_z']
+        self.cluster_y = yf - C.get('cluster_out', 0.045)
+        self.cluster_z = top + C.get('gauge_dz', -0.068)
+        cluster_pod(parts, H[0], self.cluster_y, self.cluster_z, top, C.get('gauge_r', 0.0525), C.get('gauge_gap', 0.068), style)
 
     def vent(self, parts, c, w, h, name):
         frame = slab(c, (1, 0, 0), (0, 0, 1), w, h, 0.012)
@@ -283,7 +260,7 @@ class Cabin:
         hub = superellipsoid((0, -0.03, -0.01), (0.075, 0.035, 0.06), 0.45, 16, 8)
         spokes = []
         if style == 'classic':
-            for a in (-60, 60, -120, 120):
+            for a in (-100, 100, -155, 155):        # T72: none across the dials
                 t = math.radians(a)
                 spokes.append(tube([(0, -0.02, 0), (R * math.sin(t) * 0.95, -0.005, R * math.cos(t) * 0.95)], 0.012, 6))
         else:
@@ -388,6 +365,55 @@ class Cabin:
             top = gh.point('F', 0.5 + s * 0.25, 0.97)
             parts.append(Part('SunVisor' + ('_R' if s > 0 else '_L'), material='Interior_Stone').add(
                 rbox((top[0], top[1] - 0.09, top[2] - 0.03), (0.32, 0.13, 0.014), 0.005)))
+
+
+def cluster_pod(parts, cx, y_face, cz, top, r=0.0525, gap=0.068, style='modern'):
+    """Instrument binnacle (T72): two real-size dials (default Ø 105 mm, centres ≈ 180 mm apart) and the centre display
+    between them, on a back panel under a hood (visor, cheeks, sill). Shared by the vehicle kit and the player sedan
+    (tools/build_sedan_cluster.py).
+
+    cx: centre line (the driver's x), y_face: plane of the dial faces (they face the driver, -Y), cz: dial centres,
+    top: dash top height (the visor sits on it). Contract: GaugeFace_RPM / GaugeFace_Speed are the discs the game prints
+    its scales on (DashboardView.BuildDials takes their size), Needle_RPM / Needle_Speed the pivots (VehicleVisuals),
+    Cluster_Display the screen for the gear, turn arrows and fuel bar (DashboardView.BuildClusterLayout),
+    Instrument_Hood the hood."""
+    dx = r + gap / 2 + 0.008
+    half_w = dx + r + 0.02
+    z0, z1 = cz - r - 0.02, top + 0.012
+    # back panel: hides the dash face behind the dials
+    parts.append(Part('Cluster_Panel', material='Plastic_Black').add(
+        slab((cx, y_face + 0.016, (z0 + z1) / 2), (1, 0, 0), (0, 0, 1), 2 * half_w - 0.01, z1 - z0, 0.02)))
+    # hood: a visor over the dials, cheeks down the sides, a sill under them
+    visor = superellipsoid((cx, y_face + 0.03, top + 0.022), (half_w + 0.012, 0.07, 0.024), 0.32, 24, 8)
+    cheeks = merge(*[rbox((cx + s * (half_w + 0.004), y_face + 0.012, (z0 + top + 0.02) / 2), (0.022, 0.07, top + 0.02 - z0), 0.008)
+                     for s in (-1, 1)])
+    sill = rbox((cx, y_face + 0.01, z0 - 0.004), (2 * half_w + 0.03, 0.065, 0.016), 0.006)
+    parts.append(Part('Instrument_Hood', material='Interior_Graphite').add(merge(visor, cheeks, sill)))
+    # centre display between the dials
+    parts.append(Part('Cluster_Display', material='Display').add(
+        slab((cx, y_face + 0.004, cz + 0.002), (1, 0, 0), (0, 0, 1), gap, 0.088, 0.006)))
+    ring = style == 'classic'
+    for x, title in ((cx - dx, 'RPM'), (cx + dx, 'Speed')):
+        parts.append(Part('GaugeFace_' + title, material='Gauge_Face').add(cylinder((x, y_face + 0.006, cz), (x, y_face, cz), r, 48)))
+        # bezel: a satin ring on the classic cluster, a dark rim on the modern one
+        bez = torus((x, y_face - 0.001, cz), (0, 1, 0), r + 0.0015, 0.0035 if ring else 0.0025, 48, 8)
+        parts.append(Part('GaugeBezel_' + title, material='Satin_Aluminium' if ring else 'Trim_Black').add(bez))
+        # fallback scale (11 ticks); the game hides it under its printed scale
+        ticks = []
+        for i in range(11):
+            a = math.radians(-130 + i * 26)
+            p1 = (x + math.sin(a) * r * 0.78, y_face - 0.002, cz + math.cos(a) * r * 0.78)
+            p2 = (x + math.sin(a) * r * 0.92, y_face - 0.002, cz + math.cos(a) * r * 0.92)
+            ticks.append(tube([p1, p2], 0.0015, 4))
+        parts.append(Part('GaugeTicks_' + title, material='Ink').add(merge(*ticks)))
+        piv = 'Needle_' + title
+        parts.append(Part(piv, kind='empty', loc=(x, y_face - 0.007, cz)))
+        # the needle points at the zero (-130 deg from 12 o'clock) and reaches the inner end of the ticks
+        a0 = math.radians(-130)
+        tip = (math.sin(a0) * r * 0.86, 0, math.cos(a0) * r * 0.86)
+        tail = (-math.sin(a0) * r * 0.14, 0, -math.cos(a0) * r * 0.14)
+        parts.append(Part('NeedleBlade_' + title, material='Lamp_Red', parent=piv).add(tube([tail, tip], 0.0017, 6)))
+        parts.append(Part('NeedleHub_' + title, material='Trim_Black', parent=piv).add(cylinder((0, 0.001, 0), (0, -0.005, 0), 0.0075, 16)))
 
 
 def S_arch_limit(S):
