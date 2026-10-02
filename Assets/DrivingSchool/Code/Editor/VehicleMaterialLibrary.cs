@@ -10,7 +10,8 @@ namespace DrivingSchool.Editor
     /// colours were the Blender (linear) values used as sRGB, so cars were darker than modelled — the other kits convert
     /// with Color.gamma (TransitKitBuilder, TrainKitBuilder, PedestrianAssetBuilder), the cars did not.
     ///  • Lin(…) — the colour of tools/vehicle_kit/materials.py (sedan values where its .blend differs), converted to sRGB;
-    ///  • Srgb(…) — chosen in Unity and kept: lamp lenses, screens, dial faces (they must stay near black), print, glass;
+    ///  • Srgb(…) — chosen in Unity: lamp lenses, screens, dial faces (they must stay near black), print, the dark cabin
+    ///    plastics and leather (the palette values looked light grey in sunlight);
     ///  • paints use URP Complex Lit with a clear coat (glossy lacquer over the metallic or solid base).
     /// Applied when VehicleAssembler creates a material, by Driving School → Vehicles → Import, audit and build traffic
     /// prefabs and by its own menu item. Idempotent: values are set, not scaled.
@@ -62,12 +63,12 @@ namespace DrivingSchool.Editor
             { "Lamp_Amber", Srgb(1f, .3f, .025f, 0f, .9f) },
             { "Lamp_Blue", Srgb(.02f, .12f, 1f, 0f, .9f) },
             // cabin
-            { "Interior_Graphite", Lin(.038f, .048f, .052f, 0f, .3f) },
-            { "Interior_Graphite_Light", Lin(.07f, .08f, .085f, 0f, .3f) },
+            { "Interior_Graphite", Srgb(.12f, .13f, .14f, 0f, .3f) },      // checked in Play: the palette value (sRGB .22) read as light grey in the sun
+            { "Interior_Graphite_Light", Srgb(.2f, .21f, .22f, 0f, .3f) },
             { "Interior_Stone", Lin(.32f, .35f, .32f, 0f, .18f) },
             { "Interior_Light", Lin(.62f, .64f, .63f, 0f, .3f) },
             { "Carpet", Lin(.03f, .033f, .035f, 0f, .05f) },
-            { "Leather", Lin(.07f, .085f, .08f, 0f, .38f) },
+            { "Leather", Srgb(.1f, .11f, .11f, 0f, .38f) },              // black leather: steering wheel, seats
             { "Seat_Fabric", Lin(.105f, .145f, .15f, 0f, .08f) },
             { "Seat_Insert", Lin(.23f, .3f, .3f, 0f, .08f) },
             { "Stitch", Lin(.55f, .58f, .48f, 0f, .1f) },
