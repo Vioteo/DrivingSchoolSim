@@ -1,0 +1,425 @@
+{
+  "script": "tools/build_vehicles.py",
+  "utc": "2026-10-02T05:49:35.434063Z",
+  "blender": "5.0.1",
+  "backup": {
+    "ArtSource\\Vehicles\\DS_Sedan_A_Traffic.blend": "ArtSource_Backup\\DS_Sedan_A_Traffic_before-vehicle-kit_20261002-084935.blend",
+    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Sedan_A_Traffic.fbx": "ArtSource_Backup\\DS_Sedan_A_Traffic_before-vehicle-kit_20261002-084935.fbx",
+    "ArtSource\\Vehicles\\DS_Crossover_A.blend": "ArtSource_Backup\\DS_Crossover_A_before-vehicle-kit_20261002-084935.blend",
+    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Crossover_A.fbx": "ArtSource_Backup\\DS_Crossover_A_before-vehicle-kit_20261002-084935.fbx",
+    "ArtSource\\Vehicles\\DS_Crossover_A_Traffic.blend": "ArtSource_Backup\\DS_Crossover_A_Traffic_before-vehicle-kit_20261002-084935.blend",
+    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Crossover_A_Traffic.fbx": "ArtSource_Backup\\DS_Crossover_A_Traffic_before-vehicle-kit_20261002-084935.fbx",
+    "ArtSource\\Vehicles\\DS_Police_A_Traffic.blend": "ArtSource_Backup\\DS_Police_A_Traffic_before-vehicle-kit_20261002-084935.blend",
+    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Police_A_Traffic.fbx": "ArtSource_Backup\\DS_Police_A_Traffic_before-vehicle-kit_20261002-084935.fbx",
+    "ArtSource\\Vehicles\\DS_Ambulance_A_Traffic.blend": "ArtSource_Backup\\DS_Ambulance_A_Traffic_before-vehicle-kit_20261002-084935.blend",
+    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Ambulance_A_Traffic.fbx": "ArtSource_Backup\\DS_Ambulance_A_Traffic_before-vehicle-kit_20261002-084935.fbx"
+  },
+  "vehicles": [
+    {
+      "id": "DS_Sedan_A",
+      "lod": "lo",
+      "title": "Седан (учебный, 2000-е)",
+      "blend": "ArtSource\\Vehicles\\DS_Sedan_A_Traffic.blend",
+      "fbx": "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Sedan_A_Traffic.fbx",
+      "fbx_sha256": "b470846180f6dadf02513c69933e4228131e79d1048fb11acdd85662ddb2b302",
+      "triangles": 31076,
+      "bounds_min": [
+        -1.039,
+        -2.217,
+        0.004
+      ],
+      "bounds_max": [
+        1.039,
+        2.217,
+        1.49
+      ],
+      "size": [
+        2.078,
+        4.434,
+        1.486
+      ],
+      "interior": "simple"
+    },
+    {
+      "id": "DS_Crossover_A",
+      "lod": "hi",
+      "title": "Кроссовер (2020-е)",
+      "blend": "ArtSource\\Vehicles\\DS_Crossover_A.blend",
+      "fbx": "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Crossover_A.fbx",
+      "fbx_sha256": "d6625cf4146c03806f1528efa9908e809e47bb0926faf24b7096b2254203f16b",
+      "triangles": 145190,
+      "bounds_min": [
+        -1.083,
+        -2.197,
+        0.0
+      ],
+      "bounds_max": [
+        1.083,
+        2.197,
+        1.71
+      ],
+      "size": [
+        2.166,
+        4.394,
+        1.71
+      ],
+      "interior": "modern",
+      "checks": [
+        {
+          "id": "Потолок над глазами, м",
+          "status": "PASS",
+          "value": 0.236,
+          "target": ">= 0.16 (голова ~0.12 над глазами + зазор)"
+        },
+        {
+          "id": "Глаз перед подголовником, м",
+          "status": "PASS",
+          "value": 0.162,
+          "target": "0.06..0.20"
+        },
+        {
+          "id": "Глаз не внутри сиденья",
+          "status": "PASS",
+          "value": null,
+          "target": "нет препятствия впереди"
+        },
+        {
+          "id": "Обзор вверх через стекло, град",
+          "status": "PASS",
+          "value": 18,
+          "target": ">= 14 (светофор у стоп-линии)"
+        },
+        {
+          "id": "Мёртвая зона перед бампером, м",
+          "status": "PASS",
+          "value": 5.25,
+          "target": "<= 6.5"
+        },
+        {
+          "id": "Приборы видны сквозь руль",
+          "status": "PASS",
+          "value": "видны",
+          "target": "видны"
+        },
+        {
+          "id": "Руль - грудь, м",
+          "status": "PASS",
+          "value": 0.32,
+          "target": "0.25..0.45"
+        },
+        {
+          "id": "Зазор руль - бедро, м",
+          "status": "PASS",
+          "value": 0.053,
+          "target": ">= 0.05"
+        },
+        {
+          "id": "Таз - педаль тормоза, м",
+          "status": "PASS",
+          "value": 0.802,
+          "target": "0.78..1.00"
+        },
+        {
+          "id": "Салон не выходит за кузов, м",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "<= 0.003"
+        },
+        {
+          "id": "Салон не протыкает стёкла и крышу, м",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "<= 0"
+        },
+        {
+          "id": "Шина не торчит из кузова, м",
+          "status": "PASS",
+          "value": -0.007,
+          "target": "<= +0.01"
+        },
+        {
+          "id": "Зазор шина - арка, м",
+          "status": "PASS",
+          "value": 0.085,
+          "target": ">= 0.06"
+        }
+      ]
+    },
+    {
+      "id": "DS_Crossover_A",
+      "lod": "lo",
+      "title": "Кроссовер (2020-е)",
+      "blend": "ArtSource\\Vehicles\\DS_Crossover_A_Traffic.blend",
+      "fbx": "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Crossover_A_Traffic.fbx",
+      "fbx_sha256": "f368f3b887f623cc8e2256c77570093f918bf20b0f3078caaf37997fcae16a45",
+      "triangles": 32174,
+      "bounds_min": [
+        -1.083,
+        -2.197,
+        0.004
+      ],
+      "bounds_max": [
+        1.083,
+        2.197,
+        1.71
+      ],
+      "size": [
+        2.166,
+        4.394,
+        1.706
+      ],
+      "interior": "simple"
+    },
+    {
+      "id": "DS_Police_A",
+      "lod": "hi",
+      "title": "Полиция (на базе седана)",
+      "blend": "ArtSource\\Vehicles\\DS_Police_A.blend",
+      "fbx": "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Police_A.fbx",
+      "fbx_sha256": "2bacc1e7086c65ffb549a45156d1cc298c0e1762de33ad1b655fb7a02237498b",
+      "triangles": 150322,
+      "bounds_min": [
+        -1.041,
+        -2.217,
+        0.0
+      ],
+      "bounds_max": [
+        1.041,
+        2.217,
+        1.591
+      ],
+      "size": [
+        2.082,
+        4.434,
+        1.591
+      ],
+      "interior": "simple",
+      "checks": [
+        {
+          "id": "Потолок над глазами, м",
+          "status": "PASS",
+          "value": 0.227,
+          "target": ">= 0.16 (голова ~0.12 над глазами + зазор)"
+        },
+        {
+          "id": "Глаз перед подголовником, м",
+          "status": "PASS",
+          "value": 0.17,
+          "target": "0.06..0.20"
+        },
+        {
+          "id": "Глаз не внутри сиденья",
+          "status": "PASS",
+          "value": null,
+          "target": "нет препятствия впереди"
+        },
+        {
+          "id": "Обзор вверх через стекло, град",
+          "status": "PASS",
+          "value": 14,
+          "target": ">= 14 (светофор у стоп-линии)"
+        },
+        {
+          "id": "Мёртвая зона перед бампером, м",
+          "status": "PASS",
+          "value": 5.6,
+          "target": "<= 6.5"
+        },
+        {
+          "id": "Приборы видны сквозь руль",
+          "status": "PASS",
+          "value": "видны",
+          "target": "видны"
+        },
+        {
+          "id": "Руль - грудь, м",
+          "status": "PASS",
+          "value": 0.311,
+          "target": "0.25..0.45"
+        },
+        {
+          "id": "Зазор руль - бедро, м",
+          "status": "PASS",
+          "value": 0.06,
+          "target": ">= 0.05"
+        },
+        {
+          "id": "Салон не выходит за кузов, м",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "<= 0.003"
+        },
+        {
+          "id": "Салон не протыкает стёкла и крышу, м",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "<= 0"
+        },
+        {
+          "id": "Шина не торчит из кузова, м",
+          "status": "PASS",
+          "value": -0.032,
+          "target": "<= +0.01"
+        },
+        {
+          "id": "Зазор шина - арка, м",
+          "status": "PASS",
+          "value": 0.075,
+          "target": ">= 0.06"
+        }
+      ]
+    },
+    {
+      "id": "DS_Police_A",
+      "lod": "lo",
+      "title": "Полиция (на базе седана)",
+      "blend": "ArtSource\\Vehicles\\DS_Police_A_Traffic.blend",
+      "fbx": "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Police_A_Traffic.fbx",
+      "fbx_sha256": "61094fff6a3cb9997ec5e7912b1f813534cabda35dc0ba83987fb8042600f1ef",
+      "triangles": 38216,
+      "bounds_min": [
+        -1.039,
+        -2.217,
+        0.004
+      ],
+      "bounds_max": [
+        1.039,
+        2.217,
+        1.591
+      ],
+      "size": [
+        2.078,
+        4.434,
+        1.587
+      ],
+      "interior": "simple"
+    },
+    {
+      "id": "DS_Ambulance_A",
+      "lod": "hi",
+      "title": "Скорая помощь (фургон)",
+      "blend": "ArtSource\\Vehicles\\DS_Ambulance_A.blend",
+      "fbx": "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Ambulance_A.fbx",
+      "fbx_sha256": "7d49d64163e96efa86db2c4f2821280cb0047a819926456c46a79c74a290048a",
+      "triangles": 158880,
+      "bounds_min": [
+        -1.317,
+        -3.02,
+        0.0
+      ],
+      "bounds_max": [
+        1.317,
+        2.617,
+        2.688
+      ],
+      "size": [
+        2.634,
+        5.637,
+        2.688
+      ],
+      "interior": "simple",
+      "checks": [
+        {
+          "id": "Потолок над глазами, м",
+          "status": "PASS",
+          "value": 0.907,
+          "target": ">= 0.16 (голова ~0.12 над глазами + зазор)"
+        },
+        {
+          "id": "Глаз перед подголовником, м",
+          "status": "PASS",
+          "value": 0.147,
+          "target": "0.06..0.20"
+        },
+        {
+          "id": "Глаз не внутри сиденья",
+          "status": "PASS",
+          "value": null,
+          "target": "нет препятствия впереди"
+        },
+        {
+          "id": "Обзор вверх через стекло, град",
+          "status": "PASS",
+          "value": 30,
+          "target": ">= 14 (светофор у стоп-линии)"
+        },
+        {
+          "id": "Мёртвая зона перед бампером, м",
+          "status": "PASS",
+          "value": 3.01,
+          "target": "<= 6.5"
+        },
+        {
+          "id": "Приборы видны сквозь руль",
+          "status": "PASS",
+          "value": "видны",
+          "target": "видны"
+        },
+        {
+          "id": "Руль - грудь, м",
+          "status": "PASS",
+          "value": 0.297,
+          "target": "0.25..0.45"
+        },
+        {
+          "id": "Зазор руль - бедро, м",
+          "status": "PASS",
+          "value": 0.059,
+          "target": ">= 0.05"
+        },
+        {
+          "id": "Салон не выходит за кузов, м",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "<= 0.003"
+        },
+        {
+          "id": "Салон не протыкает стёкла и крышу, м",
+          "status": "PASS",
+          "value": 0.0,
+          "target": "<= 0"
+        },
+        {
+          "id": "Шина не торчит из кузова, м",
+          "status": "PASS",
+          "value": -0.052,
+          "target": "<= +0.01"
+        },
+        {
+          "id": "Зазор шина - арка, м",
+          "status": "PASS",
+          "value": 0.09,
+          "target": ">= 0.06"
+        }
+      ]
+    },
+    {
+      "id": "DS_Ambulance_A",
+      "lod": "lo",
+      "title": "Скорая помощь (фургон)",
+      "blend": "ArtSource\\Vehicles\\DS_Ambulance_A_Traffic.blend",
+      "fbx": "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Ambulance_A_Traffic.fbx",
+      "fbx_sha256": "39276c7597de1f181c1594e4a629f52be100f2d2d77ee22f8c4dcf0a50e968b9",
+      "triangles": 63222,
+      "bounds_min": [
+        -1.315,
+        -3.02,
+        0.004
+      ],
+      "bounds_max": [
+        1.315,
+        2.617,
+        2.688
+      ],
+      "size": [
+        2.63,
+        5.637,
+        2.684
+      ],
+      "interior": "simple"
+    }
+  ],
+  "skipped": [
+    "DS_Sedan_A hi (player sedan: tools/build_sedan_*.py; pass --kit-sedan to rebuild it from the kit)"
+  ]
+}

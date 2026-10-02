@@ -173,6 +173,14 @@
       ]
     },
     {
+      "name": "Cluster_Panel",
+      "vertices": 8,
+      "triangles": 12,
+      "materials": [
+        "Plastic_Black"
+      ]
+    },
+    {
       "name": "Console_Body",
       "vertices": 72,
       "triangles": 140,
@@ -611,35 +619,51 @@
       ]
     },
     {
-      "name": "GaugeBezel",
-      "vertices": 576,
-      "triangles": 1152,
+      "name": "GaugeBezel_RPM",
+      "vertices": 384,
+      "triangles": 768,
       "materials": [
         "Satin_Aluminium"
       ]
     },
     {
-      "name": "GaugeBezel.001",
-      "vertices": 576,
-      "triangles": 1152,
+      "name": "GaugeBezel_Speed",
+      "vertices": 384,
+      "triangles": 768,
       "materials": [
         "Satin_Aluminium"
-      ]
-    },
-    {
-      "name": "GaugeFace_km/h",
-      "vertices": 128,
-      "triangles": 252,
-      "materials": [
-        "Rubber"
       ]
     },
     {
       "name": "GaugeFace_RPM",
-      "vertices": 128,
-      "triangles": 252,
+      "vertices": 98,
+      "triangles": 192,
       "materials": [
-        "Rubber"
+        "Gauge_Face"
+      ]
+    },
+    {
+      "name": "GaugeFace_Speed",
+      "vertices": 98,
+      "triangles": 192,
+      "materials": [
+        "Gauge_Face"
+      ]
+    },
+    {
+      "name": "GaugeTicks_RPM",
+      "vertices": 110,
+      "triangles": 176,
+      "materials": [
+        "Ink"
+      ]
+    },
+    {
+      "name": "GaugeTicks_Speed",
+      "vertices": 110,
+      "triangles": 176,
+      "materials": [
+        "Ink"
       ]
     },
     {
@@ -816,8 +840,8 @@
     },
     {
       "name": "Instrument_Hood",
-      "vertices": 8,
-      "triangles": 12,
+      "vertices": 512,
+      "triangles": 1008,
       "materials": [
         "Interior_Graphite"
       ]
@@ -911,19 +935,35 @@
       ]
     },
     {
-      "name": "NeedleHub",
-      "vertices": 32,
-      "triangles": 60,
+      "name": "NeedleBlade_RPM",
+      "vertices": 14,
+      "triangles": 24,
       "materials": [
-        "Satin_Aluminium"
+        "Lamp_Red"
       ]
     },
     {
-      "name": "NeedleHub.001",
-      "vertices": 32,
-      "triangles": 60,
+      "name": "NeedleHub_RPM",
+      "vertices": 34,
+      "triangles": 64,
       "materials": [
-        "Satin_Aluminium"
+        "Trim_Black"
+      ]
+    },
+    {
+      "name": "NeedleBlade_Speed",
+      "vertices": 14,
+      "triangles": 24,
+      "materials": [
+        "Lamp_Red"
+      ]
+    },
+    {
+      "name": "NeedleHub_Speed",
+      "vertices": 34,
+      "triangles": 64,
+      "materials": [
+        "Trim_Black"
       ]
     },
     {
@@ -1619,11 +1659,27 @@
       ]
     },
     {
+      "name": "Stalks",
+      "vertices": 156,
+      "triangles": 296,
+      "materials": [
+        "Interior_Graphite"
+      ]
+    },
+    {
       "name": "SteeringColumn",
-      "vertices": 64,
-      "triangles": 124,
+      "vertices": 34,
+      "triangles": 64,
       "materials": [
         "Rubber"
+      ]
+    },
+    {
+      "name": "SteeringShroud",
+      "vertices": 142,
+      "triangles": 280,
+      "materials": [
+        "Interior_Graphite"
       ]
     },
     {
@@ -2611,5 +2667,5 @@
       ]
     }
   ],
-  "trianglesBase": 147687
+  "trianglesBase": 148731
 }
