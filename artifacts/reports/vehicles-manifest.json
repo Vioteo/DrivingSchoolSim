@@ -1,18 +1,18 @@
 {
   "script": "tools/build_vehicles.py",
-  "utc": "2026-10-03T17:21:05.247833Z",
+  "utc": "2026-10-03T18:07:53.344208Z",
   "blender": "5.0.1",
   "backup": {
-    "ArtSource\\Vehicles\\DS_Sedan_A_Traffic.blend": "ArtSource_Backup\\DS_Sedan_A_Traffic_before-vehicle-kit_20261003-202105.blend",
-    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Sedan_A_Traffic.fbx": "ArtSource_Backup\\DS_Sedan_A_Traffic_before-vehicle-kit_20261003-202105.fbx",
-    "ArtSource\\Vehicles\\DS_Crossover_A.blend": "ArtSource_Backup\\DS_Crossover_A_before-vehicle-kit_20261003-202105.blend",
-    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Crossover_A.fbx": "ArtSource_Backup\\DS_Crossover_A_before-vehicle-kit_20261003-202105.fbx",
-    "ArtSource\\Vehicles\\DS_Crossover_A_Traffic.blend": "ArtSource_Backup\\DS_Crossover_A_Traffic_before-vehicle-kit_20261003-202105.blend",
-    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Crossover_A_Traffic.fbx": "ArtSource_Backup\\DS_Crossover_A_Traffic_before-vehicle-kit_20261003-202105.fbx",
-    "ArtSource\\Vehicles\\DS_Police_A_Traffic.blend": "ArtSource_Backup\\DS_Police_A_Traffic_before-vehicle-kit_20261003-202105.blend",
-    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Police_A_Traffic.fbx": "ArtSource_Backup\\DS_Police_A_Traffic_before-vehicle-kit_20261003-202105.fbx",
-    "ArtSource\\Vehicles\\DS_Ambulance_A_Traffic.blend": "ArtSource_Backup\\DS_Ambulance_A_Traffic_before-vehicle-kit_20261003-202105.blend",
-    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Ambulance_A_Traffic.fbx": "ArtSource_Backup\\DS_Ambulance_A_Traffic_before-vehicle-kit_20261003-202105.fbx"
+    "ArtSource\\Vehicles\\DS_Sedan_A_Traffic.blend": "ArtSource_Backup\\DS_Sedan_A_Traffic_before-vehicle-kit_20261003-210753.blend",
+    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Sedan_A_Traffic.fbx": "ArtSource_Backup\\DS_Sedan_A_Traffic_before-vehicle-kit_20261003-210753.fbx",
+    "ArtSource\\Vehicles\\DS_Crossover_A.blend": "ArtSource_Backup\\DS_Crossover_A_before-vehicle-kit_20261003-210753.blend",
+    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Crossover_A.fbx": "ArtSource_Backup\\DS_Crossover_A_before-vehicle-kit_20261003-210753.fbx",
+    "ArtSource\\Vehicles\\DS_Crossover_A_Traffic.blend": "ArtSource_Backup\\DS_Crossover_A_Traffic_before-vehicle-kit_20261003-210753.blend",
+    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Crossover_A_Traffic.fbx": "ArtSource_Backup\\DS_Crossover_A_Traffic_before-vehicle-kit_20261003-210753.fbx",
+    "ArtSource\\Vehicles\\DS_Police_A_Traffic.blend": "ArtSource_Backup\\DS_Police_A_Traffic_before-vehicle-kit_20261003-210753.blend",
+    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Police_A_Traffic.fbx": "ArtSource_Backup\\DS_Police_A_Traffic_before-vehicle-kit_20261003-210753.fbx",
+    "ArtSource\\Vehicles\\DS_Ambulance_A_Traffic.blend": "ArtSource_Backup\\DS_Ambulance_A_Traffic_before-vehicle-kit_20261003-210753.blend",
+    "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Ambulance_A_Traffic.fbx": "ArtSource_Backup\\DS_Ambulance_A_Traffic_before-vehicle-kit_20261003-210753.fbx"
   },
   "vehicles": [
     {
@@ -21,7 +21,7 @@
       "title": "Седан (учебный, 2000-е)",
       "blend": "ArtSource\\Vehicles\\DS_Sedan_A_Traffic.blend",
       "fbx": "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Sedan_A_Traffic.fbx",
-      "fbx_sha256": "b6bbeb3a3bed028d9156041922b9d8947857b3c510acd283d61406488ce411b9",
+      "fbx_sha256": "006aa8349b8dda9a5c81194f87109b07e7e981cf271dce2f78ce316fea507011",
       "triangles": 32004,
       "bounds_min": [
         -1.039,
@@ -46,7 +46,7 @@
       "title": "Кроссовер (2020-е)",
       "blend": "ArtSource\\Vehicles\\DS_Crossover_A.blend",
       "fbx": "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Crossover_A.fbx",
-      "fbx_sha256": "5f549ed2391a6158d72575c1c88052f8b0a82067e0e1583aff27cb90f12c3bb1",
+      "fbx_sha256": "1606293f93fecfeb92d71dbfabf6dc1fdbe9534c9508876c7f75d9b18c763f1a",
       "triangles": 146110,
       "bounds_min": [
         -1.083,
@@ -151,7 +151,7 @@
       "title": "Кроссовер (2020-е)",
       "blend": "ArtSource\\Vehicles\\DS_Crossover_A_Traffic.blend",
       "fbx": "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Crossover_A_Traffic.fbx",
-      "fbx_sha256": "5d4015e56b63652c1453a533fe1c07148f038ad55efa6c8603a9aaa24c4d6359",
+      "fbx_sha256": "c08bc2ac509ae8646576379028ab2ecd3a5766e05ab944331b53baa551c9adfd",
       "triangles": 33102,
       "bounds_min": [
         -1.083,
@@ -176,7 +176,7 @@
       "title": "Полиция (на базе седана)",
       "blend": "ArtSource\\Vehicles\\DS_Police_A.blend",
       "fbx": "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Police_A.fbx",
-      "fbx_sha256": "8f066392c5c74150f667ab0e3aff09ccd6317363dc04ec2a1c29ba853bfeb96b",
+      "fbx_sha256": "7ed0d4800354194a5b5dd8ddb389cd508e2b65f592601bf679d4a3d68831c809",
       "triangles": 151154,
       "bounds_min": [
         -1.041,
@@ -275,7 +275,7 @@
       "title": "Полиция (на базе седана)",
       "blend": "ArtSource\\Vehicles\\DS_Police_A_Traffic.blend",
       "fbx": "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Police_A_Traffic.fbx",
-      "fbx_sha256": "43124410ed5d3ffd8bb03d3a78c8ad02879655b40f17a7720193fbabc42662fe",
+      "fbx_sha256": "26a2bdfc8091f3441c4ef284bd350886205f2835cb3bbdb7f02fb19f7b9c4073",
       "triangles": 39144,
       "bounds_min": [
         -1.039,
@@ -300,7 +300,7 @@
       "title": "Скорая помощь (фургон)",
       "blend": "ArtSource\\Vehicles\\DS_Ambulance_A.blend",
       "fbx": "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Ambulance_A.fbx",
-      "fbx_sha256": "342253e2235ed34a3947bf7368c5497f6060ed98aaa2dcb4f8167d6f8418e4a2",
+      "fbx_sha256": "fdb2e81cfcbcb4c2a88e06ded73cdfc7ad2e3ec6992e5a54b43e5649289ef04c",
       "triangles": 159564,
       "bounds_min": [
         -1.317,
@@ -399,7 +399,7 @@
       "title": "Скорая помощь (фургон)",
       "blend": "ArtSource\\Vehicles\\DS_Ambulance_A_Traffic.blend",
       "fbx": "Assets\\DrivingSchool\\Art\\Vehicles\\DS_Ambulance_A_Traffic.fbx",
-      "fbx_sha256": "846d36b19d4294149fc574f656245d6453bd40257d369659863bda291c9fa513",
+      "fbx_sha256": "91aed311541370815f74b6bebff30087d42561b22ba564ff0a610ebfe5d2ba11",
       "triangles": 63966,
       "bounds_min": [
         -1.315,
