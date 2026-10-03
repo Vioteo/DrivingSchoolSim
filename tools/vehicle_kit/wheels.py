@@ -1,7 +1,7 @@
 """Wheel assemblies. Wheel_XX is an empty at the hub centre (contract name);
 everything that spins or steers is its child, in local coordinates."""
 import math
-from .geom import Part, lathe, merge, rbox, cylinder, transform, prism_x, make_outward
+from .geom import Part, lathe, merge, rbox, cylinder, transform, prism_x, make_outward, orient_to
 
 
 def tyre_profile(R, w, r_rim, hi):
@@ -16,6 +16,18 @@ def tyre_profile(R, w, r_rim, hi):
     pts += [(R - 0.004, h - 0.02), (R - 0.018, h - 0.006), (R - 0.045, h + 0.004), (r_rim + 0.05, h - 0.004),
             (r_rim + 0.012, h - 0.018)]
     return pts
+
+
+def facing_out(vf, outward):
+    """Open lathe surfaces seen from outside the car (dish, cap, hub, brake disc): normals along +outward.
+    T72: their profiles run from the axis outwards, which turned the normals inwards; Unity culls back faces, so
+    the rim dish, steel-wheel caps and hubs were invisible and the brake disc and caliper showed through."""
+    return orient_to(vf, lambda c: (outward, 0, 0))
+
+
+def facing_axis(vf):
+    """The rim barrel is seen from outside through the spokes, so it faces the axle."""
+    return orient_to(vf, lambda c: (0, -c[1], -c[2]))
 
 
 def build_wheel(S, parts, name, pos, outward, detail='hi'):
@@ -35,12 +47,12 @@ def build_wheel(S, parts, name, pos, outward, detail='hi'):
     barrel = lathe([(rr + 0.006, -w / 2 + 0.01), (rr + 0.012, -w / 2 + 0.018), (rr, -w / 2 + 0.03), (rr - 0.004, face - 0.02),
                     (rr + 0.01, face - 0.004), (rr + 0.014, face + 0.006), (rr + 0.004, face + 0.012)], o, ax, seg)
     rim = Part(name + '_Rim', material=W.get('mat', 'Satin_Aluminium'), parent=name)
-    rim.add(barrel)
+    rim.add(facing_axis(barrel))
     style = W['style']
     if style == 'alloy':
         n = W.get('spokes', 5)
         hub = lathe([(0.0, face + 0.008), (0.05, face + 0.008), (0.075, face - 0.004), (0.08, face - 0.03)], o, ax, 24)
-        rim.add(hub)
+        rim.add(facing_out(hub, outward))
         for i in range(n):
             a = 2 * math.pi * i / n
             for da in (-W.get('split', 0.0), W.get('split', 0.0)) if W.get('split') else (0.0,):
@@ -49,10 +61,10 @@ def build_wheel(S, parts, name, pos, outward, detail='hi'):
     else:  # steel wheel with plastic trim
         disc = lathe([(0.0, face - 0.004), (rr * 0.55, face - 0.006), (rr * 0.8, face + 0.004), (rr * 0.97, face + 0.002),
                       (rr + 0.01, face - 0.01)], o, ax, seg)
-        rim.add(disc)
+        rim.add(facing_out(disc, outward))
         cap = Part(name + '_Cap', material=W.get('cap_mat', 'Plastic_Grey'), parent=name)
-        cap.add(lathe([(0.0, face + 0.02), (0.07, face + 0.018), (rr * 0.72, face + 0.008), (rr * 0.95, face + 0.012),
-                       (rr + 0.02, face + 0.0)], o, ax, seg))
+        cap.add(facing_out(lathe([(0.0, face + 0.02), (0.07, face + 0.018), (rr * 0.72, face + 0.008), (rr * 0.95, face + 0.012),
+                       (rr + 0.02, face + 0.0)], o, ax, seg), outward))
         parts.append(cap)
     parts.append(rim)
     nut = Part(name + '_Hub', material='Chrome', parent=name)
@@ -64,7 +76,8 @@ def build_wheel(S, parts, name, pos, outward, detail='hi'):
     # brake disc + caliper (caliper does not spin in reality; kept under the
     # wheel pivot here so it steers with the wheel)
     disc = Part(name + '_BrakeDisc', material='Satin_Aluminium', parent=name)
-    disc.add(lathe([(0.06, -0.012), (rr - 0.04, -0.012), (rr - 0.04, 0.012), (0.06, 0.012)], (outward * (face - 0.07), 0, 0), ax, 32, False, False))
+    ring = [(0.06, -0.012), (rr - 0.04, -0.012), (rr - 0.04, 0.012), (0.06, 0.012), (0.06, -0.012)]   # closed section
+    disc.add(make_outward(lathe(ring, (outward * (face - 0.07), 0, 0), ax, 32, False, False)))
     parts.append(disc)
     cal = Part(name + '_Caliper', material=W.get('caliper', 'Interior_Graphite'), parent=name)
     cal.add(rbox((outward * (face - 0.07), -0.1 if pos[1] > 0 else 0.1, 0.06), (0.06, 0.07, 0.13), 0.015))

@@ -110,6 +110,7 @@ class Cabin:
         else:
             self.dash_simple(parts)
         self.steering(parts, style)
+        self.side_lining(parts)
         if style != 'simple':
             self.pedals(parts, style)
             self.console(parts, style)
@@ -200,7 +201,9 @@ class Cabin:
         # lower layer, set back, with a trim strip between the two
         lo = [(y_base + 0.02, C['floor_z'] + 0.25), (y_base + 0.02, top - 0.12), (yf + 0.06, top - 0.12),
               (yf + 0.04, top - 0.3), (yf + 0.14, top - 0.4), (yf + 0.3, top - 0.44)]
-        parts.append(Part('Dashboard_Lower', material='Interior_Stone').add(prism_x(self.under_glass(lo, xw), -xw + 0.01, xw - 0.01)))
+        lower = Part('Dashboard_Lower', material='Interior_Stone').add(prism_x(self.under_glass(lo, xw), -xw + 0.01, xw - 0.01))
+        lower.smooth = False      # T72: a prism of flat faces; smooth normals streaked it with dark triangles
+        parts.append(lower)
         strip = rbox((0, yf + 0.0, top - 0.11), (2 * xw - 0.06, 0.03, 0.022), 0.006)
         parts.append(Part('Dash_Trim', material='Satin_Aluminium').add(strip))
         self.cluster_pod(parts, 'modern')
@@ -324,6 +327,21 @@ class Cabin:
         hb = Part('Handbrake_Pivot', kind='empty', loc=(0.0, H[1] - 0.02, fz + hgt + 0.03))
         parts.append(hb)
         parts.append(Part('HandbrakeLever', material='Leather', parent='Handbrake_Pivot').add(transform(rbox((0, 0.1, 0), (0.035, 0.22, 0.04), 0.012), (0.18, 0, 0))))
+
+    def side_lining(self, parts):
+        """Side lining from the firewall to the rear wall, floor to belt (T72). Before, the body paint showed inside
+        the cabin below the door cards, at the kick panels under the dash, at the B-pillars and along the cargo sides
+        (traffic cars: on the whole inner wall)."""
+        C = self.C
+        rows = []
+        zl0, zl1 = C['floor_z'] - 0.01, C['card_top_z'] - 0.01
+        y_f, y_r = C['firewall_y'], C['rear_wall_y']
+        for zz in [zl0 + (zl1 - zl0) * i / 6 for i in range(7)]:
+            rows.append([(0, y_r + (y_f - y_r) * i / 28, zz) for i in range(29)])
+        for side, sfx in ((1, '_R'), (-1, '_L')):
+            lining = [[(side * self.inner_x(y, zz, 0.046), y, zz) for _, y, zz in row] for row in rows]
+            parts.append(Part('Cabin_SideLining' + sfx, material='Interior_Graphite').add(
+                orient_to(grid(lining), lambda c, s=side: (-s, 0, 0))))
 
     def door_cards(self, parts, style):
         C = self.C

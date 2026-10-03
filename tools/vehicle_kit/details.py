@@ -102,7 +102,7 @@ def build_lamps(S, sk, parts, detail='hi'):
         both(sk, parts, 'Reflector', 'Lamp_Red', a - r['w'] / 2, a + r['w'] / 2, r['z'] - 0.012, r['z'] + 0.012, 0.004, 3, 1)
 
 
-def build_plates(S, sk, parts, plate_mat='Paint_White', text_mat='Ink_Dark', text='А 001 АА 77'):
+def build_plates(S, sk, parts, plate_mat='Plate_White', text_mat='Ink_Dark', text='А 001 АА 77'):
     """Flat GOST-size plates (520 x 112 mm); text object faces outwards."""
     for key, front in (('front', True), ('rear', False)):
         z = S['plates'][key]

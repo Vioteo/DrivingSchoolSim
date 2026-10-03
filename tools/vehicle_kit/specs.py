@@ -160,7 +160,7 @@ POLICE['livery'] = dict(
 )
 POLICE['beacons'] = [dict(name='LightBar', y=-0.05, at=(0.5, 1.0), w=1.12, d=0.26, h=0.09,
                           colors=['Lamp_Blue', 'Lamp_Red', 'Lamp_Blue', 'Lamp_Red'], segments=4)]
-POLICE['plate'] = dict(mat='Paint_PoliceBlue', text_mat='Paint_White', text='А 0001 77')
+POLICE['plate'] = dict(mat='Plate_Blue', text_mat='Plate_White', text='А 0001 77')
 
 # --------------------------------------------------------------------------
 # DS_Ambulance_A - high-roof light commercial van (class B ambulance):
@@ -196,9 +196,10 @@ AMBULANCE = dict(
         nt=16, nS=60,
         windows=[dict(name='Windshield', seg='F', f0=0.04, f1=0.96, t0=0.03, t1=0.6),
                  dict(name='Front', seg='S', y0=1.52, y1=0.7, t0=0.04, t1=0.6),
-                 dict(name='Slide', seg='S', y0=0.5, y1=-0.35, t0=0.1, t1=0.42, frosted=True),
-                 dict(name='RearDoors', seg='B', f0=0.1, f1=0.9, t0=0.14, t1=0.44, frosted=True)],
-        black=[dict(seg='S', y0=0.7, y1=0.62, t0=0.0, t1=0.62), dict(seg='B', f0=0.49, f1=0.51, t0=0.0, t1=0.98)],
+                 # T72: no windows in the patient compartment (Russian class B ambulances have a blind box; the frosted
+                 # rear-door glass also stood out of the body as a slab) and no black stripe down the rear doors
+                 ],
+        black=[dict(seg='S', y0=0.7, y1=0.62, t0=0.0, t1=0.62)],
         frame=0.012,
     ),
     lamps=dict(
@@ -228,6 +229,6 @@ AMBULANCE = dict(
                door_cards=[('Front', 1.14, 0.72)], seat_style='fabric', com_y=0.1, com_z=0.85, cluster_dz=0.07, dash_inset=0.09,
                ambulance=True),
 )
-AMBULANCE['plate'] = dict(mat='Paint_White', text_mat='Ink_Dark', text='В 003 МО 77')
+AMBULANCE['plate'] = dict(mat='Plate_White', text_mat='Ink_Dark', text='В 003 МО 77')
 
 ALL = [SEDAN, CROSSOVER, POLICE, AMBULANCE]

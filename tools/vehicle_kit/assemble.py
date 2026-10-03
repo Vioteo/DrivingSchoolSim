@@ -27,7 +27,7 @@ def build(spec, detail='hi', interior=None):
                     pt.material = 'Glass_Frosted'
     build_lamps(S, sk, body_parts, detail)
     pl = S.get('plate', {})
-    build_plates(S, sk, body_parts, pl.get('mat', 'Paint_White'), pl.get('text_mat', 'Ink_Dark'), pl.get('text', 'А 001 АА 77'))
+    build_plates(S, sk, body_parts, pl.get('mat', 'Plate_White'), pl.get('text_mat', 'Ink_Dark'), pl.get('text', 'А 001 АА 77'))
     build_handles(S, sk, body_parts, paint)
     build_mirrors(S, gh, body_parts, paint)
     build_wipers(S, gh, body_parts)

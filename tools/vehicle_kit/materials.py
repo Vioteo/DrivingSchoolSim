@@ -25,6 +25,9 @@ PALETTE = {
     'Lamp_Amber': ((1.0, 0.3, 0.025), 0.1, 0.25, 2, 1),
     'Lamp_Blue': ((0.02, 0.12, 1.0), 0.1, 0.2, 3, 1),
     'Display': ((0.018, 0.06, 0.08), 0.1, 0.3, 0, 1),
+    # number plates: not Paint_*, the profile colour repaints every Paint_* material of the player's car (T72)
+    'Plate_White': ((0.82, 0.83, 0.8), 0.0, 0.55, 0, 1),
+    'Plate_Blue': ((0.02, 0.09, 0.42), 0.0, 0.5, 0, 1),
     'Gauge_Face': ((0.011, 0.012, 0.014), 0.0, 0.45, 0, 1),
     'Ink': ((0.72, 0.89, 0.91), 0.0, 0.6, 1.2, 1),
     'Ink_Dark': ((0.01, 0.01, 0.012), 0.0, 0.6, 0, 1),

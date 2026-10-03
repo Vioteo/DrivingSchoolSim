@@ -7,6 +7,9 @@ dials 189 mm apart, the centre display between them, a hood with a visor. The st
 vertical) and its column goes down into the knee panel instead of running horizontally into the cluster.
 Geometry: tools/sedan_cluster_shape.py (pure Python, previewable without Blender).
 
+Also: the number plates and the roof-lamp lens get their own materials (Plate_White, Interior_Light) instead of
+Paint_White, which the profile colour repainted.
+
 Kept (names used by code): Needle_RPM / Needle_Speed (moved), SteeringWheel_Pivot (tilted), everything under it.
 New contract objects: GaugeFace_RPM, GaugeFace_Speed, Cluster_Display, Instrument_Hood (DashboardView, VehicleVisuals).
 
@@ -97,6 +100,18 @@ def main():
             removed.append(o.name)
             bpy.data.objects.remove(o, do_unlink=True)
     report['removed'] = sorted(removed)
+    # 1b. plates and the roof-lamp lens off the Paint_* materials (the profile colour must not reach them)
+    fixed = []
+    for o in car.children_recursive:
+        if o.type != 'MESH':
+            continue
+        for prefix, mat_name in sc.MATERIAL_FIXES.items():
+            if o.name.startswith(prefix):
+                for slot in o.material_slots:
+                    if slot.material is not None and slot.material.name.startswith('Paint'):
+                        slot.material = material(mat_name)
+                        fixed.append(o.name)
+    report['material_fixes'] = sorted(set(fixed))
     # 2. tilt the steering wheel about its pivot: the rim top leans away from the driver (column axis = local +Y)
     pivot.rotation_mode = 'XYZ'
     pivot.rotation_euler = (-math.radians(sc.WHEEL_TILT_DEG), 0.0, 0.0)

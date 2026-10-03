@@ -135,6 +135,12 @@ def instantiate(parts, M, fnt):
                     pass
             o = bpy.data.objects.new(p.name, me)
             o.data.materials.append(M[p.material])
+            if p.smooth and len(p.f) > 12:
+                # T72: area-weighted normals keep big flat panels flat; plain smoothing pulled the rounded corners'
+                # normals across them (dark smears on the ambulance box, blotchy white bonnets)
+                wn = o.modifiers.new('Weighted normals', 'WEIGHTED_NORMAL')
+                wn.keep_sharp = True
+                wn.weight = 50
             if p.solidify:
                 s = o.modifiers.new('Thickness', 'SOLIDIFY')
                 s.thickness = p.solidify

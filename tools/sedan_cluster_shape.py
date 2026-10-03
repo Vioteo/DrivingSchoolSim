@@ -18,6 +18,10 @@ WHEEL_PIVOT = (-0.38, 0.28, 0.90)
 WHEEL_TILT_DEG = 20.0          # rim plane leans back from vertical, top away from the driver (kit cars: 23-25 deg)
 CLUSTER = dict(cx=-0.38, y_face=0.50, cz=0.925, top=0.995, r=0.0525, gap=0.068, style='classic')
 
+# parts that must not take the profile colour: PlayerVehicleSelector and MenuBackdropCars repaint every Paint_* material
+# of the player's car, so the plates and the roof-lamp lens turned red, blue... with the body (T72)
+MATERIAL_FIXES = {'NumberPlate': 'Plate_White', 'RoofLampLens': 'Interior_Light'}
+
 # old objects replaced by this script (any type: meshes, text curves); Needle_* empties are kept and moved
 REPLACED = ('GaugeFace', 'GaugeBezel', 'GaugeTick', 'GaugeNumber', 'GaugeUnit', 'NeedleBlade', 'NeedleHub',
             'Instrument_Hood', 'Cluster_Display', 'Cluster_Panel', 'Gear_Display', 'Odometer', 'SteeringColumn',
