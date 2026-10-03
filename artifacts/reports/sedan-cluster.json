@@ -1,9 +1,9 @@
 {
   "script": "tools/build_sedan_cluster.py",
-  "utc": "2026-10-02T05:52:32.208819Z",
+  "utc": "2026-10-02T08:05:46.551296Z",
   "backup": {
-    "DS_Sedan_A.blend": "ArtSource_Backup\\DS_Sedan_A_before-cluster_20261002-085232.blend",
-    "DS_Sedan_A.fbx": "ArtSource_Backup\\DS_Sedan_A_before-cluster_20261002-085232.fbx"
+    "DS_Sedan_A.blend": "ArtSource_Backup\\DS_Sedan_A_before-cluster_20261002-110546.blend",
+    "DS_Sedan_A.fbx": "ArtSource_Backup\\DS_Sedan_A_before-cluster_20261002-110546.fbx"
   },
   "cluster": {
     "cx": -0.38,
@@ -17,56 +17,26 @@
   "wheel_tilt_deg": 20.0,
   "removed": [
     "Cluster_Display",
-    "GaugeBezel",
-    "GaugeBezel.001",
+    "Cluster_Panel",
+    "GaugeBezel_RPM",
+    "GaugeBezel_Speed",
     "GaugeFace_RPM",
-    "GaugeFace_km/h",
-    "GaugeNumber",
-    "GaugeNumber.001",
-    "GaugeNumber.002",
-    "GaugeNumber.003",
-    "GaugeNumber.004",
-    "GaugeNumber.005",
-    "GaugeNumber.006",
-    "GaugeNumber.007",
-    "GaugeNumber.008",
-    "GaugeNumber.009",
-    "GaugeNumber.010",
-    "GaugeNumber.011",
-    "GaugeTick",
-    "GaugeTick.001",
-    "GaugeTick.002",
-    "GaugeTick.003",
-    "GaugeTick.004",
-    "GaugeTick.005",
-    "GaugeTick.006",
-    "GaugeTick.007",
-    "GaugeTick.008",
-    "GaugeTick.009",
-    "GaugeTick.010",
-    "GaugeTick.011",
-    "GaugeTick.012",
-    "GaugeTick.013",
-    "GaugeTick.014",
-    "GaugeTick.015",
-    "GaugeTick.016",
-    "GaugeTick.017",
-    "GaugeTick.018",
-    "GaugeTick.019",
-    "GaugeTick.020",
-    "GaugeTick.021",
-    "GaugeUnit",
-    "GaugeUnit.001",
-    "Gear_Display",
+    "GaugeFace_Speed",
+    "GaugeTicks_RPM",
+    "GaugeTicks_Speed",
     "Instrument_Hood",
-    "NeedleBlade",
-    "NeedleBlade.001",
-    "NeedleHub",
-    "NeedleHub.001",
-    "Odometer",
-    "Stalk_-1",
-    "Stalk_1",
-    "SteeringColumn"
+    "NeedleBlade_RPM",
+    "NeedleBlade_Speed",
+    "NeedleHub_RPM",
+    "NeedleHub_Speed",
+    "Stalks",
+    "SteeringColumn",
+    "SteeringShroud"
+  ],
+  "material_fixes": [
+    "NumberPlate_-1",
+    "NumberPlate_1",
+    "RoofLampLens"
   ],
   "created": [
     "Cluster_Display",
@@ -99,7 +69,7 @@
     ]
   },
   "after": {
-    "blend_sha256": "4764ecb29a10d4cd5c96a8d043b44a10f12ec91f2663558c4d20f9f07e4bb500",
-    "fbx_sha256": "36e5603a39279339e13cae4961a51e9c62c526af2cb5c04a7ea63bf8317b0d44"
+    "blend_sha256": "6d9fbe9ca16a25b658118f058ae8cd4d68fb940533084ea04ce2d9ecace53ff5",
+    "fbx_sha256": "998bf593b7866af381560264ec4b635202df7351deafe51954c2a75bb6162c88"
   }
 }

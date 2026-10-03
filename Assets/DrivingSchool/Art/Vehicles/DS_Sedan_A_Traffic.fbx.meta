@@ -82,6 +82,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Plate_White
+    second: {fileID: 2100000, guid: 85837a87b70653746a750621effae6e7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Rubber
     second: {fileID: 2100000, guid: dcad5d1f0c527bc4d9c1be581914633c, type: 2}
   - first:

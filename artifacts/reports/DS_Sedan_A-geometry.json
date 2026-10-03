@@ -971,7 +971,7 @@
       "vertices": 40,
       "triangles": 76,
       "materials": [
-        "Paint_White"
+        "Plate_White"
       ]
     },
     {
@@ -979,7 +979,7 @@
       "vertices": 40,
       "triangles": 76,
       "materials": [
-        "Paint_White"
+        "Plate_White"
       ]
     },
     {
@@ -1379,7 +1379,7 @@
       "vertices": 8,
       "triangles": 12,
       "materials": [
-        "Paint_White"
+        "Interior_Light"
       ]
     },
     {
