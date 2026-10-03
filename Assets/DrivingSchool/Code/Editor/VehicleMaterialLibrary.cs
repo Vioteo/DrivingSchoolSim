@@ -40,8 +40,8 @@ namespace DrivingSchool.Editor
         static readonly Dictionary<string, Recipe> Recipes = new Dictionary<string, Recipe>
         {
             // body paint: metallic base under a clear coat (Complex Lit)
-            { "Paint_Atlantic", Lin(.085f, .23f, .29f, .45f, .62f, Kind.Paint) },
-            { "Paint_Terracotta", Lin(.36f, .09f, .04f, .4f, .62f, Kind.Paint) },
+            { "Paint_Atlantic", Srgb(.1f, .24f, .36f, .45f, .62f, Kind.Paint) },   // deep blue-teal; the palette value read pastel under lacquer
+            { "Paint_Terracotta", Srgb(.52f, .2f, .1f, .4f, .62f, Kind.Paint) },   // the palette value read bright orange
             { "Paint_Silver", Lin(.42f, .44f, .45f, .55f, .62f, Kind.Paint) },
             { "Paint_Graphite", Lin(.06f, .065f, .07f, .5f, .62f, Kind.Paint) },
             { "Paint_White", Lin(.8f, .83f, .8f, .05f, .7f, Kind.Paint) },
@@ -69,11 +69,14 @@ namespace DrivingSchool.Editor
             { "Interior_Light", Lin(.62f, .64f, .63f, 0f, .3f) },
             { "Carpet", Lin(.03f, .033f, .035f, 0f, .05f) },
             { "Leather", Srgb(.1f, .11f, .11f, 0f, .38f) },              // black leather: steering wheel, seats
-            { "Seat_Fabric", Lin(.105f, .145f, .15f, 0f, .08f) },
-            { "Seat_Insert", Lin(.23f, .3f, .3f, 0f, .08f) },
+            { "Seat_Fabric", Srgb(.17f, .19f, .2f, 0f, .08f) },
+            { "Seat_Insert", Srgb(.27f, .3f, .31f, 0f, .08f) },              // the palette value made the inserts look almost white
             { "Stitch", Lin(.55f, .58f, .48f, 0f, .1f) },
             { "Stretcher_Orange", Lin(.8f, .28f, .03f, 0f, .4f) },
             // instruments: dark glossy screens, black dial faces, light print that glows a little
+            // number plates: own materials, so the profile colour (it repaints Paint_*) does not reach them
+            { "Plate_White", Lin(.82f, .83f, .8f, 0f, .45f) },
+            { "Plate_Blue", Lin(.02f, .09f, .42f, 0f, .5f) },
             { "Display", Srgb(.018f, .06f, .08f, 0f, .88f) },
             { "Gauge_Face", Srgb(.02f, .022f, .025f, 0f, .5f) },
             { "Ink", Srgb(.72f, .89f, .91f, 0f, .3f, Kind.Print, 1.2f) },
