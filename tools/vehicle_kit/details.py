@@ -159,14 +159,32 @@ def build_mirrors(S, gh, parts, paint):
 
 
 def build_wipers(S, gh, parts):
-    for name, f in (('Wiper_Pivot_L', 0.2), ('Wiper_Pivot_R', 0.62)):
+    """Two wipers parked along the foot of the windshield, tips towards the passenger side (left-hand drive).
+
+    T72: the blades were ~0.40 m on both sides and lay along the arm from near the pivot. Real ones on a 1.4-1.5 m
+    windshield: driver 0.60-0.65 m, passenger 0.40-0.45 m, the blade centred on the arm tip. Sizes follow the glass
+    width and are capped so the blade end stays under the top of the glass in a full sweep (vans: low, wide glass).
+    VehicleVisuals turns Wiper_Pivot_* about the glass normal; WindshieldRainView takes the blade from the mesh."""
+    width = math.dist(gh.point('F', 0.0, 0.02), gh.point('F', 1.0, 0.02))
+    t_top = next((w['t1'] for w in S['gh']['windows'] if w['name'] == 'Windshield'), 0.95)
+    height = math.dist(gh.point('F', 0.5, 0.02), gh.point('F', 0.5, t_top))
+    W = S.get('wipers', {})
+    #      name             pivot f, arm, blade (shares of the glass width), rise of the parked blade (t at its far end)
+    for name, f, arm_k, blade_k, rise in (('Wiper_Pivot_L', 0.18, 0.34, 0.42, 0.07),
+                                          ('Wiper_Pivot_R', 0.56, 0.22, 0.28, 0.035)):
+        f, arm_k, blade_k = W.get(name, (f, arm_k, blade_k))
+        L_arm, L_blade = arm_k * width, blade_k * width
+        cap = 0.9 * height / (L_arm + L_blade / 2)       # blade end inside the glass when the arm stands up
+        if cap < 1.0:
+            L_arm, L_blade = L_arm * cap, L_blade * cap
         p = gh.point('F', f, 0.02)
         pv = Part(name, kind='empty', loc=(p[0], p[1] + 0.02, p[2] + 0.01))
         parts.append(pv)
-        tip = gh.point('F', min(0.97, f + 0.34), 0.06)
-        d = sub(tip, p)
-        arm = tube([(0, 0, 0), (d[0] * 0.95, d[1] * 0.95 - 0.02, d[2] * 0.95)], 0.006, 5)
-        blade = tube([(d[0] * 0.25, d[1] * 0.25 - 0.02, d[2] * 0.25 + 0.012), (d[0] * 0.98, d[1] * 0.98 - 0.02, d[2] * 0.98 + 0.012)], 0.007, 5)
+        u = norm(sub(gh.point('F', min(0.99, f + 0.5), rise), p))
+        tip = mul(u, L_arm)
+        arm = tube([(0, 0, 0), (tip[0], tip[1] - 0.02, tip[2])], 0.006, 5)
+        b0, b1 = sub(tip, mul(u, L_blade / 2)), add(tip, mul(u, L_blade / 2))
+        blade = tube([(b0[0], b0[1] - 0.02, b0[2] + 0.012), (b1[0], b1[1] - 0.02, b1[2] + 0.012)], 0.007, 5)
         m = Part(name + '_Mesh', material='Trim_Black', parent=name)
         m.add(merge(arm, blade))
         parts.append(m)
