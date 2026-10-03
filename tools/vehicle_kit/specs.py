@@ -47,7 +47,9 @@ SEDAN = dict(
                   crown=0.03, bow_f=0.05, bow_r=0.02),
         stations=[(-0.19, -0.25)],
         bulge={'F': 0.022, 'S': 0.014, 'B': 0.02},
-        windows=[dict(name='Windshield', seg='F', f0=0.04, f1=0.96, t0=0.03, t1=0.95, frame=True),
+        # T72: the windshield reaches the A-pillars (f 0.04-0.96 left one loft cell of pillar each side: 15-20 cm wide,
+        # up to 14 deg of the driver's view; now 8-11 cm like a real car). Same for the crossover and the ambulance.
+        windows=[dict(name='Windshield', seg='F', f0=0.015, f1=0.985, t0=0.03, t1=0.95, frame=True),
                  dict(name='Front', seg='S', y0=0.93, y1=-0.13, t0=0.07, t1=0.93),
                  dict(name='Rear', seg='S', y0=-0.25, y1=-1.03, t0=0.07, t1=0.93),
                  dict(name='Quarter', seg='S', y0=-1.07, y1=-1.36, t0=0.1, t1=0.55),
@@ -113,7 +115,7 @@ CROSSOVER = dict(
                   crown=0.025, bow_f=0.06, bow_r=0.03),
         stations=[(-0.2, -0.27), (-1.12, -1.2)],
         bulge={'F': 0.02, 'S': 0.012, 'B': 0.015},
-        windows=[dict(name='Windshield', seg='F', f0=0.04, f1=0.96, t0=0.03, t1=0.95),
+        windows=[dict(name='Windshield', seg='F', f0=0.015, f1=0.985, t0=0.03, t1=0.95),
                  dict(name='Front', seg='S', y0=0.95, y1=-0.15, t0=0.06, t1=0.9),
                  dict(name='Rear', seg='S', y0=-0.25, y1=-1.08, t0=0.06, t1=0.9),
                  dict(name='Quarter', seg='S', y0=-1.16, y1=-1.86, t0=0.08, t1=0.84),
@@ -194,7 +196,7 @@ AMBULANCE = dict(
         stations=[(0.66, 0.62)],
         bulge={'F': 0.02, 'S': 0.012, 'B': 0.0},
         nt=16, nS=60,
-        windows=[dict(name='Windshield', seg='F', f0=0.04, f1=0.96, t0=0.03, t1=0.6),
+        windows=[dict(name='Windshield', seg='F', f0=0.015, f1=0.985, t0=0.03, t1=0.6),
                  dict(name='Front', seg='S', y0=1.52, y1=0.7, t0=0.04, t1=0.6),
                  # T72: no windows in the patient compartment (Russian class B ambulances have a blind box; the frosted
                  # rear-door glass also stood out of the body as a slab) and no black stripe down the rear doors
