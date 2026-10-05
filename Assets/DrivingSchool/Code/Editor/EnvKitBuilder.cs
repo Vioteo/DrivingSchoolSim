@@ -24,6 +24,7 @@ namespace DrivingSchool.Editor
         const string Prefabs = "Assets/DrivingSchool/Prefabs/EnvKit";
         const string Materials = "Assets/DrivingSchool/Materials/EnvKit";
         const string Demo = "Assets/DrivingSchool/Scenes/EnvKit_Demo.unity";
+        const string GroundMesh = "Assets/DrivingSchool/Scenes/EnvKit_Demo_Ground.asset";
         const string Manifest = "artifacts/reports/envkit-manifest.json";
         const string Report = "artifacts/reports/envkit-unity.json";
         const string Evidence = "artifacts/visual-review/envkit/unity";
@@ -284,19 +285,64 @@ namespace DrivingSchool.Editor
                 if (NearRoad(p, 3f)) continue;
                 Place(trees[rnd.Next(trees.Length)], "Tree", p, Quaternion.Euler(0, (float)rnd.NextDouble() * 360, 0), forest);
             }
-            var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
-            ground.name = "Ground"; ground.transform.position = new Vector3(0, -.03f, 0); ground.transform.localScale = new Vector3(120, 1, 120);
-            // the plane's UVs span 1.2 km: a copy of the grass material tiles the texture every 4 m
-            var groundMat = new Material(AssetDatabase.LoadAssetAtPath<Material>(Materials + "/EN_Grass.mat")) { name = "EN_Grass_DemoGround" };
-            groundMat.SetTextureScale("_BaseMap", new Vector2(300, 300));
-            AssetDatabase.CreateAsset(groundMat, Materials + "/EN_Grass_DemoGround.mat");
-            ground.GetComponent<MeshRenderer>().sharedMaterial = groundMat;
+            CreateGround();
             var sun = new GameObject("Sun", typeof(Light)).GetComponent<Light>();
             sun.type = LightType.Directional; sun.shadows = LightShadows.Soft;
             var cam = new GameObject("Demo Camera", typeof(Camera), typeof(AudioListener)).GetComponent<Camera>();
             cam.tag = "MainCamera"; cam.nearClipPlane = .1f; cam.farClipPlane = 800; cam.fieldOfView = 55;
             cam.GetUniversalAdditionalCameraData();
             ApplyPreset("day");
+        }
+
+        /// <summary>
+        /// Flat grass at Y = -0.03 around the road. The road modules carry their own shoulders, ditches and
+        /// verges out to 12.5 m, so the ground leaves them out: a 1 m grid near the road skips every cell whose
+        /// corners all lie over COL_DriveSurface (a plain plane would cover the shoulders with grass).
+        /// </summary>
+        static void CreateGround()
+        {
+            Physics.SyncTransforms();
+            var roads = UnityEngine.Object.FindObjectsByType<MeshCollider>(FindObjectsSortMode.None)
+                .Where(c => c.name.StartsWith("COL_DriveSurface", StringComparison.Ordinal)).ToArray();
+            var b = roads[0].bounds;
+            foreach (var c in roads.Skip(1)) b.Encapsulate(c.bounds);
+            b.Expand(new Vector3(80, 0, 80));
+            const float cell = 1f, y = -.03f, far = 600f, tile = 2f;     // EN_Grass texture: 2 m tile
+            int nx = Mathf.CeilToInt(b.size.x / cell), nz = Mathf.CeilToInt(b.size.z / cell);
+            float x0 = b.min.x, z0 = b.min.z, x1 = x0 + nx * cell, z1 = z0 + nz * cell;
+            var verts = new List<Vector3>(); var uv = new List<Vector2>(); var tris = new List<int>();
+            var inside = new bool[nx + 1, nz + 1];
+            for (int i = 0; i <= nx; i++)
+                for (int k = 0; k <= nz; k++)
+                {
+                    var p = new Vector3(x0 + i * cell, y, z0 + k * cell);
+                    verts.Add(p); uv.Add(new Vector2(p.x, p.z) / tile);
+                    inside[i, k] = Physics.RaycastAll(p + Vector3.up * 60, Vector3.down, 120)
+                        .Any(h => h.collider.name.StartsWith("COL_DriveSurface", StringComparison.Ordinal));
+                }
+            int V(int i, int k) => i * (nz + 1) + k;
+            for (int i = 0; i < nx; i++)
+                for (int k = 0; k < nz; k++)
+                {
+                    if (inside[i, k] && inside[i + 1, k] && inside[i, k + 1] && inside[i + 1, k + 1]) continue;
+                    tris.AddRange(new[] { V(i, k), V(i, k + 1), V(i + 1, k + 1), V(i, k), V(i + 1, k + 1), V(i + 1, k) });
+                }
+            void Quad(float ax, float az, float bx, float bz)
+            {
+                int o = verts.Count;
+                foreach (var c in new[] { new Vector2(ax, az), new Vector2(ax, bz), new Vector2(bx, bz), new Vector2(bx, az) })
+                { verts.Add(new Vector3(c.x, y, c.y)); uv.Add(c / tile); }
+                tris.AddRange(new[] { o, o + 1, o + 2, o, o + 2, o + 3 });
+            }
+            Quad(-far, -far, far, z0); Quad(-far, z1, far, far); Quad(-far, z0, x0, z1); Quad(x1, z0, far, z1);
+            var mesh = new Mesh { name = "EN_DemoGround", indexFormat = UnityEngine.Rendering.IndexFormat.UInt32 };
+            mesh.SetVertices(verts); mesh.SetUVs(0, uv); mesh.SetTriangles(tris, 0);
+            mesh.RecalculateNormals(); mesh.RecalculateTangents(); mesh.RecalculateBounds();
+            AssetDatabase.CreateAsset(mesh, GroundMesh);
+            var ground = new GameObject("Ground", typeof(MeshFilter), typeof(MeshRenderer));
+            ground.GetComponent<MeshFilter>().sharedMesh = mesh;
+            ground.GetComponent<MeshRenderer>().sharedMaterial = AssetDatabase.LoadAssetAtPath<Material>(Materials + "/EN_Grass.mat");
+            ground.isStatic = true;
         }
 
         /// <summary>True if p or a point within `margin` of it is over a road module (25 m wide incl. ditches).</summary>
