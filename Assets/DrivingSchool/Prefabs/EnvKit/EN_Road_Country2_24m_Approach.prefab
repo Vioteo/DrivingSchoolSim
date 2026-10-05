@@ -100,14 +100,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Model
       objectReference: {fileID: 0}
-    - target: {fileID: 4414626358529281602, guid: 25a4bb29c6d3d734f9eb9857960888c6, type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7426123136793294029, guid: 25a4bb29c6d3d734f9eb9857960888c6, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
     - target: {fileID: 8208676703577857623, guid: 25a4bb29c6d3d734f9eb9857960888c6, type: 3}
       propertyPath: m_CastShadows
       value: 0

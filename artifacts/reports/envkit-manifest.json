@@ -3,7 +3,7 @@
   "prefix": "EN_",
   "script": "tools/build_env_kit.py",
   "generator": "tools/env_kit",
-  "utc": "2026-10-05T11:33:43.668306+00:00",
+  "utc": "2026-10-05T12:13:25.223701+00:00",
   "blender": "5.0.1",
   "axes": "Blender: X right, Y back (front -Y), Z up; FBX -Z forward / Y up",
   "assets": [
@@ -57,7 +57,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Birch_A.fbx",
-      "fbx_sha256": "e289d572653e2c1c0e75b7d41e501f140b0c56fbf744c43acd503ca7580f9f70",
+      "fbx_sha256": "6a8e841f07a906490212a1bd40eb827aa2e55279a4b9d40ba414198f4e221321",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -165,7 +165,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Birch_B.fbx",
-      "fbx_sha256": "628c8a8caaaec6895a0e3be664263fb115c8cb16fbd569e3fd1c58a232a0a266",
+      "fbx_sha256": "defec8ca50fa6cf6a8ec848ddc40a2c42fbbc2c21fcb0c3238561c21f359d212",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -272,7 +272,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Spruce_A.fbx",
-      "fbx_sha256": "c4914fb0e3835db854e11260545d0ee673db73a47c2eda948da5d0d5f18f14e2",
+      "fbx_sha256": "cf41cdae46657017dc0fd3fb351f4ba204f179679948fe7ca8d5039a428f8f91",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -379,7 +379,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Spruce_B.fbx",
-      "fbx_sha256": "8d6ca6cba98b8edcd37675e29e1ee3813664030c390a77e5dc1141dfef8ec909",
+      "fbx_sha256": "38916a3e1eaedd8bf4c1e09eb70d577a59f8fbd0bb870f785c25c1349c14eeb2",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -486,7 +486,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Spruce_Young.fbx",
-      "fbx_sha256": "7bffbed3af50f470a48fb2f2c3f78f1a2eea88670f1fc1efaa0e5c2ca22a2845",
+      "fbx_sha256": "91a98a2dc23601f7b8ea3e8277fd6d03d63bc019208b53cb6c613640d08a918a",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -593,7 +593,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Pine_A.fbx",
-      "fbx_sha256": "1c2d99294d457c4effc95492740c0918dfdba9e3ea6ab249a6871656253b8487",
+      "fbx_sha256": "730c843f63115a357c57045b5b7ecd017dbc0e8929925335930e2ad575c4e8d7",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -700,7 +700,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Pine_B.fbx",
-      "fbx_sha256": "796618395c78cc26d034deaf0f16ac370609c509f07b314060db79e9642443f1",
+      "fbx_sha256": "e9cfc3fc2a6c5ef54e12e3f8155a4cc36836e504301e5438981318b1ed88f388",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -806,7 +806,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Linden_A.fbx",
-      "fbx_sha256": "00bf51f45b1801c84c4740401e9d6aa64ede403f9ac9efa5472b29960133dab2",
+      "fbx_sha256": "5bb4a8d4f6ff2e7612b4ef24f555faa90796e7f64ad08bc1c51ac86b6ca845c6",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -913,7 +913,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Bush_A.fbx",
-      "fbx_sha256": "113a8d92da05beb057efbd3f96adaae0321f3748b655fd9a64f8989b002c11c1",
+      "fbx_sha256": "9e5a57b985fda7f838416b5b3b9e3298ad85a8e5942cb23d16063dd4db30c977",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -1014,7 +1014,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Bush_B.fbx",
-      "fbx_sha256": "98e7634263aef82f1ca6a7023ab48e8ade7f46c8db4b0c519eea2957e1575d5e",
+      "fbx_sha256": "6244605db5ddecaad29bbd87e7b1e7239420562a0002acd9739a232250f8a5a5",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -1112,7 +1112,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Grass_Clump_A.fbx",
-      "fbx_sha256": "b94ff3f6ed20af816d5080d08dc9756af0bbf6bfc42d11ad641f0be7e75f152d",
+      "fbx_sha256": "6d672468518ae102ae261598748b3c998bdcb4a7fc3e95d882c6213ea633f045",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -1203,7 +1203,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Grass_Clump_B.fbx",
-      "fbx_sha256": "153a7d638acbe89f9d2b86567e633bc7ab6e950c1a1ed239c5f5320b6271a7c1",
+      "fbx_sha256": "18bc1b33aba47445a0ed2bba1644d3bb66a8a0d8edc42f04b5b0571ad9f47389",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -1294,7 +1294,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Stump.fbx",
-      "fbx_sha256": "12f00868f141279668c78bf0f2c96d5344d06d62b50a9342b8a32c87f5d3f36d",
+      "fbx_sha256": "25445fe731d1744ac0721083be937b9d9e4f33d7dae97de42907bc540ad8558a",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -1391,7 +1391,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Log_Fallen.fbx",
-      "fbx_sha256": "b95ce94e1e6c70f007405e98bb94f4ea543a6769ca9ac75ccd8aa5bdd2c06ee0",
+      "fbx_sha256": "052bb674d17b3aecacbbae17354cfe01601e3cab309e7e3d3dfb630fa022cb30",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -1489,7 +1489,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Rock_A.fbx",
-      "fbx_sha256": "055b71908bf33891d9ee13e20b2732faf2e199258f3d828be1d1cb42fafca65c",
+      "fbx_sha256": "c92497d9dd3e8cccf53ff5fecd574241781678a0a0a3cd974dab8c0952028816",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -1587,7 +1587,7 @@
         "group": "forest"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Rock_B.fbx",
-      "fbx_sha256": "0688536566560eb283c01d003b296a4bfdb8236bf49dd83d83e9379df3fe23d6",
+      "fbx_sha256": "a7eb3d76cbb3e95691ed88f623e9e35ca8437ac5055aa430aaca90209e3e8982",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -1643,7 +1643,7 @@
       "title": "Загородная дорога 2 полосы, прямая 24 м, разметка 1.5",
       "kind": "road",
       "group": "road",
-      "triangles": 416,
+      "triangles": 396,
       "lod_triangles": {},
       "bounds_min": [
         -12.5,
@@ -1662,7 +1662,6 @@
       ],
       "materials": [
         "EN_Asphalt",
-        "EN_Asphalt_Worn",
         "EN_Grass",
         "EN_Grass_Dry",
         "EN_Gravel",
@@ -1717,7 +1716,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Road_Country2_24m.fbx",
-      "fbx_sha256": "b00889232f3b68b1d67ac0c3e79e801e69f345e1aaabc07289c566ce18b2db9c",
+      "fbx_sha256": "a18a1197fcee2f605a89f8d92e5ac55585771cabe5722399a57c99e926454358",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -1734,7 +1733,7 @@
         {
           "id": "Бюджет треугольников LOD0",
           "status": "PASS",
-          "value": 416,
+          "value": 396,
           "target": "<= 24000"
         },
         {
@@ -1810,7 +1809,7 @@
       "title": "Загородная дорога, прямая 24 м, разметка 1.1",
       "kind": "road",
       "group": "road",
-      "triangles": 450,
+      "triangles": 432,
       "lod_triangles": {},
       "bounds_min": [
         -12.5,
@@ -1829,7 +1828,6 @@
       ],
       "materials": [
         "EN_Asphalt",
-        "EN_Asphalt_Worn",
         "EN_Grass",
         "EN_Grass_Dry",
         "EN_Gravel",
@@ -1884,7 +1882,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Road_Country2_24m_Solid.fbx",
-      "fbx_sha256": "141fa90e50de49ff3446d65d5c94f69830d17ed6e2a63d3284625b2a4dbe90a7",
+      "fbx_sha256": "0e0d3ff98faea685be623b4194f8967595f2d1c1ea023c5d9def8d0486b9e62e",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -1901,7 +1899,7 @@
         {
           "id": "Бюджет треугольников LOD0",
           "status": "PASS",
-          "value": 450,
+          "value": 432,
           "target": "<= 24000"
         },
         {
@@ -1977,7 +1975,7 @@
       "title": "Загородная дорога, прямая 24 м, линия приближения 1.6",
       "kind": "road",
       "group": "road",
-      "triangles": 444,
+      "triangles": 420,
       "lod_triangles": {},
       "bounds_min": [
         -12.5,
@@ -1996,7 +1994,6 @@
       ],
       "materials": [
         "EN_Asphalt",
-        "EN_Asphalt_Worn",
         "EN_Grass",
         "EN_Grass_Dry",
         "EN_Gravel",
@@ -2051,7 +2048,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Road_Country2_24m_Approach.fbx",
-      "fbx_sha256": "90ca5a21f682420c8720d416be732a66909fe816ef3004ceb4cbd14f1e79909b",
+      "fbx_sha256": "3b7a0c164b6b9b4fceb75109aeb9e18f8561734db4e99d9d3972dd0292f1da5a",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -2068,7 +2065,7 @@
         {
           "id": "Бюджет треугольников LOD0",
           "status": "PASS",
-          "value": 444,
+          "value": 420,
           "target": "<= 24000"
         },
         {
@@ -2144,7 +2141,7 @@
       "title": "Загородная дорога, опасный поворот 90° R50: переходные кривые 35 м, вираж 6 %, уширение 0,7 м",
       "kind": "road",
       "group": "road",
-      "triangles": 6254,
+      "triangles": 6156,
       "lod_triangles": {},
       "bounds_min": [
         -68.4452,
@@ -2163,7 +2160,6 @@
       ],
       "materials": [
         "EN_Asphalt",
-        "EN_Asphalt_Worn",
         "EN_Grass",
         "EN_Grass_Dry",
         "EN_Gravel",
@@ -2218,7 +2214,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Road_Country2_Curve90_R50.fbx",
-      "fbx_sha256": "88ffdae913d4663016111e3b8264a05a67c19db40097beb8460d29b5f7f8fd93",
+      "fbx_sha256": "92d8553a42aca2fb266f31a3d4a8c51a90e290002147ad2929d5c286e8696b97",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -2235,7 +2231,7 @@
         {
           "id": "Бюджет треугольников LOD0",
           "status": "PASS",
-          "value": 6254,
+          "value": 6156,
           "target": "<= 24000"
         },
         {
@@ -2367,7 +2363,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Road_Country2_Curve90_R50_Furniture.fbx",
-      "fbx_sha256": "6eb57af6fb6b427e9d90db813326e1e324e2f363dc17f1bcc05de3ebecf0e4b8",
+      "fbx_sha256": "7ba855577ea8783a6b85d7e3fe42085c5a4fb645bb97a80dca3b8bd3f4fbb4db",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -2414,7 +2410,7 @@
       "title": "Загородная дорога, плавный поворот 30° R160: переходные кривые 25 м, вираж 3 %",
       "kind": "road",
       "group": "road",
-      "triangles": 5822,
+      "triangles": 5724,
       "lod_triangles": {},
       "bounds_min": [
         -38.5318,
@@ -2433,7 +2429,6 @@
       ],
       "materials": [
         "EN_Asphalt",
-        "EN_Asphalt_Worn",
         "EN_Grass",
         "EN_Grass_Dry",
         "EN_Gravel",
@@ -2488,7 +2483,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Road_Country2_Curve30_R160.fbx",
-      "fbx_sha256": "9a556ceffe4dab340169154834f936142dadaae99353a45f868785b6c6ddeeb6",
+      "fbx_sha256": "99b3b736017c729b329431611907b1670033d47b5c9434ee9c9ef387e2d5ad39",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -2505,7 +2500,7 @@
         {
           "id": "Бюджет треугольников LOD0",
           "status": "PASS",
-          "value": 5822,
+          "value": 5724,
           "target": "<= 24000"
         },
         {
@@ -2621,7 +2616,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Road_Delineator.fbx",
-      "fbx_sha256": "ee76bd680184c7898f465011208885ad56988df9a5d904d41f7594832ccded9a",
+      "fbx_sha256": "5a423b5520cf998001b86748a5fc96e1f30d4d4e2a67cd36cb9802cb8e39dbb5",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -2709,7 +2704,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Sign_1_11_1_CurveRight.fbx",
-      "fbx_sha256": "e57fbf5befbe10309e81846c7927ac3bcedf6752b74f6b41c41a28f7cda31634",
+      "fbx_sha256": "742d2c2ca60489b3b80a92edaee881f10ed92ef0f56169029ea8aff76f5befa8",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -2797,7 +2792,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Sign_1_11_2_CurveLeft.fbx",
-      "fbx_sha256": "922db01075b794518660cafc65e4be54a2e29fbeb86f6a3a29cdc9c04adfc4f6",
+      "fbx_sha256": "e41e7dede73dfa0f823cfaafcfa4dd51d1dbc00d924b38a127b4de3be563e9aa",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -2885,7 +2880,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Sign_1_34_1_Right.fbx",
-      "fbx_sha256": "8f6b0028fb50f8f2f1066c3fa5851aeae546aebf64dce90a3337228c6f83f2cc",
+      "fbx_sha256": "068269b150008814906ec8403577112f257fca1285feeb8adb2d98e830dd4c86",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -2973,7 +2968,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Sign_1_34_2_Left.fbx",
-      "fbx_sha256": "5da8ff212df3e8abf4af4dff292010fefff8da28eb73047b6cccc4d4aabd1ec4",
+      "fbx_sha256": "92696b8c79529613b7ba38a48cdc37d60fec8849ad05d297f9fafd9630531a6a",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -3061,7 +3056,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Sign_1_34_1_Right_x2.fbx",
-      "fbx_sha256": "adf4622976d6b90c1b788a524ef089924811dafea4df2d7f78258847372c7774",
+      "fbx_sha256": "6cf343443b8f7406e54813eaac1fa4043c36218f5a5548d2442d48d3397c81dc",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -3149,7 +3144,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Sign_1_34_2_Left_x2.fbx",
-      "fbx_sha256": "6e93ba696a6ca28e39f4095c6b72735c07baf7de8012291c584df48646bb1991",
+      "fbx_sha256": "cdab4ca6872e7a789cc80c3f964eba7fc6da934617c384ad52bc52cc67e0fb38",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -3237,7 +3232,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Sign_3_20_NoOvertaking.fbx",
-      "fbx_sha256": "9a237d3f9d63cf1eb2796f058bd42436c5b6fae938c163eaf60f4ec93f200c48",
+      "fbx_sha256": "3438ae9e29fa78fc781a0b9c15d2246d614423fdc7aeffa95d4cd9ffc6ed1a73",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -3326,7 +3321,7 @@
         "group": "road"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Sign_6_13_Km17.fbx",
-      "fbx_sha256": "9ad6a4f625bb8fb625748720c4b6ae2b57e816de92f527d7042dc3ae4f38d536",
+      "fbx_sha256": "9c74b77973768bad60330645827479b866f44a08594343bc4fbb6d16ce441c3b",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -3454,7 +3449,7 @@
         "group": "barrier"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Barrier_WBeam_4m.fbx",
-      "fbx_sha256": "af9eeabc9f30fdcad2bb2e36fd2833b594aa713cb69d03009c3e85a9b9852c30",
+      "fbx_sha256": "ad5161ca97f32a95b67ce550c5bd5182797916b42151a370ed6a0bf8e08283e0",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -3624,7 +3619,7 @@
         "group": "barrier"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Barrier_WBeam_4m_R56.fbx",
-      "fbx_sha256": "d3f295b4dfc6ae39dd0d8a067294e1c46d60d776979eae4b827b0862592afc3c",
+      "fbx_sha256": "df70bc1c225f376f3bb2282c9c751f64369860faede1d4e64858c00a3d065b26",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -3782,7 +3777,7 @@
         "group": "barrier"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Barrier_WBeam_4m_R44_Convex.fbx",
-      "fbx_sha256": "a4f7276fdef4b4a88ec5290445959fca8ef8a7629748e297997cae0288c9edaf",
+      "fbx_sha256": "364feac20e3fa4998da729bdaf879971d145b965bc0914a852d8b2f3bd66314f",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -3926,7 +3921,7 @@
         "group": "barrier"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Barrier_WBeam_EndRamp.fbx",
-      "fbx_sha256": "4ab80f7555330407db6cd1d898e81d93e36e5e7f60290a0108bc2f3862d3098c",
+      "fbx_sha256": "128978a7c5c2227b9998824be3edcef63148f040fea64ae26d858bfbb5c7bcb8",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -4050,7 +4045,7 @@
         "group": "barrier"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Barrier_WBeam_EndRamp_Start.fbx",
-      "fbx_sha256": "d9263bde619c2202b67192833f04a0de8e2c4f06b7ad1c5199baba6911fd2825",
+      "fbx_sha256": "e6c43a292e759ca1210246d17e3c4342ef08a9e9e3895c83876800ff4d90eb78",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -4173,7 +4168,7 @@
         "group": "barrier"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Barrier_WBeam_EndCap.fbx",
-      "fbx_sha256": "433af50684b3f7dec9e5209146f73c06d4336f78d24d9a9abcf464c05cf59de3",
+      "fbx_sha256": "4cf3e4caec63c349bfdb97af5fb1b9c0d072b3c1dc2c7971fe5f4ebcf63d975a",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -4317,7 +4312,7 @@
         "group": "barrier"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Barrier_Concrete_NJ_4m.fbx",
-      "fbx_sha256": "2e916fc5b62a86f1c5691223a34fb8b74d27b2f3c27ef34034e8aa9704421ac3",
+      "fbx_sha256": "101c9d8cce3c7bae2f285db6141ab3c9764fad46d319091d3160ed97da114005",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -4453,7 +4448,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Bench.fbx",
-      "fbx_sha256": "9ddb15f05b1912cc5f09cc2b96e5dacb0342b563ae4c681ce230cef75db48874",
+      "fbx_sha256": "eb7971a36999dcf1650c915bcf888fd2ded23eb5d05830e0b703af41321c146f",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -4537,7 +4532,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Bin.fbx",
-      "fbx_sha256": "d185f1d3dcad800cc7be8414242adc70f886dfd703d176c50778e3fc672b26fe",
+      "fbx_sha256": "27eab6ccc3fbad5880b5b98669f6a4b6b9216d7fc0fa2f0c67431f2ef4e36c1f",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -4621,7 +4616,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Bollard_Sphere.fbx",
-      "fbx_sha256": "bae8caeeded5dc74b07808bdd4aea93c237774004e6b349d64d41a0f64359721",
+      "fbx_sha256": "8b0851eed44519e0ade1534eb9617c68b01526b6e4bfe885343eed75ba03a4ff",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -4711,7 +4706,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_TireFlowerbed.fbx",
-      "fbx_sha256": "57801116312b1a5100bf6a1a7723c5a3507438fbf94d5ab09e988119821e29e5",
+      "fbx_sha256": "672fcfe5e7ffa2788532d8f51088ccfb315ee9a2a7118ba15d57469e50d8d649",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -4815,7 +4810,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_LawnFence_2m.fbx",
-      "fbx_sha256": "cbaf1471da30fb7081b9ee2c7f3cbbe8018b6fe3c5d017d66c62f7577d9857ab",
+      "fbx_sha256": "418239fe2f1d1d80f84ed72e1857e435ca28b3ebf005211c3a2a37a6f7d6d947",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -4941,7 +4936,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_PlaygroundPad.fbx",
-      "fbx_sha256": "7d68ed2a0e39b96462f48ee361f5bf08b4b60d521124df0b58d087906ebb5782",
+      "fbx_sha256": "6e28b342a6a25b86762d154d74149bd010e4fb031e6a1973c56bd76f5ef3a0f8",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -5029,7 +5024,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Swing.fbx",
-      "fbx_sha256": "5b1cac374f71858bd35b6add7c6de2b9125f5ab24d7de79f425c4d6db8867b3e",
+      "fbx_sha256": "c06c16ce54aaaf6f8702c5f8031c2c427327bcc2fdac9014a1c09aee80088f5b",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -5117,7 +5112,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Slide.fbx",
-      "fbx_sha256": "8d63217007562354503d9c07fa51b5a83788c4d96c6a338c0441f4e54eb026ed",
+      "fbx_sha256": "fd16037458acafb3fd28e01a43f15bb9c1605fac8b3f54ae4b0145475fa1255a",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -5205,7 +5200,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Sandbox.fbx",
-      "fbx_sha256": "cd913198bd8d5394ce30272bb0da42619c647acd14aaf6dacfd934d6a5c6c38f",
+      "fbx_sha256": "6d94c6aef2281e8bed883218a1e66d29c6ec335c614225b27b55be83f3eaf3a5",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -5293,7 +5288,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Carousel.fbx",
-      "fbx_sha256": "8b5f718948acb1a1a10f3483bbb7bdc208dd1485365c0f529c849b05371b9f86",
+      "fbx_sha256": "b4eb2142fd34881a668eeab0ba62a2f507a7a5afb9e5694d574e0be9ab7bfc11",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -5377,7 +5372,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_SportsFrame.fbx",
-      "fbx_sha256": "ce2ea1cf459077026672fb3c92568bdaa5ca144bc40d67602289ccecb8e65c5f",
+      "fbx_sha256": "1dc7fc10884210e86b178b877c7ca198a6a9ea2dad95d7d2ade23c38e4615493",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -5469,7 +5464,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_WasteSite.fbx",
-      "fbx_sha256": "271f6683297898dbef024382f44b4de2ab54329d1562200cea4ed7c8054a7a17",
+      "fbx_sha256": "44cd2af4cccba3a4bdbb3848ea7eb1ff531ab4b67214c4e51041210e60c7093f",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -5564,7 +5559,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_BarrierGate.fbx",
-      "fbx_sha256": "a6cadae1ec4d035251d60a8bfe1d541924c3f3a77d53d21e5d4bb156478ff0a3",
+      "fbx_sha256": "ebaf7a00be73cf1434b383d4bd74595dc0d3933a47340bab6da57a5ca07b5249",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -5663,7 +5658,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Lamp.fbx",
-      "fbx_sha256": "3261f1d36cef9fc21ca169ed514249d3444135ddbdeb0ec5b525f9a9f53f08d9",
+      "fbx_sha256": "2ead8e0034e79deeaf8428189577e202f6d496397d465a9d3722a26862b328c8",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -5756,7 +5751,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Garage_Teal.fbx",
-      "fbx_sha256": "b0c4c39cd3c9fce4c9b158d904e5d57805ce706c231174860d49253dd63de3ae",
+      "fbx_sha256": "7af28f0fe80d900e230e4c498fb2eafd62066f0619e2b34deec1fb65ef756d6a",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -5843,7 +5838,7 @@
         "group": "yard"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Garage_Beige.fbx",
-      "fbx_sha256": "4bf4785d27a705acde10534b113bb224cbc53c1644146f20255fa363b2676071",
+      "fbx_sha256": "8d9b4e993cb16c2f0c0a4b017cf485c17d6d62bc6e81d88548c5e7f43fbbfb6b",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -5941,7 +5936,7 @@
         "group": "parking"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Park_Bay_Perp_5x.fbx",
-      "fbx_sha256": "0a21677b89f1acaf277458522882ddb33e92ec6a8e321dba47658e871eac1a7e",
+      "fbx_sha256": "cf4aee927b04edd36b30e448f657b19b0f2b2f30abc1ad399118911c7d0bee64",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -6041,7 +6036,7 @@
         "group": "parking"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Park_Bay_Angle45_4x.fbx",
-      "fbx_sha256": "1fb274272baaa3394104238572f4d265f7514a57a3cc719b0aae0702491bc830",
+      "fbx_sha256": "a53a6ee69cc9c0d8a5d1b50ae01a4ceebcd1851c4034db0917d3e649407563bb",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -6155,7 +6150,7 @@
         "group": "parking"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Park_Pocket_Parallel_3x.fbx",
-      "fbx_sha256": "0ff570077dab254c162b859efc747b3306476cbf690ced9fc0eebaf2fc294594",
+      "fbx_sha256": "bdbb9e26598dc4b022561118cf9b864a06f96028eb242e8fb3dabd6d349b9e62",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -6295,7 +6290,7 @@
         "group": "parking"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Park_Lot_20.fbx",
-      "fbx_sha256": "b57f12c5935f1a05382471f0e299a554f0b09dc58576127a09cde43aaebc0469",
+      "fbx_sha256": "8b6a4270e72e930eb019e3be74341c5092b02629e0216f943486a569060e5811",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -6392,7 +6387,7 @@
         "group": "parking"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Park_WheelStop.fbx",
-      "fbx_sha256": "e16d74eca6f24d160ec521d6fccbd10a4ee9c8ee0ba0a91950cdd126ca8641c1",
+      "fbx_sha256": "ec37160e371a57e75d32cd4c25457077daa781a52c1bb5ec46846b674357829d",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -6481,7 +6476,7 @@
         "group": "parking"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Park_PayStation.fbx",
-      "fbx_sha256": "4ac014c06528c5482dadd021c45ce84cccaa0e53d273db7e0b40ec04a613803c",
+      "fbx_sha256": "15b5a53db299cdb33f3c081d279fefd141670bda1d6070563e2e8cf67b5f6d8a",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -6566,7 +6561,7 @@
         "group": "parking"
       },
       "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Park_Bollard.fbx",
-      "fbx_sha256": "d6813b447da7c3487bdcd49663bee15f326831d057898ffc3f5c46872f398ea3",
+      "fbx_sha256": "bd69dd86c3136312e3d68258eefc1023e025b3acf00ece66b33d720652c39efd",
       "checks": [
         {
           "id": "Корень в начале координат без поворота и масштаба",
@@ -6610,7 +6605,7 @@
     }
   ],
   "textures": {
-    "T_Asphalt": "e2228f31601adcb5924d45471d2e397232f43ead64ed17945b1d681f62024f2b",
+    "T_Asphalt": "ce949a2ab45936134230aa52db00f63ac61f171449dbc998eb8f978ff7a79c78",
     "T_Bark_Birch": "618a8491747f57481cea5f3ace77e113fe9944868ee9c4f23963f03956276305",
     "T_Bark_BirchBase": "04e78b2d14ba2438d846d246051bb5f1c8500d1208c5a1b787ce0ec6babb35e5",
     "T_Bark_Dark": "53bf84760e9807b44f5ae65b4d6e54e50251b56f0aafc7061c8d17ee67723b83",
@@ -6644,6 +6639,6 @@
     "T_Wood": "8a61696d1bf2ef201ed0e5ea19c2ead56867a043ed84671847cd56d6478a03d5"
   },
   "source": "ArtSource/DS_EnvKit.blend",
-  "source_sha256": "214772367cdc02b1a0a69c343492a2b6145518fad28c6e4a4d82cd124a32be0b",
+  "source_sha256": "f3536383bb395fea623b28c51f86235d5eb74e2c6a09c8a4a59539c489ce9738",
   "failed_checks": []
 }
