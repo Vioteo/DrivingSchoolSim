@@ -241,6 +241,52 @@ def sign(kind):
     return module(name, title + ' (стилизовано)', B.parts() + col.parts(), [], meta)
 
 
+def _poly_y(poly_xz, y0, y1):
+    """Extrude an (x, z) outline along Y (a flat shape on a sign face)."""
+    v, f = prism(poly_xz, y0, y1)
+    # (x, z, y) -> (x, y, z) mirrors the frame: turn the faces round to keep them pointing out.
+    return [(a, c, b) for a, b, c in v], [tuple(reversed(q)) for q in f]
+
+
+def lane_sign(end=False):
+    """5.14 «Полоса для маршрутных транспортных средств» / 5.14.1 «Конец полосы» (T74), stylised like 5.16: blue
+    plate, white bus pictogram over a white lane band with an arrow up; the end sign is crossed out by a red stripe.
+    Not checked against ГОСТ Р 52290-2004 (drawing and sizes)."""
+    B = Bucket()
+    z = 2.45
+    B.add('Post', 'PT_Steel', cylinder((0, -0.055, 0), (0, -0.055, 2.75), 0.038, 16))
+    B.add('Post', 'PT_Steel', box((0, -0.055, 0.017), (0.24, 0.24, 0.034)))
+    B.add('Plate_Back', 'PT_Steel', box((0, 0.0, z), (0.6, 0.02, 0.6)))
+    B.add('Face_Blue', 'PT_Sign_Blue', box((0, 0.013, z), (0.59, 0.006, 0.59)))
+    y = 0.018
+    white = []
+    # lane band (the lane the sign stands for) with an arrow at its top
+    white.append(box((0, y, z - 0.13), (0.17, 0.004, 0.24)))
+    white.append(_poly_y([(-0.13, z + 0.0), (0.13, z + 0.0), (0.0, z + 0.07)], y - 0.002, y + 0.002))
+    # bus pictogram above it
+    white.append(box((0, y, z + 0.16), (0.32, 0.004, 0.12)))
+    white.append(cylinder((-0.09, y - 0.002, z + 0.09), (-0.09, y + 0.002, z + 0.09), 0.03, 16))
+    white.append(cylinder((0.10, y - 0.002, z + 0.09), (0.10, y + 0.002, z + 0.09), 0.03, 16))
+    B.add('Pictogram', 'PT_Sign_White', merge(*white))
+    # windows: blue again, a little proud of the white body
+    B.add('Pictogram_Windows', 'PT_Sign_Blue', merge(*[box((-0.11 + 0.07 * k, y + 0.003, z + 0.185), (0.05, 0.002, 0.04)) for k in range(4)]))
+    if end:
+        c, sn = math.cos(math.radians(45)), math.sin(math.radians(45))
+        L, W = 0.74, 0.055
+        quad = [(-L / 2 * c - W / 2 * sn, z - L / 2 * sn + W / 2 * c), (L / 2 * c - W / 2 * sn, z + L / 2 * sn + W / 2 * c),
+                (L / 2 * c + W / 2 * sn, z + L / 2 * sn - W / 2 * c), (-L / 2 * c + W / 2 * sn, z - L / 2 * sn - W / 2 * c)]
+        quad = [(max(-0.29, min(0.29, x)), max(z - 0.29, min(z + 0.29, q))) for x, q in quad]
+        B.add('EndStripe', 'PT_Sign_Red', _poly_y(quad, y + 0.004, y + 0.007))
+    col = Bucket()
+    col.add('COL_Post', 'PT_Collision', box((0, -0.055, 1.375), (0.08, 0.08, 2.75)))
+    col.add('COL_Plate', 'PT_Collision', box((0, 0, 2.45), (0.6, 0.03, 0.6)))
+    name = 'PT_Sign_5_14_1_BusLaneEnd' if end else 'PT_Sign_5_14_BusLane'
+    title = ('5.14.1 «Конец полосы для маршрутных транспортных средств»' if end
+             else '5.14 «Полоса для маршрутных транспортных средств»')
+    meta = dict(kind='sign', height=2.75, plate=0.6)
+    return module(name, title + ' (стилизовано)', B.parts() + col.parts(), [], meta)
+
+
 # ------------------------------------------------------------------ shelter
 def shelter_geometry(B, width=4.4, depth=1.6, height=2.55, name_board=True, prefix=''):
     """Bus shelter, open side towards +Y, footprint centred on the origin."""
@@ -363,4 +409,5 @@ def zigzag(L=20.0, depth=1.0, period=2.0, width=0.1):
 
 
 ALL = (road_tram_urban, track_grass, track_grass_curve, lambda: sign('bus'), lambda: sign('tram'),
+       lambda: lane_sign(False), lambda: lane_sign(True),
        bus_shelter, tram_platform, zigzag)

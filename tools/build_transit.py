@@ -310,7 +310,8 @@ def main():
               'PT_Road_TramUrban_20m': (30, 10, 0), 'PT_TramTrack_Grass_20m': (45, 10, 0),
               'PT_TramTrack_Grass_Curve90_R25': (80, 10, 0), 'PT_Sign_5_16_BusStop': (-12, -3, 0),
               'PT_Sign_5_17_TramStop': (-12, 3, 0), 'PT_BusStop_Shelter': (-18, 0, 0),
-              'PT_TramStop_Platform_30m': (16, 0, 0), 'PT_Marking_1_17_Zigzag_20m': (-24, 10, 0)}
+              'PT_TramStop_Platform_30m': (16, 0, 0), 'PT_Marking_1_17_Zigzag_20m': (-24, 10, 0),
+              'PT_Sign_5_14_BusLane': (-12, -6, 0), 'PT_Sign_5_14_1_BusLaneEnd': (-12, -9, 0)}
     for r in roots:
         r.location = layout.get(r.name, (0, 0, 0))
     if not no_render:
