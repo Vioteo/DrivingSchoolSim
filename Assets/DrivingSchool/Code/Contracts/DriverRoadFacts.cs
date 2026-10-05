@@ -4,7 +4,7 @@ namespace DrivingSchool.Contracts
     // What the road graph says about the player's car this tick (T65): built by PlayerRoadMonitor (Simulation) from the
     // traffic director, judged by CityRuleMonitor (Rules). Events (Entered*, LaneChange*) are set for one tick only.
 
-    public enum RoadStopPlace { Lane, Crosswalk, BeforeCrosswalk, NoStoppingZone }
+    public enum RoadStopPlace { Lane, Crosswalk, BeforeCrosswalk, NoStoppingZone, BusLane, TransitStop }
 
     [Serializable] public struct DriverRoadFacts
     {
@@ -33,10 +33,18 @@ namespace DrivingSchool.Contracts
         public bool EnteredOnRed;                 // this tick: drove into an intersection on red or red with amber
         public bool EnteredClosedRailway;         // this tick: drove onto a level crossing while it is closed
 
+        // Route vehicles (T74).
+        public bool OnBusLane;                    // the centre is on a lane for route vehicles behind a solid line (ПДД 18.2)
+        public bool OnBusLaneEntry;               // ...on its stretch behind a broken line (allowed to turn right / enter the road)
+        public bool JunctionFromBusLane;          // with JunctionManeuver: the movement was made from a lane for route vehicles
+        public bool PassedDepartingBus;           // this tick: went past a bus pulling away from its stop instead of letting it go (ПДД 18.3)
+        public string PassedBusRoute;             // its route name
+
         // Standing still.
         public RoadStopPlace StopPlace;           // what the car stands on or right before (worst of them)
         public bool WaitingForTraffic;            // a reason to stand: queue, stop line, pedestrians, closed crossing
         public bool CrosswalkSignalled;           // the crosswalk the car stands before has a pedestrian signal
+        public string TransitStopId;              // StopPlace TransitStop: which stopping place (ПДД 12.4)
 
         // Following.
         public float LeadGapM, LeadSpeedMps;      // bumper to bumper to the vehicle ahead on the car's lane; +inf if none

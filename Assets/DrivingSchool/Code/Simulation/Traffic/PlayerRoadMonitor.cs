@@ -23,6 +23,13 @@ namespace DrivingSchool.Simulation.Traffic
         readonly Dictionary<string, List<LaneBoundary>> boundaries = new Dictionary<string, List<LaneBoundary>>();
         bool inJunction; string junctionFrom; double junctionEntered;
         string rankLane; int rank; string lastPath;
+        // ПДД 18.3 (T74): route vehicles moving off a stop the player was behind, by agent id.
+        readonly Dictionary<string, BusWatch> departing = new Dictionary<string, BusWatch>();
+        sealed class BusWatch { public bool Behind, Queued; public double LastSeen; }
+
+        /// <summary>Game parameters (T74): a bus moving off counts as passed when the player gets ahead of its front while its
+        /// left signal is on or it pulls away, closer to its side than this, or after queueing right behind it.</summary>
+        public double PassLateralM = 3.0, QueueBehindM = 30, QueueLateralM = 1.3;
 
         public PlayerRoadMonitor(TrafficDirector director)
         {
@@ -45,6 +52,7 @@ namespace DrivingSchool.Simulation.Traffic
                 LeftIndicator = p.LeftIndicator, RightIndicator = p.RightIndicator, Hazard = p.Hazard,
                 LeadGapM = float.PositiveInfinity, JunctionFromAllowedLane = true,
             };
+            Transit(ref f, p);
             if (!p.Present || !pos.IsValid) { rankLane = null; lastPath = null; return f; }
             var path = index.Path(pos.PathId);
             if (path.IsConnection && lastPath != null && index.TryPath(lastPath, out var before) && !before.IsConnection && !string.IsNullOrEmpty(path.Connection.signalGroupId))
@@ -83,6 +91,8 @@ namespace DrivingSchool.Simulation.Traffic
                 f.LanesInDirection = LanesOf(lane);
                 f.RightmostLane = string.IsNullOrEmpty(lane.rightNeighborId);
                 Axis(ref f, lane, pos, p.WidthM);
+                // Lane for route vehicles (T74): the centre of the car is on it.
+                if (!pos.AgainstDirection && lane.busLane) { f.OnBusLane = !lane.busLaneEntry; f.OnBusLaneEntry = lane.busLaneEntry; }
             }
             Stop(ref f, path, pos, p);
             Lead(ref f, path, pos, p);
@@ -102,6 +112,7 @@ namespace DrivingSchool.Simulation.Traffic
             f.JunctionEnteredSeconds = junctionEntered;
             f.JunctionLaneAllowed = entry.allowedManeuvers;
             f.JunctionFromAllowedLane = entry.allowedManeuvers == LaneManeuver.None || (entry.allowedManeuvers & m) != 0;
+            f.JunctionFromBusLane = entry.busLane;
             f.EnteredRoundabout = !entry.roundabout && exit.roundabout;
             f.LeftRoundabout = entry.roundabout && !exit.roundabout;
         }
@@ -148,9 +159,13 @@ namespace DrivingSchool.Simulation.Traffic
                 if (on) { place = RoadStopPlace.Crosswalk; signalled = !string.IsNullOrEmpty(c.signalGroupId); break; }
                 if (before && place != RoadStopPlace.BeforeCrosswalk) { place = RoadStopPlace.BeforeCrosswalk; signalled = !string.IsNullOrEmpty(c.signalGroupId); }
             }
+            // A stopping place of route vehicles and 15 m round it (ПДД 12.4), a lane for them (ПДД 18.2), the zone of 3.27.
+            string stopZone = place == RoadStopPlace.Lane ? index.TransitStopZoneAt(path.Id, pos.S) : null;
+            if (stopZone != null) place = RoadStopPlace.TransitStop;
+            else if (place == RoadStopPlace.Lane && !path.IsConnection && path.Lane.busLane && !pos.AgainstDirection) place = RoadStopPlace.BusLane;
             if (place == RoadStopPlace.Lane && index.SignsAt(path.Id, pos.S).Any(c => index.World.signs.First(s => s.id == c.SignId).code == "3.27"))
                 place = RoadStopPlace.NoStoppingZone;
-            f.StopPlace = place; f.CrosswalkSignalled = signalled;
+            f.StopPlace = place; f.CrosswalkSignalled = signalled; f.TransitStopId = stopZone;
 
             // The stop line lies on the short entry lane of the junction, so look along the lanes ahead:
             // near the line — waiting to go in; a red or amber ahead — waiting for the signal (ПДД 6.13).
@@ -198,6 +213,43 @@ namespace DrivingSchool.Simulation.Traffic
             if (t < 0 || t > 1) return false;
             double px = c.a.x + ex * t - x, pz = c.a.z + ez * t - z;
             return px * px + pz * pz <= (c.widthM / 2) * (c.widthM / 2);
+        }
+
+        /// <summary>
+        /// ПДД РФ 18.3 (T74): in a town the others give way to a bus moving off its stop. Game reading: the player did not
+        /// give way if, while the bus signals left or pulls away, the player gets ahead of its front close beside it — or
+        /// after waiting right behind it in its lane (then went round it instead of letting it go).
+        /// </summary>
+        void Transit(ref DriverRoadFacts f, PlayerSample p)
+        {
+            var seen = new HashSet<string>();
+            foreach (var o in director.Snapshot.Participants)
+            {
+                if (o.RouteId == null) continue;
+                if (o.Transit != TransitPhase.Departing) continue;   // signalling to move off, or pulling away
+                seen.Add(o.Id);
+                if (!departing.TryGetValue(o.Id, out var w)) departing[o.Id] = w = new BusWatch();
+                w.LastSeen = f.Seconds;
+                if (!p.Present) continue;
+                double fx = Math.Sin(o.HeadingRad), fz = Math.Cos(o.HeadingRad);
+                double dx = p.X - o.Position.x, dz = p.Z - o.Position.z;
+                double along = dx * fx + dz * fz, lateral = dx * fz - dz * fx;   // right of the bus positive
+                bool sameWay = Math.Cos(p.HeadingRad - o.HeadingRad) > 0.7;
+                double half = o.LengthM / 2, mine = p.LengthM / 2;
+                if (!sameWay) { w.Behind = false; continue; }
+                if (along + mine < -half + 0.5)
+                {
+                    w.Behind = true;
+                    if (along > -half - QueueBehindM && Math.Abs(lateral) < QueueLateralM) w.Queued = true;
+                }
+                else if (w.Behind && along - mine > half - 0.5)
+                {
+                    // Got ahead of it: beside it on the left (or after queueing behind it).
+                    if (w.Queued || Math.Abs(lateral) < PassLateralM) { f.PassedDepartingBus = true; f.PassedBusRoute = o.RouteName; }
+                    w.Behind = false; w.Queued = false;
+                }
+            }
+            foreach (var id in departing.Keys.Where(k => !seen.Contains(k) && f.Seconds - departing[k].LastSeen > 1).ToList()) departing.Remove(id);
         }
 
         /// <summary>The nearest vehicle ahead along the graph (the lane, then every way on from it), bumper to bumper.</summary>

@@ -26,12 +26,19 @@ namespace DrivingSchool.Rules
         public const string RuleStopNearCrosswalk = "PDD_12.4_STOP_NEAR_CROSSWALK";
         public const string RuleNoStoppingZone = "PDD_3.27_NO_STOPPING";
         public const string RuleStopNotAtRightEdge = "PDD_12.1_STOP_NOT_AT_RIGHT_EDGE";
+        // Маршрутные транспортные средства (T74). Текст пунктов — ПДД РФ в редакции с изменениями, действующими
+        // с 01.03.2023 (разметка 1.17.1), по pddmaster.ru на 05.10.2026; с официальной публикацией не сверено.
+        public const string RuleBusLane = "PDD_18.2_BUS_LANE";
+        public const string RuleBusLaneStop = "PDD_18.2_BUS_LANE_STOP";
+        public const string RuleTransitStopZone = "PDD_12.4_TRANSIT_STOP";
+        public const string RuleTransitStopParking = "PDD_12.5_TRANSIT_STOP_PARKING";
+        public const string RuleYieldBus = "PDD_18.3_YIELD_BUS";
 
         public static readonly string[] AllRules =
         {
             RuleSpeed, RuleOncoming, RuleStartNoSignal, RuleLaneChangeNoSignal, RuleTurnNoSignal, RuleRoundaboutEntryNoSignal,
             RuleRoundaboutExitNoSignal, RuleWrongLane, RuleDistance, RuleStopOnCrosswalk, RuleStopNearCrosswalk, RuleNoStoppingZone,
-            RuleStopNotAtRightEdge,
+            RuleStopNotAtRightEdge, RuleBusLane, RuleBusLaneStop, RuleTransitStopZone, RuleTransitStopParking, RuleYieldBus,
         };
 
         // Игровые пороги (калибровка), не нормы.
@@ -50,6 +57,10 @@ namespace DrivingSchool.Rules
         public const double CrosswalkStopSeconds = 1.0;
         public const double StopSeconds = 3.0;
         public const double OncomingClearSeconds = 1.0;
+        public const double BusLaneSeconds = 1.0;         // по полосе для маршрутных ТС дольше — нарушение (ПДД 18.2)
+        public const double BusLaneClearSeconds = 2.0;    // столько вне её — новый эпизод
+        // Стоянка — прекращение движения более чем на 5 минут (ПДД РФ, п. 1.2, термин «Стоянка»); это определение, не порог игры.
+        public const double ParkingSeconds = 300.0;
 
         readonly List<(double t, bool left, bool right)> signals = new List<(double, bool, bool)>();
         double overSince = -1; bool speedReported;
@@ -57,6 +68,7 @@ namespace DrivingSchool.Rules
         double stoppedSince = -1; bool parked, startChecked = true;
         double closeSince = -1; bool distanceReported;
         bool crosswalkReported, stopReported; double idleSince = -1;
+        double busLaneSince = -1, busLaneClearSince = -1; bool busLaneReported, parkingReported;
         int seq;
 
         public List<RuleEvent> Update(DriverRoadFacts f)
@@ -92,7 +104,7 @@ namespace DrivingSchool.Rules
             // Стоянка у края и трогание (ПДД 8.1, 8.2).
             if (f.SpeedMps < StandstillMps)
             {
-                if (stoppedSince < 0) { stoppedSince = f.Seconds; crosswalkReported = false; stopReported = false; idleSince = -1; }
+                if (stoppedSince < 0) { stoppedSince = f.Seconds; crosswalkReported = false; stopReported = false; parkingReported = false; idleSince = -1; }
                 double stood = f.Seconds - stoppedSince;
                 bool atRoadside = !f.OnRoad || f.RightmostLane && f.LateralOffsetM >= RoadsideOffsetM && !f.InIntersection;
                 if (stood >= ParkedSeconds && atRoadside && !f.WaitingForTraffic) { parked = true; startChecked = false; }
@@ -107,10 +119,16 @@ namespace DrivingSchool.Rules
                 {
                     string rule = null;
                     if (f.StopPlace == RoadStopPlace.BeforeCrosswalk && !f.CrosswalkSignalled) rule = RuleStopNearCrosswalk;
+                    else if (f.StopPlace == RoadStopPlace.TransitStop) rule = RuleTransitStopZone;
+                    else if (f.StopPlace == RoadStopPlace.BusLane) rule = RuleBusLaneStop;
                     else if (f.StopPlace == RoadStopPlace.NoStoppingZone) rule = RuleNoStoppingZone;
                     else if (f.AgainstDirection || !f.RightmostLane) rule = RuleStopNotAtRightEdge;
-                    if (rule != null) { stopReported = true; result.Add(Make(rule, f)); }
+                    if (rule != null) { stopReported = true; result.Add(Make(rule, f, f.TransitStopId)); }
                 }
+                // Стоянка там, где запрещена остановка (ПДД 12.5): у остановки маршрутных ТС и на их полосе — дольше 5 минут.
+                if (!parkingReported && !reason && f.OnRoad && idleSince >= 0 && f.Seconds - idleSince >= ParkingSeconds
+                    && (f.StopPlace == RoadStopPlace.TransitStop || f.StopPlace == RoadStopPlace.BusLane))
+                { parkingReported = true; result.Add(Make(RuleTransitStopParking, f, f.TransitStopId)); }
             }
             else
             {
@@ -138,6 +156,29 @@ namespace DrivingSchool.Rules
                     result.Add(Make(f.EnteredRoundabout ? RuleRoundaboutEntryNoSignal : f.LeftRoundabout ? RuleRoundaboutExitNoSignal : RuleTurnNoSignal, f, f.JunctionManeuver.ToString()));
                 if (!f.JunctionFromAllowedLane) result.Add(Make(RuleWrongLane, f, f.JunctionManeuver + " from " + f.JunctionLaneAllowed));
             }
+
+            // Полоса для маршрутных ТС (ПДД 18.2): движение по ней за сплошной линией; проезд перекрёстка с неё не направо
+            // (за прерывистой на неё перестраиваются только для поворота направо и после въезда на дорогу).
+            if (f.OnRoad && f.OnBusLane && f.SpeedMps >= StandstillMps)
+            {
+                busLaneClearSince = -1;
+                if (busLaneSince < 0) busLaneSince = f.Seconds;
+                if (!busLaneReported && f.Seconds - busLaneSince >= BusLaneSeconds) { busLaneReported = true; result.Add(Make(RuleBusLane, f)); }
+            }
+            else
+            {
+                busLaneSince = -1;
+                if (!f.OnBusLane && busLaneReported)
+                {
+                    if (busLaneClearSince < 0) busLaneClearSince = f.Seconds;
+                    if (f.Seconds - busLaneClearSince >= BusLaneClearSeconds) busLaneReported = false;
+                }
+            }
+            if (f.JunctionManeuver != LaneManeuver.None && f.JunctionFromBusLane && f.JunctionManeuver != LaneManeuver.Right && !busLaneReported)
+            { busLaneReported = true; busLaneClearSince = -1; result.Add(Make(RuleBusLane, f, "through junction " + f.JunctionManeuver)); }
+
+            // Автобус отъезжает от остановки (ПДД 18.3).
+            if (f.PassedDepartingBus) result.Add(Make(RuleYieldBus, f, f.PassedBusRoute));
 
             // Дистанция до впереди идущего (ПДД 9.10).
             if (f.SpeedMps > FollowMinSpeedMps && f.LeadGapM < Math.Max(MinGapM, f.SpeedMps * MinHeadwaySeconds))
