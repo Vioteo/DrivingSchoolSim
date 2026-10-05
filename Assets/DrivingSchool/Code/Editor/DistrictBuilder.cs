@@ -618,6 +618,39 @@ namespace DrivingSchool.Editor
                 var go = Place(Kit + "TK_Lamp_7m.prefab", pos, m.yawDeg - 90f * side, parent);
                 SetLayer(go, layer); go.isStatic = true;
             }
+            // Curves (T75): they were dark between the straights' lamps. Lamps stand on the outer kerb, the arm towards the
+            // centre of the bend — one in the middle of the R 14 bend, two on the longer R 26 one. Both turn right around
+            // (R, 0, 0) from Start (heading +Z) to End (+X), RoadKitTemplates / RoadKitTemplatesV2.
+            foreach (var m in layout.instances)
+            {
+                bool wide = m.catalogId == Curve4;
+                if (!wide && m.catalogId != Curve) continue;
+                float R = (float)(wide ? RoadKitTemplatesV2.Curve4RadiusM : RoadKitTemplates.CurveRadiusM), r = R + (wide ? 8.1f : 5.4f);
+                var rot = Quaternion.Euler(0, m.yawDeg, 0);
+                foreach (float deg in wide ? new[] { 22.5f, 67.5f } : new[] { 45f })
+                {
+                    float a = deg * Mathf.Deg2Rad;
+                    var local = new Vector3(R - r * Mathf.Cos(a), 0f, r * Mathf.Sin(a));
+                    var pos = new Vector3((float)m.x, (float)m.y + SidewalkTop, (float)m.z) + rot * local;
+                    float yaw = Mathf.Atan2(Mathf.Cos(a), -Mathf.Sin(a)) * Mathf.Rad2Deg + m.yawDeg;
+                    var go = Place(Kit + "TK_Lamp_7m.prefab", pos, yaw, parent);
+                    go.name = m.id + " curve lamp";
+                    SetLayer(go, layer); go.isStatic = true;
+                }
+            }
+            // Overpass (T75): ramps, crests and the bridge span get lamps like the straights, on the road's slope.
+            int k = 0;
+            foreach (var m in layout.instances)
+            {
+                if (!RoadKitTemplates.IsSloped(m.catalogId)) continue;
+                int side = k++ % 2 == 0 ? 1 : -1;
+                var rot = Quaternion.Euler(0, m.yawDeg, 0);
+                float y = (float)RoadKitTemplates.SlopeHeight(m.catalogId, 10);
+                var pos = new Vector3((float)m.x, (float)m.y + SidewalkTop, (float)m.z) + rot * new Vector3(side * 5.4f, y, 10f);
+                var go = Place(Kit + "TK_Lamp_7m.prefab", pos, m.yawDeg - 90f * side, parent);
+                go.name = m.id + " overpass lamp";
+                SetLayer(go, layer); go.isStatic = true;
+            }
             // Junctions and the roundabout (T64): a lamp on every corner, its arm towards the centre.
             foreach (var m in layout.instances)
             {
