@@ -445,6 +445,18 @@
       "emission": 0
     },
     {
+      "name": "PT_Sign_Red",
+      "color": [
+        0.62,
+        0.02,
+        0.02,
+        1
+      ],
+      "metallic": 0.0,
+      "roughness": 0.4,
+      "emission": 0
+    },
+    {
       "name": "PT_Collision",
       "color": [
         1.0,

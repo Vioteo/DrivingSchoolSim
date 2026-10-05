@@ -1,6 +1,6 @@
 {
     "unityVersion": "6000.3.10f1",
-    "checkedUtc": "2026-09-25T06:55:49.9230509Z",
+    "checkedUtc": "2026-10-05T16:41:24.6187926Z",
     "passed": true,
     "trackSeamPass": true,
     "assets": [
@@ -96,6 +96,44 @@
             "triangles": 912,
             "colliders": 1,
             "layer": "DriveSurface not defined in TagManager: default layer used",
+            "pass": true,
+            "note": ""
+        },
+        {
+            "name": "PT_Sign_5_14_1_BusLaneEnd",
+            "boundsMetres": {
+                "x": 0.6000001430511475,
+                "y": 2.750000238418579,
+                "z": 0.24000033736228944
+            },
+            "expectedMetres": {
+                "x": 0.6000000238418579,
+                "y": 2.75,
+                "z": 0.23999999463558198
+            },
+            "minY": 0.0,
+            "triangles": 320,
+            "colliders": 2,
+            "layer": "SolidProp not defined in TagManager: default layer used",
+            "pass": true,
+            "note": ""
+        },
+        {
+            "name": "PT_Sign_5_14_BusLane",
+            "boundsMetres": {
+                "x": 0.6000001430511475,
+                "y": 2.750000238418579,
+                "z": 0.24000033736228944
+            },
+            "expectedMetres": {
+                "x": 0.6000000238418579,
+                "y": 2.75,
+                "z": 0.23999999463558198
+            },
+            "minY": 0.0,
+            "triangles": 308,
+            "colliders": 2,
+            "layer": "SolidProp not defined in TagManager: default layer used",
             "pass": true,
             "note": ""
         },

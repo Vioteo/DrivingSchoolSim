@@ -3,7 +3,7 @@
   "prefix": "PT_",
   "script": "tools/build_transit.py",
   "generator": "tools/transit_kit",
-  "utc": "2026-09-25T06:51:07.418809+00:00",
+  "utc": "2026-10-05T16:38:05.927167+00:00",
   "blender": "5.0.1",
   "axes": "Blender: X right, Y back (front -Y), Z up; FBX -Z forward / Y up",
   "assets": [
@@ -12,7 +12,7 @@
       "title": "Городской автобус 12 м, низкопольный",
       "kind": "bus",
       "fbx": "Assets\\DrivingSchool\\Art\\Transit\\PT_Bus_City12.fbx",
-      "fbx_sha256": "02de6e42f4384e66936e9ba92a1bcf52bf6b29294d33a5006e57b3f28205bc9d",
+      "fbx_sha256": "92a6e2150837f9298417c9ea1805b96ea898ccabc48dcb6c76551338ada15dcd",
       "glb": "artifacts\\visual-review\\transit\\models\\PT_Bus_City12.glb",
       "triangles": 18418,
       "bounds_min": [
@@ -347,7 +347,7 @@
       "title": "Маршрутное такси (микроавтобус)",
       "kind": "minibus",
       "fbx": "Assets\\DrivingSchool\\Art\\Transit\\PT_Minibus_Route.fbx",
-      "fbx_sha256": "a11a7b779071e0357ee9c9981f173f67a2e9a26188e59cc8c15a12f330dda9d8",
+      "fbx_sha256": "c5e73f2401e43cc72c155d2915a59be65aad3663ada230e67b5b08bfbc340428",
       "glb": "artifacts\\visual-review\\transit\\models\\PT_Minibus_Route.glb",
       "triangles": 17840,
       "bounds_min": [
@@ -701,7 +701,7 @@
       "title": "Трамвай односекционный",
       "kind": "tram",
       "fbx": "Assets\\DrivingSchool\\Art\\Transit\\PT_Tram_City.fbx",
-      "fbx_sha256": "76285816b5e06b95434256b6559c37b41195554ee8df639fbfdbeb553d725d1c",
+      "fbx_sha256": "61eb96d2d9af41bba42f50f08f60e8faaaf0aa453988515795a745e4f6236602",
       "glb": "artifacts\\visual-review\\transit\\models\\PT_Tram_City.glb",
       "triangles": 14534,
       "bounds_min": [
@@ -1025,7 +1025,7 @@
       "title": "Улица с трамвайными путями в одном уровне",
       "kind": "track",
       "fbx": "Assets\\DrivingSchool\\Art\\Transit\\PT_Road_TramUrban_20m.fbx",
-      "fbx_sha256": "b8eada9e6c674281413815bd9f42d83232003638af373c4a8ca6e667c1ea2f2b",
+      "fbx_sha256": "6142b15ad73cb39d26142f064ecd7175d7e927c75ededaecf944aa890d38e00b",
       "glb": "artifacts\\visual-review\\transit\\models\\PT_Road_TramUrban_20m.glb",
       "triangles": 912,
       "bounds_min": [
@@ -1249,7 +1249,7 @@
       "title": "Обособленный трамвайный путь на газоне",
       "kind": "track",
       "fbx": "Assets\\DrivingSchool\\Art\\Transit\\PT_TramTrack_Grass_20m.fbx",
-      "fbx_sha256": "eaa4a1b45dcaeaba0d83a1ac81769b85fce8feff7e9fc1a7e05042fc313d5194",
+      "fbx_sha256": "6d1e04dbdf39545582bbcded5dca3df4f10c9efd2c411a82be1fb1824b71fb56",
       "glb": "artifacts\\visual-review\\transit\\models\\PT_TramTrack_Grass_20m.glb",
       "triangles": 132,
       "bounds_min": [
@@ -1462,7 +1462,7 @@
       "title": "Обособленный путь, поворот 90° R25",
       "kind": "track_curve",
       "fbx": "Assets\\DrivingSchool\\Art\\Transit\\PT_TramTrack_Grass_Curve90_R25.fbx",
-      "fbx_sha256": "427e17faebbb844dfc191a2ca5bcadf695d85343d1253015758b41a1e078f37c",
+      "fbx_sha256": "e824a27ccb989d3d0b6b7aa2932d28c737b4f698f0ea05ee27fcc1c38dbbfa36",
       "glb": "artifacts\\visual-review\\transit\\models\\PT_TramTrack_Grass_Curve90_R25.glb",
       "triangles": 5676,
       "bounds_min": [
@@ -1613,7 +1613,7 @@
       "title": "5.16 «Место остановки автобуса и (или) троллейбуса» (стилизовано)",
       "kind": "sign",
       "fbx": "Assets\\DrivingSchool\\Art\\Transit\\PT_Sign_5_16_BusStop.fbx",
-      "fbx_sha256": "8a2d5e564c98cc2a7c1be948350b49276db57ca1cc8650dc858b5c7c0eb690b8",
+      "fbx_sha256": "a9965d9081764f9cb6680aa6eadd3fd8cacacde7c3d576325d5759177248abcf",
       "glb": "artifacts\\visual-review\\transit\\models\\PT_Sign_5_16_BusStop.glb",
       "triangles": 300,
       "bounds_min": [
@@ -1736,7 +1736,7 @@
       "title": "5.17 «Место остановки трамвая» (стилизовано)",
       "kind": "sign",
       "fbx": "Assets\\DrivingSchool\\Art\\Transit\\PT_Sign_5_17_TramStop.fbx",
-      "fbx_sha256": "7d853087402bd3854726d49b526889cb1794e0b6db0f99665223357b9f26095d",
+      "fbx_sha256": "727e40a08053a485d73d77635c7b37ff1cd0e94a46cd224a8aaa66739acaa76c",
       "glb": "artifacts\\visual-review\\transit\\models\\PT_Sign_5_17_TramStop.glb",
       "triangles": 436,
       "bounds_min": [
@@ -1855,11 +1855,256 @@
       ]
     },
     {
+      "id": "PT_Sign_5_14_BusLane",
+      "title": "5.14 «Полоса для маршрутных транспортных средств» (стилизовано)",
+      "kind": "sign",
+      "fbx": "Assets\\DrivingSchool\\Art\\Transit\\PT_Sign_5_14_BusLane.fbx",
+      "fbx_sha256": "9e648b71f21ca823d55e83cd4b87796022d8719e6214f9559133b2ba45bb8ca8",
+      "glb": "artifacts\\visual-review\\transit\\models\\PT_Sign_5_14_BusLane.glb",
+      "triangles": 308,
+      "bounds_min": [
+        -0.3,
+        -0.065,
+        0.0
+      ],
+      "bounds_max": [
+        0.3,
+        0.175,
+        2.75
+      ],
+      "size": [
+        0.6,
+        0.24,
+        2.75
+      ],
+      "reimport_size": [
+        0.6,
+        0.24,
+        2.75
+      ],
+      "materials": [
+        "PT_Sign_Blue",
+        "PT_Sign_White",
+        "PT_Steel"
+      ],
+      "sockets": {
+        "Socket_Front.008": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up.008": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "kind": "sign",
+        "height": 2.75,
+        "plate": 0.6
+      },
+      "checks": [
+        {
+          "id": "Корень в начале координат, без поворота",
+          "status": "PASS",
+          "value": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "target": "loc 0, rot 0"
+        },
+        {
+          "id": "Лицевая сторона -Y (Socket_Front)",
+          "status": "PASS",
+          "value": [
+            0,
+            -1,
+            0
+          ],
+          "target": "(0,-1,0)"
+        },
+        {
+          "id": "Верх +Z (Socket_Up)",
+          "status": "PASS",
+          "value": [
+            0,
+            0,
+            1
+          ],
+          "target": "(0,0,1)"
+        },
+        {
+          "id": "Высота стойки, м",
+          "status": "PASS",
+          "value": 2.75,
+          "target": 2.75
+        },
+        {
+          "id": "Щит смотрит в -Y (к водителю)",
+          "status": "PASS",
+          "value": -0.01,
+          "target": "< 0"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.6,
+            0.24,
+            2.75
+          ],
+          "target": [
+            0.6,
+            0.24,
+            2.75
+          ]
+        },
+        {
+          "id": "Бюджет треугольников",
+          "status": "PASS",
+          "value": 308,
+          "target": "<= 20000"
+        }
+      ]
+    },
+    {
+      "id": "PT_Sign_5_14_1_BusLaneEnd",
+      "title": "5.14.1 «Конец полосы для маршрутных транспортных средств» (стилизовано)",
+      "kind": "sign",
+      "fbx": "Assets\\DrivingSchool\\Art\\Transit\\PT_Sign_5_14_1_BusLaneEnd.fbx",
+      "fbx_sha256": "7629ca2d01966c0c568102921ad795651ddd1c2341a3e55a11e26fb0cd4ccb29",
+      "glb": "artifacts\\visual-review\\transit\\models\\PT_Sign_5_14_1_BusLaneEnd.glb",
+      "triangles": 320,
+      "bounds_min": [
+        -0.3,
+        -0.065,
+        0.0
+      ],
+      "bounds_max": [
+        0.3,
+        0.175,
+        2.75
+      ],
+      "size": [
+        0.6,
+        0.24,
+        2.75
+      ],
+      "reimport_size": [
+        0.6,
+        0.24,
+        2.75
+      ],
+      "materials": [
+        "PT_Sign_Blue",
+        "PT_Sign_Red",
+        "PT_Sign_White",
+        "PT_Steel"
+      ],
+      "sockets": {
+        "Socket_Front.009": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up.009": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "kind": "sign",
+        "height": 2.75,
+        "plate": 0.6
+      },
+      "checks": [
+        {
+          "id": "Корень в начале координат, без поворота",
+          "status": "PASS",
+          "value": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "target": "loc 0, rot 0"
+        },
+        {
+          "id": "Лицевая сторона -Y (Socket_Front)",
+          "status": "PASS",
+          "value": [
+            0,
+            -1,
+            0
+          ],
+          "target": "(0,-1,0)"
+        },
+        {
+          "id": "Верх +Z (Socket_Up)",
+          "status": "PASS",
+          "value": [
+            0,
+            0,
+            1
+          ],
+          "target": "(0,0,1)"
+        },
+        {
+          "id": "Высота стойки, м",
+          "status": "PASS",
+          "value": 2.75,
+          "target": 2.75
+        },
+        {
+          "id": "Щит смотрит в -Y (к водителю)",
+          "status": "PASS",
+          "value": -0.01,
+          "target": "< 0"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.6,
+            0.24,
+            2.75
+          ],
+          "target": [
+            0.6,
+            0.24,
+            2.75
+          ]
+        },
+        {
+          "id": "Бюджет треугольников",
+          "status": "PASS",
+          "value": 320,
+          "target": "<= 20000"
+        }
+      ]
+    },
+    {
       "id": "PT_BusStop_Shelter",
       "title": "Остановочный павильон",
       "kind": "stop",
       "fbx": "Assets\\DrivingSchool\\Art\\Transit\\PT_BusStop_Shelter.fbx",
-      "fbx_sha256": "6da224ef868633e7e9f5a4314510f2684678af7e174fed322b0cd18a11e4ae1c",
+      "fbx_sha256": "2c7f0751140627840d53dc5426e7fd65bfa4f8f0b734cf11f1d9dd557db16b5e",
       "glb": "artifacts\\visual-review\\transit\\models\\PT_BusStop_Shelter.glb",
       "triangles": 6532,
       "bounds_min": [
@@ -1891,12 +2136,12 @@
         "PT_Wood"
       ],
       "sockets": {
-        "Socket_Front.008": [
+        "Socket_Front.010": [
           0.0,
           -1.0,
           0.0
         ],
-        "Socket_Up.008": [
+        "Socket_Up.010": [
           0.0,
           0.0,
           1.0
@@ -1973,7 +2218,7 @@
       "title": "Трамвайная посадочная площадка 30 м",
       "kind": "platform",
       "fbx": "Assets\\DrivingSchool\\Art\\Transit\\PT_TramStop_Platform_30m.fbx",
-      "fbx_sha256": "f6bed89c4f841f4186750c91cb32cdc0dc3a81a345ffbed1de6debe9a608b241",
+      "fbx_sha256": "3670b233a3aa3aefe892418102e2e701b5490d06bf431e2df3991aba3b600d6c",
       "glb": "artifacts\\visual-review\\transit\\models\\PT_TramStop_Platform_30m.glb",
       "triangles": 1184,
       "bounds_min": [
@@ -2009,12 +2254,12 @@
         "PT_Wood"
       ],
       "sockets": {
-        "Socket_Front.009": [
+        "Socket_Front.011": [
           0.0,
           -1.0,
           0.0
         ],
-        "Socket_Up.009": [
+        "Socket_Up.011": [
           0.0,
           0.0,
           1.0
@@ -2105,7 +2350,7 @@
       "title": "Разметка 1.17 (зигзаг), стилизовано",
       "kind": "marking",
       "fbx": "Assets\\DrivingSchool\\Art\\Transit\\PT_Marking_1_17_Zigzag_20m.fbx",
-      "fbx_sha256": "b0dfdc7adf34c13f10ee8b2743c67148ec0cb03acc9f8066f6b55e1a1f315a47",
+      "fbx_sha256": "9f26c9807c6672c4cdc38357f2fd57d0d28330474e9c2b307828c59c7b703e32",
       "glb": "artifacts\\visual-review\\transit\\models\\PT_Marking_1_17_Zigzag_20m.glb",
       "triangles": 240,
       "bounds_min": [
@@ -2137,7 +2382,7 @@
           -20.0,
           0.0
         ],
-        "Socket_Front.010": [
+        "Socket_Front.012": [
           0.0,
           -1.0,
           0.0
@@ -2147,7 +2392,7 @@
           0.0,
           0.0
         ],
-        "Socket_Up.010": [
+        "Socket_Up.012": [
           0.0,
           0.0,
           1.0
@@ -2229,6 +2474,6 @@
     }
   ],
   "source": "ArtSource\\DS_TransitKit.blend",
-  "source_sha256": "c1cc85c7023f5f4e45e86ff659fa43ea66c8eb3adaafb310213071ce3316240e",
+  "source_sha256": "ca2262c230a720581fff9c43f913a2b2c4e6d0002cb19146c28562551a4ccfa2",
   "failed_checks": []
 }
