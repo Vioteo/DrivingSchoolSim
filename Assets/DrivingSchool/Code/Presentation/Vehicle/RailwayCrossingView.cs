@@ -48,9 +48,12 @@ namespace DrivingSchool.Presentation
         /// <summary>Front of the train on the track axis (world); meaningful while <see cref="TrainRunning"/>.</summary>
         public Vector3 TrainFront => crossingCentre + trainDirection * (float.IsInfinity(trainS) ? trackHalfLength : trainS);
 
-        sealed class Boom { public Transform pivot; public Quaternion closed, open; public List<Material> lamps = new List<Material>(); }
+        sealed class Boom { public Transform pivot; public Quaternion closed, open; public List<Material> lamps = new List<Material>(); public List<Renderer> discs = new List<Renderer>(); }
         readonly List<Boom> booms = new List<Boom>();
         readonly List<Material> redL = new List<Material>(), redR = new List<Material>(), white = new List<Material>();
+        // T75: the glowing discs in front of the lenses (Lamp_Red_L/R, Lamp_White, Lamp_Boom_*; docs/railway-crossing.md)
+        // are shown only while their lamp is lit — before, they stayed on and a dark signal looked red and white.
+        readonly List<Renderer> discRedL = new List<Renderer>(), discRedR = new List<Renderer>(), discWhite = new List<Renderer>();
         readonly List<AudioSource> bells = new List<AudioSource>();
         float phaseTime, idleTime, bellTimer, clearedFor, trainS = float.NegativeInfinity, boom01 = 0f;
         bool trainRunning;
@@ -162,7 +165,8 @@ namespace DrivingSchool.Presentation
             bool blink = Mathf.Repeat(Time.time, 1f) < 0.5f;                  // red lamps alternate at 1 Hz
             bool slow = Mathf.Repeat(Time.time, 2f) < 0.8f;                   // white lamp: slow flashing while open
             SetLamps(warning && blink, warning && !blink, !warning && slow);
-            foreach (var b in booms) foreach (var m in b.lamps) SetLens(m, warning && (Current != Phase.Warning) && blink, redEmission);
+            bool boomOn = warning && (Current != Phase.Warning) && blink;
+            foreach (var b in booms) { foreach (var m in b.lamps) SetLens(m, boomOn, redEmission); Show(b.discs, boomOn); }
 
             if (warning && Current != Phase.Raising)
             {
@@ -219,6 +223,7 @@ namespace DrivingSchool.Presentation
             b.pivot.localRotation = b.closed;
             foreach (var r in root.GetComponentsInChildren<Renderer>(true))
                 if (r.name.StartsWith("Lens_Boom")) b.lamps.Add(Instance(r));
+                else if (r.name.StartsWith("Lamp_Boom")) b.discs.Add(Glow(r, redEmission));
             booms.Add(b);
             AddBell(root);
         }
@@ -235,7 +240,10 @@ namespace DrivingSchool.Presentation
         {
             foreach (var r in root.GetComponentsInChildren<Renderer>(true))
             {
-                if (r.name.StartsWith("Lens_Red_L")) redL.Add(Instance(r));
+                if (r.name.StartsWith("Lamp_Red_L")) discRedL.Add(Glow(r, redEmission));
+                else if (r.name.StartsWith("Lamp_Red_R")) discRedR.Add(Glow(r, redEmission));
+                else if (r.name.StartsWith("Lamp_White")) discWhite.Add(Glow(r, whiteEmission));
+                else if (r.name.StartsWith("Lens_Red_L")) redL.Add(Instance(r));
                 else if (r.name.StartsWith("Lens_Red_R")) redR.Add(Instance(r));
                 else if (r.name.StartsWith("Lens_White")) white.Add(Instance(r));
             }
@@ -247,6 +255,26 @@ namespace DrivingSchool.Presentation
             foreach (var m in redL) SetLens(m, left, redEmission);
             foreach (var m in redR) SetLens(m, right, redEmission);
             foreach (var m in white) SetLens(m, whiteOn, whiteEmission);
+            Show(discRedL, left); Show(discRedR, right); Show(discWhite, whiteOn);
+        }
+
+        /// <summary>
+        /// A lamp disc really glows: the RW_RedOn / RW_WhiteOn assets carry an emission colour but lost the _EMISSION
+        /// keyword, so the disc showed its flat colour (bright by day, dark at night). The instance gets the keyword and the
+        /// lamp's saturated emission (a plain ×3 of the asset colour burns out to yellow-white under tone mapping).
+        /// </summary>
+        static Renderer Glow(Renderer r, Color emission)
+        {
+            var m = r.material;
+            m.EnableKeyword("_EMISSION");
+            m.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+            m.SetColor("_EmissionColor", emission);
+            return r;
+        }
+
+        static void Show(List<Renderer> discs, bool on)
+        {
+            foreach (var r in discs) if (r != null && r.enabled != on) r.enabled = on;
         }
 
         // Lens colours: lit — the material's own colour; off (T75) — a dark glossy lens of the same hue, as a real unlit
@@ -264,7 +292,7 @@ namespace DrivingSchool.Presentation
                 Color c = m.GetColor("_BaseColor");
                 litBase[m] = c;
                 bool red = c.r > c.g * 2f;
-                offBase[m] = red ? new Color(0.06f, 0.006f, 0.006f) : new Color(0.085f, 0.09f, 0.1f);
+                offBase[m] = red ? new Color(0.11f, 0.01f, 0.01f) : new Color(0.13f, 0.14f, 0.15f);
             }
             if (m.HasProperty("_Smoothness")) m.SetFloat("_Smoothness", 0.85f);   // glass lens: a sharp highlight when off
             return m;

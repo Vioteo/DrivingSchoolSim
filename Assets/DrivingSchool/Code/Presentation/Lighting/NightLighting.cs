@@ -123,7 +123,7 @@ namespace DrivingSchool.Presentation
             {
                 if (r.name != "Roof_Glass") continue;
                 var shelter = r.transform.parent != null && r.transform.parent.parent != null ? r.transform.parent.parent : r.transform.parent;
-                if (shelter == null || !(shelter.name.Contains("BusStop") || shelter.name.StartsWith("shelter"))) continue;
+                if (shelter == null || !(shelter.name.Contains("BusStop") || shelter.name.Contains("shelter"))) continue;
                 var b = r.bounds;
                 EnsureEntranceMat();
                 var lamp = GameObject.CreatePrimitive(PrimitiveType.Cube);

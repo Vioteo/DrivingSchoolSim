@@ -14,7 +14,7 @@ namespace DrivingSchool.Presentation
     public sealed class TrainLightsView : MonoBehaviour
     {
         public Color headLampEmission = new Color(1f, 0.97f, 0.9f) * 14f;
-        public Color tailLampEmission = new Color(1f, 0.05f, 0.02f) * 9f;
+        public Color tailLampEmission = new Color(1f, 0.05f, 0.02f) * 18f;
         public Color saloonEmission = new Color(1f, 1f, 1f) * 1.05f;
         public float searchlightIntensity = 4000f, searchlightRange = 220f, ditchIntensity = 220f;
 
