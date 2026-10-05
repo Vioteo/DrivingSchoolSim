@@ -675,10 +675,11 @@ namespace DrivingSchool.Simulation.Traffic
             if (!closedCache.TryGetValue(p.Id, out bool closed))
             {
                 var lane = p.IsConnection ? index.Path(p.Connection.toLaneId).Lane : p.Lane;
-                for (int guard = 0; guard < 32 && lane != null; guard++)
+                // Follow the way the car has no choice about (a junction's exit lane, plain continuations) to the next choice.
+                for (int guard = 0; guard < 64 && lane != null; guard++)
                 {
                     if (lane.busLane && !lane.busLaneEntry) { closed = true; break; }
-                    if (!lane.busLane || lane.successors.Length != 1) break;
+                    if (lane.successors.Length != 1) break;
                     lane = index.Path(lane.successors[0]).Lane;
                 }
                 closedCache[p.Id] = closed;

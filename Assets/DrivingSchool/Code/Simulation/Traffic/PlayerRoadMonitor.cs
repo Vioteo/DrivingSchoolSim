@@ -249,7 +249,8 @@ namespace DrivingSchool.Simulation.Traffic
                     w.Behind = false; w.Queued = false;
                 }
             }
-            foreach (var id in departing.Keys.Where(k => !seen.Contains(k) && f.Seconds - departing[k].LastSeen > 1).ToList()) departing.Remove(id);
+            double now = f.Seconds;   // a ref parameter cannot be used in the lambda
+            foreach (var id in departing.Keys.Where(k => !seen.Contains(k) && now - departing[k].LastSeen > 1).ToList()) departing.Remove(id);
         }
 
         /// <summary>The nearest vehicle ahead along the graph (the lane, then every way on from it), bumper to bumper.</summary>
