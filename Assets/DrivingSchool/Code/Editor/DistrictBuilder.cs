@@ -40,7 +40,7 @@ namespace DrivingSchool.Editor
         {
             public Transform root; public TrafficDirectorHost traffic; public Transform entrySpawn;
             public WorldDocumentV2 world; public readonly List<Renderer> roadRenderers = new List<Renderer>();
-            public int modules, signs, heads, houses;
+            public int modules, signs, heads, houses, transitStops, busLaneMarks;
             public ModuleInstance rail;
         }
 
@@ -288,11 +288,44 @@ namespace DrivingSchool.Editor
                     amberSeconds = st.amberSeconds, allRedSeconds = st.allRedSeconds, redAmberSeconds = st.redAmberSeconds,
                 }).ToArray(),
             };
+            // Route vehicles (T74). The outer loop X7 → north → west → X10 has a lane for route vehicles on the outer side in
+            // both directions: behind a broken line on the first piece after a junction (others may come onto it from the
+            // junction and move off it) and on the last piece before one (they move onto it to turn right there), behind a
+            // solid line in between. Bus 42 goes round anticlockwise (outer loop → X10 → X3 → X1 → X7), minibus 107 the other
+            // way; each has two stops on the bus lane and one in an ordinary lane of the avenue X3–X1 (w1).
+            var busLanes = new List<LayoutBusLane>();
+            foreach (var outer in new[] { "ol0", "ol1", "ol2", "ol3", "ol4", "ol5", "ol6", "ol7" })
+            {
+                // ol0 and ol7 touch a junction (X7, X10): there the line is broken in both directions.
+                bool entry = outer == "ol0" || outer == "ol7";
+                busLanes.Add(new LayoutBusLane { instanceId = outer, laneId = "b2", entry = entry });
+                busLanes.Add(new LayoutBusLane { instanceId = outer, laneId = "f2", entry = entry });
+            }
+            signs.Add(Sign("bus-lane-north", "5.14", null, "ol0", "b2", 3));
+            signs.Add(Sign("bus-lane-north-end", "5.14.1", null, "ol7", "b2", Before("ol7", 4)));
+            signs.Add(Sign("bus-lane-south", "5.14", null, "ol7", "f2", 3));
+            signs.Add(Sign("bus-lane-south-end", "5.14.1", null, "ol0", "f2", (float)(Curve4F2LengthM - 4)));
+            float Share(string id, double share) => (float)Math.Round(LengthOf(byId[id].catalogId) * share, 1);
+            var stops = new List<LayoutTransitStop>
+            {
+                Stop("okruzhnaya-sever", "Окружная (север)", "ol1", "b2", Share("ol1", 0.6)),
+                Stop("okruzhnaya-zapad", "Окружная (запад)", "ol3", "b2", Share("ol3", 0.55)),
+                Stop("prospekt-vostok", "Проспект (на восток)", "w1", "f2", 18, 15),
+                Stop("okruzhnaya-zapad-2", "Окружная (запад)", "ol5", "f2", Share("ol5", 0.55)),
+                Stop("okruzhnaya-sever-2", "Окружная (север)", "ol1", "f2", Share("ol1", 0.5)),
+                Stop("prospekt-zapad", "Проспект (на запад)", "w1", "b2", 18, 15),
+            };
+            var routes = new[]
+            {
+                new LayoutTransitRoute { id = "route-42", name = "42", kind = TransitKind.Bus, stopIds = new[] { "okruzhnaya-sever", "okruzhnaya-zapad", "prospekt-vostok" } },
+                new LayoutTransitRoute { id = "route-107", name = "107", kind = TransitKind.Minibus, stopIds = new[] { "okruzhnaya-zapad-2", "okruzhnaya-sever-2", "prospekt-zapad" } },
+            };
             return new DistrictLayout
             {
-                id = "test-range-district", name = "Городской район полигона", revision = "v4",
+                id = "test-range-district", name = "Городской район полигона", revision = "v5",
                 instances = list.ToArray(), joins = joins.ToArray(), openSockets = open.ToArray(),
                 signs = signs.ToArray(), approaches = approaches.ToArray(), signalPlans = new[] { plan, planX3 },
+                busLanes = busLanes.ToArray(), transitStops = stops.ToArray(), transitRoutes = routes,
             };
         }
 
@@ -303,6 +336,12 @@ namespace DrivingSchool.Editor
                 if (RoadKitTemplates.TryStretch(catalogId, b, out double length)) return length;
             return 20;
         }
+
+        /// <summary>Length of lane f2 of the 2+2 curve: the outer lane (5.5 m off the axis R 26) on the inside of the turn.</summary>
+        static readonly double Curve4F2LengthM = (RoadKitTemplatesV2.Curve4RadiusM - RoadKitTemplatesV2.OuterLaneM) * Math.PI / 2;
+
+        static LayoutTransitStop Stop(string id, string name, string instance, string lane, float atS, float lengthM = 20) =>
+            new LayoutTransitStop { id = id, name = name, instanceId = instance, laneId = lane, atS = atS, lengthM = lengthM, marked = true, shelter = true };
 
         static LayoutSign Sign(string id, string code, string value, string instance, string lane, float atS, bool untilJunction = false) =>
             new LayoutSign { id = id, code = code, value = value, instanceId = instance, laneId = lane, atS = atS, untilNextJunction = untilJunction };
@@ -357,6 +396,8 @@ namespace DrivingSchool.Editor
             }
             // Signals and signs on shared poles and masts (T54).
             var furniture = StreetFurniture.Place(world, signs, heads, layerProps);
+            // Route vehicles (T74): bus lane marking, stopping places with 1.17.1 and shelters.
+            PlaceTransit(layout, world, Child(r.root, "Transit"), layerGround, layerProps, r);
             r.signs = world.signs.Length; r.heads = furniture.heads;
             // The railway corridor (T56): track across the level crossing module, west to east over the whole district.
             r.rail = layout.instances.First(m => m.id == RailInstance);
@@ -376,6 +417,7 @@ namespace DrivingSchool.Editor
             var so = new SerializedObject(host);
             so.FindProperty("worldJson").objectReferenceValue = AssetDatabase.LoadAssetAtPath<TextAsset>(WorldPath);
             SetArray(so.FindProperty("vehiclePrefabs"), trafficPrefabs);
+            SetArray(so.FindProperty("transitPrefabs"), TransitTrafficBuilder.Ensure());
             var peds = new[] { "DS_Pedestrian_A", "DS_Pedestrian_B", "DS_Pedestrian_C", "DS_Pedestrian_Child_A", "DS_Pedestrian_Child_B" }
                 .Select(x => AssetDatabase.LoadAssetAtPath<GameObject>(Pedestrians + x + ".prefab")).Where(x => x != null).ToArray();
             SetArray(so.FindProperty("pedestrianPrefabs"), peds);
@@ -387,6 +429,120 @@ namespace DrivingSchool.Editor
             r.traffic = host;
             Validate(r, layerGround);
             return r;
+        }
+
+        // ------------------------------------------------------------------ route vehicles (T74)
+
+        const string TransitPrefabs = "Assets/DrivingSchool/Prefabs/Transit/";
+        const string MarkingWhite = "Assets/DrivingSchool/Materials/Transit/PT_Marking_White.mat";
+        // Game values, not checked against ГОСТ Р 51256: line 1.1 width, letter 1.23.1 «А» size and spacing.
+        const float BusLineWidthM = 0.15f, LetterLengthM = 4f, LetterWidthM = 1.6f, LetterStrokeM = 0.22f, LetterEveryM = 45f, MarkLiftM = 0.012f;
+
+        /// <summary>
+        /// Marking and furniture of route vehicles from the graph: a solid line along every bus lane stretch closed to
+        /// others (on the road kit's broken line), the letter «А» (1.23.1) on every stretch, the zigzag 1.17.1 over each
+        /// stopping place, a shelter on the sidewalk beside it. The sign 5.16 comes with the other signs (StreetFurniture).
+        /// </summary>
+        static void PlaceTransit(DistrictLayout layout, WorldDocumentV2 world, Transform parent, int layerGround, int layerProps, Result r)
+        {
+            var white = AssetDatabase.LoadAssetAtPath<Material>(MarkingWhite);
+            if (white == null) Debug.LogWarning("District: no " + MarkingWhite + " (transit kit not imported) — bus lane marking uses the default material");
+            var verts = new List<Vector3>(); var tris = new List<int>();
+            foreach (var lane in world.lanes.Where(l => l.busLane))
+            {
+                var line = new Polyline(lane.centerline);
+                double len = line.Length;
+                if (!lane.busLaneEntry)
+                {
+                    // Solid line on the left edge of the lane, sampled every metre (the lane may be a curve).
+                    int n = Math.Max(1, (int)Math.Ceiling(len));
+                    for (int i = 0; i < n; i++)
+                        Quad(verts, tris, line, i * len / n, (i + 1) * len / n, -lane.widthM / 2 - BusLineWidthM / 2, -lane.widthM / 2 + BusLineWidthM / 2);
+                }
+                for (double at = 6; at + LetterLengthM <= len - 2; at += LetterEveryM) { Letter(verts, tris, line, at); r.busLaneMarks++; }
+            }
+            if (verts.Count > 0)
+            {
+                var mesh = new Mesh { name = "BusLaneMarking", indexFormat = UnityEngine.Rendering.IndexFormat.UInt32 };
+                mesh.SetVertices(verts); mesh.SetTriangles(tris, 0); mesh.RecalculateNormals(); mesh.RecalculateBounds();
+                Directory.CreateDirectory(DataDir);
+                string meshPath = DataDir + "/test-range-district.buslanes.asset";
+                AssetDatabase.DeleteAsset(meshPath);
+                AssetDatabase.CreateAsset(mesh, meshPath);
+                var go = new GameObject("Bus lane marking (1.1, 1.23.1)");
+                go.transform.SetParent(parent, false);
+                go.AddComponent<MeshFilter>().sharedMesh = mesh;
+                var ren = go.AddComponent<MeshRenderer>(); ren.sharedMaterial = white; ren.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                SetLayer(go, layerGround); go.isStatic = true;
+            }
+
+            var lanes = world.lanes.ToDictionary(l => l.id);
+            foreach (var stop in world.transitStops)
+            {
+                var lane = lanes[stop.laneId]; var line = new Polyline(lane.centerline);
+                var spec = layout.transitStops.First(t => t.id == stop.id);
+                double from = Math.Max(0, stop.s - stop.lengthM);
+                var p0 = line.OffsetPoint(from, lane.widthM / 2 + 0.05);
+                float yaw = (float)(line.HeadingAt(from) * Mathf.Rad2Deg);
+                if (stop.marked)
+                {
+                    // 1.17.1: the kit's 20 m zigzag starts at the kerb line and runs into the lane (-X); stretched to the place.
+                    var zig = Place(TransitPrefabs + "PT_Marking_1_17_Zigzag_20m.prefab", new Vector3((float)p0.x, (float)p0.y, (float)p0.z), yaw, parent);
+                    zig.transform.localScale = new Vector3(1f, 1f, (float)(stop.s - from) / 20f);
+                    zig.name = stop.id + " / 1.17.1"; SetLayer(zig, layerGround); zig.isStatic = true;
+                }
+                if (spec.shelter)
+                {
+                    // On the sidewalk beside the middle of the place, its open side (+Z) to the road.
+                    bool wide = !string.IsNullOrEmpty(lane.leftNeighborId);   // 2+2: sidewalk centre 9.2 m, else 1+1: 5.2 m off the axis
+                    double mid = (from + stop.s) / 2, offset = (wide ? RoadKitTemplatesV2.Sidewalk4M - RoadKitTemplatesV2.OuterLaneM : RoadKitTemplates.SidewalkOffsetM - RoadKitTemplates.LaneOffsetM) + 0.35;
+                    var q = line.OffsetPoint(mid, offset);
+                    var shelter = Place(TransitPrefabs + "PT_BusStop_Shelter.prefab", new Vector3((float)q.x, (float)q.y + SidewalkTop, (float)q.z), (float)(line.HeadingAt(mid) * Mathf.Rad2Deg) - 90f, parent);
+                    shelter.name = stop.id + " / shelter «" + stop.name + "»"; SetLayer(shelter, layerProps); shelter.isStatic = true;
+                }
+                r.transitStops++;
+            }
+        }
+
+        /// <summary>A flat strip of marking on a lane between <paramref name="s0"/> and <paramref name="s1"/>, from d0 to d1 (right +).</summary>
+        static void Quad(List<Vector3> v, List<int> t, Polyline line, double s0, double s1, double d0, double d1)
+        {
+            int k = v.Count;
+            foreach (var (s, d) in new[] { (s0, d0), (s0, d1), (s1, d1), (s1, d0) })
+            {
+                var p = line.OffsetPoint(s, d);
+                v.Add(new Vector3((float)p.x, (float)p.y + MarkLiftM, (float)p.z));
+            }
+            // Facing up: (s0,d0) → (s1,d0) → (s1,d1) is clockwise seen from above in Unity (left-handed), so wind it that way.
+            t.AddRange(new[] { k, k + 3, k + 2, k, k + 2, k + 1 });
+        }
+
+        /// <summary>The letter «А» (1.23.1) on the lane, upright for the drivers on it, from s = at.</summary>
+        static void Letter(List<Vector3> v, List<int> t, Polyline line, double at)
+        {
+            double h = LetterLengthM, w = LetterWidthM / 2, st = LetterStrokeM;
+            // Strokes as (along, across) segments: two legs to the apex and the bar.
+            Stroke(v, t, line, at, (0, -w), (h, 0), st);
+            Stroke(v, t, line, at, (0, w), (h, 0), st);
+            double barS = h * 0.38, barD = w * (1 - 0.38);
+            Stroke(v, t, line, at, (barS, -barD), (barS, barD), st);
+        }
+
+        static void Stroke(List<Vector3> v, List<int> t, Polyline line, double at, (double s, double d) a, (double s, double d) b, double width)
+        {
+            // Lane frame: s along the lane, d to the right; offset the segment sideways by half the width.
+            double ds = b.s - a.s, dd = b.d - a.d, len = Math.Sqrt(ds * ds + dd * dd);
+            double ns = -dd / len * width / 2, nd = ds / len * width / 2;
+            int k = v.Count;
+            foreach (var (s, d) in new[] { (a.s + ns, a.d + nd), (b.s + ns, b.d + nd), (b.s - ns, b.d - nd), (a.s - ns, a.d - nd) })
+            {
+                var p = line.OffsetPoint(Math.Max(0, Math.Min(line.Length, at + s)), d);
+                v.Add(new Vector3((float)p.x, (float)p.y + MarkLiftM, (float)p.z));
+            }
+            // Facing up whichever way the segment runs: Unity's front faces wind clockwise seen from above.
+            Vector3 u = v[k + 1] - v[k], w = v[k + 2] - v[k];
+            if (u.z * w.x - u.x * w.z > 0) t.AddRange(new[] { k, k + 1, k + 2, k, k + 2, k + 3 });
+            else t.AddRange(new[] { k, k + 2, k + 1, k, k + 3, k + 2 });
         }
 
         static void SetArray(SerializedProperty prop, GameObject[] items)

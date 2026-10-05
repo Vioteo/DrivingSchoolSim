@@ -303,7 +303,7 @@ namespace DrivingSchool.Editor
 
         public static string TrafficPrefabPath(VehicleEntry v) => PrefabDir + "/" + v.id + "_Traffic.prefab";
 
-        static Renderer Overlay(MeshRenderer lamp, Material material, float scale = 1.004f)
+        internal static Renderer Overlay(MeshRenderer lamp, Material material, float scale = 1.004f)
         {
             var mf = lamp.GetComponent<MeshFilter>(); if (mf == null || mf.sharedMesh == null) return null;
             var go = new GameObject(lamp.name + "_Glow");
@@ -316,7 +316,7 @@ namespace DrivingSchool.Editor
             return r;
         }
 
-        static Material LampMaterial(string name, Color colour)
+        internal static Material LampMaterial(string name, Color colour)
         {
             Directory.CreateDirectory(MaterialDir + "/Vehicles");
             string path = MaterialDir + "/Vehicles/" + name + ".mat";

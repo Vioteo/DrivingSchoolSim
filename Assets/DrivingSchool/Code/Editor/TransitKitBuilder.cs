@@ -28,7 +28,7 @@ namespace DrivingSchool.Editor
 
         static readonly string[] Vehicles = { "PT_Bus_City12", "PT_Minibus_Route", "PT_Tram_City" };
         static readonly string[] Surfaces = { "PT_Road_TramUrban_20m", "PT_TramTrack_Grass_20m", "PT_TramTrack_Grass_Curve90_R25", "PT_TramStop_Platform_30m" };
-        const int ExpectedAssets = 11;
+        const int ExpectedAssets = 13;   // T74: + 5.14, 5.14.1
 
         [Serializable] class MaterialEntry { public string name; public float[] color; public float metallic; public float roughness; public float emission; }
         [Serializable] class MaterialList { public MaterialEntry[] materials; }
@@ -92,6 +92,7 @@ namespace DrivingSchool.Editor
                 if (!report.passed) throw new InvalidOperationException("Transit kit validation failed. See " + Report);
                 EditorSceneManager.SaveScene(scene, Demo);
                 AssetDatabase.SaveAssets();
+                TransitTrafficBuilder.Build();   // T74: bus and minibus for the district traffic
                 Debug.Log("TRANSIT_UNITY_PASS: " + results.Count + " prefabs; axes, metre bounds, ground contact, colliders and track seam verified.");
             }
             catch

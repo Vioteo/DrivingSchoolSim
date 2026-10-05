@@ -23,6 +23,8 @@ namespace DrivingSchool.Editor
     public static class StreetFurniture
     {
         const string Traffic = "Assets/DrivingSchool/Prefabs/Traffic/";
+        const string Transit = "Assets/DrivingSchool/Prefabs/Transit/";
+        const string Placeholders = "Assets/DrivingSchool/Prefabs/Traffic/Placeholder/";
         const string Mounted = "Assets/DrivingSchool/Prefabs/Traffic/Mounted/";
         const string SteelPath = "Assets/DrivingSchool/Materials/Traffic/Traffic_Steel.mat";
         // Heights above the sidewalk: pedestrian heads at eye level, vehicle heads above them, repeaters higher still; plates below.
@@ -114,7 +116,7 @@ namespace DrivingSchool.Editor
                 if (g.Count == 1)
                 {
                     var s = g[0];
-                    var go = Place(Traffic + s.catalogId + ".prefab", P(s) + Vector3.up * SidewalkTop, s.yawDeg, signsParent);
+                    var go = Place(SignPrefabPath(s.catalogId), P(s) + Vector3.up * SidewalkTop, s.yawDeg, signsParent);
                     go.name = SignName(s); SetLayer(go, layer); st.posts++;
                     continue;
                 }
@@ -127,6 +129,44 @@ namespace DrivingSchool.Editor
                 st.posts++;
             }
             return st;
+        }
+
+        /// <summary>
+        /// Kit prefab of a sign: Traffic Kit (DS_) or Transit Kit (PT_, T74). A transit sign whose model is not built yet
+        /// (tools/build_transit.py has not been run after T74) gets a plain placeholder plate so the district still builds;
+        /// a warning names it.
+        /// </summary>
+        public static string SignPrefabPath(string catalogId)
+        {
+            bool transit = catalogId.StartsWith("PT_", StringComparison.Ordinal);
+            string path = (transit ? Transit : Traffic) + catalogId + ".prefab";
+            if (!transit || AssetDatabase.LoadAssetAtPath<GameObject>(path) != null) return path;
+            string placeholder = Placeholders + catalogId + ".prefab";
+            if (AssetDatabase.LoadAssetAtPath<GameObject>(placeholder) == null) MakePlaceholder(catalogId, placeholder);
+            Debug.LogWarning("SIGN_PLACEHOLDER " + catalogId + ": no " + path + " — rebuild the transit kit (tools\\build_transit.bat, Driving School/Transit/Import and build demo)");
+            return placeholder;
+        }
+
+        /// <summary>A blue 0.6 m plate on a 2.75 m post, laid out like the kit signs (face +Z, post behind it, Model child).</summary>
+        static void MakePlaceholder(string catalogId, string path)
+        {
+            Directory.CreateDirectory(Placeholders);
+            var root = new GameObject(catalogId);
+            try
+            {
+                var model = new GameObject("Model").transform; model.SetParent(root.transform, false);
+                var steel = AssetDatabase.LoadAssetAtPath<Material>(SteelPath);
+                var post = GameObject.CreatePrimitive(PrimitiveType.Cylinder).transform; post.name = "Post"; post.SetParent(model, false);
+                post.localScale = new Vector3(0.076f, 1.375f, 0.076f); post.localPosition = new Vector3(0f, 1.375f, -0.055f);
+                post.GetComponent<Renderer>().sharedMaterial = steel;
+                var plate = GameObject.CreatePrimitive(PrimitiveType.Cube).transform; plate.name = "Plate"; plate.SetParent(model, false);
+                plate.localScale = new Vector3(0.6f, 0.6f, 0.02f); plate.localPosition = new Vector3(0f, 2.45f, 0f);
+                var blue = AssetDatabase.LoadAssetAtPath<Material>("Assets/DrivingSchool/Materials/Transit/PT_Sign_Blue.mat");
+                if (blue != null) plate.GetComponent<Renderer>().sharedMaterial = blue;
+                foreach (var c in root.GetComponentsInChildren<Collider>()) Object.DestroyImmediate(c);
+                PrefabUtility.SaveAsPrefabAsset(root, path);
+            }
+            finally { Object.DestroyImmediate(root); }
         }
 
         static string SignName(SignPlacement s) => s.id + " / " + s.code + (string.IsNullOrEmpty(s.value) ? "" : " " + s.value);
@@ -171,11 +211,13 @@ namespace DrivingSchool.Editor
         /// <summary>Kit prefab without its post, root at the mounting point (back of the housing / post axis). Made once.</summary>
         public static GameObject MountedPrefab(string catalogId)
         {
-            string path = Mounted + catalogId + "_Mounted.prefab";
+            string sourcePath = SignPrefabPath(catalogId);
+            // A placeholder is mounted under its own name: the real sign, once built, is not shadowed by a cached placeholder.
+            string path = Mounted + catalogId + (sourcePath.StartsWith(Placeholders, StringComparison.Ordinal) ? "_Placeholder" : "") + "_Mounted.prefab";
             var existing = AssetDatabase.LoadAssetAtPath<GameObject>(path);
             if (existing != null) return existing;
-            var source = AssetDatabase.LoadAssetAtPath<GameObject>(Traffic + catalogId + ".prefab");
-            if (source == null) throw new FileNotFoundException(Traffic + catalogId + ".prefab");
+            var source = AssetDatabase.LoadAssetAtPath<GameObject>(sourcePath);
+            if (source == null) throw new FileNotFoundException(sourcePath);
             Directory.CreateDirectory(Mounted);
             var go = (GameObject)PrefabUtility.InstantiatePrefab(source);
             try
@@ -183,6 +225,9 @@ namespace DrivingSchool.Editor
                 PrefabUtility.UnpackPrefabInstance(go, PrefabUnpackMode.OutermostRoot, InteractionMode.AutomatedAction);
                 go.name = catalogId + "_Mounted";
                 var postAxis = Vector3.zero; bool found = false;
+                // Collision proxies of the transit kit (COL_*, hidden renderers) go too: they would stretch the bounds to the ground.
+                foreach (var t in go.GetComponentsInChildren<Transform>(true).Where(t => t.name.StartsWith("COL_", StringComparison.Ordinal)).ToList())
+                    Object.DestroyImmediate(t.gameObject);
                 foreach (var t in go.GetComponentsInChildren<Transform>(true).Where(t => PostParts.Any(p => t.name == p || t.name.StartsWith(p + "."))).ToList())
                 {
                     if (!found && t.name.StartsWith("Post") && !t.name.StartsWith("PostCap") && t.GetComponent<Renderer>() != null) { postAxis = t.GetComponent<Renderer>().bounds.center; found = true; }

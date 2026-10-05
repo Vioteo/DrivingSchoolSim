@@ -19,6 +19,8 @@ namespace DrivingSchool.Presentation
         [SerializeField] Transform player;
         [SerializeField] float playerLengthM = 4.4f, playerWidthM = 1.8f;
         [SerializeField] GameObject[] vehiclePrefabs = new GameObject[0];
+        [Tooltip("Route vehicles (T74): the city bus and the route minibus traffic prefabs, by TransitKind (Bus, Minibus).")]
+        [SerializeField] GameObject[] transitPrefabs = new GameObject[0];
         [SerializeField] int seed = 1;
         [SerializeField] int maxVehicles = 8;
         [Tooltip("Pedestrians on the sidewalks (T51); their prefabs are picked by id.")]
@@ -35,7 +37,9 @@ namespace DrivingSchool.Presentation
         TrafficDirector director;
         readonly Dictionary<string, TrafficVehicleView> views = new Dictionary<string, TrafficVehicleView>();
         readonly Dictionary<string, List<TrafficSignalView>> heads = new Dictionary<string, List<TrafficSignalView>>();
-        readonly Stack<TrafficVehicleView> pool = new Stack<TrafficVehicleView>();
+        // A pool per prefab (T74): a bus view is never handed to a car and back.
+        readonly Dictionary<GameObject, Stack<TrafficVehicleView>> pools = new Dictionary<GameObject, Stack<TrafficVehicleView>>();
+        readonly Dictionary<TrafficVehicleView, GameObject> viewPrefab = new Dictionary<TrafficVehicleView, GameObject>();
         readonly Dictionary<string, PedestrianView> walkers = new Dictionary<string, PedestrianView>();
         VehiclePhysicsAdapter playerCar;
         long tick;
@@ -128,7 +132,7 @@ namespace DrivingSchool.Presentation
                 alive.Add(p.Id);
                 if (!views.TryGetValue(p.Id, out var view))
                 {
-                    view = Take(p.Id);
+                    view = Take(p);
                     if (view == null) continue;
                     views[p.Id] = view;
                 }
@@ -165,17 +169,34 @@ namespace DrivingSchool.Presentation
 
         static int StableHash(string s) { unchecked { int h = 17; foreach (char c in s) h = h * 31 + c; return h; } }
 
-        TrafficVehicleView Take(string id)
+        bool warnedTransit;
+
+        GameObject PrefabFor(ParticipantState p)
         {
+            if (p.RouteId != null)
+            {
+                int k = (int)p.RouteKind;
+                if (k >= 0 && k < transitPrefabs.Length && transitPrefabs[k] != null) return transitPrefabs[k];
+                if (!warnedTransit) Debug.LogWarning("TrafficDirectorHost: no traffic prefab for route vehicles of kind " + p.RouteKind + " — shown as a car");
+                warnedTransit = true;
+            }
+            if (vehiclePrefabs.Length == 0) return null;
+            return vehiclePrefabs[Mathf.Abs(p.Id.GetHashCode()) % vehiclePrefabs.Length];
+        }
+
+        TrafficVehicleView Take(ParticipantState p)
+        {
+            var id = p.Id;
+            var prefab = PrefabFor(p);
+            if (prefab == null) return null;
             TrafficVehicleView view;
-            if (pool.Count > 0) view = pool.Pop();
+            if (pools.TryGetValue(prefab, out var pool) && pool.Count > 0) view = pool.Pop();
             else
             {
-                if (vehiclePrefabs.Length == 0) return null;
-                var prefab = vehiclePrefabs[Mathf.Abs(id.GetHashCode()) % vehiclePrefabs.Length];
                 var go = Instantiate(prefab, transform);
                 view = go.GetComponent<TrafficVehicleView>();
                 if (view == null) view = go.AddComponent<TrafficVehicleView>(); // no ?? with UnityEngine.Object
+                viewPrefab[view] = prefab;
             }
             view.Bind(this, id);
             view.gameObject.SetActive(true);
@@ -188,6 +209,8 @@ namespace DrivingSchool.Presentation
         void Return(TrafficVehicleView view)
         {
             view.gameObject.SetActive(false);
+            if (!viewPrefab.TryGetValue(view, out var prefab)) { Destroy(view.gameObject); return; }
+            if (!pools.TryGetValue(prefab, out var pool)) pools[prefab] = pool = new Stack<TrafficVehicleView>();
             pool.Push(view);
         }
 

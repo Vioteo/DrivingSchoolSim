@@ -72,7 +72,8 @@ namespace DrivingSchool.Presentation
             }
             body.isKinematic = true;
             body.interpolation = RigidbodyInterpolation.Interpolate;
-            if (wheels == null) { FindWheels(); if (model != null) { modelRest = model.localRotation; modelRestPos = model.localPosition; } }
+            if (wheels == null) { FindWheels(); FindDoors(); if (model != null) { modelRest = model.localRotation; modelRestPos = model.localPosition; } }
+            doorsOpen = 0f; ApplyDoors();
             pitch = roll = pitchVel = rollVel = yawRateSmooth = 0f;
             heaveVel = springPitchVel = 0f; groundReady = false;
         }
@@ -138,12 +139,71 @@ namespace DrivingSchool.Presentation
             Set(rightLamps, (p.RightIndicator || p.Hazard) && blink);
             Set(headLamps, true);
             Set(tailLamps, true);
+            // Doors of a route vehicle at its stop (T74): about a second to open or close.
+            float wantDoors = p.DoorsOpen ? 1f : 0f;
+            if (doors.Count > 0 && !Mathf.Approximately(doorsOpen, wantDoors)) { doorsOpen = Mathf.MoveTowards(doorsOpen, wantDoors, dt); ApplyDoors(); }
             if (beam != null)
             {
                 var cam = Camera.main;
                 bool near = cam == null || (cam.transform.position - transform.position).sqrMagnitude < beamDistanceM * beamDistanceM;
                 bool on = WeatherController.Daylight01 < beamBelowDaylight && near;
                 if (beam.enabled != on) beam.enabled = on;
+            }
+        }
+
+        // ------------------------------------------------------------------ doors (T74)
+
+        sealed class Door { public Transform pivot; public Quaternion rest; public Vector3 restPos; public float swingDeg; public Vector3 slide; }
+        readonly System.Collections.Generic.List<Door> doors = new System.Collections.Generic.List<Door>();
+        float doorsOpen;
+
+        /// <summary>
+        /// Door leaves of the transit kit (docs/transit-kit.md): a leaf hangs on Door_&lt;n&gt;_&lt;A|B&gt;_Pivot and swings about its
+        /// vertical axis outwards (to the right side, where the doors are); the minibus door Door_Slide_Pivot slides back.
+        /// </summary>
+        void FindDoors()
+        {
+            doors.Clear();
+            foreach (var t in GetComponentsInChildren<Transform>(true))
+            {
+                bool swing = t.name.StartsWith("Door_", System.StringComparison.Ordinal) && t.name.Contains("_Pivot") && !t.name.StartsWith("Door_Slide", System.StringComparison.Ordinal);
+                bool slide = t.name.StartsWith("Door_Slide_Pivot", System.StringComparison.Ordinal);
+                if (!swing && !slide) continue;
+                var d = new Door { pivot = t, rest = t.localRotation, restPos = t.localPosition };
+                if (slide) d.slide = new Vector3(0.12f, 0f, -1.0f);
+                else
+                {
+                    // Which way the leaf hangs from its hinge along the car (car space): it swings so its free edge goes out to the right.
+                    var rs = t.GetComponentsInChildren<Renderer>(true);
+                    float along = 0f;
+                    if (rs.Length > 0) { var b = rs[0].bounds; foreach (var r in rs) b.Encapsulate(r.bounds); along = transform.InverseTransformPoint(b.center).z - transform.InverseTransformPoint(t.position).z; }
+                    d.swingDeg = along >= 0f ? 80f : -80f;
+                }
+                doors.Add(d);
+            }
+        }
+
+        void ApplyDoors()
+        {
+            foreach (var d in doors)
+            {
+                if (d.pivot == null) continue;
+                if (d.slide != Vector3.zero)
+                {
+                    // Out first, then back along the body (car space → the pivot's parent space).
+                    var parent = d.pivot.parent;
+                    float outT = Mathf.Clamp01(doorsOpen * 4f), backT = Mathf.Clamp01((doorsOpen - 0.25f) / 0.75f);
+                    var carOffset = new Vector3(d.slide.x * outT, 0f, d.slide.z * backT);
+                    var local = parent != null ? parent.InverseTransformVector(transform.TransformVector(carOffset)) : carOffset;
+                    d.pivot.localPosition = d.restPos + local;
+                }
+                else
+                {
+                    // Turn about the car's vertical axis, expressed in the pivot's parent space.
+                    var parent = d.pivot.parent;
+                    var axis = parent != null ? parent.InverseTransformDirection(transform.up) : Vector3.up;
+                    d.pivot.localRotation = Quaternion.AngleAxis(d.swingDeg * doorsOpen, axis) * d.rest;
+                }
             }
         }
 
