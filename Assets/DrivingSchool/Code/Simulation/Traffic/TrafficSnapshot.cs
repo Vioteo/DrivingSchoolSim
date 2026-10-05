@@ -6,6 +6,9 @@ namespace DrivingSchool.Simulation.Traffic
 {
     public enum ParticipantKind { Vehicle, Player, Pedestrian }
     public enum SimulationLod { Near, Background }
+    /// <summary>What a route vehicle is doing (T74): driving its route, pulling in to a stop, standing there with the doors
+    /// open, signalling left to move off and pulling away (ПДД 18.3: others give way to it in a town).</summary>
+    public enum TransitPhase { None, Driving, Arriving, Boarding, Departing }
 
     /// <summary>Density and behaviour mix of a district (game parameters, data-driven: traffic-profile.json).</summary>
     public sealed class TrafficProfile
@@ -39,6 +42,13 @@ namespace DrivingSchool.Simulation.Traffic
         // Town closed into loops (T66): cars also appear mid-block on lanes this long; new cars and pedestrians appear
         // within SpawnRadiusM of the player, and the ones farther than RecycleDistanceM and out of sight are taken away.
         public double InteriorSpawnMinLaneM = 15, SpawnRadiusM = 220, RecycleDistanceM = 280;
+        // Route vehicles (T74, game parameters): this many on every route at a time; they stand at a stop for a random time
+        // in the range, signal left this long before moving off (ПДД 8.1), signal right from this distance before a stop and
+        // stand this far towards the kerb. Lanes for route vehicles are kept free of other bots (ПДД 18.2).
+        public int TransitVehiclesPerRoute = 2;
+        public double TransitDwellMinSeconds = 8, TransitDwellMaxSeconds = 14, TransitDepartSignalSeconds = 2.5;
+        public double TransitApproachSignalM = 40, TransitKerbOffsetM = 0.4, TransitPullAwaySeconds = 4;
+        public DriverProfile Bus = DriverProfile.Bus(), Minibus = DriverProfile.Minibus();
     }
 
     /// <summary>What the host tells the director about the player's car each tick.</summary>
@@ -65,6 +75,11 @@ namespace DrivingSchool.Simulation.Traffic
         public SimulationLod Lod;
         public string DriverProfileId;
         public string Decision;              // human-readable reason for the debug overlay (T38)
+        // Route vehicles (T74): null RouteId for every other participant.
+        public string RouteId, RouteName, StopId;
+        public TransitKind RouteKind;
+        public TransitPhase Transit;
+        public bool DoorsOpen;
     }
 
     public struct SignalState { public string GroupId; public SignalAspect Aspect; }

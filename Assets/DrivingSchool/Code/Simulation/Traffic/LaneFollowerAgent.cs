@@ -28,6 +28,22 @@ namespace DrivingSchool.Simulation.Traffic
 
         public static DriverProfile Normal() => new DriverProfile();
 
+        /// <summary>City bus of the transit kit (T74): 12 × 2.55 m, wheelbase 5.95 m, gentle and a little slower.</summary>
+        public static DriverProfile Bus() => new DriverProfile
+        {
+            Id = "bus", DesiredSpeedFactor = 0.85, MaxAccelerationMps2 = 1.0, ComfortDecelerationMps2 = 1.5, EmergencyDecelerationMps2 = 4.0,
+            TimeHeadwaySeconds = 1.6, MinGapM = 3.0, MaxLateralSpeedMps = 0.6, ReactionDelaySeconds = 0.8, Politeness = 0.5,
+            WheelbaseM = 5.95, LengthM = 12.0, WidthM = 2.55,
+        };
+
+        /// <summary>Route minibus (маршрутное такси) of the transit kit (T74): 6.7 × 2.06 m, wheelbase 3.745 m.</summary>
+        public static DriverProfile Minibus() => new DriverProfile
+        {
+            Id = "minibus", DesiredSpeedFactor = 0.95, MaxAccelerationMps2 = 1.5, ComfortDecelerationMps2 = 2.0, EmergencyDecelerationMps2 = 4.5,
+            TimeHeadwaySeconds = 1.3, MinGapM = 2.5, MaxLateralSpeedMps = 0.8, ReactionDelaySeconds = 0.6, Politeness = 0.3,
+            WheelbaseM = 3.745, LengthM = 6.7, WidthM = 2.06,
+        };
+
         /// <summary>The same driver in a car of another size (the view picks the model, T51).</summary>
         public DriverProfile WithSize(double lengthM, double widthM, double wheelbaseM)
         {

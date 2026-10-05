@@ -43,6 +43,10 @@ namespace DrivingSchool.Simulation.Traffic
         bool pedestriansPlaced;
         // Mid-block spawn points (T66): in a town closed into loops there are few district edges to come in by.
         readonly List<(string pathId, double s)> interiorSpawns = new List<(string, double)>();
+        // Route vehicles (T74): routes of the graph, and where on its loop every stop of a route lies.
+        readonly List<TransitRoute> routes = new List<TransitRoute>();
+        readonly Dictionary<string, TransitStop> stopsById = new Dictionary<string, TransitStop>();
+        readonly Dictionary<string, int[]> stopLoopIndex = new Dictionary<string, int[]>();
 
         /// <summary>Test hook: visit agents in reverse order; the outcome must not change.</summary>
         public bool ReverseProcessingOrder;
@@ -76,8 +80,28 @@ namespace DrivingSchool.Simulation.Traffic
                 if (lane.Length >= profile.InteriorSpawnMinLaneM) interiorSpawns.Add((l.id, lane.Length / 2));
             }
             interiorSpawns.Sort((a, b) => string.CompareOrdinal(a.pathId, b.pathId));
+            foreach (var st in graph.transitStops ?? Array.Empty<TransitStop>()) stopsById[st.id] = st;
+            foreach (var r in (graph.transitRoutes ?? Array.Empty<TransitRoute>()).OrderBy(x => x.id, StringComparer.Ordinal))
+            {
+                if (r.pathIds == null || r.pathIds.Length < 2 || r.stopIds == null || r.stopIds.Length == 0) continue;
+                // Each stop: the first time its lane comes up on the loop after the previous stop.
+                var at = new int[r.stopIds.Length]; int from = 0; bool ok = true;
+                for (int j = 0; j < r.stopIds.Length && ok; j++)
+                {
+                    if (!stopsById.TryGetValue(r.stopIds[j], out var st)) { ok = false; break; }
+                    int k = 0;
+                    while (k < r.pathIds.Length && r.pathIds[(from + k) % r.pathIds.Length] != st.laneId) k++;
+                    if (k == r.pathIds.Length) { ok = false; break; }
+                    at[j] = (from + k) % r.pathIds.Length; from = at[j];
+                }
+                if (!ok) continue;
+                routes.Add(r); stopLoopIndex[r.id] = at;
+            }
             Snapshot = new TrafficSnapshot();
         }
+
+        /// <summary>Routes of route vehicles the director runs (T74).</summary>
+        public IReadOnlyList<TransitRoute> TransitRoutes => routes;
 
         public PedestrianSimulation Pedestrians => pedestrians;
 
@@ -248,6 +272,8 @@ namespace DrivingSchool.Simulation.Traffic
                 RevokeIfSignalChanged(a);
                 var next = NextConnection(a, out double distance);
                 if (next == null || a.PermitConnection == next.Id || a.Frozen) continue;
+                // A route vehicle first serves the stop before the junction: no claim on the junction while it stands there (T74).
+                if (a.Transit != null && TransitStopGap(a) < distance) continue;
                 double reach = Math.Max(profile.JunctionLookaheadM, a.Car.CurrentSpeedMps * a.Car.CurrentSpeedMps / (2 * a.Car.Profile.ComfortDecelerationMps2) + 10);
                 if (distance > reach || !IsFrontOfQueue(a, next, snapshot)) continue;
                 double v = Math.Max(1, a.Car.CurrentSpeedMps);
@@ -479,6 +505,11 @@ namespace DrivingSchool.Simulation.Traffic
             }
             double yieldStop = PedestrianStop(a);
             if (yieldStop < stop) { stop = yieldStop; a.Decision = "yield: pedestrian"; }
+            if (a.Transit != null)
+            {
+                double atStop = TransitStep(a, snapshot);
+                if (atStop < stop) stop = atStop;
+            }
             a.Car.Update(dt, gap, leadSpeed, stop);
             if (a.PermitConnection == null && a.WaitingSince < 0 && leadId != null && gap < 15) a.Decision = "follow " + leadId;
             else if (a.PermitConnection == null && a.WaitingSince < 0 && next == null) a.Decision = "free";
@@ -560,9 +591,11 @@ namespace DrivingSchool.Simulation.Traffic
 
         void TrySpawn()
         {
-            if (agents.Count >= profile.MaxVehicles) return;
+            TrySpawnTransit();
+            if (agents.Count(x => x.Transit == null) >= profile.MaxVehicles) return;
             var candidates = index.World.spawnPoints.Where(s => s.role == SpawnRole.Vehicle).OrderBy(s => s.id, StringComparer.Ordinal)
-                .Select(s => (s.pathId, (double)s.s)).Concat(interiorSpawns).ToList();
+                .Select(s => (s.pathId, (double)s.s)).Concat(interiorSpawns)
+                .Where(sp => { var lane = index.Path(sp.Item1).Lane; return lane == null || !lane.busLane && !ClosedToCars(index.Path(sp.Item1)); }).ToList();
             var snapshot = Participants();
             var free = candidates.Where(sp =>
             {
@@ -630,15 +663,192 @@ namespace DrivingSchool.Simulation.Traffic
             return Math.Sqrt((p.x - player.X) * (p.x - player.X) + (p.z - player.Z) * (p.z - player.Z)) > profile.NearRadiusM ? SimulationLod.Background : SimulationLod.Near;
         }
 
+        // ---------------------------------------------------------------- route vehicles (T74)
+
+        /// <summary>
+        /// A lane (or a connection into one) that leads, lane after lane, onto a stretch of a lane for route vehicles behind
+        /// a solid line — closed to other vehicles (ПДД РФ 18.2). A stretch behind a broken line before a junction is open:
+        /// cars move onto it to turn right there.
+        /// </summary>
+        bool ClosedToCars(PathInfo p)
+        {
+            if (!closedCache.TryGetValue(p.Id, out bool closed))
+            {
+                var lane = p.IsConnection ? index.Path(p.Connection.toLaneId).Lane : p.Lane;
+                for (int guard = 0; guard < 32 && lane != null; guard++)
+                {
+                    if (lane.busLane && !lane.busLaneEntry) { closed = true; break; }
+                    if (!lane.busLane || lane.successors.Length != 1) break;
+                    lane = index.Path(lane.successors[0]).Lane;
+                }
+                closedCache[p.Id] = closed;
+            }
+            return closed;
+        }
+        readonly Dictionary<string, bool> closedCache = new Dictionary<string, bool>();
+
+        void ExtendTransitRoute(Agent a)
+        {
+            var t = a.Transit; var ids = t.Route.pathIds;
+            for (int guard = 0; guard < 4 * ids.Length && a.Car.RemainingRouteM < profile.RouteHorizonM; guard++)
+            {
+                a.Car.AppendRoute(new[] { ids[t.NextPath] });
+                t.NextPath = (t.NextPath + 1) % ids.Length;
+            }
+        }
+
+        TransitStop NextStopOf(Agent a) => stopsById[a.Transit.Route.stopIds[a.Transit.NextStop]];
+
+        /// <summary>Front bumper to the place where the route vehicle stops at its next stop (+inf if not on the route ahead yet).</summary>
+        double TransitStopGap(Agent a)
+        {
+            var stop = NextStopOf(a);
+            return a.Car.DistanceAlongRoute(stop.laneId, stop.s) - a.Car.Profile.LengthM / 2;
+        }
+
+        /// <summary>
+        /// One step of a route vehicle at its stops: pull in (right signal, towards the kerb), stand with the doors open,
+        /// signal left, move off once nobody is going past it (the driver of a bus may move off only when the others give way,
+        /// ПДД 18.3). Returns the distance to the point it must stop at (+inf when free to go).
+        /// </summary>
+        double TransitStep(Agent a, List<ParticipantState> snapshot)
+        {
+            var t = a.Transit;
+            double gap = TransitStopGap(a);
+            switch (t.Phase)
+            {
+                case TransitPhase.Driving:
+                case TransitPhase.Arriving:
+                    // Far off; or the stop it has just left (a route with one stop); or overshot (it could not stop in time):
+                    // drive on, the stop comes round again on the next lap.
+                    bool justLeft = now - t.PhaseSince < 3 && t.Phase == TransitPhase.Driving && gap < 2;
+                    if (gap > profile.TransitApproachSignalM || justLeft || gap < -1.5) { t.Phase = TransitPhase.Driving; return double.PositiveInfinity; }
+                    if (t.Phase != TransitPhase.Arriving) { t.Phase = TransitPhase.Arriving; t.PhaseSince = now; }
+                    if (!a.Car.CurrentPath.IsConnection) a.Car.SetTargetLateralOffset(profile.TransitKerbOffsetM);
+                    a.Decision = "to stop " + NextStopOf(a).id;
+                    if (gap < 1.0 && a.Car.CurrentSpeedMps < 0.3)
+                    {
+                        t.Phase = TransitPhase.Boarding; t.PhaseSince = now; t.StopId = NextStopOf(a).id;
+                        t.DwellSeconds = profile.TransitDwellMinSeconds + a.Rng.NextDouble() * Math.Max(0, profile.TransitDwellMaxSeconds - profile.TransitDwellMinSeconds);
+                    }
+                    return gap;
+                case TransitPhase.Boarding:
+                    a.Decision = "boarding at " + t.StopId;
+                    if (now - t.PhaseSince >= t.DwellSeconds) { t.Phase = TransitPhase.Departing; t.PhaseSince = now; }
+                    return Math.Max(0, gap);
+                default: // Departing: the left signal is on
+                    if (t.PullAwayUntil >= 0)
+                    {
+                        // Pulling away (the left signal still on) until it is up to speed, a few seconds on or in a junction.
+                        if (now > t.PullAwayUntil || a.Car.CurrentSpeedMps > 4 || a.Car.CurrentPath.IsConnection)
+                        { t.Phase = TransitPhase.Driving; t.PhaseSince = now; t.PullAwayUntil = -1; }
+                        return double.PositiveInfinity;
+                    }
+                    // Hold until the signal has shown long enough and nobody is going past.
+                    if (now - t.PhaseSince < profile.TransitDepartSignalSeconds) { a.Decision = "signalling to move off"; return Math.Max(0, gap); }
+                    var passing = PassingTransit(a, snapshot);
+                    if (passing != null) { a.Decision = "wait: " + passing + " goes past"; return Math.Max(0, gap); }
+                    // Off it goes: the next stop of the route, back to the lane centre.
+                    t.NextStop = (t.NextStop + 1) % t.Route.stopIds.Length;
+                    t.PullAwayUntil = now + profile.TransitPullAwaySeconds;
+                    a.Car.SetTargetLateralOffset(0);
+                    a.Decision = "moving off " + t.StopId;
+                    return double.PositiveInfinity;
+            }
+        }
+
+        /// <summary>Who is about to go past the standing route vehicle on its left (it waits for them), null if nobody.</summary>
+        string PassingTransit(Agent a, List<ParticipantState> snapshot)
+        {
+            var bus = a.Car.BodyPosition; double h = a.Car.BodyHeadingRad, fx = Math.Sin(h), fz = Math.Cos(h);
+            double half = a.Car.Profile.LengthM / 2;
+            foreach (var p in snapshot)
+            {
+                if (p.Id == a.Id || p.Kind != ParticipantKind.Vehicle && p.Kind != ParticipantKind.Player || p.SpeedMps < 1.5) continue;
+                double dx = p.Position.x - bus.x, dz = p.Position.z - bus.z;
+                double along = dx * fx + dz * fz, left = -(dx * fz - dz * fx);
+                if (Math.Cos(p.HeadingRad - h) < 0.7) continue;                       // not the same way
+                if (along > -half - 25 && along < half + 3 && left > 0.5 && left < 4.5) return p.Id;
+            }
+            return null;
+        }
+
+        /// <summary>Signal of a route vehicle at its stops: right pulling in, left moving off; 0 otherwise.</summary>
+        int TransitIndicator(Agent a)
+        {
+            var t = a.Transit;
+            if (a.Car.CurrentPath.IsConnection) return 0;
+            if (t.Phase == TransitPhase.Departing) return -1;
+            if (t.Phase == TransitPhase.Arriving) return 1;
+            return 0;
+        }
+
+        /// <summary>Keeps every route at <see cref="TrafficProfile.TransitVehiclesPerRoute"/> vehicles: a new one appears
+        /// on a lane of its loop where the player does not see it, heading for the next stop of the route.</summary>
+        void TrySpawnTransit()
+        {
+            if (profile.TransitVehiclesPerRoute <= 0) return;
+            var snapshot = Participants();
+            foreach (var r in routes)
+            {
+                if (agents.Count(x => x.Transit != null && x.Transit.Route == r) >= profile.TransitVehiclesPerRoute) continue;
+                var driver = r.kind == TransitKind.Minibus ? profile.Minibus : profile.Bus;
+                var free = new List<(int i, double s)>();
+                for (int i = 0; i < r.pathIds.Length; i++)
+                {
+                    var path = index.Path(r.pathIds[i]);
+                    if (path.IsConnection || path.Lane.roundabout || path.Length < driver.LengthM + 6) continue;
+                    double at = path.Length / 2;
+                    var p = path.Line.PointAt(at);
+                    if (!Loaded(p) || VisibleToPlayer(p) || !NearPlayer(p, profile.SpawnRadiusM)) continue;
+                    if (snapshot.Any(o => o.Kind != ParticipantKind.Pedestrian && Polyline.Distance2D(o.Position, p) < driver.LengthM + 12)) continue;
+                    free.Add((i, at));
+                }
+                if (free.Count == 0) continue;
+                var (pick, s) = free[rng.Next(free.Count)];
+                string prefix = r.kind == TransitKind.Minibus ? "minibus" : "bus";
+                double speed = Math.Min(index.SpeedLimitAt(r.pathIds[pick], s) / 3.6 * 0.5, 6);
+                var id = AddVehicle(new[] { r.pathIds[pick] }, s, speed, driver, prefix + (++spawnCounter).ToString("D3"));
+                var agent = agents.First(x => x.Id == id);
+                agent.Car.ExitAtRouteEnd = false;
+                agent.Transit = new TransitRun { Route = r, NextPath = (pick + 1) % r.pathIds.Length, NextStop = FirstStopAhead(r, pick, s), PhaseSince = now };
+                ExtendRoute(agent);
+                snapshot = Participants();
+            }
+        }
+
+        /// <summary>The stop of route <paramref name="r"/> that comes first after loop position (<paramref name="pathIndex"/>, <paramref name="s"/>).</summary>
+        int FirstStopAhead(TransitRoute r, int pathIndex, double s)
+        {
+            var at = stopLoopIndex[r.id]; int n = r.pathIds.Length, best = 0; double bestKey = double.PositiveInfinity;
+            for (int j = 0; j < at.Length; j++)
+            {
+                int k = ((at[j] - pathIndex) % n + n) % n;
+                double key = k + (k == 0 && stopsById[r.stopIds[j]].s <= s ? n : 0) + stopsById[r.stopIds[j]].s / 1e6;
+                if (key < bestKey) { bestKey = key; best = j; }
+            }
+            return best;
+        }
+
         // ---------------------------------------------------------------- helpers
 
         void ExtendRoute(Agent a)
         {
+            if (a.Transit != null) { ExtendTransitRoute(a); return; }
             for (int guard = 0; guard < 64 && a.Car.RemainingRouteM < profile.RouteHorizonM; guard++)
             {
                 var last = index.Path(a.Car.Route[a.Car.Route.Count - 1]);
                 var options = last.Next.Select(index.Path).Where(p => !p.IsConnection || p.Connection.maneuver != LaneManeuver.UTurn).OrderBy(p => p.Id, StringComparer.Ordinal).ToList();
                 if (options.Count == 0) { a.Car.ExitAtRouteEnd = true; return; }
+                // Lanes for route vehicles (T74, ПДД 18.2): never onto a stretch behind a solid line; from a stretch behind a
+                // broken line (it was taken to turn right) the way goes on to the right.
+                var allowed = options.Where(o => !ClosedToCars(o)).ToList();
+                if (allowed.Count > 0) options = allowed;
+                if (last.Lane != null && last.Lane.busLane)
+                {
+                    var right = options.Where(o => o.IsConnection && o.Connection.maneuver == LaneManeuver.Right).ToList();
+                    if (right.Count > 0) options = right;
+                }
                 // Lane changes (T55) are optional connections: take one about a third of the time, else keep the lane.
                 var changes = options.Where(IsLaneChange).ToList();
                 var keep = options.Except(changes).ToList();
@@ -673,6 +883,8 @@ namespace DrivingSchool.Simulation.Traffic
         void UpdateIndicators(Agent a)
         {
             int side = IndicatorSide(a.Car);
+            // A route vehicle signals right pulling in to a stop and left moving off it (ПДД 8.1); a turn ahead comes first.
+            if (side == 0 && a.Transit != null) side = TransitIndicator(a);
             a.Left = side < 0; a.Right = side > 0;
         }
 
@@ -803,6 +1015,9 @@ namespace DrivingSchool.Simulation.Traffic
                     LeftIndicator = a.Left || a.Hazard, RightIndicator = a.Right || a.Hazard, Hazard = a.Hazard,
                     BrakeLight = car.TargetAccelerationMps2 < -0.5 || car.CurrentSpeedMps < 0.1,
                     Lod = Lod(a), DriverProfileId = car.Profile.Id, Decision = a.Decision,
+                    RouteId = a.Transit?.Route.id, RouteName = a.Transit?.Route.name, RouteKind = a.Transit?.Route.kind ?? TransitKind.Bus,
+                    Transit = a.Transit?.Phase ?? TransitPhase.None, DoorsOpen = a.Transit != null && a.Transit.DoorsOpen(now),
+                    StopId = a.Transit != null && (a.Transit.Phase == TransitPhase.Boarding || a.Transit.Phase == TransitPhase.Departing) ? a.Transit.StopId : null,
                 });
             }
             if (player.Present)
@@ -836,6 +1051,19 @@ namespace DrivingSchool.Simulation.Traffic
             public bool Hazard, Frozen, Left, Right;
             public string Decision = "free";
             public List<ManeuverNotice> Notices = new List<ManeuverNotice>();
+            public TransitRun Transit;   // route vehicles only (T74)
+        }
+
+        /// <summary>A route vehicle's progress round its loop (T74).</summary>
+        sealed class TransitRun
+        {
+            public TransitRoute Route;
+            public int NextPath;            // index in Route.pathIds of the next path to append to the car's route
+            public int NextStop;            // index in Route.stopIds of the stop to serve next
+            public string StopId;
+            public TransitPhase Phase = TransitPhase.Driving;
+            public double PhaseSince, DwellSeconds, PullAwayUntil = -1;   // PullAwayUntil ≥ 0: Departing and moving off
+            public bool DoorsOpen(double now) => Phase == TransitPhase.Boarding && now - PhaseSince > 0.8 && now - PhaseSince < DwellSeconds - 1.0;
         }
     }
 }
