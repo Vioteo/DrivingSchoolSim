@@ -9,6 +9,7 @@ Positions are in the author frame (X right, Y forward, Z up) and converted.
 import bpy, math, random, re
 from pathlib import Path
 from mathutils import Vector, Matrix
+from mathutils.kdtree import KDTree
 
 from .core import to_blender, MB, mesh_object
 from . import road
@@ -57,11 +58,35 @@ class Scene:
             return None
         return self.put_coll(self.assets[aid].coll, area, loc, yaw, s, 'I_' + aid)
 
-    def ground(self, area, size=1200, mat='EN_Grass', z=-0.03):
+    def ground(self, area, size=1200, mat='EN_Grass', z=-0.03, hole=None, window=None, cell=1.0):
+        """Flat ground. With hole(x, y) -> True (area coordinates) and a window (x0, x1, y0, y1), the
+        window is a grid of cells and cells lying wholly inside the hole are left out: road modules carry
+        their own shoulders, ditches and verges, a ground plane over them would hide the shoulders."""
         ox, oy = AREAS[area]
         mb = MB()
-        mb.ngon([(ox - size, oy - size, z), (ox + size, oy - size, z), (ox + size, oy + size, z),
-                 (ox - size, oy + size, z)], mat)
+        if hole is None:
+            mb.ngon([(ox - size, oy - size, z), (ox + size, oy - size, z), (ox + size, oy + size, z),
+                     (ox - size, oy + size, z)], mat)
+        else:
+            x0, x1, y0, y1 = window
+            nx, ny = int(math.ceil((x1 - x0) / cell)), int(math.ceil((y1 - y0) / cell))
+            xs = [x0 + i * cell for i in range(nx + 1)]
+            ys = [y0 + j * cell for j in range(ny + 1)]
+            inside = [[hole(x, y) for y in ys] for x in xs]
+            verts = [(ox + x, oy + y, z) for x in xs for y in ys]
+            faces = []
+            for i in range(nx):
+                for j in range(ny):
+                    if inside[i][j] and inside[i + 1][j] and inside[i][j + 1] and inside[i + 1][j + 1]:
+                        continue
+                    a_, b_ = i * (ny + 1) + j, (i + 1) * (ny + 1) + j
+                    faces.append((a_, b_, b_ + 1, a_ + 1))
+            mb.add(verts, faces, mat)
+            X0, X1, Y0, Y1 = x0 + ox, xs[-1] + ox, y0 + oy, ys[-1] + oy
+            L, R_, B, T = ox - size, ox + size, oy - size, oy + size
+            for q in (((L, B), (R_, B), (R_, Y0), (L, Y0)), ((L, Y1), (R_, Y1), (R_, T), (L, T)),
+                      ((L, Y0), (X0, Y0), (X0, Y1), (L, Y1)), ((X1, Y0), (R_, Y0), (R_, Y1), (X1, Y1))):
+                mb.ngon([(x, y, z) for x, y in q], mat)
         mesh_object(f'Ground_{area}', mb, self.M, coll=self.area(area).collection)
 
     def strip(self, area, pts, w, mat='EN_Asphalt'):
@@ -443,7 +468,6 @@ def scene_road(S):
     if not S.has('EN_Road_Country2_Curve90_R50'):
         return []
     A = 'road'
-    S.ground(A, 1500)
     ch = Chain(S, A)
     ch.p = Vector((0, -96, 0))
     for aid, path in (('EN_Road_Country2_24m', road.P_STRAIGHT), ('EN_Road_Country2_24m', road.P_STRAIGHT),
@@ -471,11 +495,20 @@ def scene_road(S):
                 p = ch.world(s, side * 6.0, road.ground_h(6.0))
                 S.put('EN_Road_Delineator', A, tuple(p), yaw_of(-t if side > 0 else t))
         s += 24.0
-    pts = ch.samples(2.0)
+    pts = ch.samples(1.0)
+    kd = KDTree(len(pts))
+    for i, p in enumerate(pts):
+        kd.insert((p.x, p.y, 0.0), i)
+    kd.balance()
 
     def dist(x, y):
-        q = Vector((x, y, 0))
-        return min((Vector((p.x, p.y, 0)) - q).length for p in pts)
+        return kd.find((x, y, 0.0))[2]
+    # the road modules are 25 m wide (+0.7 m widening inside the curve): no ground plane over them
+    def on_road(x, y):          # beside the chain, not beyond its open ends
+        _, i, d = kd.find((x, y, 0.0))
+        return d < 12.45 and 0 < i < len(pts) - 1
+    xs, ys = [p.x for p in pts], [p.y for p in pts]
+    S.ground(A, 1500, hole=on_road, window=(min(xs) - 40, max(xs) + 40, min(ys) - 40, max(ys) + 40))
     scatter(S, A, (-150, 260, -120, 230), 0.012, 7, FOREST_MIX, avoid=lambda x, y: dist(x, y) < 15.5)
     scatter(S, A, (-150, 260, -120, 230), 0.006, 9, [('EN_Bush_A', 3), ('EN_Bush_B', 3),
                                                       ('EN_Tree_Spruce_Young', 2), ('EN_Tree_Birch_B', 1)],

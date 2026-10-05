@@ -117,43 +117,25 @@ def _paste_clip(canvas, sprite, px, py):
 
 # ---------------------------------------------------------------- ground
 def asphalt():
+    """Worn asphalt concrete, 4 m tile. Deliberately without distinct features (no cracks, stains or
+    patches): anything recognisable repeats every 4 m and reads as squares and stripes on the road."""
     S = 1024                     # 4 m tile -> 3.9 mm/px
-    base = fbm((S, S), 3, 5, 11)
-    fine = fbm((S, S), 64, 3, 12)
-    t = 0.42 + 0.22 * (base - 0.5) + 0.25 * (fine - 0.5)
-    col = colorize(t, [(0, (40, 41, 42)), (0.5, (66, 66, 67)), (1, (94, 93, 92))])
+    base = fbm((S, S), 6, 4, 11)
+    fine = fbm((S, S), 96, 3, 12)
+    t = 0.45 + 0.08 * (base - 0.5) + 0.3 * (fine - 0.5)
+    col = colorize(t, [(0, (44, 45, 46)), (0.5, (64, 64, 65)), (1, (86, 85, 84))])
     R = rng(13)
     # aggregate: light and dark stones 1-3 px
-    n = 60000
+    n = 70000
     ys, xs = R.integers(0, S, n), R.integers(0, S, n)
     light = R.random(n) < 0.55
-    vals = np.where(light, R.uniform(80, 125, n), R.uniform(15, 30, n))
+    vals = np.where(light, R.uniform(78, 115, n), R.uniform(20, 34, n))
     for k in range(n):
         r = 1 if R.random() < 0.8 else 2
         y0, x0 = ys[k], xs[k]
         yy = np.arange(y0 - r + 1, y0 + r) % S
         xx = np.arange(x0 - r + 1, x0 + r) % S
-        col[np.ix_(yy, xx)] = col[np.ix_(yy, xx)] * 0.4 + vals[k] * 0.6
-    # stains and patches
-    stain = fbm((S, S), 4, 4, 14)
-    col *= (1 - 0.18 * np.clip((stain - 0.62) * 4, 0, 1))[..., None]
-    # thin cracks: random walks
-    crack = Image.new('L', (S, S), 0)
-    d = ImageDraw.Draw(crack)
-    for c in range(9):
-        x, y = R.uniform(0, S), R.uniform(0, S)
-        ang = R.uniform(0, 6.28)
-        pts = [(x, y)]
-        for s in range(int(R.uniform(30, 90))):
-            ang += R.normal(0, 0.35)
-            x += math.cos(ang) * 6
-            y += math.sin(ang) * 6
-            pts.append((x % S, y % S))
-        for a, b in zip(pts, pts[1:]):
-            if abs(a[0] - b[0]) < S / 2 and abs(a[1] - b[1]) < S / 2:
-                d.line([a, b], fill=255, width=2)
-    cr = np.asarray(crack.filter(ImageFilter.GaussianBlur(0.8)), float) / 255
-    col *= (1 - 0.55 * cr)[..., None]
+        col[np.ix_(yy, xx)] = col[np.ix_(yy, xx)] * 0.45 + vals[k] * 0.55
     save('T_Asphalt', col)
 
 

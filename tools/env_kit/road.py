@@ -212,15 +212,6 @@ def road_module(M, aid, title, path, centre):
     elif centre == '1.6':
         dashed(mk, path, 0.0, 0.12, 6.0, 2.0)
     a.mesh(f'{aid}_Markings', mk)
-    # repaired patches (lighter asphalt) and darker wheel tracks
-    R = rng(sum(map(ord, aid)))
-    pt = MB()
-    for i in range(int(path.L / 12) + 1):
-        s = R.uniform(1.0, path.L - 3.0)
-        lat = R.choice((-1, 1)) * R.uniform(0.6, 2.6)
-        ln, wd = R.uniform(1.0, 3.0), R.uniform(0.5, 1.4)
-        line(pt, path, s, s + ln, lat, wd, 'EN_Asphalt_Worn', z=0.002, step=0.5)
-    a.mesh(f'{aid}_Patches', pt)
     col = MB()
     col.extend(surface(path, 2.0 if curved else 8.0, prof, ['EN_Collision'] * len(mats), jitter=False))
     a.mesh('COL_DriveSurface', col)
