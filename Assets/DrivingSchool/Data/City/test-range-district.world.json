@@ -2,7 +2,7 @@
     "schemaVersion": 2,
     "id": "test-range-district",
     "name": "Городской район полигона",
-    "revision": "v4",
+    "revision": "v5",
     "chunkSizeM": 256,
     "nodes": [
         {
@@ -121,7 +121,9 @@
             "rightNeighborId": "X1/South.in2",
             "oncomingLaneId": "X1/South.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/South.out1",
@@ -148,7 +150,9 @@
             "rightNeighborId": "X1/South.out2",
             "oncomingLaneId": "X1/South.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/South.in2",
@@ -173,7 +177,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/South.out2",
@@ -200,7 +206,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/North.in1",
@@ -225,7 +233,9 @@
             "rightNeighborId": "X1/North.in2",
             "oncomingLaneId": "X1/North.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/North.out1",
@@ -252,7 +262,9 @@
             "rightNeighborId": "X1/North.out2",
             "oncomingLaneId": "X1/North.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/North.in2",
@@ -277,7 +289,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/North.out2",
@@ -304,7 +318,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/East.in1",
@@ -329,7 +345,9 @@
             "rightNeighborId": "X1/East.in2",
             "oncomingLaneId": "X1/East.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/East.out1",
@@ -356,7 +374,9 @@
             "rightNeighborId": "X1/East.out2",
             "oncomingLaneId": "X1/East.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/East.in2",
@@ -381,7 +401,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/East.out2",
@@ -408,7 +430,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/West.in1",
@@ -433,7 +457,9 @@
             "rightNeighborId": "X1/West.in2",
             "oncomingLaneId": "X1/West.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/West.out1",
@@ -460,7 +486,9 @@
             "rightNeighborId": "X1/West.out2",
             "oncomingLaneId": "X1/West.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/West.in2",
@@ -485,7 +513,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X1/West.out2",
@@ -512,7 +542,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "n0/f1a",
@@ -537,7 +569,9 @@
             "rightNeighborId": "n0/f2a",
             "oncomingLaneId": "n0/b1b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "n0/f1b",
@@ -564,7 +598,9 @@
             "rightNeighborId": "n0/f2b",
             "oncomingLaneId": "n0/b1a",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "n0/f2a",
@@ -589,7 +625,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "n0/f2b",
@@ -616,7 +654,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "n0/b1a",
@@ -641,7 +681,9 @@
             "rightNeighborId": "n0/b2a",
             "oncomingLaneId": "n0/f1b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "n0/b1b",
@@ -668,7 +710,9 @@
             "rightNeighborId": "n0/b2b",
             "oncomingLaneId": "n0/f1a",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "n0/b2a",
@@ -693,7 +737,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "n0/b2b",
@@ -720,7 +766,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "w0/f1",
@@ -842,7 +890,9 @@
             "rightNeighborId": "w0/f2",
             "oncomingLaneId": "w0/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "w0/f2",
@@ -964,7 +1014,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "w0/b1",
@@ -1086,7 +1138,9 @@
             "rightNeighborId": "w0/b2",
             "oncomingLaneId": "w0/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "w0/b2",
@@ -1208,7 +1262,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "w1/f1",
@@ -1330,7 +1386,9 @@
             "rightNeighborId": "w1/f2",
             "oncomingLaneId": "w1/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "w1/f2",
@@ -1452,7 +1510,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "w1/b1",
@@ -1574,7 +1634,9 @@
             "rightNeighborId": "w1/b2",
             "oncomingLaneId": "w1/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "w1/b2",
@@ -1696,7 +1758,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "w2/f1",
@@ -1818,7 +1882,9 @@
             "rightNeighborId": "w2/f2",
             "oncomingLaneId": "w2/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "w2/f2",
@@ -1940,7 +2006,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "w2/b1",
@@ -2062,7 +2130,9 @@
             "rightNeighborId": "w2/b2",
             "oncomingLaneId": "w2/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "w2/b2",
@@ -2184,7 +2254,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "s0/f1a",
@@ -2209,7 +2281,9 @@
             "rightNeighborId": "s0/f2a",
             "oncomingLaneId": "s0/b1b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "s0/f1b",
@@ -2236,7 +2310,9 @@
             "rightNeighborId": "s0/f2b",
             "oncomingLaneId": "s0/b1a",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "s0/f2a",
@@ -2261,7 +2337,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "s0/f2b",
@@ -2288,7 +2366,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "s0/b1a",
@@ -2313,7 +2393,9 @@
             "rightNeighborId": "s0/b2a",
             "oncomingLaneId": "s0/f1b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "s0/b1b",
@@ -2340,7 +2422,9 @@
             "rightNeighborId": "s0/b2b",
             "oncomingLaneId": "s0/f1a",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "s0/b2a",
@@ -2365,7 +2449,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "s0/b2b",
@@ -2392,7 +2478,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "s1/f1",
@@ -2514,7 +2602,9 @@
             "rightNeighborId": "s1/f2",
             "oncomingLaneId": "s1/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "s1/f2",
@@ -2636,7 +2726,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "s1/b1",
@@ -2758,7 +2850,9 @@
             "rightNeighborId": "s1/b2",
             "oncomingLaneId": "s1/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "s1/b2",
@@ -2880,7 +2974,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X2/South.in1",
@@ -2905,7 +3001,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X2/South.out1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X2/South.out1",
@@ -2932,7 +3030,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X2/South.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X2/North.in1",
@@ -2957,7 +3057,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X2/North.out1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X2/North.out1",
@@ -2984,7 +3086,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X2/North.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X2/East.in1",
@@ -3009,7 +3113,9 @@
             "rightNeighborId": "X2/East.in2",
             "oncomingLaneId": "X2/East.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X2/East.out1",
@@ -3036,7 +3142,9 @@
             "rightNeighborId": "X2/East.out2",
             "oncomingLaneId": "X2/East.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X2/East.in2",
@@ -3061,7 +3169,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X2/East.out2",
@@ -3088,7 +3198,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X2/West.in1",
@@ -3113,7 +3225,9 @@
             "rightNeighborId": "X2/West.in2",
             "oncomingLaneId": "X2/West.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X2/West.out1",
@@ -3140,7 +3254,9 @@
             "rightNeighborId": "X2/West.out2",
             "oncomingLaneId": "X2/West.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X2/West.in2",
@@ -3165,7 +3281,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X2/West.out2",
@@ -3192,7 +3310,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "xw0/f",
@@ -3314,7 +3434,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "xw0/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "xw0/b",
@@ -3436,7 +3558,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "xw0/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "xw1/f",
@@ -3558,7 +3682,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "xw1/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "xw1/b",
@@ -3680,7 +3806,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "xw1/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "xw2/f",
@@ -3802,7 +3930,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "xw2/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "xw2/b",
@@ -3924,7 +4054,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "xw2/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "xe0/f",
@@ -4046,7 +4178,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "xe0/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "xe0/b",
@@ -4168,7 +4302,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "xe0/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "R/East.in",
@@ -4243,7 +4379,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "R/East.out",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "R/East.out",
@@ -4320,7 +4458,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "R/East.in",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "R/ring.East",
@@ -4390,7 +4530,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": true
+            "roundabout": true,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "R/North.in",
@@ -4465,7 +4607,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "R/North.out",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "R/North.out",
@@ -4542,7 +4686,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "R/North.in",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "R/ring.North",
@@ -4612,7 +4758,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": true
+            "roundabout": true,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "R/West.in",
@@ -4687,7 +4835,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "R/West.out",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "R/West.out",
@@ -4764,7 +4914,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "R/West.in",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "R/ring.West",
@@ -4834,7 +4986,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": true
+            "roundabout": true,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "R/South.in",
@@ -4909,7 +5063,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "R/South.out",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "R/South.out",
@@ -4986,7 +5142,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "R/South.in",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "R/ring.South",
@@ -5056,7 +5214,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": true
+            "roundabout": true,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "re0/f",
@@ -5178,7 +5338,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "re0/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "re0/b",
@@ -5300,7 +5462,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "re0/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "re1/f",
@@ -5422,7 +5586,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "re1/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "re1/b",
@@ -5542,7 +5708,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "re1/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "rs0/f",
@@ -5664,7 +5832,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "rs0/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "rs0/b",
@@ -5786,7 +5956,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "rs0/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "rs1/f.in",
@@ -5811,7 +5983,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "rs1/b.out",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "rs1/f.out",
@@ -5838,7 +6012,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "rs1/b.in",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "rs1/b.in",
@@ -5863,7 +6039,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "rs1/f.out",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "rs1/b.out",
@@ -5890,7 +6068,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "rs1/f.in",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "rs2/f",
@@ -6012,7 +6192,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "rs2/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "rs2/b",
@@ -6134,7 +6316,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "rs2/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/South.in1",
@@ -6159,7 +6343,9 @@
             "rightNeighborId": "X3/South.in2",
             "oncomingLaneId": "X3/South.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/South.out1",
@@ -6186,7 +6372,9 @@
             "rightNeighborId": "X3/South.out2",
             "oncomingLaneId": "X3/South.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/South.in2",
@@ -6211,7 +6399,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/South.out2",
@@ -6238,7 +6428,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/North.in1",
@@ -6263,7 +6455,9 @@
             "rightNeighborId": "X3/North.in2",
             "oncomingLaneId": "X3/North.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/North.out1",
@@ -6290,7 +6484,9 @@
             "rightNeighborId": "X3/North.out2",
             "oncomingLaneId": "X3/North.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/North.in2",
@@ -6315,7 +6511,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/North.out2",
@@ -6342,7 +6540,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/East.in1",
@@ -6367,7 +6567,9 @@
             "rightNeighborId": "X3/East.in2",
             "oncomingLaneId": "X3/East.out1",
             "allowedManeuvers": 4,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/East.out1",
@@ -6394,7 +6596,9 @@
             "rightNeighborId": "X3/East.out2",
             "oncomingLaneId": "X3/East.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/East.in2",
@@ -6419,7 +6623,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/East.out2",
@@ -6446,7 +6652,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/West.in1",
@@ -6471,7 +6679,9 @@
             "rightNeighborId": "X3/West.in2",
             "oncomingLaneId": "X3/West.out1",
             "allowedManeuvers": 4,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/West.out1",
@@ -6498,7 +6708,9 @@
             "rightNeighborId": "X3/West.out2",
             "oncomingLaneId": "X3/West.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/West.in2",
@@ -6523,7 +6735,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 7,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X3/West.out2",
@@ -6550,7 +6764,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "m0/f1",
@@ -6672,7 +6888,9 @@
             "rightNeighborId": "m0/f2",
             "oncomingLaneId": "m0/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "m0/f2",
@@ -6794,7 +7012,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "m0/b1",
@@ -6916,7 +7136,9 @@
             "rightNeighborId": "m0/b2",
             "oncomingLaneId": "m0/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "m0/b2",
@@ -7038,7 +7260,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "m1/f1",
@@ -7160,7 +7384,9 @@
             "rightNeighborId": "m1/f2",
             "oncomingLaneId": "m1/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "m1/f2",
@@ -7282,7 +7508,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "m1/b1",
@@ -7404,7 +7632,9 @@
             "rightNeighborId": "m1/b2",
             "oncomingLaneId": "m1/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "m1/b2",
@@ -7526,7 +7756,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X4/South.in1",
@@ -7551,7 +7783,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X4/South.out1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X4/South.out1",
@@ -7578,7 +7812,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X4/South.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X4/North.in1",
@@ -7603,7 +7839,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X4/North.out1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X4/North.out1",
@@ -7630,7 +7868,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X4/North.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X4/East.in1",
@@ -7655,7 +7895,9 @@
             "rightNeighborId": "X4/East.in2",
             "oncomingLaneId": "X4/East.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X4/East.out1",
@@ -7682,7 +7924,9 @@
             "rightNeighborId": "X4/East.out2",
             "oncomingLaneId": "X4/East.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X4/East.in2",
@@ -7707,7 +7951,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X4/East.out2",
@@ -7734,7 +7980,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X4/West.in1",
@@ -7759,7 +8007,9 @@
             "rightNeighborId": "X4/West.in2",
             "oncomingLaneId": "X4/West.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X4/West.out1",
@@ -7786,7 +8036,9 @@
             "rightNeighborId": "X4/West.out2",
             "oncomingLaneId": "X4/West.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X4/West.in2",
@@ -7811,7 +8063,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X4/West.out2",
@@ -7838,7 +8092,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "q0/f1",
@@ -7960,7 +8216,9 @@
             "rightNeighborId": "q0/f2",
             "oncomingLaneId": "q0/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "q0/f2",
@@ -8082,7 +8340,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "q0/b1",
@@ -8204,7 +8464,9 @@
             "rightNeighborId": "q0/b2",
             "oncomingLaneId": "q0/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "q0/b2",
@@ -8326,7 +8588,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "q1/f1",
@@ -8448,7 +8712,9 @@
             "rightNeighborId": "q1/f2",
             "oncomingLaneId": "q1/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "q1/f2",
@@ -8570,7 +8836,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "q1/b1",
@@ -8692,7 +8960,9 @@
             "rightNeighborId": "q1/b2",
             "oncomingLaneId": "q1/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "q1/b2",
@@ -8814,7 +9084,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "q2/f1",
@@ -8936,7 +9208,9 @@
             "rightNeighborId": "q2/f2",
             "oncomingLaneId": "q2/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "q2/f2",
@@ -9058,7 +9332,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "q2/b1",
@@ -9180,7 +9456,9 @@
             "rightNeighborId": "q2/b2",
             "oncomingLaneId": "q2/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "q2/b2",
@@ -9302,7 +9580,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X5/North.in1",
@@ -9327,7 +9607,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X5/North.out1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X5/North.out1",
@@ -9354,7 +9636,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X5/North.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X5/East.in1",
@@ -9379,7 +9663,9 @@
             "rightNeighborId": "X5/East.in2",
             "oncomingLaneId": "X5/East.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X5/East.out1",
@@ -9406,7 +9692,9 @@
             "rightNeighborId": "X5/East.out2",
             "oncomingLaneId": "X5/East.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X5/East.in2",
@@ -9431,7 +9719,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X5/East.out2",
@@ -9458,7 +9748,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X5/West.in1",
@@ -9483,7 +9775,9 @@
             "rightNeighborId": "X5/West.in2",
             "oncomingLaneId": "X5/West.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X5/West.out1",
@@ -9510,7 +9804,9 @@
             "rightNeighborId": "X5/West.out2",
             "oncomingLaneId": "X5/West.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X5/West.in2",
@@ -9535,7 +9831,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X5/West.out2",
@@ -9562,7 +9860,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X6/North.in1",
@@ -9587,7 +9887,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X6/North.out1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X6/North.out1",
@@ -9614,7 +9916,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X6/North.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X6/East.in1",
@@ -9639,7 +9943,9 @@
             "rightNeighborId": "X6/East.in2",
             "oncomingLaneId": "X6/East.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X6/East.out1",
@@ -9666,7 +9972,9 @@
             "rightNeighborId": "X6/East.out2",
             "oncomingLaneId": "X6/East.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X6/East.in2",
@@ -9691,7 +9999,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X6/East.out2",
@@ -9718,7 +10028,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X6/West.in1",
@@ -9743,7 +10055,9 @@
             "rightNeighborId": "X6/West.in2",
             "oncomingLaneId": "X6/West.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X6/West.out1",
@@ -9770,7 +10084,9 @@
             "rightNeighborId": "X6/West.out2",
             "oncomingLaneId": "X6/West.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X6/West.in2",
@@ -9795,7 +10111,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X6/West.out2",
@@ -9822,7 +10140,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "h0/f",
@@ -9944,7 +10264,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "h0/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "h0/b",
@@ -10066,7 +10388,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "h0/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "h1/f",
@@ -10188,7 +10512,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "h1/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "h1/b",
@@ -10310,7 +10636,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "h1/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "h2/f",
@@ -10432,7 +10760,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "h2/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "h2/b",
@@ -10554,7 +10884,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "h2/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k0/f1",
@@ -10766,7 +11098,9 @@
             "rightNeighborId": "k0/f2",
             "oncomingLaneId": "k0/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k0/f2",
@@ -10953,7 +11287,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k0/b1",
@@ -11195,7 +11531,9 @@
             "rightNeighborId": "k0/b2",
             "oncomingLaneId": "k0/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k0/b2",
@@ -11467,7 +11805,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k1/f1",
@@ -11589,7 +11929,9 @@
             "rightNeighborId": "k1/f2",
             "oncomingLaneId": "k1/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k1/f2",
@@ -11711,7 +12053,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k1/b1",
@@ -11833,7 +12177,9 @@
             "rightNeighborId": "k1/b2",
             "oncomingLaneId": "k1/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k1/b2",
@@ -11955,7 +12301,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k2/f1",
@@ -12077,7 +12425,9 @@
             "rightNeighborId": "k2/f2",
             "oncomingLaneId": "k2/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k2/f2",
@@ -12199,7 +12549,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k2/b1",
@@ -12321,7 +12673,9 @@
             "rightNeighborId": "k2/b2",
             "oncomingLaneId": "k2/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k2/b2",
@@ -12443,7 +12797,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k3/f1",
@@ -12655,7 +13011,9 @@
             "rightNeighborId": "k3/f2",
             "oncomingLaneId": "k3/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k3/f2",
@@ -12842,7 +13200,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k3/b1",
@@ -13084,7 +13444,9 @@
             "rightNeighborId": "k3/b2",
             "oncomingLaneId": "k3/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "k3/b2",
@@ -13356,7 +13718,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "e0/f1",
@@ -13548,7 +13912,9 @@
             "rightNeighborId": "e0/f2",
             "oncomingLaneId": "e0/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "e0/f2",
@@ -13740,7 +14106,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "e0/b1",
@@ -13932,7 +14300,9 @@
             "rightNeighborId": "e0/b2",
             "oncomingLaneId": "e0/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "e0/b2",
@@ -14124,7 +14494,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X7/North.in1",
@@ -14149,7 +14521,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X7/North.out1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X7/North.out1",
@@ -14176,7 +14550,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X7/North.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X7/East.in1",
@@ -14201,7 +14577,9 @@
             "rightNeighborId": "X7/East.in2",
             "oncomingLaneId": "X7/East.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X7/East.out1",
@@ -14228,7 +14606,9 @@
             "rightNeighborId": "X7/East.out2",
             "oncomingLaneId": "X7/East.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X7/East.in2",
@@ -14253,7 +14633,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X7/East.out2",
@@ -14280,7 +14662,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X7/West.in1",
@@ -14305,7 +14689,9 @@
             "rightNeighborId": "X7/West.in2",
             "oncomingLaneId": "X7/West.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X7/West.out1",
@@ -14332,7 +14718,9 @@
             "rightNeighborId": "X7/West.out2",
             "oncomingLaneId": "X7/West.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X7/West.in2",
@@ -14357,7 +14745,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X7/West.out2",
@@ -14384,7 +14774,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "rn0/f",
@@ -14636,7 +15028,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "rn0/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "rn0/b",
@@ -14888,7 +15282,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "rn0/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b0/f",
@@ -15010,7 +15406,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b0/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b0/b",
@@ -15132,7 +15530,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b0/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b1/f",
@@ -15254,7 +15654,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b1/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b1/b",
@@ -15376,7 +15778,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b1/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X10/South.in1",
@@ -15401,7 +15805,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X10/South.out1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X10/South.out1",
@@ -15428,7 +15834,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X10/South.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X10/North.in1",
@@ -15453,7 +15861,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X10/North.out1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X10/North.out1",
@@ -15480,7 +15890,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "X10/North.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X10/East.in1",
@@ -15505,7 +15917,9 @@
             "rightNeighborId": "X10/East.in2",
             "oncomingLaneId": "X10/East.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X10/East.out1",
@@ -15532,7 +15946,9 @@
             "rightNeighborId": "X10/East.out2",
             "oncomingLaneId": "X10/East.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X10/East.in2",
@@ -15557,7 +15973,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X10/East.out2",
@@ -15584,7 +16002,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X10/West.in1",
@@ -15609,7 +16029,9 @@
             "rightNeighborId": "X10/West.in2",
             "oncomingLaneId": "X10/West.out1",
             "allowedManeuvers": 5,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X10/West.out1",
@@ -15636,7 +16058,9 @@
             "rightNeighborId": "X10/West.out2",
             "oncomingLaneId": "X10/West.in1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X10/West.in2",
@@ -15661,7 +16085,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 3,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "X10/West.out2",
@@ -15688,7 +16114,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b2/f",
@@ -15810,7 +16238,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b2/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b2/b",
@@ -15932,7 +16362,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b2/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b3/f",
@@ -16054,7 +16486,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b3/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b3/b",
@@ -16176,7 +16610,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b3/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b4/f",
@@ -16298,7 +16734,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b4/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b4/b",
@@ -16420,7 +16858,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b4/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b5/f",
@@ -16542,7 +16982,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b5/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b5/b",
@@ -16664,7 +17106,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b5/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b6/f",
@@ -16786,7 +17230,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b6/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b6/b",
@@ -16908,7 +17354,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b6/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b7/f",
@@ -17030,7 +17478,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b7/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b7/b",
@@ -17152,7 +17602,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b7/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b8/f",
@@ -17274,7 +17726,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b8/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "b8/b",
@@ -17396,7 +17850,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "b8/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "o0/f",
@@ -17578,7 +18034,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "o0/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "o0/b",
@@ -17760,7 +18218,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "o0/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "o1/f",
@@ -17882,7 +18342,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "o1/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "o1/b",
@@ -18004,7 +18466,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "o1/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "o2/f",
@@ -18126,7 +18590,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "o2/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "o2/b",
@@ -18248,7 +18714,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "o2/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "o3/f",
@@ -18370,7 +18838,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "o3/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "o3/b",
@@ -18492,7 +18962,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "o3/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "o4/f",
@@ -18614,7 +19086,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "o4/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "o4/b",
@@ -18736,7 +19210,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "o4/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "up0/f",
@@ -18858,7 +19334,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "up0/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "up0/b",
@@ -18980,7 +19458,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "up0/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "up1/f",
@@ -19102,7 +19582,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "up1/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "up1/b",
@@ -19224,7 +19706,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "up1/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "up2/f",
@@ -19346,7 +19830,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "up2/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "up2/b",
@@ -19468,7 +19954,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "up2/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "up3/f",
@@ -19590,7 +20078,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "up3/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "up3/b",
@@ -19712,7 +20202,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "up3/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "up4/f",
@@ -19834,7 +20326,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "up4/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "up4/b",
@@ -19956,7 +20450,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "up4/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "br0/f",
@@ -20078,7 +20574,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "br0/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "br0/b",
@@ -20200,7 +20698,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "br0/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "br1/f",
@@ -20322,7 +20822,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "br1/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "br1/b",
@@ -20444,7 +20946,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "br1/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "br2/f",
@@ -20566,7 +21070,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "br2/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "br2/b",
@@ -20688,7 +21194,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "br2/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "dn0/f",
@@ -20810,7 +21318,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "dn0/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "dn0/b",
@@ -20932,7 +21442,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "dn0/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "dn1/f",
@@ -21054,7 +21566,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "dn1/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "dn1/b",
@@ -21176,7 +21690,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "dn1/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "dn2/f",
@@ -21298,7 +21814,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "dn2/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "dn2/b",
@@ -21420,7 +21938,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "dn2/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "dn3/f",
@@ -21542,7 +22062,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "dn3/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "dn3/b",
@@ -21664,7 +22186,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "dn3/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "dn4/f",
@@ -21786,7 +22310,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "dn4/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "dn4/b",
@@ -21908,7 +22434,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "dn4/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "o6/f",
@@ -22030,7 +22558,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "o6/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "o6/b",
@@ -22152,7 +22682,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "o6/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "so0/f",
@@ -22334,7 +22866,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "so0/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "so0/b",
@@ -22516,7 +23050,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "so0/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "so1/f",
@@ -23408,7 +23944,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "so1/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "so1/b",
@@ -24300,7 +24838,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "so1/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "so2/f",
@@ -24422,7 +24962,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "so2/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "so2/b",
@@ -24544,7 +25086,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "so2/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "so3/f",
@@ -25436,7 +25980,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "so3/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "so3/b",
@@ -26328,7 +26874,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "so3/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "so4/f",
@@ -26510,7 +27058,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "so4/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "so4/b",
@@ -26692,7 +27242,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "so4/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "so5/f",
@@ -27374,7 +27926,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "so5/b",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "so5/b",
@@ -28056,7 +28610,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "so5/f",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol0/f1",
@@ -28268,7 +28824,9 @@
             "rightNeighborId": "ol0/f2",
             "oncomingLaneId": "ol0/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol0/f2",
@@ -28455,7 +29013,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": true
         },
         {
             "id": "ol0/b1",
@@ -28697,7 +29257,9 @@
             "rightNeighborId": "ol0/b2",
             "oncomingLaneId": "ol0/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol0/b2",
@@ -28969,7 +29531,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": true
         },
         {
             "id": "ol1/f1",
@@ -29431,7 +29995,9 @@
             "rightNeighborId": "ol1/f2",
             "oncomingLaneId": "ol1/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol1/f2",
@@ -29893,7 +30459,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": false
         },
         {
             "id": "ol1/b1",
@@ -30355,7 +30923,9 @@
             "rightNeighborId": "ol1/b2",
             "oncomingLaneId": "ol1/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol1/b2",
@@ -30817,7 +31387,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": false
         },
         {
             "id": "ol2/f1",
@@ -31029,7 +31601,9 @@
             "rightNeighborId": "ol2/f2",
             "oncomingLaneId": "ol2/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol2/f2",
@@ -31216,7 +31790,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": false
         },
         {
             "id": "ol2/b1",
@@ -31458,7 +32034,9 @@
             "rightNeighborId": "ol2/b2",
             "oncomingLaneId": "ol2/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol2/b2",
@@ -31730,7 +32308,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": false
         },
         {
             "id": "ol3/f1",
@@ -32232,7 +32812,9 @@
             "rightNeighborId": "ol3/f2",
             "oncomingLaneId": "ol3/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol3/f2",
@@ -32734,7 +33316,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": false
         },
         {
             "id": "ol3/b1",
@@ -33236,7 +33820,9 @@
             "rightNeighborId": "ol3/b2",
             "oncomingLaneId": "ol3/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol3/b2",
@@ -33738,7 +34324,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": false
         },
         {
             "id": "ol4/f1",
@@ -33860,7 +34448,9 @@
             "rightNeighborId": "ol4/f2",
             "oncomingLaneId": "ol4/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol4/f2",
@@ -33982,7 +34572,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": false
         },
         {
             "id": "ol4/b1",
@@ -34104,7 +34696,9 @@
             "rightNeighborId": "ol4/b2",
             "oncomingLaneId": "ol4/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol4/b2",
@@ -34226,7 +34820,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": false
         },
         {
             "id": "ol5/f1",
@@ -34728,7 +35324,9 @@
             "rightNeighborId": "ol5/f2",
             "oncomingLaneId": "ol5/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol5/f2",
@@ -35230,7 +35828,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": false
         },
         {
             "id": "ol5/b1",
@@ -35732,7 +36332,9 @@
             "rightNeighborId": "ol5/b2",
             "oncomingLaneId": "ol5/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol5/b2",
@@ -36234,7 +36836,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": false
         },
         {
             "id": "ol6/f1",
@@ -36446,7 +37050,9 @@
             "rightNeighborId": "ol6/f2",
             "oncomingLaneId": "ol6/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol6/f2",
@@ -36633,7 +37239,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": false
         },
         {
             "id": "ol6/b1",
@@ -36875,7 +37483,9 @@
             "rightNeighborId": "ol6/b2",
             "oncomingLaneId": "ol6/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol6/b2",
@@ -37147,7 +37757,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": false
         },
         {
             "id": "ol7/f1",
@@ -37339,7 +37951,9 @@
             "rightNeighborId": "ol7/f2",
             "oncomingLaneId": "ol7/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol7/f2",
@@ -37531,7 +38145,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": true
         },
         {
             "id": "ol7/b1",
@@ -37723,7 +38339,9 @@
             "rightNeighborId": "ol7/b2",
             "oncomingLaneId": "ol7/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol7/b2",
@@ -37915,7 +38533,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": true,
+            "busLaneEntry": true
         },
         {
             "id": "ol8/f1",
@@ -38087,7 +38707,9 @@
             "rightNeighborId": "ol8/f2",
             "oncomingLaneId": "ol8/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol8/f2",
@@ -38259,7 +38881,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol8/b1",
@@ -38431,7 +39055,9 @@
             "rightNeighborId": "ol8/b2",
             "oncomingLaneId": "ol8/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol8/b2",
@@ -38603,7 +39229,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol9/f1",
@@ -38815,7 +39443,9 @@
             "rightNeighborId": "ol9/f2",
             "oncomingLaneId": "ol9/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol9/f2",
@@ -39002,7 +39632,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol9/b1",
@@ -39244,7 +39876,9 @@
             "rightNeighborId": "ol9/b2",
             "oncomingLaneId": "ol9/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol9/b2",
@@ -39516,7 +40150,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol10/f1",
@@ -39688,7 +40324,9 @@
             "rightNeighborId": "ol10/f2",
             "oncomingLaneId": "ol10/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol10/f2",
@@ -39860,7 +40498,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol10/b1",
@@ -40032,7 +40672,9 @@
             "rightNeighborId": "ol10/b2",
             "oncomingLaneId": "ol10/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "ol10/b2",
@@ -40204,7 +40846,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u0/f1",
@@ -40416,7 +41060,9 @@
             "rightNeighborId": "u0/f2",
             "oncomingLaneId": "u0/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u0/f2",
@@ -40603,7 +41249,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u0/b1",
@@ -40845,7 +41493,9 @@
             "rightNeighborId": "u0/b2",
             "oncomingLaneId": "u0/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u0/b2",
@@ -41117,7 +41767,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u1/f1",
@@ -41239,7 +41891,9 @@
             "rightNeighborId": "u1/f2",
             "oncomingLaneId": "u1/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u1/f2",
@@ -41361,7 +42015,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u1/b1",
@@ -41483,7 +42139,9 @@
             "rightNeighborId": "u1/b2",
             "oncomingLaneId": "u1/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u1/b2",
@@ -41605,7 +42263,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u2/f1",
@@ -41727,7 +42387,9 @@
             "rightNeighborId": "u2/f2",
             "oncomingLaneId": "u2/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u2/f2",
@@ -41849,7 +42511,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u2/b1",
@@ -41971,7 +42635,9 @@
             "rightNeighborId": "u2/b2",
             "oncomingLaneId": "u2/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u2/b2",
@@ -42093,7 +42759,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u3/f1",
@@ -42305,7 +42973,9 @@
             "rightNeighborId": "u3/f2",
             "oncomingLaneId": "u3/b1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u3/f2",
@@ -42492,7 +43162,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u3/b1",
@@ -42734,7 +43406,9 @@
             "rightNeighborId": "u3/b2",
             "oncomingLaneId": "u3/f1",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         },
         {
             "id": "u3/b2",
@@ -43006,7 +43680,9 @@
             "rightNeighborId": "",
             "oncomingLaneId": "",
             "allowedManeuvers": 0,
-            "roundabout": false
+            "roundabout": false,
+            "busLane": false,
+            "busLaneEntry": false
         }
     ],
     "junctions": [
@@ -67524,7 +68200,7 @@
             "id": "ol1/br.f1",
             "laneId": "ol1/f1",
             "side": 1,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 88.0
         },
@@ -67532,7 +68208,7 @@
             "id": "ol1/bl.f2",
             "laneId": "ol1/f2",
             "side": 0,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 88.0
         },
@@ -67556,7 +68232,7 @@
             "id": "ol1/br.b1",
             "laneId": "ol1/b1",
             "side": 1,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 88.0
         },
@@ -67564,7 +68240,7 @@
             "id": "ol1/bl.b2",
             "laneId": "ol1/b2",
             "side": 0,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 88.0
         },
@@ -67588,7 +68264,7 @@
             "id": "ol2/br.f1",
             "laneId": "ol2/f1",
             "side": 1,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 37.69642639160156
         },
@@ -67596,7 +68272,7 @@
             "id": "ol2/bl.f2",
             "laneId": "ol2/f2",
             "side": 0,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 32.19828414916992
         },
@@ -67620,7 +68296,7 @@
             "id": "ol2/br.b1",
             "laneId": "ol2/b1",
             "side": 1,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 43.97996139526367
         },
@@ -67628,7 +68304,7 @@
             "id": "ol2/bl.b2",
             "laneId": "ol2/b2",
             "side": 0,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 49.478050231933597
         },
@@ -67652,7 +68328,7 @@
             "id": "ol3/br.f1",
             "laneId": "ol3/f1",
             "side": 1,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 96.0
         },
@@ -67660,7 +68336,7 @@
             "id": "ol3/bl.f2",
             "laneId": "ol3/f2",
             "side": 0,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 96.0
         },
@@ -67684,7 +68360,7 @@
             "id": "ol3/br.b1",
             "laneId": "ol3/b1",
             "side": 1,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 96.0
         },
@@ -67692,7 +68368,7 @@
             "id": "ol3/bl.b2",
             "laneId": "ol3/b2",
             "side": 0,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 96.0
         },
@@ -67716,7 +68392,7 @@
             "id": "ol4/br.f1",
             "laneId": "ol4/f1",
             "side": 1,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 20.0
         },
@@ -67724,7 +68400,7 @@
             "id": "ol4/bl.f2",
             "laneId": "ol4/f2",
             "side": 0,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 20.0
         },
@@ -67748,7 +68424,7 @@
             "id": "ol4/br.b1",
             "laneId": "ol4/b1",
             "side": 1,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 20.0
         },
@@ -67756,7 +68432,7 @@
             "id": "ol4/bl.b2",
             "laneId": "ol4/b2",
             "side": 0,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 20.0
         },
@@ -67780,7 +68456,7 @@
             "id": "ol5/br.f1",
             "laneId": "ol5/f1",
             "side": 1,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 96.0
         },
@@ -67788,7 +68464,7 @@
             "id": "ol5/bl.f2",
             "laneId": "ol5/f2",
             "side": 0,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 96.0
         },
@@ -67812,7 +68488,7 @@
             "id": "ol5/br.b1",
             "laneId": "ol5/b1",
             "side": 1,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 96.0
         },
@@ -67820,7 +68496,7 @@
             "id": "ol5/bl.b2",
             "laneId": "ol5/b2",
             "side": 0,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 96.0
         },
@@ -67844,7 +68520,7 @@
             "id": "ol6/br.f1",
             "laneId": "ol6/f1",
             "side": 1,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 37.69642639160156
         },
@@ -67852,7 +68528,7 @@
             "id": "ol6/bl.f2",
             "laneId": "ol6/f2",
             "side": 0,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 32.19828414916992
         },
@@ -67876,7 +68552,7 @@
             "id": "ol6/br.b1",
             "laneId": "ol6/b1",
             "side": 1,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 43.97996139526367
         },
@@ -67884,7 +68560,7 @@
             "id": "ol6/bl.b2",
             "laneId": "ol6/b2",
             "side": 0,
-            "type": 2,
+            "type": 1,
             "fromS": 0.0,
             "toS": 49.478050231933597
         },
@@ -69673,6 +70349,186 @@
                 "u1/b2"
             ],
             "atS": 8.0,
+            "untilNextJunction": false,
+            "zoneEndLaneId": "",
+            "zoneEndS": 0.0
+        },
+        {
+            "id": "bus-lane-north",
+            "code": "5.14",
+            "value": "",
+            "catalogId": "PT_Sign_5_14_BusLane",
+            "plaques": [],
+            "x": -72.63136356961886,
+            "y": 0.019999999552965165,
+            "z": 101.2637674189556,
+            "yawDeg": -96.30000305175781,
+            "laneIds": [
+                "ol0/b2"
+            ],
+            "atS": 3.0,
+            "untilNextJunction": false,
+            "zoneEndLaneId": "",
+            "zoneEndS": 0.0
+        },
+        {
+            "id": "bus-lane-north-end",
+            "code": "5.14.1",
+            "value": "",
+            "catalogId": "PT_Sign_5_14_1_BusLaneEnd",
+            "plaques": [],
+            "x": -322.9,
+            "y": 0.019999999552965165,
+            "z": 194.0,
+            "yawDeg": 0.0,
+            "laneIds": [
+                "ol7/b2"
+            ],
+            "atS": 30.0,
+            "untilNextJunction": false,
+            "zoneEndLaneId": "",
+            "zoneEndS": 0.0
+        },
+        {
+            "id": "bus-lane-south",
+            "code": "5.14",
+            "value": "",
+            "catalogId": "PT_Sign_5_14_BusLane",
+            "plaques": [],
+            "x": -305.1,
+            "y": 0.019999999552965165,
+            "z": 193.0,
+            "yawDeg": 180.0,
+            "laneIds": [
+                "ol7/f2"
+            ],
+            "atS": 3.0,
+            "untilNextJunction": false,
+            "zoneEndLaneId": "",
+            "zoneEndS": 0.0
+        },
+        {
+            "id": "bus-lane-south-end",
+            "code": "5.14.1",
+            "value": "",
+            "catalogId": "PT_Sign_5_14_1_BusLaneEnd",
+            "plaques": [],
+            "x": -72.75108490215045,
+            "y": 0.019999999552965165,
+            "z": 119.21277150451826,
+            "yawDeg": 77.7272720336914,
+            "laneIds": [
+                "ol0/f2"
+            ],
+            "atS": 28.201324462890626,
+            "untilNextJunction": false,
+            "zoneEndLaneId": "",
+            "zoneEndS": 0.0
+        },
+        {
+            "id": "stop-sign/okruzhnaya-sever",
+            "code": "5.16",
+            "value": "",
+            "catalogId": "PT_Sign_5_16_BusStop",
+            "plaques": [],
+            "x": -41.10000000000001,
+            "y": 0.019999999552965165,
+            "z": 188.79999923706056,
+            "yawDeg": 180.0,
+            "laneIds": [
+                "ol1/b2"
+            ],
+            "atS": 52.79999923706055,
+            "untilNextJunction": false,
+            "zoneEndLaneId": "",
+            "zoneEndS": 0.0
+        },
+        {
+            "id": "stop-sign/okruzhnaya-zapad",
+            "code": "5.16",
+            "value": "",
+            "catalogId": "PT_Sign_5_16_BusStop",
+            "plaques": [],
+            "x": -128.79999923706056,
+            "y": 0.019999999552965165,
+            "z": 258.9,
+            "yawDeg": 90.0,
+            "laneIds": [
+                "ol3/b2"
+            ],
+            "atS": 52.79999923706055,
+            "untilNextJunction": false,
+            "zoneEndLaneId": "",
+            "zoneEndS": 0.0
+        },
+        {
+            "id": "stop-sign/prospekt-vostok",
+            "code": "5.16",
+            "value": "",
+            "catalogId": "PT_Sign_5_16_BusStop",
+            "plaques": [],
+            "x": -188.0,
+            "y": 0.019999999552965165,
+            "z": 101.1,
+            "yawDeg": -90.0,
+            "laneIds": [
+                "w1/f2"
+            ],
+            "atS": 18.0,
+            "untilNextJunction": false,
+            "zoneEndLaneId": "",
+            "zoneEndS": 0.0
+        },
+        {
+            "id": "stop-sign/okruzhnaya-zapad-2",
+            "code": "5.16",
+            "value": "",
+            "catalogId": "PT_Sign_5_16_BusStop",
+            "plaques": [],
+            "x": -235.20000076293946,
+            "y": 0.019999999552965165,
+            "z": 241.1,
+            "yawDeg": -90.0,
+            "laneIds": [
+                "ol5/f2"
+            ],
+            "atS": 52.79999923706055,
+            "untilNextJunction": false,
+            "zoneEndLaneId": "",
+            "zoneEndS": 0.0
+        },
+        {
+            "id": "stop-sign/okruzhnaya-sever-2",
+            "code": "5.16",
+            "value": "",
+            "catalogId": "PT_Sign_5_16_BusStop",
+            "plaques": [],
+            "x": -58.900000000000009,
+            "y": 0.019999999552965165,
+            "z": 180.0,
+            "yawDeg": 0.0,
+            "laneIds": [
+                "ol1/f2"
+            ],
+            "atS": 44.0,
+            "untilNextJunction": false,
+            "zoneEndLaneId": "",
+            "zoneEndS": 0.0
+        },
+        {
+            "id": "stop-sign/prospekt-zapad",
+            "code": "5.16",
+            "value": "",
+            "catalogId": "PT_Sign_5_16_BusStop",
+            "plaques": [],
+            "x": -204.0,
+            "y": 0.019999999552965165,
+            "z": 118.9,
+            "yawDeg": 90.0,
+            "laneIds": [
+                "w1/b2"
+            ],
+            "atS": 18.0,
             "untilNextJunction": false,
             "zoneEndLaneId": "",
             "zoneEndS": 0.0
@@ -81487,5 +82343,141 @@
         }
     ],
     "objects": [],
-    "districts": []
+    "districts": [],
+    "transitStops": [
+        {
+            "id": "okruzhnaya-sever",
+            "name": "Окружная (север)",
+            "laneId": "ol1/b2",
+            "signId": "stop-sign/okruzhnaya-sever",
+            "s": 52.79999923706055,
+            "lengthM": 20.0,
+            "marked": true
+        },
+        {
+            "id": "okruzhnaya-zapad",
+            "name": "Окружная (запад)",
+            "laneId": "ol3/b2",
+            "signId": "stop-sign/okruzhnaya-zapad",
+            "s": 52.79999923706055,
+            "lengthM": 20.0,
+            "marked": true
+        },
+        {
+            "id": "prospekt-vostok",
+            "name": "Проспект (на восток)",
+            "laneId": "w1/f2",
+            "signId": "stop-sign/prospekt-vostok",
+            "s": 18.0,
+            "lengthM": 15.0,
+            "marked": true
+        },
+        {
+            "id": "okruzhnaya-zapad-2",
+            "name": "Окружная (запад)",
+            "laneId": "ol5/f2",
+            "signId": "stop-sign/okruzhnaya-zapad-2",
+            "s": 52.79999923706055,
+            "lengthM": 20.0,
+            "marked": true
+        },
+        {
+            "id": "okruzhnaya-sever-2",
+            "name": "Окружная (север)",
+            "laneId": "ol1/f2",
+            "signId": "stop-sign/okruzhnaya-sever-2",
+            "s": 44.0,
+            "lengthM": 20.0,
+            "marked": true
+        },
+        {
+            "id": "prospekt-zapad",
+            "name": "Проспект (на запад)",
+            "laneId": "w1/b2",
+            "signId": "stop-sign/prospekt-zapad",
+            "s": 18.0,
+            "lengthM": 15.0,
+            "marked": true
+        }
+    ],
+    "transitRoutes": [
+        {
+            "id": "route-42",
+            "name": "42",
+            "kind": 0,
+            "stopIds": [
+                "okruzhnaya-sever",
+                "okruzhnaya-zapad",
+                "prospekt-vostok"
+            ],
+            "pathIds": [
+                "ol1/b2",
+                "ol2/b2",
+                "ol3/b2",
+                "ol4/b2",
+                "ol5/b2",
+                "ol6/b2",
+                "ol7/b2",
+                "X10/West.in2",
+                "X10/c:West.in2>East.out2",
+                "X10/East.out2",
+                "ol8/b2",
+                "ol9/b2",
+                "ol10/b2",
+                "X3/West.in2",
+                "X3/c:West.in2>East.out2",
+                "X3/East.out2",
+                "w2/f2",
+                "w1/f2",
+                "w0/f2",
+                "X1/West.in2",
+                "X1/c:West.in2>East.out2",
+                "X1/East.out2",
+                "e0/b2",
+                "X7/East.in2",
+                "X7/c:East.in2>West.out2",
+                "X7/West.out2",
+                "ol0/b2"
+            ]
+        },
+        {
+            "id": "route-107",
+            "name": "107",
+            "kind": 1,
+            "stopIds": [
+                "okruzhnaya-zapad-2",
+                "okruzhnaya-sever-2",
+                "prospekt-zapad"
+            ],
+            "pathIds": [
+                "ol5/f2",
+                "ol4/f2",
+                "ol3/f2",
+                "ol2/f2",
+                "ol1/f2",
+                "ol0/f2",
+                "X7/West.in2",
+                "X7/c:West.in2>East.out2",
+                "X7/East.out2",
+                "e0/f2",
+                "X1/East.in2",
+                "X1/c:East.in2>West.out2",
+                "X1/West.out2",
+                "w0/b2",
+                "w1/b2",
+                "w2/b2",
+                "X3/East.in2",
+                "X3/c:East.in2>West.out2",
+                "X3/West.out2",
+                "ol10/f2",
+                "ol9/f2",
+                "ol8/f2",
+                "X10/East.in2",
+                "X10/c:East.in2>West.out2",
+                "X10/West.out2",
+                "ol7/f2",
+                "ol6/f2"
+            ]
+        }
+    ]
 }

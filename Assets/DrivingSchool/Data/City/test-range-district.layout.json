@@ -2,7 +2,7 @@
     "schemaVersion": 1,
     "id": "test-range-district",
     "name": "Городской район полигона",
-    "revision": "v4",
+    "revision": "v5",
     "instances": [
         {
             "id": "X1",
@@ -2060,6 +2060,46 @@
             "plaques": [],
             "atS": 8.0,
             "untilNextJunction": false
+        },
+        {
+            "id": "bus-lane-north",
+            "code": "5.14",
+            "value": "",
+            "instanceId": "ol0",
+            "laneId": "b2",
+            "plaques": [],
+            "atS": 3.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "bus-lane-north-end",
+            "code": "5.14.1",
+            "value": "",
+            "instanceId": "ol7",
+            "laneId": "b2",
+            "plaques": [],
+            "atS": 30.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "bus-lane-south",
+            "code": "5.14",
+            "value": "",
+            "instanceId": "ol7",
+            "laneId": "f2",
+            "plaques": [],
+            "atS": 3.0,
+            "untilNextJunction": false
+        },
+        {
+            "id": "bus-lane-south-end",
+            "code": "5.14.1",
+            "value": "",
+            "instanceId": "ol0",
+            "laneId": "f2",
+            "plaques": [],
+            "atS": 28.201324462890626,
+            "untilNextJunction": false
         }
     ],
     "approaches": [
@@ -2339,6 +2379,172 @@
                     "allRedSeconds": 2.0,
                     "redAmberSeconds": 1.0
                 }
+            ]
+        }
+    ],
+    "busLanes": [
+        {
+            "instanceId": "ol0",
+            "laneId": "b2",
+            "entry": true
+        },
+        {
+            "instanceId": "ol0",
+            "laneId": "f2",
+            "entry": true
+        },
+        {
+            "instanceId": "ol1",
+            "laneId": "b2",
+            "entry": false
+        },
+        {
+            "instanceId": "ol1",
+            "laneId": "f2",
+            "entry": false
+        },
+        {
+            "instanceId": "ol2",
+            "laneId": "b2",
+            "entry": false
+        },
+        {
+            "instanceId": "ol2",
+            "laneId": "f2",
+            "entry": false
+        },
+        {
+            "instanceId": "ol3",
+            "laneId": "b2",
+            "entry": false
+        },
+        {
+            "instanceId": "ol3",
+            "laneId": "f2",
+            "entry": false
+        },
+        {
+            "instanceId": "ol4",
+            "laneId": "b2",
+            "entry": false
+        },
+        {
+            "instanceId": "ol4",
+            "laneId": "f2",
+            "entry": false
+        },
+        {
+            "instanceId": "ol5",
+            "laneId": "b2",
+            "entry": false
+        },
+        {
+            "instanceId": "ol5",
+            "laneId": "f2",
+            "entry": false
+        },
+        {
+            "instanceId": "ol6",
+            "laneId": "b2",
+            "entry": false
+        },
+        {
+            "instanceId": "ol6",
+            "laneId": "f2",
+            "entry": false
+        },
+        {
+            "instanceId": "ol7",
+            "laneId": "b2",
+            "entry": true
+        },
+        {
+            "instanceId": "ol7",
+            "laneId": "f2",
+            "entry": true
+        }
+    ],
+    "transitStops": [
+        {
+            "id": "okruzhnaya-sever",
+            "name": "Окружная (север)",
+            "instanceId": "ol1",
+            "laneId": "b2",
+            "atS": 52.79999923706055,
+            "lengthM": 20.0,
+            "marked": true,
+            "shelter": true
+        },
+        {
+            "id": "okruzhnaya-zapad",
+            "name": "Окружная (запад)",
+            "instanceId": "ol3",
+            "laneId": "b2",
+            "atS": 52.79999923706055,
+            "lengthM": 20.0,
+            "marked": true,
+            "shelter": true
+        },
+        {
+            "id": "prospekt-vostok",
+            "name": "Проспект (на восток)",
+            "instanceId": "w1",
+            "laneId": "f2",
+            "atS": 18.0,
+            "lengthM": 15.0,
+            "marked": true,
+            "shelter": true
+        },
+        {
+            "id": "okruzhnaya-zapad-2",
+            "name": "Окружная (запад)",
+            "instanceId": "ol5",
+            "laneId": "f2",
+            "atS": 52.79999923706055,
+            "lengthM": 20.0,
+            "marked": true,
+            "shelter": true
+        },
+        {
+            "id": "okruzhnaya-sever-2",
+            "name": "Окружная (север)",
+            "instanceId": "ol1",
+            "laneId": "f2",
+            "atS": 44.0,
+            "lengthM": 20.0,
+            "marked": true,
+            "shelter": true
+        },
+        {
+            "id": "prospekt-zapad",
+            "name": "Проспект (на запад)",
+            "instanceId": "w1",
+            "laneId": "b2",
+            "atS": 18.0,
+            "lengthM": 15.0,
+            "marked": true,
+            "shelter": true
+        }
+    ],
+    "transitRoutes": [
+        {
+            "id": "route-42",
+            "name": "42",
+            "kind": 0,
+            "stopIds": [
+                "okruzhnaya-sever",
+                "okruzhnaya-zapad",
+                "prospekt-vostok"
+            ]
+        },
+        {
+            "id": "route-107",
+            "name": "107",
+            "kind": 1,
+            "stopIds": [
+                "okruzhnaya-zapad-2",
+                "okruzhnaya-sever-2",
+                "prospekt-zapad"
             ]
         }
     ]
