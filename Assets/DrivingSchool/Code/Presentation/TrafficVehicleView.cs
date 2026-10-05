@@ -60,6 +60,8 @@ namespace DrivingSchool.Presentation
             model = modelRoot; brakeLamps = brake; leftLamps = left; rightLamps = right; lengthM = length; widthM = width; wheelbaseM = wheelbase;
         }
 
+        bool transitChecked;
+
         internal void Bind(TrafficDirectorHost owner, string agentId)
         {
             host = owner; id = agentId; placed = false;
@@ -69,6 +71,8 @@ namespace DrivingSchool.Presentation
                 var audio = GetComponent<TrafficVehicleAudio>();                         // T67: engine note
                 if (audio == null) audio = gameObject.AddComponent<TrafficVehicleAudio>();
                 audio.ResetMotion();
+                // T75: buses and minibuses light the saloon at night, route displays glow.
+                if (!transitChecked) { transitChecked = true; if (TransitNightView.IsTransit(transform)) gameObject.AddComponent<TransitNightView>(); }
             }
             body.isKinematic = true;
             body.interpolation = RigidbodyInterpolation.Interpolate;

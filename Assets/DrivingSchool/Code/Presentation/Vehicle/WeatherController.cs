@@ -55,6 +55,7 @@ namespace DrivingSchool.Presentation
             ShieldVehicles(rain); ShieldVehicles(snow);
             SetPreset(preset, true);
             if (GetComponent<AmbientAudio>() == null) gameObject.AddComponent<AmbientAudio>();   // T67: city, wind, rain, birds
+            if (GetComponent<NightLighting>() == null) gameObject.AddComponent<NightLighting>(); // T75: windows, entrance lamps
         }
 
         void OnDestroy()
@@ -126,11 +127,12 @@ namespace DrivingSchool.Presentation
                 sun.transform.rotation = Quaternion.Euler(elev, yaw, 0f);
             }
             Color skyDay = Color.Lerp(new Color(0.58f, 0.72f, 0.88f), new Color(0.55f, 0.58f, 0.62f), cloud);
-            Color sky = Color.Lerp(new Color(0.012f, 0.016f, 0.03f), skyDay, day);
+            // Night (T75): a town sky is never black — the lights glow back from the haze (warm skyglow, more under clouds).
+            Color sky = Color.Lerp(new Color(0.02f, 0.021f, 0.032f) * (1f + cloud * 0.8f), skyDay, day);
             RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Trilight;
-            RenderSettings.ambientSkyColor = Color.Lerp(new Color(0.03f, 0.035f, 0.06f), skyDay * 1.05f, day);
-            RenderSettings.ambientEquatorColor = Color.Lerp(new Color(0.025f, 0.025f, 0.035f), new Color(0.5f, 0.55f, 0.6f), day);
-            RenderSettings.ambientGroundColor = Color.Lerp(new Color(0.015f, 0.015f, 0.015f), new Color(0.25f, 0.28f, 0.22f), day);
+            RenderSettings.ambientSkyColor = Color.Lerp(new Color(0.045f, 0.05f, 0.075f), skyDay * 1.05f, day);
+            RenderSettings.ambientEquatorColor = Color.Lerp(new Color(0.052f, 0.045f, 0.042f), new Color(0.5f, 0.55f, 0.6f), day);
+            RenderSettings.ambientGroundColor = Color.Lerp(new Color(0.03f, 0.026f, 0.022f), new Color(0.25f, 0.28f, 0.22f), day);
             // Car paint and glass reflect the environment: without this they mirror the bright default sky at night.
             RenderSettings.reflectionIntensity = Mathf.Lerp(0.06f, 1f, day);
             RenderSettings.fog = true; RenderSettings.fogMode = FogMode.Exponential;
@@ -142,7 +144,7 @@ namespace DrivingSchool.Presentation
                 skyMaterial.SetColor("_ZenithColor", Color.Lerp(zenith, RenderSettings.fogColor, fog));
                 skyMaterial.SetColor("_HorizonColor", RenderSettings.fogColor);
                 skyMaterial.SetColor("_GroundColor", RenderSettings.fogColor * 0.6f);
-                skyMaterial.SetColor("_GlowColor", new Color(0.05f, 0.03f, 0.015f) * (1f - day) * (1f + cloud));
+                skyMaterial.SetColor("_GlowColor", new Color(0.11f, 0.065f, 0.032f) * (1f - day) * (1f + cloud));
                 float clear = (1f - cloud) * (1f - fog);
                 skyMaterial.SetFloat("_Stars", Mathf.Clamp01(1f - day * 1.6f) * clear);
                 Vector3 toLight = sun != null ? -sun.transform.forward : new Vector3(0.3f, 0.5f, -0.8f);

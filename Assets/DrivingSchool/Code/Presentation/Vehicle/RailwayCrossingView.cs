@@ -59,6 +59,12 @@ namespace DrivingSchool.Presentation
 
         void Start()
         {
+            // T75: head and tail lamps, searchlight, lit saloon windows (added before the trains are hidden below).
+            if (Application.isPlaying)
+            {
+                foreach (var c in consists) if (c != null && c.GetComponent<TrainLightsView>() == null) c.gameObject.AddComponent<TrainLightsView>();
+                if (train != null && train.GetComponent<TrainLightsView>() == null) train.gameObject.AddComponent<TrainLightsView>();
+            }
             foreach (var b in barriers) if (b != null) SetupBarrier(b);
             foreach (var s in signals) if (s != null) SetupSignal(s);
             // T69: все составы — кинематические и спрятаны до вызова; текущий — первый.
@@ -156,7 +162,7 @@ namespace DrivingSchool.Presentation
             bool blink = Mathf.Repeat(Time.time, 1f) < 0.5f;                  // red lamps alternate at 1 Hz
             bool slow = Mathf.Repeat(Time.time, 2f) < 0.8f;                   // white lamp: slow flashing while open
             SetLamps(warning && blink, warning && !blink, !warning && slow);
-            foreach (var b in booms) foreach (var m in b.lamps) SetEmission(m, warning && (Current != Phase.Warning) && blink ? redEmission : Color.black);
+            foreach (var b in booms) foreach (var m in b.lamps) SetLens(m, warning && (Current != Phase.Warning) && blink, redEmission);
 
             if (warning && Current != Phase.Raising)
             {
@@ -238,20 +244,40 @@ namespace DrivingSchool.Presentation
 
         void SetLamps(bool left, bool right, bool whiteOn)
         {
-            foreach (var m in redL) SetEmission(m, left ? redEmission : Color.black);
-            foreach (var m in redR) SetEmission(m, right ? redEmission : Color.black);
-            foreach (var m in white) SetEmission(m, whiteOn ? whiteEmission : Color.black);
+            foreach (var m in redL) SetLens(m, left, redEmission);
+            foreach (var m in redR) SetLens(m, right, redEmission);
+            foreach (var m in white) SetLens(m, whiteOn, whiteEmission);
         }
 
-        static Material Instance(Renderer r)
+        // Lens colours: lit — the material's own colour; off (T75) — a dark glossy lens of the same hue, as a real unlit
+        // signal lens looks (deep cherry red, smoky "moon-white"), so a dark signal does not read as lit.
+        readonly Dictionary<Material, Color> litBase = new Dictionary<Material, Color>(), offBase = new Dictionary<Material, Color>();
+        readonly Dictionary<Material, bool> lensOn = new Dictionary<Material, bool>();
+
+        Material Instance(Renderer r)
         {
             var m = r.material;   // per-renderer instance
             m.EnableKeyword("_EMISSION");
             m.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+            if (m.HasProperty("_BaseColor"))
+            {
+                Color c = m.GetColor("_BaseColor");
+                litBase[m] = c;
+                bool red = c.r > c.g * 2f;
+                offBase[m] = red ? new Color(0.06f, 0.006f, 0.006f) : new Color(0.085f, 0.09f, 0.1f);
+            }
+            if (m.HasProperty("_Smoothness")) m.SetFloat("_Smoothness", 0.85f);   // glass lens: a sharp highlight when off
             return m;
         }
 
-        static void SetEmission(Material m, Color c) { if (m != null && m.HasProperty("_EmissionColor")) m.SetColor("_EmissionColor", c); }
+        void SetLens(Material m, bool on, Color emission)
+        {
+            if (m == null) return;
+            if (lensOn.TryGetValue(m, out bool was) && was == on) return;
+            lensOn[m] = on;
+            if (m.HasProperty("_EmissionColor")) m.SetColor("_EmissionColor", on ? emission : Color.black);
+            if (litBase.TryGetValue(m, out var lit)) m.SetColor("_BaseColor", on ? lit : offBase[m]);
+        }
 
         static Transform Find(Transform root, string prefix)
         {
