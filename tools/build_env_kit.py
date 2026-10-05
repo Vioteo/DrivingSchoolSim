@@ -29,8 +29,8 @@ ART = ROOT / 'Assets/DrivingSchool/Art/EnvKit'
 SOURCE = ROOT / 'ArtSource/DS_EnvKit.blend'
 REPORTS = ROOT / 'artifacts/reports'
 REVIEW = ROOT / 'artifacts/visual-review/envkit'
-# bake the axis conversion into the data: the FBX root node comes out without the -90 deg X rotation
-BAKE_SPACE = True
+# axis conversion stays on the FBX root node (as in the transit kit): baking it breaks nested pivots (gate boom)
+BAKE_SPACE = False
 GROUPS = {'forest': forest, 'road': road, 'barrier': barrier, 'yard': yard, 'parking': parking}
 
 
@@ -162,9 +162,23 @@ def main():
                   f"fails={[r['id'] for r in res if r['status'] != 'PASS']}", flush=True)
     print(f'BUILD_TIME {time.time() - t0:.1f}s', flush=True)
     if not no_export:
-        (ART / 'EN_Materials.json').write_text(json.dumps(
-            {'materials': [dict(name=n, color=list(c) + [a], metallic=m, roughness=r, emission=e)
-                           for n, (c, m, r, e, a) in PALETTE.items()]}, indent=2), encoding='utf-8')
+        from env_kit.materials import TEX, FOLIAGE
+        import shutil
+        tex_out = ART / 'Textures'
+        tex_out.mkdir(parents=True, exist_ok=True)
+        used = sorted({t['file'] for t in TEX.values()})
+        for f in used:
+            shutil.copyfile(TOOLS / 'env_kit' / 'textures' / f'{f}.png', tex_out / f'{f}.png')
+        mats = []
+        for n, (c, m, r, e, a) in PALETTE.items():
+            d = dict(name=n, color=list(c) + [a], metallic=m, roughness=r, emission=e)
+            t = TEX.get(n)
+            if t:
+                d.update(texture=f"Textures/{t['file']}.png", tint=list(t.get('tint', (1, 1, 1))),
+                         alphaClip=bool(t.get('alpha')), doubleSided=n in FOLIAGE)
+            mats.append(d)
+        (ART / 'EN_Materials.json').write_text(json.dumps({'materials': mats}, indent=2), encoding='utf-8')
+        report['textures'] = {f: sha(tex_out / f'{f}.png') for f in used}
     # hide the kit collections: review scenes instance them
     for lc in bpy.context.view_layer.layer_collection.children:
         if lc.name in assets:

@@ -140,14 +140,9 @@ def wbeam_4m(M, R=None, concave=True):
     return a
 
 
-def wbeam_end_ramp(M, start=False):
-    """Отгон: the beam goes down into the ground over 4 m and away from the road by 0.5 m.
-    End version: Socket_Start (0,0,0) joins a section's Socket_End, the ramp continues along +Y.
-    Start version: the ramp rises from the ground at y = -4 to Socket_End (0,0,0), which joins the
-    Socket_Start of the first section (a mirror of the end version, the traffic face stays at -X)."""
-    aid = 'EN_Barrier_WBeam_EndRamp_Start' if start else 'EN_Barrier_WBeam_EndRamp'
-    a = Asset(aid, 'Барьерное ограждение: ' + ('начальный' if start else 'концевой') + ' участок с отгоном (4 м)',
-              'barrier', M, min_z=-0.6)
+def ramp_mb(start=False):
+    """Отгон in the barrier frame: the beam goes down into the ground over 4 m and away from the road by 0.5 m.
+    End version continues along +Y from the joint at the origin; start version rises from y = -4 to the origin."""
     mb = MB()
     fr = []
     n = 12
@@ -163,6 +158,55 @@ def wbeam_end_ramp(M, start=False):
     spacer(mb, 0.0, reflector=True)
     ye = -4.0 if start else 4.0
     mb.box((0.33, ye, -0.15), (0.5, 0.5, 0.3), 'EN_Concrete')      # anchor where the beam enters the ground
+    return mb
+
+
+def run_mb(frame, length, ramps=True):
+    """Continuous barrier along a path. frame(t) -> (pos, x_axis, y_axis) for t in [0, length] metres along
+    the post line; x_axis points away from the road (beam on -x), y_axis is the running direction.
+    Posts every 2 m, splices and reflectors every 4 m, ramps (отгон) at both ends."""
+    mb = MB()
+    n = max(2, int(length / 0.5) + 1)
+    fr = []
+    for i in range(n):
+        p, x, y = frame(length * i / (n - 1))
+        fr.append((p, x, Vector((0, 0, 1))))
+    beam(mb, fr)
+
+    def place(t, fn):
+        p, x, y = frame(t)
+        m = Matrix((
+            (x.x, y.x, 0, p.x),
+            (x.y, y.y, 0, p.y),
+            (x.z, y.z, 1, p.z),
+            (0, 0, 0, 1)))
+        tmp = MB()
+        fn(tmp)
+        mb.extend(tmp, m)
+    k = 0
+    t = 1.0
+    while t < length - 0.5:
+        place(t, lambda m: c_post(m, 0.0))
+        place(t, lambda m, r=(k % 2 == 0): spacer(m, 0.0, reflector=r))
+        if k % 2 == 0:
+            place(t, lambda m: splice(m, 0.0))
+        k += 1
+        t += 2.0
+    if ramps:
+        place(0.0, lambda m: m.extend(ramp_mb(start=True)))
+        place(length, lambda m: m.extend(ramp_mb(start=False)))
+    return mb
+
+
+def wbeam_end_ramp(M, start=False):
+    """End version: Socket_Start (0,0,0) joins a section's Socket_End, the ramp continues along +Y.
+    Start version: the ramp rises from the ground at y = -4 to Socket_End (0,0,0), which joins the
+    Socket_Start of the first section (a mirror of the end version, the traffic face stays at -X)."""
+    aid = 'EN_Barrier_WBeam_EndRamp_Start' if start else 'EN_Barrier_WBeam_EndRamp'
+    a = Asset(aid, 'Барьерное ограждение: ' + ('начальный' if start else 'концевой') + ' участок с отгоном (4 м)',
+              'barrier', M, min_z=-0.6)
+    mb = ramp_mb(start)
+    ye = -4.0 if start else 4.0
     a.mesh(f'{aid}_Mesh', mb)
     col = MB()
     col.box((0.05, ye / 2, 0.25), (0.55, 4.0, 0.5), 'EN_Collision')
