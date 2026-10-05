@@ -75,7 +75,58 @@ namespace DrivingSchool.Simulation.RoadGraph
             foreach (var c in world.connections) if (c.maneuver != LaneManeuver.Straight) intersections.Add(c.junctionId ?? "");
             foreach (var sign in world.signs) foreach (var id in sign.laneIds) if (paths.ContainsKey(id)) Add(signsByPath, id, sign);
             foreach (var sign in world.signs) BuildCoverage(sign);
+            foreach (var stop in world.transitStops ?? Array.Empty<TransitStop>()) BuildStopZone(stop);
         }
+
+        /// <summary>No stopping closer than this to a stopping place of route vehicles (ПДД РФ 12.4, T74).</summary>
+        public const double TransitStopClearanceM = 15;
+        readonly Dictionary<string, List<(double from, double to, string stopId)>> stopZones = new Dictionary<string, List<(double, double, string)>>();
+
+        /// <summary>
+        /// The stopping place of route vehicles whose no-stopping zone covers (path, s), null if none (T74). ПДД РФ 12.4:
+        /// closer than 15 m to the place marked with 1.17.1 (the marked stretch included), else to the sign 5.16.
+        /// </summary>
+        public string TransitStopZoneAt(string pathId, double s)
+        {
+            if (!stopZones.TryGetValue(pathId ?? "", out var list)) return null;
+            foreach (var z in list) if (s >= z.from && s <= z.to) return z.stopId;
+            return null;
+        }
+
+        void BuildStopZone(TransitStop stop)
+        {
+            if (!paths.ContainsKey(stop.laneId ?? "")) return;
+            double from = stop.s - (stop.marked ? stop.lengthM : 0) - TransitStopClearanceM, to = stop.s + TransitStopClearanceM;
+            var lane = Path(stop.laneId);
+            AddStopZone(lane, Math.Max(0, from), Math.Min(lane.Length, to), stop.id);
+            // Spill over into the plain continuations before and after (a lane-change stretch is no intersection).
+            SpillStopZone(lane, -from, stop.id, backwards: true, guard: 0);
+            SpillStopZone(lane, to - lane.Length, stop.id, backwards: false, guard: 0);
+        }
+
+        void SpillStopZone(PathInfo p, double left, string stopId, bool backwards, int guard)
+        {
+            if (left <= 1e-6 || guard > 16) return;
+            foreach (var id in backwards ? p.Previous : p.Next)
+            {
+                var q = Path(id);
+                if (q.IsConnection && IsIntersection(q.Connection.junctionId)) continue;
+                if (backwards) AddStopZone(q, Math.Max(0, q.Length - left), q.Length, stopId);
+                else AddStopZone(q, 0, Math.Min(q.Length, left), stopId);
+                SpillStopZone(q, left - q.Length, stopId, backwards, guard + 1);
+            }
+        }
+
+        void AddStopZone(PathInfo p, double from, double to, string stopId)
+        {
+            if (to <= from) return;
+            if (!stopZones.TryGetValue(p.Id, out var list)) stopZones[p.Id] = list = new List<(double, double, string)>();
+            list.Add((from, to, stopId));
+        }
+
+        /// <summary>Stopping places of route vehicles on a lane (T74).</summary>
+        public IReadOnlyList<TransitStop> TransitStopsOn(string laneId) =>
+            (World.transitStops ?? Array.Empty<TransitStop>()).Where(x => x.laneId == laneId).ToList();
 
         public IEnumerable<PathInfo> Paths => paths.Values;
         public PathInfo Path(string id) => paths.TryGetValue(id, out var p) ? p : throw new KeyNotFoundException("Unknown path " + id);

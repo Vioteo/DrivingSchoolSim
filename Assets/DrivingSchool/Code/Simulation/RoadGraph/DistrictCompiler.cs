@@ -79,7 +79,10 @@ namespace DrivingSchool.Simulation.RoadGraph
                     Require(used.Contains(inst.id + ":" + s.Name), "Dangling socket: " + inst.id + ":" + s.Name + " (join it or list it in openSockets)");
 
             LinkSidewalks(acc);
-            AddSigns(acc, layout, instances);
+            AddBusLanes(acc, layout, instances);
+            var stopSigns = TransitStopSigns(layout, instances);
+            AddSigns(acc, layout.signs.Concat(stopSigns).ToList(), instances);
+            AddTransitStops(acc, layout, instances, stopSigns);
             AddApproachesAndSignals(acc, layout, instances);
 
             world.nodes = acc.Nodes.ToArray();
@@ -97,6 +100,12 @@ namespace DrivingSchool.Simulation.RoadGraph
             world.signalPlans = acc.Plans.ToArray();
             world.signals = acc.Heads.ToArray();
             world.spawnPoints = acc.Spawns.ToArray();
+            world.transitStops = acc.Stops.ToArray();
+            world.transitRoutes = (layout.transitRoutes ?? Array.Empty<LayoutTransitRoute>()).Select(r => new TransitRoute
+            {
+                id = r.id, name = r.name, kind = r.kind, stopIds = (r.stopIds ?? Array.Empty<string>()).ToArray(),
+            }).ToArray();
+            TransitRouting.CompileRoutes(world);
             WorldValidatorV2.Validate(world, SignCatalog.Codes);
             return world;
         }
@@ -211,11 +220,65 @@ namespace DrivingSchool.Simulation.RoadGraph
         static bool Touches(SidewalkPath p, Vec3d point) =>
             Polyline.Distance2D(p.points[0], point) <= SidewalkLinkToleranceM || Polyline.Distance2D(p.points[p.points.Length - 1], point) <= SidewalkLinkToleranceM;
 
-        static void AddSigns(Accumulator acc, DistrictLayout layout, Dictionary<string, (ModuleInstance inst, ModuleTemplate tpl)> instances)
+        /// <summary>
+        /// Lanes for route vehicles (T74, ПДД 18.2): flags the lane and draws its line to the neighbouring lane of the same
+        /// direction — solid (1.1) where others may not move onto it, broken where they may (before a right turn, after
+        /// entering the road). Only the outermost lane of a road with two or more lanes in its direction can be one.
+        /// </summary>
+        static void AddBusLanes(Accumulator acc, DistrictLayout layout, Dictionary<string, (ModuleInstance inst, ModuleTemplate tpl)> instances)
+        {
+            var lanes = acc.Lanes.ToDictionary(l => l.id);
+            var seen = new HashSet<string>();
+            foreach (var b in layout.busLanes ?? Array.Empty<LayoutBusLane>())
+            {
+                Require(b != null && instances.ContainsKey(b.instanceId ?? ""), "Bus lane on unknown instance: " + b?.instanceId);
+                var id = P(instances[b.instanceId].inst, b.laneId);
+                Require(id != null && lanes.ContainsKey(id), "Bus lane on unknown lane: " + b.instanceId + "/" + b.laneId);
+                var lane = lanes[id];
+                Require(seen.Add(id), "Bus lane given twice: " + id);
+                Require(string.IsNullOrEmpty(lane.rightNeighborId) && !string.IsNullOrEmpty(lane.leftNeighborId),
+                    "A bus lane must be the outermost of two or more lanes of its direction: " + id);
+                lane.busLane = true; lane.busLaneEntry = b.entry;
+                var line = b.entry ? MarkingType.Dashed : MarkingType.Solid;
+                foreach (var m in acc.Boundaries)
+                    if (m.laneId == id && m.side == BoundarySide.Left || m.laneId == lane.leftNeighborId && m.side == BoundarySide.Right) m.type = line;
+            }
+        }
+
+        /// <summary>Sign 5.16 at every stopping place of route vehicles (T74), on the stop's lane at its front.</summary>
+        static List<LayoutSign> TransitStopSigns(DistrictLayout layout, Dictionary<string, (ModuleInstance inst, ModuleTemplate tpl)> instances) =>
+            (layout.transitStops ?? Array.Empty<LayoutTransitStop>()).Where(t => t != null).Select(t => new LayoutSign
+            {
+                id = "stop-sign/" + t.id, code = "5.16", instanceId = t.instanceId, laneId = t.laneId, atS = t.atS,
+            }).ToList();
+
+        static void AddTransitStops(Accumulator acc, DistrictLayout layout, Dictionary<string, (ModuleInstance inst, ModuleTemplate tpl)> instances, List<LayoutSign> signs)
         {
             var lanes = acc.Lanes.ToDictionary(l => l.id);
             var ids = new HashSet<string>();
-            foreach (var s in layout.signs)
+            foreach (var t in layout.transitStops ?? Array.Empty<LayoutTransitStop>())
+            {
+                Require(t != null && !string.IsNullOrWhiteSpace(t.id) && ids.Add(t.id), "Duplicate/empty transit stop id: " + t?.id);
+                Require(instances.ContainsKey(t.instanceId ?? ""), "Transit stop on unknown instance: " + t.id);
+                var laneId = P(instances[t.instanceId].inst, t.laneId);
+                Require(laneId != null && lanes.ContainsKey(laneId), "Transit stop on unknown lane: " + t.id + " -> " + t.laneId);
+                var lane = lanes[laneId];
+                Require(string.IsNullOrEmpty(lane.rightNeighborId), "Transit stop not on the outermost lane: " + t.id);
+                double length = new Polyline(lane.centerline).Length;
+                Require(t.lengthM > 0 && t.atS - t.lengthM >= -1e-3 && t.atS <= length + 1e-3, "Transit stop outside its lane: " + t.id);
+                acc.Stops.Add(new TransitStop
+                {
+                    id = t.id, name = t.name, laneId = laneId, s = t.atS, lengthM = t.lengthM, marked = t.marked,
+                    signId = signs.First(x => x.id == "stop-sign/" + t.id).id,
+                });
+            }
+        }
+
+        static void AddSigns(Accumulator acc, IReadOnlyList<LayoutSign> layoutSigns, Dictionary<string, (ModuleInstance inst, ModuleTemplate tpl)> instances)
+        {
+            var lanes = acc.Lanes.ToDictionary(l => l.id);
+            var ids = new HashSet<string>();
+            foreach (var s in layoutSigns)
             {
                 Require(s != null && !string.IsNullOrWhiteSpace(s.id) && ids.Add(s.id), "Duplicate/empty layout sign id: " + s?.id);
                 Require(instances.ContainsKey(s.instanceId), "Sign on unknown instance: " + s.id);
@@ -459,6 +522,7 @@ namespace DrivingSchool.Simulation.RoadGraph
             public readonly List<SignalPlan> Plans = new List<SignalPlan>();
             public readonly List<TrafficSignalAttachment> Heads = new List<TrafficSignalAttachment>();
             public readonly List<SpawnPoint> Spawns = new List<SpawnPoint>();
+            public readonly List<TransitStop> Stops = new List<TransitStop>();
 
             public void Successor(string from, string to)
             {

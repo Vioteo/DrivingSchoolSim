@@ -48,6 +48,10 @@ namespace DrivingSchool.Simulation.RoadGraph
             E("4.3", "DS_Sign_Roundabout", "Круговое движение", SignKind.Mandatory),
             E("5.15.1", "DS_Sign_LaneDir_L_SR", "Направления движения по полосам", SignKind.Information, needsValue: true),
             E("5.15.2", "DS_Sign_LaneDir1_LS", "Направления движения по полосе", SignKind.Information, needsValue: true),
+            // Route vehicles (T74): models of Transit Kit v1 (tools/transit_kit, prefix PT_, Prefabs/Transit).
+            E("5.14", "PT_Sign_5_14_BusLane", "Полоса для маршрутных транспортных средств", SignKind.Information),
+            E("5.14.1", "PT_Sign_5_14_1_BusLaneEnd", "Конец полосы для маршрутных транспортных средств", SignKind.Information),
+            E("5.16", "PT_Sign_5_16_BusStop", "Место остановки автобуса и (или) троллейбуса", SignKind.Information),
             E("5.19.1", "DS_Sign_Crossing", "Пешеходный переход", SignKind.Information),
             E("5.20", "DS_Sign_BumpInfo", "Искусственная неровность", SignKind.Information),
             E("5.23.1", "DS_Sign_TownEntry", "Начало населённого пункта", SignKind.Settlement),

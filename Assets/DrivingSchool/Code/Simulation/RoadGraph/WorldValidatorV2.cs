@@ -217,6 +217,31 @@ namespace DrivingSchool.Simulation.RoadGraph
                 Require(s.role == SpawnRole.Vehicle ? onLane : onWalk, "Spawn point on wrong path type: " + s.id);
                 Require(s.s >= 0, "Spawn point before path start: " + s.id);
             }
+
+            // T74: route vehicles. Bus lanes are lanes; stops lie on lanes; a route is a closed loop through its stops.
+            foreach (var l in w.lanes) Require(!l.busLaneEntry || l.busLane, "Bus lane entry stretch on a plain lane: " + l.id);
+            var stops = new Dictionary<string, TransitStop>();
+            foreach (var s in w.transitStops ?? Array.Empty<TransitStop>())
+            {
+                Require(s != null, "Null transit stop"); Unique(s.id, "transit stop"); stops[s.id] = s;
+                Require(lanes.ContainsKey(s.laneId), "Transit stop on unknown lane: " + s.id);
+                Require(s.lengthM > 0 && s.s - s.lengthM >= -JoinToleranceM && s.s <= paths[s.laneId].Length + JoinToleranceM, "Transit stop outside its lane: " + s.id);
+                Require(string.IsNullOrEmpty(s.signId) || signs.ContainsKey(s.signId), "Transit stop with unknown sign: " + s.id);
+            }
+            foreach (var r in w.transitRoutes ?? Array.Empty<TransitRoute>())
+            {
+                Require(r != null, "Null transit route"); Unique(r.id, "transit route");
+                Require(r.stopIds != null && r.stopIds.Length > 0 && r.stopIds.All(stops.ContainsKey), "Transit route with unknown stops: " + r.id);
+                Require(r.pathIds != null && r.pathIds.Length > 1 && r.pathIds.All(paths.ContainsKey), "Transit route with unknown paths: " + r.id);
+                for (int i = 0; i < r.pathIds.Length; i++)
+                {
+                    string a = r.pathIds[i], b = r.pathIds[(i + 1) % r.pathIds.Length];
+                    bool joined = connections.TryGetValue(a, out var ca) ? ca.toLaneId == b
+                        : lanes[a].successors.Contains(b) || connections.TryGetValue(b, out var cb) && cb.fromLaneId == a;
+                    Require(joined, "Transit route is not a closed way: " + r.id + " at " + a + " -> " + b);
+                }
+                foreach (var sid in r.stopIds) Require(r.pathIds.Contains(stops[sid].laneId), "Transit route misses its stop: " + r.id + " -> " + sid);
+            }
         }
 
         static bool HasSign(JunctionApproach a, Dictionary<string, SignPlacement> signs, Func<string, bool> match)

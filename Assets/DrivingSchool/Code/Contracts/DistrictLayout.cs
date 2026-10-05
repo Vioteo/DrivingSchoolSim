@@ -14,6 +14,10 @@ namespace DrivingSchool.Contracts
         public LayoutSign[] signs = Array.Empty<LayoutSign>();
         public LayoutApproach[] approaches = Array.Empty<LayoutApproach>();
         public LayoutSignalPlan[] signalPlans = Array.Empty<LayoutSignalPlan>();
+        // T74: lanes for route vehicles, their stopping places and routes.
+        public LayoutBusLane[] busLanes = Array.Empty<LayoutBusLane>();
+        public LayoutTransitStop[] transitStops = Array.Empty<LayoutTransitStop>();
+        public LayoutTransitRoute[] transitRoutes = Array.Empty<LayoutTransitRoute>();
     }
 
     // Pose of the prefab root: position of the local origin and Unity yaw (degrees, 0 = +Z, 90 = +X).
@@ -59,5 +63,30 @@ namespace DrivingSchool.Contracts
         public string[] greenSockets = Array.Empty<string>(); // approaches with green
         public string[] walkSockets = Array.Empty<string>();  // crossings (by arm socket) with pedestrian green
         public float greenSeconds, greenFlashSeconds, amberSeconds, allRedSeconds, redAmberSeconds;
+    }
+
+    // A lane of an instance reserved for route vehicles (T74). entry: separated by a broken line (others may move onto it
+    // to turn right, after entering the road); otherwise by a solid line.
+    [Serializable] public sealed class LayoutBusLane
+    {
+        public string instanceId, laneId;
+        public bool entry;
+    }
+
+    // Stopping place on a lane of an instance (T74): the compiler adds the sign 5.16 at atS and, when marked, records the
+    // marking 1.17.1 over lengthM before it.
+    [Serializable] public sealed class LayoutTransitStop
+    {
+        public string id, name, instanceId, laneId;
+        public float atS, lengthM = 20;
+        public bool marked = true, shelter = true;
+    }
+
+    // Route through stops in order (T74); the way between them is the shortest one the compiler finds, then back to the first.
+    [Serializable] public sealed class LayoutTransitRoute
+    {
+        public string id, name;
+        public TransitKind kind;
+        public string[] stopIds = Array.Empty<string>();
     }
 }

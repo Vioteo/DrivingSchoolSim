@@ -19,6 +19,7 @@ namespace DrivingSchool.Contracts
     public enum ZoneKind { Parking, NoStopping, NoParking, KeepJunctionClear }
     public enum SpawnRole { Vehicle, Pedestrian }
     public enum SpawnEdge { Interior, DistrictEdge }
+    public enum TransitKind { Bus, Minibus }
 
     [Serializable] public sealed class WorldDocumentV2
     {
@@ -45,6 +46,9 @@ namespace DrivingSchool.Contracts
         public SpawnPoint[] spawnPoints = Array.Empty<SpawnPoint>();
         public WorldObject[] objects = Array.Empty<WorldObject>();
         public District[] districts = Array.Empty<District>();
+        // T74 route vehicles: stopping places (sign 5.16, marking 1.17.1) and closed routes through them.
+        public TransitStop[] transitStops = Array.Empty<TransitStop>();
+        public TransitRoute[] transitRoutes = Array.Empty<TransitRoute>();
     }
 
     // Cubic Bezier in world coordinates; straight segments keep p1/p2 at 1/3 and 2/3 of the chord.
@@ -69,6 +73,10 @@ namespace DrivingSchool.Contracts
         public string oncomingLaneId;                       // lane across the axis, empty if none
         public LaneManeuver allowedManeuvers = LaneManeuver.None; // None = not restricted
         public bool roundabout;                             // runs round a roundabout (ring lane, T65)
+        // Lane for route vehicles (T74; signs 5.11.1, 5.13.1, 5.13.2, 5.14, marking 1.23.1; ПДД 18.2): other vehicles may
+        // neither drive nor stop on it. busLaneEntry: this stretch is separated by a broken line — others move onto it
+        // to turn right, when they enter the road and to set down passengers at the kerb (ПДД 18.2).
+        public bool busLane, busLaneEntry;
     }
 
     [Serializable] public sealed class Junction
@@ -180,5 +188,25 @@ namespace DrivingSchool.Contracts
         public SpawnRole role;
         public SpawnEdge edge;
         public float s;
+    }
+
+    // Stopping place of route vehicles (T74): the sign 5.16 stands at s on the lane (the front of the vehicle stops
+    // there); the place runs lengthM back from it. marked: marking 1.17.1 covers the place (ПДД 12.4: no stopping closer
+    // than 15 m to a marked place, else to the sign).
+    [Serializable] public sealed class TransitStop
+    {
+        public string id, name, laneId, signId;
+        public float s, lengthM;
+        public bool marked;
+    }
+
+    // Closed route of route vehicles (T74): pathIds is a loop of lanes and connections (the last one leads into the
+    // first), stopIds are served in this order. Compiled from the stops by the shortest way between them.
+    [Serializable] public sealed class TransitRoute
+    {
+        public string id, name;
+        public TransitKind kind;
+        public string[] stopIds = Array.Empty<string>();
+        public string[] pathIds = Array.Empty<string>();
     }
 }
