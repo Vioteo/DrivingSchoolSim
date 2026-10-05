@@ -3,7 +3,42 @@ guid: 74f33c172f62b6145b8ef9d48a79b0a2
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_Green
+    second: {fileID: 2100000, guid: 826395e104be9c44cb75e8725491333d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_White
+    second: {fileID: 2100000, guid: c5ad6c020bf8169489297a1ee57b9d1b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Plastic_Green
+    second: {fileID: 2100000, guid: 0071c90c2351f494db536fc7bf7fa04e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Plastic_Red
+    second: {fileID: 2100000, guid: 669953a53bbf12244bb87f8cb4c87ca1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Plastic_White
+    second: {fileID: 2100000, guid: e662125139d55aa47b674dfb1cf01546, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Plastic_Yellow
+    second: {fileID: 2100000, guid: f15a79db7d401a94d8be878f896fc346, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Soil
+    second: {fileID: 2100000, guid: e3d2f376b8f43304cb163e52975a670b, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

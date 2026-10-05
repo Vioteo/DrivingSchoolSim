@@ -3,7 +3,42 @@ guid: 115bf12268b43f341aef493de0fa8d5c
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Chain
+    second: {fileID: 2100000, guid: c76a729dde506b9418c59cc8df22e627, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_Blue
+    second: {fileID: 2100000, guid: 2385a0ba75ddc7844972d7fa21c9a5c4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_Yellow
+    second: {fileID: 2100000, guid: ad6c54dd824d2b84aa7422952cf1e7cc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Plastic_Green
+    second: {fileID: 2100000, guid: 0071c90c2351f494db536fc7bf7fa04e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Plastic_Red
+    second: {fileID: 2100000, guid: 669953a53bbf12244bb87f8cb4c87ca1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Steel_Dark
+    second: {fileID: 2100000, guid: a69ce302be4b5c04b9ce2452e3f73828, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

@@ -3,7 +3,27 @@ guid: 5fb895c136ac07747b78e52f0c3bc692
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_Grey
+    second: {fileID: 2100000, guid: 4eebc068ad0b9654b8606ad107fbac0b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Reflector_Red
+    second: {fileID: 2100000, guid: 2a9f4d1a816a0294ba105a3bbdfe6282, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Reflector_White
+    second: {fileID: 2100000, guid: c52cd1c1941d132488e6d90ec24e86e1, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

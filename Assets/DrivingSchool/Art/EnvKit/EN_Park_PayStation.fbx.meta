@@ -3,7 +3,47 @@ guid: 1fd7d4abb3865d142bed6548bda11936
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Concrete
+    second: {fileID: 2100000, guid: 8ebe1f26b24943d4abbfc5a9dff1cb2f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Display
+    second: {fileID: 2100000, guid: 9182f453285b6924d9f52bd2ed03aedc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_Grey
+    second: {fileID: 2100000, guid: 4eebc068ad0b9654b8606ad107fbac0b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Sign_Blue
+    second: {fileID: 2100000, guid: 336c24470f5d94f46bd20a1876a1a6c1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Sign_White
+    second: {fileID: 2100000, guid: be01ef4ddc6d68e46bbe5e71f435997e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Steel_Dark
+    second: {fileID: 2100000, guid: a69ce302be4b5c04b9ce2452e3f73828, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Steel_Galv
+    second: {fileID: 2100000, guid: c73f506abdec7a24da105d08b8d7a80d, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

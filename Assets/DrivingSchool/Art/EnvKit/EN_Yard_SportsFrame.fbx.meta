@@ -3,7 +3,22 @@ guid: db0fd6b2141a1bd4eb94654ceff60188
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_Green
+    second: {fileID: 2100000, guid: 826395e104be9c44cb75e8725491333d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Steel_Galv
+    second: {fileID: 2100000, guid: c73f506abdec7a24da105d08b8d7a80d, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

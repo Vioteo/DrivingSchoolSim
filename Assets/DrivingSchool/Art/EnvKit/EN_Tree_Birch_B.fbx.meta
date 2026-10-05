@@ -3,7 +3,27 @@ guid: 3c4439bdf01fad348a0c5cf9da7cc79c
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Bark_Birch
+    second: {fileID: 2100000, guid: 2330e71e7d4fcab4ca0f3f807bb2397d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Bark_BirchBase
+    second: {fileID: 2100000, guid: ec74cac248f3bbb4495bbb3e723c4bc5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Leaves_Birch
+    second: {fileID: 2100000, guid: 13bf28834ae54704c8b7e0c620b601ba, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
