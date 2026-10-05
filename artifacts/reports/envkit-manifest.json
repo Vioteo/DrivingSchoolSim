@@ -1,0 +1,6214 @@
+{
+  "kit": "envkit",
+  "prefix": "EN_",
+  "script": "tools/build_env_kit.py",
+  "generator": "tools/env_kit",
+  "utc": "2026-10-04T20:45:18.096181+00:00",
+  "blender": "5.0.1",
+  "axes": "Blender: X right, Y back (front -Y), Z up; FBX -Z forward / Y up",
+  "assets": [
+    {
+      "id": "EN_Tree_Birch_A",
+      "title": "Берёза",
+      "kind": "tree",
+      "group": "forest",
+      "triangles": 11254,
+      "lod_triangles": {
+        "0": 11254,
+        "1": 3529,
+        "2": 622
+      },
+      "bounds_min": [
+        -3.6485,
+        -5.3384,
+        -0.0063
+      ],
+      "bounds_max": [
+        4.2823,
+        4.82,
+        16.3464
+      ],
+      "size": [
+        7.9308,
+        10.1584,
+        16.3527
+      ],
+      "materials": [
+        "EN_Bark_Birch",
+        "EN_Bark_BirchMark",
+        "EN_Bark_BirchTwig",
+        "EN_Leaves_Birch_A",
+        "EN_Leaves_Birch_B"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "lods": 3,
+        "group": "forest"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Birch_A.fbx",
+      "fbx_sha256": "ea6dc56a83b3fb71656715bf04e5ff2463db0fae754fa40c3152473685e47768",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.0063,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 11254,
+          "target": "<= 12000"
+        },
+        {
+          "id": "LOD: каждый следующий уровень легче (≤ 60 %)",
+          "status": "PASS",
+          "value": [
+            11254,
+            3529,
+            622
+          ],
+          "target": null
+        },
+        {
+          "id": "Бюджет последнего LOD",
+          "status": "PASS",
+          "value": 622,
+          "target": "<= 1800"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            7.9308,
+            10.1584,
+            16.3527
+          ],
+          "target": [
+            7.9308,
+            10.1584,
+            16.3527
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Tree_Birch_B",
+      "title": "Берёза",
+      "kind": "tree",
+      "group": "forest",
+      "triangles": 11394,
+      "lod_triangles": {
+        "0": 11394,
+        "1": 3542,
+        "2": 632
+      },
+      "bounds_min": [
+        -3.8659,
+        -4.1524,
+        -0.0055
+      ],
+      "bounds_max": [
+        4.4432,
+        3.8398,
+        17.7082
+      ],
+      "size": [
+        8.3091,
+        7.9922,
+        17.7138
+      ],
+      "materials": [
+        "EN_Bark_Birch",
+        "EN_Bark_BirchMark",
+        "EN_Bark_BirchTwig",
+        "EN_Leaves_Birch_A",
+        "EN_Leaves_Birch_B"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "lods": 3,
+        "group": "forest"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Birch_B.fbx",
+      "fbx_sha256": "417d41ac1944b45b2c3253642155dfe673ed84686591265ebd057de17865332b",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.0055,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 11394,
+          "target": "<= 12000"
+        },
+        {
+          "id": "LOD: каждый следующий уровень легче (≤ 60 %)",
+          "status": "PASS",
+          "value": [
+            11394,
+            3542,
+            632
+          ],
+          "target": null
+        },
+        {
+          "id": "Бюджет последнего LOD",
+          "status": "PASS",
+          "value": 632,
+          "target": "<= 1800"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            8.3091,
+            7.9922,
+            17.7138
+          ],
+          "target": [
+            8.3091,
+            7.9922,
+            17.7138
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Tree_Spruce_A",
+      "title": "Ель",
+      "kind": "tree",
+      "group": "forest",
+      "triangles": 7366,
+      "lod_triangles": {
+        "0": 7366,
+        "1": 2246,
+        "2": 592
+      },
+      "bounds_min": [
+        -3.2932,
+        -3.6802,
+        0.0
+      ],
+      "bounds_max": [
+        3.5014,
+        3.7717,
+        17.0517
+      ],
+      "size": [
+        6.7946,
+        7.452,
+        17.0517
+      ],
+      "materials": [
+        "EN_Bark_Spruce",
+        "EN_Needles_Spruce_A",
+        "EN_Needles_Spruce_B"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "height": 17.0,
+        "lods": 3,
+        "group": "forest"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Spruce_A.fbx",
+      "fbx_sha256": "d1783ccf8baec49382edc71c2e54fa5c46af66040b7b27a81ff74a446f900922",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": 0.0,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 7366,
+          "target": "<= 12000"
+        },
+        {
+          "id": "LOD: каждый следующий уровень легче (≤ 60 %)",
+          "status": "PASS",
+          "value": [
+            7366,
+            2246,
+            592
+          ],
+          "target": null
+        },
+        {
+          "id": "Бюджет последнего LOD",
+          "status": "PASS",
+          "value": 592,
+          "target": "<= 1800"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            6.7946,
+            7.452,
+            17.0517
+          ],
+          "target": [
+            6.7946,
+            7.452,
+            17.0517
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Tree_Spruce_B",
+      "title": "Ель",
+      "kind": "tree",
+      "group": "forest",
+      "triangles": 5453,
+      "lod_triangles": {
+        "0": 5453,
+        "1": 1678,
+        "2": 429
+      },
+      "bounds_min": [
+        -2.9035,
+        -2.7783,
+        0.0
+      ],
+      "bounds_max": [
+        2.9356,
+        2.6852,
+        11.5402
+      ],
+      "size": [
+        5.8391,
+        5.4636,
+        11.5402
+      ],
+      "materials": [
+        "EN_Bark_Spruce",
+        "EN_Needles_Spruce_A",
+        "EN_Needles_Spruce_B"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "height": 11.5,
+        "lods": 3,
+        "group": "forest"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Spruce_B.fbx",
+      "fbx_sha256": "e974cef410113062735d56741117fad17d6fc74b8cf5915904ed8d66ef86a240",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": 0.0,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 5453,
+          "target": "<= 12000"
+        },
+        {
+          "id": "LOD: каждый следующий уровень легче (≤ 60 %)",
+          "status": "PASS",
+          "value": [
+            5453,
+            1678,
+            429
+          ],
+          "target": null
+        },
+        {
+          "id": "Бюджет последнего LOD",
+          "status": "PASS",
+          "value": 429,
+          "target": "<= 1800"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            5.8391,
+            5.4636,
+            11.5402
+          ],
+          "target": [
+            5.8391,
+            5.4636,
+            11.5402
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Tree_Spruce_Young",
+      "title": "Ель молодая",
+      "kind": "tree",
+      "group": "forest",
+      "triangles": 832,
+      "lod_triangles": {
+        "0": 832,
+        "1": 261,
+        "2": 69
+      },
+      "bounds_min": [
+        -1.2103,
+        -1.2767,
+        0.0
+      ],
+      "bounds_max": [
+        1.3694,
+        1.2649,
+        3.3225
+      ],
+      "size": [
+        2.5797,
+        2.5417,
+        3.3225
+      ],
+      "materials": [
+        "EN_Bark_Spruce",
+        "EN_Needles_Spruce_A",
+        "EN_Needles_Spruce_B"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "height": 3.2,
+        "lods": 3,
+        "group": "forest"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Spruce_Young.fbx",
+      "fbx_sha256": "f92c6dad310864b4b1041303eed75140ea2781f8ffc075d78d1a7404c12d9786",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": 0.0,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 832,
+          "target": "<= 12000"
+        },
+        {
+          "id": "LOD: каждый следующий уровень легче (≤ 60 %)",
+          "status": "PASS",
+          "value": [
+            832,
+            261,
+            69
+          ],
+          "target": null
+        },
+        {
+          "id": "Бюджет последнего LOD",
+          "status": "PASS",
+          "value": 69,
+          "target": "<= 1800"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            2.5797,
+            2.5417,
+            3.3225
+          ],
+          "target": [
+            2.5797,
+            2.5417,
+            3.3225
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Tree_Pine_A",
+      "title": "Сосна",
+      "kind": "tree",
+      "group": "forest",
+      "triangles": 5420,
+      "lod_triangles": {
+        "0": 5420,
+        "1": 2058,
+        "2": 433
+      },
+      "bounds_min": [
+        -4.2607,
+        -2.643,
+        -0.0107
+      ],
+      "bounds_max": [
+        3.2468,
+        4.3068,
+        20.0455
+      ],
+      "size": [
+        7.5075,
+        6.9498,
+        20.0562
+      ],
+      "materials": [
+        "EN_Bark_PineLow",
+        "EN_Bark_PineUp",
+        "EN_Needles_Pine",
+        "EN_Needles_Pine_Light"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "lods": 3,
+        "group": "forest"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Pine_A.fbx",
+      "fbx_sha256": "944525ecc1f6d62e9ab6cbf0540d5cb9cb076abc8f696834c3ca229c3f599c72",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.0107,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 5420,
+          "target": "<= 12000"
+        },
+        {
+          "id": "LOD: каждый следующий уровень легче (≤ 60 %)",
+          "status": "PASS",
+          "value": [
+            5420,
+            2058,
+            433
+          ],
+          "target": null
+        },
+        {
+          "id": "Бюджет последнего LOD",
+          "status": "PASS",
+          "value": 433,
+          "target": "<= 1800"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            7.5075,
+            6.9498,
+            20.0562
+          ],
+          "target": [
+            7.5075,
+            6.9498,
+            20.0562
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Tree_Pine_B",
+      "title": "Сосна",
+      "kind": "tree",
+      "group": "forest",
+      "triangles": 5421,
+      "lod_triangles": {
+        "0": 5421,
+        "1": 2058,
+        "2": 433
+      },
+      "bounds_min": [
+        -3.3938,
+        -2.5838,
+        -0.0152
+      ],
+      "bounds_max": [
+        3.9916,
+        4.2738,
+        20.2344
+      ],
+      "size": [
+        7.3854,
+        6.8576,
+        20.2496
+      ],
+      "materials": [
+        "EN_Bark_PineLow",
+        "EN_Bark_PineUp",
+        "EN_Needles_Pine",
+        "EN_Needles_Pine_Light"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "lods": 3,
+        "group": "forest"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Pine_B.fbx",
+      "fbx_sha256": "ed980669e784fd53dc977cd3ced6fbe713fb18081a632c3069ca2e09f3b01cdb",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.0152,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 5421,
+          "target": "<= 12000"
+        },
+        {
+          "id": "LOD: каждый следующий уровень легче (≤ 60 %)",
+          "status": "PASS",
+          "value": [
+            5421,
+            2058,
+            433
+          ],
+          "target": null
+        },
+        {
+          "id": "Бюджет последнего LOD",
+          "status": "PASS",
+          "value": 433,
+          "target": "<= 1800"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            7.3854,
+            6.8576,
+            20.2496
+          ],
+          "target": [
+            7.3854,
+            6.8576,
+            20.2496
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Tree_Linden_A",
+      "title": "Липа (дворовое дерево)",
+      "kind": "tree",
+      "group": "forest",
+      "triangles": 8822,
+      "lod_triangles": {
+        "0": 8822,
+        "1": 2658,
+        "2": 513
+      },
+      "bounds_min": [
+        -4.4542,
+        -3.7439,
+        -0.0123
+      ],
+      "bounds_max": [
+        4.114,
+        4.8407,
+        13.7101
+      ],
+      "size": [
+        8.5682,
+        8.5846,
+        13.7224
+      ],
+      "materials": [
+        "EN_Bark_Dark",
+        "EN_Leaves_Linden_A",
+        "EN_Leaves_Linden_B"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "lods": 3,
+        "group": "forest"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Tree_Linden_A.fbx",
+      "fbx_sha256": "15a85f45c1e89d34d89fe6f9556fc873bf02560979bbe6842823a02026e7e736",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.0123,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 8822,
+          "target": "<= 12000"
+        },
+        {
+          "id": "LOD: каждый следующий уровень легче (≤ 60 %)",
+          "status": "PASS",
+          "value": [
+            8822,
+            2658,
+            513
+          ],
+          "target": null
+        },
+        {
+          "id": "Бюджет последнего LOD",
+          "status": "PASS",
+          "value": 513,
+          "target": "<= 1800"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            8.5682,
+            8.5846,
+            13.7224
+          ],
+          "target": [
+            8.5682,
+            8.5846,
+            13.7224
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Bush_A",
+      "title": "Куст",
+      "kind": "bush",
+      "group": "forest",
+      "triangles": 1929,
+      "lod_triangles": {
+        "0": 1929,
+        "1": 711,
+        "2": 140
+      },
+      "bounds_min": [
+        -1.2266,
+        -1.0794,
+        -0.069
+      ],
+      "bounds_max": [
+        1.1223,
+        1.288,
+        1.7149
+      ],
+      "size": [
+        2.3489,
+        2.3674,
+        1.7839
+      ],
+      "materials": [
+        "EN_Bark_Dark",
+        "EN_Bush_A",
+        "EN_Bush_B"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "collider": false,
+        "lods": 3,
+        "group": "forest"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Bush_A.fbx",
+      "fbx_sha256": "bafea29e9edc766945ae72c91a8cf058a3dee201a2b77297bd3c43eafb273fef",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.069,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 1929,
+          "target": "<= 6000"
+        },
+        {
+          "id": "LOD: каждый следующий уровень легче (≤ 60 %)",
+          "status": "PASS",
+          "value": [
+            1929,
+            711,
+            140
+          ],
+          "target": null
+        },
+        {
+          "id": "Бюджет последнего LOD",
+          "status": "PASS",
+          "value": 140,
+          "target": "<= 900"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            2.3489,
+            2.3674,
+            1.7839
+          ],
+          "target": [
+            2.3489,
+            2.3674,
+            1.7839
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Bush_B",
+      "title": "Куст",
+      "kind": "bush",
+      "group": "forest",
+      "triangles": 1929,
+      "lod_triangles": {
+        "0": 1929,
+        "1": 711,
+        "2": 140
+      },
+      "bounds_min": [
+        -0.8218,
+        -0.836,
+        -0.0681
+      ],
+      "bounds_max": [
+        0.9843,
+        1.1752,
+        1.6719
+      ],
+      "size": [
+        1.8061,
+        2.0112,
+        1.74
+      ],
+      "materials": [
+        "EN_Bark_Dark",
+        "EN_Bush_A",
+        "EN_Bush_B"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "collider": false,
+        "lods": 3,
+        "group": "forest"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Bush_B.fbx",
+      "fbx_sha256": "f99d7d31b0735a5987d179baf76809ee3c916c9a26e0d0a26d3e657aea88e87f",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.0681,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 1929,
+          "target": "<= 6000"
+        },
+        {
+          "id": "LOD: каждый следующий уровень легче (≤ 60 %)",
+          "status": "PASS",
+          "value": [
+            1929,
+            711,
+            140
+          ],
+          "target": null
+        },
+        {
+          "id": "Бюджет последнего LOD",
+          "status": "PASS",
+          "value": 140,
+          "target": "<= 900"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            1.8061,
+            2.0112,
+            1.74
+          ],
+          "target": [
+            1.8061,
+            2.0112,
+            1.74
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Stump",
+      "title": "Пень",
+      "kind": "prop",
+      "group": "forest",
+      "triangles": 344,
+      "lod_triangles": {
+        "0": 344,
+        "1": 63
+      },
+      "bounds_min": [
+        -0.6695,
+        -0.6472,
+        -0.05
+      ],
+      "bounds_max": [
+        0.6054,
+        0.6476,
+        0.45
+      ],
+      "size": [
+        1.2749,
+        1.2947,
+        0.5
+      ],
+      "materials": [
+        "EN_Bark_Dark",
+        "EN_WoodCut"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "lods": 2,
+        "group": "forest"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Stump.fbx",
+      "fbx_sha256": "364e0bde0bb7f7c87ea2d42729719779b5e46122caf05f3aecfe186d99757e53",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 344,
+          "target": "<= 8000"
+        },
+        {
+          "id": "LOD: каждый следующий уровень легче (≤ 60 %)",
+          "status": "PASS",
+          "value": [
+            344,
+            63
+          ],
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            1.2749,
+            1.2947,
+            0.5
+          ],
+          "target": [
+            1.2749,
+            1.2947,
+            0.5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Log_Fallen",
+      "title": "Бревно (валежник)",
+      "kind": "prop",
+      "group": "forest",
+      "triangles": 163,
+      "lod_triangles": {
+        "0": 163,
+        "1": 68
+      },
+      "bounds_min": [
+        -2.4968,
+        -0.7027,
+        -0.01
+      ],
+      "bounds_max": [
+        2.5053,
+        0.2099,
+        0.7247
+      ],
+      "size": [
+        5.0021,
+        0.9126,
+        0.7347
+      ],
+      "materials": [
+        "EN_Bark_PineLow",
+        "EN_WoodCut"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "lods": 2,
+        "group": "forest"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Log_Fallen.fbx",
+      "fbx_sha256": "33169a03f49fd05a42d1e1dec885a3dc388265488620f38d82e13b7a6bfe329f",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.01,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 163,
+          "target": "<= 8000"
+        },
+        {
+          "id": "LOD: каждый следующий уровень легче (≤ 60 %)",
+          "status": "PASS",
+          "value": [
+            163,
+            68
+          ],
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            5.0021,
+            0.9126,
+            0.7347
+          ],
+          "target": [
+            5.0021,
+            0.9126,
+            0.7347
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Rock_A",
+      "title": "Валун",
+      "kind": "prop",
+      "group": "forest",
+      "triangles": 1280,
+      "lod_triangles": {
+        "0": 1280,
+        "1": 80
+      },
+      "bounds_min": [
+        -1.0677,
+        -0.7712,
+        0.0605
+      ],
+      "bounds_max": [
+        0.912,
+        0.8142,
+        0.7801
+      ],
+      "size": [
+        1.9797,
+        1.5855,
+        0.7196
+      ],
+      "materials": [
+        "EN_Moss",
+        "EN_Rock"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "size": 1.4,
+        "lods": 2,
+        "group": "forest"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Rock_A.fbx",
+      "fbx_sha256": "c6cbe6cc1253fedf6ab8232d800d81994f46b729dc66375a0f2b8dc30ea3e875",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": 0.0605,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 1280,
+          "target": "<= 8000"
+        },
+        {
+          "id": "LOD: каждый следующий уровень легче (≤ 60 %)",
+          "status": "PASS",
+          "value": [
+            1280,
+            80
+          ],
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            1.9797,
+            1.5855,
+            0.7196
+          ],
+          "target": [
+            1.9797,
+            1.5855,
+            0.7196
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Rock_B",
+      "title": "Валун",
+      "kind": "prop",
+      "group": "forest",
+      "triangles": 1280,
+      "lod_triangles": {
+        "0": 1280,
+        "1": 80
+      },
+      "bounds_min": [
+        -0.5139,
+        -0.4006,
+        0.0096
+      ],
+      "bounds_max": [
+        0.5088,
+        0.3773,
+        0.4203
+      ],
+      "size": [
+        1.0227,
+        0.7779,
+        0.4106
+      ],
+      "materials": [
+        "EN_Moss",
+        "EN_Rock"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "size": 0.7,
+        "lods": 2,
+        "group": "forest"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Rock_B.fbx",
+      "fbx_sha256": "794eb57a9e416ce7b8d672ad7b4a19d4986abf516107613eb7bbb1c3c644fbc6",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": 0.0096,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 1280,
+          "target": "<= 8000"
+        },
+        {
+          "id": "LOD: каждый следующий уровень легче (≤ 60 %)",
+          "status": "PASS",
+          "value": [
+            1280,
+            80
+          ],
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            1.0227,
+            0.7779,
+            0.4106
+          ],
+          "target": [
+            1.0227,
+            0.7779,
+            0.4106
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Road_Country2_24m",
+      "title": "Загородная дорога 2 полосы, прямая 24 м, разметка 1.5",
+      "kind": "road",
+      "group": "road",
+      "triangles": 400,
+      "lod_triangles": {},
+      "bounds_min": [
+        -12.5,
+        -24.0,
+        -0.78
+      ],
+      "bounds_max": [
+        12.5,
+        0.0,
+        0.005
+      ],
+      "size": [
+        25.0,
+        24.0,
+        0.785
+      ],
+      "materials": [
+        "EN_Asphalt",
+        "EN_Asphalt_Worn",
+        "EN_Grass",
+        "EN_Grass_Dry",
+        "EN_Gravel",
+        "EN_Marking_White"
+      ],
+      "sockets": {
+        "Socket_End": [
+          0.0,
+          -24.0,
+          0.0
+        ],
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.8,
+        "centre_line": "1.5",
+        "length": 24,
+        "required": [
+          "COL_DriveSurface",
+          "Socket_Start",
+          "Socket_End"
+        ],
+        "sockets": {
+          "Socket_Start": [
+            0,
+            0,
+            0
+          ],
+          "Socket_End": [
+            -0.0,
+            -24.0,
+            0.0
+          ]
+        },
+        "end_heading_deg": -0.0,
+        "expect_size": {
+          "z": [
+            0.78,
+            0.8
+          ]
+        },
+        "group": "road"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Road_Country2_24m.fbx",
+      "fbx_sha256": "1d785ee8fa0b9257ceba7712e16de79b00534339874edbfa2feee91fb6073e5c",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.78,
+          "target": ">= -0.8"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 400,
+          "target": "<= 24000"
+        },
+        {
+          "id": "Габарит по z",
+          "status": "PASS",
+          "value": 0.785,
+          "target": "0.78..0.8"
+        },
+        {
+          "id": "Сокет Socket_Start на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Сокет Socket_End на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            -24.0,
+            0.0
+          ],
+          "target": [
+            -0.0,
+            -24.0,
+            0.0
+          ]
+        },
+        {
+          "id": "Есть объект COL_DriveSurface",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_Start",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_End",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            25.0,
+            24.0,
+            0.785
+          ],
+          "target": [
+            25.0,
+            24.0,
+            0.785
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Road_Country2_24m_Solid",
+      "title": "Загородная дорога, прямая 24 м, разметка 1.1",
+      "kind": "road",
+      "group": "road",
+      "triangles": 436,
+      "lod_triangles": {},
+      "bounds_min": [
+        -12.5,
+        -24.0,
+        -0.78
+      ],
+      "bounds_max": [
+        12.5,
+        0.0,
+        0.005
+      ],
+      "size": [
+        25.0,
+        24.0,
+        0.785
+      ],
+      "materials": [
+        "EN_Asphalt",
+        "EN_Asphalt_Worn",
+        "EN_Grass",
+        "EN_Grass_Dry",
+        "EN_Gravel",
+        "EN_Marking_White"
+      ],
+      "sockets": {
+        "Socket_End": [
+          0.0,
+          -24.0,
+          0.0
+        ],
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.8,
+        "centre_line": "1.1",
+        "length": 24,
+        "required": [
+          "COL_DriveSurface",
+          "Socket_Start",
+          "Socket_End"
+        ],
+        "sockets": {
+          "Socket_Start": [
+            0,
+            0,
+            0
+          ],
+          "Socket_End": [
+            -0.0,
+            -24.0,
+            0.0
+          ]
+        },
+        "end_heading_deg": -0.0,
+        "expect_size": {
+          "z": [
+            0.78,
+            0.8
+          ]
+        },
+        "group": "road"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Road_Country2_24m_Solid.fbx",
+      "fbx_sha256": "44e3b24f2fea7f2b370c4509498bda71f27a1b16c38bb4ef1361b5b1bc94b923",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.78,
+          "target": ">= -0.8"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 436,
+          "target": "<= 24000"
+        },
+        {
+          "id": "Габарит по z",
+          "status": "PASS",
+          "value": 0.785,
+          "target": "0.78..0.8"
+        },
+        {
+          "id": "Сокет Socket_Start на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Сокет Socket_End на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            -24.0,
+            0.0
+          ],
+          "target": [
+            -0.0,
+            -24.0,
+            0.0
+          ]
+        },
+        {
+          "id": "Есть объект COL_DriveSurface",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_Start",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_End",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            25.0,
+            24.0,
+            0.785
+          ],
+          "target": [
+            25.0,
+            24.0,
+            0.785
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Road_Country2_24m_Approach",
+      "title": "Загородная дорога, прямая 24 м, линия приближения 1.6",
+      "kind": "road",
+      "group": "road",
+      "triangles": 424,
+      "lod_triangles": {},
+      "bounds_min": [
+        -12.5,
+        -24.0,
+        -0.78
+      ],
+      "bounds_max": [
+        12.5,
+        0.0,
+        0.005
+      ],
+      "size": [
+        25.0,
+        24.0,
+        0.785
+      ],
+      "materials": [
+        "EN_Asphalt",
+        "EN_Asphalt_Worn",
+        "EN_Grass",
+        "EN_Grass_Dry",
+        "EN_Gravel",
+        "EN_Marking_White"
+      ],
+      "sockets": {
+        "Socket_End": [
+          0.0,
+          -24.0,
+          0.0
+        ],
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.8,
+        "centre_line": "1.6",
+        "length": 24,
+        "required": [
+          "COL_DriveSurface",
+          "Socket_Start",
+          "Socket_End"
+        ],
+        "sockets": {
+          "Socket_Start": [
+            0,
+            0,
+            0
+          ],
+          "Socket_End": [
+            -0.0,
+            -24.0,
+            0.0
+          ]
+        },
+        "end_heading_deg": -0.0,
+        "expect_size": {
+          "z": [
+            0.78,
+            0.8
+          ]
+        },
+        "group": "road"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Road_Country2_24m_Approach.fbx",
+      "fbx_sha256": "b7849253c9fc73b60a1ff3728db30b06dff3419283f0371730e126f26229682c",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.78,
+          "target": ">= -0.8"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 424,
+          "target": "<= 24000"
+        },
+        {
+          "id": "Габарит по z",
+          "status": "PASS",
+          "value": 0.785,
+          "target": "0.78..0.8"
+        },
+        {
+          "id": "Сокет Socket_Start на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Сокет Socket_End на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            -24.0,
+            0.0
+          ],
+          "target": [
+            -0.0,
+            -24.0,
+            0.0
+          ]
+        },
+        {
+          "id": "Есть объект COL_DriveSurface",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_Start",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_End",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            25.0,
+            24.0,
+            0.785
+          ],
+          "target": [
+            25.0,
+            24.0,
+            0.785
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Road_Country2_Curve90_R50",
+      "title": "Загородная дорога, опасный поворот 90° R50, разметка 1.1",
+      "kind": "road",
+      "group": "road",
+      "triangles": 3030,
+      "lod_triangles": {},
+      "bounds_min": [
+        -50.0,
+        -62.5,
+        -0.78
+      ],
+      "bounds_max": [
+        12.5,
+        0.0,
+        0.005
+      ],
+      "size": [
+        62.5,
+        62.5,
+        0.785
+      ],
+      "materials": [
+        "EN_Asphalt",
+        "EN_Asphalt_Worn",
+        "EN_Grass",
+        "EN_Grass_Dry",
+        "EN_Gravel",
+        "EN_Marking_White"
+      ],
+      "sockets": {
+        "Socket_End": [
+          -50.0,
+          -50.0,
+          0.0
+        ],
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.8,
+        "centre_line": "1.1",
+        "length": 78.54,
+        "required": [
+          "COL_DriveSurface",
+          "Socket_Start",
+          "Socket_End"
+        ],
+        "sockets": {
+          "Socket_Start": [
+            0,
+            0,
+            0
+          ],
+          "Socket_End": [
+            -50.0,
+            -50.0,
+            0.0
+          ]
+        },
+        "end_heading_deg": 90.0,
+        "expect_size": {
+          "z": [
+            0.78,
+            0.8
+          ]
+        },
+        "group": "road"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Road_Country2_Curve90_R50.fbx",
+      "fbx_sha256": "329e5097d6da9ca4a99733c9f6339b68162232e9da97eb258769464662a06ebc",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.78,
+          "target": ">= -0.8"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 3030,
+          "target": "<= 24000"
+        },
+        {
+          "id": "Габарит по z",
+          "status": "PASS",
+          "value": 0.785,
+          "target": "0.78..0.8"
+        },
+        {
+          "id": "Сокет Socket_Start на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Сокет Socket_End на месте",
+          "status": "PASS",
+          "value": [
+            -50.0,
+            -50.0,
+            0.0
+          ],
+          "target": [
+            -50.0,
+            -50.0,
+            0.0
+          ]
+        },
+        {
+          "id": "Есть объект COL_DriveSurface",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_Start",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_End",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            62.5,
+            62.5,
+            0.785
+          ],
+          "target": [
+            62.5,
+            62.5,
+            0.785
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Road_Country2_Curve30_R160",
+      "title": "Загородная дорога, плавный поворот 30° R160, разметка 1.5",
+      "kind": "road",
+      "group": "road",
+      "triangles": 3078,
+      "lod_triangles": {},
+      "bounds_min": [
+        -32.2613,
+        -86.25,
+        -0.78
+      ],
+      "bounds_max": [
+        12.5,
+        0.0,
+        0.005
+      ],
+      "size": [
+        44.7613,
+        86.25,
+        0.785
+      ],
+      "materials": [
+        "EN_Asphalt",
+        "EN_Asphalt_Worn",
+        "EN_Grass",
+        "EN_Grass_Dry",
+        "EN_Gravel",
+        "EN_Marking_White"
+      ],
+      "sockets": {
+        "Socket_End": [
+          -21.4359,
+          -80.0,
+          0.0
+        ],
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.8,
+        "centre_line": "1.5",
+        "length": 83.776,
+        "required": [
+          "COL_DriveSurface",
+          "Socket_Start",
+          "Socket_End"
+        ],
+        "sockets": {
+          "Socket_Start": [
+            0,
+            0,
+            0
+          ],
+          "Socket_End": [
+            -21.435935974121094,
+            -80.0,
+            0.0
+          ]
+        },
+        "end_heading_deg": 30.0,
+        "expect_size": {
+          "z": [
+            0.78,
+            0.8
+          ]
+        },
+        "group": "road"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Road_Country2_Curve30_R160.fbx",
+      "fbx_sha256": "05b2a507a96b336027f3261df11bcf645529f9396eea625d03929c0a7adf54e4",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.78,
+          "target": ">= -0.8"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 3078,
+          "target": "<= 24000"
+        },
+        {
+          "id": "Габарит по z",
+          "status": "PASS",
+          "value": 0.785,
+          "target": "0.78..0.8"
+        },
+        {
+          "id": "Сокет Socket_Start на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Сокет Socket_End на месте",
+          "status": "PASS",
+          "value": [
+            -21.435935974121094,
+            -80.0,
+            0.0
+          ],
+          "target": [
+            -21.435935974121094,
+            -80.0,
+            0.0
+          ]
+        },
+        {
+          "id": "Есть объект COL_DriveSurface",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_Start",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_End",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            44.7613,
+            86.25,
+            0.785
+          ],
+          "target": [
+            44.7613,
+            86.25,
+            0.785
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Road_Delineator",
+      "title": "Сигнальный столбик С1",
+      "kind": "sign",
+      "group": "road",
+      "triangles": 56,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.06,
+        -0.05,
+        -0.05
+      ],
+      "bounds_max": [
+        0.06,
+        0.05,
+        1.0
+      ],
+      "size": [
+        0.12,
+        0.1,
+        1.05
+      ],
+      "materials": [
+        "EN_Plastic_White",
+        "EN_Reflector_Red",
+        "EN_Reflector_White",
+        "EN_Sign_Black"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "height": 1.0,
+        "group": "road"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Road_Delineator.fbx",
+      "fbx_sha256": "30953aaf09b34421ceb6afd22ec40b7444011b3bb8d45a4f50ad4e5740fdb4d6",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 56,
+          "target": "<= 3000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.12,
+            0.1,
+            1.05
+          ],
+          "target": [
+            0.12,
+            0.1,
+            1.05
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Sign_1_11_1_CurveRight",
+      "title": "Знак 1.11.1 «Опасный поворот направо»",
+      "kind": "sign",
+      "group": "road",
+      "triangles": 141,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.45,
+        -0.0048,
+        -0.05
+      ],
+      "bounds_max": [
+        0.45,
+        0.102,
+        2.8696
+      ],
+      "size": [
+        0.9,
+        0.1068,
+        2.9196
+      ],
+      "materials": [
+        "EN_Plastic_Grey",
+        "EN_Sign_Back",
+        "EN_Sign_Black",
+        "EN_Sign_Red",
+        "EN_Sign_White",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "gost": "1.11.1",
+        "size_group": "II (сторона 900 мм)",
+        "group": "road"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Sign_1_11_1_CurveRight.fbx",
+      "fbx_sha256": "d157318309e22f7f6951ca4549f40afff352613a6770f322f560af4c25c68e25",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 141,
+          "target": "<= 3000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.9,
+            0.1068,
+            2.9196
+          ],
+          "target": [
+            0.9,
+            0.1068,
+            2.9196
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Sign_1_11_2_CurveLeft",
+      "title": "Знак 1.11.2 «Опасный поворот налево»",
+      "kind": "sign",
+      "group": "road",
+      "triangles": 141,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.45,
+        -0.0048,
+        -0.05
+      ],
+      "bounds_max": [
+        0.45,
+        0.102,
+        2.8696
+      ],
+      "size": [
+        0.9,
+        0.1068,
+        2.9196
+      ],
+      "materials": [
+        "EN_Plastic_Grey",
+        "EN_Sign_Back",
+        "EN_Sign_Black",
+        "EN_Sign_Red",
+        "EN_Sign_White",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "gost": "1.11.2",
+        "size_group": "II (сторона 900 мм)",
+        "group": "road"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Sign_1_11_2_CurveLeft.fbx",
+      "fbx_sha256": "9794abb015ec29631cac8e76b547ed16e038dd66d2ecb6917e2dc8ee2ff62938",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 141,
+          "target": "<= 3000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.9,
+            0.1068,
+            2.9196
+          ],
+          "target": [
+            0.9,
+            0.1068,
+            2.9196
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Sign_1_34_1_Right",
+      "title": "Знак 1.34.1 «Направление поворота» (направо)",
+      "kind": "sign",
+      "group": "road",
+      "triangles": 138,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.45,
+        -0.0036,
+        -0.05
+      ],
+      "bounds_max": [
+        0.45,
+        0.102,
+        1.962
+      ],
+      "size": [
+        0.9,
+        0.1056,
+        2.012
+      ],
+      "materials": [
+        "EN_Plastic_Grey",
+        "EN_Sign_Back",
+        "EN_Sign_Red",
+        "EN_Sign_White",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "gost": "1.34.1",
+        "size_group": "II",
+        "note": "пропорции и шевроны стилизованы",
+        "group": "road"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Sign_1_34_1_Right.fbx",
+      "fbx_sha256": "416f29fa32d5be0898590a27e60c33c1e6e06a8e3c152b95c4c038630c9949c8",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 138,
+          "target": "<= 3000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.9,
+            0.1056,
+            2.012
+          ],
+          "target": [
+            0.9,
+            0.1056,
+            2.012
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Sign_1_34_2_Left",
+      "title": "Знак 1.34.2 «Направление поворота» (налево)",
+      "kind": "sign",
+      "group": "road",
+      "triangles": 138,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.45,
+        -0.0036,
+        -0.05
+      ],
+      "bounds_max": [
+        0.45,
+        0.102,
+        1.962
+      ],
+      "size": [
+        0.9,
+        0.1056,
+        2.012
+      ],
+      "materials": [
+        "EN_Plastic_Grey",
+        "EN_Sign_Back",
+        "EN_Sign_Red",
+        "EN_Sign_White",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "gost": "1.34.2",
+        "size_group": "II",
+        "note": "пропорции и шевроны стилизованы",
+        "group": "road"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Sign_1_34_2_Left.fbx",
+      "fbx_sha256": "9814104f62cf99863d4ce21ba13e9776f3060da9a5fe319d536bf6c1af03de9b",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 138,
+          "target": "<= 3000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.9,
+            0.1056,
+            2.012
+          ],
+          "target": [
+            0.9,
+            0.1056,
+            2.012
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Sign_3_20_NoOvertaking",
+      "title": "Знак 3.20 «Обгон запрещён»",
+      "kind": "sign",
+      "group": "road",
+      "triangles": 372,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.35,
+        -0.0096,
+        -0.05
+      ],
+      "bounds_max": [
+        0.35,
+        0.102,
+        2.762
+      ],
+      "size": [
+        0.7,
+        0.1116,
+        2.812
+      ],
+      "materials": [
+        "EN_Plastic_Grey",
+        "EN_Sign_Back",
+        "EN_Sign_Black",
+        "EN_Sign_Red",
+        "EN_Sign_White",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "gost": "3.20",
+        "size_group": "II (Ø 700 мм)",
+        "note": "силуэты автомобилей стилизованы",
+        "group": "road"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Sign_3_20_NoOvertaking.fbx",
+      "fbx_sha256": "b04a0e639a3b56b6850bc4830aacfc84ed9dd5641d696f4f3a8fdaaaadce329d",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 372,
+          "target": "<= 3000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.7,
+            0.1116,
+            2.812
+          ],
+          "target": [
+            0.7,
+            0.1116,
+            2.812
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Sign_6_13_Km17",
+      "title": "Знак 6.13 «Километровый знак» (17 / 23)",
+      "kind": "sign",
+      "group": "road",
+      "triangles": 362,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.21,
+        -0.048,
+        -0.05
+      ],
+      "bounds_max": [
+        0.21,
+        0.048,
+        2.212
+      ],
+      "size": [
+        0.42,
+        0.096,
+        2.262
+      ],
+      "materials": [
+        "EN_Plastic_Grey",
+        "EN_Sign_Back",
+        "EN_Sign_Black",
+        "EN_Sign_White",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "gost": "6.13",
+        "group": "road"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Sign_6_13_Km17.fbx",
+      "fbx_sha256": "c66876de25519a138e1274b16c7dbeb7b3e786b3e5f89843104a5e191af22ae5",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 362,
+          "target": "<= 3000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.42,
+            0.096,
+            2.262
+          ],
+          "target": [
+            0.42,
+            0.096,
+            2.262
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Barrier_WBeam_4m",
+      "title": "Барьерное ограждение (W-балка), секция 4 м",
+      "kind": "barrier",
+      "group": "barrier",
+      "triangles": 640,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.0275,
+        -4.0,
+        -0.1
+      ],
+      "bounds_max": [
+        0.265,
+        0.16,
+        0.84
+      ],
+      "size": [
+        0.2925,
+        4.16,
+        0.94
+      ],
+      "materials": [
+        "EN_Plastic_Grey",
+        "EN_Reflector_Red",
+        "EN_Reflector_White",
+        "EN_Steel_Dark",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_End": [
+          0.0,
+          -4.0,
+          0.0
+        ],
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.1,
+        "length": 4.0,
+        "post_spacing": 2.0,
+        "radius": null,
+        "required": [
+          "Socket_Start",
+          "Socket_End"
+        ],
+        "sockets": {
+          "Socket_Start": [
+            0,
+            0,
+            0
+          ],
+          "Socket_End": [
+            -0.0,
+            -4.0,
+            0.0
+          ]
+        },
+        "end_heading_deg": 0.0,
+        "expect_size": {
+          "y": [
+            4.0,
+            4.4
+          ],
+          "z": [
+            0.85,
+            0.95
+          ]
+        },
+        "group": "barrier"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Barrier_WBeam_4m.fbx",
+      "fbx_sha256": "b962e2eaa28d4a201cec8b17ae85186fff70b6e14c0dc99acff3c1f5d32317d9",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.1,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 640,
+          "target": "<= 8000"
+        },
+        {
+          "id": "Габарит по y",
+          "status": "PASS",
+          "value": 4.16,
+          "target": "4.0..4.4"
+        },
+        {
+          "id": "Габарит по z",
+          "status": "PASS",
+          "value": 0.94,
+          "target": "0.85..0.95"
+        },
+        {
+          "id": "Сокет Socket_Start на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Сокет Socket_End на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            -4.0,
+            0.0
+          ],
+          "target": [
+            -0.0,
+            -4.0,
+            0.0
+          ]
+        },
+        {
+          "id": "Есть объект Socket_Start",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_End",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.2925,
+            4.16,
+            0.94
+          ],
+          "target": [
+            0.2925,
+            4.16,
+            0.94
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Barrier_WBeam_4m_R56",
+      "title": "Барьерное ограждение, секция 4 м по дуге R56 (дорога внутри поворота — внешняя кромка)",
+      "kind": "barrier",
+      "group": "barrier",
+      "triangles": 920,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.0275,
+        -3.9848,
+        -0.1
+      ],
+      "bounds_max": [
+        0.3952,
+        0.16,
+        0.84
+      ],
+      "size": [
+        0.4227,
+        4.1448,
+        0.94
+      ],
+      "materials": [
+        "EN_Plastic_Grey",
+        "EN_Reflector_Red",
+        "EN_Reflector_White",
+        "EN_Steel_Dark",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_End": [
+          0.1428,
+          -3.9966,
+          0.0
+        ],
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.1,
+        "length": 4.0,
+        "post_spacing": 2.0,
+        "radius": 56,
+        "required": [
+          "Socket_Start",
+          "Socket_End"
+        ],
+        "sockets": {
+          "Socket_Start": [
+            0,
+            0,
+            0
+          ],
+          "Socket_End": [
+            0.14279641211032867,
+            -3.9965994358062744,
+            0.0
+          ]
+        },
+        "end_heading_deg": 4.093,
+        "group": "barrier"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Barrier_WBeam_4m_R56.fbx",
+      "fbx_sha256": "93f7ef1d898b959693210387097eb09c8acab3e9c59d11ff58877db19807b2f1",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.1,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 920,
+          "target": "<= 8000"
+        },
+        {
+          "id": "Сокет Socket_Start на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Сокет Socket_End на месте",
+          "status": "PASS",
+          "value": [
+            0.14279641211032867,
+            -3.9965994358062744,
+            0.0
+          ],
+          "target": [
+            0.14279641211032867,
+            -3.9965994358062744,
+            0.0
+          ]
+        },
+        {
+          "id": "Есть объект Socket_Start",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_End",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.4227,
+            4.1448,
+            0.94
+          ],
+          "target": [
+            0.4227,
+            4.1448,
+            0.94
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Barrier_WBeam_4m_R44_Convex",
+      "title": "Барьерное ограждение, секция 4 м по дуге R44 (дорога снаружи — внутренняя кромка)",
+      "kind": "barrier",
+      "group": "barrier",
+      "triangles": 920,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.0753,
+        -4.0175,
+        -0.1
+      ],
+      "bounds_max": [
+        0.265,
+        0.16,
+        0.84
+      ],
+      "size": [
+        0.3403,
+        4.1775,
+        0.94
+      ],
+      "materials": [
+        "EN_Plastic_Grey",
+        "EN_Reflector_Red",
+        "EN_Reflector_White",
+        "EN_Steel_Dark",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_End": [
+          -0.1817,
+          -3.9945,
+          0.0
+        ],
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.1,
+        "length": 4.0,
+        "post_spacing": 2.0,
+        "radius": 44,
+        "required": [
+          "Socket_Start",
+          "Socket_End"
+        ],
+        "sockets": {
+          "Socket_Start": [
+            0,
+            0,
+            0
+          ],
+          "Socket_End": [
+            -0.18169300258159637,
+            -3.994492530822754,
+            0.0
+          ]
+        },
+        "end_heading_deg": -5.209,
+        "group": "barrier"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Barrier_WBeam_4m_R44_Convex.fbx",
+      "fbx_sha256": "1944a34bfd290c70b453f3d9087883b8772fef994d06d717ad5b2ef0fd6f6b05",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.1,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 920,
+          "target": "<= 8000"
+        },
+        {
+          "id": "Сокет Socket_Start на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Сокет Socket_End на месте",
+          "status": "PASS",
+          "value": [
+            -0.18169300258159637,
+            -3.994492530822754,
+            0.0
+          ],
+          "target": [
+            -0.18169300258159637,
+            -3.994492530822754,
+            0.0
+          ]
+        },
+        {
+          "id": "Есть объект Socket_Start",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_End",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.3403,
+            4.1775,
+            0.94
+          ],
+          "target": [
+            0.3403,
+            4.1775,
+            0.94
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Barrier_WBeam_EndRamp",
+      "title": "Барьерное ограждение: концевой участок с отгоном (4 м)",
+      "kind": "barrier",
+      "group": "barrier",
+      "triangles": 984,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.58,
+        -4.25,
+        -0.3
+      ],
+      "bounds_max": [
+        0.265,
+        0.16,
+        0.84
+      ],
+      "size": [
+        0.845,
+        4.41,
+        1.14
+      ],
+      "materials": [
+        "EN_Concrete",
+        "EN_Plastic_Grey",
+        "EN_Reflector_Red",
+        "EN_Reflector_White",
+        "EN_Steel_Dark",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.6,
+        "sockets": {
+          "Socket_Start": [
+            0,
+            0,
+            0
+          ]
+        },
+        "required": [
+          "Socket_Start"
+        ],
+        "group": "barrier"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Barrier_WBeam_EndRamp.fbx",
+      "fbx_sha256": "b6bb5a2dd27a7fb10632d960adb395026202e1c0268f38aebdc032a5a19a4e98",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.3,
+          "target": ">= -0.6"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 984,
+          "target": "<= 8000"
+        },
+        {
+          "id": "Сокет Socket_Start на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Есть объект Socket_Start",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.845,
+            4.41,
+            1.14
+          ],
+          "target": [
+            0.845,
+            4.41,
+            1.14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Barrier_WBeam_EndRamp_Start",
+      "title": "Барьерное ограждение: начальный участок с отгоном (4 м)",
+      "kind": "barrier",
+      "group": "barrier",
+      "triangles": 984,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.58,
+        -0.16,
+        -0.3
+      ],
+      "bounds_max": [
+        0.265,
+        4.25,
+        0.84
+      ],
+      "size": [
+        0.845,
+        4.41,
+        1.14
+      ],
+      "materials": [
+        "EN_Concrete",
+        "EN_Plastic_Grey",
+        "EN_Reflector_Red",
+        "EN_Reflector_White",
+        "EN_Steel_Dark",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_End": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.6,
+        "sockets": {
+          "Socket_End": [
+            0,
+            0,
+            0
+          ]
+        },
+        "required": [
+          "Socket_End"
+        ],
+        "group": "barrier"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Barrier_WBeam_EndRamp_Start.fbx",
+      "fbx_sha256": "65efab636066b9286e02bad35693e244270064aeed1e7b374ef47c8b06847395",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.3,
+          "target": ">= -0.6"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 984,
+          "target": "<= 8000"
+        },
+        {
+          "id": "Сокет Socket_End на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Есть объект Socket_End",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.845,
+            4.41,
+            1.14
+          ],
+          "target": [
+            0.845,
+            4.41,
+            1.14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Barrier_WBeam_EndCap",
+      "title": "Барьерное ограждение: торцевой закруглённый элемент",
+      "kind": "barrier",
+      "group": "barrier",
+      "triangles": 650,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.2,
+        -0.753,
+        -0.1
+      ],
+      "bounds_max": [
+        0.253,
+        0.0525,
+        0.84
+      ],
+      "size": [
+        0.453,
+        0.8055,
+        0.94
+      ],
+      "materials": [
+        "EN_Plastic_Grey",
+        "EN_Reflector_Red",
+        "EN_Reflector_White",
+        "EN_Steel_Dark",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.1,
+        "required": [
+          "Socket_Start"
+        ],
+        "sockets": {
+          "Socket_Start": [
+            0,
+            0,
+            0
+          ]
+        },
+        "group": "barrier"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Barrier_WBeam_EndCap.fbx",
+      "fbx_sha256": "3715284f89ee6e3e10803258188cb6a0511f31a0e1c0a5fc5f46155f40398a7c",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.1,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 650,
+          "target": "<= 8000"
+        },
+        {
+          "id": "Сокет Socket_Start на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Есть объект Socket_Start",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.453,
+            0.8055,
+            0.94
+          ],
+          "target": [
+            0.453,
+            0.8055,
+            0.94
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Barrier_Concrete_NJ_4m",
+      "title": "Бетонное ограждение «Нью-Джерси», блок 4 м",
+      "kind": "barrier",
+      "group": "barrier",
+      "triangles": 160,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.31,
+        -3.99,
+        0.0
+      ],
+      "bounds_max": [
+        0.31,
+        -0.01,
+        0.821
+      ],
+      "size": [
+        0.62,
+        3.98,
+        0.821
+      ],
+      "materials": [
+        "EN_Concrete",
+        "EN_Paint_Red",
+        "EN_Paint_White",
+        "EN_Reflector_Amber",
+        "EN_Steel_Dark"
+      ],
+      "sockets": {
+        "Socket_End": [
+          0.0,
+          -4.0,
+          0.0
+        ],
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.01,
+        "required": [
+          "Socket_Start",
+          "Socket_End"
+        ],
+        "sockets": {
+          "Socket_Start": [
+            0,
+            0,
+            0
+          ],
+          "Socket_End": [
+            0,
+            -4.0,
+            0
+          ]
+        },
+        "expect_size": {
+          "x": [
+            0.6,
+            0.62
+          ],
+          "z": [
+            0.8,
+            0.83
+          ]
+        },
+        "group": "barrier"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Barrier_Concrete_NJ_4m.fbx",
+      "fbx_sha256": "8b41ee2930e7da2cf1306f3518d8e5e5b9b8ed3a3ad9d81ace25342c9fe6ddaf",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": 0.0,
+          "target": ">= -0.01"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 160,
+          "target": "<= 8000"
+        },
+        {
+          "id": "Габарит по x",
+          "status": "PASS",
+          "value": 0.62,
+          "target": "0.6..0.62"
+        },
+        {
+          "id": "Габарит по z",
+          "status": "PASS",
+          "value": 0.821,
+          "target": "0.8..0.83"
+        },
+        {
+          "id": "Сокет Socket_Start на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Сокет Socket_End на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            -4.0,
+            0.0
+          ],
+          "target": [
+            0,
+            -4.0,
+            0
+          ]
+        },
+        {
+          "id": "Есть объект Socket_Start",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_End",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.62,
+            3.98,
+            0.821
+          ],
+          "target": [
+            0.62,
+            3.98,
+            0.821
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_Bench",
+      "title": "Скамейка со спинкой",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 352,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.9,
+        -0.26,
+        -0.0012
+      ],
+      "bounds_max": [
+        0.9,
+        0.2846,
+        0.8546
+      ],
+      "size": [
+        1.8,
+        0.5446,
+        0.8558
+      ],
+      "materials": [
+        "EN_Paint_Black",
+        "EN_Wood"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Bench.fbx",
+      "fbx_sha256": "7dd55d6d1b441f0999c374c35bf49a5100d09db0e26cc7ba62df018bea88a95b",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.0012,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 352,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            1.8,
+            0.5446,
+            0.8558
+          ],
+          "target": [
+            1.8,
+            0.5446,
+            0.8558
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_Bin",
+      "title": "Урна опрокидывающаяся",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 380,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.2609,
+        -0.205,
+        -0.05
+      ],
+      "bounds_max": [
+        0.2609,
+        0.205,
+        0.8
+      ],
+      "size": [
+        0.5218,
+        0.41,
+        0.85
+      ],
+      "materials": [
+        "EN_Paint_Green",
+        "EN_Steel_Dark"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Bin.fbx",
+      "fbx_sha256": "9484cb2fb1d9143b0030d2c17582c273e6b4023777d48d792f1a96e3fed54332",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 380,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.5218,
+            0.41,
+            0.85
+          ],
+          "target": [
+            0.5218,
+            0.41,
+            0.85
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_Bollard_Sphere",
+      "title": "Бетонная полусфера",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 420,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.27,
+        -0.27,
+        -0.03
+      ],
+      "bounds_max": [
+        0.27,
+        0.27,
+        0.247
+      ],
+      "size": [
+        0.54,
+        0.54,
+        0.277
+      ],
+      "materials": [
+        "EN_Concrete",
+        "EN_Paint_Yellow"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Bollard_Sphere.fbx",
+      "fbx_sha256": "a43c23d1ffe14a4f2895912780bde3ac97117df89d9d85ff0c062e07ddf23b1e",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.03,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 420,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.54,
+            0.54,
+            0.277
+          ],
+          "target": [
+            0.54,
+            0.54,
+            0.277
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_TireFlowerbed",
+      "title": "Клумба из покрышки",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 2092,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.32,
+        -0.32,
+        -0.05
+      ],
+      "bounds_max": [
+        0.32,
+        0.32,
+        0.3151
+      ],
+      "size": [
+        0.64,
+        0.64,
+        0.3651
+      ],
+      "materials": [
+        "EN_Bush_A",
+        "EN_Bush_B",
+        "EN_Paint_White",
+        "EN_Plastic_Red",
+        "EN_Plastic_White",
+        "EN_Plastic_Yellow",
+        "EN_Soil"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "collider": false,
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_TireFlowerbed.fbx",
+      "fbx_sha256": "4a31664da3930eba0312a6c013d8795dbf14fd91d3831d685cdafe6d4e6f22b6",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 2092,
+          "target": "<= 12000"
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.64,
+            0.64,
+            0.3651
+          ],
+          "target": [
+            0.64,
+            0.64,
+            0.3651
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_LawnFence_2m",
+      "title": "Газонное ограждение (дуги), 2 м",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 836,
+      "lod_triangles": {},
+      "bounds_min": [
+        -2.0139,
+        -0.014,
+        -0.0519
+      ],
+      "bounds_max": [
+        0.0139,
+        0.014,
+        0.514
+      ],
+      "size": [
+        2.0278,
+        0.028,
+        0.5659
+      ],
+      "materials": [
+        "EN_Paint_Green"
+      ],
+      "sockets": {
+        "Socket_End": [
+          -2.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "required": [
+          "Socket_Start",
+          "Socket_End"
+        ],
+        "note": "идёт вдоль +X (Unity +X)",
+        "sockets": {
+          "Socket_Start": [
+            0,
+            0,
+            0
+          ],
+          "Socket_End": [
+            -2.0,
+            0,
+            0
+          ]
+        },
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_LawnFence_2m.fbx",
+      "fbx_sha256": "a5d34e2f404ddfcc885367d383311e9505f4b3402fe15b912f5ef5b909abbd56",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.0519,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 836,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Сокет Socket_Start на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Сокет Socket_End на месте",
+          "status": "PASS",
+          "value": [
+            -2.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            -2.0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Есть объект Socket_Start",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_End",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            2.0278,
+            0.028,
+            0.5659
+          ],
+          "target": [
+            2.0278,
+            0.028,
+            0.5659
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_PlaygroundPad",
+      "title": "Площадка с резиновым покрытием 14 × 10 м",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 120,
+      "lod_triangles": {},
+      "bounds_min": [
+        -7.08,
+        -5.08,
+        -0.15
+      ],
+      "bounds_max": [
+        7.08,
+        5.08,
+        0.08
+      ],
+      "size": [
+        14.16,
+        10.16,
+        0.23
+      ],
+      "materials": [
+        "EN_Curb",
+        "EN_Rubber_Crumb",
+        "EN_Rubber_Crumb_Green"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.15,
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_PlaygroundPad.fbx",
+      "fbx_sha256": "9d77d20d73b7861b536fecf3ae3d7d2d094c73718174db71c90cee1e5b5eda63",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.15,
+          "target": ">= -0.15"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 120,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            14.16,
+            10.16,
+            0.23
+          ],
+          "target": [
+            14.16,
+            10.16,
+            0.23
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_Swing",
+      "title": "Качели двойные",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 400,
+      "lod_triangles": {},
+      "bounds_min": [
+        -1.6,
+        -0.788,
+        -0.0624
+      ],
+      "bounds_max": [
+        1.6,
+        0.788,
+        2.295
+      ],
+      "size": [
+        3.2,
+        1.5761,
+        2.3574
+      ],
+      "materials": [
+        "EN_Chain",
+        "EN_Paint_Blue",
+        "EN_Paint_Yellow",
+        "EN_Plastic_Green",
+        "EN_Plastic_Red",
+        "EN_Steel_Dark"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Swing.fbx",
+      "fbx_sha256": "e0476ffa824441565eefcd9b0abb13992f78572a7f582fb1c28fc65121984ff2",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.0624,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 400,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            3.2,
+            1.5761,
+            2.3574
+          ],
+          "target": [
+            3.2,
+            1.5761,
+            2.3574
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_Slide",
+      "title": "Горка с лесенкой и крышей",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 654,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.75,
+        -3.4,
+        -0.0605
+      ],
+      "bounds_max": [
+        0.75,
+        1.5227,
+        2.85
+      ],
+      "size": [
+        1.5,
+        4.9227,
+        2.9105
+      ],
+      "materials": [
+        "EN_Paint_Red",
+        "EN_Paint_Yellow",
+        "EN_Plastic_Blue",
+        "EN_Plastic_Red",
+        "EN_Steel_Galv",
+        "EN_Wood_Light"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Slide.fbx",
+      "fbx_sha256": "251f1136c1093b4f386e097f39a75c14227494ac32d66dd23fb1822223abd614",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.0605,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 654,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            1.5,
+            4.9227,
+            2.9105
+          ],
+          "target": [
+            1.5,
+            4.9227,
+            2.9105
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_Sandbox",
+      "title": "Песочница с грибком",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 1312,
+      "lod_triangles": {},
+      "bounds_min": [
+        -1.25,
+        -1.25,
+        0.0
+      ],
+      "bounds_max": [
+        1.25,
+        1.25,
+        2.32
+      ],
+      "size": [
+        2.5,
+        2.5,
+        2.32
+      ],
+      "materials": [
+        "EN_Paint_Green",
+        "EN_Paint_Red",
+        "EN_Paint_White",
+        "EN_Paint_Yellow",
+        "EN_Sand",
+        "EN_Wood_Light"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Sandbox.fbx",
+      "fbx_sha256": "34262821d412992871d3770b82c64b15e743822384d66751992a860d0e701e5b",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": 0.0,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 1312,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            2.5,
+            2.5,
+            2.32
+          ],
+          "target": [
+            2.5,
+            2.5,
+            2.32
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_Carousel",
+      "title": "Карусель",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 1396,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.88,
+        -0.88,
+        -0.05
+      ],
+      "bounds_max": [
+        0.88,
+        0.88,
+        1.06
+      ],
+      "size": [
+        1.76,
+        1.76,
+        1.11
+      ],
+      "materials": [
+        "EN_Paint_Blue",
+        "EN_Paint_Green",
+        "EN_Paint_Red",
+        "EN_Paint_Yellow",
+        "EN_Steel_Dark",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Carousel.fbx",
+      "fbx_sha256": "d973c5beebf38603eb99ecf27d83ceb9f4506f2adfa0c5b733caf37d848c28e1",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 1396,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            1.76,
+            1.76,
+            1.11
+          ],
+          "target": [
+            1.76,
+            1.76,
+            1.11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_SportsFrame",
+      "title": "Турник с рукоходом",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 588,
+      "lod_triangles": {},
+      "bounds_min": [
+        -2.2428,
+        -0.345,
+        -0.05
+      ],
+      "bounds_max": [
+        1.6428,
+        0.345,
+        2.23
+      ],
+      "size": [
+        3.8856,
+        0.69,
+        2.28
+      ],
+      "materials": [
+        "EN_Paint_Green",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_SportsFrame.fbx",
+      "fbx_sha256": "04c30a1cbd82b0679df9ceaff55acda0dc46b5606c71a227db7962ad92711973",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 588,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            3.8856,
+            0.69,
+            2.28
+          ],
+          "target": [
+            3.8856,
+            0.69,
+            2.28
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_WasteSite",
+      "title": "Контейнерная площадка (3 евроконтейнера)",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 1054,
+      "lod_triangles": {},
+      "bounds_min": [
+        -2.95,
+        -1.3,
+        -0.12
+      ],
+      "bounds_max": [
+        2.95,
+        1.3,
+        1.95
+      ],
+      "size": [
+        5.9,
+        2.6,
+        2.07
+      ],
+      "materials": [
+        "EN_Concrete",
+        "EN_Paint_Grey",
+        "EN_Plastic_Blue",
+        "EN_Plastic_Green",
+        "EN_Plastic_Grey",
+        "EN_Plastic_Yellow",
+        "EN_Profiled_Sheet",
+        "EN_Rubber",
+        "EN_Steel_Dark"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.12,
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_WasteSite.fbx",
+      "fbx_sha256": "b365402fa69958cb516bf6c826d164606b68369bb8ba7790e077e1c685841ba5",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.12,
+          "target": ">= -0.12"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 1054,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            5.9,
+            2.6,
+            2.07
+          ],
+          "target": [
+            5.9,
+            2.6,
+            2.07
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_BarrierGate",
+      "title": "Шлагбаум въезда во двор (стрела 4,6 м)",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 408,
+      "lod_triangles": {},
+      "bounds_min": [
+        -4.69,
+        -0.295,
+        -0.05
+      ],
+      "bounds_max": [
+        0.4,
+        0.225,
+        1.22
+      ],
+      "size": [
+        5.09,
+        0.52,
+        1.27
+      ],
+      "materials": [
+        "EN_Concrete",
+        "EN_Paint_Grey",
+        "EN_Paint_Red",
+        "EN_Paint_White",
+        "EN_Paint_Yellow",
+        "EN_Reflector_Amber",
+        "EN_Reflector_Red",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "required": [
+          "Boom",
+          "COL_Boom"
+        ],
+        "note": "начало координат объекта Boom — ось стрелы; подъём — поворот Boom вокруг оси въезда (author Y, Unity Z); 0° = закрыт",
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_BarrierGate.fbx",
+      "fbx_sha256": "2f3f98bcf273434e9f09028161987d33786d1a9590652cdeb77ceeaf6bcf2ebd",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 408,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Есть объект Boom",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект COL_Boom",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            5.09,
+            0.52,
+            1.27
+          ],
+          "target": [
+            5.09,
+            0.52,
+            1.27
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_Lamp",
+      "title": "Дворовый светильник на опоре 6 м",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 304,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.16,
+        -1.55,
+        -0.05
+      ],
+      "bounds_max": [
+        0.16,
+        0.1,
+        6.27
+      ],
+      "size": [
+        0.32,
+        1.65,
+        6.32
+      ],
+      "materials": [
+        "EN_Lamp_White",
+        "EN_Paint_Grey"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "required": [
+          "Lamp_Head"
+        ],
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Lamp.fbx",
+      "fbx_sha256": "582d7fdf758b5a66d9cc44465d1c2c12fe30cc51bdf0f59678fb00e95a2324c7",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 304,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Есть объект Lamp_Head",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.32,
+            1.65,
+            6.32
+          ],
+          "target": [
+            0.32,
+            1.65,
+            6.32
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_Garage_Teal",
+      "title": "Металлический гараж",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 497,
+      "lod_triangles": {},
+      "bounds_min": [
+        -1.62,
+        -3.12,
+        0.0
+      ],
+      "bounds_max": [
+        1.62,
+        3.12,
+        2.48
+      ],
+      "size": [
+        3.24,
+        6.24,
+        2.48
+      ],
+      "materials": [
+        "EN_Concrete",
+        "EN_Garage_Teal",
+        "EN_Paint_White",
+        "EN_Steel_Dark",
+        "EN_Steel_Rusty"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Garage_Teal.fbx",
+      "fbx_sha256": "4a6ecca4e03dc6b714fed7afecbcd908503e68fee97b04293d6d98f30d04b33c",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": 0.0,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 497,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            3.24,
+            6.24,
+            2.48
+          ],
+          "target": [
+            3.24,
+            6.24,
+            2.48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Yard_Garage_Beige",
+      "title": "Металлический гараж",
+      "kind": "yard",
+      "group": "yard",
+      "triangles": 543,
+      "lod_triangles": {},
+      "bounds_min": [
+        -1.62,
+        -3.12,
+        0.0
+      ],
+      "bounds_max": [
+        1.62,
+        3.12,
+        2.48
+      ],
+      "size": [
+        3.24,
+        6.24,
+        2.48
+      ],
+      "materials": [
+        "EN_Concrete",
+        "EN_Garage_Beige",
+        "EN_Paint_White",
+        "EN_Steel_Dark",
+        "EN_Steel_Rusty"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "group": "yard"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Yard_Garage_Beige.fbx",
+      "fbx_sha256": "6589dc64f324b59fef7aaa0294abee65382349c114fddcd72910c45c3b707f75",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": 0.0,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 543,
+          "target": "<= 12000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            3.24,
+            6.24,
+            2.48
+          ],
+          "target": [
+            3.24,
+            6.24,
+            2.48
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Park_Bay_Perp_5x",
+      "title": "Парковочный карман: 5 мест перпендикулярно (2,5 × 5,3 м)",
+      "kind": "parking",
+      "group": "parking",
+      "triangles": 34,
+      "lod_triangles": {},
+      "bounds_min": [
+        -6.325,
+        0.0,
+        -0.2
+      ],
+      "bounds_max": [
+        6.325,
+        5.45,
+        0.15
+      ],
+      "size": [
+        12.65,
+        5.45,
+        0.35
+      ],
+      "materials": [
+        "EN_Asphalt",
+        "EN_Curb",
+        "EN_Marking_White"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.2,
+        "spaces": 5,
+        "tiles_along": "X 12,5 м",
+        "expect_size": {
+          "x": [
+            12.5,
+            12.7
+          ],
+          "y": [
+            5.45,
+            5.5
+          ]
+        },
+        "group": "parking"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Park_Bay_Perp_5x.fbx",
+      "fbx_sha256": "42c64d7d04b1705700d086692063972e7a4d2b8da3503259edeae1beee9ff863",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.2,
+          "target": ">= -0.2"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 34,
+          "target": "<= 16000"
+        },
+        {
+          "id": "Габарит по x",
+          "status": "PASS",
+          "value": 12.65,
+          "target": "12.5..12.7"
+        },
+        {
+          "id": "Габарит по y",
+          "status": "PASS",
+          "value": 5.45,
+          "target": "5.45..5.5"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            12.65,
+            5.45,
+            0.35
+          ],
+          "target": [
+            12.65,
+            5.45,
+            0.35
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Park_Bay_Angle45_4x",
+      "title": "Парковочный карман: 4 места под углом 45°",
+      "kind": "parking",
+      "group": "parking",
+      "triangles": 32,
+      "lod_triangles": {},
+      "bounds_min": [
+        -9.3711,
+        0.0,
+        -0.2
+      ],
+      "bounds_max": [
+        9.4461,
+        4.75,
+        0.15
+      ],
+      "size": [
+        18.8171,
+        4.75,
+        0.35
+      ],
+      "materials": [
+        "EN_Asphalt",
+        "EN_Curb",
+        "EN_Marking_White"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.2,
+        "spaces": 4,
+        "tiles_along": "X 14.142 м",
+        "group": "parking"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Park_Bay_Angle45_4x.fbx",
+      "fbx_sha256": "6fdc6a1a7463f5d6ab2001abfd1524dea736de57f73815a52f2ab161b853f833",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.2,
+          "target": ">= -0.2"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 32,
+          "target": "<= 16000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            18.8171,
+            4.75,
+            0.35
+          ],
+          "target": [
+            18.8171,
+            4.75,
+            0.35
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Park_Pocket_Parallel_3x",
+      "title": "Заездной карман вдоль улицы: 3 места параллельно (6 × 2,5 м)",
+      "kind": "parking",
+      "group": "parking",
+      "triangles": 54,
+      "lod_triangles": {},
+      "bounds_min": [
+        -2.6669,
+        -26.1431,
+        -0.2
+      ],
+      "bounds_max": [
+        0.0397,
+        0.1431,
+        0.15
+      ],
+      "size": [
+        2.7067,
+        26.2862,
+        0.35
+      ],
+      "materials": [
+        "EN_Asphalt",
+        "EN_Curb",
+        "EN_Marking_White"
+      ],
+      "sockets": {
+        "Socket_End": [
+          0.0,
+          -26.0,
+          0.0
+        ],
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Start": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.2,
+        "spaces": 3,
+        "note": "открытая сторона x = 0 — край проезжей части; карман уходит в +X (справа)",
+        "required": [
+          "Socket_Start",
+          "Socket_End"
+        ],
+        "sockets": {
+          "Socket_Start": [
+            0,
+            0,
+            0
+          ],
+          "Socket_End": [
+            0,
+            -26.0,
+            0
+          ]
+        },
+        "group": "parking"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Park_Pocket_Parallel_3x.fbx",
+      "fbx_sha256": "d559446eea2607c0e5d1221915024746ba24463a32c1f08a7b579bdb80e68ecd",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.2,
+          "target": ">= -0.2"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 54,
+          "target": "<= 16000"
+        },
+        {
+          "id": "Сокет Socket_Start на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Сокет Socket_End на месте",
+          "status": "PASS",
+          "value": [
+            0.0,
+            -26.0,
+            0.0
+          ],
+          "target": [
+            0,
+            -26.0,
+            0
+          ]
+        },
+        {
+          "id": "Есть объект Socket_Start",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть объект Socket_End",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            2.7067,
+            26.2862,
+            0.35
+          ],
+          "target": [
+            2.7067,
+            26.2862,
+            0.35
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Park_Lot_20",
+      "title": "Автостоянка на 20 мест (2 ряда, проезд 6 м)",
+      "kind": "parking",
+      "group": "parking",
+      "triangles": 360,
+      "lod_triangles": {},
+      "bounds_min": [
+        -14.5,
+        -8.15,
+        -0.2
+      ],
+      "bounds_max": [
+        14.5,
+        8.15,
+        0.15
+      ],
+      "size": [
+        29.0,
+        16.3,
+        0.35
+      ],
+      "materials": [
+        "EN_Asphalt",
+        "EN_Curb",
+        "EN_Grass",
+        "EN_Marking_White",
+        "EN_Soil"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "min_z": -0.2,
+        "spaces": 20,
+        "note": "въезды с обоих торцов проезда (±X)",
+        "expect_size": {
+          "x": [
+            29.0,
+            29.0
+          ],
+          "y": [
+            16.3,
+            16.3
+          ]
+        },
+        "group": "parking"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Park_Lot_20.fbx",
+      "fbx_sha256": "b624192d426bcac6a68e7469726ab9fa5ddf7c62af08fcc380504a503809f9f6",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.2,
+          "target": ">= -0.2"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 360,
+          "target": "<= 16000"
+        },
+        {
+          "id": "Габарит по x",
+          "status": "PASS",
+          "value": 29.0,
+          "target": "29.0..29.0"
+        },
+        {
+          "id": "Габарит по y",
+          "status": "PASS",
+          "value": 16.3,
+          "target": "16.3..16.3"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            29.0,
+            16.3,
+            0.35
+          ],
+          "target": [
+            29.0,
+            16.3,
+            0.35
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Park_WheelStop",
+      "title": "Колесоотбойник 1,8 м",
+      "kind": "parking",
+      "group": "parking",
+      "triangles": 108,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.9,
+        -0.075,
+        0.0
+      ],
+      "bounds_max": [
+        0.9,
+        0.075,
+        0.105
+      ],
+      "size": [
+        1.8,
+        0.15,
+        0.105
+      ],
+      "materials": [
+        "EN_Paint_Yellow",
+        "EN_Rubber",
+        "EN_Steel_Dark"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "group": "parking"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Park_WheelStop.fbx",
+      "fbx_sha256": "bd42947046511142df6dea9fd46b8ceb1b2100475fc23434ca8279ab4d8192d5",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": 0.0,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 108,
+          "target": "<= 16000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            1.8,
+            0.15,
+            0.105
+          ],
+          "target": [
+            1.8,
+            0.15,
+            0.105
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Park_PayStation",
+      "title": "Паркомат",
+      "kind": "parking",
+      "group": "parking",
+      "triangles": 296,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.3,
+        -0.225,
+        0.0
+      ],
+      "bounds_max": [
+        0.3,
+        0.225,
+        1.88
+      ],
+      "size": [
+        0.6,
+        0.45,
+        1.88
+      ],
+      "materials": [
+        "EN_Concrete",
+        "EN_Display",
+        "EN_Paint_Grey",
+        "EN_Sign_Blue",
+        "EN_Sign_White",
+        "EN_Steel_Dark",
+        "EN_Steel_Galv"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "group": "parking"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Park_PayStation.fbx",
+      "fbx_sha256": "5220c961d5e5a64ef7ca41543bbed461aa9754d46ac637c70f60822969ddd32f",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": 0.0,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 296,
+          "target": "<= 16000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.6,
+            0.45,
+            1.88
+          ],
+          "target": [
+            0.6,
+            0.45,
+            1.88
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN_Park_Bollard",
+      "title": "Парковочный столбик",
+      "kind": "parking",
+      "group": "parking",
+      "triangles": 158,
+      "lod_triangles": {},
+      "bounds_min": [
+        -0.0565,
+        -0.0565,
+        -0.05
+      ],
+      "bounds_max": [
+        0.0565,
+        0.0565,
+        0.92
+      ],
+      "size": [
+        0.113,
+        0.113,
+        0.97
+      ],
+      "materials": [
+        "EN_Paint_Grey",
+        "EN_Reflector_Red",
+        "EN_Reflector_White"
+      ],
+      "sockets": {
+        "Socket_Front": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "Socket_Up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "meta": {
+        "group": "parking"
+      },
+      "fbx": "Assets/DrivingSchool/Art/EnvKit/EN_Park_Bollard.fbx",
+      "fbx_sha256": "254ee5b9ab31547d2bc82220a4c90bd0a29e6a0ae513c1576e5ff084a23f4fa5",
+      "checks": [
+        {
+          "id": "Корень в начале координат без поворота и масштаба",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "Ничего не уходит под землю глубже допуска",
+          "status": "PASS",
+          "value": -0.05,
+          "target": ">= -0.1"
+        },
+        {
+          "id": "Бюджет треугольников LOD0",
+          "status": "PASS",
+          "value": 158,
+          "target": "<= 16000"
+        },
+        {
+          "id": "Есть коллизия COL_*",
+          "status": "PASS",
+          "value": null,
+          "target": null
+        },
+        {
+          "id": "FBX: повторный импорт совпадает по габаритам",
+          "status": "PASS",
+          "value": [
+            0.113,
+            0.113,
+            0.97
+          ],
+          "target": [
+            0.113,
+            0.113,
+            0.97
+          ]
+        }
+      ]
+    }
+  ],
+  "source": "ArtSource/DS_EnvKit.blend",
+  "source_sha256": "aca7b75dae74022fac7ba8d0fcfa0c5e774bcb8c64697e73c8c4e1c5025f88cf",
+  "failed_checks": []
+}
