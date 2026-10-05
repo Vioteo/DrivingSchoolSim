@@ -3,7 +3,37 @@ guid: ce3dba8cbf18c54448f31145358cfc7f
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Asphalt
+    second: {fileID: 2100000, guid: 8b2409f56b316064882b2fdb914c1835, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Curb
+    second: {fileID: 2100000, guid: dc7ff115dc7652648842c169bb461899, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Grass
+    second: {fileID: 2100000, guid: 8adfdac1f847bad4ca4b45eefd753efd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Marking_White
+    second: {fileID: 2100000, guid: bcd7b19f91d81304596373b5a4577b59, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Soil
+    second: {fileID: 2100000, guid: e3d2f376b8f43304cb163e52975a670b, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

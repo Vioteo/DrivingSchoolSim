@@ -3,7 +3,27 @@ guid: 2165c437b1bb2f142b42c5832ec9d8ee
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Bark_PineLow
+    second: {fileID: 2100000, guid: bd5cb7ef4ea574f41afd01050bdac06e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Bark_PineUp
+    second: {fileID: 2100000, guid: ec0a0c5446b1c0940b25aaef001137c2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Needles_Pine
+    second: {fileID: 2100000, guid: 091db4a486316e141ace42bdb201f877, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

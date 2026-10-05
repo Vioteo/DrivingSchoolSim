@@ -3,74 +3,102 @@
     {
       "name": "EN_Bark_Birch",
       "color": [
-        0.78,
-        0.77,
         0.72,
+        0.7,
+        0.64,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.75,
-      "emission": 0
+      "emission": 0,
+      "texture": "Textures/T_Bark_Birch.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
-      "name": "EN_Bark_BirchMark",
+      "name": "EN_Bark_BirchBase",
       "color": [
-        0.025,
-        0.024,
-        0.022,
+        0.2,
+        0.19,
+        0.17,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.85,
-      "emission": 0
-    },
-    {
-      "name": "EN_Bark_BirchTwig",
-      "color": [
-        0.12,
-        0.075,
-        0.055,
+      "emission": 0,
+      "texture": "Textures/T_Bark_BirchBase.png",
+      "tint": [
+        1,
+        1,
         1
       ],
-      "metallic": 0.0,
-      "roughness": 0.8,
-      "emission": 0
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Bark_Dark",
       "color": [
+        0.08,
         0.065,
-        0.05,
-        0.04,
+        0.055,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.9,
-      "emission": 0
+      "emission": 0,
+      "texture": "Textures/T_Bark_Dark.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Bark_Spruce",
       "color": [
-        0.085,
-        0.055,
-        0.04,
+        0.09,
+        0.065,
+        0.05,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.9,
-      "emission": 0
+      "emission": 0,
+      "texture": "Textures/T_Bark_Spruce.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Bark_PineLow",
       "color": [
         0.11,
-        0.075,
-        0.055,
+        0.08,
+        0.06,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.92,
-      "emission": 0
+      "emission": 0,
+      "texture": "Textures/T_Bark_PineLow.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Bark_PineUp",
@@ -82,7 +110,15 @@
       ],
       "metallic": 0.0,
       "roughness": 0.8,
-      "emission": 0
+      "emission": 0,
+      "texture": "Textures/T_Bark_PineUp.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_WoodCut",
@@ -97,124 +133,124 @@
       "emission": 0
     },
     {
-      "name": "EN_Leaves_Birch_A",
+      "name": "EN_Leaves_Birch",
       "color": [
-        0.12,
-        0.25,
-        0.035,
+        0.09,
+        0.2,
+        0.03,
         1
       ],
       "metallic": 0.0,
-      "roughness": 0.75,
-      "emission": 0
+      "roughness": 0.6,
+      "emission": 0,
+      "texture": "Textures/T_Leaves_Birch.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": true,
+      "doubleSided": true
     },
     {
-      "name": "EN_Leaves_Birch_B",
+      "name": "EN_Leaves_Linden",
       "color": [
-        0.2,
-        0.33,
         0.05,
+        0.13,
+        0.02,
         1
       ],
       "metallic": 0.0,
-      "roughness": 0.75,
-      "emission": 0
-    },
-    {
-      "name": "EN_Leaves_Linden_A",
-      "color": [
-        0.075,
-        0.2,
-        0.03,
+      "roughness": 0.6,
+      "emission": 0,
+      "texture": "Textures/T_Leaves_Linden.png",
+      "tint": [
+        1,
+        1,
         1
       ],
-      "metallic": 0.0,
-      "roughness": 0.78,
-      "emission": 0
+      "alphaClip": true,
+      "doubleSided": true
     },
     {
-      "name": "EN_Leaves_Linden_B",
+      "name": "EN_Leaves_Bush",
       "color": [
-        0.12,
-        0.26,
         0.04,
+        0.11,
+        0.02,
         1
       ],
       "metallic": 0.0,
-      "roughness": 0.78,
-      "emission": 0
+      "roughness": 0.62,
+      "emission": 0,
+      "texture": "Textures/T_Leaves_Bush.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": true,
+      "doubleSided": true
     },
     {
-      "name": "EN_Needles_Spruce_A",
+      "name": "EN_Needles_Spruce",
       "color": [
-        0.018,
-        0.075,
-        0.03,
+        0.012,
+        0.04,
+        0.016,
         1
       ],
       "metallic": 0.0,
-      "roughness": 0.85,
-      "emission": 0
-    },
-    {
-      "name": "EN_Needles_Spruce_B",
-      "color": [
-        0.028,
-        0.1,
-        0.038,
+      "roughness": 0.7,
+      "emission": 0,
+      "texture": "Textures/T_Needles_Spruce.png",
+      "tint": [
+        1,
+        1,
         1
       ],
-      "metallic": 0.0,
-      "roughness": 0.85,
-      "emission": 0
+      "alphaClip": true,
+      "doubleSided": true
     },
     {
       "name": "EN_Needles_Pine",
       "color": [
         0.03,
-        0.095,
+        0.08,
         0.03,
         1
       ],
       "metallic": 0.0,
-      "roughness": 0.85,
-      "emission": 0
-    },
-    {
-      "name": "EN_Needles_Pine_Light",
-      "color": [
-        0.07,
-        0.16,
-        0.045,
+      "roughness": 0.7,
+      "emission": 0,
+      "texture": "Textures/T_Needles_Pine.png",
+      "tint": [
+        1,
+        1,
         1
       ],
-      "metallic": 0.0,
-      "roughness": 0.85,
-      "emission": 0
+      "alphaClip": true,
+      "doubleSided": true
     },
     {
-      "name": "EN_Bush_A",
+      "name": "EN_Grass_Blades",
       "color": [
-        0.07,
-        0.17,
-        0.03,
+        0.05,
+        0.12,
+        0.025,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.8,
-      "emission": 0
-    },
-    {
-      "name": "EN_Bush_B",
-      "color": [
-        0.11,
-        0.22,
-        0.035,
+      "emission": 0,
+      "texture": "Textures/T_GrassBlades.png",
+      "tint": [
+        1,
+        1,
         1
       ],
-      "metallic": 0.0,
-      "roughness": 0.8,
-      "emission": 0
+      "alphaClip": true,
+      "doubleSided": true
     },
     {
       "name": "EN_Rock",
@@ -243,74 +279,122 @@
     {
       "name": "EN_Asphalt",
       "color": [
-        0.085,
-        0.09,
-        0.095,
+        0.05,
+        0.05,
+        0.052,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.88,
-      "emission": 0
+      "emission": 0,
+      "texture": "Textures/T_Asphalt.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Asphalt_Worn",
       "color": [
-        0.13,
-        0.13,
-        0.13,
+        0.07,
+        0.07,
+        0.07,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.9,
-      "emission": 0
+      "emission": 0,
+      "texture": "Textures/T_Asphalt.png",
+      "tint": [
+        1.35,
+        1.33,
+        1.3
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Gravel",
       "color": [
-        0.24,
-        0.215,
-        0.18,
+        0.17,
+        0.15,
+        0.12,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.95,
-      "emission": 0
+      "emission": 0,
+      "texture": "Textures/T_Gravel.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Grass",
       "color": [
-        0.085,
-        0.19,
         0.04,
+        0.09,
+        0.015,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.95,
-      "emission": 0
+      "emission": 0,
+      "texture": "Textures/T_Grass.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Grass_Dry",
       "color": [
-        0.17,
-        0.2,
-        0.06,
+        0.08,
+        0.1,
+        0.03,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.95,
-      "emission": 0
+      "emission": 0,
+      "texture": "Textures/T_GrassDry.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Soil",
       "color": [
-        0.12,
-        0.08,
-        0.05,
+        0.06,
+        0.04,
+        0.025,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.95,
-      "emission": 0
+      "emission": 0,
+      "texture": "Textures/T_Soil.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Sand",
@@ -327,50 +411,82 @@
     {
       "name": "EN_Rubber_Crumb",
       "color": [
-        0.33,
-        0.06,
+        0.22,
+        0.03,
+        0.02,
+        1
+      ],
+      "metallic": 0.0,
+      "roughness": 0.92,
+      "emission": 0,
+      "texture": "Textures/T_RubberCrumb.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "EN_Rubber_Crumb_Green",
+      "color": [
+        0.03,
+        0.12,
         0.04,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.92,
-      "emission": 0
-    },
-    {
-      "name": "EN_Rubber_Crumb_Green",
-      "color": [
-        0.06,
-        0.2,
-        0.08,
+      "emission": 0,
+      "texture": "Textures/T_RubberCrumbGreen.png",
+      "tint": [
+        1,
+        1,
         1
       ],
-      "metallic": 0.0,
-      "roughness": 0.92,
-      "emission": 0
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Concrete",
       "color": [
-        0.48,
-        0.48,
-        0.45,
+        0.3,
+        0.3,
+        0.28,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.88,
-      "emission": 0
+      "emission": 0,
+      "texture": "Textures/T_Concrete.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Curb",
       "color": [
-        0.56,
-        0.56,
-        0.53,
+        0.38,
+        0.38,
+        0.36,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.85,
-      "emission": 0
+      "emission": 0,
+      "texture": "Textures/T_Concrete.png",
+      "tint": [
+        1.1,
+        1.1,
+        1.1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Paving",
@@ -387,14 +503,22 @@
     {
       "name": "EN_Marking_White",
       "color": [
-        0.86,
-        0.87,
-        0.83,
+        0.7,
+        0.7,
+        0.66,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.7,
-      "emission": 0
+      "emission": 0,
+      "texture": "Textures/T_Marking.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Marking_Yellow",
@@ -435,14 +559,22 @@
     {
       "name": "EN_Steel_Galv",
       "color": [
-        0.55,
-        0.57,
-        0.58,
+        0.42,
+        0.44,
+        0.46,
         1
       ],
-      "metallic": 0.9,
-      "roughness": 0.42,
-      "emission": 0
+      "metallic": 0.85,
+      "roughness": 0.45,
+      "emission": 0,
+      "texture": "Textures/T_Galvanized.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Steel_Dark",
@@ -591,26 +723,42 @@
     {
       "name": "EN_Wood",
       "color": [
-        0.33,
+        0.2,
+        0.09,
+        0.035,
+        1
+      ],
+      "metallic": 0.0,
+      "roughness": 0.7,
+      "emission": 0,
+      "texture": "Textures/T_Wood.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "EN_Wood_Light",
+      "color": [
+        0.3,
         0.17,
         0.07,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.7,
-      "emission": 0
-    },
-    {
-      "name": "EN_Wood_Light",
-      "color": [
-        0.5,
-        0.32,
-        0.15,
-        1
+      "emission": 0,
+      "texture": "Textures/T_Wood.png",
+      "tint": [
+        1.5,
+        1.4,
+        1.3
       ],
-      "metallic": 0.0,
-      "roughness": 0.7,
-      "emission": 0
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Plastic_Red",
@@ -795,14 +943,202 @@
     {
       "name": "EN_Sign_Back",
       "color": [
-        0.3,
-        0.32,
-        0.33,
+        0.36,
+        0.37,
+        0.38,
         1
       ],
-      "metallic": 0.7,
-      "roughness": 0.45,
-      "emission": 0
+      "metallic": 0.75,
+      "roughness": 0.42,
+      "emission": 0,
+      "texture": "Textures/T_Galvanized.png",
+      "tint": [
+        0.9,
+        0.9,
+        0.92
+      ],
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "EN_SignFace_1_11_1",
+      "color": [
+        0.6,
+        0.3,
+        0.3,
+        1
+      ],
+      "metallic": 0.0,
+      "roughness": 0.35,
+      "emission": 0,
+      "texture": "Textures/T_Sign_1_11_1.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "EN_SignFace_1_11_2",
+      "color": [
+        0.6,
+        0.3,
+        0.3,
+        1
+      ],
+      "metallic": 0.0,
+      "roughness": 0.35,
+      "emission": 0,
+      "texture": "Textures/T_Sign_1_11_2.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "EN_SignFace_1_34_1_x1",
+      "color": [
+        0.5,
+        0.05,
+        0.05,
+        1
+      ],
+      "metallic": 0.0,
+      "roughness": 0.35,
+      "emission": 0,
+      "texture": "Textures/T_Sign_1_34_1_x1.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "EN_SignFace_1_34_2_x1",
+      "color": [
+        0.5,
+        0.05,
+        0.05,
+        1
+      ],
+      "metallic": 0.0,
+      "roughness": 0.35,
+      "emission": 0,
+      "texture": "Textures/T_Sign_1_34_2_x1.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "EN_SignFace_1_34_1_x2",
+      "color": [
+        0.5,
+        0.05,
+        0.05,
+        1
+      ],
+      "metallic": 0.0,
+      "roughness": 0.35,
+      "emission": 0,
+      "texture": "Textures/T_Sign_1_34_1_x2.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "EN_SignFace_1_34_2_x2",
+      "color": [
+        0.5,
+        0.05,
+        0.05,
+        1
+      ],
+      "metallic": 0.0,
+      "roughness": 0.35,
+      "emission": 0,
+      "texture": "Textures/T_Sign_1_34_2_x2.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "EN_SignFace_3_20",
+      "color": [
+        0.6,
+        0.3,
+        0.3,
+        1
+      ],
+      "metallic": 0.0,
+      "roughness": 0.35,
+      "emission": 0,
+      "texture": "Textures/T_Sign_3_20.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "EN_SignFace_6_13_17",
+      "color": [
+        0.8,
+        0.8,
+        0.8,
+        1
+      ],
+      "metallic": 0.0,
+      "roughness": 0.35,
+      "emission": 0,
+      "texture": "Textures/T_Sign_6_13_17.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
+    },
+    {
+      "name": "EN_SignFace_6_13_23",
+      "color": [
+        0.8,
+        0.8,
+        0.8,
+        1
+      ],
+      "metallic": 0.0,
+      "roughness": 0.35,
+      "emission": 0,
+      "texture": "Textures/T_Sign_6_13_23.png",
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "alphaClip": false,
+      "doubleSided": false
     },
     {
       "name": "EN_Reflector_Red",
@@ -814,7 +1150,7 @@
       ],
       "metallic": 0.1,
       "roughness": 0.15,
-      "emission": 0.6
+      "emission": 0.08
     },
     {
       "name": "EN_Reflector_White",
@@ -826,7 +1162,7 @@
       ],
       "metallic": 0.1,
       "roughness": 0.15,
-      "emission": 0.4
+      "emission": 0.05
     },
     {
       "name": "EN_Reflector_Amber",
@@ -838,19 +1174,19 @@
       ],
       "metallic": 0.1,
       "roughness": 0.15,
-      "emission": 0.6
+      "emission": 0.08
     },
     {
       "name": "EN_Lamp_White",
       "color": [
         1.0,
-        0.92,
-        0.8,
+        0.86,
+        0.66,
         1
       ],
       "metallic": 0.0,
       "roughness": 0.3,
-      "emission": 1.0
+      "emission": 6.0
     },
     {
       "name": "EN_Collision",

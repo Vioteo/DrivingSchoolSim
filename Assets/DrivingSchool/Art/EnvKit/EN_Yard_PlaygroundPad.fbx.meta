@@ -3,7 +3,27 @@ guid: 803d5509671d6494daa45a41054d44b2
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Curb
+    second: {fileID: 2100000, guid: dc7ff115dc7652648842c169bb461899, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Rubber_Crumb
+    second: {fileID: 2100000, guid: 77f1a12a36fc04c4698a8bfe209658aa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Rubber_Crumb_Green
+    second: {fileID: 2100000, guid: ab4be81f25687ad4fb3faa1ec4ac30f5, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

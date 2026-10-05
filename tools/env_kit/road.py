@@ -1,27 +1,35 @@
-"""Country road (two lanes, outside settlements) and roadside furniture.
+"""Country road (two lanes, outside settlements), road signs and the dangerous-curve furniture.
 
-Road modules run along author +Y (Unity +Z) from Socket_Start (0,0,0) to
-Socket_End; curves turn right (towards +X), a left curve is the same module
-driven the other way. Cross-section (each side from the centre line):
-lane 3.5 m | edge line 1.2 + paved strip 0.75 m (asphalt top Y = 0) |
-gravel shoulder 1.95 m falling to -0.09 | slope 1:3 | ditch bottom -0.78 m |
+Road modules run along author +Y (Unity +Z) from Socket_Start (0,0,0) to Socket_End.
+Curves turn right (towards +X); a left curve is the same module driven the other way.
+
+Cross-section from the centre line: lane 3.5 m | edge line 1.2 + paved strip to 4.25 m
+(asphalt top Y = 0 on straights) | gravel shoulder to 6.2 m | slope | ditch bottom -0.78 m |
 back slope | ground 0 at 12.5 m. Total width 25 m.
 
-Markings (ГОСТ Р 51256-2018, line widths and dash/gap lengths of the table;
-module lengths chosen so the dash period closes on the module):
-1.5 dash 3 / gap 9 m, 1.6 (approach) dash 6 / gap 2 m, 1.1 solid, 1.2 edge.
-Signs and delineators: shapes and colours after ГОСТ Р 52290-2004 and
-ГОСТ Р 50970-2011, size group II; pictograms are stylised (not traced).
+Curves are built like a real road: transition spirals (clothoids, curvature grows linearly)
+on both sides of the circular arc, superelevation (вираж: the carriageway and shoulders are
+rotated about the centre line towards the inside of the curve, rising linearly along the
+spiral to the full value on the arc) and widening of the inner lane. Straight ends are flat,
+so every module joins any other at Y = 0.
+
+Markings after ГОСТ Р 51256-2018: 1.5 dash 3 / gap 9 m, 1.6 dash 6 / gap 2 m, 1.1 solid,
+1.2 edge line 0.15 m. Signs: ГОСТ Р 52290-2004 типоразмер II (triangle 900 mm, circle 700 mm,
+1.34.1/2 500 x 615 and 500 x 1160 mm, 6.13 300 x 200 mm); faces are textures from
+make_textures.py. Delineator С1 after ГОСТ Р 50970-2011 (white post, black band 250 mm
+inclined 30 deg towards the road, red reflector to traffic for which the post is on the right).
 Front of signs and delineators = author +Y (Unity +Z), as in the traffic kit.
 """
 import math
-from mathutils import Vector, Matrix
+from mathutils import Vector, Matrix, noise
 
-from .core import MB, Asset, rng, text_mb, stroke, ccw, arc_pts, to_blender
+from .core import MB, Asset, rng, ccw, to_blender, split_by_planes
+from . import barrier
 
-LANE, PAVED, SHOULDER = 3.5, 4.25, 6.2
+LANE, PAVED, SHOULDER, EDGE = 3.5, 4.25, 6.2, 12.5
 HALF = [(0.0, 0.0), (LANE, 0.0), (PAVED, 0.0), (PAVED + 0.02, -0.035), (SHOULDER, -0.09), (7.0, -0.33),
-        (7.75, -0.62), (8.35, -0.78), (9.15, -0.78), (9.8, -0.6), (10.6, -0.22), (11.5, -0.03), (12.5, 0.0)]
+        (7.75, -0.62), (8.35, -0.78), (9.15, -0.78), (9.8, -0.6), (10.6, -0.22), (11.5, -0.03), (EDGE, 0.0)]
+Z = Vector((0, 0, 1))
 
 
 def profile():
@@ -34,63 +42,169 @@ def profile():
     return pts, mats
 
 
-class Straight:
-    def __init__(self, L):
-        self.L = L
+def ground_h(lat):
+    """Profile height (without superelevation) at a lateral offset."""
+    a = abs(lat)
+    for (x0, h0), (x1, h1) in zip(HALF, HALF[1:]):
+        if a <= x1:
+            return h0 + (h1 - h0) * (a - x0) / max(1e-9, x1 - x0)
+    return 0.0
 
-    def frame(self, s):
-        return Vector((0, s, 0)), Vector((1, 0, 0)), Vector((0, 0, 1))
+
+# ---------------------------------------------------------------- road path
+class RoadPath:
+    """Plan line from segments ('line', L) / ('spiral', L, k0, k1) / ('arc', L, k), curvature k > 0 turns
+    right. Integrated numerically; heading psi is measured from +Y towards +X."""
+
+    def __init__(self, segments, e_max=0.0, widen=0.0, ds=0.02):
+        self.e_max, self.widen = e_max, widen
+        s, x, y, psi = 0.0, 0.0, 0.0, 0.0
+        self.S, self.X, self.Y, self.P, self.K = [0.0], [0.0], [0.0], [0.0], [0.0]
+        for seg in segments:
+            kind, L = seg[0], seg[1]
+            n = max(1, int(round(L / ds)))
+            h = L / n
+            for i in range(n):
+                u0, u1 = i / n, (i + 1) / n
+                if kind == 'line':
+                    k0 = k1 = 0.0
+                elif kind == 'arc':
+                    k0 = k1 = seg[2]
+                else:
+                    k0 = seg[2] + (seg[3] - seg[2]) * u0
+                    k1 = seg[2] + (seg[3] - seg[2]) * u1
+                km = (k0 + k1) / 2
+                pm = psi + km * h / 2
+                x += math.sin(pm) * h
+                y += math.cos(pm) * h
+                psi += km * h
+                s += h
+                self.S.append(s)
+                self.X.append(x)
+                self.Y.append(y)
+                self.P.append(psi)
+                self.K.append(k1)
+        self.L = s
+        self.kmax = max(abs(k) for k in self.K) or 1.0
+
+    def _i(self, s):
+        if s <= 0:
+            return 0, 0.0
+        if s >= self.L:
+            return len(self.S) - 2, 1.0
+        lo, hi = 0, len(self.S) - 1
+        while hi - lo > 1:
+            m = (lo + hi) // 2
+            if self.S[m] <= s:
+                lo = m
+            else:
+                hi = m
+        return lo, (s - self.S[lo]) / max(1e-12, self.S[lo + 1] - self.S[lo])
+
+    def at(self, s):
+        """(position, tangent, right, curvature) at s; beyond the ends the path continues straight."""
+        if s < 0 or s > self.L:
+            e = 0 if s < 0 else len(self.S) - 1
+            p0 = Vector((self.X[e], self.Y[e], 0))
+            psi = self.P[e]
+            t = Vector((math.sin(psi), math.cos(psi), 0))
+            d = s if s < 0 else s - self.L
+            return p0 + t * d, t, Vector((t.y, -t.x, 0)), 0.0
+        i, f = self._i(s)
+        x = self.X[i] + (self.X[i + 1] - self.X[i]) * f
+        y = self.Y[i] + (self.Y[i + 1] - self.Y[i]) * f
+        psi = self.P[i] + (self.P[i + 1] - self.P[i]) * f
+        k = self.K[i] + (self.K[i + 1] - self.K[i]) * f
+        t = Vector((math.sin(psi), math.cos(psi), 0))
+        return Vector((x, y, 0)), t, Vector((t.y, -t.x, 0)), k
 
     def heading(self, s):
-        return 0.0
+        return self.at(s)[1]
+
+    def e(self, k):
+        return self.e_max * k / self.kmax
+
+    def point(self, s, lat, h):
+        """Surface point: lateral offset with widening on the inside, superelevation about the centre line."""
+        p, t, r, k = self.at(s)
+        sgn = 1 if k >= 0 else -1
+        w = self.widen * abs(k) / self.kmax
+        lat_e = lat
+        if lat * sgn > 0:
+            lat_e = lat + sgn * w * min(1.0, abs(lat) / LANE)
+        e = self.e(k)
+        a = abs(lat)
+        if a <= SHOULDER:
+            zb = -lat * e
+        else:
+            zb = -math.copysign(SHOULDER, lat) * e * max(0.0, (EDGE - a) / (EDGE - SHOULDER))
+        return p + r * lat_e + Z * (h + zb)
+
+    def end_yaw(self):
+        return -self.P[-1]
 
 
-class CurveRight:
-    def __init__(self, R, deg):
-        self.R, self.A = R, math.radians(deg)
-        self.L = R * self.A
-
-    def frame(self, s):
-        t = s / self.R
-        return (Vector((self.R * (1 - math.cos(t)), self.R * math.sin(t), 0)),
-                Vector((math.cos(t), -math.sin(t), 0)), Vector((0, 0, 1)))
-
-    def heading(self, s):
-        return -s / self.R
+def straight(L):
+    return RoadPath([('line', L)])
 
 
-def frames(path, step):
+def curve(R, deg, Ls, e_max, widen):
+    k = 1.0 / R
+    arc = math.radians(deg) - Ls * k        # each spiral turns by Ls / (2R)
+    return RoadPath([('spiral', Ls, 0.0, k), ('arc', arc * R, k), ('spiral', Ls, k, 0.0)], e_max, widen)
+
+
+# ---------------------------------------------------------------- road modules
+def surface(path, step, prof, mats, jitter=True, seed=0):
+    mb = MB()
     n = max(1, int(math.ceil(path.L / step)))
-    return [path.frame(path.L * i / n) for i in range(n + 1)]
+    np_ = len(prof)
+    verts = []
+    for i in range(n + 1):
+        s = path.L * i / n
+        for lat, h in prof:
+            if jitter and abs(abs(lat) - PAVED) < 0.03:      # broken asphalt edge
+                lat = lat + math.copysign(0.05 * noise.noise(Vector((s * 0.35, lat, seed))), lat)
+            verts.append(path.point(s, lat, h))
+    faces, fms = [], []
+    for i in range(n):
+        for j in range(np_ - 1):
+            faces.append((i * np_ + j, i * np_ + j + 1, (i + 1) * np_ + j + 1, (i + 1) * np_ + j))
+            fms.append(mats[j])
+    mb.add(verts, faces, mats[0], face_mats=fms)
+    return mb
 
 
-def line(mb, path, s0, s1, lat, w, mat='EN_Marking_White', z=0.005, step=1.0):
+def line(mb, path, s0, s1, lat, w, mat='EN_Marking_White', z=0.006, step=1.0):
     s0, s1 = max(0.0, s0), min(path.L, s1)
     if s1 - s0 < 0.05:
         return
     n = max(1, int(math.ceil((s1 - s0) / step)))
-    fr = [path.frame(s0 + (s1 - s0) * i / n) for i in range(n + 1)]
-    mb.sweep(fr, [(lat - w / 2, z), (lat + w / 2, z)], mat)
+    verts = []
+    for i in range(n + 1):
+        s = s0 + (s1 - s0) * i / n
+        verts += [path.point(s, lat - w / 2, z), path.point(s, lat + w / 2, z)]
+    faces = [(2 * i, 2 * i + 1, 2 * i + 3, 2 * i + 2) for i in range(n)]
+    mb.add(verts, faces, mat)
 
 
-def dashed(mb, path, lat, w, dash, gap, phase=0.0):
-    s = -phase
+def dashed(mb, path, lat, w, dash, gap):
+    s = 0.0
     while s < path.L:
         line(mb, path, s, s + dash, lat, w)
         s += dash + gap
 
 
 def road_module(M, aid, title, path, centre):
-    a = Asset(aid, title, 'road', M, min_z=-0.8, centre_line=centre, length=round(path.L, 3),
+    a = Asset(aid, title, 'road', M, min_z=-1.1 if path.e_max else -0.8, centre_line=centre, length=round(path.L, 3),
+              superelevation=path.e_max, widening=path.widen,
               required=['COL_DriveSurface', 'Socket_Start', 'Socket_End'])
     prof, mats = profile()
-    step = 4.0 if isinstance(path, Straight) else 1.5
-    mb = MB()
-    mb.sweep(frames(path, step), prof, mats)
-    a.mesh(f'{aid}_Surface', mb)
+    curved = path.kmax > 1e-6 and any(abs(k) > 1e-6 for k in path.K)
+    a.mesh(f'{aid}_Surface', surface(path, 1.0 if curved else 4.0, prof, mats, seed=len(aid)))
     mk = MB()
     for side in (-1, 1):
-        line(mk, path, 0, path.L, side * (LANE + 0.075), 0.15)          # 1.2 edge lines
+        line(mk, path, 0, path.L, side * (LANE + 0.075), 0.15)
     if centre == '1.1':
         line(mk, path, 0, path.L, 0.0, 0.12)
     elif centre == '1.5':
@@ -98,216 +212,300 @@ def road_module(M, aid, title, path, centre):
     elif centre == '1.6':
         dashed(mk, path, 0.0, 0.12, 6.0, 2.0)
     a.mesh(f'{aid}_Markings', mk)
-    # worn asphalt patches (repairs), a few per module
-    R = rng(sum(map(ord, aid)))
-    pt = MB()
-    for i in range(int(path.L / 14) + 1):
-        s = R.uniform(1.5, path.L - 3.0)
-        lat = R.uniform(-3.0, 3.0)
-        ln, wd = R.uniform(1.0, 2.6), R.uniform(0.6, 1.6)
-        if abs(lat) < wd / 2 + 0.1:
-            lat = (wd / 2 + 0.2) * (1 if lat >= 0 else -1)
-        pt.sweep([path.frame(s), path.frame(s + ln)], [(lat - wd / 2, 0.002), (lat + wd / 2, 0.002)],
-                 'EN_Asphalt_Worn')
-    a.mesh(f'{aid}_Patches', pt)
     col = MB()
-    col.sweep(frames(path, 8.0 if isinstance(path, Straight) else 4.0), prof, 'EN_Collision')
+    col.extend(surface(path, 2.0 if curved else 8.0, prof, ['EN_Collision'] * len(mats), jitter=False))
     a.mesh('COL_DriveSurface', col)
     a.socket('Socket_Start', (0, 0, 0))
-    end, _, _ = path.frame(path.L)
-    a.socket('Socket_End', tuple(end), yaw=path.heading(path.L))
+    end, _, _, _ = path.at(path.L)
+    a.socket('Socket_End', tuple(end), yaw=path.end_yaw())
     a.meta['sockets'] = {'Socket_Start': (0, 0, 0), 'Socket_End': to_blender(tuple(end))}
-    a.meta['end_heading_deg'] = round(math.degrees(-path.heading(path.L)), 3)
-    a.meta['expect_size'] = {'z': (0.78, 0.8)}
+    a.meta['end_heading_deg'] = round(math.degrees(path.P[-1]), 3)
     return a
 
 
-# ---------------------------------------------------------------- roadside
-def sign_plate(mb, outer, layers, cz, y=0.0, back='EN_Sign_Back'):
-    """outer: polygon in sign coords (a = viewer's right, b = up). Plate face at author y, facing +Y."""
-    O, U, V = Vector((0, y, cz)), Vector((-1, 0, 0)), Vector((0, 0, 1))
-    mb.plate(ccw(outer), O, U, V, 0.018, back, side_mat=back, back_mat=back)
-    for i, (poly, mat) in enumerate(layers):
-        off = 0.0012 * (i + 1)
-        pts = [O + U * p[0] + V * p[1] + Vector((0, off, 0)) for p in ccw(poly)]
-        mb.ngon(pts, mat)
+# ---------------------------------------------------------------- signs
+SIGN_FRONT_Y = 0.0
+PLATE = 0.022          # folded edge depth
+POST_R = 0.038         # pipe 76 mm
 
 
-def post(mb, h, y=-0.06, r=0.038):
-    mb.cyl((0, y, -0.05), (0, y, h), r, seg=14, mat='EN_Steel_Galv', cap0=False)
-    mb.cyl((0, y, h - 0.005), (0, y, h + 0.012), r + 0.004, seg=14, mat='EN_Plastic_Grey')
+def rounded_triangle(A, r, n=8):
+    rho = A / (2 * math.sqrt(3))
+    d_c = 2 * (rho - r)
+    pts = []
+    for k in range(3):
+        a = math.radians(90 + 120 * k)
+        cx, cy = math.cos(a) * d_c, math.sin(a) * d_c
+        for i in range(n + 1):
+            t = a - math.radians(60) + math.radians(120) * i / n
+            pts.append((cx + r * math.cos(t), cy + r * math.sin(t)))
+    return pts
 
 
-def clamps(mb, zs, y=-0.06):
-    for z in zs:
-        mb.box((0, y + 0.025, z), (0.09, 0.07, 0.035), 'EN_Steel_Galv')
+def rounded_rect(W, H, r, n=5):
+    pts = []
+    for cx, cy, a0 in ((W / 2 - r, -H / 2 + r, -90), (W / 2 - r, H / 2 - r, 0), (-W / 2 + r, H / 2 - r, 90),
+                       (-W / 2 + r, -H / 2 + r, 180)):
+        for i in range(n + 1):
+            t = math.radians(a0 + 90 * i / n)
+            pts.append((cx + r * math.cos(t), cy + r * math.sin(t)))
+    return pts
 
 
-def tri(R, rot=90):
-    return [(R * math.cos(math.radians(rot + 120 * k)), R * math.sin(math.radians(rot + 120 * k))) for k in range(3)]
+def sign_shape(kind, w_mm, h_mm):
+    """Outline (m, relative to the texture bbox centre) and the texture bbox (W, H) in m."""
+    if kind == 'triangle':
+        A = w_mm
+        H = A * math.sqrt(3) / 2 + 2
+        dy = -H / 2 + A / (2 * math.sqrt(3))
+        pts = [(x, y + dy) for x, y in rounded_triangle(A, 58.5)]
+        return [(x / 1000, y / 1000) for x, y in pts], (A / 1000, H / 1000)
+    if kind == 'circle':
+        D = w_mm
+        return [(D / 2000 * math.cos(2 * math.pi * i / 48), D / 2000 * math.sin(2 * math.pi * i / 48))
+                for i in range(48)], (D / 1000, D / 1000)
+    r = 30 if h_mm >= 400 else 12
+    return [(x / 1000, y / 1000) for x, y in rounded_rect(w_mm, h_mm, r)], (w_mm / 1000, h_mm / 1000)
 
 
-def arrow_head(tip, d, size):
-    d = Vector(d).normalized()
-    n = Vector((-d.y, d.x))
-    t = Vector(tip)
-    b = t - d * size
-    return [tuple(t), tuple(b + n * size * 0.55), tuple(b - n * size * 0.55)]
-
-
-def curve_pictogram(right=True):
-    s = 1 if right else -1
-    w = 0.05
-    cx = -0.035 * s + 0.1 * s
-    pts = [(-0.035 * s, -0.17), (-0.035 * s, -0.02)]
-    a0, a1 = (math.pi, math.pi * 0.55) if right else (0.0, math.pi * 0.45)
-    pts += arc_pts(cx, -0.02, 0.1, a0, a1, 6)[1:]
-    end = Vector(pts[-1])
-    d = (end - Vector(pts[-2])).normalized()
-    body = stroke(pts[:-1] + [tuple(end - d * 0.03)], w)
-    head = arrow_head(tuple(end + d * 0.06), tuple(d), 0.11)
-    return [(body, 'EN_Sign_Black'), (head, 'EN_Sign_Black')]
-
-
-def warning_sign(M, aid, title, right):
-    a = Asset(aid, title, 'sign', M, gost='1.11.1' if right else '1.11.2', size_group='II (сторона 900 мм)')
+def sign_plate_mb(kind, w_mm, h_mm, face):
+    """Sign plate in its own frame: centre of the texture bbox at the origin, face in the XZ plane at y = 0
+    looking +Y, folded edge PLATE deep behind it."""
+    pts, (W, H) = sign_shape(kind, w_mm, h_mm)
+    pts = ccw(pts)
     mb = MB()
-    post(mb, 2.75)
-    cz = 2.35
-    Rout = 0.9 / math.sqrt(3)
-    sign_plate(mb, tri(Rout), [(tri(Rout - 0.004), 'EN_Sign_Red'), (tri(Rout - 0.14), 'EN_Sign_White')] +
-               curve_pictogram(right), cz)
-    clamps(mb, (cz - 0.2, cz + 0.12))
+    # front: viewer looks along -Y, his right is -X -> x_world = -a
+    front = [(-a, SIGN_FRONT_Y, b) for a, b in pts]
+    uv_front = [((a + W / 2) / W, (b + H / 2) / H) for a, b in pts]
+    n = len(pts)
+    o = mb.add(front, [tuple(range(n))], face, uvs=[uv_front])
+    backv = [(-a, SIGN_FRONT_Y - PLATE, b) for a, b in pts]
+    mb.add(backv, [tuple(reversed(range(n)))], 'EN_Sign_Back')
+    rim_v = front + backv
+    rim_f = [((i + 1) % n, i, n + i, n + (i + 1) % n) for i in range(n)]
+    mb.add(rim_v, rim_f, 'EN_Sign_Back')
+    return mb, (W, H), pts
+
+
+def mount(mb, z_rails, half_widths, y_post):
+    """Mounting rails behind the plate and band clamps round the post."""
+    yb = SIGN_FRONT_Y - PLATE
+    for z, hw in zip(z_rails, half_widths):
+        mb.box((0, yb - 0.012, z), (2 * hw, 0.024, 0.035), 'EN_Steel_Galv')
+        mb.cyl((0, y_post, z - 0.022), (0, y_post, z + 0.022), POST_R + 0.007, seg=14, mat='EN_Steel_Galv')
+
+
+def post(mb, top, y, ground=0.0):
+    mb.cyl((0, y, ground - 0.05), (0, y, top), POST_R, seg=16, mat='EN_Steel_Galv', cap0=False, cap1=False)
+    mb.lathe([(POST_R + 0.003, top), (POST_R + 0.003, top + 0.012), (0.02, top + 0.03), (0.0, top + 0.034)],
+             (0, y, 0), 16, 'EN_Plastic_Grey')
+
+
+def sign_mb(kind, w_mm, h_mm, face, bottom, back=None, post_extra=0.08):
+    """Complete sign on a post in the asset frame (post on the ground near the origin, face looking +Y).
+    back: a second sign on the other side of the same post, facing -Y (opposite direction of travel)."""
+    plate, (W, H), pts = sign_plate_mb(kind, w_mm, h_mm, face)
+    ymin = min(b for _, b in pts)
+    ymax = max(b for _, b in pts)
+    lift = bottom - ymin
+    y_post = SIGN_FRONT_Y - PLATE - 0.024 - POST_R
+    h = ymax - ymin
+    zr = [bottom + h * 0.25, bottom + h * 0.72] if h > 0.35 else [bottom + h * 0.5]
+
+    def half_width(z):
+        zz = z - lift
+        xs = []
+        for (a0, b0), (a1, b1) in zip(pts, pts[1:] + pts[:1]):
+            if (b0 - zz) * (b1 - zz) <= 0 and b0 != b1:
+                xs.append(a0 + (a1 - a0) * (zz - b0) / (b1 - b0))
+        return 0.8 * (max(xs) - min(xs)) / 2 if len(xs) >= 2 else 0.1
+    one = MB()
+    plate.transform(Matrix.Translation((0, 0, lift)))
+    one.extend(plate)
+    mount(one, zr, [half_width(z) for z in zr], y_post)
+    mb = MB()
+    mb.extend(one)
+    if back:
+        plate2, _, _ = sign_plate_mb(kind, w_mm, h_mm, back)
+        two = MB()
+        plate2.transform(Matrix.Translation((0, 0, lift)))
+        two.extend(plate2)
+        mount(two, zr, [half_width(z) for z in zr], y_post)
+        # mirror position through the post axis: turn 180 deg about the post
+        mb.extend(two, Matrix.Translation((0, 2 * y_post, 0)) @ Matrix.Rotation(math.pi, 4, 'Z'))
+    top = lift + ymax + post_extra
+    post(mb, top, y_post)
+    return mb, y_post, top
+
+
+def sign_asset(M, aid, title, kind, w_mm, h_mm, face, bottom, back=None, **meta):
+    a = Asset(aid, title, 'sign', M, **meta)
+    mb, y_post, top = sign_mb(kind, w_mm, h_mm, face, bottom, back)
     a.mesh(f'{aid}_Mesh', mb)
     col = MB()
-    col.box((0, -0.06, 1.4), (0.1, 0.1, 2.8), 'EN_Collision')
+    col.box((0, y_post, top / 2), (0.1, 0.1, top), 'EN_Collision')
     a.mesh('COL_Post', col)
     return a
 
 
-def chevron_sign(M, aid, title, right):
-    a = Asset(aid, title, 'sign', M, gost='1.34.1' if right else '1.34.2', size_group='II',
-              note='пропорции и шевроны стилизованы')
+# ---------------------------------------------------------------- delineator
+def delineator_mb():
+    """Сигнальный столбик С1: white post 1.0 m above the ground, black band 250 mm wide inclined 30 deg,
+    falling towards the road (+X in the asset frame: the post stands to the right of the traffic it faces),
+    red reflector on the front band, white on the back."""
     mb = MB()
-    post(mb, 1.95)
-    cz = 1.55
-    W, H = 0.9, 0.6
-    rect = [(-W / 2, -H / 2), (W / 2, -H / 2), (W / 2, H / 2), (-W / 2, H / 2)]
-    layers = [([(x * 0.995, y * 0.99) for x, y in rect], 'EN_Sign_Red')]
-    s = 1 if right else -1
-    for cx in (-0.15, 0.17):
-        layers.append((stroke([((cx - 0.09) * s, 0.19), ((cx + 0.08) * s, 0.0), ((cx - 0.09) * s, -0.19)], 0.1),
-                       'EN_Sign_White'))
-    sign_plate(mb, rect, layers, cz)
-    clamps(mb, (cz - 0.18, cz + 0.18))
-    a.mesh(f'{aid}_Mesh', mb)
-    col = MB()
-    col.box((0, -0.06, 1.0), (0.1, 0.1, 2.0), 'EN_Collision')
-    a.mesh('COL_Post', col)
-    return a
-
-
-def car_rear(cx, mat):
-    body = [(-0.085, -0.06), (0.085, -0.06), (0.085, 0.005), (0.065, 0.015), (0.045, 0.07), (-0.045, 0.07),
-            (-0.065, 0.015), (-0.085, 0.005)]
-    out = [([(x + cx, y) for x, y in body], mat)]
-    for wx in (-0.06, 0.06):
-        out.append(([(cx + wx - 0.02, -0.088), (cx + wx + 0.02, -0.088), (cx + wx + 0.02, -0.055),
-                     (cx + wx - 0.02, -0.055)], mat))
-    return out
-
-
-def circle(r, n=40, cx=0.0, cy=0.0):
-    return [(cx + r * math.cos(2 * math.pi * i / n), cy + r * math.sin(2 * math.pi * i / n)) for i in range(n)]
-
-
-def no_overtaking(M):
-    a = Asset('EN_Sign_3_20_NoOvertaking', 'Знак 3.20 «Обгон запрещён»', 'sign', M, gost='3.20',
-              size_group='II (Ø 700 мм)', note='силуэты автомобилей стилизованы')
-    mb = MB()
-    post(mb, 2.75)
-    cz = 2.4
-    layers = [(circle(0.348), 'EN_Sign_Red'), (circle(0.27), 'EN_Sign_White')]
-    layers += car_rear(-0.1, 'EN_Sign_Red') + car_rear(0.1, 'EN_Sign_Black')
-    sign_plate(mb, circle(0.35), layers, cz)
-    for cx in (-0.1, 0.1):   # car rear windows (white) on top of the silhouettes
-        O = Vector((0, 0.0075, cz))
-        poly = ccw([(cx - 0.035, 0.018), (cx + 0.035, 0.018), (cx + 0.028, 0.055), (cx - 0.028, 0.055)])
-        mb.ngon([O + Vector((-p[0], 0, p[1])) for p in poly], 'EN_Sign_White')
-    clamps(mb, (cz - 0.2, cz + 0.2))
-    a.mesh(f'{a.id}_Mesh', mb)
-    col = MB()
-    col.box((0, -0.06, 1.4), (0.1, 0.1, 2.8), 'EN_Collision')
-    a.mesh('COL_Post', col)
-    return a
-
-
-def km_post(M, front='17', back='23'):
-    a = Asset(f'EN_Sign_6_13_Km{front}', f'Знак 6.13 «Километровый знак» ({front} / {back})', 'sign', M, gost='6.13')
-    mb = MB()
-    post(mb, 2.2, y=0.0)
-    cz = 1.85
-    W, H = 0.42, 0.32
-    for y, txt, facing in ((0.045, front, 1), (-0.045, back, -1)):
-        O, U, V = Vector((0, y, cz)), Vector((-facing, 0, 0)), Vector((0, 0, 1))
-        rect = ccw([(-W / 2, -H / 2), (W / 2, -H / 2), (W / 2, H / 2), (-W / 2, H / 2)])
-        mb.plate(rect, O, U, V, 0.012, 'EN_Sign_White', side_mat='EN_Sign_Back', back_mat='EN_Sign_Back')
-        nrm = U.cross(V)
-        border = [(x * 0.92, yy * 0.88) for x, yy in rect]
-        inner = [(x * 0.86, yy * 0.8) for x, yy in rect]
-        for poly, m, off in ((border, 'EN_Sign_Black', 0.001), (inner, 'EN_Sign_White', 0.002)):
-            mb.ngon([O + U * p[0] + V * p[1] + nrm * off for p in poly], m)
-        t = text_mb(txt, 0.2, 'EN_Sign_Black', extrude=0.0)
-        rot = Matrix.Rotation(0 if facing > 0 else math.pi, 4, 'Z')
-        t.transform(Matrix.Translation(O + nrm * 0.003 + Vector((0, 0, -0.005))) @ rot)
-        mb.extend(t)
-    a.mesh(f'{a.id}_Mesh', mb)
-    col = MB()
-    col.box((0, 0, 1.1), (0.1, 0.12, 2.2), 'EN_Collision')
-    a.mesh('COL_Post', col)
-    return a
+    wb, db, wt, dt = 0.12, 0.10, 0.10, 0.085
+    z0, z1 = -0.05, 1.0
+    v = [(-wb / 2, -db / 2, z0), (wb / 2, -db / 2, z0), (wb / 2, db / 2, z0), (-wb / 2, db / 2, z0),
+         (-wt / 2, -dt / 2, z1), (wt / 2, -dt / 2, z1 - 0.025), (wt / 2, dt / 2, z1 - 0.025), (-wt / 2, dt / 2, z1)]
+    f = [(3, 2, 1, 0), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]
+    mb.add(v, f, 'EN_Plastic_White')
+    k = math.tan(math.radians(30))
+    n = Vector((k, 0, 1)).normalized()
+    zc = 0.80
+    band = 0.25 / math.cos(math.radians(30))
+    mb = split_by_planes(mb, [((0, 0, zc - band / 2), tuple(n)), ((0, 0, zc + band / 2), tuple(n))], 'EN_Sign_Black')
+    for y, m in ((dt / 2 + 0.0035, 'EN_Reflector_Red'), (-(dt / 2 + 0.0035), 'EN_Reflector_White')):
+        mb.box((0, y, zc), (0.04, 0.004, 0.13), m)
+    return mb
 
 
 def delineator(M):
-    """Сигнальный столбик С1 (ГОСТ Р 50970): white post, black band, reflectors —
-    red facing traffic for which the post is on the right (front, +Y), white on the back."""
     a = Asset('EN_Road_Delineator', 'Сигнальный столбик С1', 'sign', M, height=1.0)
-    mb = MB()
-    wb, db = 0.12, 0.1          # width (across the road, X) x depth (along the road, Y) at the bottom
-    wt, dt = 0.1, 0.085
-    zs = [-0.05, 0.72, 0.94, 1.0]
-    mats = ['EN_Plastic_White', 'EN_Sign_Black', 'EN_Plastic_White']
-    for i in range(3):
-        z0, z1 = zs[i], zs[i + 1]
-        f0, f1 = (z0 + 0.05) / 1.05, (z1 + 0.05) / 1.05
-        w0, d0 = wb + (wt - wb) * f0, db + (dt - db) * f0
-        w1, d1 = wb + (wt - wb) * f1, db + (dt - db) * f1
-        top_slope = 0.04 if i == 2 else 0.0      # top falls towards the road (-X)
-        v = [(-w0 / 2, -d0 / 2, z0), (w0 / 2, -d0 / 2, z0), (w0 / 2, d0 / 2, z0), (-w0 / 2, d0 / 2, z0),
-             (-w1 / 2, -d1 / 2, z1 - top_slope), (w1 / 2, -d1 / 2, z1), (w1 / 2, d1 / 2, z1),
-             (-w1 / 2, d1 / 2, z1 - top_slope)]
-        f = [(3, 2, 1, 0), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)]
-        mb.add(v, f, mats[i])
-    for y, m in ((0.0465, 'EN_Reflector_Red'), (-0.0465, 'EN_Reflector_White')):
-        mb.box((0, y, 0.83), (0.045, 0.006, 0.17), m)
-    a.mesh(f'{a.id}_Mesh', mb)
+    a.mesh(f'{a.id}_Mesh', delineator_mb())
     col = MB()
     col.box((0, 0, 0.5), (0.12, 0.1, 1.0), 'EN_Collision')
     a.mesh('COL_Post', col)
     return a
 
 
+# ---------------------------------------------------------------- dangerous curve furniture
+def frame_matrix(pos, x_axis, y_axis):
+    x, y = Vector(x_axis).normalized(), Vector(y_axis).normalized()
+    return Matrix(((x.x, y.x, 0, pos[0]), (x.y, y.y, 0, pos[1]), (x.z, y.z, 1, pos[2]), (0, 0, 0, 1)))
+
+
+def curve_furniture(M, aid, title, path, ext=14.0):
+    """Barrier along the outer edge (exactly on the curve, with superelevation), direction signs 1.34.1
+    (back-to-back with 1.34.2 for the opposite direction) behind it, delineators on the inner edge and
+    beyond the barrier. Same origin as the road module: place both at the same point."""
+    a = Asset(aid, title, 'barrier', M, min_z=-1.1, budget=90000, road=aid.replace('_Furniture', ''))
+    sgn = 1 if max(path.K) > 0 else -1           # right curve: outer edge is on the left (lat < 0)
+    lat_b = -sgn * 5.85
+    # --- barrier: sample its post line, parametrise by its own length, run against the traffic
+    ss = []
+    s = path.L + ext
+    while s > -ext:
+        ss.append(s)
+        s -= 0.25
+    ss.append(-ext)
+    P = [path.point(s_, lat_b, ground_h(lat_b)) for s_ in ss]
+    acc = [0.0]
+    for i in range(1, len(P)):
+        acc.append(acc[-1] + (P[i] - P[i - 1]).length)
+    Lb = acc[-1]
+
+    def bframe(t):
+        t = max(0.0, min(Lb, t))
+        i = max(0, min(len(acc) - 2, next((k for k in range(len(acc) - 1) if acc[k + 1] >= t), len(acc) - 2)))
+        f = (t - acc[i]) / max(1e-9, acc[i + 1] - acc[i])
+        p = P[i].lerp(P[i + 1], f)
+        yv = (P[i + 1] - P[i])
+        yv.z = 0
+        yv.normalize()
+        _, _, r, _ = path.at(ss[i])
+        xv = Vector((r.x, r.y, 0)) * (-sgn)              # away from the road
+        # keep the frame orthogonal to the running direction
+        xv = (xv - yv * xv.dot(yv)).normalized()
+        return p, xv, yv
+    a.mesh(f'{aid}_Barrier', barrier.run_mb(bframe, Lb))
+    col = MB()
+    t = 1.0
+    while t < Lb:
+        p, xv, yv = bframe(t)
+        tmp = MB()
+        tmp.box((-(barrier.SPACER + 0.04), 0, barrier.BEAM_C - 0.05), (0.13, 2.05, 0.45), 'EN_Collision')
+        tmp.box((0.0, 0, 0.2), (0.06, 2.05, 0.4), 'EN_Collision')
+        col.extend(tmp, frame_matrix(p, xv, yv))
+        t += 2.0
+    a.mesh('COL_Barrier', col)
+    # --- direction signs on the outer edge, facing the traffic that turns into the curve
+    signs = MB()
+    lat_s = -sgn * 6.6
+    s = 10.0
+    count = 0
+    while s < path.L - 8.0:
+        p = path.point(s, lat_s, ground_h(lat_s))
+        _, tng, r, _ = path.at(s)
+        face_dir = (-tng + r * sgn * 0.3).normalized()          # towards drivers coming into the curve
+        yv = face_dir
+        xv = yv.cross(Z).normalized()
+        mbs, _, _ = sign_mb('rect', 615, 500, 'EN_SignFace_1_34_1_x1' if sgn > 0 else 'EN_SignFace_1_34_2_x1', 1.25,
+                            back='EN_SignFace_1_34_2_x1' if sgn > 0 else 'EN_SignFace_1_34_1_x1')
+        signs.extend(mbs, frame_matrix(p, xv, yv))
+        col2 = MB()
+        col2.box((0, -0.07, 0.8), (0.1, 0.1, 1.6), 'EN_Collision')
+        col.extend(col2, frame_matrix(p, xv, yv))
+        count += 1
+        s += 12.5
+    a.mesh(f'{aid}_Signs', signs)
+    # --- delineators: inner edge all along, outer edge beyond the barrier
+    dl = MB()
+    base = delineator_mb()
+    s = -ext - 24.0
+    while s <= path.L + ext + 24.0:
+        for side in (1, -1):
+            lat = side * sgn * 6.0       # side = 1: inner edge
+            if side == -1 and -ext - 2 < s < path.L + ext + 2:
+                continue
+            p = path.point(s, lat, ground_h(lat))
+            _, tng, r, _ = path.at(s)
+            on_right = lat > 0
+            yv = -tng if on_right else tng          # front (red) towards the traffic for which it is on the right
+            xv = yv.cross(Z).normalized()
+            dl.extend(base, frame_matrix(p, xv, yv))
+        s += 6.0 if 0 <= s <= path.L else 12.0
+    a.mesh(f'{aid}_Delineators', dl)
+    a.socket('Socket_Start', (0, 0, 0))
+    a.meta.update(barrier_length=round(Lb, 2), direction_signs=count)
+    return a
+
+
+# ---------------------------------------------------------------- catalogue
+P_STRAIGHT = straight(24)
+P_CURVE90 = curve(50, 90, 35, 0.06, 0.7)
+P_CURVE30 = curve(160, 30, 25, 0.03, 0.0)
+
 ALL = [
-    lambda M: road_module(M, 'EN_Road_Country2_24m', 'Загородная дорога 2 полосы, прямая 24 м, разметка 1.5', Straight(24), '1.5'),
-    lambda M: road_module(M, 'EN_Road_Country2_24m_Solid', 'Загородная дорога, прямая 24 м, разметка 1.1', Straight(24), '1.1'),
-    lambda M: road_module(M, 'EN_Road_Country2_24m_Approach', 'Загородная дорога, прямая 24 м, линия приближения 1.6', Straight(24), '1.6'),
-    lambda M: road_module(M, 'EN_Road_Country2_Curve90_R50', 'Загородная дорога, опасный поворот 90° R50, разметка 1.1', CurveRight(50, 90), '1.1'),
-    lambda M: road_module(M, 'EN_Road_Country2_Curve30_R160', 'Загородная дорога, плавный поворот 30° R160, разметка 1.5', CurveRight(160, 30), '1.5'),
+    lambda M: road_module(M, 'EN_Road_Country2_24m', 'Загородная дорога 2 полосы, прямая 24 м, разметка 1.5',
+                          P_STRAIGHT, '1.5'),
+    lambda M: road_module(M, 'EN_Road_Country2_24m_Solid', 'Загородная дорога, прямая 24 м, разметка 1.1',
+                          P_STRAIGHT, '1.1'),
+    lambda M: road_module(M, 'EN_Road_Country2_24m_Approach', 'Загородная дорога, прямая 24 м, линия приближения 1.6',
+                          P_STRAIGHT, '1.6'),
+    lambda M: road_module(M, 'EN_Road_Country2_Curve90_R50',
+                          'Загородная дорога, опасный поворот 90° R50: переходные кривые 35 м, вираж 6 %, уширение 0,7 м',
+                          P_CURVE90, '1.1'),
+    lambda M: curve_furniture(M, 'EN_Road_Country2_Curve90_R50_Furniture',
+                              'Обустройство опасного поворота R50: ограждение, знаки 1.34, столбики', P_CURVE90),
+    lambda M: road_module(M, 'EN_Road_Country2_Curve30_R160',
+                          'Загородная дорога, плавный поворот 30° R160: переходные кривые 25 м, вираж 3 %',
+                          P_CURVE30, '1.5'),
     delineator,
-    lambda M: warning_sign(M, 'EN_Sign_1_11_1_CurveRight', 'Знак 1.11.1 «Опасный поворот направо»', True),
-    lambda M: warning_sign(M, 'EN_Sign_1_11_2_CurveLeft', 'Знак 1.11.2 «Опасный поворот налево»', False),
-    lambda M: chevron_sign(M, 'EN_Sign_1_34_1_Right', 'Знак 1.34.1 «Направление поворота» (направо)', True),
-    lambda M: chevron_sign(M, 'EN_Sign_1_34_2_Left', 'Знак 1.34.2 «Направление поворота» (налево)', False),
-    no_overtaking,
-    lambda M: km_post(M),
+    lambda M: sign_asset(M, 'EN_Sign_1_11_1_CurveRight', 'Знак 1.11.1 «Опасный поворот» (направо)', 'triangle',
+                         900, 0, 'EN_SignFace_1_11_1', 1.6, gost='1.11.1', size_group='II'),
+    lambda M: sign_asset(M, 'EN_Sign_1_11_2_CurveLeft', 'Знак 1.11.2 «Опасный поворот» (налево)', 'triangle',
+                         900, 0, 'EN_SignFace_1_11_2', 1.6, gost='1.11.2', size_group='II'),
+    lambda M: sign_asset(M, 'EN_Sign_1_34_1_Right', 'Знак 1.34.1 «Направление поворота», 500 × 615', 'rect',
+                         615, 500, 'EN_SignFace_1_34_1_x1', 1.0, gost='1.34.1', size_group='II'),
+    lambda M: sign_asset(M, 'EN_Sign_1_34_2_Left', 'Знак 1.34.2 «Направление поворота», 500 × 615', 'rect',
+                         615, 500, 'EN_SignFace_1_34_2_x1', 1.0, gost='1.34.2', size_group='II'),
+    lambda M: sign_asset(M, 'EN_Sign_1_34_1_Right_x2', 'Знак 1.34.1 «Направление поворота», 500 × 1160', 'rect',
+                         1160, 500, 'EN_SignFace_1_34_1_x2', 1.0, gost='1.34.1', size_group='II'),
+    lambda M: sign_asset(M, 'EN_Sign_1_34_2_Left_x2', 'Знак 1.34.2 «Направление поворота», 500 × 1160', 'rect',
+                         1160, 500, 'EN_SignFace_1_34_2_x2', 1.0, gost='1.34.2', size_group='II'),
+    lambda M: sign_asset(M, 'EN_Sign_3_20_NoOvertaking', 'Знак 3.20 «Обгон запрещён»', 'circle', 700, 700,
+                         'EN_SignFace_3_20', 1.6, gost='3.20', size_group='II'),
+    lambda M: sign_asset(M, 'EN_Sign_6_13_Km17', 'Знак 6.13 «Километровый знак» (17 / 23)', 'rect', 300, 200,
+                         'EN_SignFace_6_13_17', 1.3, back='EN_SignFace_6_13_23', gost='6.13', size_group='II'),
 ]

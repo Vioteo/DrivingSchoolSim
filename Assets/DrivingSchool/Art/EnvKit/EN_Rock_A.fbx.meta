@@ -3,7 +3,22 @@ guid: c1e1db097a75ffd4fb24bab1e71b5af2
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Moss
+    second: {fileID: 2100000, guid: 9b5a63d51d58fb54a91f0954c49ee8b2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Rock
+    second: {fileID: 2100000, guid: fd57b1c243f7c50478af16e41f3989ed, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

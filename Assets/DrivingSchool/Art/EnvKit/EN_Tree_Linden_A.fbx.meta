@@ -3,7 +3,22 @@ guid: 2ba1eb6d31b283d4cac1b55e0d3a0237
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Bark_Dark
+    second: {fileID: 2100000, guid: b4d4ddb03e298b447b2f7251f4914019, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Leaves_Linden
+    second: {fileID: 2100000, guid: e3c519923eb531a408c7186c96951775, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

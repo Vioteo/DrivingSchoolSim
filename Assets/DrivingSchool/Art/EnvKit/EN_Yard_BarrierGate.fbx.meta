@@ -3,7 +3,52 @@ guid: e1638a5005880794ca937418408d4d0c
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Concrete
+    second: {fileID: 2100000, guid: 8ebe1f26b24943d4abbfc5a9dff1cb2f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_Grey
+    second: {fileID: 2100000, guid: 4eebc068ad0b9654b8606ad107fbac0b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_Red
+    second: {fileID: 2100000, guid: cfa39b8215b8b354794455a34d38cdce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_White
+    second: {fileID: 2100000, guid: c5ad6c020bf8169489297a1ee57b9d1b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_Yellow
+    second: {fileID: 2100000, guid: ad6c54dd824d2b84aa7422952cf1e7cc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Reflector_Amber
+    second: {fileID: 2100000, guid: 33a5b0ec433b26c409b3adf676fb371d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Reflector_Red
+    second: {fileID: 2100000, guid: 2a9f4d1a816a0294ba105a3bbdfe6282, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Steel_Galv
+    second: {fileID: 2100000, guid: c73f506abdec7a24da105d08b8d7a80d, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

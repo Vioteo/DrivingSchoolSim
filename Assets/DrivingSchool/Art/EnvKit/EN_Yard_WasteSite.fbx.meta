@@ -3,7 +3,57 @@ guid: c04a9e70284aca242baed23bf0b912c6
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Concrete
+    second: {fileID: 2100000, guid: 8ebe1f26b24943d4abbfc5a9dff1cb2f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_Grey
+    second: {fileID: 2100000, guid: 4eebc068ad0b9654b8606ad107fbac0b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Plastic_Blue
+    second: {fileID: 2100000, guid: aed1a1fa855715043b5d1476b942753f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Plastic_Green
+    second: {fileID: 2100000, guid: 0071c90c2351f494db536fc7bf7fa04e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Plastic_Grey
+    second: {fileID: 2100000, guid: 182b961b056b2814698dc0f07b236074, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Plastic_Yellow
+    second: {fileID: 2100000, guid: f15a79db7d401a94d8be878f896fc346, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Profiled_Sheet
+    second: {fileID: 2100000, guid: 74915cdd8fa92e44f8777237eb19cdb3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Rubber
+    second: {fileID: 2100000, guid: 294a5fe6482080748b0bc3476e598e7e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Steel_Dark
+    second: {fileID: 2100000, guid: a69ce302be4b5c04b9ce2452e3f73828, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

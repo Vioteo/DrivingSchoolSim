@@ -96,10 +96,10 @@ def tire_bed(M):
         c = (math.cos(ang) * rad, math.sin(ang) * rad, 0.2 + R.uniform(0, 0.08))
         mb.ico(c, 0.045, 2, R.choice(('EN_Plastic_Red', 'EN_Plastic_Yellow', 'EN_Plastic_Red', 'EN_Plastic_White')),
                jitter=0.2, seed=i)
-        mb.cyl((c[0], c[1], 0.13), c, 0.006, seg=4, mat='EN_Bush_A', cap0=False)
+        mb.cyl((c[0], c[1], 0.13), c, 0.006, seg=4, mat='EN_Paint_Green', cap0=False)
     for i in range(6):
         ang = R.uniform(0, 6.28)
-        mb.ico((math.cos(ang) * 0.1, math.sin(ang) * 0.1, 0.16), 0.08, 2, 'EN_Bush_B', scale=(1, 1, 0.6), jitter=0.3,
+        mb.ico((math.cos(ang) * 0.1, math.sin(ang) * 0.1, 0.16), 0.08, 2, 'EN_Plastic_Green', scale=(1, 1, 0.6), jitter=0.3,
                seed=i)
     a.mesh(f'{a.id}_Mesh', mb)
     return a

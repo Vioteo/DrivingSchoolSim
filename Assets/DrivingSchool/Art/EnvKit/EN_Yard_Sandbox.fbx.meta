@@ -3,7 +3,42 @@ guid: a0e07d58e97e25a45a854aa0952fbdf8
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_Green
+    second: {fileID: 2100000, guid: 826395e104be9c44cb75e8725491333d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_Red
+    second: {fileID: 2100000, guid: cfa39b8215b8b354794455a34d38cdce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_White
+    second: {fileID: 2100000, guid: c5ad6c020bf8169489297a1ee57b9d1b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_Yellow
+    second: {fileID: 2100000, guid: ad6c54dd824d2b84aa7422952cf1e7cc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Sand
+    second: {fileID: 2100000, guid: af8ebcbc4d647a540a16ff7ded99f483, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Wood_Light
+    second: {fileID: 2100000, guid: 1eafeab02cf3fb6418e6c2f03b379ac5, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

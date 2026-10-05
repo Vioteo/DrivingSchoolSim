@@ -3,7 +3,37 @@ guid: b83642f3ee2c4cf4a8156b637f19d10c
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Concrete
+    second: {fileID: 2100000, guid: 8ebe1f26b24943d4abbfc5a9dff1cb2f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_Red
+    second: {fileID: 2100000, guid: cfa39b8215b8b354794455a34d38cdce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Paint_White
+    second: {fileID: 2100000, guid: c5ad6c020bf8169489297a1ee57b9d1b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Reflector_Amber
+    second: {fileID: 2100000, guid: 33a5b0ec433b26c409b3adf676fb371d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Steel_Dark
+    second: {fileID: 2100000, guid: a69ce302be4b5c04b9ce2452e3f73828, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

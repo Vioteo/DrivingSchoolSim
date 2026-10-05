@@ -3,7 +3,22 @@ guid: 8c547462fa9ff7c49bf31c8cc7ac6fa1
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Bark_PineLow
+    second: {fileID: 2100000, guid: bd5cb7ef4ea574f41afd01050bdac06e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_WoodCut
+    second: {fileID: 2100000, guid: 9d4e457ad8a78ad4ebd14d3f03e36293, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

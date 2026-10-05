@@ -3,7 +3,42 @@ guid: 3d3a6ae50a620ce4c9963b9cacb16a35
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Asphalt
+    second: {fileID: 2100000, guid: 8b2409f56b316064882b2fdb914c1835, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Asphalt_Worn
+    second: {fileID: 2100000, guid: 04f11873f93b4c04db37ab73b7ec1f02, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Collision
+    second: {fileID: 2100000, guid: 60da2ca1967956c4d96fdd78623d1ea2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Grass
+    second: {fileID: 2100000, guid: 8adfdac1f847bad4ca4b45eefd753efd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Grass_Dry
+    second: {fileID: 2100000, guid: 256d9f07a92aaec41835332f497b725f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Gravel
+    second: {fileID: 2100000, guid: b0a8c26b564aa8949a32d0ea61e59997, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EN_Marking_White
+    second: {fileID: 2100000, guid: bcd7b19f91d81304596373b5a4577b59, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

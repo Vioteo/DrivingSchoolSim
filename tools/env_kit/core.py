@@ -20,13 +20,18 @@ def to_blender(p):
 
 
 # ---------------------------------------------------------------- materials
+TEX_DIR = __import__('pathlib').Path(__file__).resolve().parent / 'textures'
+
+
 def make_materials():
+    from .materials import TEX
     M = {}
     for name, (col, metal, rough, emis, alpha) in PALETTE.items():
         m = bpy.data.materials.get(name) or bpy.data.materials.new(name)
         m.use_nodes = True
         m.diffuse_color = (*col, alpha)
-        p = m.node_tree.nodes.get('Principled BSDF')
+        nt = m.node_tree
+        p = nt.nodes.get('Principled BSDF')
         p.inputs['Base Color'].default_value = (*col, 1)
         p.inputs['Metallic'].default_value = metal
         p.inputs['Roughness'].default_value = rough
@@ -34,6 +39,34 @@ def make_materials():
         if emis:
             p.inputs['Emission Color'].default_value = (*col, 1)
             p.inputs['Emission Strength'].default_value = emis
+        t = TEX.get(name)
+        if t:
+            path = TEX_DIR / f"{t['file']}.png"
+            img = bpy.data.images.get(path.name) or bpy.data.images.load(str(path), check_existing=True)
+            if t.get('data'):
+                img.colorspace_settings.name = 'Non-Color'
+            node = nt.nodes.new('ShaderNodeTexImage')
+            node.image = img
+            node.interpolation = 'Linear'
+            if t.get('tint'):
+                mix = nt.nodes.new('ShaderNodeMix')
+                mix.data_type = 'RGBA'
+                mix.blend_type = 'MULTIPLY'
+                mix.inputs['Factor'].default_value = 1.0
+                nt.links.new(node.outputs['Color'], mix.inputs[6])
+                mix.inputs[7].default_value = (*t['tint'], 1)
+                nt.links.new(mix.outputs[2], p.inputs['Base Color'])
+            else:
+                nt.links.new(node.outputs['Color'], p.inputs['Base Color'])
+            if t.get('alpha'):
+                nt.links.new(node.outputs['Alpha'], p.inputs['Alpha'])
+                try:
+                    m.surface_render_method = 'DITHERED'
+                except Exception:
+                    pass
+            if t.get('emission_tex'):
+                nt.links.new(node.outputs['Color'], p.inputs['Emission Color'])
+        m.use_backface_culling = False
         if alpha < 1:
             try:
                 m.surface_render_method = 'BLENDED'
@@ -49,6 +82,8 @@ class MB:
 
     def __init__(self):
         self.v, self.f, self.fm, self.fs = [], [], [], []
+        self.fuv = []           # per face: None (planar mapping later) or a uv per corner
+        self.vn = {}            # vertex index -> custom normal (author frame), foliage cards
         self.mats = []
 
     def _mi(self, mat):
@@ -58,13 +93,14 @@ class MB:
             self.mats.append(mat)
         return self.mats.index(mat)
 
-    def add(self, verts, faces, mat, smooth=False, face_mats=None):
+    def add(self, verts, faces, mat, smooth=False, face_mats=None, uvs=None):
         o = len(self.v)
         self.v += [tuple(p) for p in verts]
         for i, fc in enumerate(faces):
             self.f.append(tuple(j + o for j in fc))
             self.fm.append(self._mi(face_mats[i] if face_mats else mat))
             self.fs.append(smooth)
+            self.fuv.append(uvs[i] if uvs else None)
         return o
 
     def extend(self, other, xf=None):
@@ -72,10 +108,14 @@ class MB:
         o = len(self.v)
         for p in other.v:
             self.v.append(tuple(xf @ Vector(p)) if xf else p)
-        for fc, mi, s in zip(other.f, other.fm, other.fs):
+        for fc, mi, s, uv in zip(other.f, other.fm, other.fs, other.fuv):
             self.f.append(tuple(j + o for j in fc))
             self.fm.append(self._mi(other.mats[mi]))
             self.fs.append(s)
+            self.fuv.append(uv)
+        rot = xf.to_3x3() if xf else None
+        for k, n in other.vn.items():
+            self.vn[k + o] = tuple((rot @ Vector(n)).normalized()) if rot else n
 
     @property
     def empty(self):
@@ -123,9 +163,12 @@ class MB:
         r1 = r0 if r1 is None else r1
         return self.tube([p0, p1], [r0, r1], seg, mat, cap0=cap0, cap1=cap1, smooth=smooth)
 
-    def tube(self, pts, radii, seg, mat, cap0=False, cap1=True, smooth=True, face_mat=None, phase=0.0):
+    def tube(self, pts, radii, seg, mat, cap0=False, cap1=True, smooth=True, face_mat=None, phase=0.0,
+             uv_tile=None):
         """Swept circle along a polyline with parallel-transport frames.
-        face_mat(i, k) -> material name for the quad between ring i and i+1, sector k."""
+        face_mat(i, k) -> material name for the quad between ring i and i+1, sector k.
+        uv_tile = (metres around per tile, metres along per tile): cylindrical UVs for bark;
+        or a callable (i, k, s_along, circumference) -> (u0, u1, v0, v1)."""
         P = [Vector(p) for p in pts]
         n = len(P)
         T = []
@@ -137,7 +180,7 @@ class MB:
             else:
                 t = (P[i + 1] - P[i]).normalized() + (P[i] - P[i - 1]).normalized()
             T.append(t.normalized())
-        a = Vector((1, 0, 0)) if abs(T[0].x) < 0.9 else Vector((0, 1, 0))
+        a = Vector((0, 0, 1)) if abs(T[0].z) < 0.9 else Vector((1, 0, 0))
         N = T[0].cross(a).normalized()
         verts = []
         for i in range(n):
@@ -150,19 +193,53 @@ class MB:
             for k in range(seg):
                 a_ = 2 * math.pi * k / seg + phase
                 verts.append(P[i] + radii[i] * (math.cos(a_) * N + math.sin(a_) * B))
-        faces, fms = [], []
+        faces, fms, uvs = [], [], []
+        acc = [0.0]
+        for i in range(1, n):
+            acc.append(acc[-1] + (P[i] - P[i - 1]).length)
         for i in range(n - 1):
             for k in range(seg):
                 k1 = (k + 1) % seg
                 faces.append((i * seg + k, i * seg + k1, (i + 1) * seg + k1, (i + 1) * seg + k))
                 fms.append(face_mat(i, k) if face_mat else mat)
+                if uv_tile:
+                    circ = 2 * math.pi * max(radii[i], 1e-3)
+                    tu, tv = uv_tile
+                    reps = max(1, round(circ / tu))       # whole tiles around, so the seam closes
+                    u0, u1 = reps * k / seg, reps * (k + 1) / seg
+                    v0, v1 = acc[i] / tv, acc[i + 1] / tv
+                    uvs.append(((u0, v0), (u1, v0), (u1, v1), (u0, v1)))
+                else:
+                    uvs.append(None)
         if cap0:
             faces.append(tuple(reversed(range(seg))))
             fms.append(mat)
+            uvs.append(None)
         if cap1:
             faces.append(tuple((n - 1) * seg + k for k in range(seg)))
             fms.append(mat)
-        return self.add(verts, faces, mat, smooth, face_mats=fms)
+            uvs.append(None)
+        return self.add(verts, faces, mat, smooth, face_mats=fms, uvs=uvs if uv_tile else None)
+
+    def card(self, centre, right, up, w, h, mat, uv_rect, normal=None, anchor='centre'):
+        """Textured quad (foliage card). uv_rect = (u0, v0, u1, v1) in the atlas.
+        anchor 'top': centre is the middle of the top edge (hanging sprig), 'bottom': of the bottom edge.
+        normal: custom normal for its 4 vertices (author frame)."""
+        C, R_, U = Vector(centre), Vector(right).normalized(), Vector(up).normalized()
+        if anchor == 'top':
+            C = C - U * h / 2
+        elif anchor == 'bottom':
+            C = C + U * h / 2
+        elif anchor == 'left':
+            C = C + R_ * w / 2
+        hw, hh = w / 2, h / 2
+        v = [C - R_ * hw - U * hh, C + R_ * hw - U * hh, C + R_ * hw + U * hh, C - R_ * hw + U * hh]
+        u0, v0, u1, v1 = uv_rect
+        o = self.add(v, [(0, 1, 2, 3)], mat, True, uvs=[((u0, v0), (u1, v0), (u1, v1), (u0, v1))])
+        if normal is not None:
+            for k in range(4):
+                self.vn[o + k] = tuple(Vector(normal).normalized())
+        return o
 
     def ico(self, c, r, subdiv, mat, scale=(1, 1, 1), jitter=0.0, seed=0, smooth=True, nscale=1.0, flat_bottom=None):
         bm = bmesh.new()
@@ -311,17 +388,12 @@ def text_mb(body, size, mat, extrude=0.0015):
 
 
 # ---------------------------------------------------------------- objects
-def planar_uv(me, repeat_for):
-    uv = me.uv_layers.new(name='UVMap')
-    mats = [m.name if m else '' for m in me.materials]
-    for poly in me.polygons:
-        n = poly.normal
-        ax = max(range(3), key=lambda i: abs(n[i]))
-        rep = repeat_for(mats[poly.material_index] if poly.material_index < len(mats) else '')
-        for li in poly.loop_indices:
-            co = me.vertices[me.loops[li].vertex_index].co
-            a, b = [(co.y, co.z), (co.x, co.z), (co.x, co.y)][ax]
-            uv.data[li].uv = (a / rep, b / rep)
+def planar_repeat(mat):
+    from .materials import TEX
+    t = TEX.get(mat)
+    if t and 'repeat' in t:
+        return t['repeat']
+    return 2.0 if mat in GROUND else 1.0
 
 
 def mesh_object(name, mb, M, parent=None, sharp_deg=40, coll=None, weld=True):
@@ -332,10 +404,29 @@ def mesh_object(name, mb, M, parent=None, sharp_deg=40, coll=None, weld=True):
     for poly, mi, s in zip(me.polygons, mb.fm, mb.fs):
         poly.material_index = mi
         poly.use_smooth = s
+    # UVs before any topology change (loops keep them through bmesh)
+    uv = me.uv_layers.new(name='UVMap')
+    for poly, fuv, mi in zip(me.polygons, mb.fuv, mb.fm):
+        if fuv is not None and len(fuv) == poly.loop_total:
+            for li, t in zip(poly.loop_indices, fuv):
+                uv.data[li].uv = t
+            continue
+        n = poly.normal
+        ax = max(range(3), key=lambda i: abs(n[i]))
+        rep = planar_repeat(mb.mats[mi])
+        for li in poly.loop_indices:
+            co = me.vertices[me.loops[li].vertex_index].co
+            a, b = [(co.y, co.z), (co.x, co.z), (co.x, co.y)][ax]
+            uv.data[li].uv = (a / rep, b / rep)
+    has_vn = bool(mb.vn)
+    if has_vn:
+        att = me.attributes.new('en_normal', 'FLOAT_VECTOR', 'POINT')
+        for i, nrm in mb.vn.items():
+            att.data[i].vector = to_blender(nrm)
     me.validate(clean_customdata=False)
     bm = bmesh.new()
     bm.from_mesh(me)
-    if weld:
+    if weld and not has_vn:
         bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-5)
     bmesh.ops.dissolve_degenerate(bm, edges=bm.edges, dist=1e-7)
     ngons = [f for f in bm.faces if len(f.verts) > 4]
@@ -343,9 +434,16 @@ def mesh_object(name, mb, M, parent=None, sharp_deg=40, coll=None, weld=True):
         bmesh.ops.triangulate(bm, faces=ngons)
     bm.to_mesh(me)
     bm.free()
-    if any(mb.fs):
+    if any(mb.fs) and not has_vn:
         me.set_sharp_from_angle(angle=math.radians(sharp_deg))
-    planar_uv(me, lambda m: 2.0 if m in GROUND else 1.0)
+    if has_vn:
+        att = me.attributes['en_normal']
+        normals = []
+        for i, v in enumerate(me.vertices):
+            n = Vector(att.data[i].vector)
+            normals.append(n.normalized() if n.length > 0.5 else v.normal.copy())
+        me.normals_split_custom_set_from_vertices(normals)
+        me.attributes.remove(me.attributes['en_normal'])
     o = bpy.data.objects.new(name, me)
     (coll or bpy.context.scene.collection).objects.link(o)
     if parent:
@@ -463,3 +561,54 @@ def organic(mb, voxel, target_tris, displace=0.0, noise_size=0.6, mats=None, see
     if tex:
         bpy.data.textures.remove(tex)
     return out
+
+
+# ---------------------------------------------------------------- planar cuts
+def split_by_planes(mb, planes, mat_between, start=0):
+    """Cuts the faces added since `start` with planes [(point, normal)], then gives the material
+    `mat_between` to faces whose centre lies on the positive side of the first plane and the negative
+    side of the second. Used for the slanted band of a road delineator."""
+    bm = bmesh.new()
+    vmap = {}
+    for fi in range(start, len(mb.f)):
+        for vi in mb.f[fi]:
+            if vi not in vmap:
+                vmap[vi] = bm.verts.new(mb.v[vi])
+    bm.verts.ensure_lookup_table()
+    mats = []
+    for fi in range(start, len(mb.f)):
+        f = bm.faces.new([vmap[vi] for vi in mb.f[fi]])
+        f.material_index = mb.fm[fi]
+        f.smooth = mb.fs[fi]
+    for co, no in planes:
+        geom = list(bm.verts) + list(bm.edges) + list(bm.faces)
+        bmesh.ops.bisect_plane(bm, geom=geom, plane_co=co, plane_no=no)
+    (c0, n0), (c1, n1) = planes
+    out = MB()
+    out.mats = list(mb.mats)
+    verts = [tuple(v.co) for v in bm.verts]
+    idx = {v: i for i, v in enumerate(bm.verts)}
+    for f in bm.faces:
+        c = f.calc_center_median()
+        inside = (c - Vector(c0)).dot(Vector(n0)) > 0 and (c - Vector(c1)).dot(Vector(n1)) < 0
+        name = mat_between if inside else mb.mats[f.material_index]
+        out.f.append(tuple(idx[v] for v in f.verts))
+        out.fm.append(out._mi(name))
+        out.fs.append(f.smooth)
+        out.fuv.append(None)
+    out.v = verts
+    bm.free()
+    # replace the cut faces in mb
+    keep_f = list(range(start))
+    res = MB()
+    res.mats = list(mb.mats)
+    used = sorted({vi for fi in keep_f for vi in mb.f[fi]})
+    remap = {vi: i for i, vi in enumerate(used)}
+    res.v = [mb.v[vi] for vi in used]
+    for fi in keep_f:
+        res.f.append(tuple(remap[vi] for vi in mb.f[fi]))
+        res.fm.append(mb.fm[fi])
+        res.fs.append(mb.fs[fi])
+        res.fuv.append(mb.fuv[fi])
+    res.extend(out)
+    return res
